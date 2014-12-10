@@ -1,0 +1,13 @@
+- u tried running a verify on an AndProp for 2 atomicProps that r the exact same.
+From the debug, u could tell that the atomic prop was verified only once and the result reused. 
+Check if u verify an AndProp for 2 different arguments, 
+	the verify (and building the state space) is done once for each atomic Prop separately
+	--answer yes, works fine but if ur verifying an OrProp and the verifications of the first arg resolves to true, the 2nd arg verification is not checked
+	--same for implication, if first arg evaluates to false, the whole verification evaluates to true without verifying the 2nd argument
+	----but if 1st arg evaluates to true, the 2nd ar must b evaluated too before resolving the ImplicationProp to T/F
+	
+For the verifiedStateCache of each AtomicStateProperty, can we add the (collapsed state, #of matches)instead of the (merged state, #of matches)? explore and implement
+
+When verifying Implication/and/or/not stateProperties some smart processing is done automatically, e.g., if ur verifying an ANDStateProperty and the first argument evaluates to False, the second argument will not b verified and the ANDStateProperty verification will return false.
+On the other hand when verifying an "And" Property of a false argument (result of running a complete verifyCompositeStateProperty) and a true argument (result of running a complete verifyCompositeStateProperty), then each verifyCompositeStateProperty will be evaluated first, then we will evaluate the "And" pROPERTY..
+cHECK if u can add smart processing to such cases where u try to combine fwk1 and fwk2, e.g., in the above example if the first verifyCompositeStateProp valuates to false, dont bother evaluating the second verifyCompositeStateProperty

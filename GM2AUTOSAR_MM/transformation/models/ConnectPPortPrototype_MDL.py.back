@@ -1,0 +1,705 @@
+"""
+__ConnectPPortPrototype_MDL.py_____________________________________________________
+
+Automatically generated AToM3 Model File (Do not modify directly)
+Author: gehan
+Modified: Wed Oct 16 20:56:13 2013
+___________________________________________________________________________________
+"""
+from stickylink import *
+from widthXfillXdecoration import *
+from directLink_S import *
+from apply_contains import *
+from Distributable import *
+from paired_with import *
+from PPortPrototype import *
+from backward_link import *
+from directLink_T import *
+from ApplyModel import *
+from CompositionType import *
+from ECU import *
+from VirtualDevice import *
+from ExecFrame import *
+from Signal import *
+from match_contains import *
+from MatchModel import *
+from graph_ECU import *
+from graph_PPortPrototype import *
+from graph_match_contains import *
+from graph_Distributable import *
+from graph_ExecFrame import *
+from graph_directLink_T import *
+from graph_directLink_S import *
+from graph_MatchModel import *
+from graph_apply_contains import *
+from graph_backward_link import *
+from graph_CompositionType import *
+from graph_Signal import *
+from graph_paired_with import *
+from graph_ApplyModel import *
+from graph_VirtualDevice import *
+from ATOM3Enum import *
+from ATOM3String import *
+from ATOM3BottomType import *
+from ATOM3Constraint import *
+from ATOM3Attribute import *
+from ATOM3Float import *
+from ATOM3List import *
+from ATOM3Link import *
+from ATOM3Connection import *
+from ATOM3Boolean import *
+from ATOM3Appearance import *
+from ATOM3Text import *
+from ATOM3Action import *
+from ATOM3Integer import *
+from ATOM3Port import *
+from ATOM3MSEnum import *
+
+def ConnectPPortPrototype_MDL(self, rootNode, GM2AUTOSAR_MMRootNode=None):
+
+    # --- Generating attributes code for ASG GM2AUTOSAR_MM ---
+    if( GM2AUTOSAR_MMRootNode ): 
+        # author
+        GM2AUTOSAR_MMRootNode.author.setValue('Annonymous')
+
+        # description
+        GM2AUTOSAR_MMRootNode.description.setValue('\n')
+        GM2AUTOSAR_MMRootNode.description.setHeight(15)
+
+        # name
+        GM2AUTOSAR_MMRootNode.name.setValue('ConnectPPortPrototype')
+    # --- ASG attributes over ---
+
+
+    self.obj6628=directLink_S(self)
+    self.obj6628.isGraphObjectVisual = True
+
+    if(hasattr(self.obj6628, '_setHierarchicalLink')):
+      self.obj6628._setHierarchicalLink(False)
+
+    # associationType
+    self.obj6628.associationType.setValue('virtualDevice')
+
+    self.obj6628.graphClass_= graph_directLink_S
+    if self.genGraphics:
+       new_obj = graph_directLink_S(422.0,804.0,self.obj6628)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("directLink_S", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj6628.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj6628)
+    self.globalAndLocalPostcondition(self.obj6628, rootNode)
+    self.obj6628.postAction( rootNode.CREATE )
+
+    self.obj6629=directLink_S(self)
+    self.obj6629.isGraphObjectVisual = True
+
+    if(hasattr(self.obj6629, '_setHierarchicalLink')):
+      self.obj6629._setHierarchicalLink(False)
+
+    # associationType
+    self.obj6629.associationType.setValue('distributable')
+
+    self.obj6629.graphClass_= graph_directLink_S
+    if self.genGraphics:
+       new_obj = graph_directLink_S(592.0,804.0,self.obj6629)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("directLink_S", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj6629.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj6629)
+    self.globalAndLocalPostcondition(self.obj6629, rootNode)
+    self.obj6629.postAction( rootNode.CREATE )
+
+    self.obj6630=directLink_S(self)
+    self.obj6630.isGraphObjectVisual = True
+
+    if(hasattr(self.obj6630, '_setHierarchicalLink')):
+      self.obj6630._setHierarchicalLink(False)
+
+    # associationType
+    self.obj6630.associationType.setValue('execFrame')
+
+    self.obj6630.graphClass_= graph_directLink_S
+    if self.genGraphics:
+       new_obj = graph_directLink_S(772.0,804.0,self.obj6630)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("directLink_S", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj6630.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj6630)
+    self.globalAndLocalPostcondition(self.obj6630, rootNode)
+    self.obj6630.postAction( rootNode.CREATE )
+
+    self.obj6631=directLink_S(self)
+    self.obj6631.isGraphObjectVisual = True
+
+    if(hasattr(self.obj6631, '_setHierarchicalLink')):
+      self.obj6631._setHierarchicalLink(False)
+
+    # associationType
+    self.obj6631.associationType.setValue('provided')
+
+    self.obj6631.graphClass_= graph_directLink_S
+    if self.genGraphics:
+       new_obj = graph_directLink_S(953.0,804.0,self.obj6631)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("directLink_S", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj6631.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj6631)
+    self.globalAndLocalPostcondition(self.obj6631, rootNode)
+    self.obj6631.postAction( rootNode.CREATE )
+
+    self.obj6633=apply_contains(self)
+    self.obj6633.isGraphObjectVisual = True
+
+    if(hasattr(self.obj6633, '_setHierarchicalLink')):
+      self.obj6633._setHierarchicalLink(False)
+
+    self.obj6633.graphClass_= graph_apply_contains
+    if self.genGraphics:
+       new_obj = graph_apply_contains(250.5,1034.0,self.obj6633)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("apply_contains", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj6633.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj6633)
+    self.globalAndLocalPostcondition(self.obj6633, rootNode)
+    self.obj6633.postAction( rootNode.CREATE )
+
+    self.obj6634=apply_contains(self)
+    self.obj6634.isGraphObjectVisual = True
+
+    if(hasattr(self.obj6634, '_setHierarchicalLink')):
+      self.obj6634._setHierarchicalLink(False)
+
+    self.obj6634.graphClass_= graph_apply_contains
+    if self.genGraphics:
+       new_obj = graph_apply_contains(480.5,1034.0,self.obj6634)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("apply_contains", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj6634.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj6634)
+    self.globalAndLocalPostcondition(self.obj6634, rootNode)
+    self.obj6634.postAction( rootNode.CREATE )
+
+    self.obj6617=Distributable(self)
+    self.obj6617.isGraphObjectVisual = True
+
+    if(hasattr(self.obj6617, '_setHierarchicalLink')):
+      self.obj6617._setHierarchicalLink(False)
+
+    # classtype
+    self.obj6617.classtype.setValue('Distributable')
+
+    # cardinality
+    self.obj6617.cardinality.setValue('+')
+
+    # name
+    self.obj6617.name.setValue('dist1')
+
+    self.obj6617.graphClass_= graph_Distributable
+    if self.genGraphics:
+       new_obj = graph_Distributable(540.0,760.0,self.obj6617)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("Distributable", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+       new_obj.layConstraints['scale'] = [1.0, 1.0]
+    else: new_obj = None
+    self.obj6617.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj6617)
+    self.globalAndLocalPostcondition(self.obj6617, rootNode)
+    self.obj6617.postAction( rootNode.CREATE )
+
+    self.obj6622=paired_with(self)
+    self.obj6622.isGraphObjectVisual = True
+
+    if(hasattr(self.obj6622, '_setHierarchicalLink')):
+      self.obj6622._setHierarchicalLink(False)
+
+    self.obj6622.graphClass_= graph_paired_with
+    if self.genGraphics:
+       new_obj = graph_paired_with(157.0,844.5,self.obj6622)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("paired_with", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj6622.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj6622)
+    self.globalAndLocalPostcondition(self.obj6622, rootNode)
+    self.obj6622.postAction( rootNode.CREATE )
+
+    self.obj6621=PPortPrototype(self)
+    self.obj6621.isGraphObjectVisual = True
+
+    if(hasattr(self.obj6621, '_setHierarchicalLink')):
+      self.obj6621._setHierarchicalLink(False)
+
+    # classtype
+    self.obj6621.classtype.setValue('PPortPrototype')
+
+    # cardinality
+    self.obj6621.cardinality.setValue('1')
+
+    # name
+    self.obj6621.name.setValue('pport1')
+
+    self.obj6621.graphClass_= graph_PPortPrototype
+    if self.genGraphics:
+       new_obj = graph_PPortPrototype(660.0,1040.0,self.obj6621)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("PPortPrototype", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+       new_obj.layConstraints['scale'] = [1.0, 1.0]
+    else: new_obj = None
+    self.obj6621.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj6621)
+    self.globalAndLocalPostcondition(self.obj6621, rootNode)
+    self.obj6621.postAction( rootNode.CREATE )
+
+    self.obj6635=backward_link(self)
+    self.obj6635.isGraphObjectVisual = True
+
+    if(hasattr(self.obj6635, '_setHierarchicalLink')):
+      self.obj6635._setHierarchicalLink(False)
+
+    # type
+    self.obj6635.type.setValue('ruleDef')
+
+    self.obj6635.graphClass_= graph_backward_link
+    if self.genGraphics:
+       new_obj = graph_backward_link(341.0,943.0,self.obj6635)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("backward_link", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj6635.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj6635)
+    self.globalAndLocalPostcondition(self.obj6635, rootNode)
+    self.obj6635.postAction( rootNode.CREATE )
+
+    self.obj6632=directLink_T(self)
+    self.obj6632.isGraphObjectVisual = True
+
+    if(hasattr(self.obj6632, '_setHierarchicalLink')):
+      self.obj6632._setHierarchicalLink(False)
+
+    # associationType
+    self.obj6632.associationType.setValue('port')
+
+    self.obj6632.graphClass_= graph_directLink_T
+    if self.genGraphics:
+       new_obj = graph_directLink_T(570.0,1082.0,self.obj6632)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("directLink_T", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj6632.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj6632)
+    self.globalAndLocalPostcondition(self.obj6632, rootNode)
+    self.obj6632.postAction( rootNode.CREATE )
+
+    self.obj6614=ApplyModel(self)
+    self.obj6614.isGraphObjectVisual = True
+
+    if(hasattr(self.obj6614, '_setHierarchicalLink')):
+      self.obj6614._setHierarchicalLink(False)
+
+    self.obj6614.graphClass_= graph_ApplyModel
+    if self.genGraphics:
+       new_obj = graph_ApplyModel(20.0,940.0,self.obj6614)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("ApplyModel", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+       new_obj.layConstraints['scale'] = [1.0, 1.0]
+    else: new_obj = None
+    self.obj6614.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj6614)
+    self.globalAndLocalPostcondition(self.obj6614, rootNode)
+    self.obj6614.postAction( rootNode.CREATE )
+
+    self.obj6620=CompositionType(self)
+    self.obj6620.isGraphObjectVisual = True
+
+    if(hasattr(self.obj6620, '_setHierarchicalLink')):
+      self.obj6620._setHierarchicalLink(False)
+
+    # classtype
+    self.obj6620.classtype.setValue('CompositionType')
+
+    # cardinality
+    self.obj6620.cardinality.setValue('1')
+
+    # name
+    self.obj6620.name.setValue('composty1')
+
+    self.obj6620.graphClass_= graph_CompositionType
+    if self.genGraphics:
+       new_obj = graph_CompositionType(200.0,1040.0,self.obj6620)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("CompositionType", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+       new_obj.layConstraints['scale'] = [1.0, 1.0]
+    else: new_obj = None
+    self.obj6620.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj6620)
+    self.globalAndLocalPostcondition(self.obj6620, rootNode)
+    self.obj6620.postAction( rootNode.CREATE )
+
+    self.obj6615=ECU(self)
+    self.obj6615.isGraphObjectVisual = True
+
+    if(hasattr(self.obj6615, '_setHierarchicalLink')):
+      self.obj6615._setHierarchicalLink(False)
+
+    # classtype
+    self.obj6615.classtype.setValue('ECU')
+
+    # cardinality
+    self.obj6615.cardinality.setValue('+')
+
+    # name
+    self.obj6615.name.setValue('ecu1')
+
+    self.obj6615.graphClass_= graph_ECU
+    if self.genGraphics:
+       new_obj = graph_ECU(200.0,760.0,self.obj6615)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("ECU", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+       new_obj.layConstraints['scale'] = [1.0, 1.0]
+    else: new_obj = None
+    self.obj6615.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj6615)
+    self.globalAndLocalPostcondition(self.obj6615, rootNode)
+    self.obj6615.postAction( rootNode.CREATE )
+
+    self.obj6616=VirtualDevice(self)
+    self.obj6616.isGraphObjectVisual = True
+
+    if(hasattr(self.obj6616, '_setHierarchicalLink')):
+      self.obj6616._setHierarchicalLink(False)
+
+    # classtype
+    self.obj6616.classtype.setValue('VirtualDevice')
+
+    # cardinality
+    self.obj6616.cardinality.setValue('+')
+
+    # name
+    self.obj6616.name.setValue('vd1')
+
+    self.obj6616.graphClass_= graph_VirtualDevice
+    if self.genGraphics:
+       new_obj = graph_VirtualDevice(360.0,760.0,self.obj6616)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("VirtualDevice", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+       new_obj.layConstraints['scale'] = [1.0, 1.0]
+    else: new_obj = None
+    self.obj6616.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj6616)
+    self.globalAndLocalPostcondition(self.obj6616, rootNode)
+    self.obj6616.postAction( rootNode.CREATE )
+
+    self.obj6618=ExecFrame(self)
+    self.obj6618.isGraphObjectVisual = True
+
+    if(hasattr(self.obj6618, '_setHierarchicalLink')):
+      self.obj6618._setHierarchicalLink(False)
+
+    # classtype
+    self.obj6618.classtype.setValue('ExecFrame')
+
+    # cardinality
+    self.obj6618.cardinality.setValue('+')
+
+    # name
+    self.obj6618.name.setValue('ef1')
+
+    self.obj6618.graphClass_= graph_ExecFrame
+    if self.genGraphics:
+       new_obj = graph_ExecFrame(720.0,760.0,self.obj6618)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("ExecFrame", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+       new_obj.layConstraints['scale'] = [1.0, 1.0]
+    else: new_obj = None
+    self.obj6618.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj6618)
+    self.globalAndLocalPostcondition(self.obj6618, rootNode)
+    self.obj6618.postAction( rootNode.CREATE )
+
+    self.obj6619=Signal(self)
+    self.obj6619.isGraphObjectVisual = True
+
+    if(hasattr(self.obj6619, '_setHierarchicalLink')):
+      self.obj6619._setHierarchicalLink(False)
+
+    # classtype
+    self.obj6619.classtype.setValue('Signal')
+
+    # cardinality
+    self.obj6619.cardinality.setValue('1')
+
+    # name
+    self.obj6619.name.setValue('s1')
+
+    self.obj6619.graphClass_= graph_Signal
+    if self.genGraphics:
+       new_obj = graph_Signal(900.0,760.0,self.obj6619)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("Signal", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+       new_obj.layConstraints['scale'] = [1.0, 1.0]
+    else: new_obj = None
+    self.obj6619.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj6619)
+    self.globalAndLocalPostcondition(self.obj6619, rootNode)
+    self.obj6619.postAction( rootNode.CREATE )
+
+    self.obj6623=match_contains(self)
+    self.obj6623.isGraphObjectVisual = True
+
+    if(hasattr(self.obj6623, '_setHierarchicalLink')):
+      self.obj6623._setHierarchicalLink(False)
+
+    self.obj6623.graphClass_= graph_match_contains
+    if self.genGraphics:
+       new_obj = graph_match_contains(247.5,753.5,self.obj6623)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("match_contains", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj6623.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj6623)
+    self.globalAndLocalPostcondition(self.obj6623, rootNode)
+    self.obj6623.postAction( rootNode.CREATE )
+
+    self.obj6624=match_contains(self)
+    self.obj6624.isGraphObjectVisual = True
+
+    if(hasattr(self.obj6624, '_setHierarchicalLink')):
+      self.obj6624._setHierarchicalLink(False)
+
+    self.obj6624.graphClass_= graph_match_contains
+    if self.genGraphics:
+       new_obj = graph_match_contains(337.5,753.5,self.obj6624)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("match_contains", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj6624.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj6624)
+    self.globalAndLocalPostcondition(self.obj6624, rootNode)
+    self.obj6624.postAction( rootNode.CREATE )
+
+    self.obj6625=match_contains(self)
+    self.obj6625.isGraphObjectVisual = True
+
+    if(hasattr(self.obj6625, '_setHierarchicalLink')):
+      self.obj6625._setHierarchicalLink(False)
+
+    self.obj6625.graphClass_= graph_match_contains
+    if self.genGraphics:
+       new_obj = graph_match_contains(427.5,753.5,self.obj6625)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("match_contains", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj6625.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj6625)
+    self.globalAndLocalPostcondition(self.obj6625, rootNode)
+    self.obj6625.postAction( rootNode.CREATE )
+
+    self.obj6626=match_contains(self)
+    self.obj6626.isGraphObjectVisual = True
+
+    if(hasattr(self.obj6626, '_setHierarchicalLink')):
+      self.obj6626._setHierarchicalLink(False)
+
+    self.obj6626.graphClass_= graph_match_contains
+    if self.genGraphics:
+       new_obj = graph_match_contains(517.5,753.5,self.obj6626)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("match_contains", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj6626.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj6626)
+    self.globalAndLocalPostcondition(self.obj6626, rootNode)
+    self.obj6626.postAction( rootNode.CREATE )
+
+    self.obj6627=match_contains(self)
+    self.obj6627.isGraphObjectVisual = True
+
+    if(hasattr(self.obj6627, '_setHierarchicalLink')):
+      self.obj6627._setHierarchicalLink(False)
+
+    self.obj6627.graphClass_= graph_match_contains
+    if self.genGraphics:
+       new_obj = graph_match_contains(607.5,753.5,self.obj6627)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("match_contains", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj6627.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj6627)
+    self.globalAndLocalPostcondition(self.obj6627, rootNode)
+    self.obj6627.postAction( rootNode.CREATE )
+
+    self.obj6613=MatchModel(self)
+    self.obj6613.isGraphObjectVisual = True
+
+    if(hasattr(self.obj6613, '_setHierarchicalLink')):
+      self.obj6613._setHierarchicalLink(False)
+
+    self.obj6613.graphClass_= graph_MatchModel
+    if self.genGraphics:
+       new_obj = graph_MatchModel(20.0,660.0,self.obj6613)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("MatchModel", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+       new_obj.layConstraints['scale'] = [1.0, 1.0]
+    else: new_obj = None
+    self.obj6613.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj6613)
+    self.globalAndLocalPostcondition(self.obj6613, rootNode)
+    self.obj6613.postAction( rootNode.CREATE )
+
+    # Connections for obj6628 (graphObject_: Obj464) of type directLink_S
+    self.drawConnections(
+(self.obj6628,self.obj6616,[422.0, 804.0, 502.0, 804.0],"true", 2) )
+    # Connections for obj6629 (graphObject_: Obj465) of type directLink_S
+    self.drawConnections(
+(self.obj6629,self.obj6617,[592.0, 804.0, 682.0, 804.0],"true", 2) )
+    # Connections for obj6630 (graphObject_: Obj466) of type directLink_S
+    self.drawConnections(
+(self.obj6630,self.obj6618,[772.0, 804.0, 862.0, 804.0],"true", 2) )
+    # Connections for obj6631 (graphObject_: Obj467) of type directLink_S
+    self.drawConnections(
+(self.obj6631,self.obj6619,[953.0, 804.0, 1042.0, 804.0],"true", 2) )
+    # Connections for obj6633 (graphObject_: Obj469) of type apply_contains
+    self.drawConnections(
+(self.obj6633,self.obj6620,[250.5, 1034.0, 340.0, 1082.0],"true", 2) )
+    # Connections for obj6634 (graphObject_: Obj470) of type apply_contains
+    self.drawConnections(
+(self.obj6634,self.obj6621,[480.5, 1034.0, 800.0, 1082.0],"true", 2) )
+    # Connections for obj6617 (graphObject_: Obj453) named dist1
+    self.drawConnections(
+(self.obj6617,self.obj6630,[682.0, 804.0, 772.0, 804.0],"true", 2) )
+    # Connections for obj6622 (graphObject_: Obj458) of type paired_with
+    self.drawConnections(
+(self.obj6622,self.obj6614,[157.0, 844.5, 161.0, 986.0],"true", 2) )
+    # Connections for obj6621 (graphObject_: Obj457) named pport1
+    self.drawConnections(
+ )
+    # Connections for obj6635 (graphObject_: Obj471) of type backward_link
+    self.drawConnections(
+(self.obj6635,self.obj6615,[341.0, 943.0, 342.0, 804.0],"true", 2) )
+    # Connections for obj6632 (graphObject_: Obj468) of type directLink_T
+    self.drawConnections(
+(self.obj6632,self.obj6621,[570.0, 1082.0, 800.0, 1082.0],"true", 2) )
+    # Connections for obj6614 (graphObject_: Obj450) of type ApplyModel
+    self.drawConnections(
+(self.obj6614,self.obj6633,[161.0, 986.0, 250.5, 1034.0],"true", 2),
+(self.obj6614,self.obj6634,[161.0, 986.0, 480.5, 1034.0],"true", 2) )
+    # Connections for obj6620 (graphObject_: Obj456) named composty1
+    self.drawConnections(
+(self.obj6620,self.obj6632,[340.0, 1082.0, 570.0, 1082.0],"true", 2),
+(self.obj6620,self.obj6635,[340.0, 1082.0, 341.0, 943.0],"true", 2) )
+    # Connections for obj6615 (graphObject_: Obj451) named ecu1
+    self.drawConnections(
+(self.obj6615,self.obj6628,[342.0, 804.0, 422.0, 804.0],"true", 2) )
+    # Connections for obj6616 (graphObject_: Obj452) named vd1
+    self.drawConnections(
+(self.obj6616,self.obj6629,[502.0, 804.0, 592.0, 804.0],"true", 2) )
+    # Connections for obj6618 (graphObject_: Obj454) named ef1
+    self.drawConnections(
+(self.obj6618,self.obj6631,[862.0, 804.0, 953.0, 804.0],"true", 2) )
+    # Connections for obj6619 (graphObject_: Obj455) named s1
+    self.drawConnections(
+ )
+    # Connections for obj6623 (graphObject_: Obj459) of type match_contains
+    self.drawConnections(
+(self.obj6623,self.obj6615,[247.5, 753.5, 342.0, 804.0],"true", 2) )
+    # Connections for obj6624 (graphObject_: Obj460) of type match_contains
+    self.drawConnections(
+(self.obj6624,self.obj6616,[337.5, 753.5, 502.0, 804.0],"true", 2) )
+    # Connections for obj6625 (graphObject_: Obj461) of type match_contains
+    self.drawConnections(
+(self.obj6625,self.obj6617,[427.5, 753.5, 682.0, 804.0],"true", 2) )
+    # Connections for obj6626 (graphObject_: Obj462) of type match_contains
+    self.drawConnections(
+(self.obj6626,self.obj6618,[517.5, 753.5, 862.0, 804.0],"true", 2) )
+    # Connections for obj6627 (graphObject_: Obj463) of type match_contains
+    self.drawConnections(
+(self.obj6627,self.obj6619,[607.5, 753.5, 1042.0, 804.0],"true", 2) )
+    # Connections for obj6613 (graphObject_: Obj449) of type MatchModel
+    self.drawConnections(
+(self.obj6613,self.obj6622,[153.0, 703.0, 157.0, 844.5],"true", 2),
+(self.obj6613,self.obj6623,[153.0, 703.0, 247.5, 753.5],"true", 2),
+(self.obj6613,self.obj6624,[153.0, 703.0, 337.5, 753.5],"true", 2),
+(self.obj6613,self.obj6625,[153.0, 703.0, 427.5, 753.5],"true", 2),
+(self.obj6613,self.obj6626,[153.0, 703.0, 517.5, 753.5],"true", 2),
+(self.obj6613,self.obj6627,[153.0, 703.0, 607.5, 753.5],"true", 2) )
+
+newfunction = ConnectPPortPrototype_MDL
+
+loadedMMName = 'GM2AUTOSAR_MM_META'
+
+atom3version = '0.3'

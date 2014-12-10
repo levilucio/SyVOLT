@@ -1,0 +1,14 @@
+List of State Properties debugged
+- AtomicStateProperty IsolHasNoMatch
+- AndStateProperty (IsolHasNoMatch, P1atomic)
+- ImplicationStateProperty (P1atomic, IsolHasNoMatch)
+- AndStateProperty (trivNegProp, P2atomic)
+- AndStateProperty (P1atomic, trivNegProp)
+- OrStateProperty (P2atomic, trivNegProp)
+
+List of State Space properties debugged
+-Not (False) --> true
+-And (True, True) --> true
+-Implication (False, anything) --> true
+-And(False, anything) --> False
+-Or(True, anything) --> True

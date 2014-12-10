@@ -1,0 +1,78 @@
+- Collapse two by two for elements of the same type on the match
+- If the elements collapsed on the match have backward links towards them and the elements on the backward links have the same type, then the apply elements on the backward links need to be collapsed
+- elements of rules from different layers may be collapsed
+
+- if two backward linked elements come from different rules from the same layer, then the merged and non merged possibilities need to be be built;
+
+- if two backward linked elements come from different rules and different layers, then only the merged possibility is kept.
+
+- only merge two elements if the same rule does not point at both (use NACS)
+
+- make the choice of the match element deterministic based on element 1 having less direct/indirect links than element 2. If they have the same amount of links base the choice on another criteria (e.g. the object's ID). ALWAYS MAKE A RANDOM CHOICE, ALSO FOR THE APPLY!!
+
+- make the matchmodel of the second element point to the first (such that the link from the second matchmodel is not lost)
+
+- merge the matchmodels and applymodels of the merged rules at the end in order to end up with only one matchmodel and one applymodel per merged rule
+
+- when the backward link overlap is detected in a rule of layer l-1, collapse the rule of layer l with the rule of layer l-1. If other backward links are detected in other rules of layer l-n, then collapse the result of the first backward link collapse with the following one until the collapse has been done as many times as the number of backward links. All original rules involved from layer l-n where the collapse was done are discarded from the state and only the final collapsed rules will remain
+
+- if the backward rule was matched twice over the same rule then replicate the rule from the previous layer where it matched twice when collapsing
+
+- all the non backward linked rules remaining in the final state (coming from different layers) can be collapsed when checking the property
+
+- eliminate previous states that are completely covered by backward links in the current layer
+
+- optimize collapsing (recursively) by looking at concatenated names of rules and the results of their collapses
+
+- allows multiple collapses between two rules (we currently only allow one collapse given one two rules collapse over one element the rules merge)
+
+- check whether the cache for already collapsed rules really accelerates as compared to redoing the collapses for each combination
+
+- check whether ordering of the names in the formation of the collapse subcombination keys is always correct if there are cases in which the ordering is not correct
+
+- strategy to improve proof time by diminishing the the amount of combinations of rules to be checked:
+
+	1) find how many matches of the individual elements exist for the rules in the state
+	2) if the whole property is found, then store the rule combination plus the amount of matches found
+	3) if a larger state (with at least the same plus some more rules) appears, and the amount of individual matches is the same as in the smaller, state, then the property holds without a need for checking the collapsed versions
+	the worst case happens when the property appears in the larger combinations of states (possibly when the property is larger)
+	
+- build transitive closures on the match part of the property on each collapsed state on all transitive/direct links
+- build direct closures for each transitive closure on the match (can also be done on the type of the link)
+- build transitive closures on all direct / indirect links on the apply part of the property
+(build closures during collapse to keep the results cached)
+
+- implement cache check for merge operation
+
+- merge operation has to be done over all the backward links
+
+- Problem with multiple matches when merging rules. What happens when rule 1 has A-->B and rule 2 has A-->B A-->B?
+
+- if I have A-->B-->C collapsed with A-->B-->D on the matchmodel I'll have 4 solutions:
+  . A-->B-->C and A-->B-->D
+  . A-->B-->C
+         -->D
+  . A-->B-->C
+    A--> -->D
+  . A-->B-->C
+     -->B-->D
+
+- make the distinction between merging over backward links (same layer) and over traceability links (different layers)
+  . need to redo the backward rules to match over traceability links instead of backward links
+  
+- no need for explicit traceability links, can be deduced just from the existence of the match and the apply element in the rule?
+
+- what happens when two rules with A-->B and A  B get merged? Do we have A-->B?
+
+- Add the cardinality resolution to the collapse rules
+
+- It is not completely sure whether the collapses during symbolic execution construction are not needed. When checking for the connected match graphs connecting
+  to the match elements that are backward linked we need to check for collapsed rules because the connected match graphs may span several rules
+  
+- We are currently checking if the apply part of the property matches on top of the path condition, and if it does we then try matching the whole property. This technique may actually say that a property holds when it doesn't. This can happen if the property has backward (traceability) links and the precondition part of the property matches over more than one possibility (imagine it found two possibilities). In this case the whole property graph (including traceability links) needs to be found connected to the two match possibilities. However, if it found connected to one of the match possibilities and not the other, using our current implementation the property will still hold on that path condition when it shoudn't.The immediate technical solution to this problem I see (and probably the only one) is by using pivots between the connected and complete matchers of the property. It is not a difficult fix and it can be done at the level of the property matchers. 
+
+- Strategy to only disambiguate when necessary:
+    . Mark each the elements of each rule with the rule they belong to (and the layer they belong to, possibly not) (possibly at the himesis level);
+    . Rules are kept individually, unless they need to be merged with the rules of a previous layer, as is done now;
+    . When rules get merged from a previous layer, disambiguation is necessary. The disambiguated rules may be kept or not;
+    . Disambiguation can only be done between elements that do not belong to the same original rule. Other elements that originally belonged to the same rule get merged and not disambiguated.

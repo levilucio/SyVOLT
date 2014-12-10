@@ -1,0 +1,3 @@
+S1 is implemented as an implication: "If you find the first pattern, then you must find the 1st & 2nd pattern"
+So S1 has an IF clause and a THEN clause...
+For the IF clause of S1, we have 2 files: S1IfClauseIsolated & S1IfClauseConnectedComplete (connected and complete are represented in one file since the property only involves apply elements, i.e., the "connected" & the "complete" patterns are the same) 
