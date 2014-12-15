@@ -1,0 +1,18 @@
+digraph HEmptyPathCondition_HF2F_run1 {
+apply_contains0 [style=filled, fillcolor="#FCDB58"];
+ApplyModel1 [style=filled, fillcolor="#FED017"];
+MatchModel2 [style=filled, fillcolor="#E15C34"];
+"Female_T3\n Classtype = female1\n Name = 2.f" [style=filled, fillcolor=lightblue];
+match_contains4 [style=filled, fillcolor="#F798A1"];
+"Female_S5\n Classtype = female1\n Name = 2.f" [style=filled, fillcolor=lightblue];
+paired_with6 [style=filled, fillcolor=lightgray];
+trace_link7 [style=filled, fillcolor=lightgoldenrod];
+ApplyModel1 -> apply_contains0;
+apply_contains0 -> "Female_T3\n Classtype = female1\n Name = 2.f";
+paired_with6 -> ApplyModel1;
+MatchModel2 -> paired_with6;
+MatchModel2 -> match_contains4;
+match_contains4 -> "Female_S5\n Classtype = female1\n Name = 2.f";
+trace_link7 -> "Female_S5\n Classtype = female1\n Name = 2.f";
+"Female_T3\n Classtype = female1\n Name = 2.f" -> trace_link7;
+}
