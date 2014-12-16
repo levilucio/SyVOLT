@@ -7,7 +7,7 @@ from himesis_utils import *
 #from ramify_actions import *
 
 from core.himesis import *
-
+from itertools import combinations
 
 '''
 
@@ -98,9 +98,37 @@ class PyRamify:
         graph.NACs = []
 
         return graph
-        
-        
-        
+
+    def makePostConditionPattern(self, old_graph):
+        graph = self.copy_graph(old_graph)
+
+        # force the class to be different
+        graph.__class__ = HimesisPostConditionPattern
+
+        # variables added in subclasses
+
+        #from HimesisPattern
+        graph.nodes_label = {}
+        graph.nodes_pivot_out = {}
+
+        #from HimesisPostConditionPattern
+        graph.pre = None
+        graph.import_name = 'HimesisPostConditionPattern'
+
+
+    #FIXME to be proper
+    def copy_graph(self, graph2):
+        graph1 = copy.deepcopy(graph2)
+        graph1.nodes_label = copy.deepcopy(graph2.nodes_label)
+        graph1.nodes_pivot_out = copy.deepcopy(graph2.nodes_pivot_out)
+
+        graph1.nodes_pivot_in = copy.deepcopy(graph2.nodes_pivot_in)
+
+        graph1.import_name = copy.deepcopy(graph2.import_name)
+        graph1.NACs = copy.deepcopy(graph2.NACs)
+
+        return graph1
+
     #the default eval match code
     #use to build the matchers
     def get_default_match_code(self):
@@ -144,7 +172,11 @@ return True
         self.next_label = 0
 
         #change mm of the graph
-        graph["mm__"] = [str(Himesis.Constants.MT_PRECOND_PREFIX + graph["mm__"][0]), 'MoTifRule']
+
+        try:
+            graph["mm__"] = [str(Himesis.Constants.MT_PRECOND_PREFIX + graph["mm__"][0]), 'MoTifRule']
+        except IndexError:
+            graph["mm__"] = "MM"
 
         #set the default constraint
         graph["MT_constraint__"] = self.get_default_constraint()
@@ -387,13 +419,14 @@ return True
         print("\nStarting get backward patterns")
         name = rule.keys()[0]
         graph = rule[rule.keys()[0]]
+        return_graph = copy.deepcopy(graph)
 
         #check to see which nodes have backward links
         backwards_links = self.find_nodes_with_mm(graph, ["backward_link"])
 
         #no backward links in file, do nothing
         if len(backwards_links) == 0:
-            return [{name: []}, []]
+            return [{graph: None}, []]
 
         #there are backward links, so start RAMifying
         out_dir = "./patterns/"
@@ -425,51 +458,190 @@ return True
         structure_nodes = self.find_nodes_with_mm(graph, ["MT_pre__MatchModel", "MT_pre__paired_with", "MT_pre__ApplyModel", "MT_pre__match_contains", "MT_pre__apply_contains"])
         structure_nums = [self.get_node_num(graph, item) for item in structure_nodes]
 
+
+        # make sure to copy the graph, as we will make multiple smaller matchers from it
+        new_graph = copy.deepcopy(graph)
+        new_graph = self.makePreConditionPattern(new_graph)
+
+
+        # keep the nodes attached to the backward link plus the 'structural' nodes
+        #that should be kept
+        nodes_to_keep = []  # + new_structure
+
+
         #for each backward link found, create a matcher for the attached nodes
         i = 0
         for link in backwards_links:
-
-            #make sure to copy the graph, as we will make multiple smaller matchers from it
-            new_graph = copy.deepcopy(graph)
-            new_graph = self.makePreConditionPattern(new_graph)
-
             #find the nodes attached to the backwards link
             attached_nodes = self.look_for_attached(link, new_graph)
 
 
-            #get the nodes attached to the nodes attached to the backward link
-            attached_to_attached = []
-            for a in attached_nodes:
-                b = self.look_for_attached(new_graph.vs[a], new_graph)
-                attached_to_attached += b
-
-            #start a list of nodes to keep
-            new_structure = []
-
-            #the metamodels to keep
-            keep_mms = ["MT_pre__MatchModel", "MT_pre__paired_with", "MT_pre__ApplyModel"]
-
-            #for all the 'structural' nodes
-            for item in structure_nums:
-
-                #keep the node if it is attached to a node attached to the backwards link
-                #or the metamodel should be kept
-                if item in attached_to_attached or new_graph.vs[item]["mm__"] in keep_mms:
-                    new_structure.append(item)
-
-            #keep the nodes attached to the backward link plus the 'structural' nodes
-            #that should be kept
-            nodes_to_keep = attached_nodes + new_structure
+            # #get the nodes attached to the nodes attached to the backward link
+            # attached_to_attached = []
+            # for a in attached_nodes:
+            #     b = self.look_for_attached(new_graph.vs[a], new_graph)
+            #     attached_to_attached += b
+            #
+            # #start a list of nodes to keep
+            # new_structure = []
+            #
+            # #the metamodels to keep
+            # keep_mms = ["MT_pre__MatchModel", "MT_pre__paired_with", "MT_pre__ApplyModel"]
+            #
+            # #for all the 'structural' nodes
+            # for item in structure_nums:
+            #
+            #     #keep the node if it is attached to a node attached to the backwards link
+            #     #or the metamodel should be kept
+            #     if item in attached_to_attached or new_graph.vs[item]["mm__"] in keep_mms:
+            #         new_structure.append(item)
 
 
-            #get the list of nodes to remove
-            #(which is all nodes that should not be kept)
-            nodes_to_remove = range(len(new_graph.vs))
-            nodes_to_remove = [new_graph.vs[item] for item in nodes_to_remove if item not in nodes_to_keep]
+            nodes_to_keep += attached_nodes
+
+        #get the list of nodes to remove
+        #(which is all nodes that should not be kept)
+        nodes_to_remove = range(len(new_graph.vs))
+        nodes_to_remove = [new_graph.vs[item] for item in nodes_to_remove if item not in nodes_to_keep]
+
+        #remove everything except for the attached nodes and the backward link
+        new_graph.delete_nodes(nodes_to_remove)
+
+
+        #create a new name for this backward matcher
+        #replace the pattern name with the partial pattern name
+        new_name = self.get_RAMified_name(name, True) + str(i)
+        i += 1
+
+        #write out the file
+        new_graph.name = new_name
+        new_graph["name"] = new_name
+
+
+        #BIG HACK
+        new_graph = self.fix_attrs_for_backward_patterns(new_graph)
+
+        new_graph.compile(out_dir)
+
+        rule = self.load_class(out_dir + "/" + new_name)
+        backward_pattern = rule[rule.keys()[0]]
+
+        graph_to_dot(new_name, backward_pattern)
+
+        #create the Matcher
+        matcher = Matcher(backward_pattern)
+
+        #append the new backward pattern and name mapping
+        bwPatterns.append(matcher)
+        #bwPatterns2Rule[matcher] = name
+
+        return [{return_graph: matcher}, bwPatterns2Rule]
+
+    # create the backward patterns for this file
+    def get_rule_combinators(self, rule):
+        print("\nStarting get backward patterns")
+        name = rule.keys()[0]
+        graph = rule[rule.keys()[0]]
+        return_graph = copy.deepcopy(graph)
+
+        # check to see which nodes have backward links
+        backwards_links = self.find_nodes_with_mm(graph, ["backward_link"])
+
+        #no backward links in file, do nothing
+        if len(backwards_links) == 0:
+            return {graph: None}
+
+        #there are backward links, so start RAMifying
+        out_dir = "./patterns/"
+        outfile = out_dir + self.get_RAMified_name(name) + ".py"
+
+        graph = self.do_RAMify(graph, out_dir, remove_rule_nodes = False)
+
+        #change the graph's name
+        graph.name = self.get_RAMified_name(name)
+        graph["name"] = self.get_RAMified_name(name)
+
+        #output the graph
+        graph.compile(out_dir)
+
+        bwPatterns = []
+        bwPatterns2Rule = {}
+
+        #The node mappings may have changed
+        #So to be safe, find the backward/trace links again
+        backwards_links = self.find_nodes_with_mm(graph, ["MT_pre__trace_link"])
+
+        #get the ids of the structural nodes
+        structure_nodes = self.find_nodes_with_mm(graph, ["MT_pre__MatchModel", "MT_pre__paired_with",
+                                                          "MT_pre__ApplyModel", "MT_pre__match_contains",
+                                                          "MT_pre__apply_contains"])
+        structure_nums = [self.get_node_num(graph, item) for item in structure_nodes]
+
+
+        # make sure to copy the graph, as we will make multiple smaller matchers from it
+        new_graph = copy.deepcopy(graph)
+        new_graph = self.makePreConditionPattern(new_graph)
+
+        print("NACs: " + str(new_graph.NACs))
+        base_graph = self.copy_graph(new_graph)
+
+        print("NACs: " + str(base_graph.NACs))
+
+
+        base_graph.delete_nodes(structure_nums)
+
+        graph_to_dot("base_graph", base_graph)
+
+
+
+        #TODO: Turn base_graph into RHS
+        rewriter_graph = self.makePostConditionPattern(new_graph)
+
+        # keep the nodes attached to the backward link plus the 'structural' nodes
+        #that should be kept
+        nodes_to_keep = []  # + new_structure
+
+
+        #for each backward link found, create a matcher for the attached nodes
+        i = 0
+        for link in backwards_links:
+            #find the nodes attached to the backwards link
+            attached_nodes = self.look_for_attached(link, base_graph)
+            nodes_to_keep += attached_nodes
+
+
+        #get the list of nodes to remove
+        #(which is all nodes that should not be kept)
+        nodes_to_remove = range(len(base_graph.vs))
+#        nodes_to_remove = [new_graph.vs[item] for item in nodes_to_remove if item not in nodes_to_keep]
+
+        # don't consider removing the backward links and attached nodes
+        for n in nodes_to_keep:
+            nodes_to_remove.remove(n)
+
+        print("Nodes to remove: " + str(nodes_to_remove))
+        print("Types:")
+        for n in nodes_to_remove:
+            print(base_graph.vs[n]["mm__"])
+
+        input_nodes = nodes_to_remove
+
+        output = sum([map(list, combinations(input_nodes, i)) for i in range(len(input_nodes) + 1)], [])
+        #print(input_nodes)
+        #print(output)
+
+        j = 0
+
+        for remove_set in output:
+
+            new_graph = self.copy_graph(base_graph)
+
 
             #remove everything except for the attached nodes and the backward link
-            new_graph.delete_nodes(nodes_to_remove)
+            new_graph.delete_nodes(remove_set)
 
+
+            j += 1
 
             #create a new name for this backward matcher
             #replace the pattern name with the partial pattern name
@@ -484,21 +656,26 @@ return True
             #BIG HACK
             new_graph = self.fix_attrs_for_backward_patterns(new_graph)
 
+
+
             new_graph.compile(out_dir)
 
             rule = self.load_class(out_dir + "/" + new_name)
             backward_pattern = rule[rule.keys()[0]]
 
-            graph_to_dot(new_name, backward_pattern)
+            #graph_to_dot(new_name, backward_pattern)
+            graph_to_dot("remove_graph" + str(j), new_graph)
 
             #create the Matcher
             matcher = Matcher(backward_pattern)
 
             #append the new backward pattern and name mapping
             bwPatterns.append(matcher)
-            bwPatterns2Rule[matcher] = name
+            #bwPatterns2Rule[matcher] = name
 
-        return [{name: bwPatterns}, bwPatterns2Rule]
+            #print("bwPatterns: " + str(bwPatterns))
+        return {return_graph: bwPatterns}
+
 
     def get_match_pattern(self, rule):
         name = rule.keys()[0]
@@ -614,8 +791,8 @@ return True
             #but there were problems with aliasing and copying
             rule2 = self.load_class(dir_name + "/" + f)
             #get the complete backwards pattern
-            BwPComplete = self.get_complete_backward_pattern(rule2, skip_pausing)
-            backwardPatternsComplete.update(BwPComplete)
+            BwPComplete = None#self.get_complete_backward_pattern(rule2, skip_pausing)
+            #backwardPatternsComplete.update(BwPComplete)
 
             #get the backwards pattern for this rule
             rule3 = self.load_class(dir_name + "/" + f)
@@ -627,7 +804,7 @@ return True
 
             #fresh rule for the match pattern
             rule4 = self.load_class(dir_name + "/" + f)
-            matchRulePattern = self.get_match_pattern(rule4)
+            matchRulePattern = self.get_rule_combinators(rule4)
             matchRulePatterns.update(matchRulePattern)
 
         return [rules, backwardPatterns, backwardPatterns2Rules, backwardPatternsComplete, matchRulePatterns]

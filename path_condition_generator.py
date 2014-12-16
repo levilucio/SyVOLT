@@ -93,6 +93,10 @@ class PathConditionGenerator():
         self.ruleCombinators = ruleCombinators
         self.ruleTraceCheckers = ruleTraceCheckers
 
+        self.print_transformation()
+        self.print_ruleCombinators()
+        self.print_ruleTraceCheckers()
+
 #         self.backwardPatternsComplete = backwardPatternsComplete
 #         self.matchRulePatterns = matchRulePatterns
         self.verbosity = verbosity
@@ -111,6 +115,34 @@ class PathConditionGenerator():
 
         self._pre_process()
 
+    def print_transformation(self):
+        for layer in self.transformation:
+            for rule in layer:
+                graph_to_dot("rule_" + str(rule['name']), rule)
+
+    def print_ruleCombinators(self):
+        print("RuleCombinators")
+        for key in self.ruleCombinators.keys():
+            value = self.ruleCombinators[key]
+
+            if value is not None:
+                #print("Value")
+                #print(value)
+
+                for (m, r) in value:
+                    #print("Name: " + str(m.condition.name))
+
+                    #print(m)
+
+                    graph_to_dot("ruleCombinator_match_" + str(m.condition.name), m.condition)
+                    graph_to_dot("ruleCombinator_rewrite_" + str(r.condition.name), r.condition)
+
+    def print_ruleTraceCheckers(self):
+        for key in self.ruleTraceCheckers.keys():
+
+            tc = self.ruleTraceCheckers[key]
+            if tc is not None:
+                graph_to_dot("traceChecker_" + str(tc.condition.name), tc.condition)
 
 #    def print_backwardPatternsComplete(self):
 #        print("\n===\nbackwardPatternsComplete:")
@@ -646,7 +678,9 @@ class PathConditionGenerator():
                         
                         # gather the matcher for only the backward links in the rule being combined.
                         # it is the first matcher (LHS) of the combinators in the list.
-                        ruleBackwardLinksMatcher = self.ruleTraceCheckers[rule] 
+                        #print(rule)
+
+                        ruleBackwardLinksMatcher = self.ruleTraceCheckers[rule]
 
                         # check if the backward links cannot be found by matching them on the path condition
                         

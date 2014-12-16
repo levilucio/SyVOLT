@@ -19,8 +19,10 @@ from PyRamify import PyRamify
 from himesis_utils import graph_to_dot
 
 from t_core.tc_python.frule import FRule
+import copy
 # all runs are the same transformation, but with different metamodel elements
 # the purpose is to do scalability testing with multiple configurations and multiple sets of rules
+
 
 from police_station_transformation.run1.transformation.HS2S_run1 import HS2S_run1
 from police_station_transformation.run1.transformation.HM2M_run1 import HM2M_run1
@@ -110,21 +112,29 @@ class Test(unittest.TestCase):
     def setUp(self):
         pyramify = PyRamify()
         
-        self.transformation = [[HS2S_run1(), HM2M_run1(), HF2F_run1()], [HSM2SM_run1(), HSF2SF_run1(), HMM2MM_run1(), HFF2FF_run1()]]
-#        self.transformation = [[HS2S_run1(), HM2M_run1(), HF2F_run1()]]
 
 
-        self.rules = {self.transformation[0][0]: HS2S_run1(),
-                      self.transformation[0][1]: HM2M_run1(),
-                      self.transformation[0][2]: HF2F_run1(),
-                      self.transformation[1][0]: HSM2SM_run1(),
-                      self.transformation[1][1]: HSF2SF_run1(),
-                      self.transformation[1][2]: HMM2MM_run1(),
-                      self.transformation[1][3]: HFF2FF_run1()}
+        [self.rules, backwardPatterns, backwardPatterns2Rules, backwardPatternsComplete, matchRulePatterns] = \
+            pyramify.ramify_directory("police_station_transformation/run1/transformation/", True)
+
+        #print("Rules: " + str(self.rules))
+        # self.rules = {self.transformation[0][0]: HS2S_run1(),
+        #               self.transformation[0][1]: HM2M_run1(),
+        #               self.transformation[0][2]: HF2F_run1(),
+        #               self.transformation[1][0]: HSM2SM_run1(),
+        #               self.transformation[1][1]: HSF2SF_run1(),
+        #               self.transformation[1][2]: HMM2MM_run1(),
+        #               self.transformation[1][3]: HFF2FF_run1()}
         
 #         self.rules = {self.transformation[0][0]: HS2S_run1(),
 #                       self.transformation[0][1]: HM2M_run1(),
 #                       self.transformation[0][2]: HF2F_run1()}
+
+
+        self.transformation = [[self.rules["HS2S_run1"], self.rules["HM2M_run1"], self.rules["HF2F_run1"]],
+                               [self.rules["HSM2SM_run1"], self.rules["HSF2SF_run1"], self.rules["HMM2MM_run1"], self.rules["HFF2FF_run1"]]]
+        # self.transformation = [[HS2S_run1(), HM2M_run1(), HF2F_run1()]]
+
 
         self.ruleCombinators = {self.transformation[0][0]: None,
                                 self.transformation[0][1]: None,
@@ -161,11 +171,42 @@ class Test(unittest.TestCase):
 #             self.transformation[0][1]: None,
 #             self.transformation[0][2]: None}
 
-#         [rules, self.backwardPatterns, self.backwardPatterns2Rules, self.backwardPatternsComplete, self.matchRulePatterns] = \
-#                 pyramify.ramify_directory("police_station_transformation/run1/transformation/", True)
 
 
-        #print(self.rules)
+        #HACKY
+        #make the backward patterns fit the trace checkers
+        #otherwise the python objects hash to different hashes
+        #so they aren't the same key
+        # bps = copy.deepcopy(self.backwardPatterns)
+        # for layer in self.transformation:
+        #     for rule in layer:
+        #         for bp in bps.keys():
+        #             if bp.name == rule.name:
+        #                 self.backwardPatterns[rule] = bps[bp]
+
+
+
+
+        # print("traceCheckers")
+        # for k in self.ruleTraceCheckers.keys():
+        #     print(k)
+        #
+        # print("Backward Patterns")
+        # for k in self.backwardPatterns.keys():
+        #     print(k)
+
+        # for key in self.backwardPatterns.keys():
+        #     value = self.backwardPatterns[key]
+        #
+        #     if value is not None and value != []:
+        #         print("Value")
+        #         print(value)
+        #
+        #         for m in value:
+        #             graph_to_dot("backwardPattern_" + str(m.condition.name), m.condition)
+        #
+
+                    #print(self.rules)
 
 #     def test_matching(self):
 #         build_traceability_for_rule = FRule(HBuildTraceabilityForRuleLHS(), HBuildTraceabilityForRuleRHS())
@@ -198,6 +239,8 @@ class Test(unittest.TestCase):
  
         print("create state space")
         s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, 2)
+
+        #s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.backwardPatterns, 2)
  
         ts0 = time.time()
         s.build_path_conditions()

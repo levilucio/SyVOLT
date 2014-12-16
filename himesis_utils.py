@@ -101,8 +101,10 @@ def graph_to_dot(name, g, verbosity = 0):
                 #vattr += "Association Type = " + str(v['associationType'])
                 pass
             elif node_type in ['MT_pre__directLink_T', 'MT_pre__directLink_S']:
-                vattr += get_attribute("\\n Association Type = ", v['MT_pre__associationType'])
-                
+                try:
+                    vattr += get_attribute("\\n Association Type = ", v['MT_pre__associationType'])
+                except KeyError:
+                    pass
                 
             fillcolor="lightyellow"  
                        
