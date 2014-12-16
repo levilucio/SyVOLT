@@ -646,7 +646,7 @@ class PathConditionGenerator():
                     ######################################
                     
                     # the rule is disjointly added to the path condition
-                    if self.ruleCombinators[rule] == None:
+                    if self.ruleCombinators[rule.name] == None:
                         if self.verbosity >= 1 : print "Case 1: Rule has no dependencies"
                         
                         localPathConditionLayerAccumulator = []
@@ -753,7 +753,7 @@ class PathConditionGenerator():
                                             # now combine the rule with the newly created path condition using the current combinator
                                             p_copy = deepcopy(p)
                                             p_copy.graph = newPathCond 
-                                            p_copy = self.ruleCombinators[rule][combinator][1].packet_in(p_copy)
+                                            p_copy = self.ruleCombinators[rule.name][combinator][1].packet_in(p_copy)
                                             
                                             newPathCond = p_copy.graph
                                             newPathCond.name = newPathCondName

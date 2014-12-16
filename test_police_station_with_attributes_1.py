@@ -97,38 +97,39 @@ class Test(unittest.TestCase):
     def setUp(self):
         pyramify = PyRamify()
         
-        self.transformation = [[HS2S(), HM2M(), HF2F()], [HSM2SM(), HSF2SF(), HMM2MM(), HFF2FF()]]
-#        self.transformation = [[HS2S(), HM2M(), HF2F()]]
+        self.rules = {"S2S": HS2S(),
+                      "M2M": HM2M(),
+                      "F2F": HF2F(),
+                      "SM2SM": HSM2SM(),
+                      "SF2SF": HSF2SF(),
+                      "MM2MM": HMM2MM(),
+                      "FF2FF": HMM2MM(),                      
+                      }
+        
+        self.transformation = [[self.rules["S2S"], self.rules["M2M"], self.rules["F2F"]],\
+                               [self.rules["SM2SM"], self.rules["SF2SF"], self.rules["MM2MM"], self.rules["FF2FF"]]]
 
-
-        self.rules = {self.transformation[0][0]: HS2S(),
-                      self.transformation[0][1]: HM2M(),
-                      self.transformation[0][2]: HF2F(),
-                      self.transformation[1][0]: HSM2SM(),
-                      self.transformation[1][1]: HSF2SF(),
-                      self.transformation[1][2]: HMM2MM(),
-                      self.transformation[1][3]: HFF2FF()}
         
 #         self.rules = {self.transformation[0][0]: HS2S(),
 #                       self.transformation[0][1]: HM2M(),
 #                       self.transformation[0][2]: HF2F()}
 
-        self.ruleCombinators = {self.transformation[0][0]: None,
-                                self.transformation[0][1]: None,
-                                self.transformation[0][2]: None,
-                                self.transformation[1][0]: [(Matcher(HSM2SM_combine_0LHS()),Rewriter(HSM2SM_combine_0RHS())),(Matcher(HSM2SM_combine_1LHS()),Rewriter(HSM2SM_combine_1RHS()))],
-                                self.transformation[1][1]: [(Matcher(HSF2SF_combine_0LHS()),Rewriter(HSF2SF_combine_0RHS())),(Matcher(HSF2SF_combine_1LHS()),Rewriter(HSF2SF_combine_1RHS()))],                    
-                                self.transformation[1][2]: [(Matcher(HMM2MM_combine_0LHS()),Rewriter(HMM2MM_combine_0RHS())),(Matcher(HMM2MM_combine_1LHS()),Rewriter(HMM2MM_combine_1RHS()))],
-                                self.transformation[1][3]: [(Matcher(HFF2FF_combine_0LHS()),Rewriter(HFF2FF_combine_0RHS())),(Matcher(HFF2FF_combine_1LHS()),Rewriter(HFF2FF_combine_1RHS()))]}
+        self.ruleCombinators = {self.transformation[0][0].name: None,
+                                self.transformation[0][1].name: None,
+                                self.transformation[0][2].name: None,
+                                self.transformation[1][0].name: [(Matcher(HSM2SM_combine_0LHS()),Rewriter(HSM2SM_combine_0RHS())),(Matcher(HSM2SM_combine_1LHS()),Rewriter(HSM2SM_combine_1RHS()))],
+                                self.transformation[1][1].name: [(Matcher(HSF2SF_combine_0LHS()),Rewriter(HSF2SF_combine_0RHS())),(Matcher(HSF2SF_combine_1LHS()),Rewriter(HSF2SF_combine_1RHS()))],                    
+                                self.transformation[1][2].name: [(Matcher(HMM2MM_combine_0LHS()),Rewriter(HMM2MM_combine_0RHS())),(Matcher(HMM2MM_combine_1LHS()),Rewriter(HMM2MM_combine_1RHS()))],
+                                self.transformation[1][3].name: [(Matcher(HFF2FF_combine_0LHS()),Rewriter(HFF2FF_combine_0RHS())),(Matcher(HFF2FF_combine_1LHS()),Rewriter(HFF2FF_combine_1RHS()))]}
         
     
-        self.ruleTraceCheckers = {self.transformation[0][0]: None,
-                                  self.transformation[0][1]: None,
-                                  self.transformation[0][2]: None,
-                                  self.transformation[1][0]: Matcher(HSM2SM_trace_checkLHS()),
-                                  self.transformation[1][1]: Matcher(HSF2SF_trace_checkLHS()),                    
-                                  self.transformation[1][2]: Matcher(HMM2MM_trace_checkLHS()),
-                                  self.transformation[1][3]: Matcher(HFF2FF_trace_checkLHS())}
+        self.ruleTraceCheckers = {self.transformation[0][0].name: None,
+                                  self.transformation[0][1].name: None,
+                                  self.transformation[0][2].name: None,
+                                  self.transformation[1][0].name: Matcher(HSM2SM_trace_checkLHS()),
+                                  self.transformation[1][1].name: Matcher(HSF2SF_trace_checkLHS()),                    
+                                  self.transformation[1][2].name: Matcher(HMM2MM_trace_checkLHS()),
+                                  self.transformation[1][3].name: Matcher(HFF2FF_trace_checkLHS())}
 
 #         self.ruleCombinators = {self.transformation[0][0]: None,
 #                                 self.transformation[0][1]: None,
