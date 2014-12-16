@@ -1,0 +1,35 @@
+digraph rule_MM2MM_run1 {
+"directLink_T0\n" [style=filled, fillcolor=lightyellow];
+ApplyModel1 [style=filled, fillcolor="#FED017"];
+MatchModel2 [style=filled, fillcolor="#E15C34"];
+indirectLink_S3 [style=filled, fillcolor=lightgreen];
+paired_with4 [style=filled, fillcolor=lightgray];
+apply_contains5 [style=filled, fillcolor="#FCDB58"];
+apply_contains6 [style=filled, fillcolor="#FCDB58"];
+backward_link7 [style=filled, fillcolor=coral];
+backward_link8 [style=filled, fillcolor=coral];
+match_contains9 [style=filled, fillcolor="#F798A1"];
+match_contains10 [style=filled, fillcolor="#F798A1"];
+"Male_S11\n Classtype = male1\n Name = 6.m1" [style=filled, fillcolor=lightblue];
+"Male_S12\n Classtype = male1\n Name = 6.m2" [style=filled, fillcolor=lightblue];
+"Male_T13\n Classtype = male1\n Name = 6.m" [style=filled, fillcolor=lightblue];
+"Male_T14\n Classtype = male1\n Name = 6.m2" [style=filled, fillcolor=lightblue];
+ApplyModel1 -> apply_contains5;
+apply_contains5 -> "Male_T13\n Classtype = male1\n Name = 6.m";
+ApplyModel1 -> apply_contains6;
+apply_contains6 -> "Male_T14\n Classtype = male1\n Name = 6.m2";
+"Male_T13\n Classtype = male1\n Name = 6.m" -> backward_link7;
+backward_link7 -> "Male_S11\n Classtype = male1\n Name = 6.m1";
+"Male_T14\n Classtype = male1\n Name = 6.m2" -> backward_link8;
+backward_link8 -> "Male_S12\n Classtype = male1\n Name = 6.m2";
+"Male_T13\n Classtype = male1\n Name = 6.m" -> "directLink_T0\n";
+"directLink_T0\n" -> "Male_T14\n Classtype = male1\n Name = 6.m2";
+paired_with4 -> ApplyModel1;
+MatchModel2 -> paired_with4;
+MatchModel2 -> match_contains9;
+MatchModel2 -> match_contains10;
+"Male_S11\n Classtype = male1\n Name = 6.m1" -> indirectLink_S3;
+indirectLink_S3 -> "Male_S12\n Classtype = male1\n Name = 6.m2";
+match_contains9 -> "Male_S11\n Classtype = male1\n Name = 6.m1";
+match_contains10 -> "Male_S12\n Classtype = male1\n Name = 6.m2";
+}

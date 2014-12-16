@@ -22,40 +22,40 @@ S'PoliceStationMM'
 p2
 a.""")
         self["name"] = """M2M"""
-        self["GUID__"] = UUID('488fe13e-6fdc-459b-89f9-960f35a91db9')
+        self["GUID__"] = UUID('ca24643e-e458-42e4-9856-0246a6bae4d1')
         
         # Set the node attributes
         self.vs[0]["mm__"] = """apply_contains"""
-        self.vs[0]["GUID__"] = UUID('1307eaa9-46ef-47ce-b9a6-475443ae1156')
+        self.vs[0]["GUID__"] = UUID('099b47c1-4397-490e-befc-d1a76831905e')
         self.vs[1]["mm__"] = """leftExpr"""
-        self.vs[1]["GUID__"] = UUID('46b81ca5-57bc-48a9-a61c-f6c4af0a9254')
+        self.vs[1]["GUID__"] = UUID('67f0f790-8d38-4b9a-82d7-db14f0287cd3')
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["GUID__"] = UUID('76594ba3-6bb9-4d15-aa63-586fd724e8ee')
+        self.vs[2]["GUID__"] = UUID('8011f6d6-de53-45c1-8b3f-dcb843d31118')
         self.vs[3]["mm__"] = """hasAttr_S"""
-        self.vs[3]["GUID__"] = UUID('b1daa623-a7ca-48d8-ac47-fa6b0ce631cb')
+        self.vs[3]["GUID__"] = UUID('cb7b48c2-69c9-410d-85f9-346868d28f50')
         self.vs[4]["mm__"] = """ApplyModel"""
-        self.vs[4]["GUID__"] = UUID('2a99e217-4977-4c3a-97be-4ced917fccfb')
+        self.vs[4]["GUID__"] = UUID('43202232-75b2-45ab-883d-e9fc0a93eefb')
         self.vs[5]["mm__"] = """Equation"""
-        self.vs[5]["GUID__"] = UUID('abd209f8-1cfb-4f3c-a323-8ea876ed3b37')
+        self.vs[5]["GUID__"] = UUID('9ef058ad-729d-46f2-a64c-8a778bc8137c')
         self.vs[6]["mm__"] = """match_contains"""
-        self.vs[6]["GUID__"] = UUID('65de52a0-4e64-4a91-a889-acee82b10f13')
+        self.vs[6]["GUID__"] = UUID('aca44d3c-8f72-4dbd-be7e-d9dfab37576b')
         self.vs[7]["name"] = """s_"""
         self.vs[7]["classtype"] = """t_"""
         self.vs[7]["mm__"] = """Male_T"""
-        self.vs[7]["GUID__"] = UUID('ad7d29fe-fa59-49bf-99dd-dc27dc54d9cc')
-        self.vs[8]["value"] = """somestation"""
+        self.vs[7]["GUID__"] = UUID('86512c60-3b61-4f1b-ac81-248b82d4415f')
+        self.vs[8]["value"] = """somemale"""
         self.vs[8]["mm__"] = """Constant"""
-        self.vs[8]["GUID__"] = UUID('d8892b62-1144-4ec9-a752-921959b0ef63')
+        self.vs[8]["GUID__"] = UUID('7eed3de6-e3da-4488-adce-c1bd0fafc57f')
         self.vs[9]["mm__"] = """rightExpr"""
-        self.vs[9]["GUID__"] = UUID('291e78de-83de-4848-8250-4c484568d063')
+        self.vs[9]["GUID__"] = UUID('16f023d2-c317-4279-af01-10536a0c8b61')
         self.vs[10]["mm__"] = """MatchModel"""
-        self.vs[10]["GUID__"] = UUID('3f96302a-6828-4955-879b-9160224d05d1')
+        self.vs[10]["GUID__"] = UUID('965f9cd8-f62c-43d4-85b9-785243039284')
         self.vs[11]["name"] = """name"""
         self.vs[11]["mm__"] = """Attribute"""
-        self.vs[11]["GUID__"] = UUID('c175068b-8802-4a03-ac69-c17178fbd978')
+        self.vs[11]["GUID__"] = UUID('b5b0c4e8-3bd0-4303-9b92-ad62abd03140')
         self.vs[12]["name"] = """s_"""
         self.vs[12]["classtype"] = """1"""
         self.vs[12]["mm__"] = """Male_S"""
         self.vs[12]["cardinality"] = """s_"""
-        self.vs[12]["GUID__"] = UUID('7df2b031-7117-46e8-b62d-4e5718cc5922')
+        self.vs[12]["GUID__"] = UUID('3613d8cd-bc61-4989-b6b9-fd1a0f87fd87')
 

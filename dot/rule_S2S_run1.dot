@@ -1,0 +1,15 @@
+digraph rule_S2S_run1 {
+apply_contains0 [style=filled, fillcolor="#FCDB58"];
+ApplyModel1 [style=filled, fillcolor="#FED017"];
+MatchModel2 [style=filled, fillcolor="#E15C34"];
+match_contains3 [style=filled, fillcolor="#F798A1"];
+"Station_T4\n Classtype = station1\n Name = 1.s" [style=filled, fillcolor=lightblue];
+"Station_S5\n Classtype = station1\n Name = 1.s" [style=filled, fillcolor=lightblue];
+paired_with6 [style=filled, fillcolor=lightgray];
+ApplyModel1 -> apply_contains0;
+apply_contains0 -> "Station_T4\n Classtype = station1\n Name = 1.s";
+paired_with6 -> ApplyModel1;
+MatchModel2 -> paired_with6;
+MatchModel2 -> match_contains3;
+match_contains3 -> "Station_S5\n Classtype = station1\n Name = 1.s";
+}

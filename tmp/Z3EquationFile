@@ -1,0 +1,13 @@
+(declare-variable a40 String)
+(declare-variable a25 String)
+(declare-variable a12 String)
+
+(assert (= a12 "somestation") )
+(assert (= a25 "somemale") )
+(assert (= a40 "otherfemale") )
+(assert (= a12 "somestation") )
+(assert (= a25 "somemale") )
+(assert (= a12 "somestation") )
+(assert (= a40 "somefemale") )
+
+(check-sat)

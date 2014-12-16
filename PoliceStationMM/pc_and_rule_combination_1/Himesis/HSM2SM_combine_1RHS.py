@@ -32,7 +32,7 @@ a.""")
 pass
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('9bddf4be-f850-44a7-b1b0-26a041d1fcbd')
+        self["GUID__"] = UUID('646f10b9-9e25-4ef5-bdce-fa6fa5f7f124')
         
         # Set the node attributes
         self.vs[0]["MT_post__associationType"] = """
@@ -49,9 +49,9 @@ pass
 
 return attr_value
 """
-        self.vs[0]["MT_label__"] = """11"""
+        self.vs[0]["MT_label__"] = """50"""
         self.vs[0]["mm__"] = """MT_post__directLink_T"""
-        self.vs[0]["GUID__"] = UUID('67725f83-0b64-4d59-9de3-070f468f2652')
+        self.vs[0]["GUID__"] = UUID('4dac2a7b-5abd-492e-8b38-84e10dea1537')
         self.vs[1]["MT_label__"] = """4"""
         self.vs[1]["MT_post__name"] = """
 #===============================================================================
@@ -82,10 +82,10 @@ return attr_value
 
 return attr_value
 """
-        self.vs[1]["GUID__"] = UUID('2a178822-c3ed-442f-8a57-54c502f9caaa')
+        self.vs[1]["GUID__"] = UUID('f1a6be66-2695-4836-9eea-9e3da5b38f22')
         self.vs[2]["MT_label__"] = """8"""
         self.vs[2]["mm__"] = """MT_post__indirectLink_S"""
-        self.vs[2]["GUID__"] = UUID('3ed5ac7c-819f-4ddd-a9d7-aea3829c6e1d')
+        self.vs[2]["GUID__"] = UUID('b3c1ccbd-8f7d-4a8f-8ed0-06b785e7743f')
         self.vs[3]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -130,7 +130,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[3]["GUID__"] = UUID('9ad0f10e-db9c-4fa7-be75-d9c5b4f657a3')
+        self.vs[3]["GUID__"] = UUID('064a2c3f-dc6d-46a2-9c91-62f383e93e68')
         self.vs[4]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -175,7 +175,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[4]["GUID__"] = UUID('0c99b662-1f1a-4f88-a9c8-e27c6c60f24e')
+        self.vs[4]["GUID__"] = UUID('84146857-4b71-4655-bca4-357d9b66f887')
         self.vs[5]["MT_label__"] = """3"""
         self.vs[5]["MT_post__name"] = """
 #===============================================================================
@@ -206,71 +206,49 @@ return attr_value
 
 return attr_value
 """
-        self.vs[5]["GUID__"] = UUID('36850080-47bb-46bb-9a7e-4d938fdba0ec')
+        self.vs[5]["GUID__"] = UUID('dbcee759-56cb-42bb-80ca-050e13d00979')
         self.vs[6]["MT_label__"] = """12"""
-        self.vs[6]["MT_post__name"] = """
-#===============================================================================
-# You can access the value of the current node's attribute value by: attr_value.
-# If the current node shall be created you MUST initialize it here!
-# You can access a node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# Note that the attribute values are those before the match is rewritten.
-# The order in which this code is executed depends on the label value
-# of the encapsulating node.
-# The given action must return the new value of the attribute.
-#===============================================================================
-
-return "name"
-"""
+        self.vs[6]["MT_post__name"] = pickle.loads("""V\u000a#===============================================================================\u000a# You can access the value of the current node's attribute value by: attr_value.\u000a# If the current node shall be created you MUST initialize it here!\u000a# You can access a node labelled n by: PreNode('n').\u000a# To access attribute x of node n, use: PreNode('n')['x'].\u000a# Note that the attribute values are those before the match is rewritten.\u000a# The order in which this code is executed depends on the label value\u000a# of the encapsulating node.\u000a# The given action must return the new value of the attribute.\u000a#===============================================================================\u000a\u000areturn attr_value\u000a
+p1
+.""")
         self.vs[6]["mm__"] = """MT_post__Attribute"""
-        self.vs[6]["GUID__"] = UUID('f13dc5bd-d267-4d16-9aba-df81afa6c700')
+        self.vs[6]["GUID__"] = UUID('a7e5983d-df25-486f-af19-af8313bc4a37')
         self.vs[7]["MT_label__"] = """16"""
-        self.vs[7]["MT_post__name"] = """
-#===============================================================================
-# You can access the value of the current node's attribute value by: attr_value.
-# If the current node shall be created you MUST initialize it here!
-# You can access a node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# Note that the attribute values are those before the match is rewritten.
-# The order in which this code is executed depends on the label value
-# of the encapsulating node.
-# The given action must return the new value of the attribute.
-#===============================================================================
-
-return "name"
-"""
+        self.vs[7]["MT_post__name"] = pickle.loads("""V\u000a#===============================================================================\u000a# You can access the value of the current node's attribute value by: attr_value.\u000a# If the current node shall be created you MUST initialize it here!\u000a# You can access a node labelled n by: PreNode('n').\u000a# To access attribute x of node n, use: PreNode('n')['x'].\u000a# Note that the attribute values are those before the match is rewritten.\u000a# The order in which this code is executed depends on the label value\u000a# of the encapsulating node.\u000a# The given action must return the new value of the attribute.\u000a#===============================================================================\u000a\u000areturn attr_value\u000a
+p1
+.""")
         self.vs[7]["mm__"] = """MT_post__Attribute"""
-        self.vs[7]["GUID__"] = UUID('a678dc2f-cc0b-4d4a-9502-4d6a7918116d')
+        self.vs[7]["GUID__"] = UUID('48927f53-8188-4ff8-b07c-668795be1b70')
         self.vs[8]["MT_label__"] = """20"""
         self.vs[8]["mm__"] = """MT_post__rightExpr"""
-        self.vs[8]["GUID__"] = UUID('dd285745-6465-4e0c-b72d-9af300115471')
+        self.vs[8]["GUID__"] = UUID('ce58dc99-322e-4ffd-8ce5-e647be43802e')
         self.vs[9]["MT_label__"] = """23"""
         self.vs[9]["mm__"] = """MT_post__rightExpr"""
-        self.vs[9]["GUID__"] = UUID('879830ff-c3ba-405c-8fb8-37c2ad67d8f9')
+        self.vs[9]["GUID__"] = UUID('a20ea26c-53e9-4559-b2af-52d55a486781')
         self.vs[10]["MT_label__"] = """13"""
         self.vs[10]["mm__"] = """MT_post__Equation"""
-        self.vs[10]["GUID__"] = UUID('f9cd044c-537b-4662-bf5c-561308075313')
+        self.vs[10]["GUID__"] = UUID('4e6227ef-47b8-4d74-b78b-91674f240577')
         self.vs[11]["MT_label__"] = """17"""
         self.vs[11]["mm__"] = """MT_post__Equation"""
-        self.vs[11]["GUID__"] = UUID('8e9a759c-530b-412c-b097-7b6a21844ccc')
+        self.vs[11]["GUID__"] = UUID('34634efd-aca2-475e-b8b2-5e14a1bb2a15')
         self.vs[12]["MT_label__"] = """6"""
         self.vs[12]["mm__"] = """MT_post__trace_link"""
-        self.vs[12]["GUID__"] = UUID('1b22bec0-13e9-4377-97c8-4b7c0ac2128d')
+        self.vs[12]["GUID__"] = UUID('e4a8751e-4877-4ff9-a933-454e6ad91d30')
         self.vs[13]["MT_label__"] = """7"""
         self.vs[13]["mm__"] = """MT_post__trace_link"""
-        self.vs[13]["GUID__"] = UUID('906531d6-532e-4e10-a957-b32ae0134912')
+        self.vs[13]["GUID__"] = UUID('12b59d2a-893c-4f4b-a5af-ab2f6d2afe1d')
         self.vs[14]["MT_label__"] = """19"""
         self.vs[14]["mm__"] = """MT_post__leftExpr"""
-        self.vs[14]["GUID__"] = UUID('5f0dd353-4b0d-460f-bfef-4ae948936ced')
+        self.vs[14]["GUID__"] = UUID('a86f227b-4d15-4407-badf-ad1f19efb36c')
         self.vs[15]["MT_label__"] = """22"""
         self.vs[15]["mm__"] = """MT_post__leftExpr"""
-        self.vs[15]["GUID__"] = UUID('61db480a-c9fd-4fb6-b247-1b96ea0e3f77')
-        self.vs[16]["MT_label__"] = """15"""
+        self.vs[15]["GUID__"] = UUID('601e9764-8de0-4149-b835-bd8e43cf1b44')
+        self.vs[16]["MT_label__"] = """11"""
         self.vs[16]["mm__"] = """MT_post__hasAttr_S"""
-        self.vs[16]["GUID__"] = UUID('9e2ab01b-2878-4f3c-ab89-d60e0828704c')
+        self.vs[16]["GUID__"] = UUID('3b17530a-8ba0-4fdc-b7b5-aff70bc5e420')
         self.vs[17]["MT_label__"] = """21"""
         self.vs[17]["mm__"] = """MT_post__hasAttr_S"""
-        self.vs[17]["GUID__"] = UUID('f6603622-875f-4b16-8e72-3eaab11692cb')
+        self.vs[17]["GUID__"] = UUID('97c46e20-0c96-4269-8446-dfa4cd391145')
         self.vs[18]["MT_label__"] = """14"""
         self.vs[18]["mm__"] = """MT_post__Constant"""
         self.vs[18]["MT_post__value"] = """
@@ -287,7 +265,7 @@ return "name"
 
 return "somestation"
 """
-        self.vs[18]["GUID__"] = UUID('def0b9d6-058c-4170-b065-e2197c5abd5f')
+        self.vs[18]["GUID__"] = UUID('08d76551-d26a-4f8f-9cb5-5e3851d8bb7e')
         self.vs[19]["MT_label__"] = """18"""
         self.vs[19]["mm__"] = """MT_post__Constant"""
         self.vs[19]["MT_post__value"] = """
@@ -304,43 +282,11 @@ return "somestation"
 
 return "somemale"
 """
-        self.vs[19]["GUID__"] = UUID('ef0a6ca7-6967-4f60-b7fe-83d34742aaba')
+        self.vs[19]["GUID__"] = UUID('6ecbcd3b-652c-4915-ae02-7f1351441da7')
 
         from HSM2SM_combine_1LHS import HSM2SM_combine_1LHS
         self.pre = HSM2SM_combine_1LHS()
     
-    def set_name12(self, attr_value, PreNode, graph):
-        
-        #===============================================================================
-        # You can access the value of the current node's attribute value by: attr_value.
-        # If the current node shall be created you MUST initialize it here!
-        # You can access a node labelled n by: PreNode('n').
-        # To access attribute x of node n, use: PreNode('n')['x'].
-        # Note that the attribute values are those before the match is rewritten.
-        # The order in which this code is executed depends on the label value
-        # of the encapsulating node.
-        # The given action must return the new value of the attribute.
-        #===============================================================================
-        
-        return "name"
-
-
-    def set_name16(self, attr_value, PreNode, graph):
-        
-        #===============================================================================
-        # You can access the value of the current node's attribute value by: attr_value.
-        # If the current node shall be created you MUST initialize it here!
-        # You can access a node labelled n by: PreNode('n').
-        # To access attribute x of node n, use: PreNode('n')['x'].
-        # Note that the attribute values are those before the match is rewritten.
-        # The order in which this code is executed depends on the label value
-        # of the encapsulating node.
-        # The given action must return the new value of the attribute.
-        #===============================================================================
-        
-        return "name"
-
-
     def set_value14(self, attr_value, PreNode, graph):
         
         #===============================================================================
@@ -408,25 +354,9 @@ return "somemale"
         #===============================================================================
         # Create new nodes
         #===============================================================================
-        # Attribute12
+        # directLink_T50
         new_node = graph.add_node()
-        labels['12'] = new_node
-        graph.vs[new_node][Himesis.Constants.META_MODEL] = 'Attribute'
-        try:
-            graph.vs[new_node]['name'] = self.set_name12(None, lambda i: graph.vs[match[i]], graph)
-        except Exception, e:
-            raise Exception('An error has occurred while computing the value of the attribute \'name\'', e)
-        # Attribute16
-        new_node = graph.add_node()
-        labels['16'] = new_node
-        graph.vs[new_node][Himesis.Constants.META_MODEL] = 'Attribute'
-        try:
-            graph.vs[new_node]['name'] = self.set_name16(None, lambda i: graph.vs[match[i]], graph)
-        except Exception, e:
-            raise Exception('An error has occurred while computing the value of the attribute \'name\'', e)
-        # directLink_T11
-        new_node = graph.add_node()
-        labels['11'] = new_node
+        labels['50'] = new_node
         graph.vs[new_node][Himesis.Constants.META_MODEL] = 'directLink_T'
         # rightExpr20
         new_node = graph.add_node()
@@ -452,14 +382,6 @@ return "somemale"
         new_node = graph.add_node()
         labels['22'] = new_node
         graph.vs[new_node][Himesis.Constants.META_MODEL] = 'leftExpr'
-        # hasAttr_S15
-        new_node = graph.add_node()
-        labels['15'] = new_node
-        graph.vs[new_node][Himesis.Constants.META_MODEL] = 'hasAttr_S'
-        # hasAttr_S21
-        new_node = graph.add_node()
-        labels['21'] = new_node
-        graph.vs[new_node][Himesis.Constants.META_MODEL] = 'hasAttr_S'
         # Constant14
         new_node = graph.add_node()
         labels['14'] = new_node
@@ -480,34 +402,26 @@ return "somemale"
         #===============================================================================
         # Create new edges
         #===============================================================================
-        # Station_T3 -> directLink_T11
-        graph.add_edges((labels['3'], labels['11']))
-        # directLink_T11 -> Male_T4
-        graph.add_edges((labels['11'], labels['4']))
-        # hasAttr_S15 -> Attribute12
-        graph.add_edges((labels['15'], labels['12']))
-        # leftExpr19 -> Attribute12
-        graph.add_edges((labels['19'], labels['12']))
         # Equation13 -> rightExpr20
         graph.add_edges((labels['13'], labels['20']))
         # Equation13 -> leftExpr19
         graph.add_edges((labels['13'], labels['19']))
         # rightExpr20 -> Constant14
         graph.add_edges((labels['20'], labels['14']))
-        # Station_S1 -> hasAttr_S15
-        graph.add_edges((labels['1'], labels['15']))
-        # hasAttr_S21 -> Attribute16
-        graph.add_edges((labels['21'], labels['16']))
-        # leftExpr22 -> Attribute16
-        graph.add_edges((labels['22'], labels['16']))
         # Equation17 -> rightExpr23
         graph.add_edges((labels['17'], labels['23']))
         # Equation17 -> leftExpr22
         graph.add_edges((labels['17'], labels['22']))
         # rightExpr23 -> Constant18
         graph.add_edges((labels['23'], labels['18']))
-        # Male_S2 -> hasAttr_S21
-        graph.add_edges((labels['2'], labels['21']))
+        # leftExpr19 -> Attribute12
+        graph.add_edges((labels['19'], labels['12']))
+        # leftExpr22 -> Attribute16
+        graph.add_edges((labels['22'], labels['16']))
+        # Station_T3 -> directLink_T50
+        graph.add_edges((labels['3'], labels['50']))
+        # directLink_T50 -> Male_T4
+        graph.add_edges((labels['50'], labels['4']))
         
         #===============================================================================
         # Set the output pivots

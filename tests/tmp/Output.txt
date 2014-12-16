@@ -1,0 +1,7 @@
+(declare-variable a26 String)
+(declare-variable a25 String)
+
+(assert (= a25 "somestation") )
+(assert (= a26 "somemale") )
+
+(check-sat)

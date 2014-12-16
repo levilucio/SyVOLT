@@ -1,0 +1,30 @@
+digraph rule_F2F {
+apply_contains0 [style=filled, fillcolor="#FCDB58"];
+"hasAttr_T1\n Classtype = None\n Name = None" [style=filled, fillcolor=lightblue];
+"leftExpr2\n Classtype = None\n Name = None" [style=filled, fillcolor=lightblue];
+paired_with3 [style=filled, fillcolor=lightgray];
+"hasAttr_S4\n Classtype = None\n Name = None" [style=filled, fillcolor=lightblue];
+ApplyModel5 [style=filled, fillcolor="#FED017"];
+"Female_T6\n Classtype = t_\n Name = s_" [style=filled, fillcolor=lightblue];
+"Female_S7\n Classtype = 1\n Name = s_" [style=filled, fillcolor=lightblue];
+"Equation8\n Classtype = None\n Name = None" [style=filled, fillcolor=lightblue];
+match_contains9 [style=filled, fillcolor="#F798A1"];
+"rightExpr10\n Classtype = None\n Name = None" [style=filled, fillcolor=lightblue];
+MatchModel11 [style=filled, fillcolor="#E15C34"];
+"Attribute12\n Classtype = None\n Name = name" [style=filled, fillcolor=lightblue];
+"Attribute13\n Classtype = None\n Name = name" [style=filled, fillcolor=lightblue];
+ApplyModel5 -> apply_contains0;
+apply_contains0 -> "Female_T6\n Classtype = t_\n Name = s_";
+"Female_T6\n Classtype = t_\n Name = s_" -> "hasAttr_T1\n Classtype = None\n Name = None";
+"hasAttr_T1\n Classtype = None\n Name = None" -> "Attribute13\n Classtype = None\n Name = name";
+"Equation8\n Classtype = None\n Name = None" -> "leftExpr2\n Classtype = None\n Name = None";
+"leftExpr2\n Classtype = None\n Name = None" -> "Attribute12\n Classtype = None\n Name = name";
+MatchModel11 -> paired_with3;
+paired_with3 -> ApplyModel5;
+"Female_S7\n Classtype = 1\n Name = s_" -> "hasAttr_S4\n Classtype = None\n Name = None";
+"hasAttr_S4\n Classtype = None\n Name = None" -> "Attribute12\n Classtype = None\n Name = name";
+match_contains9 -> "Female_S7\n Classtype = 1\n Name = s_";
+"Equation8\n Classtype = None\n Name = None" -> "rightExpr10\n Classtype = None\n Name = None";
+MatchModel11 -> match_contains9;
+"rightExpr10\n Classtype = None\n Name = None" -> "Attribute13\n Classtype = None\n Name = name";
+}

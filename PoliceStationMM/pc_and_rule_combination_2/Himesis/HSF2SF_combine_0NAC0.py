@@ -35,7 +35,7 @@ a.""")
 return True
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('a7cb3c7b-ecb0-4f52-9b0c-e1b7ceac9781')
+        self["GUID__"] = UUID('9f261601-d32d-4db6-b834-be966b0f4b3d')
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
@@ -80,7 +80,7 @@ return True
 
 return True
 """
-        self.vs[0]["GUID__"] = UUID('a9764ae2-16dd-4abb-b1b7-506299b9dc64')
+        self.vs[0]["GUID__"] = UUID('16ff7c7f-30c0-4705-8d18-b56b06a6f23f')
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_pre__classtype"] = """
 #===============================================================================
@@ -123,14 +123,14 @@ return True
 
 return True
 """
-        self.vs[1]["GUID__"] = UUID('5dc29e67-a709-4cb8-9689-4df0c2fe879a')
+        self.vs[1]["GUID__"] = UUID('6ea97afe-670d-428f-8356-36a88791e06a')
         self.vs[2]["MT_subtypeMatching__"] = False
         self.vs[2]["MT_label__"] = """7"""
         self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[2]["MT_dirty__"] = False
         self.vs[2]["mm__"] = """MT_pre__indirectLink_S"""
-        self.vs[2]["GUID__"] = UUID('ef5847e1-b50d-4d66-8287-be42131d9bf3')
+        self.vs[2]["GUID__"] = UUID('4d7de5b4-0fb1-4a32-9280-5f0a6264f44d')
 
         
         # Load the bridge between this NAC and its LHS

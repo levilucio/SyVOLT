@@ -1,0 +1,35 @@
+digraph rule_FF2FF {
+"directLink_T0\n" [style=filled, fillcolor=lightyellow];
+paired_with1 [style=filled, fillcolor=lightgray];
+ApplyModel2 [style=filled, fillcolor="#FED017"];
+indirectLink_S3 [style=filled, fillcolor=lightgreen];
+MatchModel4 [style=filled, fillcolor="#E15C34"];
+apply_contains5 [style=filled, fillcolor="#FCDB58"];
+apply_contains6 [style=filled, fillcolor="#FCDB58"];
+backward_link7 [style=filled, fillcolor=coral];
+backward_link8 [style=filled, fillcolor=coral];
+"Female_T9\n Classtype = t_\n Name = s_" [style=filled, fillcolor=lightblue];
+"Female_T10\n Classtype = t_\n Name = s_" [style=filled, fillcolor=lightblue];
+"Female_S11\n Classtype = 1\n Name = s_" [style=filled, fillcolor=lightblue];
+"Female_S12\n Classtype = 1\n Name = s_" [style=filled, fillcolor=lightblue];
+match_contains13 [style=filled, fillcolor="#F798A1"];
+match_contains14 [style=filled, fillcolor="#F798A1"];
+ApplyModel2 -> apply_contains5;
+apply_contains5 -> "Female_T9\n Classtype = t_\n Name = s_";
+ApplyModel2 -> apply_contains6;
+apply_contains6 -> "Female_T10\n Classtype = t_\n Name = s_";
+"Female_T9\n Classtype = t_\n Name = s_" -> "directLink_T0\n";
+"directLink_T0\n" -> "Female_T10\n Classtype = t_\n Name = s_";
+MatchModel4 -> paired_with1;
+paired_with1 -> ApplyModel2;
+"Female_T9\n Classtype = t_\n Name = s_" -> backward_link7;
+backward_link7 -> "Female_S11\n Classtype = 1\n Name = s_";
+"Female_T10\n Classtype = t_\n Name = s_" -> backward_link8;
+backward_link8 -> "Female_S12\n Classtype = 1\n Name = s_";
+"Female_S11\n Classtype = 1\n Name = s_" -> indirectLink_S3;
+indirectLink_S3 -> "Female_S12\n Classtype = 1\n Name = s_";
+match_contains13 -> "Female_S11\n Classtype = 1\n Name = s_";
+match_contains14 -> "Female_S12\n Classtype = 1\n Name = s_";
+MatchModel4 -> match_contains13;
+MatchModel4 -> match_contains14;
+}
