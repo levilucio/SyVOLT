@@ -419,7 +419,7 @@ return True
         print("\nStarting get backward patterns")
         name = rule.keys()[0]
         graph = rule[rule.keys()[0]]
-        return_graph = copy.deepcopy(graph)
+        return_graph = graph
 
         #check to see which nodes have backward links
         backwards_links = self.find_nodes_with_mm(graph, ["backward_link"])
@@ -432,6 +432,7 @@ return True
         out_dir = "./patterns/"
         outfile = out_dir + self.get_RAMified_name(name) + ".py"
 
+        graph = copy.deepcopy(graph)
         graph = self.do_RAMify(graph, out_dir, remove_rule_nodes = False)
 
         #we might want to pause to let the matcher-writer edit the complete matcher before continuing
@@ -535,7 +536,7 @@ return True
         bwPatterns.append(matcher)
         #bwPatterns2Rule[matcher] = name
 
-        return [{return_graph: matcher}, bwPatterns2Rule]
+        return [{str(return_graph.name): matcher}, bwPatterns2Rule]
 
     # create the backward patterns for this file
     def get_rule_combinators(self, rule):
@@ -582,10 +583,10 @@ return True
         new_graph = copy.deepcopy(graph)
         new_graph = self.makePreConditionPattern(new_graph)
 
-        print("NACs: " + str(new_graph.NACs))
+        #print("NACs: " + str(new_graph.NACs))
         base_graph = self.copy_graph(new_graph)
 
-        print("NACs: " + str(base_graph.NACs))
+        #print("NACs: " + str(base_graph.NACs))
 
 
         base_graph.delete_nodes(structure_nums)
@@ -619,10 +620,10 @@ return True
         for n in nodes_to_keep:
             nodes_to_remove.remove(n)
 
-        print("Nodes to remove: " + str(nodes_to_remove))
-        print("Types:")
-        for n in nodes_to_remove:
-            print(base_graph.vs[n]["mm__"])
+        #print("Nodes to remove: " + str(nodes_to_remove))
+        #print("Types:")
+        #for n in nodes_to_remove:
+        #    print(base_graph.vs[n]["mm__"])
 
         input_nodes = nodes_to_remove
 

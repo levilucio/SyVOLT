@@ -644,7 +644,7 @@ class PathConditionGenerator():
                     ######################################
                     
                     # the rule is disjointly added to the path condition
-                    if self.ruleCombinators[rule] == None:
+                    if self.ruleCombinators[rule.name] is None:
                         if self.verbosity >= 1 : print "Case 1: Rule has no dependencies"
                         
                         localPathConditionLayerAccumulator = []
@@ -678,9 +678,9 @@ class PathConditionGenerator():
                         
                         # gather the matcher for only the backward links in the rule being combined.
                         # it is the first matcher (LHS) of the combinators in the list.
-                        #print(rule)
+                        print("Rule: " + str(rule))
 
-                        ruleBackwardLinksMatcher = self.ruleTraceCheckers[rule]
+                        ruleBackwardLinksMatcher = self.ruleTraceCheckers[rule.name]
 
                         # check if the backward links cannot be found by matching them on the path condition
                         
@@ -699,9 +699,9 @@ class PathConditionGenerator():
                             if self.verbosity >= 1 : print "Case 3: Rule has dependencies that may or will execute"
                             
                             # go through all LHS (matchers) in rule combinators
-                            for combinator in range(len(self.ruleCombinators[rule])):
+                            for combinator in range(len(self.ruleCombinators[rule.name])):
                                 
-                                combinatorMatcher = self.ruleCombinators[rule][combinator][0]
+                                combinatorMatcher = self.ruleCombinators[rule.name][combinator][0]
                                 
                                 if self.verbosity >= 2 : print "Combinator: " + combinatorMatcher.condition.name
                                 
@@ -709,7 +709,7 @@ class PathConditionGenerator():
                                 
                                 isTotalCombinator = False
                                 
-                                if combinator == len(self.ruleCombinators[rule]) - 1:
+                                if combinator == len(self.ruleCombinators[rule.name]) - 1:
                                     isTotalCombinator = True
                                 
                                 # find all the matches of the rule combinator in the path condition that the rule combines with
@@ -766,7 +766,7 @@ class PathConditionGenerator():
                                                 # now combine the rule with the newly created path condition using the current combinator
                                                 p_copy = deepcopy(p)
                                                 p_copy.graph = newPathCond 
-                                                p_copy = self.ruleCombinators[rule][combinator][1].packet_in(p_copy)
+                                                p_copy = self.ruleCombinators[rule.name][combinator][1].packet_in(p_copy)
                                                 
                                                 # add the result to the local accumulator
                                                 p_copy.graph.name = newPathCondName
