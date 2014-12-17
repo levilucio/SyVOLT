@@ -760,28 +760,30 @@ class PathConditionGenerator():
                                             
                                             # check if the equations on the attributes of the newly created path condition are satisfied
                                             
-                                            Z3formula = self.build_Z3_attribute_equations(newPathCond)
-                                            if self.verbosity >= 2 :
-                                                print "\nChecking with Z3:"
-                                                print "----------------"
-                                                print Z3formula
-                                                print "\n"
+#                                             Z3formula = self.build_Z3_attribute_equations(newPathCond)
+#                                             if self.verbosity >= 2 :
+#                                                 print "\nChecking with Z3:"
+#                                                 print "----------------"
+#                                                 print Z3formula
+#                                                 print "\n"
+#                                             
+#                                             # for now write the file with the equation formulas to be caught by the binary
+#                                             # TODO: this is WAY TOO SLOW and needs to be done via an API or something faster    
+#                                             with open("./tmp/Z3EquationFile", "w") as text_file:
+#                                                 text_file.write(Z3formula)
+#                                                 
+#                                             # now call the z3-str binary to get the result of checking the formula
+#                                             command = 'python /home/levi/z3-str/Z3-str.py -f ./tmp/Z3EquationFile'
+#                                             z3_output = subprocess.check_output(command, shell=True)   
+#                                             
+#                                             if self.verbosity >= 2 :
+#                                                 print z3_output                                                                                      
+# 
+#                                             # only keep the new path combination if the equations on the attributes are satisfied
+#                                         
+#                                             if "UNSAT" not in z3_output:
                                             
-                                            # for now write the file with the equation formulas to be caught by the binary
-                                            # TODO: this is WAY TOO SLOW and needs to be done via an API or something faster    
-                                            with open("./tmp/Z3EquationFile", "w") as text_file:
-                                                text_file.write(Z3formula)
-                                                
-                                            # now call the z3-str binary to get the result of checking the formula
-                                            command = 'python /home/levi/z3-str/Z3-str.py -f ./tmp/Z3EquationFile'
-                                            z3_output = subprocess.check_output(command, shell=True)   
-                                            
-                                            if self.verbosity >= 2 :
-                                                print z3_output                                                                                      
-
-                                            # only keep the new path combination if the equations on the attributes are satisfied
-                                        
-                                            if "UNSAT" not in z3_output:
+                                            if True:
                                             
                                                 if isTotalCombinator:
                                                     # because the rule combines totally with a path condition in the accumulator we just copy it 

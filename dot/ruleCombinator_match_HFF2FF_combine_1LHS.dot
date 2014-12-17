@@ -1,5 +1,5 @@
 digraph ruleCombinator_match_HFF2FF_combine_1LHS {
-"MT_pre__indirectLink_S0\n Label 10" [style=filled, fillcolor=lightgreen];
+"MT_pre__indirectLink_S0\n Label 7" [style=filled, fillcolor=lightgreen];
 "MT_pre__Female_T1\n Label 3" [style=filled, fillcolor=lightblue];
 "MT_pre__Female_T2\n Label 4" [style=filled, fillcolor=lightblue];
 "MT_pre__trace_link3\n Label 5" [style=filled, fillcolor=lightgoldenrod];
@@ -10,6 +10,6 @@ digraph ruleCombinator_match_HFF2FF_combine_1LHS {
 "MT_pre__Female_T2\n Label 4" -> "MT_pre__trace_link4\n Label 6";
 "MT_pre__trace_link3\n Label 5" -> "MT_pre__Female_S5\n Label 1";
 "MT_pre__trace_link4\n Label 6" -> "MT_pre__Female_S6\n Label 2";
-"MT_pre__Female_S5\n Label 1" -> "MT_pre__indirectLink_S0\n Label 10";
-"MT_pre__indirectLink_S0\n Label 10" -> "MT_pre__Female_S6\n Label 2";
+"MT_pre__Female_S5\n Label 1" -> "MT_pre__indirectLink_S0\n Label 7";
+"MT_pre__indirectLink_S0\n Label 7" -> "MT_pre__Female_S6\n Label 2";
 }

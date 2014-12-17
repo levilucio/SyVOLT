@@ -1,18 +1,18 @@
 digraph ruleCombinator_rewrite_HFF2FF_combine_0RHS {
-"MT_post__directLink_T0\n Label 11" [style=filled, fillcolor=lightblue];
-"MT_post__indirectLink_S1\n Label 10" [style=filled, fillcolor=lightblue];
+"MT_post__directLink_T0\n Label 8" [style=filled, fillcolor=lightblue];
+"MT_post__indirectLink_S1\n Label 9" [style=filled, fillcolor=lightblue];
 "MT_post__trace_link2\n Label 5" [style=filled, fillcolor=lightblue];
 "MT_post__trace_link3\n Label 6" [style=filled, fillcolor=lightblue];
 "MT_post__Female_T4\n Label 3" [style=filled, fillcolor=lightblue];
 "MT_post__Female_T5\n Label 4" [style=filled, fillcolor=lightblue];
 "MT_post__Female_S6\n Label 1" [style=filled, fillcolor=lightblue];
 "MT_post__Female_S7\n Label 2" [style=filled, fillcolor=lightblue];
-"MT_post__Female_T4\n Label 3" -> "MT_post__directLink_T0\n Label 11";
-"MT_post__directLink_T0\n Label 11" -> "MT_post__Female_T5\n Label 4";
+"MT_post__Female_T4\n Label 3" -> "MT_post__directLink_T0\n Label 8";
+"MT_post__directLink_T0\n Label 8" -> "MT_post__Female_T5\n Label 4";
 "MT_post__Female_T4\n Label 3" -> "MT_post__trace_link2\n Label 5";
 "MT_post__trace_link2\n Label 5" -> "MT_post__Female_S6\n Label 1";
 "MT_post__Female_T5\n Label 4" -> "MT_post__trace_link3\n Label 6";
 "MT_post__trace_link3\n Label 6" -> "MT_post__Female_S7\n Label 2";
-"MT_post__Female_S6\n Label 1" -> "MT_post__indirectLink_S1\n Label 10";
-"MT_post__indirectLink_S1\n Label 10" -> "MT_post__Female_S7\n Label 2";
+"MT_post__Female_S6\n Label 1" -> "MT_post__indirectLink_S1\n Label 9";
+"MT_post__indirectLink_S1\n Label 9" -> "MT_post__Female_S7\n Label 2";
 }

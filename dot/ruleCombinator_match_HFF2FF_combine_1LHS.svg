@@ -9,11 +9,11 @@
 <g id="graph1" class="graph" transform="scale(1 1) rotate(0) translate(4 458)">
 <title>ruleCombinator_match_HFF2FF_combine_1LHS</title>
 <polygon fill="white" stroke="white" points="-4,5 -4,-458 513,-458 513,5 -4,5"/>
-<!-- MT_pre__indirectLink_S0\n Label 10 -->
-<g id="node1" class="node"><title>MT_pre__indirectLink_S0\n Label 10</title>
+<!-- MT_pre__indirectLink_S0\n Label 7 -->
+<g id="node1" class="node"><title>MT_pre__indirectLink_S0\n Label 7</title>
 <ellipse fill="lightgreen" stroke="black" cx="375" cy="-129" rx="133.143" ry="31.1127"/>
 <text text-anchor="middle" x="375" y="-134.4" font-family="Times Roman,serif" font-size="14.00">MT_pre__indirectLink_S0</text>
-<text text-anchor="middle" x="375" y="-116.4" font-family="Times Roman,serif" font-size="14.00"> Label 10</text>
+<text text-anchor="middle" x="375" y="-116.4" font-family="Times Roman,serif" font-size="14.00"> Label 7</text>
 </g>
 <!-- MT_pre__Female_S6\n Label 2 -->
 <g id="node7" class="node"><title>MT_pre__Female_S6\n Label 2</title>
@@ -21,8 +21,8 @@
 <text text-anchor="middle" x="243" y="-36.4" font-family="Times Roman,serif" font-size="14.00">MT_pre__Female_S6</text>
 <text text-anchor="middle" x="243" y="-18.4" font-family="Times Roman,serif" font-size="14.00"> Label 2</text>
 </g>
-<!-- MT_pre__indirectLink_S0\n Label 10&#45;&gt;MT_pre__Female_S6\n Label 2 -->
-<g id="edge12" class="edge"><title>MT_pre__indirectLink_S0\n Label 10&#45;&gt;MT_pre__Female_S6\n Label 2</title>
+<!-- MT_pre__indirectLink_S0\n Label 7&#45;&gt;MT_pre__Female_S6\n Label 2 -->
+<g id="edge12" class="edge"><title>MT_pre__indirectLink_S0\n Label 7&#45;&gt;MT_pre__Female_S6\n Label 2</title>
 <path fill="none" stroke="black" d="M335.037,-99.3308C321.082,-88.9703 305.278,-77.2367 290.753,-66.453"/>
 <polygon fill="black" stroke="black" points="292.488,-63.382 282.373,-60.2311 288.315,-69.0023 292.488,-63.382"/>
 </g>
@@ -76,8 +76,8 @@
 <path fill="none" stroke="black" d="M150.95,-99.8621C165.077,-89.2937 181.188,-77.2414 195.94,-66.2055"/>
 <polygon fill="black" stroke="black" points="198.063,-68.9877 203.974,-60.1949 193.87,-63.3825 198.063,-68.9877"/>
 </g>
-<!-- MT_pre__Female_S5\n Label 1&#45;&gt;MT_pre__indirectLink_S0\n Label 10 -->
-<g id="edge10" class="edge"><title>MT_pre__Female_S5\n Label 1&#45;&gt;MT_pre__indirectLink_S0\n Label 10</title>
+<!-- MT_pre__Female_S5\n Label 1&#45;&gt;MT_pre__indirectLink_S0\n Label 7 -->
+<g id="edge10" class="edge"><title>MT_pre__Female_S5\n Label 1&#45;&gt;MT_pre__indirectLink_S0\n Label 7</title>
 <path fill="none" stroke="black" d="M375,-195.992C375,-187.859 375,-178.959 375,-170.378"/>
 <polygon fill="black" stroke="black" points="378.5,-170.142 375,-160.142 371.5,-170.142 378.5,-170.142"/>
 </g>
