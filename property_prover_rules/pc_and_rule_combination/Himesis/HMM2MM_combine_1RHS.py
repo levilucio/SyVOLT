@@ -18,7 +18,7 @@ class HMM2MM_combine_1RHS(HimesisPostConditionPattern):
         self.add_edges([[3, 0], [0, 2], [2, 5], [3, 4], [4, 7], [5, 6], [1, 6], [7, 1]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__PoliceStationMM'
+S'MT_post__GM2AUTOSAR_MM'
 p2
 aS'MoTifRule'
 p3

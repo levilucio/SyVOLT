@@ -15,10 +15,10 @@ class HMM2MM_combine_0RHS(HimesisPostConditionPattern):
         super(HMM2MM_combine_0RHS, self).__init__(name='HMM2MM_combine_0RHS', num_nodes=8, edges=[])
         
         # Add the edges
-        self.add_edges([(3, 0), (0, 2), (2, 5), (3, 4), (4, 7), (5, 6), (1, 6), (7, 1)])
+        self.add_edges([[3, 0], [0, 2], [2, 5], [3, 4], [4, 7], [5, 6], [1, 6], [7, 1]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__PoliceStationMM'
+S'MT_post__GM2AUTOSAR_MM'
 p2
 aS'MoTifRule'
 p3
@@ -265,13 +265,13 @@ return attr_value
         # Create new edges
         #===============================================================================
         # Male_T3 -> directLink_T8
-        graph.add_edges((labels['3'], labels['8']))
+        graph.add_edges([(labels['3'], labels['8'])])
         # directLink_T8 -> Male_T4
-        graph.add_edges((labels['8'], labels['4']))
+        graph.add_edges([(labels['8'], labels['4'])])
         # indirectLink_S9 -> Male_S2
-        graph.add_edges((labels['9'], labels['2']))
+        graph.add_edges([(labels['9'], labels['2'])])
         # Male_S1 -> indirectLink_S9
-        graph.add_edges((labels['1'], labels['9']))
+        graph.add_edges([(labels['1'], labels['9'])])
         
         #===============================================================================
         # Set the output pivots

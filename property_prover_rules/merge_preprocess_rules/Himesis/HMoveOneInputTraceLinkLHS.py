@@ -18,7 +18,7 @@ class HMoveOneInputTraceLinkLHS(HimesisPreConditionPatternLHS):
         self.add_edges([[0, 1], [1, 3]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_pre__PoliceStationMM'
+S'MT_pre__GM2AUTOSAR_MM'
 p2
 aS'MoTifRule'
 p3
@@ -46,17 +46,6 @@ return True
 
 return True
 """
-        self.vs[0]["MT_label__"] = """9"""
-        self.vs[0]["mm__"] = """MT_pre__MetaModelElement_T"""
-        self.vs[0]["MT_dirty__"] = False
-        self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__Station_T'
-p2
-aS'MT_pre__Male_T'
-p3
-aS'MT_pre__Female_T'
-p4
-a.""")
         self.vs[0]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -69,6 +58,34 @@ a.""")
 
 return True
 """
+        self.vs[0]["MT_label__"] = """9"""
+        self.vs[0]["mm__"] = """MT_pre__MetaModelElement_T"""
+        self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
+S'MT_pre__EcuInstance'
+p2
+aS'MT_pre__System'
+p3
+aS'MT_pre__SystemMapping'
+p4
+aS'MT_pre__ComponentPrototype'
+p5
+aS'MT_pre__SwCompToEcuMapping_component'
+p6
+aS'MT_pre__CompositionType'
+p7
+aS'MT_pre__PPortPrototype'
+p8
+aS'MT_pre__SwcToEcuMapping'
+p9
+aS'MT_pre__SoftwareComposition'
+p10
+aS'MT_pre__RPortPrototype'
+p11
+aS'MT_pre__PortPrototype'
+p12
+aS'MT_pre__ComponentType'
+p13
+a.""")
         self.vs[0]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -81,13 +98,14 @@ return True
 
 return True
 """
+        self.vs[0]["MT_dirty__"] = False
         self.vs[0]["GUID__"] = UUID('34e838db-2d84-4fad-82d7-e94f62acbb3e')
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_label__"] = """10"""
         self.vs[1]["mm__"] = """MT_pre__trace_link"""
-        self.vs[1]["MT_dirty__"] = False
         self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
+        self.vs[1]["MT_dirty__"] = False
         self.vs[1]["GUID__"] = UUID('5ae23021-a9fb-40e4-9152-4e93a4865b1b')
         self.vs[2]["MT_pivotOut__"] = """element1"""
         self.vs[2]["MT_subtypeMatching__"] = True
@@ -103,18 +121,6 @@ return True
 
 return True
 """
-        self.vs[2]["MT_pivotIn__"] = """element1"""
-        self.vs[2]["MT_label__"] = """7"""
-        self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
-        self.vs[2]["MT_dirty__"] = False
-        self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__Station_S'
-p2
-aS'MT_pre__Male_S'
-p3
-aS'MT_pre__Female_S'
-p4
-a.""")
         self.vs[2]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -127,6 +133,21 @@ a.""")
 
 return True
 """
+        self.vs[2]["MT_pivotIn__"] = """element1"""
+        self.vs[2]["MT_label__"] = """7"""
+        self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
+        self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
+S'MT_pre__VirtualDevice'
+p2
+aS'MT_pre__Distributable'
+p3
+aS'MT_pre__ExecFrame'
+p4
+aS'MT_pre__Signal'
+p5
+aS'MT_pre__ECU'
+p6
+a.""")
         self.vs[2]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -139,6 +160,7 @@ return True
 
 return True
 """
+        self.vs[2]["MT_dirty__"] = False
         self.vs[2]["GUID__"] = UUID('31c2e2f7-4f4e-455b-a66d-9879f1dba07f')
         self.vs[3]["MT_pivotOut__"] = """element2"""
         self.vs[3]["MT_subtypeMatching__"] = True
@@ -154,18 +176,6 @@ return True
 
 return True
 """
-        self.vs[3]["MT_pivotIn__"] = """element2"""
-        self.vs[3]["MT_label__"] = """8"""
-        self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
-        self.vs[3]["MT_dirty__"] = False
-        self.vs[3]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__Station_S'
-p2
-aS'MT_pre__Male_S'
-p3
-aS'MT_pre__Female_S'
-p4
-a.""")
         self.vs[3]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -178,6 +188,21 @@ a.""")
 
 return True
 """
+        self.vs[3]["MT_pivotIn__"] = """element2"""
+        self.vs[3]["MT_label__"] = """8"""
+        self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
+        self.vs[3]["MT_subtypes__"] = pickle.loads("""(lp1
+S'MT_pre__VirtualDevice'
+p2
+aS'MT_pre__Distributable'
+p3
+aS'MT_pre__ExecFrame'
+p4
+aS'MT_pre__Signal'
+p5
+aS'MT_pre__ECU'
+p6
+a.""")
         self.vs[3]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -190,6 +215,7 @@ return True
 
 return True
 """
+        self.vs[3]["MT_dirty__"] = False
         self.vs[3]["GUID__"] = UUID('0e8f0029-7321-41b3-b6fc-1799942f1fc0')
 
     def eval_classtype9(self, attr_value, this):

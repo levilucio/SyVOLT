@@ -18,7 +18,7 @@ class HStripApplyModelLHS(HimesisPreConditionPatternLHS):
         self.add_edges([[1, 0], [2, 1]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_pre__PoliceStationMM'
+S'MT_pre__GM2AUTOSAR_MM'
 p2
 aS'MoTifRule'
 p3
@@ -54,12 +54,30 @@ return True
         self.vs[0]["MT_label__"] = """2"""
         self.vs[0]["mm__"] = """MT_pre__MetaModelElement_T"""
         self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__Station_T'
+S'MT_pre__EcuInstance'
 p2
-aS'MT_pre__Male_T'
+aS'MT_pre__System'
 p3
-aS'MT_pre__Female_T'
+aS'MT_pre__SystemMapping'
 p4
+aS'MT_pre__ComponentPrototype'
+p5
+aS'MT_pre__SwCompToEcuMapping_component'
+p6
+aS'MT_pre__CompositionType'
+p7
+aS'MT_pre__PPortPrototype'
+p8
+aS'MT_pre__SwcToEcuMapping'
+p9
+aS'MT_pre__SoftwareComposition'
+p10
+aS'MT_pre__RPortPrototype'
+p11
+aS'MT_pre__PortPrototype'
+p12
+aS'MT_pre__ComponentType'
+p13
 a.""")
         self.vs[0]["MT_pre__name"] = """
 #===============================================================================

@@ -199,16 +199,16 @@ class Test(unittest.TestCase):
                                       'HConnECU2VirtualDevice': [Matcher(HConnECU2VirtualDevice_Back_CompleteLHS())],
                                       'HConnVirtualDeviceToDistributable': [Matcher(HConnVirtualDevice2Distributable_Back_CompleteLHS())]}
         
-        #self.matchRulePatterns = {    'HMapECU2FiveElements': Matcher(HMapECU2FiveElements_overlapLHS()),
-        #                              'HMapDistributable': Matcher(HMapDistributable_overlapLHS()),
-        #                              'HMapVirtualDevice': Matcher(HMapVirtualDevice_overlapLHS()),
-        #                              'HConnectPPortPrototype': Matcher(HConnectPPortPrototype_overlapLHS()),
-        #                              'HConnectRPortPrototype': Matcher(HConnectRPortPrototype_overlapLHS()),
-        #                              'HConnECU2VirtualDevice': Matcher(HConnECU2VirtualDevice_overlapLHS()),
-        #                              'HConnVirtualDeviceToDistributable': Matcher(HConnVirtualDeviceToDistributable_overlapLHS())}
+        self.matchRulePatterns = {    'HMapECU2FiveElements': Matcher(HMapECU2FiveElements_overlapLHS()),
+                                      'HMapDistributable': Matcher(HMapDistributable_overlapLHS()),
+                                      'HMapVirtualDevice': Matcher(HMapVirtualDevice_overlapLHS()),
+                                      'HConnectPPortPrototype': Matcher(HConnectPPortPrototype_overlapLHS()),
+                                      'HConnectRPortPrototype': Matcher(HConnectRPortPrototype_overlapLHS()),
+                                      'HConnECU2VirtualDevice': Matcher(HConnECU2VirtualDevice_overlapLHS()),
+                                      'HConnVirtualDeviceToDistributable': Matcher(HConnVirtualDeviceToDistributable_overlapLHS())}
 
-        pyramify = PyRamify()
-        [self.rules, self.backwardPatterns, self.backwardPatterns2Rules, self.backwardPatternsComplete, self.matchRulePatterns] = pyramify.ramify_directory("GM2AUTOSAR_MM/transformation/HimesisWOFaulty/")
+#         pyramify = PyRamify()
+#         [self.rules, self.backwardPatterns, self.backwardPatterns2Rules, self.backwardPatternsComplete, self.matchRulePatterns] = pyramify.ramify_directory("GM2AUTOSAR_MM/transformation/HimesisWOFaulty/")
 
         #self.matchRulePatterns['HMapECU2FiveElements'] = matchRulePatterns['HMapECU2FiveElements']
         

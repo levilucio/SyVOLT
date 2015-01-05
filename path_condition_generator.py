@@ -90,7 +90,7 @@ class PathConditionGenerator():
                           
     """
 
-    def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, verbosity):
+    def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, verbosity):
         self.transformation = transformation
         self.ruleCombinators = ruleCombinators
         self.ruleTraceCheckers = ruleTraceCheckers
@@ -100,7 +100,7 @@ class PathConditionGenerator():
         self.print_ruleTraceCheckers()
 
 #         self.backwardPatternsComplete = backwardPatternsComplete
-#         self.matchRulePatterns = matchRulePatterns
+        self.matchRulePatterns = matchRulePatterns
         self.verbosity = verbosity
 #         self.outputStates = outputStates
 
@@ -109,7 +109,7 @@ class PathConditionGenerator():
       
         # the path condition set starts with only the empty (None) path condition inside
         self.pathConditionSet = [HEmptyPathCondition()]        
-#        self.ruleOrder = []
+        self.ruleOrder = []
 #        self.verifiedStateCache = []
         self.collapseFactory = CollapseFactory(verbosity)
         self.mergePreprocessFactory = MergePreprocessFactory(verbosity)
@@ -187,7 +187,7 @@ class PathConditionGenerator():
 #                 print(rule.name)
 #                 print(rule)
 #         
-#         # merge rules of the same layer that share common match patterns over those match patterns   
+        # merge rules of the same layer that share common match patterns over those match patterns   
 #         print("merge rules of the same layer that share common match patterns over those match patterns   ")
 #         for layer in range(0,len(self.transformation)):
 #             print(layer)
@@ -197,9 +197,9 @@ class PathConditionGenerator():
 #                 # compare the first rule to the remaining ones
 #                 mergeResult = self.transformation[layer][0]
 #                 markedForRemoval = [self.transformation[layer][0]]
-#                  
+#                   
 #                 matchPatternCurrentRule = self.matchRulePatterns[self.transformation[layer][0].name]
-# 
+#  
 #                 print("MPCR: ")
 #                 print_graph(matchPatternCurrentRule.condition)
 #                 for r in self.transformation[layer]:
@@ -222,17 +222,17 @@ class PathConditionGenerator():
 #                     print("matchPatternCurrentRule.is_success: " + str(matchPatternCurrentRule.is_success))
 #                     print("matchPatternCandidateRule.is_success: " + str(matchPatternCandidateRule.is_success))
 #                     if matchPatternCurrentRule.is_success and matchPatternCandidateRule.is_success:
-# 
+#  
 #                         mergeResult = self.mergePreprocessFactory.merge_two_rules_preprocess(mergeResult, self.transformation[layer][candidateToMerge])
 #                         # mark the rule for removal
 #                         markedForRemoval.append(self.transformation[layer][candidateToMerge])
-# 
+#  
 #                 # copy the result of the merge to the merged layer
 #                 merged_layer.append(mergeResult)
 #                 # merge backwardPatterns matchers for the merged rules
 #                 # gather all the backwardPattern matchers from the rules that got merged
 #                 # and are to be removed, only if any rule got merged during this pass
-#                 
+#                  
 #                 if len(markedForRemoval) > 1:                  
 #                     # rebuild the auxiliary structures
 #                     # rules
@@ -254,10 +254,10 @@ class PathConditionGenerator():
 #                         if self.rules[self.backwardPatterns2Rules[backPattern]] in set(markedForRemoval):
 #                             self.backwardPatterns2Rules[backPattern] = mergeResult.name
 #                     # backwardPatternsComplete
-#                     self.backwardPatternsComplete[mergeResult.name] = self.backwardPatternsComplete[markedForRemoval[0].name]  
+#                     self.backwardPatternsComplete[mergeResult.name] = self.[markedForRemoval[0].name]  
 #                     # matchRulePatterns
 #                     self.matchRulePatterns[mergeResult.name] = self.matchRulePatterns[markedForRemoval[0].name]
-#                                    
+#                                     
 #                     # remove from the backwardPatterns dictionary the references to rules that got merged
 #                     for rule in markedForRemoval:
 #                         del self.rules[rule.name]
@@ -269,7 +269,7 @@ class PathConditionGenerator():
 #                 self.transformation[layer] = [rule for rule in self.transformation[layer] if rule not in markedForRemoval]               
 #             # the layer has been treated and can be put back into the transformation               
 #             self.transformation[layer] = merged_layer
-            
+#             
 #        print 'Transformation:'
 #        for layer in range(0,len(self.transformation)):
 #            print 'Layer ' + str(layer)
@@ -298,14 +298,14 @@ class PathConditionGenerator():
 #        print self.matchRulePatterns
             
 
-#        print 'Buiding traceability---------------------'
-#        for layerIndex in range(0,len(self.transformation)):
-#            p = Packet()
-#            p.graph = self.transformation[layerIndex][0]
-#            p = build_traceability_for_rule.packet_in(p)
-#            print build_traceability_for_rule.is_success
-#            self.transformation[layerIndex][0] =  p.graph
-#        print '------------------------------------------'
+#         print 'Buiding traceability---------------------'
+#         for layerIndex in range(0,len(self.transformation)):
+#             p = Packet()
+#             p.graph = self.transformation[layerIndex][0]
+#             p = build_traceability_for_rule.packet_in(p)
+#             print build_traceability_for_rule.is_success
+#             self.transformation[layerIndex][0] =  p.graph
+#         print '------------------------------------------'
 
         # build traceability links-for each rule that got merged it produces traceability between them
         # to know which apply elems came from which match elems   
@@ -325,271 +325,46 @@ class PathConditionGenerator():
             
         # calculate the partial order containing the containment order between the match patterns of the rules
         # first calculate all the pairs according to the layers of the transformation
-#         layerpairs = []
-#         for layerIndex in range(0,len(self.transformation)):
-#             layerpairs.append(list(permutations(self.transformation[layerIndex],2)))
-#             
-#         # now build the partial order of rules as a dictionary per layer
-#         # the keys are rules that are larger than the elements in the order 
-#         for layerIndex in range(0,len(layerpairs)):
-#             self.ruleOrder.append({})
-#             for pair in layerpairs[layerIndex]:
-#                 p = Packet()
-#                 p.graph = pair[1]
-#                 self.matchRulePatterns[pair[0].name].packet_in(p)
-#                 if self.matchRulePatterns[pair[0].name].is_success:
-#                     # the partial order may branch, so we need lists to store the smaller elements
-#                     if pair[1] not in self.ruleOrder[layerIndex].keys():
-#                         self.ruleOrder[layerIndex][pair[1]] = [pair[0]]
-#                     else:
-#                         self.ruleOrder[layerIndex][pair[1]].append(pair[0])
-
-#        print 'Partial Order:'                    
-#        print self.ruleOrder
-        
-
+        layerpairs = []
+        for layerIndex in range(0,len(self.transformation)):
+            layerpairs.append(list(permutations(self.transformation[layerIndex],2)))
+             
+        # now build the partial order of rules as a dictionary per layer
+        # the keys are rules that are larger than the elements in the order 
+        for layerIndex in range(0,len(layerpairs)):
+            self.ruleOrder.append({})
+            for pair in layerpairs[layerIndex]:
+                p = Packet()
+                p.graph = pair[1]
+                p = self.matchRulePatterns[pair[0].name][0].packet_in(p)
+                if self.matchRulePatterns[pair[0].name][0].is_success:
+                    # Test for the satisfaction of the attribute equations when the two rules combine.
+                    # If the attribute equations are satisfied for at least one of the combination of the two rules, 
+                    # then the two rules are dependent, otherwise they are not dependent
                     
+                    dependentRules = False
+                    
+                    i = Iterator()
+                    p = i.packet_in(p)
+                    while i.is_success:
+                        p.graph = pair[0]
+                        p = self.matchRulePatterns[pair[0].name][1].packet_in(p)
+                        if self.evaluate_attribute_equations(p.graph):
+                            dependentRules = True
+                            break
+                        p = i.next_in(p)                                                   
+                
+                    
+                    if dependentRules:
+                        # the partial order may branch, so we need lists to store the smaller elements
+                        if pair[1] not in self.ruleOrder[layerIndex].keys():
+                            self.ruleOrder[layerIndex][pair[1]] = [pair[0]]
+                        else:
+                            self.ruleOrder[layerIndex][pair[1]].append(pair[0])
 
-#     def build_path_conditions(self):     
-#         """
-#         Build the symbolic state space collapsing rules with backward links
-#         """
-# 
-#         # merge rules of the same layer that share common match patterns
-# #        self._pre_process()
-#         print("Start symbolic state space")
-#         for curLayer in range(len(self.transformation)):
-#             # first build the traceability links for all the rules in the layer
-#             # self._printRules(self.transformation[layer])           
-#             
-#             # if we're dealing with the first layer then just add the powerset of the rules
-#             # in the first layer as the first set of symbolic states in the state space
-#             
-#             if curLayer == 0:
-#                 # build the powerset of all the rules in the first layer
-#                 self.symbStateSpace.extend(self._rulePowerSet(self.transformation[curLayer], curLayer))                
-#                 print 'Layer ' + str(curLayer) + ':'
-# 
-#             else:
-#                 # build the powerset of all the rules in the layer in a temporary variable
-#                 # remove the empty rule application since it does nothing
-#                 curLayerSymbStateSpace = self._rulePowerSet(self.transformation[curLayer], curLayer) 
-#                 curLayerSymbStateSpace = [x for x in curLayerSymbStateSpace if x <> ()]
-#                 
-#                 print 'Layer ' + str(curLayer) + ':'
-#                 
-#                 # the new states will only be added at the end of the layer being processed
-#                 # some states will also be removed
-#                 statesToAdd = []
-#                 statesToRemove = []   
-#  
-#                 # go through the symbolic states of the current layer
-#                 for curSymbState in range(len(curLayerSymbStateSpace)):
-#                     
-#                     print 'Current state:'
-#                     print curLayerSymbStateSpace[curSymbState]
-#                     #print_graph(curLayerSymbStateSpace[curSymbState][0])
-#                     # check if the symbolic state we're analysing in the current layer has any of the backward link rules 
-#                     matchBack = []
-#                     
-#                     for ruleInclBack in self.rulesIncludingBackwardLinks[curLayer]:
-#                         #print_graph(ruleInclBack)
-#                         # gather all the back rules belonging to the curSymbState so the search can begin
-#                         if ruleInclBack in set(curLayerSymbStateSpace[curSymbState]):
-#                             matchBack.extend(self.backwardPatterns[ruleInclBack.name])
-#                     
-#                     print 'Matchback:'        
-#                     print matchBack
-#                     
-#                     #gehan- matchback has all the backlink rules of the current state.
-#                     #G- to merge the current state with any of the prev states:
-#                     #   1- if match back is not empty, then make sure all bwd links (captured in rules of matchback)of the cur state were generated by rules of the prev state, to combine this state only with prev states that generate all its bwd links
-#                     #   2- if matchback is empty, then get power set of this state with all states in SymbStateSpace
-#                             
-#                     # go through the symbolic states of the previous layer       
-#                     for previousSymbState in range(len(self.symbStateSpace)):     
-#                         #print 'Previous state:'
-#                         #print self.symbStateSpace[previousSymbState]                                                                                       
-#                         # try to eliminate backward link rules on the previous symbolic state                      
-#                         foundMatchBack = list(matchBack)
-#                         
-#                         # build the cartesian product between the current backward link matcher name and all
-#                         # the previous rules
-#                         cacheKeys = self._buildCacheKeys(matchBack,self.symbStateSpace[previousSymbState])
-#                                                                         
-#                         # store the rules with backward links of the current layer that have been matched
-#                         # with rules from a previous layer. The goal is to merge (collapse) them at the end
-#                         rulesInvolvedInBackwardMatches = {}
-#                       
-#                         # the matchers are organised by backward link pattern
-#                         # go through the matcher lists first
-#                         for matcher in range(len(cacheKeys)):
-#                             # and only after through the previous rules
-#                             # if we find a match with one of the rules we can avoid going through the rest
-#                             for key in cacheKeys[matcher]:
-# 
-#                                 foundMatcher = False
-# 
-#                                 # check cache first
-#                                 if key[0] in set(self.backwardMatchCache.keys()):
-#                                     #print '\nCache Hit!'
-#                                     if self.backwardMatchCache[key[0]] == True:
-#                                         print "Found backward matcher..."
-#                                         foundMatcher = True
-#                                 else:
-#                                     print '\nCache Miss!'
-#                                     # perform the match using T-Core and add the result (true/false) to the cache
-#                                     #print matchBack[matcher]
-#                                     
-#                                     p = Packet()
-#                                     p.graph = self.symbStateSpace[previousSymbState][key[2]]
-#                                     p = matchBack[matcher].packet_in(p)
-#                                     self.backwardMatchCache.update({key[0]:matchBack[matcher].is_success})
-# 
-#                                     # if the backward link was found, we can stop analysing 
-#                                     if matchBack[matcher].is_success:
-#                                         print "Found backward matcher..."
-#                                         foundMatcher = True
-# 
-#                                 if foundMatcher:
-#                                     # set the backward match pattern in search list to None because it has been found
-#                                     foundMatchBack[matcher] = None
-#                                     # keep track of which rules from the previous layer were backward matched.
-#                                     # we need this such that we can create the merged rules with the backward links.
-#                                     # only keep track of one rule per backward link.
-#                                     if key[1] in set(rulesInvolvedInBackwardMatches.keys()):
-#                                         rulesInvolvedInBackwardMatches[key[1]].append(self.symbStateSpace[previousSymbState][key[2]])
-#                                         #print 'Rules involved in backward matches: '
-#                                         #print self.symbStateSpace[previousSymbState][key[2]]
-#                                         # remove duplicates
-#                                         rulesInvolvedInBackwardMatches[key[1]] = list(set(rulesInvolvedInBackwardMatches[key[1]]))
-#                                     else:
-#                                         rulesInvolvedInBackwardMatches[key[1]] = [self.symbStateSpace[previousSymbState][key[2]]] 
-#                                     break
-#                                     
-#                             # compress the matchBack list by removing all the None elements
-#                             # (corresponding backward patterns required by the curSymbolicState found on this layer)
-#                             compressed = [x for x in foundMatchBack if x <> None]
-#                             if compressed == []:
-#                                 foundMatchBack = []                               
-#                                 break
-#                         
-#                         #print 'Current PC:'
-#                         #print curLayerSymbStateSpace[curSymbState]
-#                         #print 'Rules involved in backward matches: '
-#                         #print rulesInvolvedInBackwardMatches
-#                               
-#                                                 
-#                         # if all the backward link matches were found going up the state space then  
-#                         # we can add the rules in the current symbolic state to the symbolic state in the previous layer    
-#                         # G- if all bwdlink matches of current symbstate were found in prev symb state, then u can merge them.. 
-#                         if foundMatchBack == []:   
-#                             
-#                             print 'found match back.....'
-#                                                         
-#                             newPreviousSymbState = list(self.symbStateSpace[previousSymbState])
-#                                                      
-#                             newRules = curLayerSymbStateSpace[curSymbState]
-# 
-# 
-#                             print '-------------- Begin -----------------------'
-#                             print 'Previous states:'
-#                             for s in newPreviousSymbState:
-#                                 print(s.name)
-#                             print 'New states:'
-#                             for s in newRules:
-#                                 print(s.name)
-#                             
-#                             if rulesInvolvedInBackwardMatches != {}:
-#                                 # build the new rules resulting from merging rules with backward links
-# 
-#                                 for currentRule in rulesInvolvedInBackwardMatches.keys():
-#                                     # first build the cache entry for all the rules that were involved in the backward links
-# 
-#                                     print("Current rule: " + str(currentRule))
-# 
-#                                     mergeCacheKey = currentRule
-#                                     for previousRule in rulesInvolvedInBackwardMatches[currentRule]:
-#                                         mergeCacheKey = mergeCacheKey + '-' + previousRule.name
-# 
-#                                     mergedCollapsedState = None
-#                                     
-#                                     # check if the merged state already exists in the cache
-#                                     if mergeCacheKey in set(self.backwardMergeCache.keys()):
-#                                         # print 'Cache hit!!'
-#                                         mergedCollapsedState = self.backwardMergeCache[mergeCacheKey]
-#                                     else:
-#                                         # print 'No Cache hit!!'
-#                                         # build the merge of the state of the current layer with the
-#                                         # states from the previous layer where the backward links were found
-#                                         
-#                                         #mergedCollapsedState = getattr(sys.modules[__name__], currentRule)()
-#                                         mergedCollapsedState = deepcopy(self.rules[currentRule])
-#                                         
-#                                         for previousRule in rulesInvolvedInBackwardMatches[currentRule]:
-#                                             print("previousRule rule: " + str(previousRule))
-#                                             # first merge the two rules
-#                                             # print 'building the merged version....'
-#                                             mergeResult = self.mergeInterLayerFactory.merge_two_rules_inter_layer(previousRule, mergedCollapsedState)
-#                                             if mergeResult != None:                                                                                                                                                                      
-#                                                 mergedCollapsedState = mergeResult              
-#                                                                                      
-#                                         # add the new merged rule to the cache
-#                                         self.backwardMergeCache.update({mergeCacheKey: mergedCollapsedState})
-#                                         
-#                                     # Decide whether the previous rules can stay in the symbolic execution or not.
-#                                     # This is achieved by using the complete connected graphs to the match elements that
-#                                     # have match links attached to them. If they can be completely found in a state of the symbolic
-#                                     # execution built so far then the merge totally overlaps and the previous state can be discarded.
-# 
-#                                     # Look for the complete connected graphs within the rules involved in backward links, as they
-#                                     # cannot be elsewhere. TODO: cache this matching operation
-#                                     
-#                                     completeBackwardMatchers = self.backwardPatternsComplete[currentRule]
-#                                     
-#                                     foundCompleteBackwardMatchers = [False]*len(completeBackwardMatchers)
-#                                     
-#                                     for completeBackMatcher in range(len(completeBackwardMatchers)):
-#                                         for previousRuleWithBackMatch in rulesInvolvedInBackwardMatches[currentRule]:
-#                                             #print previousRuleWithBackMatch
-#                                             p = Packet()
-#                                             p.graph = previousRuleWithBackMatch 
-#                                             #print completeBackwardMatchers[completeBackMatcher]
-#                                             completeBackwardMatchers[completeBackMatcher].packet_in(p)
-#                                             #print completeBackwardMatchers[completeBackMatcher].is_success
-#                                             # found the complete pattern in one of the previous rules, don't need to look further
-#                                             if completeBackwardMatchers[completeBackMatcher].is_success:
-#                                                 foundCompleteBackwardMatchers[completeBackMatcher] = True
-#                                                 break
-#                                                                       
-#                                     # now remove the rules that were superseded by the backward linked rules                             
-#                                     newPreviousSymbState = [r for r in newPreviousSymbState if r not in rulesInvolvedInBackwardMatches[currentRule]]
-#                                     # remove from the new rules the rule that got merged with the backward linked rules
-#                                     newRules = [r for r in newRules if r.name != currentRule] 
-# 
-#                                     # if all the complete connected graphs to the match elements for the rule have been found then we can remove 
-#                                     # the previous state because there is no uncertainty regarding missing match elements in the current rule
-#                                     
-#                                     if not (False in set(foundCompleteBackwardMatchers)):
-#                                         statesToRemove.append(previousSymbState)
-#                                     # add the new merged rule
-#                                     newRules.append(mergedCollapsedState)
-# 
-#                             # finally put the new state together resulting from eliminating the rules with backward links that got merged (if any)                               
-#                                            
-#                             newPreviousSymbState += newRules
-#                             
-#                             statesToAdd.append(newPreviousSymbState)                            
-#                 
-#                 # finally add the new states to the global state space
-#                 
-#                 self.symbStateSpace.extend(statesToAdd)
-#                 # and remove states from previous layers that were superseded because some of their rules got merged
-#                 self.symbStateSpace = [self.symbStateSpace[i] for i in range(len(self.symbStateSpace)) if i not in statesToRemove]
-#                 
-# #                print 'Symbolic State Space: '
-# #                print self.symbStateSpace
-# #                print '---------------------------'
+        print 'Partial Order:'                    
+        print self.ruleOrder
+        
 
 
     def build_path_conditions(self):     
@@ -723,6 +498,8 @@ class PathConditionGenerator():
                                 
                                 if combinatorMatcher.is_success:  
                                     
+                                    # TODO: go through all the matches in the iterator, now we're only going through
+                                    # the first one
                                     p = i.packet_in(p)
                                     
                                     # holds the result of combining the path conditions generated so far when combining
@@ -760,28 +537,7 @@ class PathConditionGenerator():
                                             
                                             # check if the equations on the attributes of the newly created path condition are satisfied
                                             
-#                                             Z3formula = self.build_Z3_attribute_equations(newPathCond)
-#                                             if self.verbosity >= 2 :
-#                                                 print "\nChecking with Z3:"
-#                                                 print "----------------"
-#                                                 print Z3formula
-#                                                 print "\n"
-#                                             
-#                                             # for now write the file with the equation formulas to be caught by the binary
-#                                             # TODO: this is WAY TOO SLOW and needs to be done via an API or something faster    
-#                                             with open("./tmp/Z3EquationFile", "w") as text_file:
-#                                                 text_file.write(Z3formula)
-#                                                 
-#                                             # now call the z3-str binary to get the result of checking the formula
-#                                             command = 'python /home/levi/z3-str/Z3-str.py -f ./tmp/Z3EquationFile'
-#                                             z3_output = subprocess.check_output(command, shell=True)   
-#                                             
-#                                             if self.verbosity >= 2 :
-#                                                 print z3_output                                                                                      
-# 
-#                                             # only keep the new path combination if the equations on the attributes are satisfied
-#                                         
-#                                             if "UNSAT" not in z3_output:
+                                            # if self.evaluate_attribute_equations(newPathCond):
                                             
                                             if True:
                                             
@@ -813,161 +569,161 @@ class PathConditionGenerator():
                 
 
 
-    def _rulePowerSet(self,rules,layer):
-        """
-        build the powerset of rules in a layer
-        
-        eliminate from the powerset rules that cannot execute alone, because they imply the execution of other rules.
-        this implication is calculated by looking at the partial order implied by containment between the match
-        patterns contained in the self.ruleOrder attribute
-        """
-      
-        rulePowerset = list(chain.from_iterable(combinations(rules, r) for r in range(len(rules)+1)))
-                      
-        # go down all the branches of the partial orders until bottom elements are reached.
-        # when traversing each node branches merge all the rules downtstream from it recursively 
-        # and build new rules from this merging that are put together with the rules of the
-        # transformation, but are only used for the powerset that is returned
-        
-        if self.ruleOrder[layer] != {}:
-            for rule in rules:
-                branchMergeResult = self._recursiveRuleMerge(rule,layer)
-                if branchMergeResult != None:          
-                                        
-                    rulePowerset = [comb for comb in rulePowerset if branchMergeResult[1] != set(comb) and set([rule]) != set(comb)]     
-                                      
-                    # add to the powerset the new rule as a member of the set
-                    rulePowerset.append((branchMergeResult[0],))
-                    
-                    # add the new rule to the rules in the layer.
-                    # The rule will be treated as a preprocessed merged rule given it is important to
-                    # know what are the auxiliary structures for it. This treatment cannot be done during the
-                    # preprocess step and needs to be done dynamically because smaller rules in the partial 
-                    # order need to exist both individually in the powerset and also collapsed with larger rules
-                    
-                    # build the auxiliary structures for the newly merged rules
-                    #rules
-                    self.rules[branchMergeResult[0].name] = branchMergeResult[0]
-                    # rulesIncludingBackwardLinks
-                    if set(branchMergeResult[1]).intersection(set(self.rulesIncludingBackwardLinks[layer])) != set([]):
-                        self.rulesIncludingBackwardLinks[layer].append(branchMergeResult[0])
-                    # backwardPatterns
-                    newBackwardPattern = []
-                    for rule in branchMergeResult[1]:
-                        if self.backwardPatterns[rule.name] != []:
-                            for matcher in self.backwardPatterns[rule.name]:
-                                # build copies of all the matchers such that there is no overlap with the matchers that
-                                # are used by the smaller rule
-                                #tmp = getattr(sys.modules[__name__], matcher.condition.name)()
-                                newMatcher = copy.deepcopy(matcher)#Matcher(tmp)
-                                #newMatcher = deepcopy(matcher)
-                                newBackwardPattern.append(newMatcher)
-                                # add copy of the matcher to the backwardPatterns2Rules structure
-                                self.backwardPatterns2Rules[newMatcher] = branchMergeResult[0].name               
-                         
-                    self.backwardPatterns[branchMergeResult[0].name] = newBackwardPattern                
-                    # backwardPatternsComplete
-                    self.backwardPatternsComplete[branchMergeResult[0].name] = self.backwardPatternsComplete[rule.name]  
-                    # matchRulePatterns
-                    self.matchRulePatterns[branchMergeResult[0].name] = self.matchRulePatterns[rule.name]
-
-                    # remove from the powerset path conditions that include rules that form "branches" of the
-                    # partial order, since they are superseded by the merge of the top rule of the partial
-                    # order with all the rules, potentially in branches, under it. Leaf nodes or combinations
-                    # of leaf nodes are not removed.
-            
-                    rulePowerset = [pc for pc in rulePowerset if set(pc).difference(branchMergeResult[1]) != set([]) or\
-                                    set([rule for rule in pc if rule not in self.ruleOrder[layer].keys()]) == set(pc)]
-                    
-            # remove the smallest members of the powerset where all match elements are connected by
-            # backward links. In this case, if a larger (with a larger match patterns) rule merged with
-            # this one executed, then this one had to necessarily execute because all apply elements
-            # backward linked in the smaller rule already exist.
-            # TODO: This assumes that no dead code rules exist that refers to traces that are never
-            # generated by a previous layer.
-            
-            # go through all the smallest members of the partial order and remove their path conditions
-            # from the powerset in all the elements in their match pattern are connected by backward links
-            for rule in rules:
-                if rule not in self.ruleOrder[layer].keys():
-                    # check if all the elements in their match pattern are connected by backward links
-#                    print 'Rule not in self.ruleOrder:'
-#                    print rule
-                    
-                    p = Packet()
-                    p.graph = rule
-                    check_for_no_backward_links.packet_in(p)
-                    if not check_for_no_backward_links.is_success:
-                        for pathCondition in rulePowerset:
-                            if rule in set(pathCondition) and len(pathCondition) == 1:
-                                rulePowerset.remove(pathCondition)
-                                break
-            
-#            print 'Transformation:'
-#            for layer in range(0,len(self.transformation)):
-#                print 'Layer ' + str(layer)
-#                for rule in self.transformation[layer]:
-#                    print rule
+#     def _rulePowerSet(self,rules,layer):
+#         """
+#         build the powerset of rules in a layer
+#         
+#         eliminate from the powerset rules that cannot execute alone, because they imply the execution of other rules.
+#         this implication is calculated by looking at the partial order implied by containment between the match
+#         patterns contained in the self.ruleOrder attribute
+#         """
+#       
+#         rulePowerset = list(chain.from_iterable(combinations(rules, r) for r in range(len(rules)+1)))
+#                       
+#         # go down all the branches of the partial orders until bottom elements are reached.
+#         # when traversing each node branches merge all the rules downtstream from it recursively 
+#         # and build new rules from this merging that are put together with the rules of the
+#         # transformation, but are only used for the powerset that is returned
+#         
+#         if self.ruleOrder[layer] != {}:
+#             for rule in rules:
+#                 branchMergeResult = self._recursiveRuleMerge(rule,layer)
+#                 if branchMergeResult != None:          
+#                                         
+#                     rulePowerset = [comb for comb in rulePowerset if branchMergeResult[1] != set(comb) and set([rule]) != set(comb)]     
+#                                       
+#                     # add to the powerset the new rule as a member of the set
+#                     rulePowerset.append((branchMergeResult[0],))
+#                     
+#                     # add the new rule to the rules in the layer.
+#                     # The rule will be treated as a preprocessed merged rule given it is important to
+#                     # know what are the auxiliary structures for it. This treatment cannot be done during the
+#                     # preprocess step and needs to be done dynamically because smaller rules in the partial 
+#                     # order need to exist both individually in the powerset and also collapsed with larger rules
+#                     
+#                     # build the auxiliary structures for the newly merged rules
+#                     #rules
+#                     self.rules[branchMergeResult[0].name] = branchMergeResult[0]
+#                     # rulesIncludingBackwardLinks
+#                     if set(branchMergeResult[1]).intersection(set(self.rulesIncludingBackwardLinks[layer])) != set([]):
+#                         self.rulesIncludingBackwardLinks[layer].append(branchMergeResult[0])
+#                     # backwardPatterns
+#                     newBackwardPattern = []
+#                     for rule in branchMergeResult[1]:
+#                         if self.backwardPatterns[rule.name] != []:
+#                             for matcher in self.backwardPatterns[rule.name]:
+#                                 # build copies of all the matchers such that there is no overlap with the matchers that
+#                                 # are used by the smaller rule
+#                                 #tmp = getattr(sys.modules[__name__], matcher.condition.name)()
+#                                 newMatcher = copy.deepcopy(matcher)#Matcher(tmp)
+#                                 #newMatcher = deepcopy(matcher)
+#                                 newBackwardPattern.append(newMatcher)
+#                                 # add copy of the matcher to the backwardPatterns2Rules structure
+#                                 self.backwardPatterns2Rules[newMatcher] = branchMergeResult[0].name               
+#                          
+#                     self.backwardPatterns[branchMergeResult[0].name] = newBackwardPattern                
+#                     # backwardPatternsComplete
+#                     self.backwardPatternsComplete[branchMergeResult[0].name] = self.backwardPatternsComplete[rule.name]  
+#                     # matchRulePatterns
+#                     self.matchRulePatterns[branchMergeResult[0].name] = self.matchRulePatterns[rule.name]
+# 
+#                     # remove from the powerset path conditions that include rules that form "branches" of the
+#                     # partial order, since they are superseded by the merge of the top rule of the partial
+#                     # order with all the rules, potentially in branches, under it. Leaf nodes or combinations
+#                     # of leaf nodes are not removed.
+#             
+#                     rulePowerset = [pc for pc in rulePowerset if set(pc).difference(branchMergeResult[1]) != set([]) or\
+#                                     set([rule for rule in pc if rule not in self.ruleOrder[layer].keys()]) == set(pc)]
+#                     
+#             # remove the smallest members of the powerset where all match elements are connected by
+#             # backward links. In this case, if a larger (with a larger match patterns) rule merged with
+#             # this one executed, then this one had to necessarily execute because all apply elements
+#             # backward linked in the smaller rule already exist.
+#             # TODO: This assumes that no dead code rules exist that refers to traces that are never
+#             # generated by a previous layer.
+#             
+#             # go through all the smallest members of the partial order and remove their path conditions
+#             # from the powerset in all the elements in their match pattern are connected by backward links
+#             for rule in rules:
+#                 if rule not in self.ruleOrder[layer].keys():
+#                     # check if all the elements in their match pattern are connected by backward links
+# #                    print 'Rule not in self.ruleOrder:'
+# #                    print rule
+#                     
+#                     p = Packet()
+#                     p.graph = rule
+#                     check_for_no_backward_links.packet_in(p)
+#                     if not check_for_no_backward_links.is_success:
+#                         for pathCondition in rulePowerset:
+#                             if rule in set(pathCondition) and len(pathCondition) == 1:
+#                                 rulePowerset.remove(pathCondition)
+#                                 break
+#             
+# #            print 'Transformation:'
+# #            for layer in range(0,len(self.transformation)):
+# #                print 'Layer ' + str(layer)
+# #                for rule in self.transformation[layer]:
+# #                    print rule
+# #    
+# #            print '\nRules:'
+# #            print self.rules
+# #            
+# #            print '\nRules Including Backward Links:'
+# #            for layer in range(0,len(self.rulesIncludingBackwardLinks)):
+# #                print 'Layer: ' + str(layer)
+# #                for rule in self.rulesIncludingBackwardLinks[layer]:
+# #                    print rule
+# #                  
+# #            print '\nBackward Pattern Matchers:'
+# #            print self.backwardPatterns
+# #            
+# #            print '\nBackward Pattern 2 Rules Matchers:'
+# #            print self.backwardPatterns2Rules             
+# #            
+# #            print '\nBackward Complete Matchers:'
+# #            print self.backwardPatternsComplete
+# #            
+# #            print '\nMatch Rule Patterns:'
+# #            print self.matchRulePatterns           
+#                 
+#         
+#         
+# #        for pc in rulePowerset:
+# #            if pc != ():           
+# #                graph_to_dot(pc[0].name, pc[0], 1) 
 #    
-#            print '\nRules:'
-#            print self.rules
-#            
-#            print '\nRules Including Backward Links:'
-#            for layer in range(0,len(self.rulesIncludingBackwardLinks)):
-#                print 'Layer: ' + str(layer)
-#                for rule in self.rulesIncludingBackwardLinks[layer]:
-#                    print rule
-#                  
-#            print '\nBackward Pattern Matchers:'
-#            print self.backwardPatterns
-#            
-#            print '\nBackward Pattern 2 Rules Matchers:'
-#            print self.backwardPatterns2Rules             
-#            
-#            print '\nBackward Complete Matchers:'
-#            print self.backwardPatternsComplete
-#            
-#            print '\nMatch Rule Patterns:'
-#            print self.matchRulePatterns           
-                
-        
-        
-#        for pc in rulePowerset:
-#            if pc != ():           
-#                graph_to_dot(pc[0].name, pc[0], 1) 
-   
-        return rulePowerset
+#         return rulePowerset
 
         
-    def _recursiveRuleMerge(self,rule,layer):
-        """
-        go down a, potentially branching, partial order (in the self.ruleOrder dictionary) and merge all the rules
-        until bottom elements are reached. Returns the merged rule plus the set of all rules in the partial
-        order under the top element.
-        TODO: can be optimised by starting from the bottom of the branches and building up 
-        """
-
-        print("_recursiveRuleMerge")
-        print_graph(rule)
-        print(layer)
-        if rule in self.ruleOrder[layer].keys():
-            # accumulate set of treated rules
-            setOfMergedRules = set([rule])
-            # accumulate the result of merging all the rules down the branch
-            mergedResult = deepcopy(rule)  
-            previousRules = self.ruleOrder[layer][rule]
-            for previousRule in previousRules:
-                print("PreviousRule")
-                print_graph(previousRule)
-                branchMergedResult = self._recursiveRuleMerge(previousRule,layer)
-                if branchMergedResult != None:
-                    mergedResult = self.mergePreprocessFactory.merge_two_rules_preprocess(mergedResult, branchMergedResult[0])
-                    setOfMergedRules.union(branchMergedResult[1])
-                mergedResult = self.mergePreprocessFactory.merge_two_rules_preprocess(mergedResult, previousRule)
-                setOfMergedRules.add(previousRule)
-            return (mergedResult, setOfMergedRules)
-        else:
-            return None
+#     def _recursiveRuleMerge(self,rule,layer):
+#         """
+#         go down a, potentially branching, partial order (in the self.ruleOrder dictionary) and merge all the rules
+#         until bottom elements are reached. Returns the merged rule plus the set of all rules in the partial
+#         order under the top element.
+#         TODO: can be optimised by starting from the bottom of the branches and building up 
+#         """
+# 
+#         print("_recursiveRuleMerge")
+#         print_graph(rule)
+#         print(layer)
+#         if rule in self.ruleOrder[layer].keys():
+#             # accumulate set of treated rules
+#             setOfMergedRules = set([rule])
+#             # accumulate the result of merging all the rules down the branch
+#             mergedResult = deepcopy(rule)  
+#             previousRules = self.ruleOrder[layer][rule]
+#             for previousRule in previousRules:
+#                 print("PreviousRule")
+#                 print_graph(previousRule)
+#                 branchMergedResult = self._recursiveRuleMerge(previousRule,layer)
+#                 if branchMergedResult != None:
+#                     mergedResult = self.mergePreprocessFactory.merge_two_rules_preprocess(mergedResult, branchMergedResult[0])
+#                     setOfMergedRules.union(branchMergedResult[1])
+#                 mergedResult = self.mergePreprocessFactory.merge_two_rules_preprocess(mergedResult, previousRule)
+#                 setOfMergedRules.add(previousRule)
+#             return (mergedResult, setOfMergedRules)
+#         else:
+#             return None
         
     def _buildTraceabilityLinks(self,layer):
         """
@@ -997,11 +753,12 @@ class PathConditionGenerator():
         return backLinksCacheKeys
     
 
-    def build_Z3_attribute_equations(self, pathCondition):
+    def evaluate_attribute_equations(self, pathCondition):
         """
         Build the necessary set of equations to be passed onto Z3 for evaluation (SAT/UNSAT) given a path condition.
         Equations have an abstract syntax tree structure inside the path condition that needs to be parsed.
         Note that some equations share the same variables, and as such those variables have to be given the same identifiers throughout the Z3 expression.
+        Evaluate the set of equations using Z3 and return True if there is a solution for them, false otherwise
         """
         
         Z3Input = ""
@@ -1027,9 +784,30 @@ class PathConditionGenerator():
         Z3Input = "\n" + Z3Input
         for var in variablesInExpression:
             Z3Input = "(declare-variable " + var + " String)\n" + Z3Input
-        Z3Input += "\n(check-sat)"   
-           
-        return Z3Input
+        Z3Input += "\n(check-sat)"
+        
+        if self.verbosity >= 2 :
+            print "\nChecking with Z3:"
+            print "----------------"
+            print Z3Input
+            print "\n"
+         
+        # for now write the file with the equation formulas to be caught by the binary
+        # TODO: this is WAY TOO SLOW and needs to be done via an API or something faster    
+        with open("./tmp/Z3EquationFile", "w") as text_file:
+            text_file.write(Z3Input)
+             
+        # now call the z3-str binary to get the result of checking the formula
+        command = 'python /home/levi/z3-str/Z3-str.py -f ./tmp/Z3EquationFile'
+        z3_output = subprocess.check_output(command, shell=True)   
+         
+        if self.verbosity >= 2 :
+            print z3_output                                                                                      
+        
+        if "UNSAT" not in z3_output:   
+            return True
+        else:
+            return False
 
 
     def _build_equation_expression(self, node, pathCondition, variablesInExpression):

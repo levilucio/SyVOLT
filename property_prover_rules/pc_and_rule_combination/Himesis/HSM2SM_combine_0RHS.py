@@ -15,10 +15,10 @@ class HSM2SM_combine_0RHS(HimesisPostConditionPattern):
         super(HSM2SM_combine_0RHS, self).__init__(name='HSM2SM_combine_0RHS', num_nodes=8, edges=[])
         
         # Add the edges
-        self.add_edges([(5, 0), (0, 3), (5, 6), (6, 2), (3, 7), (7, 4), (2, 1), (1, 4)])
+        self.add_edges([[5, 0], [0, 3], [5, 6], [6, 2], [3, 7], [7, 4], [2, 1], [1, 4]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__PoliceStationMM'
+S'MT_post__GM2AUTOSAR_MM'
 p2
 aS'MoTifRule'
 p3

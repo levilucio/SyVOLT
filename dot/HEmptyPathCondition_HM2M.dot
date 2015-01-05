@@ -13,7 +13,6 @@ MatchModel10 [style=filled, fillcolor="#E15C34"];
 "Male_S11\n Classtype = 1\n Name = s_" [style=filled, fillcolor=lightblue];
 "Attribute12\n Classtype = None\n Name = name" [style=filled, fillcolor=lightblue];
 "Attribute13\n Classtype = None\n Name = name" [style=filled, fillcolor=lightblue];
-trace_link14 [style=filled, fillcolor=lightgoldenrod];
 ApplyModel5 -> apply_contains0;
 apply_contains0 -> "Male_T8\n Classtype = t_\n Name = s_";
 "Male_T8\n Classtype = t_\n Name = s_" -> "hasAttr_T1\n Classtype = None\n Name = None";
@@ -28,6 +27,4 @@ paired_with3 -> ApplyModel5;
 MatchModel10 -> match_contains7;
 match_contains7 -> "Male_S11\n Classtype = 1\n Name = s_";
 "rightExpr9\n Classtype = None\n Name = None" -> "Attribute13\n Classtype = None\n Name = name";
-trace_link14 -> "Male_S11\n Classtype = 1\n Name = s_";
-"Male_T8\n Classtype = t_\n Name = s_" -> trace_link14;
 }

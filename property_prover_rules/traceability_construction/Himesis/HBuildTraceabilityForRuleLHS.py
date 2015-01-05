@@ -18,7 +18,7 @@ class HBuildTraceabilityForRuleLHS(HimesisPreConditionPatternLHS):
         self.add_edges([])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_pre__PoliceStationMM'
+S'MT_pre__GM2AUTOSAR_MM'
 p2
 aS'MoTifRule'
 p3
@@ -43,7 +43,36 @@ p1
 
 return True
 """
-        self.vs[0]["MT_pre__name"] = """
+        self.vs[0]["MT_label__"] = """2"""
+        self.vs[0]["mm__"] = """MT_pre__MetaModelElement_T"""
+        self.vs[0]["MT_dirty__"] = False
+        self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
+S'MT_pre__EcuInstance'
+p2
+aS'MT_pre__System'
+p3
+aS'MT_pre__SystemMapping'
+p4
+aS'MT_pre__ComponentPrototype'
+p5
+aS'MT_pre__SwCompToEcuMapping_component'
+p6
+aS'MT_pre__CompositionType'
+p7
+aS'MT_pre__PPortPrototype'
+p8
+aS'MT_pre__SwcToEcuMapping'
+p9
+aS'MT_pre__SoftwareComposition'
+p10
+aS'MT_pre__RPortPrototype'
+p11
+aS'MT_pre__PortPrototype'
+p12
+aS'MT_pre__ComponentType'
+p13
+a.""")
+        self.vs[0]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -55,18 +84,7 @@ return True
 
 return True
 """
-        self.vs[0]["MT_label__"] = """2"""
-        self.vs[0]["mm__"] = """MT_pre__MetaModelElement_T"""
-        self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__Station_T'
-p2
-aS'MT_pre__Male_T'
-p3
-aS'MT_pre__Female_T'
-p4
-a.""")
-        self.vs[0]["MT_dirty__"] = False
-        self.vs[0]["MT_pre__cardinality"] = """
+        self.vs[0]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -92,7 +110,22 @@ return True
 
 return True
 """
-        self.vs[1]["MT_pre__name"] = """
+        self.vs[1]["MT_label__"] = """1"""
+        self.vs[1]["mm__"] = """MT_pre__MetaModelElement_S"""
+        self.vs[1]["MT_dirty__"] = False
+        self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
+S'MT_pre__VirtualDevice'
+p2
+aS'MT_pre__Distributable'
+p3
+aS'MT_pre__ExecFrame'
+p4
+aS'MT_pre__Signal'
+p5
+aS'MT_pre__ECU'
+p6
+a.""")
+        self.vs[1]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -104,18 +137,7 @@ return True
 
 return True
 """
-        self.vs[1]["MT_label__"] = """1"""
-        self.vs[1]["mm__"] = """MT_pre__MetaModelElement_S"""
-        self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__Station_S'
-p2
-aS'MT_pre__Male_S'
-p3
-aS'MT_pre__Female_S'
-p4
-a.""")
-        self.vs[1]["MT_dirty__"] = False
-        self.vs[1]["MT_pre__cardinality"] = """
+        self.vs[1]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -143,7 +165,7 @@ return True
         return True
 
 
-    def eval_name2(self, attr_value, this):
+    def eval_cardinality2(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.
@@ -157,7 +179,7 @@ return True
         return True
 
 
-    def eval_cardinality2(self, attr_value, this):
+    def eval_name2(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.
@@ -185,7 +207,7 @@ return True
         return True
 
 
-    def eval_name1(self, attr_value, this):
+    def eval_cardinality1(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.
@@ -199,7 +221,7 @@ return True
         return True
 
 
-    def eval_cardinality1(self, attr_value, this):
+    def eval_name1(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.

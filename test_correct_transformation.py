@@ -242,21 +242,21 @@ class Test(unittest.TestCase):
                                    [transformation[1][0], transformation[1][1]],\
                                    [transformation[2][0], transformation[2][1]]]
 
-        pyramify = PyRamify()
-        #self.rulesIncludingBackLinks = pyramify.getRulesIncludingBackLinks(transformation, self.backwardPatterns)
-
-        #transformation = [[HMapECU2FiveElements(), HMapVirtualDevice(), HMapDistributable()]]
-
-        #rulesIncludingBackLinks = [[]]
-
-
-        pre_metamodel = ["MT_pre__GM2AUTOSAR_MM", "MoTifRule"]
-        post_metamodel = ["MT_post__GM2AUTOSAR_MM", "MoTifRule"]
-        subclasses_source = ["MT_pre__VirtualDevice", 'MT_pre__Distributable','MT_pre__ExecFrame', 'MT_pre__Signal', 'MT_pre__ECU']
-        subclasses_target = ['MT_pre__EcuInstance','MT_pre__System','MT_pre__SystemMapping','MT_pre__ComponentPrototype','MT_pre__SwCompToEcuMapping_component','MT_pre__CompositionType','MT_pre__PPortPrototype','MT_pre__SwcToEcuMapping','MT_pre__SoftwareComposition','MT_pre__RPortPrototype','MT_pre__PortPrototype', 'MT_pre__ComponentType']
-
-
-        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_source, subclasses_target)
+#         pyramify = PyRamify()
+#         #self.rulesIncludingBackLinks = pyramify.getRulesIncludingBackLinks(transformation, self.backwardPatterns)
+# 
+#         #transformation = [[HMapECU2FiveElements(), HMapVirtualDevice(), HMapDistributable()]]
+# 
+#         #rulesIncludingBackLinks = [[]]
+# 
+# 
+#         pre_metamodel = ["MT_pre__GM2AUTOSAR_MM", "MoTifRule"]
+#         post_metamodel = ["MT_post__GM2AUTOSAR_MM", "MoTifRule"]
+#         subclasses_source = ["MT_pre__VirtualDevice", 'MT_pre__Distributable','MT_pre__ExecFrame', 'MT_pre__Signal', 'MT_pre__ECU']
+#         subclasses_target = ['MT_pre__EcuInstance','MT_pre__System','MT_pre__SystemMapping','MT_pre__ComponentPrototype','MT_pre__SwCompToEcuMapping_component','MT_pre__CompositionType','MT_pre__PPortPrototype','MT_pre__SwcToEcuMapping','MT_pre__SoftwareComposition','MT_pre__RPortPrototype','MT_pre__PortPrototype', 'MT_pre__ComponentType']
+# 
+# 
+#         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_source, subclasses_target)
 
 
         print("create state space")

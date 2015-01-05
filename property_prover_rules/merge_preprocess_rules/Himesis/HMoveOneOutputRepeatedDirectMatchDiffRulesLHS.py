@@ -18,7 +18,7 @@ class HMoveOneOutputRepeatedDirectMatchDiffRulesLHS(HimesisPreConditionPatternLH
         self.add_edges([[3, 0], [0, 4], [2, 1], [1, 4]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_pre__PoliceStationMM'
+S'MT_pre__GM2AUTOSAR_MM'
 p2
 aS'MoTifRule'
 p3
@@ -98,12 +98,16 @@ return True
         self.vs[2]["MT_label__"] = """3"""
         self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__Station_S'
+S'MT_pre__VirtualDevice'
 p2
-aS'MT_pre__Male_S'
+aS'MT_pre__Distributable'
 p3
-aS'MT_pre__Female_S'
+aS'MT_pre__ExecFrame'
 p4
+aS'MT_pre__Signal'
+p5
+aS'MT_pre__ECU'
+p6
 a.""")
         self.vs[2]["MT_dirty__"] = False
         self.vs[2]["MT_pre__name"] = """
@@ -149,12 +153,16 @@ return True
         self.vs[3]["MT_label__"] = """4"""
         self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[3]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__Station_S'
+S'MT_pre__VirtualDevice'
 p2
-aS'MT_pre__Male_S'
+aS'MT_pre__Distributable'
 p3
-aS'MT_pre__Female_S'
+aS'MT_pre__ExecFrame'
 p4
+aS'MT_pre__Signal'
+p5
+aS'MT_pre__ECU'
+p6
 a.""")
         self.vs[3]["MT_dirty__"] = False
         self.vs[3]["MT_pre__name"] = """
@@ -198,12 +206,16 @@ return True
         self.vs[4]["MT_label__"] = """5"""
         self.vs[4]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[4]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__Station_S'
+S'MT_pre__VirtualDevice'
 p2
-aS'MT_pre__Male_S'
+aS'MT_pre__Distributable'
 p3
-aS'MT_pre__Female_S'
+aS'MT_pre__ExecFrame'
 p4
+aS'MT_pre__Signal'
+p5
+aS'MT_pre__ECU'
+p6
 a.""")
         self.vs[4]["MT_dirty__"] = False
         self.vs[4]["MT_pre__name"] = """

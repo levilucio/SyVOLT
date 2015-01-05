@@ -18,7 +18,7 @@ class HBuildTraceabilityForRuleRHS(HimesisPostConditionPattern):
         self.add_edges([[1, 0], [2, 1]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__PoliceStationMM'
+S'MT_post__GM2AUTOSAR_MM'
 p2
 aS'MoTifRule'
 p3

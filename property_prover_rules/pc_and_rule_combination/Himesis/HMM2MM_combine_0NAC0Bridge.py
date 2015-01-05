@@ -25,38 +25,38 @@ class HMM2MM_combine_0NAC0Bridge(HimesisPreConditionPattern):
 from HMM2MM_combine_0LHS import HMM2MM_combine_0LHS
 lhs = HMM2MM_combine_0LHS()
 return HMM2MM_combine_0NAC0(lhs).eval_classtype1(attr_value, this) and HMM2MM_combine_0LHS().eval_classtype1(attr_value, this)"""
-        self.vs[0]["MT_pre__name"] = """from HMM2MM_combine_0NAC0 import HMM2MM_combine_0NAC0
-from HMM2MM_combine_0LHS import HMM2MM_combine_0LHS
-lhs = HMM2MM_combine_0LHS()
-return HMM2MM_combine_0NAC0(lhs).eval_name1(attr_value, this) and HMM2MM_combine_0LHS().eval_name1(attr_value, this)"""
         self.vs[0]["MT_label__"] = """1"""
         self.vs[0]["mm__"] = """MT_pre__Male_S"""
+        self.vs[0]["MT_dirty__"] = False
         self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
-        self.vs[0]["MT_dirty__"] = False
         self.vs[0]["MT_pre__cardinality"] = """from HMM2MM_combine_0NAC0 import HMM2MM_combine_0NAC0
 from HMM2MM_combine_0LHS import HMM2MM_combine_0LHS
 lhs = HMM2MM_combine_0LHS()
 return HMM2MM_combine_0NAC0(lhs).eval_cardinality1(attr_value, this) and HMM2MM_combine_0LHS().eval_cardinality1(attr_value, this)"""
+        self.vs[0]["MT_pre__name"] = """from HMM2MM_combine_0NAC0 import HMM2MM_combine_0NAC0
+from HMM2MM_combine_0LHS import HMM2MM_combine_0LHS
+lhs = HMM2MM_combine_0LHS()
+return HMM2MM_combine_0NAC0(lhs).eval_name1(attr_value, this) and HMM2MM_combine_0LHS().eval_name1(attr_value, this)"""
         self.vs[0]["GUID__"] = UUID('0d9e56fd-078c-4fb4-b7d2-7d164e1e70fb')
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_pre__classtype"] = """from HMM2MM_combine_0NAC0 import HMM2MM_combine_0NAC0
 from HMM2MM_combine_0LHS import HMM2MM_combine_0LHS
 lhs = HMM2MM_combine_0LHS()
 return HMM2MM_combine_0NAC0(lhs).eval_classtype2(attr_value, this) and HMM2MM_combine_0LHS().eval_classtype2(attr_value, this)"""
-        self.vs[1]["MT_pre__name"] = """from HMM2MM_combine_0NAC0 import HMM2MM_combine_0NAC0
-from HMM2MM_combine_0LHS import HMM2MM_combine_0LHS
-lhs = HMM2MM_combine_0LHS()
-return HMM2MM_combine_0NAC0(lhs).eval_name2(attr_value, this) and HMM2MM_combine_0LHS().eval_name2(attr_value, this)"""
         self.vs[1]["MT_label__"] = """2"""
         self.vs[1]["mm__"] = """MT_pre__Male_S"""
+        self.vs[1]["MT_dirty__"] = False
         self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
-        self.vs[1]["MT_dirty__"] = False
         self.vs[1]["MT_pre__cardinality"] = """from HMM2MM_combine_0NAC0 import HMM2MM_combine_0NAC0
 from HMM2MM_combine_0LHS import HMM2MM_combine_0LHS
 lhs = HMM2MM_combine_0LHS()
 return HMM2MM_combine_0NAC0(lhs).eval_cardinality2(attr_value, this) and HMM2MM_combine_0LHS().eval_cardinality2(attr_value, this)"""
+        self.vs[1]["MT_pre__name"] = """from HMM2MM_combine_0NAC0 import HMM2MM_combine_0NAC0
+from HMM2MM_combine_0LHS import HMM2MM_combine_0LHS
+lhs = HMM2MM_combine_0LHS()
+return HMM2MM_combine_0NAC0(lhs).eval_name2(attr_value, this) and HMM2MM_combine_0LHS().eval_name2(attr_value, this)"""
         self.vs[1]["GUID__"] = UUID('bbdf0d91-5b19-4d6d-8c5b-7734c48cdd4a')
 
     def eval_classtype1(self, attr_value, this):
@@ -66,18 +66,18 @@ return HMM2MM_combine_0NAC0(lhs).eval_cardinality2(attr_value, this) and HMM2MM_
         return HMM2MM_combine_0NAC0(lhs).eval_classtype1(attr_value, this) and HMM2MM_combine_0LHS().eval_classtype1(attr_value, this)
 
 
-    def eval_name1(self, attr_value, this):
-        from HMM2MM_combine_0NAC0 import HMM2MM_combine_0NAC0
-        from HMM2MM_combine_0LHS import HMM2MM_combine_0LHS
-        lhs = HMM2MM_combine_0LHS()
-        return HMM2MM_combine_0NAC0(lhs).eval_name1(attr_value, this) and HMM2MM_combine_0LHS().eval_name1(attr_value, this)
-
-
     def eval_cardinality1(self, attr_value, this):
         from HMM2MM_combine_0NAC0 import HMM2MM_combine_0NAC0
         from HMM2MM_combine_0LHS import HMM2MM_combine_0LHS
         lhs = HMM2MM_combine_0LHS()
         return HMM2MM_combine_0NAC0(lhs).eval_cardinality1(attr_value, this) and HMM2MM_combine_0LHS().eval_cardinality1(attr_value, this)
+
+
+    def eval_name1(self, attr_value, this):
+        from HMM2MM_combine_0NAC0 import HMM2MM_combine_0NAC0
+        from HMM2MM_combine_0LHS import HMM2MM_combine_0LHS
+        lhs = HMM2MM_combine_0LHS()
+        return HMM2MM_combine_0NAC0(lhs).eval_name1(attr_value, this) and HMM2MM_combine_0LHS().eval_name1(attr_value, this)
 
 
     def eval_classtype2(self, attr_value, this):
@@ -87,18 +87,18 @@ return HMM2MM_combine_0NAC0(lhs).eval_cardinality2(attr_value, this) and HMM2MM_
         return HMM2MM_combine_0NAC0(lhs).eval_classtype2(attr_value, this) and HMM2MM_combine_0LHS().eval_classtype2(attr_value, this)
 
 
-    def eval_name2(self, attr_value, this):
-        from HMM2MM_combine_0NAC0 import HMM2MM_combine_0NAC0
-        from HMM2MM_combine_0LHS import HMM2MM_combine_0LHS
-        lhs = HMM2MM_combine_0LHS()
-        return HMM2MM_combine_0NAC0(lhs).eval_name2(attr_value, this) and HMM2MM_combine_0LHS().eval_name2(attr_value, this)
-
-
     def eval_cardinality2(self, attr_value, this):
         from HMM2MM_combine_0NAC0 import HMM2MM_combine_0NAC0
         from HMM2MM_combine_0LHS import HMM2MM_combine_0LHS
         lhs = HMM2MM_combine_0LHS()
         return HMM2MM_combine_0NAC0(lhs).eval_cardinality2(attr_value, this) and HMM2MM_combine_0LHS().eval_cardinality2(attr_value, this)
+
+
+    def eval_name2(self, attr_value, this):
+        from HMM2MM_combine_0NAC0 import HMM2MM_combine_0NAC0
+        from HMM2MM_combine_0LHS import HMM2MM_combine_0LHS
+        lhs = HMM2MM_combine_0LHS()
+        return HMM2MM_combine_0NAC0(lhs).eval_name2(attr_value, this) and HMM2MM_combine_0LHS().eval_name2(attr_value, this)
 
 
     def constraint(self, PreNode, graph):

@@ -15,10 +15,10 @@ class HFF2FF_combine_0LHS(HimesisPreConditionPatternLHS):
         super(HFF2FF_combine_0LHS, self).__init__(name='HFF2FF_combine_0LHS', num_nodes=6, edges=[])
         
         # Add the edges
-        self.add_edges([(0, 2), (1, 3), (2, 4), (3, 5)])
+        self.add_edges([[0, 2], [1, 3], [2, 4], [3, 5]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_pre__PoliceStationMM'
+S'MT_pre__GM2AUTOSAR_MM'
 p2
 aS'MoTifRule'
 p3

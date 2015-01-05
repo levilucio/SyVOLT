@@ -18,7 +18,7 @@ class HMergeCardinalitiesMatchDiffRulesLHS(HimesisPreConditionPatternLHS):
         self.add_edges([])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_pre__PoliceStationMM'
+S'MT_pre__GM2AUTOSAR_MM'
 p2
 aS'MoTifRule'
 p3
@@ -47,18 +47,6 @@ return False
 
 return True
 """
-        self.vs[0]["MT_pivotIn__"] = """element1"""
-        self.vs[0]["MT_label__"] = """1"""
-        self.vs[0]["mm__"] = """MT_pre__MetaModelElement_S"""
-        self.vs[0]["MT_dirty__"] = False
-        self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__Station_S'
-p2
-aS'MT_pre__Male_S'
-p3
-aS'MT_pre__Female_S'
-p4
-a.""")
         self.vs[0]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -71,6 +59,21 @@ a.""")
 
 return True
 """
+        self.vs[0]["MT_pivotIn__"] = """element1"""
+        self.vs[0]["MT_label__"] = """1"""
+        self.vs[0]["mm__"] = """MT_pre__MetaModelElement_S"""
+        self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
+S'MT_pre__VirtualDevice'
+p2
+aS'MT_pre__Distributable'
+p3
+aS'MT_pre__ExecFrame'
+p4
+aS'MT_pre__Signal'
+p5
+aS'MT_pre__ECU'
+p6
+a.""")
         self.vs[0]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -83,6 +86,7 @@ return True
 
 return True
 """
+        self.vs[0]["MT_dirty__"] = False
         self.vs[0]["GUID__"] = UUID('f27b9a3e-1709-46bf-8f3e-191289510b72')
         self.vs[1]["MT_pivotOut__"] = """element2"""
         self.vs[1]["MT_subtypeMatching__"] = True
@@ -98,18 +102,6 @@ return True
 
 return True
 """
-        self.vs[1]["MT_pivotIn__"] = """element2"""
-        self.vs[1]["MT_label__"] = """2"""
-        self.vs[1]["mm__"] = """MT_pre__MetaModelElement_S"""
-        self.vs[1]["MT_dirty__"] = False
-        self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__Station_S'
-p2
-aS'MT_pre__Male_S'
-p3
-aS'MT_pre__Female_S'
-p4
-a.""")
         self.vs[1]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -122,6 +114,21 @@ a.""")
 
 return True
 """
+        self.vs[1]["MT_pivotIn__"] = """element2"""
+        self.vs[1]["MT_label__"] = """2"""
+        self.vs[1]["mm__"] = """MT_pre__MetaModelElement_S"""
+        self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
+S'MT_pre__VirtualDevice'
+p2
+aS'MT_pre__Distributable'
+p3
+aS'MT_pre__ExecFrame'
+p4
+aS'MT_pre__Signal'
+p5
+aS'MT_pre__ECU'
+p6
+a.""")
         self.vs[1]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -134,6 +141,7 @@ return True
 
 return True
 """
+        self.vs[1]["MT_dirty__"] = False
         self.vs[1]["GUID__"] = UUID('584f45b6-212e-487f-8cb8-0e53a69c7ee6')
 
     def eval_classtype1(self, attr_value, this):

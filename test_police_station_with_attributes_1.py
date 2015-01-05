@@ -33,6 +33,20 @@ from PoliceStationMM.transformation_1.Himesis.HFF2FF import HFF2FF
 # combination rules
 # ------------------
 
+from PoliceStationMM.pc_and_rule_combination_1.Himesis.HS2S_combineLHS import HS2S_combineLHS
+from PoliceStationMM.pc_and_rule_combination_1.Himesis.HS2S_combineRHS import HS2S_combineRHS
+
+from PoliceStationMM.pc_and_rule_combination_1.Himesis.HM2M_combineLHS import HM2M_combineLHS
+from PoliceStationMM.pc_and_rule_combination_1.Himesis.HM2M_combineRHS import HM2M_combineRHS
+
+from PoliceStationMM.pc_and_rule_combination_1.Himesis.HF2F_combineLHS import HF2F_combineLHS
+from PoliceStationMM.pc_and_rule_combination_1.Himesis.HF2F_combineRHS import HF2F_combineRHS
+
+from PoliceStationMM.pc_and_rule_combination_1.Himesis.HFF2FF_combine_0LHS import HFF2FF_combine_0LHS
+from PoliceStationMM.pc_and_rule_combination_1.Himesis.HFF2FF_combine_0RHS import HFF2FF_combine_0RHS
+from PoliceStationMM.pc_and_rule_combination_1.Himesis.HFF2FF_combine_1LHS import HFF2FF_combine_1LHS
+from PoliceStationMM.pc_and_rule_combination_1.Himesis.HFF2FF_combine_1RHS import HFF2FF_combine_1RHS
+
 from PoliceStationMM.pc_and_rule_combination_1.Himesis.HFF2FF_combine_0LHS import HFF2FF_combine_0LHS
 from PoliceStationMM.pc_and_rule_combination_1.Himesis.HFF2FF_combine_0RHS import HFF2FF_combine_0RHS
 from PoliceStationMM.pc_and_rule_combination_1.Himesis.HFF2FF_combine_1LHS import HFF2FF_combine_1LHS
@@ -103,7 +117,7 @@ class Test(unittest.TestCase):
                       "SM2SM": HSM2SM(),
                       "SF2SF": HSF2SF(),
                       "MM2MM": HMM2MM(),
-                      "FF2FF": HMM2MM(),                      
+                      "FF2FF": HFF2FF(),                      
                       }
         
         self.transformation = [[self.rules["S2S"], self.rules["M2M"], self.rules["F2F"]],\
@@ -130,6 +144,15 @@ class Test(unittest.TestCase):
                                   self.transformation[1][1].name: Matcher(HSF2SF_trace_checkLHS()),                    
                                   self.transformation[1][2].name: Matcher(HMM2MM_trace_checkLHS()),
                                   self.transformation[1][3].name: Matcher(HFF2FF_trace_checkLHS())}
+        
+        self.matchRulePatterns = {self.transformation[0][0].name: (Matcher(HS2S_combineLHS()),Rewriter(HS2S_combineRHS())),
+                                  self.transformation[0][1].name: (Matcher(HM2M_combineLHS()),Rewriter(HM2M_combineRHS())),
+                                  self.transformation[0][2].name: (Matcher(HF2F_combineLHS()),Rewriter(HF2F_combineRHS())),
+                                  self.transformation[1][0].name: (Matcher(HSM2SM_combine_1LHS()),Rewriter(HSM2SM_combine_1RHS())),
+                                  self.transformation[1][1].name: (Matcher(HSF2SF_combine_1LHS()),Rewriter(HSF2SF_combine_1RHS())),                    
+                                  self.transformation[1][2].name: (Matcher(HMM2MM_combine_1LHS()),Rewriter(HMM2MM_combine_1RHS())),
+                                  self.transformation[1][3].name: (Matcher(HFF2FF_combine_1LHS()),Rewriter(HFF2FF_combine_1RHS()))}
+
 
 #         self.ruleCombinators = {self.transformation[0][0]: None,
 #                                 self.transformation[0][1]: None,
@@ -185,7 +208,8 @@ class Test(unittest.TestCase):
 #        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_source, subclasses_target)
  
         print("create state space")
-        s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, 2)
+        s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, \
+                                   self.matchRulePatterns, 2)
  
         ts0 = time.time()
         s.build_path_conditions()
@@ -207,9 +231,9 @@ class Test(unittest.TestCase):
 #         print(finalresult)
 #         tv11 = time.time()
  
-        print("Time to build the set of path conditions: " + str(ts1 - ts0))
-        print("Size of the set of path conditions: " + str(sys.getsizeof(s.pathConditionSet) / 1024))
-        print("Number of path conditions: " + str(len(s.pathConditionSet)))
+#         print("Time to build the set of path conditions: " + str(ts1 - ts0))
+#         print("Size of the set of path conditions: " + str(sys.getsizeof(s.pathConditionSet) / 1024))
+#         print("Number of path conditions: " + str(len(s.pathConditionSet)))
 #         print
 #         '\n'
 #         print
@@ -222,10 +246,9 @@ class Test(unittest.TestCase):
  
         print("printing path conditions")
         s.print_path_conditions_screen()
-        
-        s.print_path_conditions_file()        
          
-#         graph_to_dot('symbolic_exec', s.symbStateSpace[1][0], 1) 
+        s.print_path_conditions_file()        
+
           
           
         ####REAL EXPERIMENTATION: Proving the 4 types of constraints in our MODELS paper
