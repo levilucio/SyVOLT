@@ -109,7 +109,6 @@ class PathConditionGenerator():
       
         # the path condition set starts with only the empty (None) path condition inside
         self.pathConditionSet = [HEmptyPathCondition()]        
-        self.ruleOrder = []
 #        self.verifiedStateCache = []
         self.collapseFactory = CollapseFactory(verbosity)
         self.mergePreprocessFactory = MergePreprocessFactory(verbosity)
@@ -331,8 +330,10 @@ class PathConditionGenerator():
              
         # now build the partial order of rules as a dictionary per layer
         # the keys are rules that are larger than the elements in the order 
+        ruleOrder = []
+        
         for layerIndex in range(0,len(layerpairs)):
-            self.ruleOrder.append({})
+            ruleOrder.append({})
             for pair in layerpairs[layerIndex]:
                 p = Packet()
                 p.graph = pair[1]
@@ -352,19 +353,71 @@ class PathConditionGenerator():
                         if self.evaluate_attribute_equations(p.graph):
                             dependentRules = True
                             break
-                        p = i.next_in(p)                                                   
-                
+                        p = i.next_in(p)                                                                   
                     
                     if dependentRules:
                         # the partial order may branch, so we need lists to store the smaller elements
-                        if pair[1] not in self.ruleOrder[layerIndex].keys():
-                            self.ruleOrder[layerIndex][pair[1]] = [pair[0]]
+                        if pair[1] not in ruleOrder[layerIndex].keys():
+                            ruleOrder[layerIndex][pair[1]] = [pair[0]]
                         else:
-                            self.ruleOrder[layerIndex][pair[1]].append(pair[0])
+                            ruleOrder[layerIndex][pair[1]].append(pair[0])
 
-        print 'Partial Order:'                    
-        print self.ruleOrder
+        if self.verbosity >= 2:
+            print 'Subsumption order between rules for all layers:'                    
+            print ruleOrder
         
+        # now reorder the rules within each layer of the transformation such that the rules that are
+        # contained in others always appear first. This makes it possible to make it such that when
+        # rules are symbolically executed to build the path conditions, we can force subsumed rules
+        # to executed with the rules that subsume them.
+             
+        
+        for layerIndex in range(0,len(self.transformation)):
+
+            # first find all the top nodes
+            topNodes = []
+
+            for node in ruleOrder[layerIndex].keys():
+                topnode = True
+                for nodepass in ruleOrder.keys():
+                    if node in set(ruleOrder[nodepass]):
+                        topnode = False
+                if topnode: topNodes.append(node)
+
+            orderedNodes = []            
+            orderedNodes.extend(topNodes)
+            
+            # auxiliary function to order the nodes recursively, starting from the top nodes
+            def build_ordered_nodes(topNodes):
+                newTopNodes = []
+                for node in topNodes:
+                    if node in set(self.partialOrder.keys()):
+                        newTopNodes.extend(self.partialOrder[node])
+                        orderedNodes.extend(self.partialOrder[node])
+                
+                if newTopNodes != [] : self.build_ordered_nodes(newTopNodes)
+            
+            print "---------------- before"
+            print orderedNodes
+            
+            # continue adding nodes as we go down the tree
+            build_ordered_nodes(topNodes)
+            
+            print orderedNodes
+            print "---------------- after"
+
+            # remove from the layer the rules that need to be ordered
+            self.transformation[layerIndex] = list(set(self.transformation[layerIndex]) - set(orderedNodes))   
+            # now place the reordered rules back in the layer, at the end
+            
+            print list(reversed(orderedNodes))
+            
+            print self.transformation[layerIndex] 
+            
+            self.transformation[layerIndex] = self.transformation[layerIndex]#.extend(list(reversed(orderedNodes)))
+            
+            print self.transformation[layerIndex] 
+                       
 
 
     def build_path_conditions(self):     
