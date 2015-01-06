@@ -26,6 +26,10 @@ class Test(unittest.TestCase):
         
         self.build_depth()
         
+        req = self.calc_required(['R2'], self.partialOrder)
+        
+        print req
+        
     
     def build_depth(self):
         
@@ -54,7 +58,16 @@ class Test(unittest.TestCase):
                 self.orderedNodes.extend(self.partialOrder[node])
         
         if newTopNodes != [] : self.build_ordered_nodes(newTopNodes)
-            
+        
+
+    def calc_required(self, rules, ruleContainment):
+        requiredRules = []
+        for rule in rules:
+            if rule in set(ruleContainment.keys()):
+                requiredRules = ruleContainment[rule]
+                requiredRules.extend(self.calc_required(ruleContainment[rule], ruleContainment))
+        return requiredRules
+                
         
             
         

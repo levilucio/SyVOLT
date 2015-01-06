@@ -84,7 +84,7 @@ class PathConditionGenerator():
                            duplicate collapses resulting from multiple collapses of the same rules.
         - mergeFactory: holds the object that allows performing merges. The object contains a cache of its own to handle
                      duplicate merges resulting from multiple collapses of the same rules.
-        - ruleOrder: holds for each layer a lattice representing which match patterns for rules are included in those of other rules
+        - ruleContainment: holds for each layer a lattice representing which match patterns for rules are included in those of other rules
         - verbosity: verbosity level (0 - no verbosity / 1 - verbose / 2 - debug)
         - outputStates: True - output all the produced states, including collapsed one, in svg format
                           
@@ -94,6 +94,8 @@ class PathConditionGenerator():
         self.transformation = transformation
         self.ruleCombinators = ruleCombinators
         self.ruleTraceCheckers = ruleTraceCheckers
+        
+        self.ruleContainment = []
 
 #         self.print_transformation()
 #         self.print_ruleCombinators()
@@ -330,10 +332,10 @@ class PathConditionGenerator():
              
         # now build the partial order of rules as a dictionary per layer
         # the keys are rules that are larger than the elements in the order 
-        ruleOrder = []
+        ruleContainment = []
         
         for layerIndex in range(0,len(layerpairs)):
-            ruleOrder.append({})
+            ruleContainment.append({})
             for pair in layerpairs[layerIndex]:
                 p = Packet()
                 p.graph = pair[1]
@@ -357,53 +359,54 @@ class PathConditionGenerator():
                     
                     if dependentRules:
                         # the partial order may branch, so we need lists to store the smaller elements
-                        if pair[1] not in ruleOrder[layerIndex].keys():
-                            ruleOrder[layerIndex][pair[1]] = [pair[0]]
+                        if pair[1] not in ruleContainment[layerIndex].keys():
+                            ruleContainment[layerIndex][pair[1]] = [pair[0]]
                         else:
-                            ruleOrder[layerIndex][pair[1]].append(pair[0])
+                            ruleContainment[layerIndex][pair[1]].append(pair[0])
+                            
+        self.ruleContainment = ruleContainment
 
         if self.verbosity >= 2:
             print 'Subsumption order between rules for all layers:'                    
-            print ruleOrder
+            print ruleContainment
         
         # now reorder the rules within each layer of the transformation such that the rules that are
         # contained in others always appear first. This makes it possible to make it such that when
         # rules are symbolically executed to build the path conditions, we can force subsumed rules
         # to executed with the rules that subsume them.
-             
-        
+                     
         for layerIndex in range(0,len(self.transformation)):
 
             # first find all the top nodes
-            topNodes = []
+            topRules = []
 
-            for node in ruleOrder[layerIndex].keys():
-                topnode = True
-                for nodepass in ruleOrder.keys():
-                    if node in set(ruleOrder[nodepass]):
-                        topnode = False
-                if topnode: topNodes.append(node)
+            for rule in ruleContainment[layerIndex].keys():
+                toprule = True
+                for rulepass in ruleContainment.keys():
+                    if rule in set(ruleContainment[rulepass]):
+                        toprule = False
+                if toprule: topRules.append(rule)
 
-            orderedNodes = []            
-            orderedNodes.extend(topNodes)
+            orderedRules = []            
+            orderedRules.extend(topRules)
             
             # auxiliary function to order the nodes recursively, starting from the top nodes
-            def build_ordered_nodes(topNodes):
-                newTopNodes = []
-                for node in topNodes:
-                    if node in set(self.partialOrder.keys()):
-                        newTopNodes.extend(self.partialOrder[node])
-                        orderedNodes.extend(self.partialOrder[node])
+            def _build_ordered_rules(topRules):
+                newTopRules = []
+                for rule in topRules:
+                    if rule in set(self.partialOrder.keys()):
+                        newTopRules.extend(self.partialOrder[rule])
+                        orderedRules.extend(self.partialOrder[rule])
                 
-                if newTopNodes != [] : self.build_ordered_nodes(newTopNodes)
+                if newTopRules != [] : _build_ordered_rules(newTopRules)
             
             # continue adding nodes as we go down the tree
-            build_ordered_nodes(topNodes)
+            _build_ordered_rules(topRules)
 
             # remove from the layer the rules that need to be ordered
-            self.transformation[layerIndex] = list(set(self.transformation[layerIndex]) - set(orderedNodes))   
+            self.transformation[layerIndex] = list(set(self.transformation[layerIndex]) - set(orderedRules))   
             # now place the reordered rules back in the layer, at the end
-            self.transformation[layerIndex].extend(list(reversed(orderedNodes)))
+            self.transformation[layerIndex].extend(list(reversed(orderedRules)))
 
 
 
@@ -452,7 +455,42 @@ class PathConditionGenerator():
                         print "Treating rule:"
                         print rule.name
                         print "Combining with:"
-                        print "Path Condition:" + self.pathConditionSet[pathCondition].name           
+                        print "Path Condition:" + self.pathConditionSet[pathCondition].name
+                        
+                    # first check if the rule requires any other rules to execute with it,
+                    # in case of rule overlapping. If all the rules that are required to execute
+                    # are already present in the path condition, then the rule executes.
+                    # If they are not, then the combination is not possible and we can skip it.
+                    
+                    # function to return all the rules that have to execute if the current rule executes.
+                    
+                    def calc_required(rules):
+                        requiredRules = []
+                        for rule in rules:
+                            if rule in set(self.ruleContainment[layer].keys()):
+                                requiredRules = self.ruleContainment[layer][rule]
+                                requiredRules.extend(self.calc_required(self.ruleContainment[layer][rule]))
+                        return requiredRules
+                    
+                    
+                    requiredRules = calc_required([rule])
+                    
+                    # now check if all the required rules exist in the path condition
+                    # by checking the path condition's name. Note that "_" (underscore) is
+                    # the rule name separator, so rules names cannot have underscores
+                   
+                    combinationIsPossible = True                
+                    if requiredRules != []:
+                        namesOfRulesinPathCond = pathCondition.name.split("_")
+                        for rule in requiredRules:
+                            if rule.name not in set(namesOfRulesinPathCond):
+                                combinationIsPossible = False
+                    
+                    if not combinationIsPossible:
+                        if self.verbosity >= 2:
+                            print "Cannot combine: missing required rules that should have executed\
+                                    because they are subsumed by the executed rule!"                      
+                        continue                   
 
                     # possible cases of rule combination                    
 
@@ -577,7 +615,7 @@ class PathConditionGenerator():
                                             
                                             # check if the equations on the attributes of the newly created path condition are satisfied
                                             
-                                            # if self.evaluate_attribute_equations(newPathCond):
+                                            #if self.evaluate_attribute_equations(newPathCond):
                                             
                                             if True:
                                             
@@ -608,162 +646,6 @@ class PathConditionGenerator():
             self.pathConditionSet = layerPathCondAccumulator
                 
 
-
-#     def _rulePowerSet(self,rules,layer):
-#         """
-#         build the powerset of rules in a layer
-#         
-#         eliminate from the powerset rules that cannot execute alone, because they imply the execution of other rules.
-#         this implication is calculated by looking at the partial order implied by containment between the match
-#         patterns contained in the self.ruleOrder attribute
-#         """
-#       
-#         rulePowerset = list(chain.from_iterable(combinations(rules, r) for r in range(len(rules)+1)))
-#                       
-#         # go down all the branches of the partial orders until bottom elements are reached.
-#         # when traversing each node branches merge all the rules downtstream from it recursively 
-#         # and build new rules from this merging that are put together with the rules of the
-#         # transformation, but are only used for the powerset that is returned
-#         
-#         if self.ruleOrder[layer] != {}:
-#             for rule in rules:
-#                 branchMergeResult = self._recursiveRuleMerge(rule,layer)
-#                 if branchMergeResult != None:          
-#                                         
-#                     rulePowerset = [comb for comb in rulePowerset if branchMergeResult[1] != set(comb) and set([rule]) != set(comb)]     
-#                                       
-#                     # add to the powerset the new rule as a member of the set
-#                     rulePowerset.append((branchMergeResult[0],))
-#                     
-#                     # add the new rule to the rules in the layer.
-#                     # The rule will be treated as a preprocessed merged rule given it is important to
-#                     # know what are the auxiliary structures for it. This treatment cannot be done during the
-#                     # preprocess step and needs to be done dynamically because smaller rules in the partial 
-#                     # order need to exist both individually in the powerset and also collapsed with larger rules
-#                     
-#                     # build the auxiliary structures for the newly merged rules
-#                     #rules
-#                     self.rules[branchMergeResult[0].name] = branchMergeResult[0]
-#                     # rulesIncludingBackwardLinks
-#                     if set(branchMergeResult[1]).intersection(set(self.rulesIncludingBackwardLinks[layer])) != set([]):
-#                         self.rulesIncludingBackwardLinks[layer].append(branchMergeResult[0])
-#                     # backwardPatterns
-#                     newBackwardPattern = []
-#                     for rule in branchMergeResult[1]:
-#                         if self.backwardPatterns[rule.name] != []:
-#                             for matcher in self.backwardPatterns[rule.name]:
-#                                 # build copies of all the matchers such that there is no overlap with the matchers that
-#                                 # are used by the smaller rule
-#                                 #tmp = getattr(sys.modules[__name__], matcher.condition.name)()
-#                                 newMatcher = copy.deepcopy(matcher)#Matcher(tmp)
-#                                 #newMatcher = deepcopy(matcher)
-#                                 newBackwardPattern.append(newMatcher)
-#                                 # add copy of the matcher to the backwardPatterns2Rules structure
-#                                 self.backwardPatterns2Rules[newMatcher] = branchMergeResult[0].name               
-#                          
-#                     self.backwardPatterns[branchMergeResult[0].name] = newBackwardPattern                
-#                     # backwardPatternsComplete
-#                     self.backwardPatternsComplete[branchMergeResult[0].name] = self.backwardPatternsComplete[rule.name]  
-#                     # matchRulePatterns
-#                     self.matchRulePatterns[branchMergeResult[0].name] = self.matchRulePatterns[rule.name]
-# 
-#                     # remove from the powerset path conditions that include rules that form "branches" of the
-#                     # partial order, since they are superseded by the merge of the top rule of the partial
-#                     # order with all the rules, potentially in branches, under it. Leaf nodes or combinations
-#                     # of leaf nodes are not removed.
-#             
-#                     rulePowerset = [pc for pc in rulePowerset if set(pc).difference(branchMergeResult[1]) != set([]) or\
-#                                     set([rule for rule in pc if rule not in self.ruleOrder[layer].keys()]) == set(pc)]
-#                     
-#             # remove the smallest members of the powerset where all match elements are connected by
-#             # backward links. In this case, if a larger (with a larger match patterns) rule merged with
-#             # this one executed, then this one had to necessarily execute because all apply elements
-#             # backward linked in the smaller rule already exist.
-#             # TODO: This assumes that no dead code rules exist that refers to traces that are never
-#             # generated by a previous layer.
-#             
-#             # go through all the smallest members of the partial order and remove their path conditions
-#             # from the powerset in all the elements in their match pattern are connected by backward links
-#             for rule in rules:
-#                 if rule not in self.ruleOrder[layer].keys():
-#                     # check if all the elements in their match pattern are connected by backward links
-# #                    print 'Rule not in self.ruleOrder:'
-# #                    print rule
-#                     
-#                     p = Packet()
-#                     p.graph = rule
-#                     check_for_no_backward_links.packet_in(p)
-#                     if not check_for_no_backward_links.is_success:
-#                         for pathCondition in rulePowerset:
-#                             if rule in set(pathCondition) and len(pathCondition) == 1:
-#                                 rulePowerset.remove(pathCondition)
-#                                 break
-#             
-# #            print 'Transformation:'
-# #            for layer in range(0,len(self.transformation)):
-# #                print 'Layer ' + str(layer)
-# #                for rule in self.transformation[layer]:
-# #                    print rule
-# #    
-# #            print '\nRules:'
-# #            print self.rules
-# #            
-# #            print '\nRules Including Backward Links:'
-# #            for layer in range(0,len(self.rulesIncludingBackwardLinks)):
-# #                print 'Layer: ' + str(layer)
-# #                for rule in self.rulesIncludingBackwardLinks[layer]:
-# #                    print rule
-# #                  
-# #            print '\nBackward Pattern Matchers:'
-# #            print self.backwardPatterns
-# #            
-# #            print '\nBackward Pattern 2 Rules Matchers:'
-# #            print self.backwardPatterns2Rules             
-# #            
-# #            print '\nBackward Complete Matchers:'
-# #            print self.backwardPatternsComplete
-# #            
-# #            print '\nMatch Rule Patterns:'
-# #            print self.matchRulePatterns           
-#                 
-#         
-#         
-# #        for pc in rulePowerset:
-# #            if pc != ():           
-# #                graph_to_dot(pc[0].name, pc[0], 1) 
-#    
-#         return rulePowerset
-
-        
-#     def _recursiveRuleMerge(self,rule,layer):
-#         """
-#         go down a, potentially branching, partial order (in the self.ruleOrder dictionary) and merge all the rules
-#         until bottom elements are reached. Returns the merged rule plus the set of all rules in the partial
-#         order under the top element.
-#         TODO: can be optimised by starting from the bottom of the branches and building up 
-#         """
-# 
-#         print("_recursiveRuleMerge")
-#         print_graph(rule)
-#         print(layer)
-#         if rule in self.ruleOrder[layer].keys():
-#             # accumulate set of treated rules
-#             setOfMergedRules = set([rule])
-#             # accumulate the result of merging all the rules down the branch
-#             mergedResult = deepcopy(rule)  
-#             previousRules = self.ruleOrder[layer][rule]
-#             for previousRule in previousRules:
-#                 print("PreviousRule")
-#                 print_graph(previousRule)
-#                 branchMergedResult = self._recursiveRuleMerge(previousRule,layer)
-#                 if branchMergedResult != None:
-#                     mergedResult = self.mergePreprocessFactory.merge_two_rules_preprocess(mergedResult, branchMergedResult[0])
-#                     setOfMergedRules.union(branchMergedResult[1])
-#                 mergedResult = self.mergePreprocessFactory.merge_two_rules_preprocess(mergedResult, previousRule)
-#                 setOfMergedRules.add(previousRule)
-#             return (mergedResult, setOfMergedRules)
-#         else:
-#             return None
         
     def _buildTraceabilityLinks(self,layer):
         """
@@ -779,18 +661,18 @@ class PathConditionGenerator():
         return symbLayer
     
 
-    def _buildBackLinksCacheKeys(self,backLinkMatchers,pathCondition):
-        """
-        build a set of cache keys by concatenating the name of the backward link matcher with a fragment of the path condition to check.
-        The cache keys are organized in sublists, one per backward link matcher.
-        Each key is a pair, containing the string with the concatenation of names and the fragment of the path condition it refers to.
-        """     
-        backLinksCacheKeys = []
-        for backMatcherPosition in range(len(backLinkMatchers)):
-            backLinksCacheKeys.append([])
-            for fragment in pathCondition:
-                backLinksCacheKeys[backMatcherPosition].append((backLinkMatchers[backMatcherPosition].condition.name + fragment.name, fragment))
-        return backLinksCacheKeys
+#     def _buildBackLinksCacheKeys(self,backLinkMatchers,pathCondition):
+#         """
+#         build a set of cache keys by concatenating the name of the backward link matcher with a fragment of the path condition to check.
+#         The cache keys are organized in sublists, one per backward link matcher.
+#         Each key is a pair, containing the string with the concatenation of names and the fragment of the path condition it refers to.
+#         """     
+#         backLinksCacheKeys = []
+#         for backMatcherPosition in range(len(backLinkMatchers)):
+#             backLinksCacheKeys.append([])
+#             for fragment in pathCondition:
+#                 backLinksCacheKeys[backMatcherPosition].append((backLinkMatchers[backMatcherPosition].condition.name + fragment.name, fragment))
+#         return backLinksCacheKeys
     
 
     def evaluate_attribute_equations(self, pathCondition):
@@ -800,6 +682,32 @@ class PathConditionGenerator():
         Note that some equations share the same variables, and as such those variables have to be given the same identifiers throughout the Z3 expression.
         Evaluate the set of equations using Z3 and return True if there is a solution for them, false otherwise
         """
+
+        def _build_equation_expression(node, pathCondition, variablesInExpression):
+            """
+            helper for building the attribute equations by recursively going through the operations associated
+            to the left hand side and to the right hand side of an equation
+            """
+    
+            # in case it's an attribute, return the object's ID
+            if pathCondition.vs[node]['mm__'] == 'Attribute':
+                newVar = "a" + str(node)
+                if newVar not in set(variablesInExpression):
+                    variablesInExpression.append(newVar)
+                return "a" + str(node)
+            # in case it's a constant, return it's value
+            elif pathCondition.vs[node]['mm__'] == 'Constant':
+                return "\"" + pathCondition.vs[node]['value'] + "\""
+            # it's a concat operation
+            else:
+                # get the arguments of the concat operation
+                arg1Edge = [i for i in pathCondition.neighbors(node,1) if pathCondition.vs[i]['mm__'] == 'arg_1'][0]    
+                arg2Edge = [i for i in pathCondition.neighbors(node,1) if pathCondition.vs[i]['mm__'] == 'arg_2'][0]
+                arg1 = pathCondition.neighbors(arg1Edge,1)[0]
+                arg2 = pathCondition.neighbors(arg2Edge,1)[0]
+    
+                return "( Concat " + self.build_equation_expression(arg1) + " " + self.build_equation_expression(arg2) + ")"
+
         
         Z3Input = ""
         variablesInExpression = []
@@ -816,8 +724,8 @@ class PathConditionGenerator():
                 leftExprNode = pathCondition.neighbors(leftExprEdge,1)[0]
                 rightExprNode = pathCondition.neighbors(rightExprEdge,1)[0] 
                 
-                leftExpr = self._build_equation_expression(leftExprNode, pathCondition, variablesInExpression)
-                rightExpr = self._build_equation_expression(rightExprNode, pathCondition, variablesInExpression)  
+                leftExpr = _build_equation_expression(leftExprNode, pathCondition, variablesInExpression)
+                rightExpr = _build_equation_expression(rightExprNode, pathCondition, variablesInExpression)  
 
                 Z3Input += "(assert (= " + leftExpr + " " +  rightExpr + ") )\n"
         
@@ -848,32 +756,6 @@ class PathConditionGenerator():
             return True
         else:
             return False
-
-
-    def _build_equation_expression(self, node, pathCondition, variablesInExpression):
-        """
-        helper for building the attribute equations by recursively going through the operations associated
-        to the left hand side and to the right hand side of an equation
-        """
-
-        # in case it's an attribute, return the object's ID
-        if pathCondition.vs[node]['mm__'] == 'Attribute':
-            newVar = "a" + str(node)
-            if newVar not in set(variablesInExpression):
-                variablesInExpression.append(newVar)
-            return "a" + str(node)
-        # in case it's a constant, return it's value
-        elif pathCondition.vs[node]['mm__'] == 'Constant':
-            return "\"" + pathCondition.vs[node]['value'] + "\""
-        # it's a concat operation
-        else:
-            # get the arguments of the concat operation
-            arg1Edge = [i for i in pathCondition.neighbors(node,1) if pathCondition.vs[i]['mm__'] == 'arg_1'][0]    
-            arg2Edge = [i for i in pathCondition.neighbors(node,1) if pathCondition.vs[i]['mm__'] == 'arg_2'][0]
-            arg1 = pathCondition.neighbors(arg1Edge,1)[0]
-            arg2 = pathCondition.neighbors(arg2Edge,1)[0]
-
-            return "( Concat " + self.build_equation_expression(arg1) + " " + self.build_equation_expression(arg2) + ")"
 
 
     #find the nodes with this mm name
