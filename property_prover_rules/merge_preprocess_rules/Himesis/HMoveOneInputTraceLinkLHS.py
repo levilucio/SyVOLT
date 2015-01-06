@@ -18,7 +18,7 @@ class HMoveOneInputTraceLinkLHS(HimesisPreConditionPatternLHS):
         self.add_edges([[0, 1], [1, 3]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_pre__GM2AUTOSAR_MM'
+S'MT_pre__PoliceStationMM'
 p2
 aS'MoTifRule'
 p3
@@ -46,7 +46,7 @@ return True
 
 return True
 """
-        self.vs[0]["MT_pre__cardinality"] = """
+        self.vs[0]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -61,32 +61,15 @@ return True
         self.vs[0]["MT_label__"] = """9"""
         self.vs[0]["mm__"] = """MT_pre__MetaModelElement_T"""
         self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__EcuInstance'
+S'MT_pre__Station_T'
 p2
-aS'MT_pre__System'
+aS'MT_pre__Male_T'
 p3
-aS'MT_pre__SystemMapping'
+aS'MT_pre__Female_T'
 p4
-aS'MT_pre__ComponentPrototype'
-p5
-aS'MT_pre__SwCompToEcuMapping_component'
-p6
-aS'MT_pre__CompositionType'
-p7
-aS'MT_pre__PPortPrototype'
-p8
-aS'MT_pre__SwcToEcuMapping'
-p9
-aS'MT_pre__SoftwareComposition'
-p10
-aS'MT_pre__RPortPrototype'
-p11
-aS'MT_pre__PortPrototype'
-p12
-aS'MT_pre__ComponentType'
-p13
 a.""")
-        self.vs[0]["MT_pre__name"] = """
+        self.vs[0]["MT_dirty__"] = False
+        self.vs[0]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -98,7 +81,6 @@ a.""")
 
 return True
 """
-        self.vs[0]["MT_dirty__"] = False
         self.vs[0]["GUID__"] = UUID('34e838db-2d84-4fad-82d7-e94f62acbb3e')
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_label__"] = """10"""
@@ -121,7 +103,7 @@ return True
 
 return True
 """
-        self.vs[2]["MT_pre__cardinality"] = """
+        self.vs[2]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -137,18 +119,15 @@ return True
         self.vs[2]["MT_label__"] = """7"""
         self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__VirtualDevice'
+S'MT_pre__Station_S'
 p2
-aS'MT_pre__Distributable'
+aS'MT_pre__Male_S'
 p3
-aS'MT_pre__ExecFrame'
+aS'MT_pre__Female_S'
 p4
-aS'MT_pre__Signal'
-p5
-aS'MT_pre__ECU'
-p6
 a.""")
-        self.vs[2]["MT_pre__name"] = """
+        self.vs[2]["MT_dirty__"] = False
+        self.vs[2]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -160,7 +139,6 @@ a.""")
 
 return True
 """
-        self.vs[2]["MT_dirty__"] = False
         self.vs[2]["GUID__"] = UUID('31c2e2f7-4f4e-455b-a66d-9879f1dba07f')
         self.vs[3]["MT_pivotOut__"] = """element2"""
         self.vs[3]["MT_subtypeMatching__"] = True
@@ -176,7 +154,7 @@ return True
 
 return True
 """
-        self.vs[3]["MT_pre__cardinality"] = """
+        self.vs[3]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -192,18 +170,15 @@ return True
         self.vs[3]["MT_label__"] = """8"""
         self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[3]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__VirtualDevice'
+S'MT_pre__Station_S'
 p2
-aS'MT_pre__Distributable'
+aS'MT_pre__Male_S'
 p3
-aS'MT_pre__ExecFrame'
+aS'MT_pre__Female_S'
 p4
-aS'MT_pre__Signal'
-p5
-aS'MT_pre__ECU'
-p6
 a.""")
-        self.vs[3]["MT_pre__name"] = """
+        self.vs[3]["MT_dirty__"] = False
+        self.vs[3]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -215,24 +190,9 @@ a.""")
 
 return True
 """
-        self.vs[3]["MT_dirty__"] = False
         self.vs[3]["GUID__"] = UUID('0e8f0029-7321-41b3-b6fc-1799942f1fc0')
 
     def eval_classtype9(self, attr_value, this):
-        
-        #===============================================================================
-        # This code is executed when evaluating if a node shall be matched by this rule.
-        # You can access the value of the current node's attribute value by: attr_value.
-        # You can access any attribute x of this node by: this['x'].
-        # If the constraint relies on attribute values from other nodes,
-        # use the LHS/NAC constraint instead.
-        # The given constraint must evaluate to a boolean expression.
-        #===============================================================================
-        
-        return True
-
-
-    def eval_cardinality9(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.
@@ -260,7 +220,7 @@ return True
         return True
 
 
-    def eval_classtype7(self, attr_value, this):
+    def eval_cardinality9(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.
@@ -274,7 +234,7 @@ return True
         return True
 
 
-    def eval_cardinality7(self, attr_value, this):
+    def eval_classtype7(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.
@@ -302,6 +262,20 @@ return True
         return True
 
 
+    def eval_cardinality7(self, attr_value, this):
+        
+        #===============================================================================
+        # This code is executed when evaluating if a node shall be matched by this rule.
+        # You can access the value of the current node's attribute value by: attr_value.
+        # You can access any attribute x of this node by: this['x'].
+        # If the constraint relies on attribute values from other nodes,
+        # use the LHS/NAC constraint instead.
+        # The given constraint must evaluate to a boolean expression.
+        #===============================================================================
+        
+        return True
+
+
     def eval_classtype8(self, attr_value, this):
         
         #===============================================================================
@@ -316,7 +290,7 @@ return True
         return True
 
 
-    def eval_cardinality8(self, attr_value, this):
+    def eval_name8(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.
@@ -330,7 +304,7 @@ return True
         return True
 
 
-    def eval_name8(self, attr_value, this):
+    def eval_cardinality8(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.

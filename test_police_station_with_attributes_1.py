@@ -203,9 +203,9 @@ class Test(unittest.TestCase):
         subclasses_source = ["MT_pre__Station_S", "MT_pre__Male_S","MT_pre__Female_S"]
         subclasses_target = ["MT_pre__Station_T","MT_pre__Male_T","MT_pre__Female_T"]
  
-#        pyramify = PyRamify()
+        pyramify = PyRamify()
 
-#        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_source, subclasses_target)
+        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_source, subclasses_target)
  
         print("create state space")
         s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, \

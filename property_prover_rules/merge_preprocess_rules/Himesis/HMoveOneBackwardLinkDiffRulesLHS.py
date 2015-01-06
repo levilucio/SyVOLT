@@ -18,7 +18,7 @@ class HMoveOneBackwardLinkDiffRulesLHS(HimesisPreConditionPatternLHS):
         self.add_edges([[0, 1], [1, 3]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_pre__GM2AUTOSAR_MM'
+S'MT_pre__PoliceStationMM'
 p2
 aS'MoTifRule'
 p3
@@ -46,30 +46,12 @@ return True
         self.vs[0]["MT_label__"] = """9"""
         self.vs[0]["mm__"] = """MT_pre__MetaModelElement_T"""
         self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__EcuInstance'
+S'MT_pre__Station_T'
 p2
-aS'MT_pre__System'
+aS'MT_pre__Male_T'
 p3
-aS'MT_pre__SystemMapping'
+aS'MT_pre__Female_T'
 p4
-aS'MT_pre__ComponentPrototype'
-p5
-aS'MT_pre__SwCompToEcuMapping_component'
-p6
-aS'MT_pre__CompositionType'
-p7
-aS'MT_pre__PPortPrototype'
-p8
-aS'MT_pre__SwcToEcuMapping'
-p9
-aS'MT_pre__SoftwareComposition'
-p10
-aS'MT_pre__RPortPrototype'
-p11
-aS'MT_pre__PortPrototype'
-p12
-aS'MT_pre__ComponentType'
-p13
 a.""")
         self.vs[0]["MT_pre__name"] = """
 #===============================================================================
@@ -110,16 +92,12 @@ return True
         self.vs[2]["MT_label__"] = """7"""
         self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__VirtualDevice'
+S'MT_pre__Station_S'
 p2
-aS'MT_pre__Distributable'
+aS'MT_pre__Male_S'
 p3
-aS'MT_pre__ExecFrame'
+aS'MT_pre__Female_S'
 p4
-aS'MT_pre__Signal'
-p5
-aS'MT_pre__ECU'
-p6
 a.""")
         self.vs[2]["MT_pre__name"] = """
 #===============================================================================
@@ -153,16 +131,12 @@ return True
         self.vs[3]["MT_label__"] = """8"""
         self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[3]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__VirtualDevice'
+S'MT_pre__Station_S'
 p2
-aS'MT_pre__Distributable'
+aS'MT_pre__Male_S'
 p3
-aS'MT_pre__ExecFrame'
+aS'MT_pre__Female_S'
 p4
-aS'MT_pre__Signal'
-p5
-aS'MT_pre__ECU'
-p6
 a.""")
         self.vs[3]["MT_pre__name"] = """
 #===============================================================================

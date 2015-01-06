@@ -18,7 +18,7 @@ class HReconnectMatchElementsLHS(HimesisPreConditionPatternLHS):
         self.add_edges([])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_pre__GM2AUTOSAR_MM'
+S'MT_pre__PoliceStationMM'
 p2
 aS'MoTifRule'
 p3
@@ -48,16 +48,12 @@ return True
         self.vs[0]["MT_label__"] = """2"""
         self.vs[0]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__VirtualDevice'
+S'MT_pre__Station_S'
 p2
-aS'MT_pre__Distributable'
+aS'MT_pre__Male_S'
 p3
-aS'MT_pre__ExecFrame'
+aS'MT_pre__Female_S'
 p4
-aS'MT_pre__Signal'
-p5
-aS'MT_pre__ECU'
-p6
 a.""")
         self.vs[0]["MT_pre__name"] = """
 #===============================================================================
