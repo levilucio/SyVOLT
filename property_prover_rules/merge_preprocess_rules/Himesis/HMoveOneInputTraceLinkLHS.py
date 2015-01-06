@@ -59,7 +59,6 @@ return True
 return True
 """
         self.vs[0]["MT_label__"] = """9"""
-        self.vs[0]["mm__"] = """MT_pre__MetaModelElement_T"""
         self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
 S'MT_pre__Station_T'
 p2
@@ -68,6 +67,7 @@ p3
 aS'MT_pre__Female_T'
 p4
 a.""")
+        self.vs[0]["mm__"] = """MT_pre__MetaModelElement_T"""
         self.vs[0]["MT_dirty__"] = False
         self.vs[0]["MT_pre__cardinality"] = """
 #===============================================================================
@@ -84,9 +84,9 @@ return True
         self.vs[0]["GUID__"] = UUID('34e838db-2d84-4fad-82d7-e94f62acbb3e')
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_label__"] = """10"""
-        self.vs[1]["mm__"] = """MT_pre__trace_link"""
         self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
+        self.vs[1]["mm__"] = """MT_pre__trace_link"""
         self.vs[1]["MT_dirty__"] = False
         self.vs[1]["GUID__"] = UUID('5ae23021-a9fb-40e4-9152-4e93a4865b1b')
         self.vs[2]["MT_pivotOut__"] = """element1"""
@@ -117,7 +117,6 @@ return True
 """
         self.vs[2]["MT_pivotIn__"] = """element1"""
         self.vs[2]["MT_label__"] = """7"""
-        self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
 S'MT_pre__Station_S'
 p2
@@ -126,6 +125,7 @@ p3
 aS'MT_pre__Female_S'
 p4
 a.""")
+        self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[2]["MT_dirty__"] = False
         self.vs[2]["MT_pre__cardinality"] = """
 #===============================================================================
@@ -168,7 +168,6 @@ return True
 """
         self.vs[3]["MT_pivotIn__"] = """element2"""
         self.vs[3]["MT_label__"] = """8"""
-        self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[3]["MT_subtypes__"] = pickle.loads("""(lp1
 S'MT_pre__Station_S'
 p2
@@ -177,6 +176,7 @@ p3
 aS'MT_pre__Female_S'
 p4
 a.""")
+        self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[3]["MT_dirty__"] = False
         self.vs[3]["MT_pre__cardinality"] = """
 #===============================================================================

@@ -44,7 +44,6 @@ p1
 return True
 """
         self.vs[0]["MT_label__"] = """9"""
-        self.vs[0]["mm__"] = """MT_pre__MetaModelElement_T"""
         self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
 S'MT_pre__Station_T'
 p2
@@ -53,6 +52,7 @@ p3
 aS'MT_pre__Female_T'
 p4
 a.""")
+        self.vs[0]["mm__"] = """MT_pre__MetaModelElement_T"""
         self.vs[0]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -69,9 +69,9 @@ return True
         self.vs[0]["GUID__"] = UUID('e235c7c1-4bec-419c-bbf2-8490dd8af04e')
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_label__"] = """13"""
-        self.vs[1]["mm__"] = """MT_pre__backward_link"""
         self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
+        self.vs[1]["mm__"] = """MT_pre__backward_link"""
         self.vs[1]["MT_dirty__"] = False
         self.vs[1]["GUID__"] = UUID('d3103d82-52bc-45e6-bdd9-714ec63cbf7c')
         self.vs[2]["MT_pivotOut__"] = """element1"""
@@ -90,7 +90,6 @@ return True
 """
         self.vs[2]["MT_pivotIn__"] = """element1"""
         self.vs[2]["MT_label__"] = """7"""
-        self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
 S'MT_pre__Station_S'
 p2
@@ -99,6 +98,7 @@ p3
 aS'MT_pre__Female_S'
 p4
 a.""")
+        self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[2]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -129,7 +129,6 @@ return True
 """
         self.vs[3]["MT_pivotIn__"] = """element2"""
         self.vs[3]["MT_label__"] = """8"""
-        self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[3]["MT_subtypes__"] = pickle.loads("""(lp1
 S'MT_pre__Station_S'
 p2
@@ -138,6 +137,7 @@ p3
 aS'MT_pre__Female_S'
 p4
 a.""")
+        self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[3]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.

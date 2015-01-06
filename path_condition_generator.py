@@ -566,7 +566,6 @@ class PathConditionGenerator():
                                 # find all the matches of the rule combinator in the path condition that the rule combines with
                                 
                                 p = Packet()
-                                i = Iterator()
                                 p.graph = self.pathConditionSet[pathCondition]
                                 combinatorMatcher.packet_in(p)
                                 
@@ -575,10 +574,6 @@ class PathConditionGenerator():
                                 # the combinator's RHS to every possibility of match of the combinator's LHS
                                 
                                 if combinatorMatcher.is_success:  
-                                    
-                                    # TODO: go through all the matches in the iterator, now we're only going through
-                                    # the first one
-                                    p = i.packet_in(p)
                                     
                                     # holds the result of combining the path conditions generated so far when combining
                                     # the rule with the path condition using the multiple combinators
@@ -606,18 +601,24 @@ class PathConditionGenerator():
                                             newPathCond = deepcopy(layerPathCondAccumulator[currentPathCondition])                               
         
                                             # now combine the rule with the newly created path condition using the current combinator
+                                            # in all the places where the rule matched on top of the path condition
+                                            i = Iterator()
                                             p_copy = deepcopy(p)
-                                            p_copy.graph = newPathCond 
-                                            p_copy = self.ruleCombinators[rule.name][combinator][1].packet_in(p_copy)
-                                            
+                                            p_copy.graph = newPathCond
+                                            p_copy = i.packet_in(p_copy)
+                                                                    
+                                            while i.is_success:
+                                                p_copy = self.ruleCombinators[rule.name][combinator][1].packet_in(p_copy)
+                                                p_copy = i.next_in(p_copy)
+                                                
                                             newPathCond = p_copy.graph
                                             newPathCond.name = newPathCondName
                                             
                                             # check if the equations on the attributes of the newly created path condition are satisfied
                                             
-                                            #if self.evaluate_attribute_equations(newPathCond):
+                                            if self.evaluate_attribute_equations(newPathCond):
                                             
-                                            if True:
+                                            #if True:
                                             
                                                 if isTotalCombinator:
                                                     # because the rule combines totally with a path condition in the accumulator we just copy it 
