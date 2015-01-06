@@ -284,6 +284,10 @@ class Test(unittest.TestCase):
         combineResult = mergeInterLayerFactory.merge_two_rules_inter_layer(mm2mm,m2m)
         
         graph_to_dot("combinelargerrule", combineResult, 1)
+        
+        l = [HSM2SM_run1(),HFF2FF_run1()]
+        l.extend([])
+        print l
 
 #        graph_to_dot("bla",p.graph)
             

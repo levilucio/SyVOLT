@@ -95,9 +95,9 @@ class PathConditionGenerator():
         self.ruleCombinators = ruleCombinators
         self.ruleTraceCheckers = ruleTraceCheckers
 
-        self.print_transformation()
-        self.print_ruleCombinators()
-        self.print_ruleTraceCheckers()
+#         self.print_transformation()
+#         self.print_ruleCombinators()
+#         self.print_ruleTraceCheckers()
 
 #         self.backwardPatternsComplete = backwardPatternsComplete
         self.matchRulePatterns = matchRulePatterns
@@ -397,27 +397,14 @@ class PathConditionGenerator():
                 
                 if newTopNodes != [] : self.build_ordered_nodes(newTopNodes)
             
-            print "---------------- before"
-            print orderedNodes
-            
             # continue adding nodes as we go down the tree
             build_ordered_nodes(topNodes)
-            
-            print orderedNodes
-            print "---------------- after"
 
             # remove from the layer the rules that need to be ordered
             self.transformation[layerIndex] = list(set(self.transformation[layerIndex]) - set(orderedNodes))   
             # now place the reordered rules back in the layer, at the end
-            
-            print list(reversed(orderedNodes))
-            
-            print self.transformation[layerIndex] 
-            
-            self.transformation[layerIndex] = self.transformation[layerIndex]#.extend(list(reversed(orderedNodes)))
-            
-            print self.transformation[layerIndex] 
-                       
+            self.transformation[layerIndex].extend(list(reversed(orderedNodes)))
+
 
 
     def build_path_conditions(self):     
