@@ -110,18 +110,23 @@ class Test(unittest.TestCase):
 
     def setUp(self):
         pyramify = PyRamify()
+
+        [self.rules, ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, matchRulePatterns] = \
+            pyramify.ramify_directory("PoliceStationMM/transformation_1/Himesis/", True)
+
+        # print(self.rules)
+
+        # self.rules = {"S2S": HS2S(),
+        #               "M2M": HM2M(),
+        #               "F2F": HF2F(),
+        #               "SM2SM": HSM2SM(),
+        #               "SF2SF": HSF2SF(),
+        #               "MM2MM": HMM2MM(),
+        #               "FF2FF": HFF2FF(),
+        #               }
         
-        self.rules = {"S2S": HS2S(),
-                      "M2M": HM2M(),
-                      "F2F": HF2F(),
-                      "SM2SM": HSM2SM(),
-                      "SF2SF": HSF2SF(),
-                      "MM2MM": HMM2MM(),
-                      "FF2FF": HFF2FF(),                      
-                      }
-        
-        self.transformation = [[self.rules["S2S"], self.rules["M2M"], self.rules["F2F"]],\
-                               [self.rules["SM2SM"], self.rules["SF2SF"], self.rules["MM2MM"], self.rules["FF2FF"]]]
+        self.transformation = [[self.rules["HS2S"], self.rules["HM2M"], self.rules["HF2F"]],\
+                               [self.rules["HSM2SM"], self.rules["HSF2SF"], self.rules["HMM2MM"], self.rules["HFF2FF"]]]
 
         
 #         self.rules = {self.transformation[0][0]: HS2S(),
@@ -206,7 +211,8 @@ class Test(unittest.TestCase):
         pyramify = PyRamify()
 
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_source, subclasses_target)
- 
+
+
         s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, \
                                    self.matchRulePatterns, 2)
  
