@@ -8,9 +8,9 @@
 (assert (= a12 a13) )
 (assert (= a27 a28) )
 (assert (= a42 a43) )
-(assert (= a42 "somestation") )
+(assert (= a27 "somestation") )
 (assert (= a12 "somemale") )
-(assert (= a42 "somestation") )
-(assert (= a27 "somefemale") )
+(assert (= a27 "somestation") )
+(assert (= a42 "somefemale") )
 
 (check-sat)
