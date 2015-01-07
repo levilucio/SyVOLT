@@ -409,7 +409,4 @@ class CollapseFactory():
                 nameComb = nameComb + '-' + ruleComb[rule].name
             names_combinations.append((nameComb,ruleComb))
         
-        return names_combinations
-
-
-                                                                     
+        return names_combinations                                                           
