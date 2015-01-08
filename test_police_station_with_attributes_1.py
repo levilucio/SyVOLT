@@ -111,7 +111,7 @@ class Test(unittest.TestCase):
     def setUp(self):
         pyramify = PyRamify()
 
-        [self.rules, ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, matchRulePatterns] = \
+        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, ruleCombinators] = \
             pyramify.ramify_directory("PoliceStationMM/transformation_1/Himesis/", True)
 
         # print(self.rules)
@@ -142,21 +142,26 @@ class Test(unittest.TestCase):
                                 self.transformation[1][3].name: [(Matcher(HFF2FF_combine_0LHS()),Rewriter(HFF2FF_combine_0RHS())),(Matcher(HFF2FF_combine_1LHS()),Rewriter(HFF2FF_combine_1RHS()))]}
         
     
-        self.ruleTraceCheckers = {self.transformation[0][0].name: None,
-                                  self.transformation[0][1].name: None,
-                                  self.transformation[0][2].name: None,
-                                  self.transformation[1][0].name: Matcher(HSM2SM_trace_checkLHS()),
-                                  self.transformation[1][1].name: Matcher(HSF2SF_trace_checkLHS()),                    
-                                  self.transformation[1][2].name: Matcher(HMM2MM_trace_checkLHS()),
-                                  self.transformation[1][3].name: Matcher(HFF2FF_trace_checkLHS())}
-        
+        # self.ruleTraceCheckers = {self.transformation[0][0].name: None,
+        #                           self.transformation[0][1].name: None,
+        #                           self.transformation[0][2].name: None,
+        #                           self.transformation[1][0].name: Matcher(HSM2SM_trace_checkLHS()),
+        #                           self.transformation[1][1].name: Matcher(HSF2SF_trace_checkLHS()),
+        #                           self.transformation[1][2].name: Matcher(HMM2MM_trace_checkLHS()),
+        #                           self.transformation[1][3].name: Matcher(HFF2FF_trace_checkLHS())}
+        #
+
+        print(self.matchRulePatterns)
+
         self.matchRulePatterns = {self.transformation[0][0].name: (Matcher(HS2S_combineLHS()),Rewriter(HS2S_combineRHS())),
                                   self.transformation[0][1].name: (Matcher(HM2M_combineLHS()),Rewriter(HM2M_combineRHS())),
                                   self.transformation[0][2].name: (Matcher(HF2F_combineLHS()),Rewriter(HF2F_combineRHS())),
                                   self.transformation[1][0].name: (Matcher(HSM2SM_combine_1LHS()),Rewriter(HSM2SM_combine_1RHS())),
-                                  self.transformation[1][1].name: (Matcher(HSF2SF_combine_1LHS()),Rewriter(HSF2SF_combine_1RHS())),                    
+                                  self.transformation[1][1].name: (Matcher(HSF2SF_combine_1LHS()),Rewriter(HSF2SF_combine_1RHS())),
                                   self.transformation[1][2].name: (Matcher(HMM2MM_combine_1LHS()),Rewriter(HMM2MM_combine_1RHS())),
                                   self.transformation[1][3].name: (Matcher(HFF2FF_combine_1LHS()),Rewriter(HFF2FF_combine_1RHS()))}
+
+        print(self.matchRulePatterns)
 
 
 #         self.ruleCombinators = {self.transformation[0][0]: None,

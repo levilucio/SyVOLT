@@ -3,6 +3,7 @@ import re
 import sys
 import os
 from t_core.matcher import Matcher
+from t_core.rewriter import Rewriter
 from himesis_utils import *
 #from ramify_actions import *
 
@@ -100,7 +101,7 @@ class PyRamify:
         return graph
 
     def makePostConditionPattern(self, old_graph):
-        graph = self.copy_graph(old_graph)
+        graph = copy.deepcopy(old_graph)
 
         # force the class to be different
         graph.__class__ = HimesisPostConditionPattern
@@ -115,13 +116,16 @@ class PyRamify:
         graph.pre = None
         graph.import_name = 'HimesisPostConditionPattern'
 
+        return graph
+
 
     #FIXME to be proper
     def copy_graph(self, graph2):
         graph1 = copy.deepcopy(graph2)
+
+
         graph1.nodes_label = copy.deepcopy(graph2.nodes_label)
         graph1.nodes_pivot_out = copy.deepcopy(graph2.nodes_pivot_out)
-
         graph1.nodes_pivot_in = copy.deepcopy(graph2.nodes_pivot_in)
 
         graph1.import_name = copy.deepcopy(graph2.import_name)
@@ -681,7 +685,10 @@ return True
     def get_match_pattern(self, rule):
         name = rule.keys()[0]
         graph = rule[rule.keys()[0]]
-            
+
+
+        rewriter = self.makePostConditionPattern(graph)
+
         new_name = name + "_overlapLHS"
         
         graph.name = new_name
@@ -713,8 +720,11 @@ return True
         #    print graph.vs[n]["mm__"]
 
         nodes_to_remove = []
-        mms_to_remove = ["MT_pre__MatchModel", "MT_pre__match_contains", "MT_pre__paired_with", "MT_pre__trace_link"]
+        mms_to_remove = ["MT_pre__MatchModel", "MT_pre__match_contains", "MT_pre__paired_with", "MT_pre__trace_link", "MT_pre__hasAttr_T", "MT_pre__hasAttr_S"]
+
+        print("Removal")
         for i in range(len(graph.vs)):
+            print("MM: " + graph.vs[i]["mm__"])
             if i not in nodes_to_keep or graph.vs[i]["mm__"] in mms_to_remove:
                 nodes_to_remove.append(i)
 
@@ -744,7 +754,7 @@ return True
         rule = self.load_class(out_dir + "/" + new_name)
         match_graph = rule[rule.keys()[0]]
 
-        return {name : Matcher(match_graph)}
+        return {name : (Matcher(match_graph), Rewriter(rewriter))}
     #=========================
 
     #function to dynamically load a new class
@@ -773,6 +783,7 @@ return True
         backwardPatterns2Rules = {}
         backwardPatternsComplete = {}
         matchRulePatterns = {}
+        ruleCombinators = {}
 
         #examine all the files in this dir
         for f in os.listdir(dir_name):
@@ -805,10 +816,16 @@ return True
 
             #fresh rule for the match pattern
             rule4 = self.load_class(dir_name + "/" + f)
-            matchRulePattern = self.get_rule_combinators(rule4)
+            matchRulePattern = self.get_match_pattern(rule4)
             matchRulePatterns.update(matchRulePattern)
 
-        return [rules, backwardPatterns, backwardPatterns2Rules, backwardPatternsComplete, matchRulePatterns]
+
+            # fresh rule for the rule combinators
+            rule5 = self.load_class(dir_name + "/" + f)
+            rule_combinator = self.get_rule_combinators(rule5)
+            ruleCombinators.update(rule_combinator)
+
+        return [rules, backwardPatterns, backwardPatterns2Rules, backwardPatternsComplete, matchRulePatterns, ruleCombinators]
 
     #helper function for the user, to list all of the
     #rules in the transformation that have backward links
