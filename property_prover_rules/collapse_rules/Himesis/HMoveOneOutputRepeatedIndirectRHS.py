@@ -18,7 +18,7 @@ class HMoveOneOutputRepeatedIndirectRHS(HimesisPostConditionPattern):
         self.add_edges([])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__GM2AUTOSAR_MM'
+S'MT_post__PoliceStationMM'
 p2
 aS'MoTifRule'
 p3
@@ -32,7 +32,7 @@ a.""")
 pass
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('43a47126-5a5e-4bf7-8304-381bee2b5a3f')
+        self["GUID__"] = UUID('fc5ffa72-1f63-411c-b2b4-9d2f186e617d')
         
         # Set the node attributes
         self.vs[0]["MT_pivotOut__"] = """element1"""
@@ -80,7 +80,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[0]["GUID__"] = UUID('46e55c3f-8c78-4054-b6ec-cda26cda40e5')
+        self.vs[0]["GUID__"] = UUID('928fc72d-80f2-48b8-bb32-d4a0205165fe')
         self.vs[1]["MT_pivotOut__"] = """element2"""
         self.vs[1]["MT_post__cardinality"] = """
 #===============================================================================
@@ -126,7 +126,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[1]["GUID__"] = UUID('2fd99826-2959-42c8-abc8-8246f3b55250')
+        self.vs[1]["GUID__"] = UUID('0b236cc0-1741-4acf-8e99-846abc80a781')
         self.vs[2]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -171,7 +171,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[2]["GUID__"] = UUID('be1e6c88-a2fa-4bbf-bfc7-ceee3477cac7')
+        self.vs[2]["GUID__"] = UUID('2d6fecc6-585c-4cc8-9c45-cb2650749cb2')
 
         from HMoveOneOutputRepeatedIndirectLHS import HMoveOneOutputRepeatedIndirectLHS
         self.pre = HMoveOneOutputRepeatedIndirectLHS()

@@ -15,21 +15,19 @@ class HMoveOneInputRepeatedDirectLHS(HimesisPreConditionPatternLHS):
         super(HMoveOneInputRepeatedDirectLHS, self).__init__(name='HMoveOneInputRepeatedDirectLHS', num_nodes=5, edges=[])
         
         # Add the edges
-        self.add_edges([(4, 0), (0, 3), (4, 1), (1, 2)])
+        self.add_edges([[4, 0], [0, 3], [4, 1], [1, 2]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_pre__GM2AUTOSAR_MM'
+S'MT_pre__PoliceStationMM'
 p2
 aS'MoTifRule'
 p3
 a.""")
-        self["MT_constraint__"] = """if graph.vs[9]['associationType'] == graph.vs[10]['associationType']
-    return True
-
-return False
-"""
+        self["MT_constraint__"] = pickle.loads("""Vif graph.vs[9]['associationType'] == graph.vs[10]['associationType']:\u000a    return True\u000a\u000areturn False\u000a
+p1
+.""")
         self["name"] = """"""
-        self["GUID__"] = UUID('cb05a51d-9657-4aa1-a700-64e73ba10f71')
+        self["GUID__"] = UUID('715ab69b-d23c-4f9f-b218-f74c900e8dbc')
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
@@ -50,7 +48,7 @@ return True
 .""")
         self.vs[0]["mm__"] = """MT_pre__directLink_S"""
         self.vs[0]["MT_dirty__"] = False
-        self.vs[0]["GUID__"] = UUID('1e79569a-263f-4fbb-8996-7ba61b07d178')
+        self.vs[0]["GUID__"] = UUID('1cf1961b-71df-4f57-a6f3-de3400ef4bbd')
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_pre__associationType"] = """
 #===============================================================================
@@ -69,7 +67,7 @@ return True
 .""")
         self.vs[1]["mm__"] = """MT_pre__directLink_S"""
         self.vs[1]["MT_dirty__"] = False
-        self.vs[1]["GUID__"] = UUID('764e62de-8e98-4a84-94c3-53a633eacd97')
+        self.vs[1]["GUID__"] = UUID('20e7f202-88d2-4dc3-9095-b0058fe6f4f2')
         self.vs[2]["MT_pivotOut__"] = """element1"""
         self.vs[2]["MT_pre__name"] = """
 #===============================================================================
@@ -99,16 +97,12 @@ return True
         self.vs[2]["MT_pivotIn__"] = """element1"""
         self.vs[2]["MT_label__"] = """3"""
         self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__VirtualDevice'
+S'MT_pre__Station_S'
 p2
-aS'MT_pre__Distributable'
+aS'MT_pre__Male_S'
 p3
-aS'MT_pre__Signal'
+aS'MT_pre__Female_S'
 p4
-aS'MT_pre__ExecFrame'
-p5
-aS'MT_pre__ECU'
-p6
 a.""")
         self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[2]["MT_dirty__"] = False
@@ -124,7 +118,7 @@ a.""")
 
 return True
 """
-        self.vs[2]["GUID__"] = UUID('4de027d3-6240-4580-8e84-5a4ef77a74cb')
+        self.vs[2]["GUID__"] = UUID('0bd31a91-8f64-4cff-b013-900e42c1b86d')
         self.vs[3]["MT_pivotOut__"] = """element2"""
         self.vs[3]["MT_pre__name"] = """
 #===============================================================================
@@ -154,16 +148,12 @@ return True
         self.vs[3]["MT_pivotIn__"] = """element2"""
         self.vs[3]["MT_label__"] = """4"""
         self.vs[3]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__VirtualDevice'
+S'MT_pre__Station_S'
 p2
-aS'MT_pre__Distributable'
+aS'MT_pre__Male_S'
 p3
-aS'MT_pre__Signal'
+aS'MT_pre__Female_S'
 p4
-aS'MT_pre__ExecFrame'
-p5
-aS'MT_pre__ECU'
-p6
 a.""")
         self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[3]["MT_dirty__"] = False
@@ -179,7 +169,7 @@ a.""")
 
 return True
 """
-        self.vs[3]["GUID__"] = UUID('859572a0-77eb-43cf-b67a-4d9dd3e04e13')
+        self.vs[3]["GUID__"] = UUID('da9ae42a-ef64-4e4c-9fe3-5df00d9f7bd9')
         self.vs[4]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -207,16 +197,12 @@ return True
 """
         self.vs[4]["MT_label__"] = """5"""
         self.vs[4]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__VirtualDevice'
+S'MT_pre__Station_S'
 p2
-aS'MT_pre__Distributable'
+aS'MT_pre__Male_S'
 p3
-aS'MT_pre__Signal'
+aS'MT_pre__Female_S'
 p4
-aS'MT_pre__ExecFrame'
-p5
-aS'MT_pre__ECU'
-p6
 a.""")
         self.vs[4]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[4]["MT_dirty__"] = False
@@ -232,7 +218,7 @@ a.""")
 
 return True
 """
-        self.vs[4]["GUID__"] = UUID('3fc6f438-a275-4551-b9b6-8598ec6e98b7')
+        self.vs[4]["GUID__"] = UUID('0f67c296-77d2-47c4-878b-c38e0969acaf')
 
     def eval_associationType9(self, attr_value, this):
         
@@ -394,7 +380,7 @@ return True
             @param PreNode: Function taking an integer as parameter
                             and returns the node corresponding to that label.
         """
-        if graph.vs[9]['associationType'] == graph.vs[10]['associationType']
+        if graph.vs[9]['associationType'] == graph.vs[10]['associationType']:
             return True
         
         return False

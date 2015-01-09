@@ -15,7 +15,7 @@ class HMoveOneEquationsRightExpressionLHS(HimesisPreConditionPatternLHS):
         super(HMoveOneEquationsRightExpressionLHS, self).__init__(name='HMoveOneEquationsRightExpressionLHS', num_nodes=8, edges=[])
         
         # Add the edges
-        self.add_edges([(4, 2), (1, 2), (5, 3), (6, 4), (7, 5), (0, 1)])
+        self.add_edges([[4, 2], [1, 2], [5, 3], [6, 4], [7, 5], [0, 1]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
 S'MT_pre__PoliceStationMM'
@@ -57,6 +57,7 @@ return True
         self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[2]["mm__"] = """MT_pre__Attribute"""
+        self.vs[2]["MT_dirty__"] = False
         self.vs[2]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -69,13 +70,13 @@ return True
 
 return True
 """
-        self.vs[2]["MT_dirty__"] = False
         self.vs[2]["GUID__"] = UUID('98e83f69-1e1e-4cbb-823f-ece5a29fa4c6')
         self.vs[3]["MT_subtypeMatching__"] = False
         self.vs[3]["MT_label__"] = """4"""
         self.vs[3]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[3]["mm__"] = """MT_pre__Attribute"""
+        self.vs[3]["MT_dirty__"] = False
         self.vs[3]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -88,7 +89,6 @@ return True
 
 return True
 """
-        self.vs[3]["MT_dirty__"] = False
         self.vs[3]["GUID__"] = UUID('bb253319-17ae-4875-b9c2-9149f9e1b76a')
         self.vs[4]["MT_subtypeMatching__"] = False
         self.vs[4]["MT_label__"] = """5"""
@@ -139,6 +139,7 @@ aS'MT_pre__Male_S'
 p4
 a.""")
         self.vs[6]["mm__"] = """MT_pre__MetaModelElement_S"""
+        self.vs[6]["MT_dirty__"] = False
         self.vs[6]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -151,7 +152,6 @@ a.""")
 
 return True
 """
-        self.vs[6]["MT_dirty__"] = False
         self.vs[6]["GUID__"] = UUID('6f66d1b0-e05b-420e-8a62-7e57f9392458')
         self.vs[7]["MT_subtypeMatching__"] = False
         self.vs[7]["MT_pre__classtype"] = """
@@ -188,6 +188,7 @@ aS'MT_pre__Male_S'
 p4
 a.""")
         self.vs[7]["mm__"] = """MT_pre__MetaModelElement_S"""
+        self.vs[7]["MT_dirty__"] = False
         self.vs[7]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -200,7 +201,6 @@ a.""")
 
 return True
 """
-        self.vs[7]["MT_dirty__"] = False
         self.vs[7]["GUID__"] = UUID('e6bdf7fe-2b79-4547-929d-6010e7def87e')
 
     def eval_name3(self, attr_value, this):

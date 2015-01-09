@@ -15,10 +15,10 @@ class HDeleteUncollapsedElementRHS(HimesisPostConditionPattern):
         super(HDeleteUncollapsedElementRHS, self).__init__(name='HDeleteUncollapsedElementRHS', num_nodes=5, edges=[])
         
         # Add the edges
-        self.add_edges([(3, 1), (1, 0), (4, 2), (2, 0)])
+        self.add_edges([[3, 1], [1, 0], [4, 2], [2, 0]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__GM2AUTOSAR_MM'
+S'MT_post__PoliceStationMM'
 p2
 aS'MoTifRule'
 p3

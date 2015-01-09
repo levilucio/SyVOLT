@@ -6,23 +6,14 @@ from t_core.tc_python.srule import SRule
 from t_core.tc_python.frule import FRule
 
 from itertools import permutations
-from itertools import combinations
-from itertools import chain
 
 from himesis_utils import disjoint_model_union
 from himesis_utils import graph_to_dot
 from himesis_utils import print_graph
 
 from copy import deepcopy
-from collapse import CollapseFactory
-from merge_preprocess import MergePreprocessFactory
-from merge_inter_layer import MergeInterLayerFactory
 
-import sys
-import time
-import copy
-
-import subprocess
+from evaluate_attribute_equations import AttributeEquationEvaluator
 
 # the empty path condition
 from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
@@ -63,31 +54,15 @@ class PathConditionGenerator():
     Attributes:
         - rules: all the rules in the transformation, accessible by name, in a dictionary
         - transformation: an array containing the rules, with one subarray per layer
-        - ruleCombinators: a dictionary containing as key the rule name and as element for each key the array of matcher/rewriter pairs containing the rules necessary
+        - ruleCombinators: dictionary containing as key the rule name and as element for each key the array of matcher/rewriter pairs containing the rules necessary
                            to combine the rule with path conditions.
                            Each pair contains a partial or total possibility of matching of the rule on top of the path condition.
                            The first pair in the list entry for a rule key is always the one where only the backward links exist and no other match parts of the rule.
-        - backwardPatternsComplete: dictionary holding for each rule the complete set of linked connected graphs involving the
-                                    match elements that are backward linked plus the match elements connected to them
+        - ruleTraceCheckers: dictionary containing a matcher for each set of backward links existing for each rule.
         - matchRulePatterns: dictionary containing matchers for the match part of each rule. Needed in case the match parts of the rules overlap.
-        - symbStateSpace: holds the state space itself. The state space is a list of lists of rules, obtained by going through
-                          each layer, calculating its powerset and for each state in that powerset merging it will all states
-                          found in previous layers. A merge can only be achieved if all the backward linked graphs in the
-                          new state exist the previous state.
-        - backwardMergeCache: holds the cache for rules for layer l+1 merged with rules of layer l-n.
-        - backwardMatchCache: holds a dictionary cache that allows checking whether a backward link pattern matches a rule
-                              key: concatenation of the backward link pattern name and the rule name
-                              value: True, False, meaning the backward links patterns matches or does not match.
-        - verifiedStateCache (deprecated): holds all the verified states during a property check, along with the number of times the 
-                              individual elements rules matched. --> This attribute is deprecated and is now an attribute of AtomicStateProperty 
-        - collapseFactory: holds the object that allows performing collapses. The object contains a cache of its own to handle
-                           duplicate collapses resulting from multiple collapses of the same rules.
-        - mergeFactory: holds the object that allows performing merges. The object contains a cache of its own to handle
-                     duplicate merges resulting from multiple collapses of the same rules.
+        - pathConditionSet: holds the set of path conditions. Starts off with the empty path condition.
         - ruleContainment: holds for each layer a lattice representing which match patterns for rules are included in those of other rules
-        - verbosity: verbosity level (0 - no verbosity / 1 - verbose / 2 - debug)
-        - outputStates: True - output all the produced states, including collapsed one, in svg format
-                          
+        - verbosity: verbosity level (0 - no verbosity / 1 - verbose / 2 - debug)                          
     """
 
     def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, verbosity):
@@ -111,9 +86,7 @@ class PathConditionGenerator():
       
         # the path condition set starts with only the empty (None) path condition inside
         self.pathConditionSet = [HEmptyPathCondition()]        
-#        self.verifiedStateCache = []
-        self.collapseFactory = CollapseFactory(verbosity)
-        self.mergePreprocessFactory = MergePreprocessFactory(verbosity)
+        self.attributeEquationEvaluator = AttributeEquationEvaluator(verbosity) 
 #        self.mergeInterLayerFactory = MergeInterLayerFactory(verbosity)
 
         self._pre_process()
@@ -616,9 +589,9 @@ class PathConditionGenerator():
                                             
                                             # check if the equations on the attributes of the newly created path condition are satisfied
                                             
-                                            if self.evaluate_attribute_equations(newPathCond):
+                                            #if self.attributeEquationEvaluator(newPathCond):
                                             
-                                            #if True:
+                                            if True:
                                             
                                                 if isTotalCombinator:
                                                     # because the rule combines totally with a path condition in the accumulator we just copy it 
@@ -675,98 +648,6 @@ class PathConditionGenerator():
 #                 backLinksCacheKeys[backMatcherPosition].append((backLinkMatchers[backMatcherPosition].condition.name + fragment.name, fragment))
 #         return backLinksCacheKeys
     
-
-    def evaluate_attribute_equations(self, pathCondition):
-        """
-        Build the necessary set of equations to be passed onto Z3 for evaluation (SAT/UNSAT) given a path condition.
-        Equations have an abstract syntax tree structure inside the path condition that needs to be parsed.
-        Note that some equations share the same variables, and as such those variables have to be given the same identifiers throughout the Z3 expression.
-        Evaluate the set of equations using Z3 and return True if there is a solution for them, false otherwise
-        """
-
-        def _build_equation_expression(node, pathCondition, variablesInExpression):
-            """
-            helper for building the attribute equations by recursively going through the operations associated
-            to the left hand side and to the right hand side of an equation
-            """
-    
-            # in case it's an attribute, return the object's ID
-            if pathCondition.vs[node]['mm__'] == 'Attribute':
-                newVar = "a" + str(node)
-                if newVar not in set(variablesInExpression):
-                    variablesInExpression.append(newVar)
-                return "a" + str(node)
-            # in case it's a constant, return it's value
-            elif pathCondition.vs[node]['mm__'] == 'Constant':
-                return "\"" + pathCondition.vs[node]['value'] + "\""
-            # it's a concat operation
-            else:
-                # get the arguments of the concat operation
-                arg1Edge = [i for i in pathCondition.neighbors(node,1) if pathCondition.vs[i]['mm__'] == 'arg_1'][0]    
-                arg2Edge = [i for i in pathCondition.neighbors(node,1) if pathCondition.vs[i]['mm__'] == 'arg_2'][0]
-                arg1 = pathCondition.neighbors(arg1Edge,1)[0]
-                arg2 = pathCondition.neighbors(arg2Edge,1)[0]
-    
-                return "( Concat " + self.build_equation_expression(arg1) + " " + self.build_equation_expression(arg2) + ")"
-
-        
-        Z3Input = ""
-        variablesInExpression = []
-        
-        # grab all the equation nodes in the path condition
-        equationNodes = self._find_nodes_with_mm(pathCondition, "Equation")
-        # now build all the equations
-        if equationNodes != []:
-            for equationNode in equationNodes:
-                # get the left and the right expressions of the equation
-                leftExprEdge = [i for i in pathCondition.neighbors(equationNode,1) if pathCondition.vs[i]['mm__'] == 'leftExpr'][0]    
-                rightExprEdge = [i for i in pathCondition.neighbors(equationNode,1) if pathCondition.vs[i]['mm__'] == 'rightExpr'][0]
-
-                leftExprNode = pathCondition.neighbors(leftExprEdge,1)[0]
-                rightExprNode = pathCondition.neighbors(rightExprEdge,1)[0] 
-                
-                leftExpr = _build_equation_expression(leftExprNode, pathCondition, variablesInExpression)
-                rightExpr = _build_equation_expression(rightExprNode, pathCondition, variablesInExpression)  
-
-                Z3Input += "(assert (= " + leftExpr + " " +  rightExpr + ") )\n"
-        
-        Z3Input = "\n" + Z3Input
-        for var in variablesInExpression:
-            Z3Input = "(declare-variable " + var + " String)\n" + Z3Input
-        Z3Input += "\n(check-sat)"
-        
-        if self.verbosity >= 2 :
-            print "\nChecking with Z3:"
-            print "----------------"
-            print Z3Input
-            print "\n"
-         
-        # for now write the file with the equation formulas to be caught by the binary
-        # TODO: this is WAY TOO SLOW and needs to be done via an API or something faster    
-        with open("./tmp/Z3EquationFile", "w") as text_file:
-            text_file.write(Z3Input)
-             
-        # now call the z3-str binary to get the result of checking the formula
-        command = 'python /home/levi/z3-str/Z3-str.py -f ./tmp/Z3EquationFile'
-        z3_output = subprocess.check_output(command, shell=True)   
-         
-        if self.verbosity >= 2 :
-            print z3_output                                                                                      
-        
-        if "UNSAT" not in z3_output:   
-            return True
-        else:
-            return False
-
-
-    #find the nodes with this mm name
-    #move this method to the himesis_utils file, together with the one from PyRamify 
-    def _find_nodes_with_mm(self, graph, mm_names):
-        nodes = []
-        for node in graph.vs:
-            if node["mm__"] in mm_names:
-                nodes.append(node)
-        return nodes
 
     def print_path_conditions_screen(self):
         for pathCond in self.pathConditionSet:

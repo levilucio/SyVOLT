@@ -15,7 +15,7 @@ class HMoveOneEquationsLeftExpressionRHS(HimesisPostConditionPattern):
         super(HMoveOneEquationsLeftExpressionRHS, self).__init__(name='HMoveOneEquationsLeftExpressionRHS', num_nodes=8, edges=[])
         
         # Add the edges
-        self.add_edges([(4, 2), (5, 3), (1, 3), (0, 1), (6, 4), (7, 5)])
+        self.add_edges([[4, 2], [5, 3], [1, 3], [0, 1], [6, 4], [7, 5]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
 S'MT_post__PoliceStationMM'
@@ -219,9 +219,9 @@ return attr_value
         # Create new edges
         #===============================================================================
         # leftExpr9 -> Attribute4
-        graph.add_edges((labels['9'], labels['4']))
+        graph.add_edges([(labels['9'], labels['4'])])
         # Equation7 -> leftExpr9
-        graph.add_edges((labels['7'], labels['9']))
+        graph.add_edges([(labels['7'], labels['9'])])
         
         #===============================================================================
         # Set the output pivots

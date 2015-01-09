@@ -15,10 +15,10 @@ class HMoveOneOutputDirectRHS(HimesisPostConditionPattern):
         super(HMoveOneOutputDirectRHS, self).__init__(name='HMoveOneOutputDirectRHS', num_nodes=4, edges=[])
         
         # Add the edges
-        self.add_edges([(1, 0), (0, 3)])
+        self.add_edges([[1, 0], [0, 3]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__GM2AUTOSAR_MM'
+S'MT_post__PoliceStationMM'
 p2
 aS'MoTifRule'
 p3
@@ -225,9 +225,9 @@ return attr_value
         # Create new edges
         #===============================================================================
         # MetaModelElement_S3 -> directLink_S19
-        graph.add_edges((labels['3'], labels['19']))
+        graph.add_edges([(labels['3'], labels['19'])])
         # directLink_S19 -> MetaModelElement_S5
-        graph.add_edges((labels['19'], labels['5']))
+        graph.add_edges([(labels['19'], labels['5'])])
         
         #===============================================================================
         # Set the output pivots

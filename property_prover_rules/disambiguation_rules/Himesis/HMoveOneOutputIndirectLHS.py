@@ -15,10 +15,10 @@ class HMoveOneOutputIndirectLHS(HimesisPreConditionPatternLHS):
         super(HMoveOneOutputIndirectLHS, self).__init__(name='HMoveOneOutputIndirectLHS', num_nodes=4, edges=[])
         
         # Add the edges
-        self.add_edges([(2, 0), (0, 3)])
+        self.add_edges([[2, 0], [0, 3]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_pre__GM2AUTOSAR_MM'
+S'MT_pre__PoliceStationMM'
 p2
 aS'MoTifRule'
 p3
@@ -65,16 +65,12 @@ return True
         self.vs[1]["MT_pivotIn__"] = """element1"""
         self.vs[1]["MT_label__"] = """3"""
         self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__VirtualDevice'
+S'MT_pre__Station_S'
 p2
-aS'MT_pre__Distributable'
+aS'MT_pre__Male_S'
 p3
-aS'MT_pre__Signal'
+aS'MT_pre__Female_S'
 p4
-aS'MT_pre__ExecFrame'
-p5
-aS'MT_pre__ECU'
-p6
 a.""")
         self.vs[1]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[1]["MT_dirty__"] = False
@@ -120,16 +116,12 @@ return True
         self.vs[2]["MT_pivotIn__"] = """element2"""
         self.vs[2]["MT_label__"] = """4"""
         self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__VirtualDevice'
+S'MT_pre__Station_S'
 p2
-aS'MT_pre__Distributable'
+aS'MT_pre__Male_S'
 p3
-aS'MT_pre__Signal'
+aS'MT_pre__Female_S'
 p4
-aS'MT_pre__ExecFrame'
-p5
-aS'MT_pre__ECU'
-p6
 a.""")
         self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[2]["MT_dirty__"] = False
@@ -173,16 +165,12 @@ return True
 """
         self.vs[3]["MT_label__"] = """5"""
         self.vs[3]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__VirtualDevice'
+S'MT_pre__Station_S'
 p2
-aS'MT_pre__Distributable'
+aS'MT_pre__Male_S'
 p3
-aS'MT_pre__Signal'
+aS'MT_pre__Female_S'
 p4
-aS'MT_pre__ExecFrame'
-p5
-aS'MT_pre__ECU'
-p6
 a.""")
         self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[3]["MT_dirty__"] = False

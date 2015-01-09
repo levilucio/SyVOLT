@@ -3,7 +3,7 @@ __move_one_input_repeated_direct_MDL.py_________________________________________
 
 Automatically generated AToM3 Model File (Do not modify directly)
 Author: levi
-Modified: Thu Jan  8 10:47:50 2015
+Modified: Fri Jan  9 14:13:22 2015
 ____________________________________________________________________________________________
 """
 from stickylink import *
@@ -482,7 +482,7 @@ def move_one_input_repeated_direct_MDL(self, rootNode, MT_pre__GM2AUTOSAR_MMRoot
       self.obj81._setHierarchicalLink(False)
 
     # constraint
-    self.obj81.constraint.setValue('if graph.vs[9][\'associationType\'] == graph.vs[10][\'associationType\']\n    return True\n\nreturn False\n')
+    self.obj81.constraint.setValue('if graph.vs[9][\'associationType\'] == graph.vs[10][\'associationType\']:\n    return True\n\nreturn False\n')
     self.obj81.constraint.setHeight(15)
 
     self.obj81.graphClass_= graph_LHS

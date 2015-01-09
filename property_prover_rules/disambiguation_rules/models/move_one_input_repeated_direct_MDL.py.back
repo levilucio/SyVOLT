@@ -3,7 +3,7 @@ __move_one_input_repeated_direct_MDL.py_________________________________________
 
 Automatically generated AToM3 Model File (Do not modify directly)
 Author: levi
-Modified: Thu Jan  8 10:44:07 2015
+Modified: Thu Jan  8 10:47:50 2015
 ____________________________________________________________________________________________
 """
 from stickylink import *
@@ -79,7 +79,7 @@ def move_one_input_repeated_direct_MDL(self, rootNode, MT_pre__GM2AUTOSAR_MMRoot
         MoTifRuleRootNode.description.setHeight(15)
 
         # name
-        MoTifRuleRootNode.name.setValue('MoveOneInputRepeatedDirectMatch')
+        MoTifRuleRootNode.name.setValue('MoveOneInputRepeatedDirect')
     # --- ASG attributes over ---
 
 

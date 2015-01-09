@@ -15,10 +15,10 @@ class HMoveOneOutputRepeatedDirectRHS(HimesisPostConditionPattern):
         super(HMoveOneOutputRepeatedDirectRHS, self).__init__(name='HMoveOneOutputRepeatedDirectRHS', num_nodes=4, edges=[])
         
         # Add the edges
-        self.add_edges([(1, 0), (0, 3)])
+        self.add_edges([[1, 0], [0, 3]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__GM2AUTOSAR_MM'
+S'MT_post__PoliceStationMM'
 p2
 aS'MoTifRule'
 p3

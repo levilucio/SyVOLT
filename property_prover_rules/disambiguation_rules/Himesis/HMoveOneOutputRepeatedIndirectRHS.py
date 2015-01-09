@@ -18,7 +18,7 @@ class HMoveOneOutputRepeatedIndirectRHS(HimesisPostConditionPattern):
         self.add_edges([])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__GM2AUTOSAR_MM'
+S'MT_post__PoliceStationMM'
 p2
 aS'MoTifRule'
 p3

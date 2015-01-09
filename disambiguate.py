@@ -4,10 +4,6 @@ Created on 2015-08-08
 @author: levi
 '''
 
-import pydot
-from itertools import combinations
-import time
-
 from t_core.tc_python.arule import ARule
 from t_core.tc_python.frule import FRule
 
@@ -15,11 +11,6 @@ from t_core.messages import Packet
 from t_core.matcher import Matcher
 from t_core.rewriter import Rewriter
 from t_core.iterator import Iterator
-from t_core.rollbacker import Rollbacker
-
-from himesis_utils import disjoint_model_union
-from himesis_utils import print_graph
-from himesis_utils import graph_to_dot
 
 from property_prover_rules.disambiguation_rules.Himesis.HFindTwoMatchElementsSameTypeDiffRulesLHS import HFindTwoMatchElementsSameTypeDiffRulesLHS
 
@@ -62,9 +53,7 @@ from property_prover_rules.disambiguation_rules.Himesis.HDelOneAttributeFromUnco
 from property_prover_rules.disambiguation_rules.Himesis.HDeleteUncollapsedElementLHS import HDeleteUncollapsedElementLHS
 from property_prover_rules.disambiguation_rules.Himesis.HDeleteUncollapsedElementRHS import HDeleteUncollapsedElementRHS
 
-
-from copy import deepcopy
-
+from evaluate_attribute_equations import AttributeEquationEvaluator
 
 # declare all the needed TCore rules
 
@@ -102,6 +91,7 @@ class Disambiguator():
     
     def __init__(self, verbosity):
         self.verbosity = verbosity
+        self.attributeEquationEvaluator = AttributeEquationEvaluator(verbosity) 
 
 
     def _collapse_step(self, path_condition):
@@ -116,7 +106,6 @@ class Disambiguator():
 
         p = Packet()        
         i = Iterator()
-        r = Rollbacker(HFindTwoMatchElementsSameTypeDiffRulesLHS())
 
         p = find_elements_collapse_match.packet_in(p)               
         if self.verbosity >= 2: print 'Found collapsable elements:' + str(find_elements_collapse_match.is_success)
@@ -127,9 +116,6 @@ class Disambiguator():
             
             # continue while more pairs of elements can be collapsed
             while i.is_success:
-                
-                print p
-                print '---------------------------------------------------'
                 
                 #                 p = merge_cardinalities_matchmodel.packet_in(p)
                 #                 if self.verbosity >= 2: print 'merge_cardinalities_matchmodel:' + str( merge_cardinalities_matchmodel.is_success) 
@@ -165,10 +151,9 @@ class Disambiguator():
                 if self.verbosity >= 2: print 'delete_uncollapsed_element_match:' + str(delete_uncollapsed_element.is_success)
                 
                 # check if the equations on the attributes of the disambiguated solution can be satisfied
-                
-                
-                # store the current disambiguated solution            
-                disambiguated_solutions.append(p.graph)            
+                if self.attributeEquationEvaluator(p.graph):
+                    # store the current disambiguated solution            
+                    disambiguated_solutions.append(p.graph)            
                 
                 # advance to the next pair of elements to be collapsed
                 p = i.next_in(p)                
@@ -178,12 +163,25 @@ class Disambiguator():
     
 
     
-    def collapse(self, path_condition):
-        '''
-        build all the states resulting from collapsing elements of rules
-        combinations of rules 2-by-2, 3-by-3, ..., n-by-n are built incrementally
-        the results of collapsing a combination are put into a cache to avoid multiplying the same collapse operation
-        '''
+    def disambiguate(self, path_condition):
+        """
+        Build all the disambiguated path conditions for a generated path condition.
+        This follows approximately the recursive algorithm explained in:
+        http://msdl.cs.mcgill.ca/people/levi/30_publications/files/paper_models2010.pdf
+        Note that duplicate path conditions resulting from the recursive combining algorithm might arise.
+        Although these do not alter the result of the proof, they slow it down and a more optimized
+        disambiguation algorithm should not produce them.
+        """
         
-        pass
-                                               
+        disambiguated_path_conditions = []
+        
+        collapse_step_result = self._collapse_step(path_condition)
+        
+        if collapse_step_result != []:
+            disambiguated_path_conditions.extend(collapse_step_result)
+            for disamb_path_cond in collapse_step_result:
+                disambiguated_path_conditions.extend(self.disambiguate(disamb_path_cond))
+                
+        return disambiguated_path_conditions
+        
+                                              

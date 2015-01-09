@@ -15,7 +15,7 @@ class HMoveOneEquationsRightExpressionRHS(HimesisPostConditionPattern):
         super(HMoveOneEquationsRightExpressionRHS, self).__init__(name='HMoveOneEquationsRightExpressionRHS', num_nodes=8, edges=[])
         
         # Add the edges
-        self.add_edges([(4, 2), (5, 3), (1, 3), (0, 1), (6, 4), (7, 5)])
+        self.add_edges([[4, 2], [5, 3], [1, 3], [0, 1], [6, 4], [7, 5]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
 S'MT_post__PoliceStationMM'

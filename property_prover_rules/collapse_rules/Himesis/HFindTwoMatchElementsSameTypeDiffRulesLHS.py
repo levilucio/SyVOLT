@@ -12,10 +12,10 @@ class HFindTwoMatchElementsSameTypeDiffRulesLHS(HimesisPreConditionPatternLHS):
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(HFindTwoMatchElementsSameTypeDiffRulesLHS, self).__init__(name='HFindTwoMatchElementsSameTypeDiffRulesLHS', num_nodes=4, edges=[])
+        super(HFindTwoMatchElementsSameTypeDiffRulesLHS, self).__init__(name='HFindTwoMatchElementsSameTypeDiffRulesLHS', num_nodes=6, edges=[])
         
         # Add the edges
-        self.add_edges([[1, 0], [0, 2]])
+        self.add_edges([[4, 0], [0, 2], [5, 1], [1, 3]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
 S'MT_pre__PoliceStationMM'
@@ -30,7 +30,7 @@ a.""")
 return False
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('0bca52ac-b799-4cea-bcb9-83a8a498b3ca')
+        self["GUID__"] = UUID('6ed9b475-1a8d-457f-ba6d-c3f3e3c6142c')
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
@@ -39,14 +39,14 @@ return False
 .""")
         self.vs[0]["mm__"] = """MT_pre__match_contains"""
         self.vs[0]["MT_dirty__"] = False
-        self.vs[0]["GUID__"] = UUID('977f2fd4-a596-41cf-9f2a-fc55ef9620c6')
+        self.vs[0]["GUID__"] = UUID('d5a2f776-73fd-4347-922e-afbd7f04024e')
         self.vs[1]["MT_subtypeMatching__"] = False
-        self.vs[1]["MT_label__"] = """3"""
+        self.vs[1]["MT_label__"] = """6"""
         self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
-        self.vs[1]["mm__"] = """MT_pre__MatchModel"""
+        self.vs[1]["mm__"] = """MT_pre__match_contains"""
         self.vs[1]["MT_dirty__"] = False
-        self.vs[1]["GUID__"] = UUID('707cfb12-2036-499f-8bc0-f19461897e7e')
+        self.vs[1]["GUID__"] = UUID('1899cc56-dcc2-499f-ad36-db66314ad1de')
         self.vs[2]["MT_pivotOut__"] = """element1"""
         self.vs[2]["MT_pre__name"] = """
 #===============================================================================
@@ -97,7 +97,7 @@ a.""")
 
 return True
 """
-        self.vs[2]["GUID__"] = UUID('49bc6d95-8a46-4258-aacd-4b9383552d3f')
+        self.vs[2]["GUID__"] = UUID('a870495a-50de-4236-aef8-8c30ac5a9330')
         self.vs[3]["MT_pivotOut__"] = """element2"""
         self.vs[3]["MT_pre__name"] = """
 #===============================================================================
@@ -148,7 +148,21 @@ a.""")
 
 return True
 """
-        self.vs[3]["GUID__"] = UUID('8084f8dd-1499-49e3-9d60-a38c2cff30d4')
+        self.vs[3]["GUID__"] = UUID('5da549b4-bc07-4b20-b3cc-8793882a6c19')
+        self.vs[4]["MT_subtypeMatching__"] = False
+        self.vs[4]["MT_label__"] = """3"""
+        self.vs[4]["MT_subtypes__"] = pickle.loads("""(lp1
+.""")
+        self.vs[4]["mm__"] = """MT_pre__MatchModel"""
+        self.vs[4]["MT_dirty__"] = False
+        self.vs[4]["GUID__"] = UUID('e83d1ea3-93bc-4bfa-9831-493e832fe13a')
+        self.vs[5]["MT_subtypeMatching__"] = False
+        self.vs[5]["MT_label__"] = """4"""
+        self.vs[5]["MT_subtypes__"] = pickle.loads("""(lp1
+.""")
+        self.vs[5]["mm__"] = """MT_pre__MatchModel"""
+        self.vs[5]["MT_dirty__"] = False
+        self.vs[5]["GUID__"] = UUID('be0972c5-5043-4721-b776-59c514cac4a5')
 
     def eval_name1(self, attr_value, this):
         
