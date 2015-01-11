@@ -554,7 +554,7 @@ return True
 
         #no backward links in file, do nothing
         if len(backwards_links) == 0:
-            return {graph: None}
+            return {name: None}
 
         #there are backward links, so start RAMifying
         out_dir = "./patterns/"
@@ -673,14 +673,17 @@ return True
 
             #create the Matcher
             matcher = Matcher(backward_pattern)
-
+            rewriter = Rewriter(rewriter_graph)
             #append the new backward pattern and name mapping
-            bwPatterns.append(matcher)
+            bwPatterns.append([matcher, rewriter])
             #bwPatterns2Rule[matcher] = name
 
             #print("bwPatterns: " + str(bwPatterns))
-        return {return_graph: bwPatterns}
+        return {name: bwPatterns}
 
+
+    def make_match_pattern_rewriter(self, rewriter):
+        return rewriter
 
     def get_match_pattern(self, rule):
         name = rule.keys()[0]
@@ -688,6 +691,7 @@ return True
 
 
         rewriter = self.makePostConditionPattern(graph)
+        rewriter = self.make_match_pattern_rewriter(rewriter)
 
         new_name = name + "_overlapLHS"
         
@@ -704,7 +708,7 @@ return True
         graph["MT_constraint__"] = self.get_default_constraint()
 
 
-        match_contains = self.find_nodes_with_mm(graph, ["MT_pre__match_contains"])
+        match_contains = self.find_nodes_with_mm(graph, ["MT_pre__match_contains", "MT_pre__trace_link"])
 
         nodes_to_keep = []
         for link in match_contains:
@@ -720,11 +724,11 @@ return True
         #    print graph.vs[n]["mm__"]
 
         nodes_to_remove = []
-        mms_to_remove = ["MT_pre__MatchModel", "MT_pre__match_contains", "MT_pre__paired_with", "MT_pre__trace_link", "MT_pre__hasAttr_T", "MT_pre__hasAttr_S"]
+        mms_to_remove = ["MT_pre__MatchModel", "MT_pre__match_contains", "MT_pre__paired_with", "MT_pre__hasAttr_T", "MT_pre__hasAttr_S", "MT_pre__directLink_T", "MT_pre__apply_contains"]
 
-        print("Removal")
+        #print("Removal")
         for i in range(len(graph.vs)):
-            print("MM: " + graph.vs[i]["mm__"])
+            #print("MM: " + graph.vs[i]["mm__"])
             if i not in nodes_to_keep or graph.vs[i]["mm__"] in mms_to_remove:
                 nodes_to_remove.append(i)
 
@@ -754,7 +758,7 @@ return True
         rule = self.load_class(out_dir + "/" + new_name)
         match_graph = rule[rule.keys()[0]]
 
-        return {name : (Matcher(match_graph), Rewriter(rewriter))}
+        return {name : [Matcher(match_graph), Rewriter(rewriter)]}
     #=========================
 
     #function to dynamically load a new class

@@ -72,14 +72,18 @@ class PathConditionGenerator():
         
         self.ruleContainment = []
 
-#         self.print_transformation()
-#         self.print_ruleCombinators()
+        self.print_transformation()
+        self.print_ruleCombinators()
 #         self.print_ruleTraceCheckers()
+
+
 
 #         self.backwardPatternsComplete = backwardPatternsComplete
         self.matchRulePatterns = matchRulePatterns
         self.verbosity = verbosity
 #         self.outputStates = outputStates
+
+        self.print_matchRulePatterns()
 
         # output suffix for graph files
 #        self.output_suffix = output_suffix
@@ -135,13 +139,16 @@ class PathConditionGenerator():
 #                 print_graph(v.condition)
 #                 graph_to_dot("backComplete_" + str(backwardPatternsCompleteKey) + self.output_suffix, v.condition)
 
-#    def print_matchRulePatterns(self):
-#        print("\n===\nmatchRulePatterns:")
-#         for matchRulePattern in sorted(self.matchRulePatterns.keys()):
-#             print("\nKey: " + str(matchRulePattern))
-#             print("\nValue: ")
-#             print_graph(self.matchRulePatterns[matchRulePattern].condition)
-#             graph_to_dot("matchPattern_" + str(matchRulePattern) + self.output_suffix, self.matchRulePatterns[matchRulePattern].condition)
+    def print_matchRulePatterns(self):
+        print("\n===\nmatchRulePatterns:")
+        for matchRulePattern in sorted(self.matchRulePatterns.keys()):
+            print("\nKey: " + str(matchRulePattern))
+            print("\nValue: ")
+
+            matcher, rewriter = self.matchRulePatterns[matchRulePattern]
+            #print_graph(matcher.condition)
+            graph_to_dot("matchPattern_matcher_" + str(matchRulePattern), matcher.condition)
+            graph_to_dot("matchPattern_rewriter_" + str(matchRulePattern), rewriter.condition)
 
     def _pre_process(self):
         """
@@ -589,7 +596,9 @@ class PathConditionGenerator():
                                             
                                             # check if the equations on the attributes of the newly created path condition are satisfied
                                             
+
                                             #if self.attributeEquationEvaluator(newPathCond):
+
                                             
                                             if True:
                                             
