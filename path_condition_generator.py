@@ -15,6 +15,8 @@ from copy import deepcopy
 
 from evaluate_attribute_equations import AttributeEquationEvaluator
 
+from PyRamify import PyRamify
+
 # the empty path condition
 from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 
@@ -25,9 +27,6 @@ from property_prover_rules.cardinality_resolution.Himesis.HForwardCardinalitiesT
 # transformation to built traceability for rules
 from property_prover_rules.traceability_construction.Himesis.HBuildTraceabilityForRuleLHS import HBuildTraceabilityForRuleLHS
 from property_prover_rules.traceability_construction.Himesis.HBuildTraceabilityForRuleRHS import HBuildTraceabilityForRuleRHS
-
-# check for the existence of backward links is rules
-from property_prover_rules.backward_link_test.Himesis.HCheckForNoBackwardLinksLHS import HCheckForNoBackwardLinksLHS
 
 ##Backward Matchers -start
 # from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnectPPortPrototype_Back_CompositionType2ECULHS import HConnectPPortPrototype_Back_CompositionType2ECULHS
@@ -44,7 +43,6 @@ from property_prover_rules.backward_link_test.Himesis.HCheckForNoBackwardLinksLH
 # declare the necessary T-Core rules
 forward_cardinalities_to_apply = SRule(HForwardCardinalitiesToApplyModelLHS(), HForwardCardinalitiesToApplyModelRHS())
 build_traceability_for_rule = FRule(HBuildTraceabilityForRuleLHS(), HBuildTraceabilityForRuleRHS())
-check_for_no_backward_links = Matcher(HCheckForNoBackwardLinksLHS())
 
 
 class PathConditionGenerator():
@@ -169,87 +167,76 @@ class PathConditionGenerator():
 #                 print(rule)
 #         
         # merge rules of the same layer that share common match patterns over those match patterns   
-#         print("merge rules of the same layer that share common match patterns over those match patterns   ")
-#         for layer in range(0,len(self.transformation)):
-#             print(layer)
-#             # loop until all the rules in the layer have been treated
-#             merged_layer = []
-#             while self.transformation[layer] != []:
-#                 # compare the first rule to the remaining ones
-#                 mergeResult = self.transformation[layer][0]
-#                 markedForRemoval = [self.transformation[layer][0]]
-#                   
-#                 matchPatternCurrentRule = self.matchRulePatterns[self.transformation[layer][0].name]
-#  
+        print("merge rules of the same layer that share common match patterns over those match patterns   ")
+        for layer in range(0,len(self.transformation)):
+            print(layer)
+            # loop until all the rules in the layer have been treated
+            merged_layer = []
+            while self.transformation[layer] != []:
+                # compare the first rule to the remaining ones
+                mergeResult = self.transformation[layer][0]
+                markedForRemoval = [self.transformation[layer][0]]
+                   
+                matchPatternCurrentRule = self.matchRulePatterns[self.transformation[layer][0].name][0]
+  
 #                 print("MPCR: ")
 #                 print_graph(matchPatternCurrentRule.condition)
 #                 for r in self.transformation[layer]:
 #                     print(r)
-#                 for candidateToMerge in range(1,len(self.transformation[layer])):
-#                     matchPatternCandidateRule = self.matchRulePatterns[self.transformation[layer][candidateToMerge].name]
+                for candidateToMerge in range(1,len(self.transformation[layer])):
+                    matchPatternCandidateRule = self.matchRulePatterns[self.transformation[layer][candidateToMerge].name][0]
 #                     print("MPCRNAme: " + self.transformation[layer][candidateToMerge].name)
-#                     # check whether the rules can be merged, if both have the same match pattern
-#                     # check if the current rule's (first rule) match is a subset of the candidate's rule match
-#                     p = Packet()
-#                     p.graph = self.transformation[layer][candidateToMerge]
+                    # check whether the rules can be merged, if both have the same match pattern
+                    # check if the current rule's (first rule) match is a subset of the candidate's rule match
+                    p = Packet()
+                    p.graph = self.transformation[layer][candidateToMerge]
 #                     print("First name: " + p.graph.name)
-#                     matchPatternCurrentRule.packet_in(p)
-#                     # now check if the candidate rule's match is a subset of the current rule's match
-#                     p = Packet()
-#                     p.graph = self.transformation[layer][0]
-#                     print("Other name: " + p.graph.name)
-#                     matchPatternCandidateRule.packet_in(p)                           
-#                     # check if the rules share the same match pattern such that we can merge them
-#                     print("matchPatternCurrentRule.is_success: " + str(matchPatternCurrentRule.is_success))
-#                     print("matchPatternCandidateRule.is_success: " + str(matchPatternCandidateRule.is_success))
-#                     if matchPatternCurrentRule.is_success and matchPatternCandidateRule.is_success:
-#  
-#                         mergeResult = self.mergePreprocessFactory.merge_two_rules_preprocess(mergeResult, self.transformation[layer][candidateToMerge])
-#                         # mark the rule for removal
-#                         markedForRemoval.append(self.transformation[layer][candidateToMerge])
-#  
-#                 # copy the result of the merge to the merged layer
-#                 merged_layer.append(mergeResult)
-#                 # merge backwardPatterns matchers for the merged rules
-#                 # gather all the backwardPattern matchers from the rules that got merged
-#                 # and are to be removed, only if any rule got merged during this pass
-#                  
-#                 if len(markedForRemoval) > 1:                  
-#                     # rebuild the auxiliary structures
-#                     # rules
-#                     self.rules[mergeResult.name] = mergeResult
-#                     # rulesIncludingBackwardLinks
-#                     for rule in markedForRemoval:
-#                         if rule in set(self.rulesIncludingBackwardLinks[layer]):
-#                             self.rulesIncludingBackwardLinks[layer].append(mergeResult)
-#                             break
-#                     # backwardPatterns
-#                     newBackwardPattern = []
-#                     for rule in markedForRemoval:
-#                         if self.backwardPatterns[rule.name] != []:
-#                             print("Rule name: " + str(rule.name))
-#                             newBackwardPattern.extend(self.backwardPatterns[rule.name])
-#                     self.backwardPatterns[mergeResult.name] = newBackwardPattern
-#                     # backwardPatterns2Rules
-#                     for backPattern in self.backwardPatterns2Rules.keys():
-#                         if self.rules[self.backwardPatterns2Rules[backPattern]] in set(markedForRemoval):
-#                             self.backwardPatterns2Rules[backPattern] = mergeResult.name
-#                     # backwardPatternsComplete
-#                     self.backwardPatternsComplete[mergeResult.name] = self.[markedForRemoval[0].name]  
-#                     # matchRulePatterns
-#                     self.matchRulePatterns[mergeResult.name] = self.matchRulePatterns[markedForRemoval[0].name]
-#                                     
-#                     # remove from the backwardPatterns dictionary the references to rules that got merged
-#                     for rule in markedForRemoval:
-#                         del self.rules[rule.name]
-#                         del self.backwardPatterns[rule.name]
-#                         del self.backwardPatternsComplete[rule.name]
-#                         del self.matchRulePatterns[rule.name]
-#                         self.rulesIncludingBackwardLinks[layer] = [rule for rule in self.rulesIncludingBackwardLinks[layer] if rule not in markedForRemoval]
-#                 # remove the rules that got merged (marked None) during the previous pass
-#                 self.transformation[layer] = [rule for rule in self.transformation[layer] if rule not in markedForRemoval]               
-#             # the layer has been treated and can be put back into the transformation               
-#             self.transformation[layer] = merged_layer
+                    matchPatternCurrentRule.packet_in(p)
+                    # now check if the candidate rule's match is a subset of the current rule's match
+                    p = Packet()
+                    p.graph = self.transformation[layer][0]
+                    print("Other name: " + p.graph.name)
+                    matchPatternCandidateRule.packet_in(p)                           
+                    # check if the rules share the same match pattern such that we can merge them
+                    print("matchPatternCurrentRule.is_success: " + str(matchPatternCurrentRule.is_success))
+                    print("matchPatternCandidateRule.is_success: " + str(matchPatternCandidateRule.is_success))
+                    if matchPatternCurrentRule.is_success and matchPatternCandidateRule.is_success:
+                        
+                        # merge the rules by copying the candidate to merge on top of the results of merging
+                        # all rules so far with the same matcher
+                        mergeResultNameBefore = mergeResult.name
+                        p = Packet()
+                        p.graph = mergeResult
+                        p = self.matchRulePatterns[self.transformation[layer][candidateToMerge].name][1].packet_in(p)
+                        mergeResult = p.graph
+                        mergeResult.name = mergeResult + self.transformation[layer][candidateToMerge].name
+                        
+                        # mark the rule for removal
+                        markedForRemoval.append(self.transformation[layer][candidateToMerge])
+  
+                # copy the result of the merge or the unmerged rule to the merged layer
+                merged_layer.append(mergeResult)
+                # merge backwardPatterns matchers for the merged rules
+                # gather all the backwardPattern matchers from the rules that got merged
+                # and are to be removed, only if any rule got merged during this pass
+                  
+                if len(markedForRemoval) > 1:                  
+                    # rebuild the auxiliary structures
+                    # matchRulePatterns
+                    self.matchRulePatterns[mergeResult.name] = self.matchRulePatterns[markedForRemoval[0].name]
+                    
+                    # rebuild the rule combinators for the merged rule
+#                     pyramify = PyRamify()
+#                     self.ruleCombinators = pyramify.get_rule_combinators(mergeResult)
+                                     
+                    # remove from the backwardPatterns dictionary the references to rules that got merged
+                    for rule in markedForRemoval:
+                        del self.matchRulePatterns[rule.name]
+
+                # remove the rules that got merged during the previous pass
+                self.transformation[layer] = [rule for rule in self.transformation[layer] if rule not in markedForRemoval]               
+            # the layer has been treated and can be put back into the transformation               
+            self.transformation[layer] = merged_layer
 #             
 #        print 'Transformation:'
 #        for layer in range(0,len(self.transformation)):
@@ -595,11 +582,9 @@ class PathConditionGenerator():
                                             newPathCond.name = newPathCondName
                                             
                                             # check if the equations on the attributes of the newly created path condition are satisfied
-                                            
-
+                                        
                                             #if self.attributeEquationEvaluator(newPathCond):
-
-                                            
+                                       
                                             if True:
                                             
                                                 if isTotalCombinator:

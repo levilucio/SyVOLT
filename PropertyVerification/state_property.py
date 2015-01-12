@@ -120,6 +120,7 @@ class StateProperty(Property):
                         smallerStateWithSameRulesExists = False
                 
                         for alreadyVerifiedState in AtomicStatePropsInStateProp[atomicStatePropIndex].verifiedStateCache:
+                            # if all the rules in the path cond
                             if len(set(state) - set(alreadyVerifiedState[0])) == len(set(state)) - len(set(alreadyVerifiedState[0]))\
                             and numberOfIsolatedMatches == alreadyVerifiedState[1]:
                                 smallerStateWithSameRulesExists = True
@@ -217,10 +218,10 @@ class StateProperty(Property):
         if StateSpace.verbosity >= 1: 
             print '\n'
         if found_counterexample == True:
-            if StateSpace.verbosity >= 1: print 'Composite StateProperty does not Hold for all states!!!'
+            if StateSpace.verbosity >= 1: print 'Composite StateProperty does not Hold for all path conditions!!!'
 
         else:
-            if StateSpace.verbosity >= 1: print 'Composite StateProperty Holds for all states!!!'
+            if StateSpace.verbosity >= 1: print 'Composite StateProperty Holds for all path conditions!!!'
         
         # cleanup the already verified state cache
         #StateSpace.verifiedStateCache = []

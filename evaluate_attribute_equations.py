@@ -70,33 +70,35 @@ class AttributeEquationEvaluator():
 
                 Z3Input += "(assert (= " + leftExpr + " " +  rightExpr + ") )\n"
         
-        Z3Input = "\n" + Z3Input
-        for var in variablesInExpression:
-            Z3Input = "(declare-variable " + var + " String)\n" + Z3Input
-        Z3Input += "\n(check-sat)"
-        
-        if self.verbosity >= 2 :
-            print "\nChecking with Z3:"
-            print "----------------"
-            print Z3Input
-            print "\n"
-         
-        # for now write the file with the equation formulas to be caught by the binary
-        # TODO: this is WAY TOO SLOW and needs to be done via an API or something faster    
-        with open(self.Z3InputFile, "w") as text_file:
-            text_file.write(Z3Input)
+            Z3Input = "\n" + Z3Input
+            for var in variablesInExpression:
+                Z3Input = "(declare-variable " + var + " String)\n" + Z3Input
+            Z3Input += "\n(check-sat)"
+            
+            if self.verbosity >= 2 :
+                print "\nChecking with Z3:"
+                print "----------------"
+                print Z3Input
+                print "\n"
              
-        # now call the z3-str binary to get the result of checking the formula
-        command = "python " + self.Z3Location + " -f " + self.Z3InputFile
-        z3_output = subprocess.check_output(command, shell=True)   
-         
-        if self.verbosity >= 2 :
-            print z3_output                                                                                      
-        
-        if "UNSAT" not in z3_output:   
-            return True
-        else:
-            return False
+            # for now write the file with the equation formulas to be caught by the binary
+            # TODO: this is WAY TOO SLOW and needs to be done via an API or something faster    
+            with open(self.Z3InputFile, "w") as text_file:
+                text_file.write(Z3Input)
+                 
+            # now call the z3-str binary to get the result of checking the formula
+            command = "python " + self.Z3Location + " -f " + self.Z3InputFile
+            z3_output = subprocess.check_output(command, shell=True)   
+             
+            if self.verbosity >= 2 :
+                print z3_output                                                                                      
+            
+            if "UNSAT" not in z3_output:   
+                return True
+            else:
+                return False
+            
+        return True
 
         
     def _find_nodes_with_mm(self, graph, mm_names):
