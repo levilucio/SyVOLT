@@ -542,6 +542,47 @@ return True
 
         return [{str(return_graph.name): matcher}, bwPatterns2Rule]
 
+
+    def get_links_in_apply(self, graph):
+        # find the apply_contains
+        apply_contains = self.find_nodes_with_mm(graph, ["MT_pre__apply_contains"])
+
+
+
+        # find the backward links
+        backwards_links = self.find_nodes_with_mm(graph, ["MT_pre__trace_link"])
+
+
+        #find node nums attached to a backward link
+        attached_to_backward_links = []
+        for bl in backwards_links:
+            attached_to_backward_links += self.look_for_attached(bl, graph)
+
+        nodes_to_delete = []
+
+        #look at the apply_contains link
+        for apply_contain in apply_contains:
+            #find the attached nodes to this link
+            apply_attached_nodes = self.look_for_attached_of_attached(apply_contain, graph)
+
+
+            #for the nodes
+            for aan in apply_attached_nodes:
+                #get the node
+                node = graph.vs[aan]
+                #print(node)
+
+                if aan in attached_to_backward_links:
+                    #this node is attached to a backward link, so leave it
+                    pass
+                elif str(node["mm__"]) not in ["MT_pre__ApplyModel", "MT_pre__apply_contains", "MT_pre__paired_with"]:
+                    #don't remove important nodes, but delete all others
+                    nodes_to_delete.append(node)
+
+        print("Nodes to delete: " + str(len(nodes_to_delete)))
+        return nodes_to_delete
+
+
     # create the backward patterns for this file
     def get_rule_combinators(self, rule):
         print("\nStarting get backward patterns")
@@ -593,7 +634,12 @@ return True
         #print("NACs: " + str(base_graph.NACs))
 
 
-        base_graph.delete_nodes(structure_nums)
+        graph_to_dot("base_graph_before", base_graph)
+        apply_links = self.get_links_in_apply(base_graph)
+
+        base_graph.delete_nodes(structure_nums + apply_links)
+
+
 
         graph_to_dot("base_graph", base_graph)
 
@@ -619,6 +665,8 @@ return True
         #(which is all nodes that should not be kept)
         nodes_to_remove = range(len(base_graph.vs))
 #        nodes_to_remove = [new_graph.vs[item] for item in nodes_to_remove if item not in nodes_to_keep]
+
+
 
         # don't consider removing the backward links and attached nodes
         for n in nodes_to_keep:
