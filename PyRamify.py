@@ -165,25 +165,44 @@ return True
 return True
 """
 
+    def get_default_action(self):
+        return """#===============================================================================
+# This code is executed after the rule has been applied.
+# You can access a node labelled n matched by this rule by: PostNode('n').
+# To access attribute x of node n, use: PostNode('n')['x'].
+#===============================================================================
+
+pass
+"""
+
+
     '''
      changeAttrType (M): Changes the type of attributes to 'string', which allows conditions and actions to be specified on attribute values in patterns.
      Also appends '__' to attributes starting with '__'. This is because the pLabel and pMatchSubtypes attributes (introduced in one of the next steps) need to be scoped appropriately for HOTs. 
      The first time a metamodel is ramified, each class will have a __pLabel and __pMatchSubtypes attribute.
      The next time, these attributes are renamed to ____pLabel and ____pMatchSubtypes, to allow a condition/action to be specified for the __pLabel and __pMatchSubtypes attributes which were introduced in the first RAMified metamodel.
     '''
-    def changeAttrType(self, graph):
+    def changeAttrType(self, graph, make_pre = True):
 
         self.next_label = 0
 
         #change mm of the graph
 
         try:
-            graph["mm__"] = [str(Himesis.Constants.MT_PRECOND_PREFIX + graph["mm__"][0]), 'MoTifRule']
+            if make_pre:
+                graph["mm__"] = [str(Himesis.Constants.MT_PRECOND_PREFIX + graph["mm__"][0]), 'MoTifRule']
+            else:
+                graph["mm__"] = [str(Himesis.Constants.MT_POSTCOND_PREFIX + graph["mm__"][0]), 'MoTifRule']
         except IndexError:
             graph["mm__"] = "MM"
 
-        #set the default constraint
-        graph["MT_constraint__"] = self.get_default_constraint()
+
+        if make_pre:
+            #set the default constraint
+            graph["MT_constraint__"] = self.get_default_constraint()
+        else:
+            graph["MT_action__"] = self.get_default_action()
+
 
         #add 'MT_pre__' to all non-GUID attributes
         for i in range(len(graph.vs)):
@@ -209,6 +228,10 @@ return True
                 if Himesis.Constants.MT_PRECOND_PREFIX in attrib:
                     continue
 
+                if Himesis.Constants.MT_POSTCOND_PREFIX in attrib:
+                    continue
+
+
                 #make sure to copy the value
                 val = copy.deepcopy(node[attrib])
 
@@ -216,7 +239,11 @@ return True
                 del node[attrib]
 
                 #re-add the value with the new attribute name
-                node[Himesis.Constants.MT_PRECOND_PREFIX + attrib] = val
+
+                if make_pre:
+                    node[Himesis.Constants.MT_PRECOND_PREFIX + attrib] = val
+                else:
+                    node[Himesis.Constants.MT_POSTCOND_PREFIX + attrib] = val
 
             #change attrib values
             #hacky, to fix some edge cases
@@ -224,7 +251,10 @@ return True
 
                 #add the prefix to the mm
                 if attrib == "mm__":
-                    node["mm__"] = Himesis.Constants.MT_PRECOND_PREFIX + node["mm__"]
+                    if make_pre:
+                        node["mm__"] = Himesis.Constants.MT_PRECOND_PREFIX + node["mm__"]
+                    else:
+                        node["mm__"] = Himesis.Constants.MT_POSTCOND_PREFIX + node["mm__"]
                     continue
 
                 #skip the other attribs
@@ -232,14 +262,17 @@ return True
                     continue
 
                 #hacky, some attribs are set to none
-                none_types = ["MT_pre__directLink_S", "MT_pre__trace_link", "directLink_S", "trace_link"]
-                none_attrib = ["MT_pre__cardinality", "MT_pre__classtype", "MT_pre__name"]
+                none_types = ["MT_pre__directLink_S", "MT_post__directLink_S",
+                              "MT_pre__trace_link", "MT_post__trace_link",
+                              "directLink_S", "trace_link"]
+                none_attrib = ["MT_pre__cardinality", "MT_pre__classtype", "MT_pre__name",
+                               "MT_post__cardinality", "MT_post__classtype", "MT_post__name"]
                 if node["mm__"] in none_types and attrib in none_attrib:
                     node[attrib] = None
                     continue
 
-                none_types2 = ["MT_pre__trace_link", "trace_link"]
-                none_attrib2 = ["MT_pre__associationType", "associationType"]
+                none_types2 = ["MT_pre__trace_link", "MT_post__trace_link", "trace_link"]
+                none_attrib2 = ["MT_pre__associationType", "MT_post__associationType", "associationType"]
                 if node["mm__"] in none_types2 and attrib in none_attrib2:
                     node[attrib] = None
                     continue
@@ -263,6 +296,11 @@ return True
             #--confirmed to be in igraph
             try:
                 del node["MT_pre__type"]
+            except Exception:
+                pass
+
+            try:
+                del node["MT_post__type"]
             except Exception:
                 pass
 
@@ -631,6 +669,9 @@ return True
         #print("NACs: " + str(new_graph.NACs))
         base_graph = self.copy_graph(new_graph)
 
+
+        rewriter_graph = copy.deepcopy(return_graph)
+
         #print("NACs: " + str(base_graph.NACs))
 
 
@@ -638,15 +679,17 @@ return True
         apply_links = self.get_links_in_apply(base_graph)
 
         base_graph.delete_nodes(structure_nums + apply_links)
-
+        rewriter_graph.delete_nodes(structure_nums)
 
 
         graph_to_dot("base_graph", base_graph)
 
+        graph_to_dot("rewriter_graph_before", rewriter_graph)
+        #Turn rewriter_graph into RHS
+        rewriter_graph = self.makePostConditionPattern(rewriter_graph)
 
 
-        #TODO: Turn base_graph into RHS
-        rewriter_graph = self.makePostConditionPattern(new_graph)
+        graph_to_dot("rewriter_graph", rewriter_graph)
 
         # keep the nodes attached to the backward link plus the 'structural' nodes
         #that should be kept
@@ -721,7 +764,15 @@ return True
 
             #create the Matcher
             matcher = Matcher(backward_pattern)
+
+            # change the attribs in this graph
+            rewriter_graph = self.changeAttrType(rewriter_graph, False)
+
             rewriter = Rewriter(rewriter_graph)
+            rewriter.condition.pre = backward_pattern
+            rewriter.condition.compile(out_dir)
+
+
             #append the new backward pattern and name mapping
             bwPatterns.append([matcher, rewriter])
             #bwPatterns2Rule[matcher] = name
