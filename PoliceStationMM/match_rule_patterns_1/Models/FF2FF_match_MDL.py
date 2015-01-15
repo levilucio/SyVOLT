@@ -1,9 +1,9 @@
 """
-__FF2FF_combine_0_MDL.py_____________________________________________________
+__FF2FF_combine_1_MDL.py_____________________________________________________
 
 Automatically generated AToM3 Model File (Do not modify directly)
 Author: levi
-Modified: Mon Dec 15 11:10:43 2014
+Modified: Mon Dec 15 11:12:57 2014
 _____________________________________________________________________________
 """
 from stickylink import *
@@ -17,7 +17,6 @@ from MT_post__directLink_T import *
 from MT_post__Female_S import *
 from MT_post__Female_T import *
 from MT_post__trace_link import *
-from NAC import *
 from RHS import *
 from LHS import *
 from graph_LHS import *
@@ -25,13 +24,12 @@ from graph_MT_pre__indirectLink_S import *
 from graph_MT_post__trace_link import *
 from graph_MT_pre__trace_link import *
 from graph_MT_post__directLink_T import *
-from graph_MT_post__Female_S import *
 from graph_RHS import *
 from graph_MT_post__Female_T import *
 from graph_MT_post__indirectLink_S import *
 from graph_MT_pre__Female_T import *
 from graph_MT_pre__Female_S import *
-from graph_NAC import *
+from graph_MT_post__Female_S import *
 from ATOM3Enum import *
 from ATOM3String import *
 from ATOM3BottomType import *
@@ -49,7 +47,7 @@ from ATOM3Integer import *
 from ATOM3Port import *
 from ATOM3MSEnum import *
 
-def FF2FF_combine_0_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, MoTifRuleRootNode=None, MT_post__PoliceStationMMRootNode=None):
+def FF2FF_combine_1_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, MoTifRuleRootNode=None, MT_post__PoliceStationMMRootNode=None):
 
     # --- Generating attributes code for ASG MT_pre__PoliceStationMM ---
     if( MT_pre__PoliceStationMMRootNode ): 
@@ -76,8 +74,7 @@ def FF2FF_combine_0_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, Mo
         MoTifRuleRootNode.description.setHeight(15)
 
         # name
-        MoTifRuleRootNode.name.setValue('')
-        MoTifRuleRootNode.name.setNone()
+        MoTifRuleRootNode.name.setValue('FF2FF_combine_1')
     # --- ASG attributes over ---
 
 
@@ -95,102 +92,6 @@ def FF2FF_combine_0_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, Mo
         MT_post__PoliceStationMMRootNode.name.setNone()
     # --- ASG attributes over ---
 
-
-    self.obj66=MT_pre__Female_S(self)
-    self.obj66.isGraphObjectVisual = True
-
-    if(hasattr(self.obj66, '_setHierarchicalLink')):
-      self.obj66._setHierarchicalLink(False)
-
-    # MT_pivotOut__
-    self.obj66.MT_pivotOut__.setValue('')
-    self.obj66.MT_pivotOut__.setNone()
-
-    # MT_subtypeMatching__
-    self.obj66.MT_subtypeMatching__.setValue(('True', 0))
-    self.obj66.MT_subtypeMatching__.config = 0
-
-    # MT_pre__classtype
-    self.obj66.MT_pre__classtype.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
-    self.obj66.MT_pre__classtype.setHeight(15)
-
-    # MT_pivotIn__
-    self.obj66.MT_pivotIn__.setValue('')
-    self.obj66.MT_pivotIn__.setNone()
-
-    # MT_label__
-    self.obj66.MT_label__.setValue('1')
-
-    # MT_pre__cardinality
-    self.obj66.MT_pre__cardinality.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
-    self.obj66.MT_pre__cardinality.setHeight(15)
-
-    # MT_pre__name
-    self.obj66.MT_pre__name.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
-    self.obj66.MT_pre__name.setHeight(15)
-
-    self.obj66.graphClass_= graph_MT_pre__Female_S
-    if self.genGraphics:
-       new_obj = graph_MT_pre__Female_S(120.0,280.0,self.obj66)
-       new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("MT_pre__Female_S", new_obj.tag)
-       new_obj.layConstraints = dict() # Graphical Layout Constraints 
-       new_obj.layConstraints['scale'] = [1.0, 1.0]
-    else: new_obj = None
-    self.obj66.graphObject_ = new_obj
-
-    # Add node to the root: rootNode
-    rootNode.addNode(self.obj66)
-    self.globalAndLocalPostcondition(self.obj66, rootNode)
-    self.obj66.postAction( rootNode.CREATE )
-
-    self.obj67=MT_pre__Female_S(self)
-    self.obj67.isGraphObjectVisual = True
-
-    if(hasattr(self.obj67, '_setHierarchicalLink')):
-      self.obj67._setHierarchicalLink(False)
-
-    # MT_pivotOut__
-    self.obj67.MT_pivotOut__.setValue('')
-    self.obj67.MT_pivotOut__.setNone()
-
-    # MT_subtypeMatching__
-    self.obj67.MT_subtypeMatching__.setValue(('True', 0))
-    self.obj67.MT_subtypeMatching__.config = 0
-
-    # MT_pre__classtype
-    self.obj67.MT_pre__classtype.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
-    self.obj67.MT_pre__classtype.setHeight(15)
-
-    # MT_pivotIn__
-    self.obj67.MT_pivotIn__.setValue('')
-    self.obj67.MT_pivotIn__.setNone()
-
-    # MT_label__
-    self.obj67.MT_label__.setValue('2')
-
-    # MT_pre__cardinality
-    self.obj67.MT_pre__cardinality.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
-    self.obj67.MT_pre__cardinality.setHeight(15)
-
-    # MT_pre__name
-    self.obj67.MT_pre__name.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
-    self.obj67.MT_pre__name.setHeight(15)
-
-    self.obj67.graphClass_= graph_MT_pre__Female_S
-    if self.genGraphics:
-       new_obj = graph_MT_pre__Female_S(300.0,280.0,self.obj67)
-       new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("MT_pre__Female_S", new_obj.tag)
-       new_obj.layConstraints = dict() # Graphical Layout Constraints 
-       new_obj.layConstraints['scale'] = [1.0, 1.0]
-    else: new_obj = None
-    self.obj67.graphObject_ = new_obj
-
-    # Add node to the root: rootNode
-    rootNode.addNode(self.obj67)
-    self.globalAndLocalPostcondition(self.obj67, rootNode)
-    self.obj67.postAction( rootNode.CREATE )
 
     self.obj68=MT_pre__Female_S(self)
     self.obj68.isGraphObjectVisual = True
@@ -376,40 +277,40 @@ def FF2FF_combine_0_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, Mo
     self.globalAndLocalPostcondition(self.obj83, rootNode)
     self.obj83.postAction( rootNode.CREATE )
 
-    self.obj98=MT_pre__indirectLink_S(self)
-    self.obj98.isGraphObjectVisual = True
+    self.obj10074=MT_pre__indirectLink_S(self)
+    self.obj10074.isGraphObjectVisual = True
 
-    if(hasattr(self.obj98, '_setHierarchicalLink')):
-      self.obj98._setHierarchicalLink(False)
+    if(hasattr(self.obj10074, '_setHierarchicalLink')):
+      self.obj10074._setHierarchicalLink(False)
 
     # MT_label__
-    self.obj98.MT_label__.setValue('7')
+    self.obj10074.MT_label__.setValue('10')
 
     # MT_pivotOut__
-    self.obj98.MT_pivotOut__.setValue('')
-    self.obj98.MT_pivotOut__.setNone()
+    self.obj10074.MT_pivotOut__.setValue('')
+    self.obj10074.MT_pivotOut__.setNone()
 
     # MT_subtypeMatching__
-    self.obj98.MT_subtypeMatching__.setValue(('True', 0))
-    self.obj98.MT_subtypeMatching__.config = 0
+    self.obj10074.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj10074.MT_subtypeMatching__.config = 0
 
     # MT_pivotIn__
-    self.obj98.MT_pivotIn__.setValue('')
-    self.obj98.MT_pivotIn__.setNone()
+    self.obj10074.MT_pivotIn__.setValue('')
+    self.obj10074.MT_pivotIn__.setNone()
 
-    self.obj98.graphClass_= graph_MT_pre__indirectLink_S
+    self.obj10074.graphClass_= graph_MT_pre__indirectLink_S
     if self.genGraphics:
-       new_obj = graph_MT_pre__indirectLink_S(271.0,321.0,self.obj98)
+       new_obj = graph_MT_pre__indirectLink_S(721.0,321.0,self.obj10074)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("MT_pre__indirectLink_S", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
     else: new_obj = None
-    self.obj98.graphObject_ = new_obj
+    self.obj10074.graphObject_ = new_obj
 
     # Add node to the root: rootNode
-    rootNode.addNode(self.obj98)
-    self.globalAndLocalPostcondition(self.obj98, rootNode)
-    self.obj98.postAction( rootNode.CREATE )
+    rootNode.addNode(self.obj10074)
+    self.globalAndLocalPostcondition(self.obj10074, rootNode)
+    self.obj10074.postAction( rootNode.CREATE )
 
     self.obj88=MT_pre__trace_link(self)
     self.obj88.isGraphObjectVisual = True
@@ -745,31 +646,6 @@ def FF2FF_combine_0_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, Mo
     self.globalAndLocalPostcondition(self.obj105, rootNode)
     self.obj105.postAction( rootNode.CREATE )
 
-    self.obj62=NAC(self)
-    self.obj62.isGraphObjectVisual = True
-
-    if(hasattr(self.obj62, '_setHierarchicalLink')):
-      self.obj62._setHierarchicalLink(False)
-
-    # constraint
-    self.obj62.constraint.setValue('#===============================================================================\n# This code is executed after the nodes in the NAC have been matched.\n# You can access a matched node labelled n by: PreNode(\'n\').\n# To access attribute x of node n, use: PreNode(\'n\')[\'x\'].\n# The given constraint must evaluate to a boolean expression:\n#    returning True forbids the rule from being applied,\n#    returning False enables the rule to be applied.\n#===============================================================================\n\nreturn True\n')
-    self.obj62.constraint.setHeight(15)
-
-    self.obj62.graphClass_= graph_NAC
-    if self.genGraphics:
-       new_obj = graph_NAC(60.0,200.0,self.obj62)
-       new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("NAC", new_obj.tag)
-       new_obj.layConstraints = dict() # Graphical Layout Constraints 
-       new_obj.layConstraints['scale'] = [1.0, 1.0]
-    else: new_obj = None
-    self.obj62.graphObject_ = new_obj
-
-    # Add node to the root: rootNode
-    rootNode.addNode(self.obj62)
-    self.globalAndLocalPostcondition(self.obj62, rootNode)
-    self.obj62.postAction( rootNode.CREATE )
-
     self.obj65=RHS(self)
     self.obj65.isGraphObjectVisual = True
 
@@ -820,15 +696,9 @@ def FF2FF_combine_0_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, Mo
     self.globalAndLocalPostcondition(self.obj63, rootNode)
     self.obj63.postAction( rootNode.CREATE )
 
-    # Connections for obj66 (graphObject_: Obj4) of type MT_pre__Female_S
-    self.drawConnections(
-(self.obj66,self.obj98,[181.0, 321.0, 271.0, 321.0],"true", 2) )
-    # Connections for obj67 (graphObject_: Obj5) of type MT_pre__Female_S
-    self.drawConnections(
- )
     # Connections for obj68 (graphObject_: Obj6) of type MT_pre__Female_S
     self.drawConnections(
- )
+(self.obj68,self.obj10074,[621.0, 321.0, 721.0, 321.0],"true", 2) )
     # Connections for obj69 (graphObject_: Obj7) of type MT_pre__Female_S
     self.drawConnections(
  )
@@ -838,9 +708,9 @@ def FF2FF_combine_0_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, Mo
     # Connections for obj83 (graphObject_: Obj13) of type MT_pre__Female_T
     self.drawConnections(
 (self.obj83,self.obj89,[821.0, 501.0, 821.0, 411.0],"true", 2) )
-    # Connections for obj98 (graphObject_: Obj20) of type MT_pre__indirectLink_S
+    # Connections for obj10074 (graphObject_: Obj26) of type MT_pre__indirectLink_S
     self.drawConnections(
-(self.obj98,self.obj67,[271.0, 321.0, 361.0, 321.0],"true", 2) )
+(self.obj10074,self.obj69,[721.0, 321.0, 821.0, 321.0],"true", 2) )
     # Connections for obj88 (graphObject_: Obj18) of type MT_pre__trace_link
     self.drawConnections(
 (self.obj88,self.obj68,[621.0, 411.0, 621.0, 321.0],"true", 2) )
@@ -872,9 +742,6 @@ def FF2FF_combine_0_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, Mo
     # Connections for obj105 (graphObject_: Obj23) of type MT_post__trace_link
     self.drawConnections(
 (self.obj105,self.obj85,[1321.0, 411.0, 1321.0, 321.0],"true", 2) )
-    # Connections for obj62 (graphObject_: Obj0) of type NAC
-    self.drawConnections(
- )
     # Connections for obj65 (graphObject_: Obj3) of type RHS
     self.drawConnections(
  )
@@ -882,7 +749,7 @@ def FF2FF_combine_0_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, Mo
     self.drawConnections(
  )
 
-newfunction = FF2FF_combine_0_MDL
+newfunction = FF2FF_combine_1_MDL
 
 loadedMMName = ['MT_pre__PoliceStationMM_META', 'MoTifRule_META', 'MT_post__PoliceStationMM_META']
 
