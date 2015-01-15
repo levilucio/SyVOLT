@@ -726,6 +726,11 @@ pass
         #print(input_nodes)
         #print(output)
 
+
+        # change the attribs in this graph
+        rewriter_graph = self.changeAttrType(rewriter_graph, False)
+
+
         j = 0
 
         for remove_set in output:
@@ -765,8 +770,7 @@ pass
             #create the Matcher
             matcher = Matcher(backward_pattern)
 
-            # change the attribs in this graph
-            rewriter_graph = self.changeAttrType(rewriter_graph, False)
+
 
             rewriter = Rewriter(rewriter_graph)
             rewriter.condition.pre = backward_pattern
