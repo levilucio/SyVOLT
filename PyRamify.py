@@ -9,6 +9,8 @@ from himesis_utils import *
 
 from core.himesis import *
 from itertools import combinations
+import inspect
+
 
 '''
 
@@ -120,16 +122,41 @@ class PyRamify:
 
 
     #FIXME to be proper
+    #could be smarter depending on the type
     def copy_graph(self, graph2):
         graph1 = copy.deepcopy(graph2)
 
+        try:
+            graph1.nodes_label = copy.deepcopy(graph2.nodes_label)
+        except AttributeError:
+            pass
 
-        graph1.nodes_label = copy.deepcopy(graph2.nodes_label)
-        graph1.nodes_pivot_out = copy.deepcopy(graph2.nodes_pivot_out)
-        graph1.nodes_pivot_in = copy.deepcopy(graph2.nodes_pivot_in)
+        try:
+            graph1.nodes_pivot_out = copy.deepcopy(graph2.nodes_pivot_out)
+        except AttributeError:
+            pass
+
+
+
+
+        try:
+            graph1.nodes_pivot_in = copy.deepcopy(graph2.nodes_pivot_in)
+        except AttributeError:
+            pass
+
 
         graph1.import_name = copy.deepcopy(graph2.import_name)
-        graph1.NACs = copy.deepcopy(graph2.NACs)
+
+        try:
+            graph1.NACs = copy.deepcopy(graph2.NACs)
+        except AttributeError:
+            pass
+
+
+        try:
+            graph1.pre = self.copy_graph(graph2.pre)
+        except AttributeError:
+            pass
 
         return graph1
 
@@ -648,7 +675,7 @@ pass
         print("\nStarting get backward patterns")
         name = rule.keys()[0]
         graph = rule[rule.keys()[0]]
-        return_graph = copy.deepcopy(graph)
+        return_graph = self.copy_graph(graph)
 
         # check to see which nodes have backward links
         backwards_links = self.find_nodes_with_mm(graph, ["backward_link"])
@@ -692,11 +719,11 @@ pass
         base_graph = self.copy_graph(new_graph)
 
 
-        rewriter_graph = copy.deepcopy(return_graph)
+        rewriter_graph = self.copy_graph(return_graph)
         # turn the backward links into trace links
 
         backwards_links2 = self.find_nodes_with_mm(rewriter_graph, ["backward_link"])
-        print(backwards_links2)
+        #print(backwards_links2)
 
         for node in backwards_links2:
              node["mm__"] = "trace_link"
@@ -759,7 +786,6 @@ pass
         # change the attribs in this graph
         rewriter_graph = self.changeAttrType(rewriter_graph, False)
 
-
         j = 0
 
         for remove_set in output:
@@ -799,11 +825,26 @@ pass
             #create the Matcher
             matcher = Matcher(backward_pattern)
 
+            rewriter_graph_copy = self.copy_graph(rewriter_graph)
+
+            rewriter_graph_copy.pre = self.copy_graph(backward_pattern)
+            rewriter_graph_copy.name += "_rewriter"
+            file_name = rewriter_graph_copy.compile(out_dir)
+            print("Compiled to: " + file_name)
+
+            rewriter_graph2 = self.load_class(out_dir + rewriter_graph_copy.name)
+            rewriter_graph2 = rewriter_graph2.values()[0]
+
+            print(inspect.getargspec(rewriter_graph2.execute))
+            print(rewriter_graph2.__class__)
+            print(rewriter_graph2.name)
+            print("Hierarchy:")
+            print(inspect.getmro(rewriter_graph2.__class__))
 
 
-            rewriter = Rewriter(rewriter_graph)
-            rewriter.condition.pre = backward_pattern
-            rewriter.condition.compile(out_dir)
+            rewriter_graph2.pre = self.copy_graph(backward_pattern)
+
+            rewriter = Rewriter(rewriter_graph2)
 
 
             #append the new backward pattern and name mapping

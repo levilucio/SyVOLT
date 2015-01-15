@@ -366,7 +366,7 @@ class %s(%s):
         return file.name
    
     def execute(self, *args):
-        raise AttributeError('This method is not implemented')
+        raise AttributeError('This method is not implemented in the Himesis class. It should be overridden in a subclass.')
 
 
 class HimesisPattern(Himesis):
@@ -653,7 +653,8 @@ class HimesisPostConditionPattern(HimesisPattern):
     # This method must be overridden by every sub-class.
     # There lies the code of the rewriting part of the rule.
     def execute(self, packet):
-        pass
+        raise AttributeError(
+            'This method is not implemented in the HimesisPostConditionPattern class. It should be overridden in a subclass.')
     
     def compile(self, file_path, pre_label_MM_mapping={}):
         """
