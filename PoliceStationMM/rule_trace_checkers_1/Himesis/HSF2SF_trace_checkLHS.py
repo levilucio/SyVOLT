@@ -4,15 +4,15 @@ from core.himesis import Himesis, HimesisPreConditionPatternLHS
 import cPickle as pickle
 from uuid import UUID
 
-class HSF2SF_combine_0LHS(HimesisPreConditionPatternLHS):
+class HSF2SF_trace_checkLHS(HimesisPreConditionPatternLHS):
     def __init__(self):
         """
-        Creates the himesis graph representing the AToM3 model HSF2SF_combine_0LHS.
+        Creates the himesis graph representing the AToM3 model HSF2SF_trace_checkLHS.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(HSF2SF_combine_0LHS, self).__init__(name='HSF2SF_combine_0LHS', num_nodes=6, edges=[])
+        super(HSF2SF_trace_checkLHS, self).__init__(name='HSF2SF_trace_checkLHS', num_nodes=6, edges=[])
         
         # Add the edges
         self.add_edges([(0, 5), (3, 4), (4, 2), (5, 1)])
@@ -35,7 +35,7 @@ a.""")
 return True
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('a33f32cf-0720-4bf3-a716-e1632dee4da3')
+        self["GUID__"] = UUID('1eb6444c-6ae8-4e30-b410-bb20458ef9fd')
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
@@ -68,7 +68,7 @@ return True
 return True
 """
         self.vs[0]["MT_dirty__"] = False
-        self.vs[0]["GUID__"] = UUID('59d95869-f02c-4abe-b8df-d8056efabe43')
+        self.vs[0]["GUID__"] = UUID('6c410a87-5d83-4450-899a-73d3240bb901')
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_pre__classtype"] = """
 #===============================================================================
@@ -111,7 +111,7 @@ return True
 return True
 """
         self.vs[1]["MT_dirty__"] = False
-        self.vs[1]["GUID__"] = UUID('044180d7-bd50-4394-bded-e04be5671f2a')
+        self.vs[1]["GUID__"] = UUID('d0c5a98e-712c-4244-9086-ce56abce4164')
         self.vs[2]["MT_subtypeMatching__"] = False
         self.vs[2]["MT_pre__classtype"] = """
 #===============================================================================
@@ -154,7 +154,7 @@ return True
 return True
 """
         self.vs[2]["MT_dirty__"] = False
-        self.vs[2]["GUID__"] = UUID('f288cbe4-4f06-465d-a9c4-bec869925992')
+        self.vs[2]["GUID__"] = UUID('d0f12eac-4d4b-4915-829e-f21489be04ca')
         self.vs[3]["MT_subtypeMatching__"] = False
         self.vs[3]["MT_pre__classtype"] = """
 #===============================================================================
@@ -185,26 +185,21 @@ return True
 return True
 """
         self.vs[3]["MT_dirty__"] = False
-        self.vs[3]["GUID__"] = UUID('10b7caac-50da-4c42-b855-6dd235cc7707')
+        self.vs[3]["GUID__"] = UUID('ffc10371-b08f-4858-9d9f-853acfd09b07')
         self.vs[4]["MT_subtypeMatching__"] = False
         self.vs[4]["MT_label__"] = """5"""
         self.vs[4]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[4]["mm__"] = """MT_pre__trace_link"""
         self.vs[4]["MT_dirty__"] = False
-        self.vs[4]["GUID__"] = UUID('9e6e7d89-4398-48e6-b374-8ac18de243ef')
+        self.vs[4]["GUID__"] = UUID('d5b34d2a-110a-454a-b9b5-954c38349583')
         self.vs[5]["MT_subtypeMatching__"] = False
         self.vs[5]["MT_label__"] = """6"""
         self.vs[5]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[5]["mm__"] = """MT_pre__trace_link"""
         self.vs[5]["MT_dirty__"] = False
-        self.vs[5]["GUID__"] = UUID('20e08d13-03c8-4077-bed0-c35cab5625e9')
-
-        
-        # Load the NACs
-        from HSF2SF_combine_0NAC0 import HSF2SF_combine_0NAC0
-        self.NACs = [HSF2SF_combine_0NAC0(LHS=self)]
+        self.vs[5]["GUID__"] = UUID('658009e4-1007-4b78-88d3-1cd72d08ffe1')
 
     def eval_classtype4(self, attr_value, this):
         

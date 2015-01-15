@@ -1,10 +1,10 @@
 """
-__SM2SM_combine_1_MDL.py_____________________________________________________
+__SM2SM_match_MDL.py_____________________________________________________
 
 Automatically generated AToM3 Model File (Do not modify directly)
 Author: levi
-Modified: Thu Jan 15 17:38:47 2015
-_____________________________________________________________________________
+Modified: Thu Jan 15 17:30:51 2015
+_________________________________________________________________________
 """
 from stickylink import *
 from widthXfillXdecoration import *
@@ -55,7 +55,7 @@ from ATOM3Integer import *
 from ATOM3Port import *
 from ATOM3MSEnum import *
 
-def SM2SM_combine_1_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, MoTifRuleRootNode=None, MT_post__PoliceStationMMRootNode=None):
+def SM2SM_match_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, MoTifRuleRootNode=None, MT_post__PoliceStationMMRootNode=None):
 
     # --- Generating attributes code for ASG MT_pre__PoliceStationMM ---
     if( MT_pre__PoliceStationMMRootNode ): 
@@ -82,7 +82,7 @@ def SM2SM_combine_1_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, Mo
         MoTifRuleRootNode.description.setHeight(15)
 
         # name
-        MoTifRuleRootNode.name.setValue('SM2SM_combine_1')
+        MoTifRuleRootNode.name.setValue('SM2SM_match')
     # --- ASG attributes over ---
 
 
@@ -428,7 +428,7 @@ def SM2SM_combine_1_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, Mo
       self.obj81._setHierarchicalLink(False)
 
     # MT_label__
-    self.obj81.MT_label__.setValue('50')
+    self.obj81.MT_label__.setValue('10')
 
     # MT_pivotOut__
     self.obj81.MT_pivotOut__.setValue('')
@@ -674,7 +674,7 @@ def SM2SM_combine_1_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, Mo
 
     self.obj70.graphClass_= graph_RHS
     if self.genGraphics:
-       new_obj = graph_RHS(940.0,140.0,self.obj70)
+       new_obj = graph_RHS(1004.0,160.0,self.obj70)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("RHS", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
@@ -700,7 +700,7 @@ def SM2SM_combine_1_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, Mo
 
     self.obj71.graphClass_= graph_LHS
     if self.genGraphics:
-       new_obj = graph_LHS(500.0,140.0,self.obj71)
+       new_obj = graph_LHS(540.0,160.0,self.obj71)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("LHS", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
@@ -767,7 +767,7 @@ def SM2SM_combine_1_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, Mo
     self.drawConnections(
  )
 
-newfunction = SM2SM_combine_1_MDL
+newfunction = SM2SM_match_MDL
 
 loadedMMName = ['MT_pre__PoliceStationMM_META', 'MoTifRule_META', 'MT_post__PoliceStationMM_META']
 

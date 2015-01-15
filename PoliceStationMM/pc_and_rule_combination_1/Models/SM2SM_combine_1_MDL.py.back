@@ -3,7 +3,7 @@ __SM2SM_combine_1_MDL.py_____________________________________________________
 
 Automatically generated AToM3 Model File (Do not modify directly)
 Author: levi
-Modified: Thu Jan 15 17:38:47 2015
+Modified: Thu Jan 15 17:38:40 2015
 _____________________________________________________________________________
 """
 from stickylink import *

@@ -4,18 +4,18 @@ from core.himesis import Himesis, HimesisPostConditionPattern
 import cPickle as pickle
 from uuid import UUID
 
-class HSF2SF_combine_0RHS(HimesisPostConditionPattern):
+class HS2S_matchRHS(HimesisPostConditionPattern):
     def __init__(self):
         """
-        Creates the himesis graph representing the AToM3 model HSF2SF_combine_0RHS.
+        Creates the himesis graph representing the AToM3 model HS2S_matchRHS.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(HSF2SF_combine_0RHS, self).__init__(name='HSF2SF_combine_0RHS', num_nodes=8, edges=[])
+        super(HS2S_matchRHS, self).__init__(name='HS2S_matchRHS', num_nodes=10, edges=[])
         
         # Add the edges
-        self.add_edges([(5, 0), (0, 3), (2, 1), (7, 1), (5, 6), (6, 4), (3, 7), (4, 2)])
+        self.add_edges([(5, 8), (3, 8), (6, 9), (0, 9), (1, 0), (1, 3), (7, 2), (2, 4), (4, 5), (7, 6)])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
 S'MT_post__PoliceStationMM'
@@ -32,105 +32,21 @@ a.""")
 pass
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('f3fe90ff-b341-4344-8cdf-082d8334eaba')
+        self["GUID__"] = UUID('a84f973d-866f-453d-8563-9c9aa2076a3e')
         
         # Set the node attributes
-        self.vs[0]["MT_post__associationType"] = """
-#===============================================================================
-# You can access the value of the current node's attribute value by: attr_value.
-# If the current node shall be created you MUST initialize it here!
-# You can access a node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# Note that the attribute values are those before the match is rewritten.
-# The order in which this code is executed depends on the label value
-# of the encapsulating node.
-# The given action must return the new value of the attribute.
-#===============================================================================
-
-return attr_value
-"""
-        self.vs[0]["MT_label__"] = """24"""
-        self.vs[0]["mm__"] = """MT_post__directLink_T"""
-        self.vs[0]["GUID__"] = UUID('faba6bdb-7c61-41f1-8eb9-f2ed884ae533')
-        self.vs[1]["MT_post__cardinality"] = """
-#===============================================================================
-# You can access the value of the current node's attribute value by: attr_value.
-# If the current node shall be created you MUST initialize it here!
-# You can access a node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# Note that the attribute values are those before the match is rewritten.
-# The order in which this code is executed depends on the label value
-# of the encapsulating node.
-# The given action must return the new value of the attribute.
-#===============================================================================
-
-return attr_value
-"""
-        self.vs[1]["MT_label__"] = """2"""
-        self.vs[1]["MT_post__name"] = """
-#===============================================================================
-# You can access the value of the current node's attribute value by: attr_value.
-# If the current node shall be created you MUST initialize it here!
-# You can access a node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# Note that the attribute values are those before the match is rewritten.
-# The order in which this code is executed depends on the label value
-# of the encapsulating node.
-# The given action must return the new value of the attribute.
-#===============================================================================
-
-return attr_value
-"""
-        self.vs[1]["mm__"] = """MT_post__Female_S"""
-        self.vs[1]["MT_post__classtype"] = """
-#===============================================================================
-# You can access the value of the current node's attribute value by: attr_value.
-# If the current node shall be created you MUST initialize it here!
-# You can access a node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# Note that the attribute values are those before the match is rewritten.
-# The order in which this code is executed depends on the label value
-# of the encapsulating node.
-# The given action must return the new value of the attribute.
-#===============================================================================
-
-return attr_value
-"""
-        self.vs[1]["GUID__"] = UUID('ce61644a-cce7-4e7b-a384-a2b637e665d0')
-        self.vs[2]["MT_label__"] = """10"""
-        self.vs[2]["mm__"] = """MT_post__indirectLink_S"""
-        self.vs[2]["GUID__"] = UUID('a1edfdd0-e495-4e39-ace0-6d3103c7cf88')
-        self.vs[3]["MT_label__"] = """4"""
-        self.vs[3]["MT_post__name"] = """
-#===============================================================================
-# You can access the value of the current node's attribute value by: attr_value.
-# If the current node shall be created you MUST initialize it here!
-# You can access a node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# Note that the attribute values are those before the match is rewritten.
-# The order in which this code is executed depends on the label value
-# of the encapsulating node.
-# The given action must return the new value of the attribute.
-#===============================================================================
-
-return attr_value
-"""
-        self.vs[3]["mm__"] = """MT_post__Female_T"""
-        self.vs[3]["MT_post__classtype"] = """
-#===============================================================================
-# You can access the value of the current node's attribute value by: attr_value.
-# If the current node shall be created you MUST initialize it here!
-# You can access a node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# Note that the attribute values are those before the match is rewritten.
-# The order in which this code is executed depends on the label value
-# of the encapsulating node.
-# The given action must return the new value of the attribute.
-#===============================================================================
-
-return attr_value
-"""
-        self.vs[3]["GUID__"] = UUID('8eec770f-f820-4e72-843b-ecf7f82b9138')
+        self.vs[0]["MT_label__"] = """10"""
+        self.vs[0]["mm__"] = """MT_post__rightExpr"""
+        self.vs[0]["GUID__"] = UUID('d662bf98-d4a9-4c4f-9dae-2326e949c127')
+        self.vs[1]["MT_label__"] = """6"""
+        self.vs[1]["mm__"] = """MT_post__Equation"""
+        self.vs[1]["GUID__"] = UUID('caff5113-d102-443a-836b-e78b5ec48bca')
+        self.vs[2]["MT_label__"] = """5"""
+        self.vs[2]["mm__"] = """MT_post__trace_link"""
+        self.vs[2]["GUID__"] = UUID('86933f7d-3825-4e2d-ad96-d3f53e14d422')
+        self.vs[3]["MT_label__"] = """9"""
+        self.vs[3]["mm__"] = """MT_post__leftExpr"""
+        self.vs[3]["GUID__"] = UUID('fc4d7ed0-67b5-4ed7-a30e-7f9006ea17dc')
         self.vs[4]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -175,9 +91,15 @@ return attr_value
 
 return attr_value
 """
-        self.vs[4]["GUID__"] = UUID('eaaefecc-f88f-41ac-842c-fc0e91b4b823')
-        self.vs[5]["MT_label__"] = """3"""
-        self.vs[5]["MT_post__name"] = """
+        self.vs[4]["GUID__"] = UUID('b60ea705-09fa-44e0-98da-8e322feae98b')
+        self.vs[5]["MT_label__"] = """7"""
+        self.vs[5]["mm__"] = """MT_post__hasAttr_S"""
+        self.vs[5]["GUID__"] = UUID('c6c55db4-ebec-4e84-8ec4-ba198f10ac47')
+        self.vs[6]["MT_label__"] = """8"""
+        self.vs[6]["mm__"] = """MT_post__hasAttr_T"""
+        self.vs[6]["GUID__"] = UUID('90798ce3-23ae-48a0-ac04-025a15e7daa6')
+        self.vs[7]["MT_label__"] = """3"""
+        self.vs[7]["MT_post__name"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
 # If the current node shall be created you MUST initialize it here!
@@ -191,8 +113,8 @@ return attr_value
 
 return attr_value
 """
-        self.vs[5]["mm__"] = """MT_post__Station_T"""
-        self.vs[5]["MT_post__classtype"] = """
+        self.vs[7]["mm__"] = """MT_post__Station_T"""
+        self.vs[7]["MT_post__classtype"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
 # If the current node shall be created you MUST initialize it here!
@@ -206,17 +128,61 @@ return attr_value
 
 return attr_value
 """
-        self.vs[5]["GUID__"] = UUID('d5552b57-5f4e-49d4-ac59-120bb379a43c')
-        self.vs[6]["MT_label__"] = """5"""
-        self.vs[6]["mm__"] = """MT_post__trace_link"""
-        self.vs[6]["GUID__"] = UUID('e240ca48-e0c1-4ce3-8084-2b56521d8848')
-        self.vs[7]["MT_label__"] = """6"""
-        self.vs[7]["mm__"] = """MT_post__trace_link"""
-        self.vs[7]["GUID__"] = UUID('15f30796-7a76-40a3-b1ed-aeca2cb504d4')
+        self.vs[7]["GUID__"] = UUID('340728d5-51fb-48f9-8609-caad395a209a')
+        self.vs[8]["MT_label__"] = """2"""
+        self.vs[8]["MT_post__name"] = """
+#===============================================================================
+# You can access the value of the current node's attribute value by: attr_value.
+# If the current node shall be created you MUST initialize it here!
+# You can access a node labelled n by: PreNode('n').
+# To access attribute x of node n, use: PreNode('n')['x'].
+# Note that the attribute values are those before the match is rewritten.
+# The order in which this code is executed depends on the label value
+# of the encapsulating node.
+# The given action must return the new value of the attribute.
+#===============================================================================
 
-        from HSF2SF_combine_0LHS import HSF2SF_combine_0LHS
-        self.pre = HSF2SF_combine_0LHS()
+return attr_value
+"""
+        self.vs[8]["mm__"] = """MT_post__Attribute"""
+        self.vs[8]["GUID__"] = UUID('a8ad1d09-a77b-4f2b-a1b8-8b6c00f9cf2e')
+        self.vs[9]["MT_label__"] = """4"""
+        self.vs[9]["MT_post__name"] = """
+#===============================================================================
+# You can access the value of the current node's attribute value by: attr_value.
+# If the current node shall be created you MUST initialize it here!
+# You can access a node labelled n by: PreNode('n').
+# To access attribute x of node n, use: PreNode('n')['x'].
+# Note that the attribute values are those before the match is rewritten.
+# The order in which this code is executed depends on the label value
+# of the encapsulating node.
+# The given action must return the new value of the attribute.
+#===============================================================================
+
+return "name"
+"""
+        self.vs[9]["mm__"] = """MT_post__Attribute"""
+        self.vs[9]["GUID__"] = UUID('5cfaf0b6-744e-4210-98fa-55c11eca11a3')
+
+        from HS2S_matchLHS import HS2S_matchLHS
+        self.pre = HS2S_matchLHS()
     
+    def set_name4(self, attr_value, PreNode, graph):
+        
+        #===============================================================================
+        # You can access the value of the current node's attribute value by: attr_value.
+        # If the current node shall be created you MUST initialize it here!
+        # You can access a node labelled n by: PreNode('n').
+        # To access attribute x of node n, use: PreNode('n')['x'].
+        # Note that the attribute values are those before the match is rewritten.
+        # The order in which this code is executed depends on the label value
+        # of the encapsulating node.
+        # The given action must return the new value of the attribute.
+        #===============================================================================
+        
+        return "name"
+
+
     def action(self, PostNode, graph):
         """
             Executable constraint code. 
@@ -252,26 +218,58 @@ return attr_value
         #===============================================================================
         # Create new nodes
         #===============================================================================
-        # directLink_T24
+        # Attribute4
         new_node = graph.add_node()
-        labels['24'] = new_node
-        graph.vs[new_node][Himesis.Constants.META_MODEL] = 'directLink_T'
-        # indirectLink_S10
+        labels['4'] = new_node
+        graph.vs[new_node][Himesis.Constants.META_MODEL] = 'Attribute'
+        try:
+            graph.vs[new_node]['name'] = self.set_name4(None, lambda i: graph.vs[match[i]], graph)
+        except Exception, e:
+            raise Exception('An error has occurred while computing the value of the attribute \'name\'', e)
+        # rightExpr10
         new_node = graph.add_node()
         labels['10'] = new_node
-        graph.vs[new_node][Himesis.Constants.META_MODEL] = 'indirectLink_S'
+        graph.vs[new_node][Himesis.Constants.META_MODEL] = 'rightExpr'
+        # Equation6
+        new_node = graph.add_node()
+        labels['6'] = new_node
+        graph.vs[new_node][Himesis.Constants.META_MODEL] = 'Equation'
+        # trace_link5
+        new_node = graph.add_node()
+        labels['5'] = new_node
+        graph.vs[new_node][Himesis.Constants.META_MODEL] = 'trace_link'
+        # leftExpr9
+        new_node = graph.add_node()
+        labels['9'] = new_node
+        graph.vs[new_node][Himesis.Constants.META_MODEL] = 'leftExpr'
+        # hasAttr_T8
+        new_node = graph.add_node()
+        labels['8'] = new_node
+        graph.vs[new_node][Himesis.Constants.META_MODEL] = 'hasAttr_T'
+        # Station_T3
+        new_node = graph.add_node()
+        labels['3'] = new_node
+        graph.vs[new_node][Himesis.Constants.META_MODEL] = 'Station_T'
         
         #===============================================================================
         # Create new edges
         #===============================================================================
-        # indirectLink_S10 -> Female_S2
-        graph.add_edges((labels['10'], labels['2']))
-        # Station_S1 -> indirectLink_S10
-        graph.add_edges((labels['1'], labels['10']))
-        # Station_T3 -> directLink_T24
-        graph.add_edges((labels['3'], labels['24']))
-        # directLink_T24 -> Female_T4
-        graph.add_edges((labels['24'], labels['4']))
+        # rightExpr10 -> Attribute4
+        graph.add_edges((labels['10'], labels['4']))
+        # Equation6 -> rightExpr10
+        graph.add_edges((labels['6'], labels['10']))
+        # Station_T3 -> trace_link5
+        graph.add_edges((labels['3'], labels['5']))
+        # Station_T3 -> hasAttr_T8
+        graph.add_edges((labels['3'], labels['8']))
+        # hasAttr_T8 -> Attribute4
+        graph.add_edges((labels['8'], labels['4']))
+        # trace_link5 -> Station_S1
+        graph.add_edges((labels['5'], labels['1']))
+        # Equation6 -> leftExpr9
+        graph.add_edges((labels['6'], labels['9']))
+        # leftExpr9 -> Attribute2
+        graph.add_edges((labels['9'], labels['2']))
         
         #===============================================================================
         # Set the output pivots

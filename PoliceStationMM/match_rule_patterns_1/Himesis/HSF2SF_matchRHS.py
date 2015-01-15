@@ -4,15 +4,15 @@ from core.himesis import Himesis, HimesisPostConditionPattern
 import cPickle as pickle
 from uuid import UUID
 
-class HSF2SF_combine_0RHS(HimesisPostConditionPattern):
+class HSF2SF_matchRHS(HimesisPostConditionPattern):
     def __init__(self):
         """
-        Creates the himesis graph representing the AToM3 model HSF2SF_combine_0RHS.
+        Creates the himesis graph representing the AToM3 model HSF2SF_matchRHS.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(HSF2SF_combine_0RHS, self).__init__(name='HSF2SF_combine_0RHS', num_nodes=8, edges=[])
+        super(HSF2SF_matchRHS, self).__init__(name='HSF2SF_matchRHS', num_nodes=8, edges=[])
         
         # Add the edges
         self.add_edges([(5, 0), (0, 3), (2, 1), (7, 1), (5, 6), (6, 4), (3, 7), (4, 2)])
@@ -32,7 +32,7 @@ a.""")
 pass
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('f3fe90ff-b341-4344-8cdf-082d8334eaba')
+        self["GUID__"] = UUID('eb4d11f5-2f21-4733-a51e-83420104452d')
         
         # Set the node attributes
         self.vs[0]["MT_post__associationType"] = """
@@ -49,9 +49,9 @@ pass
 
 return attr_value
 """
-        self.vs[0]["MT_label__"] = """24"""
+        self.vs[0]["MT_label__"] = """11"""
         self.vs[0]["mm__"] = """MT_post__directLink_T"""
-        self.vs[0]["GUID__"] = UUID('faba6bdb-7c61-41f1-8eb9-f2ed884ae533')
+        self.vs[0]["GUID__"] = UUID('c914c2c9-d81c-4b30-af69-6c5af69cbf5e')
         self.vs[1]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -96,10 +96,10 @@ return attr_value
 
 return attr_value
 """
-        self.vs[1]["GUID__"] = UUID('ce61644a-cce7-4e7b-a384-a2b637e665d0')
+        self.vs[1]["GUID__"] = UUID('f10bc386-7f84-45dd-8a0e-f46a7988d811')
         self.vs[2]["MT_label__"] = """10"""
         self.vs[2]["mm__"] = """MT_post__indirectLink_S"""
-        self.vs[2]["GUID__"] = UUID('a1edfdd0-e495-4e39-ace0-6d3103c7cf88')
+        self.vs[2]["GUID__"] = UUID('da183bf0-4330-4c0b-b4c9-3898cb1935d8')
         self.vs[3]["MT_label__"] = """4"""
         self.vs[3]["MT_post__name"] = """
 #===============================================================================
@@ -130,7 +130,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[3]["GUID__"] = UUID('8eec770f-f820-4e72-843b-ecf7f82b9138')
+        self.vs[3]["GUID__"] = UUID('4ba8e297-a7e5-46e7-9d98-0fd93f6de9bf')
         self.vs[4]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -175,7 +175,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[4]["GUID__"] = UUID('eaaefecc-f88f-41ac-842c-fc0e91b4b823')
+        self.vs[4]["GUID__"] = UUID('03ec53fc-b630-4893-9fb9-c1efaaa274b8')
         self.vs[5]["MT_label__"] = """3"""
         self.vs[5]["MT_post__name"] = """
 #===============================================================================
@@ -206,16 +206,16 @@ return attr_value
 
 return attr_value
 """
-        self.vs[5]["GUID__"] = UUID('d5552b57-5f4e-49d4-ac59-120bb379a43c')
+        self.vs[5]["GUID__"] = UUID('1c5ada74-d8dd-4d84-a943-a083d61acc10')
         self.vs[6]["MT_label__"] = """5"""
         self.vs[6]["mm__"] = """MT_post__trace_link"""
-        self.vs[6]["GUID__"] = UUID('e240ca48-e0c1-4ce3-8084-2b56521d8848')
+        self.vs[6]["GUID__"] = UUID('150e5dc3-48a8-4d2d-8874-35d8584516a7')
         self.vs[7]["MT_label__"] = """6"""
         self.vs[7]["mm__"] = """MT_post__trace_link"""
-        self.vs[7]["GUID__"] = UUID('15f30796-7a76-40a3-b1ed-aeca2cb504d4')
+        self.vs[7]["GUID__"] = UUID('ffa50e74-0628-4e73-869a-b1f4379ca43e')
 
-        from HSF2SF_combine_0LHS import HSF2SF_combine_0LHS
-        self.pre = HSF2SF_combine_0LHS()
+        from HSF2SF_matchLHS import HSF2SF_matchLHS
+        self.pre = HSF2SF_matchLHS()
     
     def action(self, PostNode, graph):
         """
@@ -252,26 +252,18 @@ return attr_value
         #===============================================================================
         # Create new nodes
         #===============================================================================
-        # directLink_T24
+        # directLink_T11
         new_node = graph.add_node()
-        labels['24'] = new_node
+        labels['11'] = new_node
         graph.vs[new_node][Himesis.Constants.META_MODEL] = 'directLink_T'
-        # indirectLink_S10
-        new_node = graph.add_node()
-        labels['10'] = new_node
-        graph.vs[new_node][Himesis.Constants.META_MODEL] = 'indirectLink_S'
         
         #===============================================================================
         # Create new edges
         #===============================================================================
-        # indirectLink_S10 -> Female_S2
-        graph.add_edges((labels['10'], labels['2']))
-        # Station_S1 -> indirectLink_S10
-        graph.add_edges((labels['1'], labels['10']))
-        # Station_T3 -> directLink_T24
-        graph.add_edges((labels['3'], labels['24']))
-        # directLink_T24 -> Female_T4
-        graph.add_edges((labels['24'], labels['4']))
+        # Station_T3 -> directLink_T11
+        graph.add_edges((labels['3'], labels['11']))
+        # directLink_T11 -> Female_T4
+        graph.add_edges((labels['11'], labels['4']))
         
         #===============================================================================
         # Set the output pivots

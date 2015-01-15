@@ -4,18 +4,18 @@ from core.himesis import Himesis, HimesisPostConditionPattern
 import cPickle as pickle
 from uuid import UUID
 
-class HSF2SF_combine_0RHS(HimesisPostConditionPattern):
+class HSM2SM_matchRHS(HimesisPostConditionPattern):
     def __init__(self):
         """
-        Creates the himesis graph representing the AToM3 model HSF2SF_combine_0RHS.
+        Creates the himesis graph representing the AToM3 model HSM2SM_matchRHS.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(HSF2SF_combine_0RHS, self).__init__(name='HSF2SF_combine_0RHS', num_nodes=8, edges=[])
+        super(HSM2SM_matchRHS, self).__init__(name='HSM2SM_matchRHS', num_nodes=8, edges=[])
         
         # Add the edges
-        self.add_edges([(5, 0), (0, 3), (2, 1), (7, 1), (5, 6), (6, 4), (3, 7), (4, 2)])
+        self.add_edges([(5, 0), (0, 3), (5, 6), (6, 2), (3, 7), (7, 4), (2, 1), (1, 4)])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
 S'MT_post__PoliceStationMM'
@@ -32,7 +32,7 @@ a.""")
 pass
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('f3fe90ff-b341-4344-8cdf-082d8334eaba')
+        self["GUID__"] = UUID('902a40fc-d609-4040-8ece-f46f5a5bdbe4')
         
         # Set the node attributes
         self.vs[0]["MT_post__associationType"] = """
@@ -49,10 +49,13 @@ pass
 
 return attr_value
 """
-        self.vs[0]["MT_label__"] = """24"""
+        self.vs[0]["MT_label__"] = """10"""
         self.vs[0]["mm__"] = """MT_post__directLink_T"""
-        self.vs[0]["GUID__"] = UUID('faba6bdb-7c61-41f1-8eb9-f2ed884ae533')
-        self.vs[1]["MT_post__cardinality"] = """
+        self.vs[0]["GUID__"] = UUID('cc8167cd-adf0-4e08-acae-003e8fa958b2')
+        self.vs[1]["MT_label__"] = """8"""
+        self.vs[1]["mm__"] = """MT_post__indirectLink_S"""
+        self.vs[1]["GUID__"] = UUID('16a0bce0-5de0-47ee-9538-e216b03359cb')
+        self.vs[2]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
 # If the current node shall be created you MUST initialize it here!
@@ -66,8 +69,8 @@ return attr_value
 
 return attr_value
 """
-        self.vs[1]["MT_label__"] = """2"""
-        self.vs[1]["MT_post__name"] = """
+        self.vs[2]["MT_label__"] = """1"""
+        self.vs[2]["MT_post__name"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
 # If the current node shall be created you MUST initialize it here!
@@ -81,8 +84,8 @@ return attr_value
 
 return attr_value
 """
-        self.vs[1]["mm__"] = """MT_post__Female_S"""
-        self.vs[1]["MT_post__classtype"] = """
+        self.vs[2]["mm__"] = """MT_post__Station_S"""
+        self.vs[2]["MT_post__classtype"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
 # If the current node shall be created you MUST initialize it here!
@@ -96,10 +99,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[1]["GUID__"] = UUID('ce61644a-cce7-4e7b-a384-a2b637e665d0')
-        self.vs[2]["MT_label__"] = """10"""
-        self.vs[2]["mm__"] = """MT_post__indirectLink_S"""
-        self.vs[2]["GUID__"] = UUID('a1edfdd0-e495-4e39-ace0-6d3103c7cf88')
+        self.vs[2]["GUID__"] = UUID('d1b3001d-74e1-423d-a191-ce9d198e1e7f')
         self.vs[3]["MT_label__"] = """4"""
         self.vs[3]["MT_post__name"] = """
 #===============================================================================
@@ -115,7 +115,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[3]["mm__"] = """MT_post__Female_T"""
+        self.vs[3]["mm__"] = """MT_post__Male_T"""
         self.vs[3]["MT_post__classtype"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -130,7 +130,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[3]["GUID__"] = UUID('8eec770f-f820-4e72-843b-ecf7f82b9138')
+        self.vs[3]["GUID__"] = UUID('653c2b52-e6b0-46c1-8ff9-b0aa0bdd794b')
         self.vs[4]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -145,7 +145,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[4]["MT_label__"] = """1"""
+        self.vs[4]["MT_label__"] = """2"""
         self.vs[4]["MT_post__name"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -160,7 +160,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[4]["mm__"] = """MT_post__Station_S"""
+        self.vs[4]["mm__"] = """MT_post__Male_S"""
         self.vs[4]["MT_post__classtype"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -175,7 +175,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[4]["GUID__"] = UUID('eaaefecc-f88f-41ac-842c-fc0e91b4b823')
+        self.vs[4]["GUID__"] = UUID('40e93e0d-6f29-495e-9247-ae216dd29ba9')
         self.vs[5]["MT_label__"] = """3"""
         self.vs[5]["MT_post__name"] = """
 #===============================================================================
@@ -206,16 +206,16 @@ return attr_value
 
 return attr_value
 """
-        self.vs[5]["GUID__"] = UUID('d5552b57-5f4e-49d4-ac59-120bb379a43c')
-        self.vs[6]["MT_label__"] = """5"""
+        self.vs[5]["GUID__"] = UUID('78796d5a-8d54-4dbb-9462-1602b059569c')
+        self.vs[6]["MT_label__"] = """6"""
         self.vs[6]["mm__"] = """MT_post__trace_link"""
-        self.vs[6]["GUID__"] = UUID('e240ca48-e0c1-4ce3-8084-2b56521d8848')
-        self.vs[7]["MT_label__"] = """6"""
+        self.vs[6]["GUID__"] = UUID('5f736e80-0e58-4d22-a875-3556b1a6db80')
+        self.vs[7]["MT_label__"] = """7"""
         self.vs[7]["mm__"] = """MT_post__trace_link"""
-        self.vs[7]["GUID__"] = UUID('15f30796-7a76-40a3-b1ed-aeca2cb504d4')
+        self.vs[7]["GUID__"] = UUID('a9233992-5b41-4e82-ba19-52ac59b7dc83')
 
-        from HSF2SF_combine_0LHS import HSF2SF_combine_0LHS
-        self.pre = HSF2SF_combine_0LHS()
+        from HSM2SM_matchLHS import HSM2SM_matchLHS
+        self.pre = HSM2SM_matchLHS()
     
     def action(self, PostNode, graph):
         """
@@ -252,26 +252,18 @@ return attr_value
         #===============================================================================
         # Create new nodes
         #===============================================================================
-        # directLink_T24
-        new_node = graph.add_node()
-        labels['24'] = new_node
-        graph.vs[new_node][Himesis.Constants.META_MODEL] = 'directLink_T'
-        # indirectLink_S10
+        # directLink_T10
         new_node = graph.add_node()
         labels['10'] = new_node
-        graph.vs[new_node][Himesis.Constants.META_MODEL] = 'indirectLink_S'
+        graph.vs[new_node][Himesis.Constants.META_MODEL] = 'directLink_T'
         
         #===============================================================================
         # Create new edges
         #===============================================================================
-        # indirectLink_S10 -> Female_S2
-        graph.add_edges((labels['10'], labels['2']))
-        # Station_S1 -> indirectLink_S10
-        graph.add_edges((labels['1'], labels['10']))
-        # Station_T3 -> directLink_T24
-        graph.add_edges((labels['3'], labels['24']))
-        # directLink_T24 -> Female_T4
-        graph.add_edges((labels['24'], labels['4']))
+        # Station_T3 -> directLink_T10
+        graph.add_edges((labels['3'], labels['10']))
+        # directLink_T10 -> Male_T4
+        graph.add_edges((labels['10'], labels['4']))
         
         #===============================================================================
         # Set the output pivots
