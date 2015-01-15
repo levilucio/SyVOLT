@@ -150,6 +150,22 @@ class PyRamify:
 return True
 """
 
+    def get_default_rewrite_code(self):
+        return """
+#===============================================================================
+# You can access the value of the current node's attribute value by: attr_value.
+# If the current node shall be created you MUST initialize it here!
+# You can access a node labelled n by: PreNode('n').
+# To access attribute x of node n, use: PreNode('n')['x'].
+# Note that the attribute values are those before the match is rewritten.
+# The order in which this code is executed depends on the label value
+# of the encapsulating node.
+# The given action must return the new value of the attribute.
+#===============================================================================
+
+return attr_value
+"""
+
     #the default constraint for each attribute
     #as in the bottom of matchers
     def get_default_constraint(self):
@@ -278,13 +294,18 @@ pass
                     continue
 
                 #set the other values to the default match code
-                node[attrib] = self.get_default_match_code()
+                if make_pre:
+                    node[attrib] = self.get_default_match_code()
+                else:
+                    node[attrib] = self.get_default_rewrite_code()
                 
 
             #set these properties
-            node["MT_subtypeMatching__"] = False
-            node["MT_dirty__"] = False
-            node["MT_subtypes__"] = "[]"
+
+            if make_pre:
+                node["MT_subtypeMatching__"] = False
+                node["MT_subtypes__"] = "[]"
+                node["MT_dirty__"] = False
 
             #set the next label
             node["MT_label__"] = str(self.next_label)
@@ -301,6 +322,7 @@ pass
 
             try:
                 del node["MT_post__type"]
+                del node["MT_post__associationType"]
             except Exception:
                 pass
 
@@ -671,6 +693,13 @@ pass
 
 
         rewriter_graph = copy.deepcopy(return_graph)
+        # turn the backward links into trace links
+
+        backwards_links2 = self.find_nodes_with_mm(rewriter_graph, ["backward_link"])
+        print(backwards_links2)
+
+        for node in backwards_links2:
+             node["mm__"] = "trace_link"
 
         #print("NACs: " + str(base_graph.NACs))
 
