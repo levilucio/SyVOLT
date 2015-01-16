@@ -35,7 +35,7 @@ a.""")
 return True
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('87f73b5e-7dbd-42f0-9a93-5a57909cc0c5')
+        self["GUID__"] = UUID('809d9f94-e1c4-40ec-9f07-8526d34cebb1')
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
@@ -80,7 +80,7 @@ return True
 
 return True
 """
-        self.vs[0]["GUID__"] = UUID('755eed39-b2a6-4c8e-a186-a8e58cf3c8ef')
+        self.vs[0]["GUID__"] = UUID('5a3a1a54-9911-4117-9d4a-5207d8e6f5cb')
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_pre__classtype"] = """
 #===============================================================================
@@ -111,7 +111,7 @@ return True
 
 return True
 """
-        self.vs[1]["GUID__"] = UUID('b7d9074c-8822-4088-a675-b1476713d40f')
+        self.vs[1]["GUID__"] = UUID('c4d400c7-f588-4cb6-b743-e0042f8ecb3e')
         self.vs[2]["MT_subtypeMatching__"] = False
         self.vs[2]["MT_pre__classtype"] = """
 #===============================================================================
@@ -142,7 +142,7 @@ return True
 
 return True
 """
-        self.vs[2]["GUID__"] = UUID('116a4d72-5ed6-4e72-9e88-cda017c1e899')
+        self.vs[2]["GUID__"] = UUID('4a519007-be2a-458e-b40c-5b728bb291f3')
         self.vs[3]["MT_subtypeMatching__"] = False
         self.vs[3]["MT_pre__classtype"] = """
 #===============================================================================
@@ -185,28 +185,28 @@ return True
 
 return True
 """
-        self.vs[3]["GUID__"] = UUID('bffc2804-f9f0-475e-b2c1-4ca2d77ed60c')
+        self.vs[3]["GUID__"] = UUID('0110d3c9-448d-4c56-ae82-107c81cf9ba8')
         self.vs[4]["MT_subtypeMatching__"] = False
         self.vs[4]["MT_label__"] = """10"""
         self.vs[4]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[4]["MT_dirty__"] = False
         self.vs[4]["mm__"] = """MT_pre__indirectLink_S"""
-        self.vs[4]["GUID__"] = UUID('9272718a-ccaf-4fea-9895-0c3a14d2deac')
+        self.vs[4]["GUID__"] = UUID('b6bebcbc-f141-43c2-9cbd-009f2da8f051')
         self.vs[5]["MT_subtypeMatching__"] = False
         self.vs[5]["MT_label__"] = """5"""
         self.vs[5]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[5]["MT_dirty__"] = False
         self.vs[5]["mm__"] = """MT_pre__trace_link"""
-        self.vs[5]["GUID__"] = UUID('4ad5d0d4-47a9-4567-bb77-705bd93901b9')
+        self.vs[5]["GUID__"] = UUID('75093c77-4898-4885-8623-81f01652bcd9')
         self.vs[6]["MT_subtypeMatching__"] = False
         self.vs[6]["MT_label__"] = """6"""
         self.vs[6]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[6]["MT_dirty__"] = False
         self.vs[6]["mm__"] = """MT_pre__trace_link"""
-        self.vs[6]["GUID__"] = UUID('db1b4e15-dc5f-4689-bacc-df766d96af5f')
+        self.vs[6]["GUID__"] = UUID('bce7a286-2d6f-42f4-9321-d55bd014bc9c')
 
     def eval_classtype1(self, attr_value, this):
         

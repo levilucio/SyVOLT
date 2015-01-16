@@ -35,7 +35,7 @@ a.""")
 return "name"
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('0ce3a210-fa98-4b25-bca7-2a2de20f022b')
+        self["GUID__"] = UUID('f2180dfa-9897-44f1-9eb4-3eb578c622bf')
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
@@ -80,7 +80,7 @@ return True
 return True
 """
         self.vs[0]["MT_dirty__"] = False
-        self.vs[0]["GUID__"] = UUID('53ae610e-c287-4ac1-9266-4f2aeb43fe34')
+        self.vs[0]["GUID__"] = UUID('08dbfdb8-3e3b-4020-ab48-6d831fa832ae')
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_pre__classtype"] = """
 #===============================================================================
@@ -111,7 +111,7 @@ return True
 return True
 """
         self.vs[1]["MT_dirty__"] = False
-        self.vs[1]["GUID__"] = UUID('f1108a33-e2d9-4ec0-9cf7-dfc0b2a0e557')
+        self.vs[1]["GUID__"] = UUID('d7e29c20-2c63-4998-9b27-6232277ba656')
         self.vs[2]["MT_subtypeMatching__"] = False
         self.vs[2]["MT_pre__classtype"] = """
 #===============================================================================
@@ -154,7 +154,7 @@ return True
 return True
 """
         self.vs[2]["MT_dirty__"] = False
-        self.vs[2]["GUID__"] = UUID('7f4d01d3-2bb4-45a2-9911-d629d04b8454')
+        self.vs[2]["GUID__"] = UUID('df42e02a-0d68-4052-b9ea-b239837483ae')
         self.vs[3]["MT_subtypeMatching__"] = False
         self.vs[3]["MT_pre__classtype"] = """
 #===============================================================================
@@ -185,7 +185,7 @@ return True
 return True
 """
         self.vs[3]["MT_dirty__"] = False
-        self.vs[3]["GUID__"] = UUID('35e320a2-243f-48a6-88d9-24ce9b87d814')
+        self.vs[3]["GUID__"] = UUID('8703179f-4e90-44e8-b6f3-887098d876ee')
         self.vs[4]["MT_subtypeMatching__"] = False
         self.vs[4]["MT_label__"] = """12"""
         self.vs[4]["MT_subtypes__"] = pickle.loads("""(lp1
@@ -195,7 +195,7 @@ return True
 p1
 .""")
         self.vs[4]["MT_dirty__"] = False
-        self.vs[4]["GUID__"] = UUID('c0858ad2-23fc-44c1-be84-bfd1c5295ae1')
+        self.vs[4]["GUID__"] = UUID('ba429605-a3bb-4c7f-9ca9-aef9a72eb3aa')
         self.vs[5]["MT_subtypeMatching__"] = False
         self.vs[5]["MT_label__"] = """16"""
         self.vs[5]["MT_subtypes__"] = pickle.loads("""(lp1
@@ -205,35 +205,35 @@ p1
 p1
 .""")
         self.vs[5]["MT_dirty__"] = False
-        self.vs[5]["GUID__"] = UUID('8fac8d74-7df1-4d21-965c-df1e206cac36')
+        self.vs[5]["GUID__"] = UUID('9444414e-45b1-4870-abcd-4079da14aebb')
         self.vs[6]["MT_subtypeMatching__"] = False
         self.vs[6]["MT_label__"] = """6"""
         self.vs[6]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[6]["mm__"] = """MT_pre__trace_link"""
         self.vs[6]["MT_dirty__"] = False
-        self.vs[6]["GUID__"] = UUID('7f139e79-aa1a-415a-a4c4-e700d34f0978')
+        self.vs[6]["GUID__"] = UUID('60c5c18f-5ffc-48e1-99a8-ea85869ff659')
         self.vs[7]["MT_subtypeMatching__"] = False
         self.vs[7]["MT_label__"] = """7"""
         self.vs[7]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[7]["mm__"] = """MT_pre__trace_link"""
         self.vs[7]["MT_dirty__"] = False
-        self.vs[7]["GUID__"] = UUID('f0409b75-bd4c-433b-8af8-ae565aad5bda')
+        self.vs[7]["GUID__"] = UUID('4c504881-7896-431c-812c-1bdb14f88b1c')
         self.vs[8]["MT_subtypeMatching__"] = False
         self.vs[8]["MT_label__"] = """31"""
         self.vs[8]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[8]["mm__"] = """MT_pre__hasAttr_S"""
         self.vs[8]["MT_dirty__"] = False
-        self.vs[8]["GUID__"] = UUID('789558df-8db8-4764-ae8c-86ce9be1e186')
+        self.vs[8]["GUID__"] = UUID('84dfd618-3253-45ba-b001-7b0d00573f4d')
         self.vs[9]["MT_subtypeMatching__"] = False
         self.vs[9]["MT_label__"] = """33"""
         self.vs[9]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[9]["mm__"] = """MT_pre__hasAttr_S"""
         self.vs[9]["MT_dirty__"] = False
-        self.vs[9]["GUID__"] = UUID('1533fd37-32f3-41a3-81f9-c7c6cc748e75')
+        self.vs[9]["GUID__"] = UUID('b20445e4-95d2-4b9d-9057-ab451215ed89')
 
         
         # Load the NACs

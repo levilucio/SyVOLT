@@ -3,7 +3,7 @@ __SF2SF_match_MDL.py_____________________________________________________
 
 Automatically generated AToM3 Model File (Do not modify directly)
 Author: levi
-Modified: Thu Jan 15 17:32:30 2015
+Modified: Thu Jan 15 17:32:57 2015
 _________________________________________________________________________
 """
 from stickylink import *
@@ -97,7 +97,7 @@ def SF2SF_match_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, MT_pos
         MoTifRuleRootNode.description.setHeight(15)
 
         # name
-        MoTifRuleRootNode.name.setValue('SF2SF_combine_1')
+        MoTifRuleRootNode.name.setValue('SF2SF_match')
     # --- ASG attributes over ---
 
 
