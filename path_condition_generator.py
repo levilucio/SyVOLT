@@ -13,7 +13,7 @@ from himesis_utils import print_graph
 
 from copy import deepcopy
 
-from evaluate_attribute_equations import AttributeEquationEvaluator
+from solver.prolog_attribute_equation_evaluator import PrologAttributeEquationEvaluator
 
 from PyRamify import PyRamify
 
@@ -88,7 +88,7 @@ class PathConditionGenerator():
       
         # the path condition set starts with only the empty (None) path condition inside
         self.pathConditionSet = [HEmptyPathCondition()]        
-        self.attributeEquationEvaluator = AttributeEquationEvaluator(verbosity) 
+        self.attributeEquationEvaluator = PrologAttributeEquationEvaluator(verbosity) 
 #        self.mergeInterLayerFactory = MergeInterLayerFactory(verbosity)
 
         self._pre_process()
@@ -580,9 +580,9 @@ class PathConditionGenerator():
                                             
                                             # check if the equations on the attributes of the newly created path condition are satisfied
                                         
-                                            #if self.attributeEquationEvaluator(newPathCond):
+                                            if self.attributeEquationEvaluator(newPathCond):
                                        
-                                            if True:
+                                            #if True:
                                             
                                                 if isTotalCombinator:
                                                     # because the rule combines totally with a path condition in the accumulator we just copy it 

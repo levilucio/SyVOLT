@@ -2,7 +2,7 @@ import os
 import sys
 import time
 
-class PySolver:
+class PythonAttributeEquationSolver:
 
     def __init__(self):
 
@@ -297,7 +297,7 @@ if __name__ == "__main__":
 
     graphs = []
 
-    pysolver = PySolver()
+    pysolver = PythonAttributeEquationSolver()
 
     for f in os.listdir(directory):
         if f.startswith("__") or f.endswith(".pyc") or f.startswith("."):

@@ -53,7 +53,7 @@ from property_prover_rules.disambiguation_rules.Himesis.HDelOneAttributeFromUnco
 from property_prover_rules.disambiguation_rules.Himesis.HDeleteUncollapsedElementLHS import HDeleteUncollapsedElementLHS
 from property_prover_rules.disambiguation_rules.Himesis.HDeleteUncollapsedElementRHS import HDeleteUncollapsedElementRHS
 
-from evaluate_attribute_equations import AttributeEquationEvaluator
+from solver.z3_attribute_equation_evaluator import AttributeEquationEvaluator
 
 # declare all the needed TCore rules
 

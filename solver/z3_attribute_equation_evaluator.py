@@ -6,7 +6,15 @@ Created on 2015-08-09
 
 import subprocess
 
-class AttributeEquationEvaluator():
+from attribute_equation_solver import AttributeEquationSolver
+
+class Z3AttributeEquationEvaluator(AttributeEquationSolver):
+    """
+    Evaluates string equations on the attributes of a path condition by using the Z3-str solver.
+    Z3-str does not have an API for the time being, so the binary is called directly using a system call.
+    Although much more powerful than using a prolog solver (Z3-str deals with string lenght, substrings, etc), the system call is very slow.
+    Requires the Z3-str binary to be installed, which can be found here: https://www.cs.purdue.edu/homes/zheng16/str/
+    """
     
     Z3Location = "/home/levi/z3-str/Z3-str.py"
     Z3InputFile = "./tmp/Z3EquationFile"
