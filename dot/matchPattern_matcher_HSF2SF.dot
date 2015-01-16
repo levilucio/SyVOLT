@@ -1,0 +1,35 @@
+digraph matchPattern_matcher_HSF2SF {
+"MT_pre__Station_S0\n Label 1" [style=filled, fillcolor=lightblue];
+"MT_pre__indirectLink_S1\n Label 10" [style=filled, fillcolor=lightgreen];
+"MT_pre__Female_T2\n Label 4" [style=filled, fillcolor=lightblue];
+"MT_pre__Female_S3\n Label 2" [style=filled, fillcolor=lightblue];
+"MT_pre__Station_T4\n Label 3" [style=filled, fillcolor=lightblue];
+"MT_pre__Attribute5\n Label 12\n Classtype = None\n Name = 
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by" [style=filled, fillcolor=lightblue];
+"MT_pre__Attribute6\n Label 16\n Classtype = None\n Name = 
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by" [style=filled, fillcolor=lightblue];
+"MT_pre__trace_link7\n Label 5" [style=filled, fillcolor=lightgoldenrod];
+"MT_pre__trace_link8\n Label 6" [style=filled, fillcolor=lightgoldenrod];
+"MT_pre__hasAttr_S9\n Label 15\n Classtype = None\n Name = None" [style=filled, fillcolor=lightblue];
+"MT_pre__hasAttr_S10\n Label 25\n Classtype = None\n Name = None" [style=filled, fillcolor=lightblue];
+"MT_pre__hasAttr_S9\n Label 15\n Classtype = None\n Name = None" -> "MT_pre__Attribute5\n Label 12\n Classtype = None\n Name = 
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by";
+"MT_pre__hasAttr_S10\n Label 25\n Classtype = None\n Name = None" -> "MT_pre__Attribute6\n Label 16\n Classtype = None\n Name = 
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by";
+"MT_pre__trace_link7\n Label 5" -> "MT_pre__Station_S0\n Label 1";
+"MT_pre__Station_S0\n Label 1" -> "MT_pre__hasAttr_S9\n Label 15\n Classtype = None\n Name = None";
+"MT_pre__Station_S0\n Label 1" -> "MT_pre__indirectLink_S1\n Label 10";
+"MT_pre__indirectLink_S1\n Label 10" -> "MT_pre__Female_S3\n Label 2";
+"MT_pre__Station_T4\n Label 3" -> "MT_pre__trace_link7\n Label 5";
+"MT_pre__Female_T2\n Label 4" -> "MT_pre__trace_link8\n Label 6";
+"MT_pre__trace_link8\n Label 6" -> "MT_pre__Female_S3\n Label 2";
+"MT_pre__Female_S3\n Label 2" -> "MT_pre__hasAttr_S10\n Label 25\n Classtype = None\n Name = None";
+}

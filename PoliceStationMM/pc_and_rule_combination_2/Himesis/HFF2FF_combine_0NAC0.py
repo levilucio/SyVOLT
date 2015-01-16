@@ -35,7 +35,7 @@ a.""")
 return True
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('ce64a755-b44d-4510-ba17-ad419882e231')
+        self["GUID__"] = UUID('cd84634d-cf42-4bfd-83bc-386d52d7d459')
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
@@ -44,7 +44,7 @@ return True
 .""")
         self.vs[0]["MT_dirty__"] = False
         self.vs[0]["mm__"] = """MT_pre__indirectLink_S"""
-        self.vs[0]["GUID__"] = UUID('fa4b8365-df68-4753-aedd-dfd95cd8256a')
+        self.vs[0]["GUID__"] = UUID('30829bc7-de8b-4088-801d-23c3d6f6a5fc')
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_pre__classtype"] = """
 #===============================================================================
@@ -87,7 +87,7 @@ return True
 
 return True
 """
-        self.vs[1]["GUID__"] = UUID('c50c1bee-a242-4bdb-bfe1-8a66d3f10eec')
+        self.vs[1]["GUID__"] = UUID('dd175964-6be0-4194-bc42-b7d1adac04f4')
         self.vs[2]["MT_subtypeMatching__"] = False
         self.vs[2]["MT_pre__classtype"] = """
 #===============================================================================
@@ -130,7 +130,7 @@ return True
 
 return True
 """
-        self.vs[2]["GUID__"] = UUID('63bb90ec-3554-4ee8-a27e-f672576d8bb7')
+        self.vs[2]["GUID__"] = UUID('e22c3c35-720e-4e22-a27f-e9851e465918')
 
         
         # Load the bridge between this NAC and its LHS

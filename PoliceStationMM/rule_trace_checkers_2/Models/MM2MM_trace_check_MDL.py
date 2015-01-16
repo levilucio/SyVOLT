@@ -3,7 +3,7 @@ __MM2MM_trace_check_MDL.py_____________________________________________________
 
 Automatically generated AToM3 Model File (Do not modify directly)
 Author: levi
-Modified: Mon Dec 15 11:36:18 2014
+Modified: Fri Jan 16 10:17:07 2015
 _______________________________________________________________________________
 """
 from stickylink import *
@@ -60,105 +60,105 @@ def MM2MM_trace_check_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, 
         MoTifRuleRootNode.description.setHeight(15)
 
         # name
-        MoTifRuleRootNode.name.setValue('MM2MM_combine_1')
+        MoTifRuleRootNode.name.setValue('MM2MM_trace_check')
     # --- ASG attributes over ---
 
 
-    self.obj45=MT_pre__Male_S(self)
-    self.obj45.isGraphObjectVisual = True
+    self.obj41=MT_pre__Male_S(self)
+    self.obj41.isGraphObjectVisual = True
 
-    if(hasattr(self.obj45, '_setHierarchicalLink')):
-      self.obj45._setHierarchicalLink(False)
+    if(hasattr(self.obj41, '_setHierarchicalLink')):
+      self.obj41._setHierarchicalLink(False)
 
     # MT_pivotOut__
-    self.obj45.MT_pivotOut__.setValue('')
-    self.obj45.MT_pivotOut__.setNone()
+    self.obj41.MT_pivotOut__.setValue('')
+    self.obj41.MT_pivotOut__.setNone()
 
     # MT_subtypeMatching__
-    self.obj45.MT_subtypeMatching__.setValue(('True', 0))
-    self.obj45.MT_subtypeMatching__.config = 0
+    self.obj41.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj41.MT_subtypeMatching__.config = 0
 
     # MT_pre__classtype
-    self.obj45.MT_pre__classtype.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
-    self.obj45.MT_pre__classtype.setHeight(15)
+    self.obj41.MT_pre__classtype.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
+    self.obj41.MT_pre__classtype.setHeight(15)
 
     # MT_pivotIn__
-    self.obj45.MT_pivotIn__.setValue('')
-    self.obj45.MT_pivotIn__.setNone()
+    self.obj41.MT_pivotIn__.setValue('')
+    self.obj41.MT_pivotIn__.setNone()
 
     # MT_label__
-    self.obj45.MT_label__.setValue('1')
+    self.obj41.MT_label__.setValue('1')
 
     # MT_pre__cardinality
-    self.obj45.MT_pre__cardinality.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
-    self.obj45.MT_pre__cardinality.setHeight(15)
+    self.obj41.MT_pre__cardinality.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
+    self.obj41.MT_pre__cardinality.setHeight(15)
 
     # MT_pre__name
-    self.obj45.MT_pre__name.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
-    self.obj45.MT_pre__name.setHeight(15)
+    self.obj41.MT_pre__name.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
+    self.obj41.MT_pre__name.setHeight(15)
 
-    self.obj45.graphClass_= graph_MT_pre__Male_S
+    self.obj41.graphClass_= graph_MT_pre__Male_S
     if self.genGraphics:
-       new_obj = graph_MT_pre__Male_S(600.0,260.0,self.obj45)
+       new_obj = graph_MT_pre__Male_S(600.0,260.0,self.obj41)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("MT_pre__Male_S", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
        new_obj.layConstraints['scale'] = [1.0, 1.0]
     else: new_obj = None
-    self.obj45.graphObject_ = new_obj
+    self.obj41.graphObject_ = new_obj
 
     # Add node to the root: rootNode
-    rootNode.addNode(self.obj45)
-    self.globalAndLocalPostcondition(self.obj45, rootNode)
-    self.obj45.postAction( rootNode.CREATE )
+    rootNode.addNode(self.obj41)
+    self.globalAndLocalPostcondition(self.obj41, rootNode)
+    self.obj41.postAction( rootNode.CREATE )
 
-    self.obj46=MT_pre__Male_S(self)
-    self.obj46.isGraphObjectVisual = True
+    self.obj42=MT_pre__Male_S(self)
+    self.obj42.isGraphObjectVisual = True
 
-    if(hasattr(self.obj46, '_setHierarchicalLink')):
-      self.obj46._setHierarchicalLink(False)
+    if(hasattr(self.obj42, '_setHierarchicalLink')):
+      self.obj42._setHierarchicalLink(False)
 
     # MT_pivotOut__
-    self.obj46.MT_pivotOut__.setValue('')
-    self.obj46.MT_pivotOut__.setNone()
+    self.obj42.MT_pivotOut__.setValue('')
+    self.obj42.MT_pivotOut__.setNone()
 
     # MT_subtypeMatching__
-    self.obj46.MT_subtypeMatching__.setValue(('True', 0))
-    self.obj46.MT_subtypeMatching__.config = 0
+    self.obj42.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj42.MT_subtypeMatching__.config = 0
 
     # MT_pre__classtype
-    self.obj46.MT_pre__classtype.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
-    self.obj46.MT_pre__classtype.setHeight(15)
+    self.obj42.MT_pre__classtype.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
+    self.obj42.MT_pre__classtype.setHeight(15)
 
     # MT_pivotIn__
-    self.obj46.MT_pivotIn__.setValue('')
-    self.obj46.MT_pivotIn__.setNone()
+    self.obj42.MT_pivotIn__.setValue('')
+    self.obj42.MT_pivotIn__.setNone()
 
     # MT_label__
-    self.obj46.MT_label__.setValue('2')
+    self.obj42.MT_label__.setValue('2')
 
     # MT_pre__cardinality
-    self.obj46.MT_pre__cardinality.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
-    self.obj46.MT_pre__cardinality.setHeight(15)
+    self.obj42.MT_pre__cardinality.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
+    self.obj42.MT_pre__cardinality.setHeight(15)
 
     # MT_pre__name
-    self.obj46.MT_pre__name.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
-    self.obj46.MT_pre__name.setHeight(15)
+    self.obj42.MT_pre__name.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
+    self.obj42.MT_pre__name.setHeight(15)
 
-    self.obj46.graphClass_= graph_MT_pre__Male_S
+    self.obj42.graphClass_= graph_MT_pre__Male_S
     if self.genGraphics:
-       new_obj = graph_MT_pre__Male_S(780.0,260.0,self.obj46)
+       new_obj = graph_MT_pre__Male_S(780.0,260.0,self.obj42)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("MT_pre__Male_S", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
        new_obj.layConstraints['scale'] = [1.0, 1.0]
     else: new_obj = None
-    self.obj46.graphObject_ = new_obj
+    self.obj42.graphObject_ = new_obj
 
     # Add node to the root: rootNode
-    rootNode.addNode(self.obj46)
-    self.globalAndLocalPostcondition(self.obj46, rootNode)
-    self.obj46.postAction( rootNode.CREATE )
+    rootNode.addNode(self.obj42)
+    self.globalAndLocalPostcondition(self.obj42, rootNode)
+    self.obj42.postAction( rootNode.CREATE )
 
     self.obj43=MT_pre__Male_T(self)
     self.obj43.isGraphObjectVisual = True
@@ -248,75 +248,75 @@ def MM2MM_trace_check_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, 
     self.globalAndLocalPostcondition(self.obj44, rootNode)
     self.obj44.postAction( rootNode.CREATE )
 
-    self.obj41=MT_pre__trace_link(self)
-    self.obj41.isGraphObjectVisual = True
+    self.obj45=MT_pre__trace_link(self)
+    self.obj45.isGraphObjectVisual = True
 
-    if(hasattr(self.obj41, '_setHierarchicalLink')):
-      self.obj41._setHierarchicalLink(False)
+    if(hasattr(self.obj45, '_setHierarchicalLink')):
+      self.obj45._setHierarchicalLink(False)
 
     # MT_label__
-    self.obj41.MT_label__.setValue('5')
+    self.obj45.MT_label__.setValue('5')
 
     # MT_pivotOut__
-    self.obj41.MT_pivotOut__.setValue('')
-    self.obj41.MT_pivotOut__.setNone()
+    self.obj45.MT_pivotOut__.setValue('')
+    self.obj45.MT_pivotOut__.setNone()
 
     # MT_subtypeMatching__
-    self.obj41.MT_subtypeMatching__.setValue(('True', 0))
-    self.obj41.MT_subtypeMatching__.config = 0
+    self.obj45.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj45.MT_subtypeMatching__.config = 0
 
     # MT_pivotIn__
-    self.obj41.MT_pivotIn__.setValue('')
-    self.obj41.MT_pivotIn__.setNone()
+    self.obj45.MT_pivotIn__.setValue('')
+    self.obj45.MT_pivotIn__.setNone()
 
-    self.obj41.graphClass_= graph_MT_pre__trace_link
+    self.obj45.graphClass_= graph_MT_pre__trace_link
     if self.genGraphics:
-       new_obj = graph_MT_pre__trace_link(661.0,391.0,self.obj41)
+       new_obj = graph_MT_pre__trace_link(661.0,391.0,self.obj45)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("MT_pre__trace_link", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
     else: new_obj = None
-    self.obj41.graphObject_ = new_obj
+    self.obj45.graphObject_ = new_obj
 
     # Add node to the root: rootNode
-    rootNode.addNode(self.obj41)
-    self.globalAndLocalPostcondition(self.obj41, rootNode)
-    self.obj41.postAction( rootNode.CREATE )
+    rootNode.addNode(self.obj45)
+    self.globalAndLocalPostcondition(self.obj45, rootNode)
+    self.obj45.postAction( rootNode.CREATE )
 
-    self.obj42=MT_pre__trace_link(self)
-    self.obj42.isGraphObjectVisual = True
+    self.obj46=MT_pre__trace_link(self)
+    self.obj46.isGraphObjectVisual = True
 
-    if(hasattr(self.obj42, '_setHierarchicalLink')):
-      self.obj42._setHierarchicalLink(False)
+    if(hasattr(self.obj46, '_setHierarchicalLink')):
+      self.obj46._setHierarchicalLink(False)
 
     # MT_label__
-    self.obj42.MT_label__.setValue('6')
+    self.obj46.MT_label__.setValue('6')
 
     # MT_pivotOut__
-    self.obj42.MT_pivotOut__.setValue('')
-    self.obj42.MT_pivotOut__.setNone()
+    self.obj46.MT_pivotOut__.setValue('')
+    self.obj46.MT_pivotOut__.setNone()
 
     # MT_subtypeMatching__
-    self.obj42.MT_subtypeMatching__.setValue(('True', 0))
-    self.obj42.MT_subtypeMatching__.config = 0
+    self.obj46.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj46.MT_subtypeMatching__.config = 0
 
     # MT_pivotIn__
-    self.obj42.MT_pivotIn__.setValue('')
-    self.obj42.MT_pivotIn__.setNone()
+    self.obj46.MT_pivotIn__.setValue('')
+    self.obj46.MT_pivotIn__.setNone()
 
-    self.obj42.graphClass_= graph_MT_pre__trace_link
+    self.obj46.graphClass_= graph_MT_pre__trace_link
     if self.genGraphics:
-       new_obj = graph_MT_pre__trace_link(841.0,391.0,self.obj42)
+       new_obj = graph_MT_pre__trace_link(841.0,391.0,self.obj46)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("MT_pre__trace_link", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
     else: new_obj = None
-    self.obj42.graphObject_ = new_obj
+    self.obj46.graphObject_ = new_obj
 
     # Add node to the root: rootNode
-    rootNode.addNode(self.obj42)
-    self.globalAndLocalPostcondition(self.obj42, rootNode)
-    self.obj42.postAction( rootNode.CREATE )
+    rootNode.addNode(self.obj46)
+    self.globalAndLocalPostcondition(self.obj46, rootNode)
+    self.obj46.postAction( rootNode.CREATE )
 
     self.obj47=LHS(self)
     self.obj47.isGraphObjectVisual = True
@@ -343,24 +343,24 @@ def MM2MM_trace_check_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, 
     self.globalAndLocalPostcondition(self.obj47, rootNode)
     self.obj47.postAction( rootNode.CREATE )
 
-    # Connections for obj45 (graphObject_: Obj4) of type MT_pre__Male_S
+    # Connections for obj41 (graphObject_: Obj0) of type MT_pre__Male_S
     self.drawConnections(
  )
-    # Connections for obj46 (graphObject_: Obj5) of type MT_pre__Male_S
+    # Connections for obj42 (graphObject_: Obj1) of type MT_pre__Male_S
     self.drawConnections(
  )
     # Connections for obj43 (graphObject_: Obj2) of type MT_pre__Male_T
     self.drawConnections(
-(self.obj43,self.obj41,[661.0, 481.0, 661.0, 391.0],"true", 2) )
+(self.obj43,self.obj45,[661.0, 481.0, 661.0, 391.0],"true", 2) )
     # Connections for obj44 (graphObject_: Obj3) of type MT_pre__Male_T
     self.drawConnections(
-(self.obj44,self.obj42,[841.0, 481.0, 841.0, 391.0],"true", 2) )
-    # Connections for obj41 (graphObject_: Obj0) of type MT_pre__trace_link
+(self.obj44,self.obj46,[841.0, 481.0, 841.0, 391.0],"true", 2) )
+    # Connections for obj45 (graphObject_: Obj4) of type MT_pre__trace_link
     self.drawConnections(
-(self.obj41,self.obj45,[661.0, 391.0, 661.0, 301.0],"true", 2) )
-    # Connections for obj42 (graphObject_: Obj1) of type MT_pre__trace_link
+(self.obj45,self.obj41,[661.0, 391.0, 661.0, 301.0],"true", 2) )
+    # Connections for obj46 (graphObject_: Obj5) of type MT_pre__trace_link
     self.drawConnections(
-(self.obj42,self.obj46,[841.0, 391.0, 841.0, 301.0],"true", 2) )
+(self.obj46,self.obj42,[841.0, 391.0, 841.0, 301.0],"true", 2) )
     # Connections for obj47 (graphObject_: Obj6) of type LHS
     self.drawConnections(
  )

@@ -3,7 +3,7 @@ __F2F_MDL.py_____________________________________________________
 
 Automatically generated AToM3 Model File (Do not modify directly)
 Author: levi
-Modified: Tue Dec 16 14:57:09 2014
+Modified: Fri Jan 16 09:59:44 2015
 _________________________________________________________________
 """
 from stickylink import *
@@ -51,7 +51,22 @@ from ATOM3Integer import *
 from ATOM3Port import *
 from ATOM3MSEnum import *
 
-def F2F_MDL(self, rootNode, PoliceStationMMRootNode=None):
+def F2F_MDL(self, rootNode, mbeddr2C_MMRootNode=None, PoliceStationMMRootNode=None):
+
+    # --- Generating attributes code for ASG mbeddr2C_MM ---
+    if( mbeddr2C_MMRootNode ): 
+        # author
+        mbeddr2C_MMRootNode.author.setValue('Annonymous')
+
+        # description
+        mbeddr2C_MMRootNode.description.setValue('\n')
+        mbeddr2C_MMRootNode.description.setHeight(15)
+
+        # name
+        mbeddr2C_MMRootNode.name.setValue('')
+        mbeddr2C_MMRootNode.name.setNone()
+    # --- ASG attributes over ---
+
 
     # --- Generating attributes code for ASG PoliceStationMM ---
     if( PoliceStationMMRootNode ): 
@@ -218,7 +233,7 @@ def F2F_MDL(self, rootNode, PoliceStationMMRootNode=None):
       self.obj41._setHierarchicalLink(False)
 
     # value
-    self.obj41.value.setValue('otherfemale')
+    self.obj41.value.setValue('somefemale')
 
     self.obj41.graphClass_= graph_Constant
     if self.genGraphics:
@@ -399,6 +414,6 @@ def F2F_MDL(self, rootNode, PoliceStationMMRootNode=None):
 
 newfunction = F2F_MDL
 
-loadedMMName = 'PoliceStationMM_META'
+loadedMMName = ['mbeddr2C_MM_META', 'PoliceStationMM_META']
 
 atom3version = '0.3'

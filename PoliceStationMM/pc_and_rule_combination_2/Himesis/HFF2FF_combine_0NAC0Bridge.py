@@ -17,7 +17,7 @@ class HFF2FF_combine_0NAC0Bridge(HimesisPreConditionPattern):
         # Add the edges
         self.add_edges([])
         # Set the graph attributes
-        self["GUID__"] = UUID('3b980f30-c33c-4f9a-a9d1-ffc0e27ba60f')
+        self["GUID__"] = UUID('bacb44cf-df41-4412-b103-921cc6a79f44')
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
@@ -38,7 +38,7 @@ return HFF2FF_combine_0NAC0(lhs).eval_name1(attr_value, this) and HFF2FF_combine
 from HFF2FF_combine_0LHS import HFF2FF_combine_0LHS
 lhs = HFF2FF_combine_0LHS()
 return HFF2FF_combine_0NAC0(lhs).eval_cardinality1(attr_value, this) and HFF2FF_combine_0LHS().eval_cardinality1(attr_value, this)"""
-        self.vs[0]["GUID__"] = UUID('c50c1bee-a242-4bdb-bfe1-8a66d3f10eec')
+        self.vs[0]["GUID__"] = UUID('dd175964-6be0-4194-bc42-b7d1adac04f4')
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_pre__classtype"] = """from HFF2FF_combine_0NAC0 import HFF2FF_combine_0NAC0
 from HFF2FF_combine_0LHS import HFF2FF_combine_0LHS
@@ -57,7 +57,7 @@ return HFF2FF_combine_0NAC0(lhs).eval_name2(attr_value, this) and HFF2FF_combine
 from HFF2FF_combine_0LHS import HFF2FF_combine_0LHS
 lhs = HFF2FF_combine_0LHS()
 return HFF2FF_combine_0NAC0(lhs).eval_cardinality2(attr_value, this) and HFF2FF_combine_0LHS().eval_cardinality2(attr_value, this)"""
-        self.vs[1]["GUID__"] = UUID('63bb90ec-3554-4ee8-a27e-f672576d8bb7')
+        self.vs[1]["GUID__"] = UUID('e22c3c35-720e-4e22-a27f-e9851e465918')
 
     def eval_classtype1(self, attr_value, this):
         from HFF2FF_combine_0NAC0 import HFF2FF_combine_0NAC0

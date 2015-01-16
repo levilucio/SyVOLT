@@ -1,0 +1,27 @@
+digraph rule_M2M {
+apply_contains0 [style=filled, fillcolor="#FCDB58"];
+"leftExpr1\n Classtype = None\n Name = None" [style=filled, fillcolor=lightblue];
+paired_with2 [style=filled, fillcolor=lightgray];
+"hasAttr_S3\n Classtype = None\n Name = None" [style=filled, fillcolor=lightblue];
+ApplyModel4 [style=filled, fillcolor="#FED017"];
+"Equation5\n Classtype = None\n Name = None" [style=filled, fillcolor=lightblue];
+match_contains6 [style=filled, fillcolor="#F798A1"];
+"Male_T7\n Classtype = t_\n Name = s_" [style=filled, fillcolor=lightblue];
+"Constant8\n Classtype = None\n Name = None" [style=filled, fillcolor=lightblue];
+"rightExpr9\n Classtype = None\n Name = None" [style=filled, fillcolor=lightblue];
+MatchModel10 [style=filled, fillcolor="#E15C34"];
+"Attribute11\n Classtype = None\n Name = name" [style=filled, fillcolor=lightblue];
+"Male_S12\n Classtype = 1\n Name = s_" [style=filled, fillcolor=lightblue];
+ApplyModel4 -> apply_contains0;
+apply_contains0 -> "Male_T7\n Classtype = t_\n Name = s_";
+"Equation5\n Classtype = None\n Name = None" -> "leftExpr1\n Classtype = None\n Name = None";
+"leftExpr1\n Classtype = None\n Name = None" -> "Attribute11\n Classtype = None\n Name = name";
+MatchModel10 -> paired_with2;
+paired_with2 -> ApplyModel4;
+"Male_S12\n Classtype = 1\n Name = s_" -> "hasAttr_S3\n Classtype = None\n Name = None";
+"hasAttr_S3\n Classtype = None\n Name = None" -> "Attribute11\n Classtype = None\n Name = name";
+"Equation5\n Classtype = None\n Name = None" -> "rightExpr9\n Classtype = None\n Name = None";
+MatchModel10 -> match_contains6;
+match_contains6 -> "Male_S12\n Classtype = 1\n Name = s_";
+"rightExpr9\n Classtype = None\n Name = None" -> "Constant8\n Classtype = None\n Name = None";
+}

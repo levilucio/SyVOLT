@@ -1,0 +1,13 @@
+digraph matchPattern_matcher_HF2F {
+"MT_pre__Attribute0\n Label 2\n Classtype = None\n Name = 
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by" [style=filled, fillcolor=lightblue];
+"MT_pre__Female_S1\n Label 1" [style=filled, fillcolor=lightblue];
+"MT_pre__hasAttr_S2\n Label 3\n Classtype = None\n Name = None" [style=filled, fillcolor=lightblue];
+"MT_pre__hasAttr_S2\n Label 3\n Classtype = None\n Name = None" -> "MT_pre__Attribute0\n Label 2\n Classtype = None\n Name = 
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by";
+"MT_pre__Female_S1\n Label 1" -> "MT_pre__hasAttr_S2\n Label 3\n Classtype = None\n Name = None";
+}

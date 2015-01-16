@@ -32,7 +32,7 @@ a.""")
 pass
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('4e1f4d6a-3e3c-4021-9a4e-d95704519d9a')
+        self["GUID__"] = UUID('562d9195-7f9a-4f0f-86a8-6894b4ca11d7')
         
         # Set the node attributes
         self.vs[0]["MT_post__associationType"] = """
@@ -51,7 +51,7 @@ return attr_value
 """
         self.vs[0]["MT_label__"] = """11"""
         self.vs[0]["mm__"] = """MT_post__directLink_T"""
-        self.vs[0]["GUID__"] = UUID('69cb6993-b834-4d4a-a605-5b56ca610e94')
+        self.vs[0]["GUID__"] = UUID('beae7185-cac9-499a-aa1b-b807f4ca3c59')
         self.vs[1]["MT_label__"] = """4"""
         self.vs[1]["MT_post__name"] = """
 #===============================================================================
@@ -82,10 +82,10 @@ return attr_value
 
 return attr_value
 """
-        self.vs[1]["GUID__"] = UUID('4b8d38a6-fb2d-4d85-b78c-d88d32547906')
+        self.vs[1]["GUID__"] = UUID('e7debca5-ea23-445d-a9c7-f28c303547e5')
         self.vs[2]["MT_label__"] = """10"""
         self.vs[2]["mm__"] = """MT_post__indirectLink_S"""
-        self.vs[2]["GUID__"] = UUID('c20a0a51-56d4-4af4-8a0f-8b9235365738')
+        self.vs[2]["GUID__"] = UUID('2739fadd-ec93-4600-9b78-cfb9846fb4e1')
         self.vs[3]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -130,7 +130,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[3]["GUID__"] = UUID('0e846211-1683-4372-9635-7c9714128bae')
+        self.vs[3]["GUID__"] = UUID('aecf0055-e2b1-4444-b762-dd38a7df899f')
         self.vs[4]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -175,7 +175,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[4]["GUID__"] = UUID('af942943-3714-49ce-8bb0-bd25f888a131')
+        self.vs[4]["GUID__"] = UUID('6ec70a7a-708f-41a0-99fe-c87e4f1d985d')
         self.vs[5]["MT_label__"] = """3"""
         self.vs[5]["MT_post__name"] = """
 #===============================================================================
@@ -206,83 +206,83 @@ return attr_value
 
 return attr_value
 """
-        self.vs[5]["GUID__"] = UUID('00369123-4765-45f5-b7ba-0a12d32ec663')
+        self.vs[5]["GUID__"] = UUID('ae012eb0-4336-4fe5-b8b1-9706398ab5a3')
         self.vs[6]["MT_label__"] = """12"""
-        self.vs[6]["MT_post__name"] = pickle.loads("""V\u000a#===============================================================================\u000a# You can access the value of the current node's attribute value by: attr_value.\u000a# If the current node shall be created you MUST initialize it here!\u000a# You can access a node labelled n by: PreNode('n').\u000a# To access attribute x of node n, use: PreNode('n')['x'].\u000a# Note that the attribute values are those before the match is rewritten.\u000a# The order in which this code is executed depends on the label value\u000a# of the encapsulating node.\u000a# The given action must return the new value of the attribute.\u000a#===============================================================================\u000a\u000areturn attr_value\u000a
-p1
-.""")
+        self.vs[6]["MT_post__name"] = """
+#===============================================================================
+# You can access the value of the current node's attribute value by: attr_value.
+# If the current node shall be created you MUST initialize it here!
+# You can access a node labelled n by: PreNode('n').
+# To access attribute x of node n, use: PreNode('n')['x'].
+# Note that the attribute values are those before the match is rewritten.
+# The order in which this code is executed depends on the label value
+# of the encapsulating node.
+# The given action must return the new value of the attribute.
+#===============================================================================
+
+return attr_value
+"""
         self.vs[6]["mm__"] = """MT_post__Attribute"""
-        self.vs[6]["GUID__"] = UUID('1491862c-c3c6-4b56-b0ef-6d25ed4100fa')
+        self.vs[6]["GUID__"] = UUID('c756d76f-1978-4619-8b07-88a70bfb9011')
         self.vs[7]["MT_label__"] = """16"""
-        self.vs[7]["MT_post__name"] = pickle.loads("""V\u000a#===============================================================================\u000a# You can access the value of the current node's attribute value by: attr_value.\u000a# If the current node shall be created you MUST initialize it here!\u000a# You can access a node labelled n by: PreNode('n').\u000a# To access attribute x of node n, use: PreNode('n')['x'].\u000a# Note that the attribute values are those before the match is rewritten.\u000a# The order in which this code is executed depends on the label value\u000a# of the encapsulating node.\u000a# The given action must return the new value of the attribute.\u000a#===============================================================================\u000a\u000areturn attr_value\u000a
-p1
-.""")
+        self.vs[7]["MT_post__name"] = """
+#===============================================================================
+# You can access the value of the current node's attribute value by: attr_value.
+# If the current node shall be created you MUST initialize it here!
+# You can access a node labelled n by: PreNode('n').
+# To access attribute x of node n, use: PreNode('n')['x'].
+# Note that the attribute values are those before the match is rewritten.
+# The order in which this code is executed depends on the label value
+# of the encapsulating node.
+# The given action must return the new value of the attribute.
+#===============================================================================
+
+return attr_value
+"""
         self.vs[7]["mm__"] = """MT_post__Attribute"""
-        self.vs[7]["GUID__"] = UUID('1dc660d8-4f86-4aa6-8ce7-392cacc43b9d')
+        self.vs[7]["GUID__"] = UUID('d136025e-159d-4908-8c4f-422c17d4fac2')
         self.vs[8]["MT_label__"] = """20"""
         self.vs[8]["mm__"] = """MT_post__rightExpr"""
-        self.vs[8]["GUID__"] = UUID('13a42653-c35b-4719-8d1b-cc47fc47bd47')
+        self.vs[8]["GUID__"] = UUID('7addf8f7-8100-4372-baba-a835ae5a9fa3')
         self.vs[9]["MT_label__"] = """23"""
         self.vs[9]["mm__"] = """MT_post__rightExpr"""
-        self.vs[9]["GUID__"] = UUID('2fe2a910-a711-46db-8336-8cbe93f64af3')
+        self.vs[9]["GUID__"] = UUID('614159dd-3349-4ea0-9704-95a09c1b7f88')
         self.vs[10]["MT_label__"] = """13"""
         self.vs[10]["mm__"] = """MT_post__Equation"""
-        self.vs[10]["GUID__"] = UUID('571710b7-bafe-4883-81ca-0b3f5faa87ad')
+        self.vs[10]["GUID__"] = UUID('6aabdde7-67e3-4852-9684-9e17af8a3e94')
         self.vs[11]["MT_label__"] = """17"""
         self.vs[11]["mm__"] = """MT_post__Equation"""
-        self.vs[11]["GUID__"] = UUID('e5d0fc5a-851c-4808-bc00-eb0f0860212a')
+        self.vs[11]["GUID__"] = UUID('61db67ca-b18e-47ac-91bb-3dbda6c24415')
         self.vs[12]["MT_label__"] = """6"""
         self.vs[12]["mm__"] = """MT_post__trace_link"""
-        self.vs[12]["GUID__"] = UUID('5bb5eaed-482a-42ee-8928-680b229ecd97')
+        self.vs[12]["GUID__"] = UUID('e791b594-2a83-4282-9f6d-58be7fa9b2b5')
         self.vs[13]["MT_label__"] = """7"""
         self.vs[13]["mm__"] = """MT_post__trace_link"""
-        self.vs[13]["GUID__"] = UUID('80083b47-d498-4b86-831c-24eb73997f71')
+        self.vs[13]["GUID__"] = UUID('48ed12e5-5cf0-4065-b50c-44587643b463')
         self.vs[14]["MT_label__"] = """19"""
         self.vs[14]["mm__"] = """MT_post__leftExpr"""
-        self.vs[14]["GUID__"] = UUID('089bad1d-3023-4f0b-9b3d-2c79c97cd59c')
+        self.vs[14]["GUID__"] = UUID('8d25c762-d131-4e6a-abad-0d5d838bbe65')
         self.vs[15]["MT_label__"] = """22"""
         self.vs[15]["mm__"] = """MT_post__leftExpr"""
-        self.vs[15]["GUID__"] = UUID('1a75b7c4-4138-40f4-a3bd-44b688eb932d')
+        self.vs[15]["GUID__"] = UUID('829616b6-63b0-4b8f-ba82-5500a78a6a0c')
         self.vs[16]["MT_label__"] = """31"""
         self.vs[16]["mm__"] = """MT_post__hasAttr_S"""
-        self.vs[16]["GUID__"] = UUID('84250b57-261b-4c3e-ad6e-8636a55bd855')
+        self.vs[16]["GUID__"] = UUID('3b62ce2c-6044-4ae2-9a8c-5c1d9e4bbc1a')
         self.vs[17]["MT_label__"] = """33"""
         self.vs[17]["mm__"] = """MT_post__hasAttr_S"""
-        self.vs[17]["GUID__"] = UUID('c8702991-cc95-46e3-a164-68d47ca0ce58')
+        self.vs[17]["GUID__"] = UUID('f27ca2d0-5c54-4843-8329-e32f629ae9ec')
         self.vs[18]["MT_label__"] = """14"""
         self.vs[18]["mm__"] = """MT_post__Constant"""
-        self.vs[18]["MT_post__value"] = """
-#===============================================================================
-# You can access the value of the current node's attribute value by: attr_value.
-# If the current node shall be created you MUST initialize it here!
-# You can access a node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# Note that the attribute values are those before the match is rewritten.
-# The order in which this code is executed depends on the label value
-# of the encapsulating node.
-# The given action must return the new value of the attribute.
-#===============================================================================
-
-return "somestation"
-"""
-        self.vs[18]["GUID__"] = UUID('436a081f-5779-429c-b2b5-67f4d25ac6f3')
+        self.vs[18]["MT_post__value"] = pickle.loads("""V\u000a#===============================================================================\u000a# You can access the value of the current node's attribute value by: attr_value.\u000a# If the current node shall be created you MUST initialize it here!\u000a# You can access a node labelled n by: PreNode('n').\u000a# To access attribute x of node n, use: PreNode('n')['x'].\u000a# Note that the attribute values are those before the match is rewritten.\u000a# The order in which this code is executed depends on the label value\u000a# of the encapsulating node.\u000a# The given action must return the new value of the attribute.\u000a#===============================================================================\u000a\u000areturn "somestation"\u000a
+p1
+.""")
+        self.vs[18]["GUID__"] = UUID('c742bdd7-ec2b-440b-bdd2-206383ad8993')
         self.vs[19]["MT_label__"] = """18"""
         self.vs[19]["mm__"] = """MT_post__Constant"""
-        self.vs[19]["MT_post__value"] = """
-#===============================================================================
-# You can access the value of the current node's attribute value by: attr_value.
-# If the current node shall be created you MUST initialize it here!
-# You can access a node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# Note that the attribute values are those before the match is rewritten.
-# The order in which this code is executed depends on the label value
-# of the encapsulating node.
-# The given action must return the new value of the attribute.
-#===============================================================================
-
-return "somemale"
-"""
-        self.vs[19]["GUID__"] = UUID('b6695613-5900-48ff-a8f3-35b8276639c1')
+        self.vs[19]["MT_post__value"] = pickle.loads("""V\u000a#===============================================================================\u000a# You can access the value of the current node's attribute value by: attr_value.\u000a# If the current node shall be created you MUST initialize it here!\u000a# You can access a node labelled n by: PreNode('n').\u000a# To access attribute x of node n, use: PreNode('n')['x'].\u000a# Note that the attribute values are those before the match is rewritten.\u000a# The order in which this code is executed depends on the label value\u000a# of the encapsulating node.\u000a# The given action must return the new value of the attribute.\u000a#===============================================================================\u000a\u000areturn "somemale"\u000a
+p1
+.""")
+        self.vs[19]["GUID__"] = UUID('8cf2e4b7-035a-4688-b86f-283583fe18b8')
 
         from HSM2SM_combine_0LHS import HSM2SM_combine_0LHS
         self.pre = HSM2SM_combine_0LHS()

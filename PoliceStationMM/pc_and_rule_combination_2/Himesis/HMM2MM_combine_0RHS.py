@@ -32,7 +32,7 @@ a.""")
 pass
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('64078b76-09fd-44d8-899d-015db1840a1f')
+        self["GUID__"] = UUID('d8c53dca-761c-4743-8946-d4e43c1887a0')
         
         # Set the node attributes
         self.vs[0]["MT_post__associationType"] = """
@@ -51,10 +51,10 @@ return attr_value
 """
         self.vs[0]["MT_label__"] = """8"""
         self.vs[0]["mm__"] = """MT_post__directLink_T"""
-        self.vs[0]["GUID__"] = UUID('07f08cb1-71af-4724-91a0-2e63fda4b5ec')
+        self.vs[0]["GUID__"] = UUID('ecbf9160-65d6-4a14-bfbd-577e38a52fed')
         self.vs[1]["MT_label__"] = """7"""
         self.vs[1]["mm__"] = """MT_post__indirectLink_S"""
-        self.vs[1]["GUID__"] = UUID('fb85bb14-6c09-4012-8a74-43c3b8562d39')
+        self.vs[1]["GUID__"] = UUID('4cb32d66-e0a1-4583-bb59-6dfd57000f31')
         self.vs[2]["MT_label__"] = """3"""
         self.vs[2]["MT_post__name"] = """
 #===============================================================================
@@ -85,7 +85,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[2]["GUID__"] = UUID('822a0bc7-d7a8-477c-8cd1-5ae2b5d5ecb6')
+        self.vs[2]["GUID__"] = UUID('98efc762-27f6-4a5e-93da-79fa00214597')
         self.vs[3]["MT_label__"] = """4"""
         self.vs[3]["MT_post__name"] = """
 #===============================================================================
@@ -116,13 +116,13 @@ return attr_value
 
 return attr_value
 """
-        self.vs[3]["GUID__"] = UUID('6fa38159-3139-44f6-803f-973e771b1100')
+        self.vs[3]["GUID__"] = UUID('9698d967-6491-4dda-942d-af4f8457143a')
         self.vs[4]["MT_label__"] = """5"""
         self.vs[4]["mm__"] = """MT_post__trace_link"""
-        self.vs[4]["GUID__"] = UUID('5091eeae-dda3-41bb-9919-ba1db4843d91')
+        self.vs[4]["GUID__"] = UUID('93092f73-2b8f-447a-a84f-f067dea823d9')
         self.vs[5]["MT_label__"] = """6"""
         self.vs[5]["mm__"] = """MT_post__trace_link"""
-        self.vs[5]["GUID__"] = UUID('3d173f37-e11d-4fff-8a2c-5b5f3580a200')
+        self.vs[5]["GUID__"] = UUID('89778c6e-00ba-4591-9086-236ff498005d')
         self.vs[6]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -167,7 +167,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[6]["GUID__"] = UUID('4776f039-758e-4a85-863e-87822158087c')
+        self.vs[6]["GUID__"] = UUID('de1b1611-0469-4e53-8a97-0e0c71f54a45')
         self.vs[7]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -212,7 +212,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[7]["GUID__"] = UUID('1bd84f78-3d22-4be7-a6cd-e3170234363e')
+        self.vs[7]["GUID__"] = UUID('cad13f37-feaf-4af3-903e-dfda28abb504')
 
         from HMM2MM_combine_0LHS import HMM2MM_combine_0LHS
         self.pre = HMM2MM_combine_0LHS()

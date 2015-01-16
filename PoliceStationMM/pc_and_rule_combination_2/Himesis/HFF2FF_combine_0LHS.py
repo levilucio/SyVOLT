@@ -35,7 +35,7 @@ a.""")
 return True
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('9fbcc6c5-35ce-4c24-bfcd-aa1db0c9ec53')
+        self["GUID__"] = UUID('fd9d218a-b24a-4e50-a117-fa5f13e0433e')
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
@@ -68,7 +68,7 @@ return True
 return True
 """
         self.vs[0]["MT_dirty__"] = False
-        self.vs[0]["GUID__"] = UUID('8abcce44-d96b-43ff-a472-009d0e29b8d2')
+        self.vs[0]["GUID__"] = UUID('515740fb-c734-4a9b-8dad-11f1382d4518')
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_pre__classtype"] = """
 #===============================================================================
@@ -99,21 +99,21 @@ return True
 return True
 """
         self.vs[1]["MT_dirty__"] = False
-        self.vs[1]["GUID__"] = UUID('fc6a879f-ef5e-478d-9346-af3855bfaab6')
+        self.vs[1]["GUID__"] = UUID('eb2a23fa-a9b2-4330-bfb1-7c478acb924f')
         self.vs[2]["MT_subtypeMatching__"] = False
         self.vs[2]["MT_label__"] = """5"""
         self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[2]["mm__"] = """MT_pre__trace_link"""
         self.vs[2]["MT_dirty__"] = False
-        self.vs[2]["GUID__"] = UUID('7cc0d900-db7c-4eef-8f07-84a0dcdda27e')
+        self.vs[2]["GUID__"] = UUID('2c3a3db1-5093-4f7b-8aa5-8233fb5e1562')
         self.vs[3]["MT_subtypeMatching__"] = False
         self.vs[3]["MT_label__"] = """6"""
         self.vs[3]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[3]["mm__"] = """MT_pre__trace_link"""
         self.vs[3]["MT_dirty__"] = False
-        self.vs[3]["GUID__"] = UUID('f27ef472-7bc2-4728-8e9f-aa8531408df6')
+        self.vs[3]["GUID__"] = UUID('11bca770-e48d-44bd-9315-0047bfe83dc5')
         self.vs[4]["MT_subtypeMatching__"] = False
         self.vs[4]["MT_pre__classtype"] = """
 #===============================================================================
@@ -156,7 +156,7 @@ return True
 return True
 """
         self.vs[4]["MT_dirty__"] = False
-        self.vs[4]["GUID__"] = UUID('532c998f-f628-467d-8e22-8aab038af8a3')
+        self.vs[4]["GUID__"] = UUID('11b3551f-bcc2-4eb9-8fe4-1464bba6f4cd')
         self.vs[5]["MT_subtypeMatching__"] = False
         self.vs[5]["MT_pre__classtype"] = """
 #===============================================================================
@@ -199,7 +199,7 @@ return True
 return True
 """
         self.vs[5]["MT_dirty__"] = False
-        self.vs[5]["GUID__"] = UUID('814722ba-1abb-494a-9af8-fc40d82e5abd')
+        self.vs[5]["GUID__"] = UUID('3185966c-0f5b-4bae-bb4f-2a97a6d8ac8d')
 
         
         # Load the NACs

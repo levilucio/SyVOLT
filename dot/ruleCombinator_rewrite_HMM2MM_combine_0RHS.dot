@@ -1,0 +1,18 @@
+digraph ruleCombinator_rewrite_HMM2MM_combine_0RHS {
+"MT_post__directLink_T0\n Label 8" [style=filled, fillcolor=lightblue];
+"MT_post__indirectLink_S1\n Label 7" [style=filled, fillcolor=lightblue];
+"MT_post__Male_T2\n Label 3" [style=filled, fillcolor=lightblue];
+"MT_post__Male_T3\n Label 4" [style=filled, fillcolor=lightblue];
+"MT_post__trace_link4\n Label 5" [style=filled, fillcolor=lightblue];
+"MT_post__trace_link5\n Label 6" [style=filled, fillcolor=lightblue];
+"MT_post__Male_S6\n Label 1" [style=filled, fillcolor=lightblue];
+"MT_post__Male_S7\n Label 2" [style=filled, fillcolor=lightblue];
+"MT_post__Male_T2\n Label 3" -> "MT_post__directLink_T0\n Label 8";
+"MT_post__directLink_T0\n Label 8" -> "MT_post__Male_T3\n Label 4";
+"MT_post__Male_T2\n Label 3" -> "MT_post__trace_link4\n Label 5";
+"MT_post__Male_T3\n Label 4" -> "MT_post__trace_link5\n Label 6";
+"MT_post__trace_link4\n Label 5" -> "MT_post__Male_S6\n Label 1";
+"MT_post__trace_link5\n Label 6" -> "MT_post__Male_S7\n Label 2";
+"MT_post__Male_S6\n Label 1" -> "MT_post__indirectLink_S1\n Label 7";
+"MT_post__indirectLink_S1\n Label 7" -> "MT_post__Male_S7\n Label 2";
+}
