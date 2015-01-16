@@ -40,9 +40,9 @@ return True
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
         self.vs[0]["MT_label__"] = """2"""
-        self.vs[0]["mm__"] = """MT_pre__Attribute"""
         self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
+        self.vs[0]["mm__"] = """MT_pre__Attribute"""
         self.vs[0]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -85,7 +85,6 @@ return True
 """
         self.vs[1]["MT_pivotIn__"] = """element2"""
         self.vs[1]["MT_label__"] = """1"""
-        self.vs[1]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
 S'MT_pre__Station_S'
 p2
@@ -94,6 +93,7 @@ p3
 aS'MT_pre__Female_S'
 p4
 a.""")
+        self.vs[1]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[1]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -110,9 +110,9 @@ return True
         self.vs[1]["GUID__"] = UUID('6f064e9b-d0dc-40d2-a292-af2a33008720')
         self.vs[2]["MT_subtypeMatching__"] = False
         self.vs[2]["MT_label__"] = """3"""
-        self.vs[2]["mm__"] = """MT_pre__hasAttr_S"""
         self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
+        self.vs[2]["mm__"] = """MT_pre__hasAttr_S"""
         self.vs[2]["MT_dirty__"] = False
         self.vs[2]["GUID__"] = UUID('9372760e-2b13-42e4-9bbe-516eebbc1518')
 

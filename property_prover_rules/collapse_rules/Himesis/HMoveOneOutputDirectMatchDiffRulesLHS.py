@@ -44,24 +44,12 @@ p1
 return True
 """
         self.vs[0]["MT_label__"] = """9"""
+        self.vs[0]["mm__"] = """MT_pre__directLink_S"""
         self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
-        self.vs[0]["mm__"] = """MT_pre__directLink_S"""
         self.vs[0]["MT_dirty__"] = False
         self.vs[0]["GUID__"] = UUID('4bcb15ae-d5e8-4f84-bf35-c46fa06f4194')
         self.vs[1]["MT_pivotOut__"] = """element1"""
-        self.vs[1]["MT_pre__name"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
         self.vs[1]["MT_subtypeMatching__"] = True
         self.vs[1]["MT_pre__classtype"] = """
 #===============================================================================
@@ -75,8 +63,21 @@ return True
 
 return True
 """
+        self.vs[1]["MT_pre__cardinality"] = """
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by: attr_value.
+# You can access any attribute x of this node by: this['x'].
+# If the constraint relies on attribute values from other nodes,
+# use the LHS/NAC constraint instead.
+# The given constraint must evaluate to a boolean expression.
+#===============================================================================
+
+return True
+"""
         self.vs[1]["MT_pivotIn__"] = """element1"""
         self.vs[1]["MT_label__"] = """3"""
+        self.vs[1]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
 S'MT_pre__Station_S'
 p2
@@ -85,9 +86,8 @@ p3
 aS'MT_pre__Female_S'
 p4
 a.""")
-        self.vs[1]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[1]["MT_dirty__"] = False
-        self.vs[1]["MT_pre__cardinality"] = """
+        self.vs[1]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -101,18 +101,6 @@ return True
 """
         self.vs[1]["GUID__"] = UUID('2f2cb482-2628-46df-99d6-2914c675b697')
         self.vs[2]["MT_pivotOut__"] = """element2"""
-        self.vs[2]["MT_pre__name"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
         self.vs[2]["MT_subtypeMatching__"] = True
         self.vs[2]["MT_pre__classtype"] = """
 #===============================================================================
@@ -126,18 +114,6 @@ return True
 
 return True
 """
-        self.vs[2]["MT_pivotIn__"] = """element2"""
-        self.vs[2]["MT_label__"] = """4"""
-        self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__Station_S'
-p2
-aS'MT_pre__Male_S'
-p3
-aS'MT_pre__Female_S'
-p4
-a.""")
-        self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
-        self.vs[2]["MT_dirty__"] = False
         self.vs[2]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -150,8 +126,19 @@ a.""")
 
 return True
 """
-        self.vs[2]["GUID__"] = UUID('f38a422a-ba55-4826-bf17-d7c0dfe12aec')
-        self.vs[3]["MT_pre__name"] = """
+        self.vs[2]["MT_pivotIn__"] = """element2"""
+        self.vs[2]["MT_label__"] = """4"""
+        self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
+        self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
+S'MT_pre__Station_S'
+p2
+aS'MT_pre__Male_S'
+p3
+aS'MT_pre__Female_S'
+p4
+a.""")
+        self.vs[2]["MT_dirty__"] = False
+        self.vs[2]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -163,6 +150,7 @@ return True
 
 return True
 """
+        self.vs[2]["GUID__"] = UUID('f38a422a-ba55-4826-bf17-d7c0dfe12aec')
         self.vs[3]["MT_subtypeMatching__"] = True
         self.vs[3]["MT_pre__classtype"] = """
 #===============================================================================
@@ -176,7 +164,20 @@ return True
 
 return True
 """
+        self.vs[3]["MT_pre__cardinality"] = """
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by: attr_value.
+# You can access any attribute x of this node by: this['x'].
+# If the constraint relies on attribute values from other nodes,
+# use the LHS/NAC constraint instead.
+# The given constraint must evaluate to a boolean expression.
+#===============================================================================
+
+return True
+"""
         self.vs[3]["MT_label__"] = """5"""
+        self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[3]["MT_subtypes__"] = pickle.loads("""(lp1
 S'MT_pre__Station_S'
 p2
@@ -185,9 +186,8 @@ p3
 aS'MT_pre__Female_S'
 p4
 a.""")
-        self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[3]["MT_dirty__"] = False
-        self.vs[3]["MT_pre__cardinality"] = """
+        self.vs[3]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -202,20 +202,6 @@ return True
         self.vs[3]["GUID__"] = UUID('09ef70c5-de2c-4a4f-81ae-f448b831a508')
 
     def eval_associationType9(self, attr_value, this):
-        
-        #===============================================================================
-        # This code is executed when evaluating if a node shall be matched by this rule.
-        # You can access the value of the current node's attribute value by: attr_value.
-        # You can access any attribute x of this node by: this['x'].
-        # If the constraint relies on attribute values from other nodes,
-        # use the LHS/NAC constraint instead.
-        # The given constraint must evaluate to a boolean expression.
-        #===============================================================================
-        
-        return True
-
-
-    def eval_name3(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.
@@ -257,7 +243,7 @@ return True
         return True
 
 
-    def eval_name4(self, attr_value, this):
+    def eval_name3(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.
@@ -299,7 +285,7 @@ return True
         return True
 
 
-    def eval_name5(self, attr_value, this):
+    def eval_name4(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.
@@ -328,6 +314,20 @@ return True
 
 
     def eval_cardinality5(self, attr_value, this):
+        
+        #===============================================================================
+        # This code is executed when evaluating if a node shall be matched by this rule.
+        # You can access the value of the current node's attribute value by: attr_value.
+        # You can access any attribute x of this node by: this['x'].
+        # If the constraint relies on attribute values from other nodes,
+        # use the LHS/NAC constraint instead.
+        # The given constraint must evaluate to a boolean expression.
+        #===============================================================================
+        
+        return True
+
+
+    def eval_name5(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.

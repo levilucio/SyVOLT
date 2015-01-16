@@ -2,7 +2,10 @@ import os
 import sys
 import time
 
-class PythonAttributeEquationSolver:
+
+from attribute_equation_solver import AttributeEquationSolver
+
+class PythonAttributeEquationSolver(AttributeEquationSolver):
 
     def __init__(self):
 

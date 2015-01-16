@@ -32,9 +32,9 @@ p1
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
         self.vs[0]["MT_label__"] = """9"""
+        self.vs[0]["mm__"] = """MT_pre__indirectLink_S"""
         self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
-        self.vs[0]["mm__"] = """MT_pre__indirectLink_S"""
         self.vs[0]["MT_dirty__"] = False
         self.vs[0]["GUID__"] = UUID('a56b643c-0b0f-438f-ae87-407b6a7ad192')
         self.vs[1]["MT_pivotOut__"] = """element1"""
@@ -53,6 +53,7 @@ return True
 """
         self.vs[1]["MT_pivotIn__"] = """element1"""
         self.vs[1]["MT_label__"] = """3"""
+        self.vs[1]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
 S'MT_pre__Station_S'
 p2
@@ -61,7 +62,6 @@ p3
 aS'MT_pre__Female_S'
 p4
 a.""")
-        self.vs[1]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[1]["MT_dirty__"] = False
         self.vs[1]["MT_pre__name"] = """
 #===============================================================================
@@ -92,6 +92,7 @@ return True
 """
         self.vs[2]["MT_pivotIn__"] = """element2"""
         self.vs[2]["MT_label__"] = """4"""
+        self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
 S'MT_pre__Station_S'
 p2
@@ -100,7 +101,6 @@ p3
 aS'MT_pre__Female_S'
 p4
 a.""")
-        self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[2]["MT_dirty__"] = False
         self.vs[2]["MT_pre__name"] = """
 #===============================================================================
@@ -129,6 +129,7 @@ return True
 return True
 """
         self.vs[3]["MT_label__"] = """5"""
+        self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[3]["MT_subtypes__"] = pickle.loads("""(lp1
 S'MT_pre__Station_S'
 p2
@@ -137,7 +138,6 @@ p3
 aS'MT_pre__Female_S'
 p4
 a.""")
-        self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[3]["MT_dirty__"] = False
         self.vs[3]["MT_pre__name"] = """
 #===============================================================================

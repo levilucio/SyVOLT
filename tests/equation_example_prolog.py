@@ -12,9 +12,7 @@ from pyswip import Prolog, Query
 
 from PoliceStationMM.transformation_1.Himesis.HS2S import HS2S
 from PoliceStationMM.transformation_2.Himesis.HSM2SM import HSM2SM
-from PoliceStationMM.transformation_1.Himesis.HSF2SF import HSF2SF
-from PoliceStationMM.transformation_1.Himesis.HMM2MM import HMM2MM
-from PoliceStationMM.transformation_1.Himesis.HFF2FF import HFF2FF
+from tests.TestModules.HState2ProcDef import HState2ProcDef
 
 
 class Test(unittest.TestCase):
@@ -27,8 +25,7 @@ class Test(unittest.TestCase):
 
     def test_equations(self):
 
-        pathCondition = HSM2SM()       
-        pathCondition1 = HS2S()
+        pathCondition = HState2ProcDef()      
         
         clauseBody = ""
         variablesInExpression = []
@@ -52,7 +49,12 @@ class Test(unittest.TestCase):
                 if equationNode < len(equationNodes)-1:
                     clauseBody += leftExpr + "=" +  rightExpr + ","
                 else:
-                    clauseBody += leftExpr + "=" +  rightExpr       
+                    clauseBody += leftExpr + "=" +  rightExpr
+            
+            if concatsInExpression != []:
+                clauseBody += ","      
+            for concat in concatsInExpression:
+                clauseBody += concat
 
         clauseHead = "solve("
         for var in range(0,len(variablesInExpression)):
@@ -64,13 +66,13 @@ class Test(unittest.TestCase):
         
         prologInput = clauseHead + ":-" + clauseBody
 
+        print prologInput
+
         p = Prolog()
         p.assertz(prologInput)           
-#        l = list(p.query(clauseHead))   
-        p.query(clauseHead)   
-        
-           
-#        print l
+        l = list(p.query(clauseHead))   
+
+        print l
         
 #         with open("./tmp/Output.txt", "w") as text_file:
 #             text_file.write(prologInput)
@@ -84,7 +86,7 @@ class Test(unittest.TestCase):
             return "X" + str(node)
         # in case it's a constant, return it's value as a list
         elif pathCondition.vs[node]['mm__'] == 'Constant':
-            constant = pathCondition.vs[node]['value']
+            constant = pathCondition.vs[node]['name']
             constAsList = "["
             for c in range(0,len(constant)):
                 constAsList += "'" + constant[c] + "'"
@@ -95,14 +97,15 @@ class Test(unittest.TestCase):
         # it's a concat operation
         else:
             # get the arguments of the concat operation
-            arg1Edge = [i for i in pathCondition.neighbors(node,1) if pathCondition.vs[i]['mm__'] == 'arg_1'][0]    
-            arg2Edge = [i for i in pathCondition.neighbors(node,1) if pathCondition.vs[i]['mm__'] == 'arg_2'][0]
+            arg1Edge = [i for i in pathCondition.neighbors(node,1) if pathCondition.vs[i]['mm__'] == 'hasArgs'][0]    
+            arg2Edge = [i for i in pathCondition.neighbors(node,1) if pathCondition.vs[i]['mm__'] == 'hasArgs'][1]
             arg1 = pathCondition.neighbors(arg1Edge,1)[0]
             arg2 = pathCondition.neighbors(arg2Edge,1)[0]
             newVar = self.newVarID()
             
             # add the concat operation to the set of append predicates in the body of the rule 
-            concatsInExpression.append("append(" + self.build_equation_expression(arg1) + "," + self.build_equation_expression(arg2) + "," + newVar + ")")
+            concatsInExpression.append("append(" + self.build_equation_expression(arg1, pathCondition, variablesInExpression, concatsInExpression)\
+                                        + "," + self.build_equation_expression(arg2, pathCondition, variablesInExpression, concatsInExpression) + "," + newVar + ")")
             
             # return the newly created variable
             return newVar

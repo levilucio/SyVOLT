@@ -92,7 +92,12 @@ class PrologAttributeEquationEvaluator(AttributeEquationSolver):
                 if equationNode < len(equationNodes)-1:
                     clauseBody += leftExpr + "=" +  rightExpr + ","
                 else:
-                    clauseBody += leftExpr + "=" +  rightExpr       
+                    clauseBody += leftExpr + "=" +  rightExpr
+            
+            if concatsInExpression != []:
+                clauseBody += ","      
+            for concat in concatsInExpression:
+                clauseBody += concat
 
         clauseHead = "solve("
         for var in range(0,len(variablesInExpression)):
@@ -103,6 +108,12 @@ class PrologAttributeEquationEvaluator(AttributeEquationSolver):
         clauseHead += ")"
         
         prologInput = clauseHead + ":-" + clauseBody
+        
+        if self.verbosity >= 2 :
+            print "\nChecking with Prolog:"
+            print "----------------"
+            print prologInput
+            print "\n"
 
         p = Prolog()
         p.assertz(prologInput)           
