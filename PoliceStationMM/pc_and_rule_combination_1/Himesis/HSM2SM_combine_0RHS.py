@@ -265,13 +265,13 @@ return attr_value
         # Create new edges
         #===============================================================================
         # Station_S1 -> indirectLink_S10
-        graph.add_edges((labels['1'], labels['10']))
+        graph.add_edges([(labels['1'], labels['10'])])
         # indirectLink_S10 -> Male_S2
-        graph.add_edges((labels['10'], labels['2']))
+        graph.add_edges([(labels['10'], labels['2'])])
         # Station_T3 -> directLink_T11
-        graph.add_edges((labels['3'], labels['11']))
+        graph.add_edges([(labels['3'], labels['11'])])
         # directLink_T11 -> Male_T4
-        graph.add_edges((labels['11'], labels['4']))
+        graph.add_edges([(labels['11'], labels['4'])])
         
         #===============================================================================
         # Set the output pivots

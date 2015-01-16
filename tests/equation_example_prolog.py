@@ -66,7 +66,8 @@ class Test(unittest.TestCase):
 
         p = Prolog()
         p.assertz(prologInput)           
-        l = list(p.query(clauseHead))      
+#        l = list(p.query(clauseHead))   
+        p.query(clauseHead)   
         
            
 #        print l

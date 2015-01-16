@@ -195,11 +195,8 @@ class PathConditionGenerator():
                     # now check if the candidate rule's match is a subset of the current rule's match
                     p = Packet()
                     p.graph = self.transformation[layer][0]
-                    print("Other name: " + p.graph.name)
                     matchPatternCandidateRule.packet_in(p)                           
                     # check if the rules share the same match pattern such that we can merge them
-                    print("matchPatternCurrentRule.is_success: " + str(matchPatternCurrentRule.is_success))
-                    print("matchPatternCandidateRule.is_success: " + str(matchPatternCandidateRule.is_success))
                     if matchPatternCurrentRule.is_success and matchPatternCandidateRule.is_success:
                         
                         # merge the rules by copying the candidate to merge on top of the results of merging

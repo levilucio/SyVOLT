@@ -265,20 +265,19 @@ return attr_value
         # Create new edges
         #===============================================================================
         # indirectLink_S10 -> Female_S2
-        graph.add_edges((labels['10'], labels['2']))
+        graph.add_edges([(labels['10'], labels['2'])])
         # Station_S1 -> indirectLink_S10
-        graph.add_edges((labels['1'], labels['10']))
+        graph.add_edges([(labels['1'], labels['10'])])
         # Station_T3 -> directLink_T24
-        graph.add_edges((labels['3'], labels['24']))
+        graph.add_edges([(labels['3'], labels['24'])])
         # directLink_T24 -> Female_T4
-        graph.add_edges((labels['24'], labels['4']))
+        graph.add_edges([(labels['24'], labels['4'])])
         
         #===============================================================================
         # Set the output pivots
         #===============================================================================
         
         #===============================================================================
-        # Perform the post-action
         #===============================================================================
         try:
             self.action(lambda i: graph.vs[labels[i]], graph)
