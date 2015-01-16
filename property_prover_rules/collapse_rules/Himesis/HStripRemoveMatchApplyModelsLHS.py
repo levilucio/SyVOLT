@@ -40,23 +40,23 @@ return True
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
         self.vs[0]["MT_label__"] = """3"""
-        self.vs[0]["mm__"] = """MT_pre__paired_with"""
         self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
+        self.vs[0]["mm__"] = """MT_pre__paired_with"""
         self.vs[0]["MT_dirty__"] = False
         self.vs[0]["GUID__"] = UUID('5ab25aa6-32c9-4ed8-bde4-2d731d088449')
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_label__"] = """2"""
-        self.vs[1]["mm__"] = """MT_pre__ApplyModel"""
         self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
+        self.vs[1]["mm__"] = """MT_pre__ApplyModel"""
         self.vs[1]["MT_dirty__"] = False
         self.vs[1]["GUID__"] = UUID('082c8a3b-671c-46ca-9ebb-e7cea75fe527')
         self.vs[2]["MT_subtypeMatching__"] = False
         self.vs[2]["MT_label__"] = """1"""
-        self.vs[2]["mm__"] = """MT_pre__MatchModel"""
         self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
+        self.vs[2]["mm__"] = """MT_pre__MatchModel"""
         self.vs[2]["MT_dirty__"] = False
         self.vs[2]["GUID__"] = UUID('439c5b76-6561-4474-9b76-f459cd5a7823')
 

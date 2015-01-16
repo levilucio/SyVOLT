@@ -224,7 +224,7 @@ class Test(unittest.TestCase):
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_source, subclasses_target)
  
         s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, \
-                                   self.matchRulePatterns, 2)
+                                   self.matchRulePatterns, 0)
  
         ts0 = time.time()
         s.build_path_conditions()
