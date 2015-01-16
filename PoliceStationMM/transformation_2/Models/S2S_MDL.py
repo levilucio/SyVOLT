@@ -3,7 +3,7 @@ __S2S_MDL.py_____________________________________________________
 
 Automatically generated AToM3 Model File (Do not modify directly)
 Author: levi
-Modified: Fri Dec 12 16:29:08 2014
+Modified: Thu Jan 15 22:07:23 2015
 _________________________________________________________________
 """
 from stickylink import *
@@ -67,47 +67,26 @@ def S2S_MDL(self, rootNode, PoliceStationMMRootNode=None):
     # --- ASG attributes over ---
 
 
-    self.obj37=Station_S(self)
-    self.obj37.isGraphObjectVisual = True
-
-    if(hasattr(self.obj37, '_setHierarchicalLink')):
-      self.obj37._setHierarchicalLink(False)
-
-    # classtype
-    self.obj37.classtype.setValue('1')
-
-    # cardinality
-    self.obj37.cardinality.setValue('s_')
-
-    # name
-    self.obj37.name.setValue('s_')
-
-    self.obj37.graphClass_= graph_Station_S
-    if self.genGraphics:
-       new_obj = graph_Station_S(420.0,140.0,self.obj37)
-       new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("Station_S", new_obj.tag)
-       new_obj.layConstraints = dict() # Graphical Layout Constraints 
-       new_obj.layConstraints['scale'] = [1.0, 1.0]
-    else: new_obj = None
-    self.obj37.graphObject_ = new_obj
-
-    # Add node to the root: rootNode
-    rootNode.addNode(self.obj37)
-    self.globalAndLocalPostcondition(self.obj37, rootNode)
-    self.obj37.postAction( rootNode.CREATE )
-
-    self.obj35=MatchModel(self)
+    self.obj35=Station_S(self)
     self.obj35.isGraphObjectVisual = True
 
     if(hasattr(self.obj35, '_setHierarchicalLink')):
       self.obj35._setHierarchicalLink(False)
 
-    self.obj35.graphClass_= graph_MatchModel
+    # classtype
+    self.obj35.classtype.setValue('1')
+
+    # cardinality
+    self.obj35.cardinality.setValue('s_')
+
+    # name
+    self.obj35.name.setValue('s_')
+
+    self.obj35.graphClass_= graph_Station_S
     if self.genGraphics:
-       new_obj = graph_MatchModel(140.0,80.0,self.obj35)
+       new_obj = graph_Station_S(420.0,140.0,self.obj35)
        new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("MatchModel", new_obj.tag)
+       self.UMLmodel.addtag_withtag("Station_S", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
        new_obj.layConstraints['scale'] = [1.0, 1.0]
     else: new_obj = None
@@ -118,17 +97,17 @@ def S2S_MDL(self, rootNode, PoliceStationMMRootNode=None):
     self.globalAndLocalPostcondition(self.obj35, rootNode)
     self.obj35.postAction( rootNode.CREATE )
 
-    self.obj36=ApplyModel(self)
+    self.obj36=MatchModel(self)
     self.obj36.isGraphObjectVisual = True
 
     if(hasattr(self.obj36, '_setHierarchicalLink')):
       self.obj36._setHierarchicalLink(False)
 
-    self.obj36.graphClass_= graph_ApplyModel
+    self.obj36.graphClass_= graph_MatchModel
     if self.genGraphics:
-       new_obj = graph_ApplyModel(140.0,340.0,self.obj36)
+       new_obj = graph_MatchModel(140.0,80.0,self.obj36)
        new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("ApplyModel", new_obj.tag)
+       self.UMLmodel.addtag_withtag("MatchModel", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
        new_obj.layConstraints['scale'] = [1.0, 1.0]
     else: new_obj = None
@@ -138,6 +117,27 @@ def S2S_MDL(self, rootNode, PoliceStationMMRootNode=None):
     rootNode.addNode(self.obj36)
     self.globalAndLocalPostcondition(self.obj36, rootNode)
     self.obj36.postAction( rootNode.CREATE )
+
+    self.obj37=ApplyModel(self)
+    self.obj37.isGraphObjectVisual = True
+
+    if(hasattr(self.obj37, '_setHierarchicalLink')):
+      self.obj37._setHierarchicalLink(False)
+
+    self.obj37.graphClass_= graph_ApplyModel
+    if self.genGraphics:
+       new_obj = graph_ApplyModel(140.0,340.0,self.obj37)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("ApplyModel", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+       new_obj.layConstraints['scale'] = [1.0, 1.0]
+    else: new_obj = None
+    self.obj37.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj37)
+    self.globalAndLocalPostcondition(self.obj37, rootNode)
+    self.obj37.postAction( rootNode.CREATE )
 
     self.obj38=Station_T(self)
     self.obj38.isGraphObjectVisual = True
@@ -166,87 +166,22 @@ def S2S_MDL(self, rootNode, PoliceStationMMRootNode=None):
     self.globalAndLocalPostcondition(self.obj38, rootNode)
     self.obj38.postAction( rootNode.CREATE )
 
-    self.obj55=Attribute(self)
-    self.obj55.isGraphObjectVisual = True
-
-    if(hasattr(self.obj55, '_setHierarchicalLink')):
-      self.obj55._setHierarchicalLink(False)
-
-    # name
-    self.obj55.name.setValue('name')
-
-    self.obj55.graphClass_= graph_Attribute
-    if self.genGraphics:
-       new_obj = graph_Attribute(660.0,150.0,self.obj55)
-       new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("Attribute", new_obj.tag)
-       new_obj.layConstraints = dict() # Graphical Layout Constraints 
-       new_obj.layConstraints['scale'] = [1.0, 1.0]
-    else: new_obj = None
-    self.obj55.graphObject_ = new_obj
-
-    # Add node to the root: rootNode
-    rootNode.addNode(self.obj55)
-    self.globalAndLocalPostcondition(self.obj55, rootNode)
-    self.obj55.postAction( rootNode.CREATE )
-
-    self.obj50=Equation(self)
-    self.obj50.isGraphObjectVisual = True
-
-    if(hasattr(self.obj50, '_setHierarchicalLink')):
-      self.obj50._setHierarchicalLink(False)
-
-    self.obj50.graphClass_= graph_Equation
-    if self.genGraphics:
-       new_obj = graph_Equation(870.0,42.0,self.obj50)
-       new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("Equation", new_obj.tag)
-       new_obj.layConstraints = dict() # Graphical Layout Constraints 
-       new_obj.layConstraints['scale'] = [1.0, 1.0]
-    else: new_obj = None
-    self.obj50.graphObject_ = new_obj
-
-    # Add node to the root: rootNode
-    rootNode.addNode(self.obj50)
-    self.globalAndLocalPostcondition(self.obj50, rootNode)
-    self.obj50.postAction( rootNode.CREATE )
-
-    self.obj51=Constant(self)
-    self.obj51.isGraphObjectVisual = True
-
-    if(hasattr(self.obj51, '_setHierarchicalLink')):
-      self.obj51._setHierarchicalLink(False)
-
-    # value
-    self.obj51.value.setValue('somestation')
-
-    self.obj51.graphClass_= graph_Constant
-    if self.genGraphics:
-       new_obj = graph_Constant(1010.0,142.0,self.obj51)
-       new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("Constant", new_obj.tag)
-       new_obj.layConstraints = dict() # Graphical Layout Constraints 
-       new_obj.layConstraints['scale'] = [1.0, 1.0]
-    else: new_obj = None
-    self.obj51.graphObject_ = new_obj
-
-    # Add node to the root: rootNode
-    rootNode.addNode(self.obj51)
-    self.globalAndLocalPostcondition(self.obj51, rootNode)
-    self.obj51.postAction( rootNode.CREATE )
-
-    self.obj39=match_contains(self)
+    self.obj39=Attribute(self)
     self.obj39.isGraphObjectVisual = True
 
     if(hasattr(self.obj39, '_setHierarchicalLink')):
       self.obj39._setHierarchicalLink(False)
 
-    self.obj39.graphClass_= graph_match_contains
+    # name
+    self.obj39.name.setValue('name')
+
+    self.obj39.graphClass_= graph_Attribute
     if self.genGraphics:
-       new_obj = graph_match_contains(341.0,151.0,self.obj39)
+       new_obj = graph_Attribute(660.0,150.0,self.obj39)
        new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("match_contains", new_obj.tag)
+       self.UMLmodel.addtag_withtag("Attribute", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
+       new_obj.layConstraints['scale'] = [1.0, 1.0]
     else: new_obj = None
     self.obj39.graphObject_ = new_obj
 
@@ -255,18 +190,19 @@ def S2S_MDL(self, rootNode, PoliceStationMMRootNode=None):
     self.globalAndLocalPostcondition(self.obj39, rootNode)
     self.obj39.postAction( rootNode.CREATE )
 
-    self.obj40=apply_contains(self)
+    self.obj40=Equation(self)
     self.obj40.isGraphObjectVisual = True
 
     if(hasattr(self.obj40, '_setHierarchicalLink')):
       self.obj40._setHierarchicalLink(False)
 
-    self.obj40.graphClass_= graph_apply_contains
+    self.obj40.graphClass_= graph_Equation
     if self.genGraphics:
-       new_obj = graph_apply_contains(343.5,361.0,self.obj40)
+       new_obj = graph_Equation(870.0,42.0,self.obj40)
        new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("apply_contains", new_obj.tag)
+       self.UMLmodel.addtag_withtag("Equation", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
+       new_obj.layConstraints['scale'] = [1.0, 1.0]
     else: new_obj = None
     self.obj40.graphObject_ = new_obj
 
@@ -274,6 +210,70 @@ def S2S_MDL(self, rootNode, PoliceStationMMRootNode=None):
     rootNode.addNode(self.obj40)
     self.globalAndLocalPostcondition(self.obj40, rootNode)
     self.obj40.postAction( rootNode.CREATE )
+
+    self.obj41=Constant(self)
+    self.obj41.isGraphObjectVisual = True
+
+    if(hasattr(self.obj41, '_setHierarchicalLink')):
+      self.obj41._setHierarchicalLink(False)
+
+    # value
+    self.obj41.value.setValue('somestation')
+
+    self.obj41.graphClass_= graph_Constant
+    if self.genGraphics:
+       new_obj = graph_Constant(1010.0,142.0,self.obj41)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("Constant", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+       new_obj.layConstraints['scale'] = [1.0, 1.0]
+    else: new_obj = None
+    self.obj41.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj41)
+    self.globalAndLocalPostcondition(self.obj41, rootNode)
+    self.obj41.postAction( rootNode.CREATE )
+
+    self.obj42=match_contains(self)
+    self.obj42.isGraphObjectVisual = True
+
+    if(hasattr(self.obj42, '_setHierarchicalLink')):
+      self.obj42._setHierarchicalLink(False)
+
+    self.obj42.graphClass_= graph_match_contains
+    if self.genGraphics:
+       new_obj = graph_match_contains(341.0,151.0,self.obj42)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("match_contains", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj42.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj42)
+    self.globalAndLocalPostcondition(self.obj42, rootNode)
+    self.obj42.postAction( rootNode.CREATE )
+
+    self.obj43=apply_contains(self)
+    self.obj43.isGraphObjectVisual = True
+
+    if(hasattr(self.obj43, '_setHierarchicalLink')):
+      self.obj43._setHierarchicalLink(False)
+
+    self.obj43.graphClass_= graph_apply_contains
+    if self.genGraphics:
+       new_obj = graph_apply_contains(343.5,361.0,self.obj43)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("apply_contains", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj43.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj43)
+    self.globalAndLocalPostcondition(self.obj43, rootNode)
+    self.obj43.postAction( rootNode.CREATE )
 
     self.obj44=paired_with(self)
     self.obj44.isGraphObjectVisual = True
@@ -295,107 +295,107 @@ def S2S_MDL(self, rootNode, PoliceStationMMRootNode=None):
     self.globalAndLocalPostcondition(self.obj44, rootNode)
     self.obj44.postAction( rootNode.CREATE )
 
-    self.obj58=hasAttr_S(self)
-    self.obj58.isGraphObjectVisual = True
+    self.obj45=hasAttr_S(self)
+    self.obj45.isGraphObjectVisual = True
 
-    if(hasattr(self.obj58, '_setHierarchicalLink')):
-      self.obj58._setHierarchicalLink(False)
+    if(hasattr(self.obj45, '_setHierarchicalLink')):
+      self.obj45._setHierarchicalLink(False)
 
-    self.obj58.graphClass_= graph_hasAttr_S
+    self.obj45.graphClass_= graph_hasAttr_S
     if self.genGraphics:
-       new_obj = graph_hasAttr_S(595.0,179.5,self.obj58)
+       new_obj = graph_hasAttr_S(595.0,179.5,self.obj45)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("hasAttr_S", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
     else: new_obj = None
-    self.obj58.graphObject_ = new_obj
+    self.obj45.graphObject_ = new_obj
 
     # Add node to the root: rootNode
-    rootNode.addNode(self.obj58)
-    self.globalAndLocalPostcondition(self.obj58, rootNode)
-    self.obj58.postAction( rootNode.CREATE )
+    rootNode.addNode(self.obj45)
+    self.globalAndLocalPostcondition(self.obj45, rootNode)
+    self.obj45.postAction( rootNode.CREATE )
 
-    self.obj59=leftExpr(self)
-    self.obj59.isGraphObjectVisual = True
+    self.obj46=leftExpr(self)
+    self.obj46.isGraphObjectVisual = True
 
-    if(hasattr(self.obj59, '_setHierarchicalLink')):
-      self.obj59._setHierarchicalLink(False)
+    if(hasattr(self.obj46, '_setHierarchicalLink')):
+      self.obj46._setHierarchicalLink(False)
 
-    self.obj59.graphClass_= graph_leftExpr
+    self.obj46.graphClass_= graph_leftExpr
     if self.genGraphics:
-       new_obj = graph_leftExpr(811.0,132.0,self.obj59)
+       new_obj = graph_leftExpr(811.0,132.0,self.obj46)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("leftExpr", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
     else: new_obj = None
-    self.obj59.graphObject_ = new_obj
+    self.obj46.graphObject_ = new_obj
 
     # Add node to the root: rootNode
-    rootNode.addNode(self.obj59)
-    self.globalAndLocalPostcondition(self.obj59, rootNode)
-    self.obj59.postAction( rootNode.CREATE )
+    rootNode.addNode(self.obj46)
+    self.globalAndLocalPostcondition(self.obj46, rootNode)
+    self.obj46.postAction( rootNode.CREATE )
 
-    self.obj54=rightExpr(self)
-    self.obj54.isGraphObjectVisual = True
+    self.obj47=rightExpr(self)
+    self.obj47.isGraphObjectVisual = True
 
-    if(hasattr(self.obj54, '_setHierarchicalLink')):
-      self.obj54._setHierarchicalLink(False)
+    if(hasattr(self.obj47, '_setHierarchicalLink')):
+      self.obj47._setHierarchicalLink(False)
 
-    self.obj54.graphClass_= graph_rightExpr
+    self.obj47.graphClass_= graph_rightExpr
     if self.genGraphics:
-       new_obj = graph_rightExpr(987.0,132.5,self.obj54)
+       new_obj = graph_rightExpr(987.0,132.5,self.obj47)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("rightExpr", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
     else: new_obj = None
-    self.obj54.graphObject_ = new_obj
+    self.obj47.graphObject_ = new_obj
 
     # Add node to the root: rootNode
-    rootNode.addNode(self.obj54)
-    self.globalAndLocalPostcondition(self.obj54, rootNode)
-    self.obj54.postAction( rootNode.CREATE )
+    rootNode.addNode(self.obj47)
+    self.globalAndLocalPostcondition(self.obj47, rootNode)
+    self.obj47.postAction( rootNode.CREATE )
 
-    # Connections for obj37 (graphObject_: Obj2) named s_
+    # Connections for obj35 (graphObject_: Obj0) named s_
     self.drawConnections(
-(self.obj37,self.obj58,[481.0, 181.0, 595.0, 179.5],"true", 0) )
-    # Connections for obj35 (graphObject_: Obj0) of type MatchModel
+(self.obj35,self.obj45,[481.0, 181.0, 595.0, 179.5],"true", 2) )
+    # Connections for obj36 (graphObject_: Obj1) of type MatchModel
     self.drawConnections(
-(self.obj35,self.obj39,[201.0, 121.0, 341.0, 151.0],"true", 2),
-(self.obj35,self.obj44,[201.0, 121.0, 203.5, 251.0],"true", 2) )
-    # Connections for obj36 (graphObject_: Obj1) of type ApplyModel
+(self.obj36,self.obj42,[201.0, 121.0, 341.0, 151.0],"true", 2),
+(self.obj36,self.obj44,[201.0, 121.0, 203.5, 251.0],"true", 2) )
+    # Connections for obj37 (graphObject_: Obj2) of type ApplyModel
     self.drawConnections(
-(self.obj36,self.obj40,[206.0, 381.0, 343.5, 361.0],"true", 2) )
+(self.obj37,self.obj43,[206.0, 381.0, 343.5, 361.0],"true", 2) )
     # Connections for obj38 (graphObject_: Obj3) named s_
     self.drawConnections(
  )
-    # Connections for obj55 (graphObject_: Obj13) named name
+    # Connections for obj39 (graphObject_: Obj4) named name
     self.drawConnections(
  )
-    # Connections for obj50 (graphObject_: Obj10) of type Equation
+    # Connections for obj40 (graphObject_: Obj5) of type Equation
     self.drawConnections(
-(self.obj50,self.obj54,[909.0, 84.0, 987.0, 132.5],"true", 2),
-(self.obj50,self.obj59,[909.0, 84.0, 811.0, 132.0],"true", 2) )
-    # Connections for obj51 (graphObject_: Obj11) of type Constant
+(self.obj40,self.obj47,[909.0, 84.0, 987.0, 132.5],"true", 2),
+(self.obj40,self.obj46,[909.0, 84.0, 811.0, 132.0],"true", 2) )
+    # Connections for obj41 (graphObject_: Obj6) of type Constant
     self.drawConnections(
  )
-    # Connections for obj39 (graphObject_: Obj4) of type match_contains
+    # Connections for obj42 (graphObject_: Obj7) of type match_contains
     self.drawConnections(
-(self.obj39,self.obj37,[341.0, 151.0, 481.0, 181.0],"true", 2) )
-    # Connections for obj40 (graphObject_: Obj5) of type apply_contains
+(self.obj42,self.obj35,[341.0, 151.0, 481.0, 181.0],"true", 2) )
+    # Connections for obj43 (graphObject_: Obj8) of type apply_contains
     self.drawConnections(
-(self.obj40,self.obj38,[343.5, 361.0, 481.0, 341.0],"true", 2) )
-    # Connections for obj44 (graphObject_: Obj7) of type paired_with
+(self.obj43,self.obj38,[343.5, 361.0, 481.0, 341.0],"true", 2) )
+    # Connections for obj44 (graphObject_: Obj9) of type paired_with
     self.drawConnections(
-(self.obj44,self.obj36,[203.5, 251.0, 206.0, 381.0],"true", 2) )
-    # Connections for obj58 (graphObject_: Obj14) of type hasAttr_S
+(self.obj44,self.obj37,[203.5, 251.0, 206.0, 381.0],"true", 2) )
+    # Connections for obj45 (graphObject_: Obj10) of type hasAttr_S
     self.drawConnections(
-(self.obj58,self.obj55,[595.0, 179.5, 713.0, 180.0],"true", 2) )
-    # Connections for obj59 (graphObject_: Obj15) of type leftExpr
+(self.obj45,self.obj39,[595.0, 179.5, 713.0, 180.0],"true", 2) )
+    # Connections for obj46 (graphObject_: Obj11) of type leftExpr
     self.drawConnections(
-(self.obj59,self.obj55,[811.0, 132.0, 713.0, 180.0],"true", 2) )
-    # Connections for obj54 (graphObject_: Obj12) of type rightExpr
+(self.obj46,self.obj39,[811.0, 132.0, 713.0, 180.0],"true", 2) )
+    # Connections for obj47 (graphObject_: Obj12) of type rightExpr
     self.drawConnections(
-(self.obj54,self.obj51,[987.0, 132.5, 1065.0, 181.0],"true", 2) )
+(self.obj47,self.obj41,[987.0, 132.5, 1065.0, 181.0],"true", 2) )
 
 newfunction = S2S_MDL
 

@@ -3,7 +3,7 @@ __S2S_match_MDL.py_____________________________________________________
 
 Automatically generated AToM3 Model File (Do not modify directly)
 Author: levi
-Modified: Thu Jan 15 22:03:39 2015
+Modified: Thu Jan 15 22:03:19 2015
 _______________________________________________________________________
 """
 from stickylink import *
@@ -342,6 +342,38 @@ def S2S_match_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, MoTifRul
     self.globalAndLocalPostcondition(self.obj78, rootNode)
     self.obj78.postAction( rootNode.CREATE )
 
+    self.obj93=MT_post__Constant(self)
+    self.obj93.isGraphObjectVisual = True
+
+    if(hasattr(self.obj93, '_setHierarchicalLink')):
+      self.obj93._setHierarchicalLink(False)
+
+    # MT_label__
+    self.obj93.MT_label__.setValue('8')
+
+    # MT_pivotOut__
+    self.obj93.MT_pivotOut__.setValue('')
+    self.obj93.MT_pivotOut__.setNone()
+
+    # MT_post__value
+    self.obj93.MT_post__value.setValue('\n#===============================================================================\n# You can access the value of the current node\'s attribute value by: attr_value.\n# If the current node shall be created you MUST initialize it here!\n# You can access a node labelled n by: PreNode(\'n\').\n# To access attribute x of node n, use: PreNode(\'n\')[\'x\'].\n# Note that the attribute values are those before the match is rewritten.\n# The order in which this code is executed depends on the label value\n# of the encapsulating node.\n# The given action must return the new value of the attribute.\n#===============================================================================\n\nreturn "somestation"\n')
+    self.obj93.MT_post__value.setHeight(15)
+
+    self.obj93.graphClass_= graph_MT_post__Constant
+    if self.genGraphics:
+       new_obj = graph_MT_post__Constant(1260.0,400.0,self.obj93)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("MT_post__Constant", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+       new_obj.layConstraints['scale'] = [1.0, 1.0]
+    else: new_obj = None
+    self.obj93.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj93)
+    self.globalAndLocalPostcondition(self.obj93, rootNode)
+    self.obj93.postAction( rootNode.CREATE )
+
     self.obj62=MT_post__Station_T(self)
     self.obj62.isGraphObjectVisual = True
 
@@ -511,7 +543,7 @@ def S2S_match_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, MoTifRul
 
     self.obj15031.graphClass_= graph_RHS
     if self.genGraphics:
-       new_obj = graph_RHS(920.0,100.0,self.obj15031)
+       new_obj = graph_RHS(940.0,100.0,self.obj15031)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("RHS", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
@@ -569,6 +601,9 @@ def S2S_match_MDL(self, rootNode, MT_pre__PoliceStationMMRootNode=None, MoTifRul
     self.drawConnections(
 (self.obj76,self.obj73,[1228.0, 253.0, 1313.0, 250.0],"true", 2) )
     # Connections for obj78 (graphObject_: Obj11) of type MT_post__Constant
+    self.drawConnections(
+ )
+    # Connections for obj93 (graphObject_: Obj20) of type MT_post__Constant
     self.drawConnections(
  )
     # Connections for obj62 (graphObject_: Obj3) of type MT_post__Station_T
