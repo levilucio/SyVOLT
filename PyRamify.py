@@ -874,7 +874,6 @@ pass
         while len(node_stack) > 0:
             node = node_stack.pop()
 
-            print("Stop: " + str(graph.vs[node]["mm__"]))
             if graph.vs[node]["mm__"] in stop_mms:
                 continue
 
@@ -897,7 +896,20 @@ pass
         apply_contain_node = self.find_nodes_with_mm(graph, ["apply_contains"])
         apply_contain_node = self.get_node_num(graph, apply_contain_node[0])
 
-        apply_nodes = self.flood_find_nodes(apply_contain_node, graph, ["ApplyModel"])
+        apply_nodes = self.flood_find_nodes(apply_contain_node, graph, ["ApplyModel", "backward_link", "trace_link"])
+        apply_nodes = list(set(apply_nodes))
+
+        backward_links = self.find_nodes_with_mm(graph, ["backward_link"])
+        attached_apply = []
+        for bl in backward_links:
+            attached_apply += self.look_for_attached(bl, graph)
+
+        for an in attached_apply:
+
+            try:
+                apply_nodes.remove(an)
+            except ValueError:
+                pass
 
         graph.delete_nodes(apply_nodes)
         graph = self.remove_structure_nodes(graph)
@@ -905,7 +917,16 @@ pass
         return graph
 
 
-    def make_match_pattern_rewriter(self, rewriter):
+    def make_rewriter(self, graph):
+
+        rewriter = self.copy_graph(graph)
+
+        rewriter = self.changeAttrType(rewriter, False)
+        rewriter = self.makePostConditionPattern(rewriter)
+
+        #TODO: Add trace links
+
+
         return rewriter
 
     def get_match_pattern(self, rule):
@@ -913,8 +934,7 @@ pass
         graph = rule[rule.keys()[0]]
 
 
-        rewriter = self.makePostConditionPattern(graph)
-        rewriter = self.make_match_pattern_rewriter(rewriter)
+        rewriter = self.make_rewriter(graph)
 
         new_name = name + "_overlapLHS"
         
@@ -930,37 +950,6 @@ pass
         graph["mm__"] = [graph["mm__"][0], 'MoTifRule']
         graph["name"] = ""
         graph["MT_constraint__"] = self.get_default_constraint()
-
-        # match_contains = self.find_nodes_with_mm(graph, ["MT_pre__match_contains", "MT_pre__trace_link"])
-
-        # nodes_to_keep = []
-        # for link in match_contains:
-        #     nodes_to_keep = nodes_to_keep + self.look_for_attached_of_attached(link, graph)
-
-
-
-        #remove duplicates
-        #nodes_to_keep = list(set(nodes_to_keep))
-
-        #print("Keep:")
-        #for n in nodes_to_keep:
-        #    print graph.vs[n]["mm__"]
-
-        # nodes_to_remove = []
-        # mms_to_remove = ["MT_pre__MatchModel", "MT_pre__match_contains", "MT_pre__paired_with", "MT_pre__hasAttr_T", "MT_pre__hasAttr_S", "MT_pre__directLink_T", "MT_pre__apply_contains"]
-        #
-        # #print("Removal")
-        # for i in range(len(graph.vs)):
-        #     #print("MM: " + graph.vs[i]["mm__"])
-        #     if i not in nodes_to_keep or graph.vs[i]["mm__"] in mms_to_remove:
-        #         nodes_to_remove.append(i)
-
-        #print("Remove:")
-        #for n in nodes_to_remove:
-        #    print graph.vs[n]["mm__"]
-
-        #remove everything except for the attached nodes
-        # graph.delete_nodes(nodes_to_remove)
 
 
 
@@ -979,7 +968,14 @@ pass
 
         #have to reload the graph to define all the eval functions
         rule = self.load_class(out_dir + "/" + new_name)
-        match_graph = rule[rule.keys()[0]]
+        match_graph = rule.values()[0]
+
+
+        rewriter.pre = match_graph
+        rewriter.compile(out_dir)
+
+        rewriter_dict = self.load_class(out_dir + rewriter.name)
+        rewriter = rewriter_dict.values()[0]
 
         return {name : [Matcher(match_graph), Rewriter(rewriter)]}
     #=========================
