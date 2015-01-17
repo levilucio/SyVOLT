@@ -80,6 +80,8 @@ class PyRamify:
 
 
 
+
+
     #Very hacky way of making the graph a HimesisPreConditionPatternLHS
     def makePreConditionPattern(self, graph):
         
@@ -855,6 +857,54 @@ pass
         return {name: bwPatterns}
 
 
+    def remove_equation_nodes(self, graph):
+        structure_nodes = self.find_nodes_with_mm(graph, ["Equation", "leftExpr", "rightExpr"])
+        graph.delete_nodes(structure_nodes)
+        return graph
+
+    def remove_structure_nodes(self, graph):
+        structure_nodes = self.find_nodes_with_mm(graph, ["MatchModel", "match_contains", "paired_with", "ApplyModel", "apply_contains"])
+        graph.delete_nodes(structure_nodes)
+        return graph
+
+
+    def flood_find_nodes(self, start_node, graph, stop_mms = []):
+        node_stack = [start_node]
+        return_nodes = []
+        while len(node_stack) > 0:
+            node = node_stack.pop()
+
+            print("Stop: " + str(graph.vs[node]["mm__"]))
+            if graph.vs[node]["mm__"] in stop_mms:
+                continue
+
+            if node in return_nodes:
+                continue
+
+            return_nodes.append(node)
+
+            for edge in graph.get_edgelist():
+                if node == edge[0]:
+                    node_stack.append(edge[1])
+                elif node == edge[1]:
+                    node_stack.append(edge[0])
+
+        return return_nodes
+
+    def get_match_graph(self, graph):
+        graph = self.remove_equation_nodes(graph)
+
+        apply_contain_node = self.find_nodes_with_mm(graph, ["apply_contains"])
+        apply_contain_node = self.get_node_num(graph, apply_contain_node[0])
+
+        apply_nodes = self.flood_find_nodes(apply_contain_node, graph, ["ApplyModel"])
+
+        graph.delete_nodes(apply_nodes)
+        graph = self.remove_structure_nodes(graph)
+
+        return graph
+
+
     def make_match_pattern_rewriter(self, rewriter):
         return rewriter
 
@@ -872,45 +922,45 @@ pass
         graph["name"] = new_name
         
         out_dir = "./patterns/"
+
+        graph = self.get_match_graph(graph)
         
         graph = self.do_RAMify(graph, out_dir, remove_rule_nodes = False)
-
 
         graph["mm__"] = [graph["mm__"][0], 'MoTifRule']
         graph["name"] = ""
         graph["MT_constraint__"] = self.get_default_constraint()
 
+        # match_contains = self.find_nodes_with_mm(graph, ["MT_pre__match_contains", "MT_pre__trace_link"])
 
-        match_contains = self.find_nodes_with_mm(graph, ["MT_pre__match_contains", "MT_pre__trace_link"])
-
-        nodes_to_keep = []
-        for link in match_contains:
-            nodes_to_keep = nodes_to_keep + self.look_for_attached_of_attached(link, graph)
+        # nodes_to_keep = []
+        # for link in match_contains:
+        #     nodes_to_keep = nodes_to_keep + self.look_for_attached_of_attached(link, graph)
 
 
 
         #remove duplicates
-        nodes_to_keep = list(set(nodes_to_keep))
+        #nodes_to_keep = list(set(nodes_to_keep))
 
         #print("Keep:")
         #for n in nodes_to_keep:
         #    print graph.vs[n]["mm__"]
 
-        nodes_to_remove = []
-        mms_to_remove = ["MT_pre__MatchModel", "MT_pre__match_contains", "MT_pre__paired_with", "MT_pre__hasAttr_T", "MT_pre__hasAttr_S", "MT_pre__directLink_T", "MT_pre__apply_contains"]
-
-        #print("Removal")
-        for i in range(len(graph.vs)):
-            #print("MM: " + graph.vs[i]["mm__"])
-            if i not in nodes_to_keep or graph.vs[i]["mm__"] in mms_to_remove:
-                nodes_to_remove.append(i)
+        # nodes_to_remove = []
+        # mms_to_remove = ["MT_pre__MatchModel", "MT_pre__match_contains", "MT_pre__paired_with", "MT_pre__hasAttr_T", "MT_pre__hasAttr_S", "MT_pre__directLink_T", "MT_pre__apply_contains"]
+        #
+        # #print("Removal")
+        # for i in range(len(graph.vs)):
+        #     #print("MM: " + graph.vs[i]["mm__"])
+        #     if i not in nodes_to_keep or graph.vs[i]["mm__"] in mms_to_remove:
+        #         nodes_to_remove.append(i)
 
         #print("Remove:")
         #for n in nodes_to_remove:
         #    print graph.vs[n]["mm__"]
 
         #remove everything except for the attached nodes
-        graph.delete_nodes(nodes_to_remove)
+        # graph.delete_nodes(nodes_to_remove)
 
 
 

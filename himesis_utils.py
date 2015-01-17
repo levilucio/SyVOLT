@@ -79,20 +79,36 @@ def graph_to_dot(name, g, verbosity = 0):
                 
         fillcolor = "lightblue"
         
-        if node_type in ['paired_with']:
+        if node_type in ['paired_with', 'MT_pre__paired_with']:
             fillcolor="lightgray"
             
-        elif node_type in ['MatchModel']:
+        elif node_type in ['MatchModel', 'MT_pre__MatchModel']:
             fillcolor="#E15C34"
             
-        elif node_type in ['match_contains']:
+        elif node_type in ['match_contains', 'MT_pre__match_contains']:
             fillcolor="#F798A1" 
             
-        elif node_type in ['ApplyModel']:
+        elif node_type in ['ApplyModel', 'MT_pre__ApplyModel']:
             fillcolor="#FED017"  
             
-        elif node_type in ['apply_contains']:
-            fillcolor="#FCDB58" 
+        elif node_type in ['apply_contains', 'MT_pre__apply_contains']:
+            fillcolor="#FCDB58"
+
+        elif node_type in ['Equation', 'MT_pre__Equation']:
+            fillcolor = "#66FF33"
+
+
+        elif node_type in ['leftExpr', 'MT_pre__leftExpr', "rightExpr", "MT_pre__rightExpr"]:
+            fillcolor = "#22DDFF"
+
+        elif node_type in ['hasAttr_S', 'MT_pre__hasAttr_S']:
+            fillcolor = "#FF8888"
+
+        elif node_type in ['hasAttr_T', 'MT_pre__hasAttr_T']:
+            fillcolor = "#FF6666"
+
+        elif node_type in ['Attribute', 'MT_pre__Attribute']:
+            fillcolor = "#FFCC00"
             
         elif node_type in ['directLink_S', 'directLink_T', 'MT_pre__directLink_T', 'MT_pre__directLink_S']:
             
