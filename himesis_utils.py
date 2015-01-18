@@ -110,7 +110,7 @@ def graph_to_dot(name, g, verbosity = 0):
         elif node_type in ['Attribute', 'MT_pre__Attribute', 'MT_post__Attribute']:
             fillcolor = "#FFCC00"
             
-        elif node_type in ['directLink_S', 'directLink_T', 'MT_pre__directLink_T', 'MT_pre__directLink_S']:
+        elif node_type in ['directLink_S', 'directLink_T', 'MT_pre__directLink_T', 'MT_pre__directLink_S', 'MT_post__directLink_T', 'MT_post__directLink_S']:
             
             vattr += '\\n'     
             if node_type in ['directLink_S', 'directLink_T']:
@@ -124,13 +124,13 @@ def graph_to_dot(name, g, verbosity = 0):
                 
             fillcolor="lightyellow"  
                        
-        elif node_type in ['indirectLink_S', 'indirectLink_T', 'MT_pre__indirectLink_S', 'MT_pre__indirectLink_T']:
+        elif node_type in ['indirectLink_S', 'indirectLink_T', 'MT_pre__indirectLink_S', 'MT_pre__indirectLink_T', 'MT_post__indirectLink_S', 'MT_post__indirectLink_T']:
             fillcolor="lightgreen"          
                  
-        elif node_type == 'backward_link':
+        elif node_type in ['backward_link', "MT_pre__backward_link", "MT_post__backward_link"]:
             fillcolor="coral" 
             
-        elif node_type in ['trace_link', 'MT_pre__trace_link']:
+        elif node_type in ['trace_link', 'MT_pre__trace_link', 'MT_post__trace_link']:
             fillcolor="lightgoldenrod"
             #if  verbosity == 1:
               #  nodes[v.index] = pydot.Node(vattr, style="filled", fillcolor="chocolate")
@@ -168,11 +168,11 @@ def graph_to_dot(name, g, verbosity = 0):
         
         
     for e in g.es:
-        if verbosity == 0:
-            if g.vs[e.source]['mm__'] != 'trace_link' and g.vs[e.target]['mm__'] != 'trace_link':
-                graph.add_edge(pydot.Edge(nodes[e.source],nodes[e.target]))
-        else:
-            graph.add_edge(pydot.Edge(nodes[e.source],nodes[e.target]))
+        # if verbosity == 0:
+        #     if g.vs[e.source]['mm__'] != 'trace_link' and g.vs[e.target]['mm__'] != 'trace_link':
+        #         graph.add_edge(pydot.Edge(nodes[e.source],nodes[e.target]))
+        # else:
+        graph.add_edge(pydot.Edge(nodes[e.source],nodes[e.target]))
 
     dot_filename = './dot/' + name + '.dot'
     #print("Wrote to file: " + dot_filename)

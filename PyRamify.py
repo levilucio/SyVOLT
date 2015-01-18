@@ -296,6 +296,11 @@ pass
 
                 #add the prefix to the mm
                 if attrib == "mm__":
+
+                    if node["mm__"] == "backward_link":
+                        node["mm__"] = "trace_link"
+
+
                     if make_pre:
                         node["mm__"] = Himesis.Constants.MT_PRECOND_PREFIX + node["mm__"]
                     else:
@@ -921,10 +926,63 @@ pass
 
         rewriter = self.copy_graph(graph)
 
+        #Add trace links
+        match_contains = self.find_nodes_with_mm(graph, ["match_contains"])
+        match_attached = []
+        for mc in match_contains:
+            match_attached += self.look_for_attached(mc, rewriter)
+
+        apply_contains = self.find_nodes_with_mm(graph, ["apply_contains"])
+        apply_attached = []
+        for ac in apply_contains:
+            apply_attached += self.look_for_attached(ac, rewriter)
+
+        linked_nodes = []
+
+        backward_links = self.find_nodes_with_mm(graph, ["backward_link"])
+        for bl in backward_links:
+            bl_attached = self.look_for_attached(bl, rewriter)
+            print("BL attached: " + str(bl_attached))
+
+            linked_nodes.append([bl_attached[0], bl_attached[1]])
+
+        for match_node in match_attached:
+
+            print("Match node: " + str(rewriter.vs[match_node]["mm__"]))
+            if rewriter.vs[match_node]["mm__"] in ["MatchModel", "match_contains"]:
+                continue
+
+            for apply_node in apply_attached:
+                print("Apply node: " + str(rewriter.vs[apply_node]["mm__"]))
+                if rewriter.vs[apply_node]["mm__"] in ["ApplyModel", "apply_contains"]:
+                    continue
+
+                found_link = False
+                for a, b in linked_nodes:
+
+                    if (a == match_node and b == apply_node) or \
+                        (b == match_node and a == apply_node):
+                        #there is already a link here
+                        found_link = True
+                        print("Found the link")
+
+                if not found_link:
+                    print("Did not find link")
+                    new_node = rewriter.add_node()
+                    rewriter.vs[new_node]["mm__"] = "trace_link"
+                    rewriter.vs[new_node]["MT_label"] = str(len(rewriter.vs))
+
+                    rewriter.add_edge(match_node, new_node)
+                    rewriter.add_edge(new_node, apply_node)
+
+
+        #graph_to_dot("the_rewriter_graph_" + rewriter.name, rewriter)
+
         rewriter = self.changeAttrType(rewriter, False)
+
         rewriter = self.makePostConditionPattern(rewriter)
 
-        #TODO: Add trace links
+        #graph_to_dot("the_rewriter_graph_after_post_" + rewriter.name, rewriter)
 
 
         return rewriter
@@ -972,10 +1030,15 @@ pass
 
 
         rewriter.pre = match_graph
+        rewriter.name += "_rewriter"
+        graph_to_dot("the_rewriter_graph" + rewriter.name, rewriter)
+
         rewriter.compile(out_dir)
 
         rewriter_dict = self.load_class(out_dir + rewriter.name)
         rewriter = rewriter_dict.values()[0]
+
+        graph_to_dot("the_rewriter_graph_after" + rewriter.name, rewriter)
 
         return {name : [Matcher(match_graph), Rewriter(rewriter)]}
     #=========================
