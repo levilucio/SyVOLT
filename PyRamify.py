@@ -1060,6 +1060,8 @@ pass
 
 
         rewriter = self.make_rewriter(graph)
+        
+        graph_to_dot("rewriter_pyr", rewriter)
 
         new_name = name + "_matchLHS"
         
@@ -1069,6 +1071,8 @@ pass
         out_dir = "./patterns/"
 
         graph = self.get_match_graph(graph)
+        
+        graph_to_dot("matcher_pyr", graph)        
         
         graph = self.do_RAMify(graph, out_dir, remove_rule_nodes = False)
 
