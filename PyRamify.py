@@ -1010,7 +1010,7 @@ pass
 
         rewriter = self.make_rewriter(graph)
 
-        new_name = name + "_overlapLHS"
+        new_name = name + "_matchLHS"
         
         graph.name = new_name
         graph["name"] = new_name
