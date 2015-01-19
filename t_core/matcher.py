@@ -5,7 +5,7 @@ from core.match_algo import HimesisMatcher
 from core.himesis import HConstants as HC
 from rule_primitive import RulePrimitive
 from messages import MatchSet, Match, TransformationException
-
+import traceback
 
 class Matcher(RulePrimitive):
     '''
@@ -70,7 +70,9 @@ class Matcher(RulePrimitive):
 
             #log any Exceptions
             if self.warning_level == 1:
+                tb = traceback.format_exc()
                 print("Matcher Error: " + str(e))
+                print(tb)
             elif self.warning_level == 2:
                 raise Exception("Matcher Error: " + str(e))
 

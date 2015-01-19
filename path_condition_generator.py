@@ -72,7 +72,7 @@ class PathConditionGenerator():
 
         self.print_transformation()
         self.print_ruleCombinators()
-#         self.print_ruleTraceCheckers()
+        self.print_ruleTraceCheckers()
 
 
 
@@ -115,6 +115,10 @@ class PathConditionGenerator():
                     graph_to_dot("ruleCombinator_match_" + str(m.condition.name), m.condition)
                     graph_to_dot("ruleCombinator_rewrite_" + str(r.condition.name), r.condition)
 
+                    if len(m.condition.NACs) > 0:
+                        graph_to_dot("ruleCombinator_NAC_" + str(m.condition.name), m.condition.NACs[0])
+
+
     def print_ruleTraceCheckers(self):
         for key in self.ruleTraceCheckers.keys():
 
@@ -138,10 +142,10 @@ class PathConditionGenerator():
 #                 graph_to_dot("backComplete_" + str(backwardPatternsCompleteKey) + self.output_suffix, v.condition)
 
     def print_matchRulePatterns(self):
-        print("\n===\nmatchRulePatterns:")
+        #print("\n===\nmatchRulePatterns:")
         for matchRulePattern in sorted(self.matchRulePatterns.keys()):
-            print("\nKey: " + str(matchRulePattern))
-            print("\nValue: ")
+            #print("\nKey: " + str(matchRulePattern))
+            #print("\nValue: ")
 
             matcher, rewriter = self.matchRulePatterns[matchRulePattern]
             #print_graph(matcher.condition)

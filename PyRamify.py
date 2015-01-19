@@ -793,8 +793,8 @@ pass
         # change the attribs in this graph
         rewriter_graph = self.changeAttrType(rewriter_graph, False)
 
-        j = 0
 
+        base_graphs = []
         for remove_set in output:
 
             new_graph = self.copy_graph(base_graph)
@@ -802,6 +802,19 @@ pass
 
             #remove everything except for the attached nodes and the backward link
             new_graph.delete_nodes(remove_set)
+
+            base_graphs.append(new_graph)
+
+        j = 0
+        for index in range(len(base_graphs)):
+
+            new_graph = base_graphs[index]
+
+            nac_index = len(base_graphs) - index - 1
+            NAC_graph = self.copy_graph(base_graphs[nac_index])
+
+
+            
 
 
             j += 1
@@ -829,6 +842,9 @@ pass
             #graph_to_dot(new_name, backward_pattern)
             graph_to_dot("remove_graph" + str(j), new_graph)
 
+
+            backward_pattern.NACs = [NAC_graph]
+
             #create the Matcher
             matcher = Matcher(backward_pattern)
 
@@ -837,16 +853,16 @@ pass
             rewriter_graph_copy.pre = self.copy_graph(backward_pattern)
             rewriter_graph_copy.name += "_rewriter"
             file_name = rewriter_graph_copy.compile(out_dir)
-            print("Compiled to: " + file_name)
+            #print("Compiled to: " + file_name)
 
             rewriter_graph2 = self.load_class(out_dir + rewriter_graph_copy.name)
             rewriter_graph2 = rewriter_graph2.values()[0]
 
-            print(inspect.getargspec(rewriter_graph2.execute))
-            print(rewriter_graph2.__class__)
-            print(rewriter_graph2.name)
-            print("Hierarchy:")
-            print(inspect.getmro(rewriter_graph2.__class__))
+            # print(inspect.getargspec(rewriter_graph2.execute))
+            # print(rewriter_graph2.__class__)
+            # print(rewriter_graph2.name)
+            # print("Hierarchy:")
+            # print(inspect.getmro(rewriter_graph2.__class__))
 
 
             rewriter_graph2.pre = self.copy_graph(backward_pattern)
@@ -942,18 +958,18 @@ pass
         backward_links = self.find_nodes_with_mm(graph, ["backward_link"])
         for bl in backward_links:
             bl_attached = self.look_for_attached(bl, rewriter)
-            print("BL attached: " + str(bl_attached))
+            #print("BL attached: " + str(bl_attached))
 
             linked_nodes.append([bl_attached[0], bl_attached[1]])
 
         for match_node in match_attached:
 
-            print("Match node: " + str(rewriter.vs[match_node]["mm__"]))
+            #print("Match node: " + str(rewriter.vs[match_node]["mm__"]))
             if rewriter.vs[match_node]["mm__"] in ["MatchModel", "match_contains"]:
                 continue
 
             for apply_node in apply_attached:
-                print("Apply node: " + str(rewriter.vs[apply_node]["mm__"]))
+                #print("Apply node: " + str(rewriter.vs[apply_node]["mm__"]))
                 if rewriter.vs[apply_node]["mm__"] in ["ApplyModel", "apply_contains"]:
                     continue
 
@@ -964,16 +980,16 @@ pass
                         (b == match_node and a == apply_node):
                         #there is already a link here
                         found_link = True
-                        print("Found the link")
+                        #print("Found the link")
 
                 if not found_link:
-                    print("Did not find link")
+                    #print("Did not find link")
                     new_node = rewriter.add_node()
                     rewriter.vs[new_node]["mm__"] = "trace_link"
                     rewriter.vs[new_node]["MT_label"] = str(len(rewriter.vs))
 
-                    rewriter.add_edge(match_node, new_node)
-                    rewriter.add_edge(new_node, apply_node)
+                    rewriter.add_edge(apply_node, new_node)
+                    rewriter.add_edge(new_node, match_node)
 
 
         #graph_to_dot("the_rewriter_graph_" + rewriter.name, rewriter)
@@ -1031,14 +1047,14 @@ pass
 
         rewriter.pre = match_graph
         rewriter.name += "_rewriter"
-        graph_to_dot("the_rewriter_graph" + rewriter.name, rewriter)
+        #graph_to_dot("the_rewriter_graph" + rewriter.name, rewriter)
 
         rewriter.compile(out_dir)
 
         rewriter_dict = self.load_class(out_dir + rewriter.name)
         rewriter = rewriter_dict.values()[0]
 
-        graph_to_dot("the_rewriter_graph_after" + rewriter.name, rewriter)
+        #graph_to_dot("the_rewriter_graph_after" + rewriter.name, rewriter)
 
         return {name : [Matcher(match_graph), Rewriter(rewriter)]}
     #=========================
