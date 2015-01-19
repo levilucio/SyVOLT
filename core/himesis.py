@@ -615,7 +615,7 @@ return %s().%s(attr_value, this) and %s(lhs).%s(attr_value, this)'''
             if len(src) == len(trg) == 1:
                 src = src[0]
                 trg = trg[0]
-                G.add_edges((src.index, trg.index))
+                G.add_edges([(src.index, trg.index)])
             elif len(src) == 0 :
 #                raise Exception('Label does not exist :: '+str(src_label))
                 pass

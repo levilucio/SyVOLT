@@ -104,6 +104,20 @@ class PyRamify:
 
         return graph
 
+    def makePreConditionPatternNAC(self, graph):
+
+        graph = self.makePreConditionPattern(graph)
+
+        graph.__class__ = HimesisPreConditionPatternNAC
+
+        graph.LHS = None
+        graph.bridge = None
+        graph.init_params.append('LHS')
+        graph.import_name = 'HimesisPreConditionPatternNAC'
+
+        return graph
+
+
     def makePostConditionPattern(self, old_graph):
         graph = copy.deepcopy(old_graph)
 
@@ -681,7 +695,7 @@ pass
     def get_rule_combinators(self, rule):
         print("\nStarting get backward patterns")
         name = rule.keys()[0]
-        graph = rule[rule.keys()[0]]
+        graph = rule.values()[0]
         return_graph = self.copy_graph(graph)
 
         # check to see which nodes have backward links
@@ -717,16 +731,21 @@ pass
                                                           "MT_pre__apply_contains"])
         structure_nums = [self.get_node_num(graph, item) for item in structure_nodes]
 
-
         # make sure to copy the graph, as we will make multiple smaller matchers from it
-        new_graph = copy.deepcopy(graph)
+        new_graph = self.copy_graph(graph)
         new_graph = self.makePreConditionPattern(new_graph)
 
-        #print("NACs: " + str(new_graph.NACs))
+
+
         base_graph = self.copy_graph(new_graph)
 
 
+        #TODO: Get rewriter graph from matcher rewriter
         rewriter_graph = self.copy_graph(return_graph)
+
+
+        #TODO: Handled by attr changing?
+
         # turn the backward links into trace links
 
         backwards_links2 = self.find_nodes_with_mm(rewriter_graph, ["backward_link"])
@@ -735,24 +754,24 @@ pass
         for node in backwards_links2:
              node["mm__"] = "trace_link"
 
-        #print("NACs: " + str(base_graph.NACs))
 
 
-        graph_to_dot("base_graph_before", base_graph)
+
+        #graph_to_dot("base_graph_before", base_graph)
         apply_links = self.get_links_in_apply(base_graph)
 
         base_graph.delete_nodes(structure_nums + apply_links)
         rewriter_graph.delete_nodes(structure_nums)
 
 
-        graph_to_dot("base_graph", base_graph)
+        #graph_to_dot("base_graph", base_graph)
 
-        graph_to_dot("rewriter_graph_before", rewriter_graph)
+        #graph_to_dot("rewriter_graph_before", rewriter_graph)
         #Turn rewriter_graph into RHS
         rewriter_graph = self.makePostConditionPattern(rewriter_graph)
 
 
-        graph_to_dot("rewriter_graph", rewriter_graph)
+        #graph_to_dot("rewriter_graph", rewriter_graph)
 
         # keep the nodes attached to the backward link plus the 'structural' nodes
         #that should be kept
@@ -794,8 +813,8 @@ pass
         rewriter_graph = self.changeAttrType(rewriter_graph, False)
 
 
-        base_graphs = []
-        for remove_set in output:
+        j = 0
+        for remove_set in reversed(output):
 
             new_graph = self.copy_graph(base_graph)
 
@@ -803,25 +822,15 @@ pass
             #remove everything except for the attached nodes and the backward link
             new_graph.delete_nodes(remove_set)
 
-            base_graphs.append(new_graph)
-
-        j = 0
-        for index in range(len(base_graphs)):
-
-            new_graph = base_graphs[index]
-
-            nac_index = len(base_graphs) - index - 1
-            NAC_graph = self.copy_graph(base_graphs[nac_index])
 
 
-            
-
+            #create the matcher
 
             j += 1
 
             #create a new name for this backward matcher
             #replace the pattern name with the partial pattern name
-            new_name = self.get_RAMified_name(name, True) + str(i)
+            new_name = name + str(i)
             i += 1
 
             #write out the file
@@ -837,16 +846,54 @@ pass
             new_graph.compile(out_dir)
 
             rule = self.load_class(out_dir + "/" + new_name)
-            backward_pattern = rule[rule.keys()[0]]
+            backward_pattern = rule.values()[0]
 
             #graph_to_dot(new_name, backward_pattern)
-            graph_to_dot("remove_graph" + str(j), new_graph)
+            #graph_to_dot("remove_graph" + str(j), new_graph)
 
 
-            backward_pattern.NACs = [NAC_graph]
+
+            if remove_set == []:
+                backward_pattern.NACs = []
+            else:
+
+                NAC_nodes_to_remove = []
+
+                for to_remove in nodes_to_remove:
+                    node = base_graph.vs[to_remove]
+                    if node["mm__"] in ["indirectLink_S", "indirectLink_T", "directLink_S", "directLink_T"] \
+                        and not node in remove_set:
+                        NAC_nodes_to_remove.append(to_remove)
+
+                #create the NAC if needed
+                NAC_graph = self.copy_graph(base_graph)
+
+                NAC_graph.delete_nodes(NAC_nodes_to_remove)
+
+
+                NAC_graph = self.makePreConditionPatternNAC(NAC_graph)
+
+                NAC_graph.name += "_NAC"
+
+                NAC_graph.LHS = backward_pattern
+
+                file_name = NAC_graph.compile(out_dir)
+                #print("Compiled to: " + file_name)
+
+                NAC_graph = self.load_class(out_dir + NAC_graph.name, [backward_pattern])
+                NAC_graph = NAC_graph.values()[0]
+
+
+                backward_pattern.NACs = [NAC_graph]
 
             #create the Matcher
             matcher = Matcher(backward_pattern)
+
+
+
+
+
+            #TODO: Make rewriter code simpler, and same as match pattern rewriter
 
             rewriter_graph_copy = self.copy_graph(rewriter_graph)
 
@@ -868,6 +915,10 @@ pass
             rewriter_graph2.pre = self.copy_graph(backward_pattern)
 
             rewriter = Rewriter(rewriter_graph2)
+
+
+
+
 
 
             #append the new backward pattern and name mapping
@@ -1061,7 +1112,7 @@ pass
 
     #function to dynamically load a new class
     import importlib
-    def load_class(self, full_class_string):
+    def load_class(self, full_class_string, args = []):
         directory, module_name = os.path.split(full_class_string)
         module_name = os.path.splitext(module_name)[0]
 
@@ -1070,7 +1121,11 @@ pass
 
         try:
             module = __import__(module_name)
-            loaded_module = {module_name : getattr(module, module_name)()}
+
+            if args == []:
+                loaded_module = {module_name : getattr(module, module_name)()}
+            else:
+                loaded_module = {module_name : getattr(module, module_name)(args[0])}
         finally:
             sys.path[:] = path # restore
         return loaded_module
