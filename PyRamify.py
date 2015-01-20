@@ -271,7 +271,19 @@ pass
             #add MT_PRECOND_PREFIX to attrib names
             attribs_to_skip = ["GUID__", "mm__", "MT_label__", "MT_subtypes__", "MT_dirty__", "MT_subtypeMatching__"]
 
-            for attrib in node.attributes():
+            #work around the igraph bug about giving too many attributes
+            node_attributes = []
+            #print("Node Attributes: " + str(node.attributes()))
+            for attrib in node.attributes().keys():
+                try:
+                    node[attrib] = node[attrib]
+                    node_attributes.append(attrib)
+                except KeyError:
+                    pass
+
+            #print("Attributes: " + str(node_attributes))
+
+            for attrib in node_attributes:
 
                 #skip some of the attribs
                 if attrib in attribs_to_skip:
@@ -306,7 +318,7 @@ pass
 
             #change attrib values
             #hacky, to fix some edge cases
-            for attrib in node.attributes():
+            for attrib in node_attributes:
 
                 #add the prefix to the mm
                 if attrib == "mm__":
@@ -335,7 +347,7 @@ pass
                     node[attrib] = None
                     continue
 
-                none_types2 = ["MT_pre__trace_link", "MT_post__trace_link", "trace_link"]
+                none_types2 = ["MT_pre__trace_link", "MT_post__trace_link", "trace_link", "backward_link"]
                 none_attrib2 = ["MT_pre__associationType", "MT_post__associationType", "associationType"]
                 if node["mm__"] in none_types2 and attrib in none_attrib2:
                     node[attrib] = None
@@ -363,16 +375,23 @@ pass
             #there may be a bug with the node.attributes()
             #returning more attributes than the node has
             #--confirmed to be in igraph
-            try:
-                del node["MT_pre__type"]
-            except Exception:
-                pass
-
-            try:
-                del node["MT_post__type"]
-                del node["MT_post__associationType"]
-            except Exception:
-                pass
+            # try:
+            #     del node["MT_pre__type"]
+            #
+            # except Exception:
+            #     pass
+            #
+            # try:
+            #     pass
+            #     #node["MT_pre__associationType"] = None
+            # except Exception:
+            #     pass
+            #
+            # try:
+            #     del node["MT_post__type"]
+            #     del node["MT_post__associationType"]
+            # except Exception:
+            #     pass
 
         return graph
 

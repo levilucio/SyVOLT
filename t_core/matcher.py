@@ -186,7 +186,7 @@ class Matcher(RulePrimitive):
                         match = Match()
                         match.from_mapping(mapping, graph, self.condition)
                         bridgeMapping = match.to_mapping(graph, NAC)
-                        
+
                         # Now continue the matching looking for a match of the corresponding NAC
                         nacMatcher = HimesisMatcher(source_graph=graph, pattern_graph=NAC, pred1=pred1, succ1=succ1)
                         for nac_mapping in nacMatcher.match_iter(context=bridgeMapping):
@@ -200,5 +200,9 @@ class Matcher(RulePrimitive):
                     else:
                         # Either there are no bound NACs or no occurrence of any bound NAC was found: current mapping is valid
                         yield mapping
-        except Exception as e: raise e
+        except Exception as e:
+            tb = traceback.format_exc()
+            print("NAC Error: " + str(e))
+            print(tb)
+            raise e
         finally: lhsMatcher.reset_recursion_limit()
