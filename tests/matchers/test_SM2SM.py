@@ -20,7 +20,7 @@ from t_core.rewriter import Rewriter
 
 from himesis_utils import graph_to_dot
 
-from tests.matchers.dir_for_pyramify.HSM2SM import HSM2SM
+from tests.TestModules.HSM2SM import HSM2SM
 
 class Test(unittest.TestCase):
 
@@ -31,30 +31,32 @@ class Test(unittest.TestCase):
         
         p.graph = HSM2SM()
         
+        graph_to_dot("before_SM2SM", p.graph)
+        
         graph_to_dot("SM2SM", p.graph)
         
-#         s2s_match = Matcher(HSM2SM_matchLHS())
-#         s2s_rewrite = Rewriter(HSM2SM_rewriter())
-# 
-#         graph_to_dot("SM2SM_matcher", HSM2SM_matchLHS())
-#         graph_to_dot("SM2SM_rewriter", HSM2SM_rewriter())        
-        
-#         s2s_match.packet_in(p)
-#         
-#         if s2s_match.is_success:
-#             print "Yes!"
-#         else:
-#             print "no"
-#             
-#         p = i.packet_in(p)
-#         p = s2s_rewrite.packet_in(p)
-#         
-#         if s2s_rewrite.is_success:
-#             print "Yes!"
-#         else:
-#             print "no"
-#         
-#         graph_to_dot("after_SM2SM", p.graph)
+        s2s_match = Matcher(HSM2SM_matchLHS())
+        s2s_rewrite = Rewriter(HSM2SM_rewriter())
+ 
+        graph_to_dot("SM2SM_matcher", HSM2SM_matchLHS())
+        graph_to_dot("SM2SM_rewriter", HSM2SM_rewriter())        
+         
+        s2s_match.packet_in(p)
+         
+        if s2s_match.is_success:
+            print "Yes!"
+        else:
+            print "no"
+             
+        p = i.packet_in(p)
+        p = s2s_rewrite.packet_in(p)
+         
+        if s2s_rewrite.is_success:
+            print "Yes!"
+        else:
+            print "no"
+         
+        graph_to_dot("after_SM2SM", p.graph)
         
             
         
