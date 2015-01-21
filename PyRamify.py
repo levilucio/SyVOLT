@@ -243,7 +243,7 @@ pass
     '''
     def changeAttrType(self, graph, make_pre = True):
 
-        self.next_label = 0
+
 
         #change mm of the graph
 
@@ -368,8 +368,8 @@ pass
                 node["MT_dirty__"] = False
 
             #set the next label
-#            node["MT_label__"] = str(self.next_label)
-            self.next_label += 1
+            #node["MT_label__"] = str(self.next_label)
+            #self.next_label += 1
 
             #very hacky, delete this attribute if possible
             #there may be a bug with the node.attributes()
@@ -431,7 +431,7 @@ pass
 
         #compile the output pattern for future study + use
         #throw everything in the output dir
-        graph.compile(output_dir)
+        #graph.compile(output_dir)
 
         return graph
 
@@ -465,6 +465,12 @@ pass
         #from the rule, grab the name and the graph
         name = rule.keys()[0]
         graph = rule[rule.keys()[0]]
+
+        label = 0
+        for i in range(len(graph.vs)):
+            graph.vs[i]["MT_label__"] = str(label)
+            label += 1
+
 
         #check to see which nodes have backward links
         backwards_links = self.find_nodes_with_mm(graph, ["backward_link"])
@@ -550,6 +556,12 @@ pass
         print("\nStarting get backward patterns")
         name = rule.keys()[0]
         graph = rule[rule.keys()[0]]
+
+        label = 0
+        for i in range(len(graph.vs)):
+            graph.vs[i]["MT_label__"] = str(label)
+            label += 1
+
         return_graph = graph
 
         #check to see which nodes have backward links
@@ -715,6 +727,12 @@ pass
         print("\nStarting get backward patterns")
         name = rule.keys()[0]
         graph = rule.values()[0]
+
+        label = 0
+        for i in range(len(graph.vs)):
+            graph.vs[i]["MT_label__"] = str(label)
+            label += 1
+
         return_graph = self.copy_graph(graph)
 
         # check to see which nodes have backward links
@@ -1079,7 +1097,8 @@ pass
         graph = rule[rule.keys()[0]]
 
         label = 0
-        for i in len(graph.vs):
+        for i in range(len(graph.vs)):
+
             graph.vs[i]["MT_label__"] = str(label)
             label += 1
 
