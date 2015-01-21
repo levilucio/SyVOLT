@@ -368,7 +368,7 @@ pass
                 node["MT_dirty__"] = False
 
             #set the next label
-            node["MT_label__"] = str(self.next_label)
+#            node["MT_label__"] = str(self.next_label)
             self.next_label += 1
 
             #very hacky, delete this attribute if possible
@@ -1074,9 +1074,14 @@ pass
         return rewriter
 
     def get_match_pattern(self, rule):
+    
         name = rule.keys()[0]
         graph = rule[rule.keys()[0]]
 
+        label = 0
+        for i in len(graph.vs):
+            graph.vs[i]["MT_label__"] = str(label)
+            label += 1
 
         rewriter = self.make_rewriter(graph)
         
@@ -1089,9 +1094,7 @@ pass
         
         out_dir = "./patterns/"
 
-        graph = self.get_match_graph(graph)
-        
-        graph_to_dot("matcher_pyr", graph)        
+        graph = self.get_match_graph(graph)     
         
         graph = self.do_RAMify(graph, out_dir, remove_rule_nodes = False)
 
