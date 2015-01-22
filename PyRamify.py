@@ -462,9 +462,7 @@ pass
     #hacky, could be extended to better match hand-built rules
     def get_RAMified_name(self, name, partial=False):
         s = name.replace(".py", "") + "_Matcher_"
-        if not partial:
-            s = s + "_Complete"
-        else:
+        if partial:
             s = s + "LHS"
         return s
         
@@ -738,7 +736,7 @@ pass
                     #don't remove important nodes, but delete all others
                     nodes_to_delete.append(node)
 
-        print("Nodes to delete: " + str(len(nodes_to_delete)))
+        #print("Nodes to delete: " + str(len(nodes_to_delete)))
         return nodes_to_delete
 
 
@@ -816,16 +814,22 @@ pass
         #remove the equation nodes for the base graph
         #(not Attribute nodes)
 
-        backwards_links2 = self.find_nodes_with_mm(rewriter_graph, ["backward_link"])
+        equation_nodes = self.find_nodes_with_mm(base_graph, ["MT_pre__Equation"])
 
-        #self.flood_find_nodes()
+        #print("Equation nodes: " + str(equation_nodes))
 
+        equation_nodes_to_remove = []
+        for equation in equation_nodes:
+            equation_num = self.get_node_num(base_graph, equation)
+            equation_nodes_to_remove += self.flood_find_nodes(equation_num, base_graph, ["MT_pre__Attribute"])
+
+        #print("Removing equation nodes: " + str(equation_nodes_to_remove))
 
 
         #graph_to_dot("base_graph_before", base_graph)
         apply_links = self.get_links_in_apply(base_graph)
 
-        base_graph.delete_nodes(structure_nums + apply_links)
+        base_graph.delete_nodes(structure_nums + apply_links + equation_nodes_to_remove)
         rewriter_graph.delete_nodes(structure_nums)
 
 
@@ -851,11 +855,14 @@ pass
             nodes_to_keep += attached_nodes
 
 
+
         #get the list of nodes to remove
         #(which is all nodes that should not be kept)
         nodes_to_remove = range(len(base_graph.vs))
 #        nodes_to_remove = [new_graph.vs[item] for item in nodes_to_remove if item not in nodes_to_keep]
 
+        attribute_nodes = self.find_nodes_with_mm(base_graph, ["MT_pre__hasAttr_S", "MT_pre__hasAttr_T", "MT_pre__Attribute"])
+        nodes_to_keep += [self.get_node_num(base_graph, item) for item in attribute_nodes]
 
 
         # don't consider removing the backward links and attached nodes
