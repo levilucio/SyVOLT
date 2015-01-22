@@ -316,6 +316,16 @@ pass
                 else:
                     node[Himesis.Constants.MT_POSTCOND_PREFIX + attrib] = val
 
+
+            node_attributes = []
+            #print("Node Attributes: " + str(node.attributes()))
+            for attrib in node.attributes().keys():
+                try:
+                    node[attrib] = node[attrib]
+                    node_attributes.append(attrib)
+                except KeyError:
+                    pass
+
             #change attrib values
             #hacky, to fix some edge cases
             for attrib in node_attributes:
@@ -370,6 +380,7 @@ pass
             #set the next label
             #node["MT_label__"] = str(self.next_label)
             #self.next_label += 1
+
 
             #very hacky, delete this attribute if possible
             #there may be a bug with the node.attributes()
@@ -441,7 +452,7 @@ pass
 
     #hacky, could be extended to better match hand-built rules
     def get_RAMified_name(self, name, partial=False):
-        s = name.replace(".py", "") + "_Back"
+        s = name.replace(".py", "") + "_Matcher_"
         if not partial:
             s = s + "_Complete"
         else:
@@ -1104,7 +1115,7 @@ pass
 
         rewriter = self.make_rewriter(graph)
         
-        graph_to_dot("rewriter_pyr", rewriter)
+        #graph_to_dot("rewriter_pyr", rewriter)
 
         new_name = name + "_matchLHS"
         
