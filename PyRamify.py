@@ -813,6 +813,14 @@ pass
 
 
 
+        #remove the equation nodes for the base graph
+        #(not Attribute nodes)
+
+        backwards_links2 = self.find_nodes_with_mm(rewriter_graph, ["backward_link"])
+
+        #self.flood_find_nodes()
+
+
 
         #graph_to_dot("base_graph_before", base_graph)
         apply_links = self.get_links_in_apply(base_graph)
@@ -821,7 +829,7 @@ pass
         rewriter_graph.delete_nodes(structure_nums)
 
 
-        #graph_to_dot("base_graph", base_graph)
+        graph_to_dot("base_graph_" + base_graph.name, base_graph)
 
         #graph_to_dot("rewriter_graph_before", rewriter_graph)
         #Turn rewriter_graph into RHS
@@ -869,6 +877,7 @@ pass
         # change the attribs in this graph
         rewriter_graph = self.changeAttrType(rewriter_graph, False)
 
+        print("Rule combinators: Generating " + str(len(output)) + " different possibilities")
 
         j = 0
         for remove_set in reversed(output):
@@ -1063,7 +1072,7 @@ pass
 
         linked_nodes = []
 
-        backward_links = self.find_nodes_with_mm(graph, ["backward_link"])
+        backward_links = self.find_nodes_with_mm(graph, ["backward_link", "trace_link"])
         for bl in backward_links:
             bl_attached = self.look_for_attached(bl, rewriter)
             #print("BL attached: " + str(bl_attached))
@@ -1084,8 +1093,7 @@ pass
                 found_link = False
                 for a, b in linked_nodes:
 
-                    if (a == match_node and b == apply_node) or \
-                        (b == match_node and a == apply_node):
+                    if a == apply_node or b == apply_node:
                         #there is already a link here
                         found_link = True
                         #print("Found the link")
@@ -1094,7 +1102,8 @@ pass
                     #print("Did not find link")
                     new_node = rewriter.add_node()
                     rewriter.vs[new_node]["mm__"] = "trace_link"
-                    rewriter.vs[new_node]["MT_label"] = str(len(rewriter.vs))
+                    rewriter.vs[new_node]["MT_label__"] = str(new_node)
+                    #print("New label: " + str(rewriter.vs[new_node]["MT_label__"]))
 
                     rewriter.add_edge(apply_node, new_node)
                     rewriter.add_edge(new_node, match_node)
