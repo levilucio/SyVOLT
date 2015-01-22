@@ -17,7 +17,7 @@ class HFF2FF_Back_Complete_NACBridge(HimesisPreConditionPattern):
         # Add the edges
         self.add_edges([[2, 0], [0, 4], [3, 1], [1, 5]])
         # Set the graph attributes
-        self["GUID__"] = UUID('0f8453e9-3801-4c9c-8fee-957a6c768a6c')
+        self["GUID__"] = UUID('6c9ceefc-f537-4747-bcb6-18624aca6e85')
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False

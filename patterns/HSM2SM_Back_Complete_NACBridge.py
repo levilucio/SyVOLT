@@ -17,7 +17,7 @@ class HSM2SM_Back_Complete_NACBridge(HimesisPreConditionPattern):
         # Add the edges
         self.add_edges([[1, 4], [4, 0], [2, 5], [5, 3]])
         # Set the graph attributes
-        self["GUID__"] = UUID('9efcdb21-a966-4628-ad3b-47b5a85da033')
+        self["GUID__"] = UUID('e03d0ef9-b7d3-4370-a384-8b2d0f01fa98')
         
         # Set the node attributes
         self.vs[0]["associationType"] = """

@@ -594,7 +594,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[12]["GUID__"] = UUID('c9039443-7de2-402d-bbf3-124def5a1edb')
+        self.vs[12]["GUID__"] = UUID('c2cdc16f-f0c0-4c8b-a748-d9dc1f3424b7')
         self.vs[13]["MT_label__"] = """12"""
         self.vs[13]["MT_post__cardinality"] = """
 #===============================================================================
