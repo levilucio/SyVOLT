@@ -607,7 +607,7 @@ pass
         graph["name"] = self.get_RAMified_name(name)
 
         #output the graph
-        graph.compile(out_dir)
+        #graph.compile(out_dir)
 
         bwPatterns = []
         bwPatterns2Rule = {}
@@ -771,7 +771,7 @@ pass
         graph["name"] = self.get_RAMified_name(name)
 
         #output the graph
-        graph.compile(out_dir)
+        #graph.compile(out_dir)
 
         bwPatterns = []
         bwPatterns2Rule = {}
@@ -903,7 +903,7 @@ pass
 
             #create a new name for this backward matcher
             #replace the pattern name with the partial pattern name
-            new_name = name + str(i)
+            new_name = name + "_rule_combinator_matcher_" + str(i)
             i += 1
 
             #write out the file
@@ -913,7 +913,6 @@ pass
 
             #BIG HACK
             new_graph = self.fix_attrs_for_backward_patterns(new_graph)
-
 
 
             new_graph.compile(out_dir)
