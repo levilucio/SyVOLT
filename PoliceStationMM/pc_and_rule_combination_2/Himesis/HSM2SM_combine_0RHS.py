@@ -478,49 +478,49 @@ return "somemale"
         # Create new edges
         #===============================================================================
         # Station_S1 -> indirectLink_S10
-        graph.add_edges((labels['1'], labels['10']))
+        graph.add_edges([(labels['1'], labels['10'])])
         # indirectLink_S10 -> Male_S2
-        graph.add_edges((labels['10'], labels['2']))
+        graph.add_edges([(labels['10'], labels['2'])])
         # Station_T3 -> directLink_T11
-        graph.add_edges((labels['3'], labels['11']))
+        graph.add_edges([(labels['3'], labels['11'])])
         # directLink_T11 -> Male_T4
-        graph.add_edges((labels['11'], labels['4']))
+        graph.add_edges([(labels['11'], labels['4'])])
         # Equation13 -> rightExpr20
-        graph.add_edges((labels['13'], labels['20']))
+        graph.add_edges([(labels['13'], labels['20'])])
         # Equation13 -> leftExpr19
-        graph.add_edges((labels['13'], labels['19']))
+        graph.add_edges([(labels['13'], labels['19'])])
         # rightExpr20 -> Constant14
-        graph.add_edges((labels['20'], labels['14']))
+        graph.add_edges([(labels['20'], labels['14'])])
         # Equation17 -> rightExpr23
-        graph.add_edges((labels['17'], labels['23']))
+        graph.add_edges([(labels['17'], labels['23'])])
         # Equation17 -> leftExpr22
-        graph.add_edges((labels['17'], labels['22']))
+        graph.add_edges([(labels['17'], labels['22'])])
         # rightExpr23 -> Constant18
-        graph.add_edges((labels['23'], labels['18']))
+        graph.add_edges([(labels['23'], labels['18'])])
         # leftExpr19 -> Attribute12
-        graph.add_edges((labels['19'], labels['12']))
+        graph.add_edges([(labels['19'], labels['12'])])
         # leftExpr22 -> Attribute16
-        graph.add_edges((labels['22'], labels['16']))
+        graph.add_edges([(labels['22'], labels['16'])])
         # paired_with41 -> ApplyModel35
-        graph.add_edges((labels['41'], labels['35']))
+        graph.add_edges([(labels['41'], labels['35'])])
         # ApplyModel35 -> apply_contains39
-        graph.add_edges((labels['35'], labels['39']))
+        graph.add_edges([(labels['35'], labels['39'])])
         # ApplyModel35 -> apply_contains40
-        graph.add_edges((labels['35'], labels['40']))
+        graph.add_edges([(labels['35'], labels['40'])])
         # MatchModel36 -> match_contains37
-        graph.add_edges((labels['36'], labels['37']))
+        graph.add_edges([(labels['36'], labels['37'])])
         # MatchModel36 -> match_contains38
-        graph.add_edges((labels['36'], labels['38']))
+        graph.add_edges([(labels['36'], labels['38'])])
         # MatchModel36 -> paired_with41
-        graph.add_edges((labels['36'], labels['41']))
+        graph.add_edges([(labels['36'], labels['41'])])
         # match_contains37 -> Station_S1
-        graph.add_edges((labels['37'], labels['1']))
+        graph.add_edges([(labels['37'], labels['1'])])
         # match_contains38 -> Male_S2
-        graph.add_edges((labels['38'], labels['2']))
+        graph.add_edges([(labels['38'], labels['2'])])
         # apply_contains39 -> Station_T3
-        graph.add_edges((labels['39'], labels['3']))
+        graph.add_edges([(labels['39'], labels['3'])])
         # apply_contains40 -> Male_T4
-        graph.add_edges((labels['40'], labels['4']))
+        graph.add_edges([(labels['40'], labels['4'])])
         
         #===============================================================================
         # Set the output pivots
