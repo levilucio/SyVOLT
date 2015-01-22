@@ -147,15 +147,15 @@ def graph_to_dot(name, g, verbosity = 0):
             except Exception:
                 pass
                 
-            try:
-                vattr += get_attribute("\\n Classtype = ", v['MT_pre__classtype'])
-            except Exception:
-                pass
-                
-            try:
-                vattr += get_attribute("\\n Name = ", v['MT_pre__name'])
-            except Exception:
-                pass
+            # try:
+            #     vattr += get_attribute("\\n Classtype = ", v['MT_pre__classtype'])
+            # except Exception:
+            #     pass
+            #
+            # try:
+            #     vattr += get_attribute("\\n Name = ", v['MT_pre__name'])
+            # except Exception:
+            #     pass
                 
             fillcolor="lightblue"
                 
@@ -187,7 +187,6 @@ def graph_to_dot(name, g, verbosity = 0):
 def disjoint_model_union(first, second):
     """
     merge two himesis graphs
-    IMPORTANT: only makes sense if the graphs are instances of the same metamodel
     """
     
     if first.vcount() == 0:
@@ -195,27 +194,29 @@ def disjoint_model_union(first, second):
     
     if second.vcount() == 0:
         return deepcopy(first)
- 
-    nr_attr_first = len(first.vs[0].attribute_names())
-    nr_attr_second = len(second.vs[0].attribute_names())
-     
-    # graphs need to be swapped in case the nodes in the second graph have more attributes than the ones in the first
-    # this is so because each node in a model has the maximum amount of attributes used in the model
-     
-    if nr_attr_second > nr_attr_first:
-        swapbuffer = deepcopy(second)
-        second = deepcopy(first)
-        first = swapbuffer
- 
-    # get the list of attributes to copy from the second graph but don't copy the GUIDs because they are newly created        
-    attribute_names = [attr for attr in second.vs[0].attribute_names() if attr != 'GUID__']
+
     nb_nodes_first = len(first.vs)
      
     # first copy the nodes
     for index_v in range(len(second.vs)):
-        first.add_node()
-        for attr_name in attribute_names:
-            first.vs[nb_nodes_first + index_v][attr_name] = second.vs[index_v][attr_name]
+        new_node = first.add_node()
+
+        for attrib in second.vs[index_v].attributes().keys():
+
+            #skip copying the GUID
+            if attrib == "GUID__":
+                continue
+
+            try:
+                #skip None attribs
+                if second.vs[index_v][attrib] is None:
+                    continue
+
+                #copy the other attribs
+                first.vs[new_node][attrib] = second.vs[index_v][attrib]
+            except KeyError:
+                #deal with the error where too many attributes are reported for each node
+                pass
  
     # then copy the edges
     for index_e in range(len(second.es)):
