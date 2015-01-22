@@ -3,6 +3,7 @@ from rule_primitive import RulePrimitive
 from messages import TransformationException
 from core.himesis import Himesis
 
+import traceback
 
 class Rewriter(RulePrimitive):
     '''
@@ -38,6 +39,12 @@ class Rewriter(RulePrimitive):
             try:
                 self.condition.execute(packet, mapping)     # Sets dirty nodes as well
             except Exception, e:
+
+                tb = traceback.format_exc()
+                print("Rewriter Error: " + str(e))
+                print(tb)
+                print("packet.graph: " + packet.graph.name)
+                print("self.condition: " + self.condition.name)
                 raise
                 self.is_success = False
                 self.exception = TransformationException(e)
