@@ -276,8 +276,8 @@ pass
             #print("Node Attributes: " + str(node.attributes()))
             for attrib in node.attributes().keys():
                 try:
-                    node[attrib] = node[attrib]
-                    node_attributes.append(attrib)
+                    if node[attrib] is not None:
+                        node_attributes.append(attrib)
                 except KeyError:
                     pass
 
@@ -321,8 +321,8 @@ pass
             #print("Node Attributes: " + str(node.attributes()))
             for attrib in node.attributes().keys():
                 try:
-                    node[attrib] = node[attrib]
-                    node_attributes.append(attrib)
+                    if node[attrib] is not None:
+                        node_attributes.append(attrib)
                 except KeyError:
                     pass
 
@@ -392,9 +392,18 @@ pass
             # except Exception:
             #     pass
             #
+
+
+            #very hacky
+            #why is this needed?
+            #TODO: Fix
             # try:
-            #     pass
             #     #node["MT_pre__associationType"] = None
+            #     node["MT_pre__associationType"] = node["MT_pre__associationType"]
+            #     print("node[MT_pre__associationType]")
+            #     print(graph.name)
+            #     print(node["mm__"])
+            #     print(node["MT_pre__associationType"])
             # except Exception:
             #     pass
             #

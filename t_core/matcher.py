@@ -45,9 +45,7 @@ class Matcher(RulePrimitive):
     def packet_in(self, packet):
         self.exception = None
         self.is_success = False
-        #print("Heelo: " + str(packet.match_sets))
-        #print(self.condition)
-        #print(self.condition[HC.GUID])
+
         if self.condition[HC.GUID] in packet.match_sets:
             matchSet = packet.match_sets[self.condition[HC.GUID]]
         else:
@@ -73,6 +71,9 @@ class Matcher(RulePrimitive):
                 tb = traceback.format_exc()
                 print("Matcher Error: " + str(e))
                 print(tb)
+                print("packet.graph: " + packet.graph.name)
+                print("self.condition: " + self.condition.name)
+
             elif self.warning_level == 2:
                 raise Exception("Matcher Error: " + str(e))
 
