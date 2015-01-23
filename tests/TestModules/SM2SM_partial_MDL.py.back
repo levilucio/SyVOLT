@@ -3,7 +3,7 @@ __SM2SM_partial_MDL.py_____________________________________________________
 
 Automatically generated AToM3 Model File (Do not modify directly)
 Author: levi
-Modified: Thu Jan 22 21:05:52 2015
+Modified: Thu Jan 22 21:05:14 2015
 ___________________________________________________________________________
 """
 from stickylink import *
@@ -17,20 +17,20 @@ from Male_T import *
 from Attribute import *
 from match_contains import *
 from apply_contains import *
+from backward_link import *
 from directLink_T import *
 from paired_with import *
-from trace_link import *
 from hasAttr_S import *
 from graph_hasAttr_S import *
 from graph_match_contains import *
 from graph_Attribute import *
+from graph_backward_link import *
 from graph_directLink_T import *
 from graph_MatchModel import *
 from graph_apply_contains import *
 from graph_Station_T import *
 from graph_Station_S import *
 from graph_paired_with import *
-from graph_trace_link import *
 from graph_Male_T import *
 from graph_ApplyModel import *
 from graph_Male_S import *
@@ -351,6 +351,46 @@ def SM2SM_partial_MDL(self, rootNode, PoliceStationMMRootNode=None):
     self.globalAndLocalPostcondition(self.obj50, rootNode)
     self.obj50.postAction( rootNode.CREATE )
 
+    self.obj51=backward_link(self)
+    self.obj51.isGraphObjectVisual = True
+
+    if(hasattr(self.obj51, '_setHierarchicalLink')):
+      self.obj51._setHierarchicalLink(False)
+
+    self.obj51.graphClass_= graph_backward_link
+    if self.genGraphics:
+       new_obj = graph_backward_link(581.0,371.0,self.obj51)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("backward_link", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj51.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj51)
+    self.globalAndLocalPostcondition(self.obj51, rootNode)
+    self.obj51.postAction( rootNode.CREATE )
+
+    self.obj52=backward_link(self)
+    self.obj52.isGraphObjectVisual = True
+
+    if(hasattr(self.obj52, '_setHierarchicalLink')):
+      self.obj52._setHierarchicalLink(False)
+
+    self.obj52.graphClass_= graph_backward_link
+    if self.genGraphics:
+       new_obj = graph_backward_link(841.0,371.0,self.obj52)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("backward_link", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj52.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj52)
+    self.globalAndLocalPostcondition(self.obj52, rootNode)
+    self.obj52.postAction( rootNode.CREATE )
+
     self.obj54=directLink_T(self)
     self.obj54.isGraphObjectVisual = True
 
@@ -393,46 +433,6 @@ def SM2SM_partial_MDL(self, rootNode, PoliceStationMMRootNode=None):
     rootNode.addNode(self.obj55)
     self.globalAndLocalPostcondition(self.obj55, rootNode)
     self.obj55.postAction( rootNode.CREATE )
-
-    self.obj65=trace_link(self)
-    self.obj65.isGraphObjectVisual = True
-
-    if(hasattr(self.obj65, '_setHierarchicalLink')):
-      self.obj65._setHierarchicalLink(False)
-
-    self.obj65.graphClass_= graph_trace_link
-    if self.genGraphics:
-       new_obj = graph_trace_link(581.0,371.0,self.obj65)
-       new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("trace_link", new_obj.tag)
-       new_obj.layConstraints = dict() # Graphical Layout Constraints 
-    else: new_obj = None
-    self.obj65.graphObject_ = new_obj
-
-    # Add node to the root: rootNode
-    rootNode.addNode(self.obj65)
-    self.globalAndLocalPostcondition(self.obj65, rootNode)
-    self.obj65.postAction( rootNode.CREATE )
-
-    self.obj66=trace_link(self)
-    self.obj66.isGraphObjectVisual = True
-
-    if(hasattr(self.obj66, '_setHierarchicalLink')):
-      self.obj66._setHierarchicalLink(False)
-
-    self.obj66.graphClass_= graph_trace_link
-    if self.genGraphics:
-       new_obj = graph_trace_link(841.0,371.0,self.obj66)
-       new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("trace_link", new_obj.tag)
-       new_obj.layConstraints = dict() # Graphical Layout Constraints 
-    else: new_obj = None
-    self.obj66.graphObject_ = new_obj
-
-    # Add node to the root: rootNode
-    rootNode.addNode(self.obj66)
-    self.globalAndLocalPostcondition(self.obj66, rootNode)
-    self.obj66.postAction( rootNode.CREATE )
 
     self.obj56=hasAttr_S(self)
     self.obj56.isGraphObjectVisual = True
@@ -492,10 +492,10 @@ def SM2SM_partial_MDL(self, rootNode, PoliceStationMMRootNode=None):
     # Connections for obj39 (graphObject_: Obj4) named s_
     self.drawConnections(
 (self.obj39,self.obj54,[581.0, 461.0, 711.0, 461.0],"true", 2),
-(self.obj39,self.obj65,[581.0, 461.0, 581.0, 371.0],"true", 0) )
+(self.obj39,self.obj51,[581.0, 461.0, 581.0, 371.0],"true", 2) )
     # Connections for obj40 (graphObject_: Obj5) named s_
     self.drawConnections(
-(self.obj40,self.obj66,[841.0, 461.0, 841.0, 371.0],"true", 0) )
+(self.obj40,self.obj52,[841.0, 461.0, 841.0, 371.0],"true", 2) )
     # Connections for obj41 (graphObject_: Obj6) named name
     self.drawConnections(
  )
@@ -514,18 +514,18 @@ def SM2SM_partial_MDL(self, rootNode, PoliceStationMMRootNode=None):
     # Connections for obj50 (graphObject_: Obj15) of type apply_contains
     self.drawConnections(
 (self.obj50,self.obj40,[593.5, 501.0, 841.0, 461.0],"true", 2) )
+    # Connections for obj51 (graphObject_: Obj16) of type backward_link
+    self.drawConnections(
+(self.obj51,self.obj35,[581.0, 371.0, 581.0, 281.0],"true", 2) )
+    # Connections for obj52 (graphObject_: Obj17) of type backward_link
+    self.drawConnections(
+(self.obj52,self.obj36,[841.0, 371.0, 841.0, 281.0],"true", 2) )
     # Connections for obj54 (graphObject_: Obj19) of type directLink_T
     self.drawConnections(
 (self.obj54,self.obj40,[711.0, 461.0, 841.0, 461.0],"true", 2) )
     # Connections for obj55 (graphObject_: Obj20) of type paired_with
     self.drawConnections(
 (self.obj55,self.obj38,[343.5, 361.0, 346.0, 541.0],"true", 2) )
-    # Connections for obj65 (graphObject_: Obj27) of type trace_link
-    self.drawConnections(
-(self.obj65,self.obj35,[581.0, 371.0, 581.0, 281.0],"true", 2) )
-    # Connections for obj66 (graphObject_: Obj28) of type trace_link
-    self.drawConnections(
-(self.obj66,self.obj36,[841.0, 371.0, 841.0, 281.0],"true", 2) )
     # Connections for obj56 (graphObject_: Obj21) of type hasAttr_S
     self.drawConnections(
 (self.obj56,self.obj41,[597.0, 195.5, 613.0, 110.0],"true", 2) )
