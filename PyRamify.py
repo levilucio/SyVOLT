@@ -887,6 +887,9 @@ pass
 
         print("Rule combinators: Generating " + str(len(output)) + " different possibilities")
 
+
+        rewrite_name = rewriter_graph.name + "_rewriter"
+
         j = 0
         for remove_set in reversed(output):
 
@@ -921,9 +924,6 @@ pass
             rule = self.load_class(out_dir + "/" + new_name)
             backward_pattern = rule.values()[0]
 
-            for n in range(len(backward_pattern.vs)):
-                node = backward_pattern.vs[n]
-                print("bp_mm__: " + node["mm__"])
 
             #graph_to_dot(new_name, backward_pattern)
             #graph_to_dot("remove_graph" + str(j), new_graph)
@@ -977,13 +977,10 @@ pass
             rewriter_graph_copy.pre = self.copy_graph(backward_pattern)
             graph_to_dot(rewriter_graph_copy.pre.name + "_pre", rewriter_graph_copy.pre)
 
-            for n in range(len(rewriter_graph_copy.pre.vs)):
-                node = rewriter_graph_copy.pre.vs[n]
-                print("mm__: " + node["mm__"])
 
-            rewriter_graph_copy.name += "_rewriter"
+            rewriter_graph_copy.name = rewrite_name + "_" + str(j)
             file_name = rewriter_graph_copy.compile(out_dir)
-            print("Compiled to: " + file_name)
+            #print("Compiled to: " + file_name)
 
             rewriter_graph2 = self.load_class(out_dir + rewriter_graph_copy.name)
             rewriter_graph2 = rewriter_graph2.values()[0]
@@ -994,12 +991,10 @@ pass
             # print("Hierarchy:")
             # print(inspect.getmro(rewriter_graph2.__class__))
 
-            graph_to_dot(rewriter_graph2.name + "_loaded_rewriter", rewriter_graph2)
+            #graph_to_dot(rewriter_graph2.name + "_loaded_rewriter", rewriter_graph2)
 
             rewriter_graph2.pre = self.copy_graph(backward_pattern)
-            for n in range(len(rewriter_graph2.pre.vs)):
-                node = rewriter_graph2.pre.vs[n]
-                print("mm2before__: " + node["mm__"])
+
 
             rewrite_name = rewriter_graph2.name
             rewriter_graph2.name += "_loaded_rewriter"
@@ -1010,7 +1005,7 @@ pass
 
             for n in range(len(rewriter_graph2.pre.vs)):
                 node = rewriter_graph2.pre.vs[n]
-                print("mm2__: " + node["mm__"])
+                #print("mm2__: " + node["mm__"])
 
             rewriter = Rewriter(rewriter_graph2)
 
