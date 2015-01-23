@@ -4,13 +4,14 @@ Created on 2015-01-19
 @author: levi
 '''
 import unittest
+import inspect
 
 from t_core.messages import Packet
 from t_core.iterator import Iterator
 from t_core.matcher import Matcher
 from t_core.rewriter import Rewriter
 
-from himesis_utils import graph_to_dot
+from himesis_utils import graph_to_dot, print_graph
 
 from PyRamify import PyRamify
 
@@ -35,37 +36,54 @@ class Test(unittest.TestCase):
         matcher = HSM2SM_py[0][0]
         rewriter = HSM2SM_py[0][1]
         
-        p.graph = HSM2SM_partial() 
-         
-        graph_to_dot("test_before_SM2SM_partial", HSM2SM_partial())
+#        print rewriter.condition.vs[3]["MT_label__"]
+#         rewriter.condition.vs[newnode]["MT_label__"] = """100"""
+#         rewriter.condition.vs[newnode]["mm__"] = """MT_post__Station_T"""        
+#        print rewriter.condition.vs[1]["MT_label__"]
+#        print rewriter.condition.vs[1]["mm__"]
+
+#        graph_to_dot("rewriter", rewriter.condition)
+
+#         for v in range(len(rewriter.condition.vs)):
+#             print rewriter.condition.vs[v] 
+
+
+#         for v in range(len(rewriter.condition.vs)):
+#             rewriter.condition.vs[v]["MT_label__"] = """100"""  
+            
+#          print_graph(rewriter.condition)
         
-        graph_to_dot("test_SM2SM", p.graph)
-         
-        comb_match = matcher
-        comb_rewrite = rewriter
+        
+        p.graph = HSM2SM_partial() 
+#         comb_match = matcher
+#         comb_rewrite = rewriter
 # 
 #         graph_to_dot("test_SM2SM_graph", p.graph)
         graph_to_dot("comb_SM2SM_matcher", matcher.condition)
         graph_to_dot("comb_SM2SM_rewriter", rewriter.condition)
+        
+#         for v in range(len(comb_rewrite.condition.vs)):
+#             print comb_rewrite.condition.vs[v] 
+#           
+        p = matcher.packet_in(p)
           
-        comb_match.packet_in(p)
-          
-        if comb_match.is_success:
+        if matcher.is_success:
             print "Yes!"
         else:
             print "no"
               
         p = i.packet_in(p)
-        p = comb_rewrite.packet_in(p)
+        p = rewriter.packet_in(p)
           
-        if comb_rewrite.is_success:
+        if rewriter.is_success:
             print "Yes!"
         else:
             print "no"
           
         graph_to_dot("test_after_SM2SM", p.graph)
         
-            
+
+                   
         
         
 

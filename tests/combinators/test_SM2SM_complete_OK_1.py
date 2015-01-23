@@ -11,7 +11,7 @@ from t_core.iterator import Iterator
 from t_core.matcher import Matcher
 from t_core.rewriter import Rewriter
 
-from himesis_utils import graph_to_dot
+from himesis_utils import graph_to_dot, print_graph
 
 from PyRamify import PyRamify
 
@@ -66,8 +66,7 @@ class Test(unittest.TestCase):
           
         graph_to_dot("test_after_SM2SM", p.graph)
         
-            
-        
+
         
 
 
