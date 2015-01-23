@@ -34,7 +34,7 @@ class Test(unittest.TestCase):
         pyramify = PyRamify()
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
-            pyramify.ramify_directory("dir_for_pyramify/", True)
+            pyramify.ramify_directory("tests/matchers/dir_for_pyramify/", True)
 
         HSM2SM_py = self.matchRulePatterns["HSM2SM"]
         print(HSM2SM_py)
