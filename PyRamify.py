@@ -796,18 +796,19 @@ pass
 
 
         #TODO: Get rewriter graph from matcher rewriter
-        rewriter_graph = self.copy_graph(return_graph)
+        rewriter_graph = self.make_rewriter(return_graph)
+        #self.copy_graph(return_graph)
 
 
-        #TODO: Handled by attr changing?
-
-        # turn the backward links into trace links
-
-        backwards_links2 = self.find_nodes_with_mm(rewriter_graph, ["backward_link"])
-        #print(backwards_links2)
-
-        for node in backwards_links2:
-             node["mm__"] = "trace_link"
+        # #TODO: Handled by attr changing?
+        #
+        # # turn the backward links into trace links
+        #
+        # backwards_links2 = self.find_nodes_with_mm(rewriter_graph, ["backward_link"])
+        # #print(backwards_links2)
+        #
+        # for node in backwards_links2:
+        #      node["mm__"] = "trace_link"
 
 
 
@@ -837,7 +838,7 @@ pass
 
         #graph_to_dot("rewriter_graph_before", rewriter_graph)
         #Turn rewriter_graph into RHS
-        rewriter_graph = self.makePostConditionPattern(rewriter_graph)
+        #rewriter_graph = self.makePostConditionPattern(rewriter_graph)
 
 
         #graph_to_dot("rewriter_graph", rewriter_graph)
@@ -882,7 +883,7 @@ pass
 
 
         # change the attribs in this graph
-        rewriter_graph = self.changeAttrType(rewriter_graph, False)
+        #rewriter_graph = self.changeAttrType(rewriter_graph, False)
 
         print("Rule combinators: Generating " + str(len(output)) + " different possibilities")
 
@@ -908,7 +909,7 @@ pass
 
             #write out the file
             new_graph.name = new_name
-            new_graph["name"] = new_name
+            new_graph["name"] = new_name + "_rc_matcher"
 
 
             #BIG HACK
@@ -919,6 +920,10 @@ pass
 
             rule = self.load_class(out_dir + "/" + new_name)
             backward_pattern = rule.values()[0]
+
+            for n in range(len(backward_pattern.vs)):
+                node = backward_pattern.vs[n]
+                print("bp_mm__: " + node["mm__"])
 
             #graph_to_dot(new_name, backward_pattern)
             #graph_to_dot("remove_graph" + str(j), new_graph)
@@ -970,9 +975,15 @@ pass
             rewriter_graph_copy = self.copy_graph(rewriter_graph)
 
             rewriter_graph_copy.pre = self.copy_graph(backward_pattern)
+            graph_to_dot(rewriter_graph_copy.pre.name + "_pre", rewriter_graph_copy.pre)
+
+            for n in range(len(rewriter_graph_copy.pre.vs)):
+                node = rewriter_graph_copy.pre.vs[n]
+                print("mm__: " + node["mm__"])
+
             rewriter_graph_copy.name += "_rewriter"
             file_name = rewriter_graph_copy.compile(out_dir)
-            #print("Compiled to: " + file_name)
+            print("Compiled to: " + file_name)
 
             rewriter_graph2 = self.load_class(out_dir + rewriter_graph_copy.name)
             rewriter_graph2 = rewriter_graph2.values()[0]
@@ -983,8 +994,23 @@ pass
             # print("Hierarchy:")
             # print(inspect.getmro(rewriter_graph2.__class__))
 
+            graph_to_dot(rewriter_graph2.name + "_loaded_rewriter", rewriter_graph2)
 
             rewriter_graph2.pre = self.copy_graph(backward_pattern)
+            for n in range(len(rewriter_graph2.pre.vs)):
+                node = rewriter_graph2.pre.vs[n]
+                print("mm2before__: " + node["mm__"])
+
+            rewrite_name = rewriter_graph2.name
+            rewriter_graph2.name += "_loaded_rewriter"
+            rewriter_graph2.compile("./patterns")
+            rewriter_graph2.name = rewrite_name
+
+            rewriter_graph2.pre = self.copy_graph(backward_pattern)
+
+            for n in range(len(rewriter_graph2.pre.vs)):
+                node = rewriter_graph2.pre.vs[n]
+                print("mm2__: " + node["mm__"])
 
             rewriter = Rewriter(rewriter_graph2)
 
@@ -1002,8 +1028,15 @@ pass
 
 
     def remove_equation_nodes(self, graph):
-        structure_nodes = self.find_nodes_with_mm(graph, ["Equation", "leftExpr", "rightExpr"])
-        graph.delete_nodes(structure_nodes)
+        eq_nodes = self.find_nodes_with_mm(graph, ["Equation"])
+        nodes_to_remove = []
+        for eq in eq_nodes:
+            eq_num = self.get_node_num(graph, eq)
+            nodes_to_remove += self.flood_find_nodes(eq_num, graph, ["Attribute"])
+        nodes_to_remove = list(set(nodes_to_remove))
+
+
+        graph.delete_nodes(nodes_to_remove)
         return graph
 
     def remove_structure_nodes(self, graph):
@@ -1035,6 +1068,8 @@ pass
         return return_nodes
 
     def get_match_graph(self, graph):
+
+        graph_to_dot(graph.name + "_original", graph)
         graph = self.remove_equation_nodes(graph)
 
         apply_contain_node = self.find_nodes_with_mm(graph, ["apply_contains"])
@@ -1043,13 +1078,15 @@ pass
         apply_nodes = self.flood_find_nodes(apply_contain_node, graph, ["ApplyModel", "backward_link", "trace_link"])
         apply_nodes = list(set(apply_nodes))
 
+        for a in apply_nodes:
+            print(graph.vs[a]["mm__"])
+
         backward_links = self.find_nodes_with_mm(graph, ["backward_link"])
         attached_apply = []
         for bl in backward_links:
             attached_apply += self.look_for_attached(bl, graph)
 
         for an in attached_apply:
-
             try:
                 apply_nodes.remove(an)
             except ValueError:
@@ -1169,7 +1206,10 @@ pass
             if node["mm__"] != "MT_pre__directLink_S":
                 node["MT_pre__associationType"] = None
 
-        graph.compile(out_dir)
+        file_name = graph.compile(out_dir)
+        print("Match pattern compiled to: " + file_name)
+
+        graph_to_dot(graph.name + "_match_pattern", graph)
 
         #have to reload the graph to define all the eval functions
         rule = self.load_class(out_dir + "/" + new_name)
@@ -1180,7 +1220,7 @@ pass
         rewriter.name += "_rewriter"
         #graph_to_dot("the_rewriter_graph" + rewriter.name, rewriter)
 
-        rewriter.compile(out_dir)
+        file_name = rewriter.compile(out_dir)
 
         rewriter_dict = self.load_class(out_dir + rewriter.name)
         rewriter = rewriter_dict.values()[0]
