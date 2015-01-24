@@ -40,6 +40,7 @@ class PrologAttributeEquationEvaluator(AttributeEquationSolver):
         # in case it's a constant, return it's value as a list
         elif pathCondition.vs[node]['mm__'] == 'Constant':
             constant = pathCondition.vs[node]['value']
+            print "------> " + constant
             constAsList = "["
             for c in range(0,len(constant)):
                 constAsList += "'" + constant[c] + "'"
