@@ -553,7 +553,7 @@ pass
         complete_pattern = Matcher(graph)
 
         #do debugging drawing
-        graph_to_dot(self.get_RAMified_name(name), graph)
+        graph_to_dot(name, graph)
 
         return {name:[complete_pattern]}
 
@@ -603,8 +603,8 @@ pass
             temp = raw_input("Press ENTER to continue, or Ctrl-C to abort:\n")
 
         #change the graph's name
-        graph.name = self.get_RAMified_name(name)
-        graph["name"] = self.get_RAMified_name(name)
+        #graph.name = self.get_RAMified_name(name)
+        #graph["name"] = self.get_RAMified_name(name)
 
         #output the graph
         #graph.compile(out_dir)
@@ -672,7 +672,7 @@ pass
 
         #create a new name for this backward matcher
         #replace the pattern name with the partial pattern name
-        new_name = self.get_RAMified_name(name, True) + str(i)
+        new_name = new_graph.name + "_rule_trace_checker" + str(i)
         i += 1
 
         #write out the file
@@ -683,7 +683,9 @@ pass
         #BIG HACK
         new_graph = self.fix_attrs_for_backward_patterns(new_graph)
 
-        new_graph.compile(out_dir)
+
+        file_name = new_graph.compile(out_dir)
+        print("Backward patterns compiled to: " + file_name)
 
         rule = self.load_class(out_dir + "/" + new_name)
         backward_pattern = rule[rule.keys()[0]]
@@ -767,8 +769,8 @@ pass
         graph = self.do_RAMify(graph, out_dir, remove_rule_nodes = False)
 
         #change the graph's name
-        graph.name = self.get_RAMified_name(name)
-        graph["name"] = self.get_RAMified_name(name)
+        #graph.name = self.get_RAMified_name(name)
+        #graph["name"] = self.get_RAMified_name(name)
 
         #output the graph
         #graph.compile(out_dir)
@@ -888,7 +890,7 @@ pass
         print("Rule combinators: Generating " + str(len(output)) + " different possibilities")
 
 
-        rewrite_name = rewriter_graph.name + "_rewriter"
+        rewrite_name = rewriter_graph.name + "_rule_combinator_rewriter"
 
         j = 0
         for remove_set in reversed(output):
@@ -918,8 +920,8 @@ pass
             #BIG HACK
             new_graph = self.fix_attrs_for_backward_patterns(new_graph)
 
-
-            new_graph.compile(out_dir)
+            file_name = new_graph.compile(out_dir)
+            print("Rule combinator matcher compiled to: " + file_name)
 
             rule = self.load_class(out_dir + "/" + new_name)
             backward_pattern = rule.values()[0]
@@ -950,12 +952,12 @@ pass
 
                 NAC_graph = self.makePreConditionPatternNAC(NAC_graph)
 
-                NAC_graph.name += "_NAC"
+                NAC_graph.name += "_rule_combinator_NAC"
 
                 NAC_graph.LHS = backward_pattern
 
                 file_name = NAC_graph.compile(out_dir)
-                #print("Compiled to: " + file_name)
+                print("Nac graph compiled to: " + file_name)
 
                 NAC_graph = self.load_class(out_dir + NAC_graph.name, [backward_pattern])
                 NAC_graph = NAC_graph.values()[0]
@@ -975,12 +977,12 @@ pass
             rewriter_graph_copy = self.copy_graph(rewriter_graph)
 
             rewriter_graph_copy.pre = self.copy_graph(backward_pattern)
-            graph_to_dot(rewriter_graph_copy.pre.name + "_pre", rewriter_graph_copy.pre)
+            #graph_to_dot(rewriter_graph_copy.pre.name + "_pre", rewriter_graph_copy.pre)
 
 
             rewriter_graph_copy.name = rewrite_name + "_" + str(j)
             file_name = rewriter_graph_copy.compile(out_dir)
-            #print("Compiled to: " + file_name)
+            print("Rewriter graph compiled to: " + file_name)
 
             rewriter_graph2 = self.load_class(out_dir + rewriter_graph_copy.name)
             rewriter_graph2 = rewriter_graph2.values()[0]
@@ -996,10 +998,10 @@ pass
             rewriter_graph2.pre = self.copy_graph(backward_pattern)
 
 
-            rewrite_name = rewriter_graph2.name
-            rewriter_graph2.name += "_loaded_rewriter"
-            rewriter_graph2.compile("./patterns")
-            rewriter_graph2.name = rewrite_name
+            #rewrite_name = rewriter_graph2.name
+            #rewriter_graph2.name += "_loaded_rewriter"
+            #rewriter_graph2.compile("./patterns")
+            #rewriter_graph2.name = rewrite_name
 
             rewriter_graph2.pre = self.copy_graph(backward_pattern)
 
@@ -1173,10 +1175,7 @@ pass
         
         #graph_to_dot("rewriter_pyr", rewriter)
 
-        new_name = name + "_matchLHS"
-        
-        graph.name = new_name
-        graph["name"] = new_name
+
         
         out_dir = "./patterns/"
 
@@ -1185,7 +1184,6 @@ pass
         graph = self.do_RAMify(graph, out_dir, remove_rule_nodes = False)
 
         graph["mm__"] = [graph["mm__"][0], 'MoTifRule']
-        graph["name"] = ""
         graph["MT_constraint__"] = self.get_default_constraint()
 
 
@@ -1201,21 +1199,27 @@ pass
             if node["mm__"] != "MT_pre__directLink_S":
                 node["MT_pre__associationType"] = None
 
-        file_name = graph.compile(out_dir)
-        print("Match pattern compiled to: " + file_name)
+        old_name = graph.name
 
-        graph_to_dot(graph.name + "_match_pattern", graph)
+
+
+        graph.name = old_name + "_match_pattern_matcher"
+        file_name = graph.compile(out_dir)
+        print("Match pattern matcher compiled to: " + file_name)
+
+        graph_to_dot(graph.name, graph)
 
         #have to reload the graph to define all the eval functions
-        rule = self.load_class(out_dir + "/" + new_name)
+        rule = self.load_class(out_dir + "/" + old_name + "_match_pattern_matcher")
         match_graph = rule.values()[0]
 
 
         rewriter.pre = match_graph
-        rewriter.name += "_rewriter"
+        rewriter.name = old_name + "_match_pattern_rewriter"
         #graph_to_dot("the_rewriter_graph" + rewriter.name, rewriter)
 
         file_name = rewriter.compile(out_dir)
+        print("Match pattern rewriter compiled to: " + file_name)
 
         rewriter_dict = self.load_class(out_dir + rewriter.name)
         rewriter = rewriter_dict.values()[0]
