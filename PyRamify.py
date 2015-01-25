@@ -243,8 +243,6 @@ pass
     '''
     def changeAttrType(self, graph, make_pre = True):
 
-
-
         #change mm of the graph
 
         try:
@@ -256,43 +254,30 @@ pass
             graph["mm__"] = "MM"
 
 
+
         if make_pre:
             #set the default constraint
             graph["MT_constraint__"] = self.get_default_constraint()
         else:
             graph["MT_action__"] = self.get_default_action()
 
+        attribs_to_skip = ["GUID__", "mm__", "MT_label__", "MT_subtypes__", "MT_dirty__", "MT_subtypeMatching__"]
+
 
         #add 'MT_pre__' to all non-GUID attributes
         for i in range(len(graph.vs)):
             node = graph.vs[i]
-
-
             #add MT_PRECOND_PREFIX to attrib names
-            attribs_to_skip = ["GUID__", "mm__", "MT_label__", "MT_subtypes__", "MT_dirty__", "MT_subtypeMatching__"]
 
-            #work around the igraph bug about giving too many attributes
-            node_attributes = []
-            #print("Node Attributes: " + str(node.attributes()))
-            for attrib in node.attributes().keys():
-                try:
-                    if node[attrib] is not None:
-                        node_attributes.append(attrib)
-                except KeyError:
-                    pass
 
-            #print("Attributes: " + str(node_attributes))
+            for attrib in node.attribute_names():
 
-            for attrib in node_attributes:
+                if node[attrib] is None:
+                    continue
 
                 #skip some of the attribs
                 if attrib in attribs_to_skip:
                     continue
-
-                #if the value is none, skip it
-                if node[attrib] is None:
-                    continue
-
 
                 #skip already RAMified attribs
                 #TODO: Fix for double RAMification
@@ -307,28 +292,34 @@ pass
                 val = copy.deepcopy(node[attrib])
 
                 #delete the attrib from the node
-                del node[attrib]
+                node[attrib] = None
+
 
                 #re-add the value with the new attribute name
 
                 if make_pre:
-                    node[Himesis.Constants.MT_PRECOND_PREFIX + attrib] = val
+                    new_attrib_name = Himesis.Constants.MT_PRECOND_PREFIX + attrib
                 else:
-                    node[Himesis.Constants.MT_POSTCOND_PREFIX + attrib] = val
+                    new_attrib_name = Himesis.Constants.MT_POSTCOND_PREFIX + attrib
+
+                node[new_attrib_name] = val
 
 
-            node_attributes = []
-            #print("Node Attributes: " + str(node.attributes()))
-            for attrib in node.attributes().keys():
-                try:
-                    if node[attrib] is not None:
-                        node_attributes.append(attrib)
-                except KeyError:
-                    pass
+
+        for i in range(len(graph.vs)):
+            node = graph.vs[i]
+
+
+            #print("\n\n\nNode: " + node["mm__"])
+            #print("Attributes after: " + str(mm_attribs[node["mm__"]]))
+
 
             #change attrib values
             #hacky, to fix some edge cases
-            for attrib in node_attributes:
+            for attrib in node.attribute_names():
+
+                if node[attrib] is None:
+                    continue
 
                 #add the prefix to the mm
                 if attrib == "mm__":
@@ -348,27 +339,30 @@ pass
                     continue
 
                 #hacky, some attribs are set to none
-                none_types = ["MT_pre__directLink_S", "MT_post__directLink_S",
-                              "MT_pre__trace_link", "MT_post__trace_link",
-                              "directLink_S", "trace_link"]
-                none_attrib = ["MT_pre__cardinality", "MT_pre__classtype", "MT_pre__name",
-                               "MT_post__cardinality", "MT_post__classtype", "MT_post__name"]
-                if node["mm__"] in none_types and attrib in none_attrib:
-                    node[attrib] = None
-                    continue
-
-                none_types2 = ["MT_pre__trace_link", "MT_post__trace_link", "trace_link", "backward_link"]
-                none_attrib2 = ["MT_pre__associationType", "MT_post__associationType", "associationType"]
-                if node["mm__"] in none_types2 and attrib in none_attrib2:
-                    node[attrib] = None
-                    continue
+                # none_types = ["MT_pre__directLink_S", "MT_post__directLink_S",
+                #               "MT_pre__trace_link", "MT_post__trace_link",
+                #               "directLink_S", "trace_link"]
+                # none_attrib = ["MT_pre__cardinality", "MT_pre__classtype", "MT_pre__name",
+                #                "MT_post__cardinality", "MT_post__classtype", "MT_post__name"]
+                # if node["mm__"] in none_types and attrib in none_attrib:
+                #     node[attrib] = None
+                #     continue
+                #
+                # none_types2 = ["MT_pre__trace_link", "MT_post__trace_link", "trace_link", "backward_link"]
+                # none_attrib2 = ["MT_pre__associationType", "MT_post__associationType", "associationType"]
+                # if node["mm__"] in none_types2 and attrib in none_attrib2:
+                #     node[attrib] = None
+                #     continue
 
                 #set the other values to the default match code
                 if make_pre:
                     node[attrib] = self.get_default_match_code()
                 else:
                     node[attrib] = self.get_default_rewrite_code()
-                
+
+                #Hack for Attributes
+                if "Attribute" in node["mm__"] and attrib == "MT_pre__name":
+                    node[attrib] = "if attr_value == \"name\":\n    return True\nreturn False\n"
 
             #set these properties
 
@@ -423,7 +417,7 @@ pass
 
 
         #rename the class
-        graph["name"] = self.get_RAMified_name(input_name)
+        #graph["name"] = self.get_RAMified_name(input_name)
 
         #turn the backward links into trace links
         backwards_links = self.find_nodes_with_mm(graph, ["backward_link"])
@@ -431,13 +425,22 @@ pass
             node["mm__"] = "trace_link"
 
         #in some cases, the 'structural' or 'rule' nodes are removed
-        if remove_rule_nodes == True:
+        if remove_rule_nodes is True:
             remove_nodes = self.find_nodes_with_mm(graph, ["MatchModel", "ApplyModel", "paired_with", "match_contains", "apply_contains", "directLink_T"])
             print("Removing rule nodes")
             graph.delete_nodes(remove_nodes)
-        
+
+        #
+        # for n in graph.vs:
+        #     if "Attribute" in n["mm__"]:
+        #         print(n)
+
         #make sure this graph becomes a precondition pattern
         graph = self.makePreConditionPattern(graph)
+
+        # for n in graph.vs:
+        #     if "Attribute" in n["mm__"]:
+        #         print(n)
 
         #change the attribs in this graph
         graph = self.changeAttrType(graph)

@@ -575,8 +575,12 @@ class HimesisPreConditionPatternNAC(HimesisPreConditionPattern):
                 new_node = G.add_node()
                 # Now do a conjunction of the attributes
                 for attr in v1.attribute_names():
+                    if v1[attr] is None:
+                        continue
                     G.vs[new_node][attr] = v1[attr]
                 for attr in v2.attribute_names():
+                    if v2[attr] is None:
+                        continue
                     # The attribute is not in v1
                     if attr not in G.vs[new_node].attribute_names():
                         G.vs[new_node][attr] = v2[attr]
