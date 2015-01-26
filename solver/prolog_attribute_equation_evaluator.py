@@ -37,7 +37,7 @@ class PrologAttributeEquationEvaluator(AttributeEquationSolver):
         if pathCondition.vs[node]['mm__'] == 'Attribute':
             variablesInExpression.append("X" + str(node))
             return "X" + str(node)
-        # in case it's a constant, return it's value as a list
+        # in case it's a constant, return its value as a list
         elif pathCondition.vs[node]['mm__'] == 'Constant':
             constant = pathCondition.vs[node]['value']
             print "------> " + constant
@@ -101,6 +101,7 @@ class PrologAttributeEquationEvaluator(AttributeEquationSolver):
                 clauseBody += concat
 
         clauseHead = "solve("
+        variablesInExpression = list(set(variablesInExpression))
         for var in range(0,len(variablesInExpression)):
             if var < len(variablesInExpression)-1:
                 clauseHead += variablesInExpression[var] + ","
@@ -119,11 +120,16 @@ class PrologAttributeEquationEvaluator(AttributeEquationSolver):
         p = Prolog()
         p.assertz(prologInput)           
 #        l = list(p.query(clauseHead))   
-        result = list(p.query(clauseHead))
+        result = list(p.query(clauseHead+'.'))
+        
+        print "Prolog result:"
+        print result
         
         if result == []:
+            if self.verbosity >= 2 : print "Prolog check failed!"
             return False
         else:
+            if self.verbosity >= 2 : print "Prolog check succeeded!"
             return True
 
 
