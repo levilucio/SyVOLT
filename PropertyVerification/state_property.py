@@ -7,6 +7,7 @@ from abc import ABCMeta, abstractmethod
 from property import Property
 #from atomic_state_property import AtomicStateProperty
 
+from disambiguate import Disambiguator
 from himesis_utils import disjoint_model_union
 from copy import deepcopy
 from himesis_utils import graph_to_dot
@@ -84,15 +85,16 @@ class StateProperty(Property):
         for state in StateSpace.symbStateSpace:
             if state != ():
                 #Initially, merged_state has the first rule of the the current state being examined in the SymbolicStateSpace
-                merged_state = deepcopy(state[0])
-                rule_index = 1
+                #merged_state = deepcopy(state[0])
+                merged_state = deepcopy(state)
+                #rule_index = 1
                 numberOfIsolatedMatchesForAllAtomicStateProperties=[]
                 
                 # Go through all the rules in the layer and merge them in one graph
                 # Merged state will finally have the merged (disjoint union) state corresponding to the state we are checking in SymbolicStateSpace
-                while rule_index < len(state):
-                    merged_state = disjoint_model_union(merged_state, state[rule_index])
-                    rule_index += 1
+                #while rule_index < len(state):
+                #    merged_state = disjoint_model_union(merged_state, state[rule_index])
+                #    rule_index += 1
             
                 cacheIsolatedPatternMatches=[]
                 for atomicStatePropIndex in range(len(AtomicStatePropsInStateProp)):
@@ -165,7 +167,8 @@ class StateProperty(Property):
                     #G- states_to_analyze will contain merged state (containing disjoint union of its composite rules), and all recursively, collapsed versions of the (composite rules of the) state
                     states_to_analyse = [merged_state]               
                     if StateSpace.verbosity >= 1: t0 = time.time()                
-                    states_to_analyse.extend(StateSpace.collapseFactory.collapse(state))
+                    #states_to_analyse.extend(StateSpace.collapseFactory.collapse(state))
+                    states_to_analyse.extend(Disambiguator.disambiguate(state))
                     if StateSpace.verbosity >= 1: t1 = time.time()
                     if StateSpace.verbosity >= 1: print 'Time to collapse state: ' + str(t1-t0)
                     if StateSpace.verbosity >= 1: print '    Number of states to analyse: ' + str(len(states_to_analyse))

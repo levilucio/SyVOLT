@@ -122,6 +122,10 @@ from police_station_transformation.property.run1.negative.HF2FFComplete_run1LHS 
 from GM2AUTOSAR_MM.traceability_construction.Himesis.HBuildTraceabilityForRuleLHS import HBuildTraceabilityForRuleLHS
 from GM2AUTOSAR_MM.traceability_construction.Himesis.HBuildTraceabilityForRuleRHS import HBuildTraceabilityForRuleRHS
 
+#IMPORTING PROPERTY FILES OF POLICE STATION TRANSFORMATION
+from PoliceStationMM.properties_transformation1.positiveProps_transformation1.himesis.HS2StrivialtrueIsolatedLHS import HS2StrivialtrueIsolatedLHS
+from PoliceStationMM.properties_transformation1.positiveProps_transformation1.himesis.HS2StrivialtrueConnectedLHS import HS2StrivialtrueConnectedLHS
+from PoliceStationMM.properties_transformation1.positiveProps_transformation1.himesis.HS2StrivialtrueCompleteLHS import HS2StrivialtrueCompleteLHS
 class Test(unittest.TestCase):
 
     def setUp(self):
@@ -250,11 +254,12 @@ class Test(unittest.TestCase):
         ts1 = time.time()
  
 #         tv00 = time.time()
-#         #s.verify_property(HFSMIsolated_run1LHS(), HFSMConnected_run1LHS(), HFSMComplete_run1LHS())
+#        s.verify_property(HS2StrivialtrueIsolatedLHS(), HS2StrivialtrueConnectedLHS(), HS2StrivialtrueCompleteLHS())
+        pos=AtomicStateProperty(HS2StrivialtrueIsolatedLHS(), HS2StrivialtrueConnectedLHS(), HS2StrivialtrueCompleteLHS())
 #         pos = AtomicStateProperty(HFSMIsolated_run1LHS(), HFSMConnected_run1LHS(), HFSMComplete_run1LHS())
-#         finalresult = StateProperty.verifyCompositeStateProperty(s, pos)
-#         print('finalresult : ')
-#         print(finalresult)
+        finalresult = StateProperty.verifyCompositeStateProperty(s, pos)
+        print('finalresult : ')
+        print(finalresult)
 #         tv01 = time.time()
 #  
 #         tv10 = time.time()
