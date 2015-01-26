@@ -354,15 +354,21 @@ pass
                 #     node[attrib] = None
                 #     continue
 
-                #set the other values to the default match code
-                if make_pre:
-                    node[attrib] = self.get_default_match_code()
-                else:
-                    node[attrib] = self.get_default_rewrite_code()
+
 
                 #Hack for Attributes
                 if "Attribute" in node["mm__"] and attrib == "MT_pre__name":
                     node[attrib] = "if attr_value == \"name\":\n    return True\nreturn False\n"
+
+                #Hack for Constants
+                elif "Constant" in node["mm__"] and attrib == "MT_post__value":
+                    node[attrib] = "return '" + node[attrib] + "'"
+                else:
+                    #set the other values to the default match code
+                    if make_pre:
+                        node[attrib] = self.get_default_match_code()
+                    else:
+                        node[attrib] = self.get_default_rewrite_code()
 
             #set these properties
 
