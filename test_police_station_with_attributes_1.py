@@ -255,11 +255,11 @@ class Test(unittest.TestCase):
  
 #         tv00 = time.time()
 #        s.verify_property(HS2StrivialtrueIsolatedLHS(), HS2StrivialtrueConnectedLHS(), HS2StrivialtrueCompleteLHS())
-        pos=AtomicStateProperty(HS2StrivialtrueIsolatedLHS(), HS2StrivialtrueConnectedLHS(), HS2StrivialtrueCompleteLHS())
+#        pos=AtomicStateProperty(HS2StrivialtrueIsolatedLHS(), HS2StrivialtrueConnectedLHS(), HS2StrivialtrueCompleteLHS())
 #         pos = AtomicStateProperty(HFSMIsolated_run1LHS(), HFSMConnected_run1LHS(), HFSMComplete_run1LHS())
-        finalresult = StateProperty.verifyCompositeStateProperty(s, pos)
-        print('finalresult : ')
-        print(finalresult)
+#        finalresult = StateProperty.verifyCompositeStateProperty(s, pos)
+#        print('finalresult : ')
+#        print(finalresult)
 #         tv01 = time.time()
 #  
 #         tv10 = time.time()
