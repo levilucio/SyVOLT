@@ -243,7 +243,7 @@ class Test(unittest.TestCase):
  
         pyramify = PyRamify()
 
-        #pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_source, subclasses_target)
+        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_source, subclasses_target)
 
         print("create state space")
         s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, \
