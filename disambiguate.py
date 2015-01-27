@@ -53,8 +53,8 @@ from property_prover_rules.disambiguation_rules.Himesis.HDelOneAttributeFromUnco
 from property_prover_rules.disambiguation_rules.Himesis.HDeleteUncollapsedElementLHS import HDeleteUncollapsedElementLHS
 from property_prover_rules.disambiguation_rules.Himesis.HDeleteUncollapsedElementRHS import HDeleteUncollapsedElementRHS
 
-from solver.z3_attribute_equation_evaluator import AttributeEquationEvaluator
-
+#from solver.z3_attribute_equation_evaluator import AttributeEquationEvaluator
+from solver.prolog_attribute_equation_evaluator import PrologAttributeEquationEvaluator
 # declare all the needed TCore rules
 
 find_elements_collapse_match = Matcher(HFindTwoMatchElementsSameTypeDiffRulesLHS())       
@@ -91,7 +91,7 @@ class Disambiguator():
     
     def __init__(self, verbosity):
         self.verbosity = verbosity
-        self.attributeEquationEvaluator = AttributeEquationEvaluator(verbosity) 
+        self.attributeEquationEvaluator = PrologAttributeEquationEvaluator(verbosity) 
 
 
     def _collapse_step(self, path_condition):
