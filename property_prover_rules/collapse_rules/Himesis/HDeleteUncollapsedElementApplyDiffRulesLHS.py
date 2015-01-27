@@ -18,7 +18,7 @@ class HDeleteUncollapsedElementApplyDiffRulesLHS(HimesisPreConditionPatternLHS):
         self.add_edges([])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_pre__PoliceStationMM'
+S'MT_pre__UMLRT2Kiltera_MM'
 p2
 aS'MoTifRule'
 p3
@@ -49,12 +49,62 @@ return True
         self.vs[0]["MT_label__"] = """3"""
         self.vs[0]["mm__"] = """MT_pre__MetaModelElement_T"""
         self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__Station_T'
+S'MT_pre__Name'
 p2
-aS'MT_pre__Male_T'
+aS'MT_pre__Module'
 p3
-aS'MT_pre__Female_T'
+aS'MT_pre__ConditionBranch'
 p4
+aS'MT_pre__Delay'
+p5
+aS'MT_pre__LocalDef'
+p6
+aS'MT_pre__Expr'
+p7
+aS'MT_pre__ConditionSet'
+p8
+aS'MT_pre__Proc'
+p9
+aS'MT_pre__MatchCase'
+p10
+aS'MT_pre__Match'
+p11
+aS'MT_pre__FuncDef'
+p12
+aS'MT_pre__Null'
+p13
+aS'MT_pre__Par'
+p14
+aS'MT_pre__Inst'
+p15
+aS'MT_pre__Listen'
+p16
+aS'MT_pre__Site'
+p17
+aS'MT_pre__New'
+p18
+aS'MT_pre__PythonRef'
+p19
+aS'MT_pre__Def'
+p20
+aS'MT_pre__Seq'
+p21
+aS'MT_pre__ParIndexed'
+p22
+aS'MT_pre__Condition'
+p23
+aS'MT_pre__Print'
+p24
+aS'MT_pre__Pattern'
+p25
+aS'MT_pre__ListenBranch'
+p26
+aS'MT_pre__ProcDef'
+p27
+aS'MT_pre__Trigger_T'
+p28
+aS'MT_pre__Model_T'
+p29
 a.""")
         self.vs[0]["MT_pre__name"] = """
 #===============================================================================

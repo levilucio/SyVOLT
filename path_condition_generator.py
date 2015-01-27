@@ -290,6 +290,7 @@ class PathConditionGenerator():
 #                p = build_traceability_with_backward.packet_in(p)
                 p = build_traceability_for_rule.packet_in(p)                
                 self.transformation[layerIndex][ruleIndex] =  p.graph
+                graph_to_dot("rule" + str(layerIndex) + str(ruleIndex), p.graph)
 
             
         # calculate the partial order containing the containment order between the match patterns of the rules
@@ -535,6 +536,7 @@ class PathConditionGenerator():
                                 
                                 p = Packet()
                                 p.graph = self.pathConditionSet[pathCondition]
+                                
                                 combinatorMatcher.packet_in(p)
                                 
                                 # now go through the path conditions resulting from combination of the rule and the

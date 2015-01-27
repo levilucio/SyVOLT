@@ -18,7 +18,7 @@ class HMoveOneEquationsLeftExpressionLHS(HimesisPreConditionPatternLHS):
         self.add_edges([[6, 2], [0, 2], [7, 3], [1, 0], [4, 6], [5, 7]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_pre__PoliceStationMM'
+S'MT_pre__UMLRT2Kiltera_MM'
 p2
 aS'MoTifRule'
 p3

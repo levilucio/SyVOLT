@@ -247,7 +247,7 @@ class Test(unittest.TestCase):
 
         print("create state space")
         s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, \
-                                   self.matchRulePatterns, 0)
+                                   self.matchRulePatterns, 2)
  
         ts0 = time.time()
         s.build_path_conditions()

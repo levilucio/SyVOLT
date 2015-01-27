@@ -101,7 +101,7 @@ class PrologAttributeEquationEvaluator(AttributeEquationSolver):
                 clauseBody += concat
 
         clauseHead = "solve("
-        variablesInExpression = list(set(variablesInExpression))
+#        variablesInExpression = list(set(variablesInExpression))
         for var in range(0,len(variablesInExpression)):
             if var < len(variablesInExpression)-1:
                 clauseHead += variablesInExpression[var] + ","
@@ -119,9 +119,10 @@ class PrologAttributeEquationEvaluator(AttributeEquationSolver):
 
         p = Prolog()
         p.assertz(prologInput)           
-#        l = list(p.query(clauseHead))   
-        result = list(p.query(clauseHead+'.'))
-        
+#        l = list(p.query(clauseHead))  
+      
+        print "Clause head: " + clauseHead
+        result = list(p.query(clauseHead))
         print "Prolog result:"
         print result
         

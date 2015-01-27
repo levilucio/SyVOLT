@@ -18,7 +18,7 @@ class HStripRemoveMatchApplyModelsLHS(HimesisPreConditionPatternLHS):
         self.add_edges([[2, 0], [0, 1]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_pre__PoliceStationMM'
+S'MT_pre__UMLRT2Kiltera_MM'
 p2
 aS'MoTifRule'
 p3
