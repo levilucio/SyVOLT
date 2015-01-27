@@ -71,10 +71,10 @@ move_input_repeated_indirect = FRule(HMoveOneInputRepeatedIndirectLHS(), HMoveOn
 move_output_indirect = FRule(HMoveOneOutputIndirectLHS(), HMoveOneOutputIndirectRHS())
 move_output_repeated_indirect = FRule(HMoveOneOutputRepeatedIndirectLHS(), HMoveOneOutputRepeatedIndirectRHS())
 
-move_trace = FRule(HMoveOneTraceLHS(), HMoveOneTraceRHS()())
+move_trace = FRule(HMoveOneTraceLHS(), HMoveOneTraceRHS())
 
-move_right_expression_of_equation = FRule(HMoveOneEquationsRightExpressionLHS, HMoveOneEquationsRightExpressionRHS)
-move_left_expression_of_equation = FRule(HMoveOneEquationsLeftExpressionLHS, HMoveOneEquationsLeftExpressionRHS)
+move_right_expression_of_equation = FRule(HMoveOneEquationsRightExpressionLHS(), HMoveOneEquationsRightExpressionRHS())
+move_left_expression_of_equation = FRule(HMoveOneEquationsLeftExpressionLHS(), HMoveOneEquationsLeftExpressionRHS())
 
 delete_uncollapsed_element = FRule(HDeleteUncollapsedElementLHS(), HDeleteUncollapsedElementRHS())
 delete_attributes_from_uncollapsed_element = FRule(HDelOneAttributeFromUncollapsedElemLHS(), HDelOneAttributeFromUncollapsedElemRHS())

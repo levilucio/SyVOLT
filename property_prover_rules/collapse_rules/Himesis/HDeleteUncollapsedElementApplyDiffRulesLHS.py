@@ -47,7 +47,6 @@ return True
 """
         self.vs[0]["MT_pivotIn__"] = """element2"""
         self.vs[0]["MT_label__"] = """3"""
-        self.vs[0]["mm__"] = """MT_pre__MetaModelElement_T"""
         self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
 S'MT_pre__Name'
 p2
@@ -106,6 +105,7 @@ p28
 aS'MT_pre__Model_T'
 p29
 a.""")
+        self.vs[0]["mm__"] = """MT_pre__MetaModelElement_T"""
         self.vs[0]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.

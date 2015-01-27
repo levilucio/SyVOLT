@@ -52,7 +52,6 @@ return True
 return True
 """
         self.vs[0]["MT_label__"] = """2"""
-        self.vs[0]["mm__"] = """MT_pre__MetaModelElement_T"""
         self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
 S'MT_pre__Name'
 p2
@@ -111,6 +110,7 @@ p28
 aS'MT_pre__Model_T'
 p29
 a.""")
+        self.vs[0]["mm__"] = """MT_pre__MetaModelElement_T"""
         self.vs[0]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -127,16 +127,16 @@ return True
         self.vs[0]["GUID__"] = UUID('2614eab6-cec5-44d0-98de-6413d841cdce')
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_label__"] = """3"""
-        self.vs[1]["mm__"] = """MT_pre__apply_contains"""
         self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
+        self.vs[1]["mm__"] = """MT_pre__apply_contains"""
         self.vs[1]["MT_dirty__"] = False
         self.vs[1]["GUID__"] = UUID('a8c741a3-47c8-4c1e-8db0-ea48b2a843c6')
         self.vs[2]["MT_subtypeMatching__"] = False
         self.vs[2]["MT_label__"] = """1"""
-        self.vs[2]["mm__"] = """MT_pre__ApplyModel"""
         self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
+        self.vs[2]["mm__"] = """MT_pre__ApplyModel"""
         self.vs[2]["MT_dirty__"] = False
         self.vs[2]["GUID__"] = UUID('4d7ae8a8-ea98-41ac-8c65-786043890195')
 

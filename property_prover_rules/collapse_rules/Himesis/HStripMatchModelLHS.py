@@ -40,9 +40,9 @@ return True
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
         self.vs[0]["MT_label__"] = """3"""
-        self.vs[0]["mm__"] = """MT_pre__match_contains"""
         self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
+        self.vs[0]["mm__"] = """MT_pre__match_contains"""
         self.vs[0]["MT_dirty__"] = False
         self.vs[0]["GUID__"] = UUID('1d6d9517-f3f5-4e6c-8de1-ae25b29a96bc')
         self.vs[1]["MT_subtypeMatching__"] = True
@@ -59,7 +59,6 @@ return True
 return True
 """
         self.vs[1]["MT_label__"] = """2"""
-        self.vs[1]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
 S'MT_pre__OPTIONAL1,'
 p2
@@ -142,6 +141,7 @@ p40
 aS'MT_pre__FIXED0'
 p41
 a.""")
+        self.vs[1]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[1]["MT_dirty__"] = False
         self.vs[1]["MT_pre__name"] = """
 #===============================================================================
@@ -158,9 +158,9 @@ return True
         self.vs[1]["GUID__"] = UUID('f40b719a-bdf2-4bc5-9884-7e46db661360')
         self.vs[2]["MT_subtypeMatching__"] = False
         self.vs[2]["MT_label__"] = """1"""
-        self.vs[2]["mm__"] = """MT_pre__MatchModel"""
         self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
+        self.vs[2]["mm__"] = """MT_pre__MatchModel"""
         self.vs[2]["MT_dirty__"] = False
         self.vs[2]["GUID__"] = UUID('8647c586-48f8-494a-9cb4-724076412514')
 
