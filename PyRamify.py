@@ -313,6 +313,9 @@ pass
             #print("\n\n\nNode: " + node["mm__"])
             #print("Attributes after: " + str(mm_attribs[node["mm__"]]))
 
+            if "trace_link" in node["mm__"] and "type" not in node.attribute_names():
+                print("Node: " + str(node))
+                node["type"] = "default"
 
             #change attrib values
             #hacky, to fix some edge cases
@@ -363,6 +366,7 @@ pass
                 #Hack for Constants
                 elif "Constant" in node["mm__"] and attrib == "MT_post__value":
                     node[attrib] = "return '" + node[attrib] + "'"
+
                 else:
                     #set the other values to the default match code
                     if make_pre:
@@ -743,7 +747,7 @@ pass
                 if aan in attached_to_backward_links:
                     #this node is attached to a backward link, so leave it
                     pass
-                elif str(node["mm__"]) not in ["MT_pre__ApplyModel", "MT_pre__apply_contains", "MT_pre__paired_with"]:
+                elif str(node["mm__"]) not in ["MT_pre__ApplyModel", "MT_pre__apply_contains", "MT_pre__paired_with", "MT_pre__hasAttribute_T"]:
                     #don't remove important nodes, but delete all others
                     nodes_to_delete.append(node)
 
@@ -838,6 +842,8 @@ pass
         #print("Removing equation nodes: " + str(equation_nodes_to_remove))
 
 
+
+
         #graph_to_dot("base_graph_before", base_graph)
         apply_links = self.get_links_in_apply(base_graph)
 
@@ -873,7 +879,7 @@ pass
         nodes_to_remove = range(len(base_graph.vs))
 #        nodes_to_remove = [new_graph.vs[item] for item in nodes_to_remove if item not in nodes_to_keep]
 
-        attribute_nodes = self.find_nodes_with_mm(base_graph, ["MT_pre__hasAttr_S", "MT_pre__hasAttr_T", "MT_pre__Attribute"])
+        attribute_nodes = self.find_nodes_with_mm(base_graph, ["MT_pre__hasAttr_S", "MT_pre__hasAttribute_S","MT_pre__hasAttr_T", "MT_pre__hasAttribute_T", "MT_pre__Attribute"])
         nodes_to_keep += [self.get_node_num(base_graph, item) for item in attribute_nodes]
 
 
