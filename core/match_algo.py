@@ -421,8 +421,17 @@ class HimesisMatcher(object):
                         return False
                 except Exception as e:
                     #TODO: This should be a TransformationLanguageSpecificException
-                    raise Exception("An error has occurred while checking the constraint of the attribute '%s'"
-                                    % Himesis.to_non_RAM_attribute(attr), e)
+                    print("Source graph: " + self.G1.name)
+                    print("Pattern graph: " + self.G2.name)
+                    for n in self.G1.vs:
+                        try:
+
+                            print("Type: " + n["type"])
+                            print("MM: " + n["mm__"])
+                        except KeyError:
+                            pass
+                    raise Exception("An error has occurred while checking the constraint of the attribute '" + Himesis.to_non_RAM_attribute(attr) + "'"
+                                   + " in node '" + src_node["mm__"] + "' in graph: '" + self.G1.name + "'", e)
             else:
                 raise Exception('The method %s was not found in the pattern graph' % methName)
         return True

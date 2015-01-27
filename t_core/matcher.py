@@ -162,7 +162,11 @@ class Matcher(RulePrimitive):
                 for mapping in lhsMatcher.match_iter(context=lhs_pivots):
                     if self.condition.constraint(lambda i: getSourceNodeFromLabel(i, mapping, self.condition), graph):
                         yield mapping
-            except Exception as e: raise e
+            except Exception as e:
+                tb = traceback.format_exc()
+                print("NAC Error: " + str(e))
+                print(tb)
+                raise e
             finally: lhsMatcher.reset_recursion_limit()
             
             # The matching is complete
