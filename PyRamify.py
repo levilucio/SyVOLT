@@ -367,6 +367,10 @@ pass
                 elif "Constant" in node["mm__"] and attrib == "MT_post__value":
                     node[attrib] = "return '" + node[attrib] + "'"
 
+                # Hack for trace_links
+                elif "trace_link" in node["mm__"] and attrib == "MT_pre__type":
+                    node[attrib] = None
+
                 else:
                     #set the other values to the default match code
                     if make_pre:
