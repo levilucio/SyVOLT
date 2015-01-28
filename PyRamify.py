@@ -1351,9 +1351,19 @@ pass
             if not os.path.isdir(property_prover_rules_dir + d):
                 continue
 
-            #print(d)
+            if d.startswith('.'):
+                continue
+
+            print(d)
             rule_dir = property_prover_rules_dir + d + "/Himesis/"
-            for f in os.listdir(rule_dir):
+
+            try:
+                files = os.listdir(rule_dir)
+            except OSError:
+                print("Warning: " + rule_dir + " does not exist")
+                files = []
+                
+            for f in files:
                 if f == "__init__.py" or f.endswith(".pyc") or f.startswith("."):
                     continue
                 #print f
