@@ -539,6 +539,9 @@ class PathConditionGenerator():
                                 
                                 combinatorMatcher.packet_in(p)
                                 
+                                print "Combinator:"
+                                print combinatorMatcher.is_success
+                                
                                 # now go through the path conditions resulting from combination of the rule and the
                                 # path condition from the previous layer currently being treated in order to apply
                                 # the combinator's RHS to every possibility of match of the combinator's LHS

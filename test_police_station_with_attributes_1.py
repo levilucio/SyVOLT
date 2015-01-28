@@ -235,16 +235,16 @@ class Test(unittest.TestCase):
 
     
     def test_correct_police_station(self):
+        
+        pyramify = PyRamify()
 
         pre_metamodel = ["MT_pre__PoliceStationMM", "MoTifRule"]
         post_metamodel = ["MT_post__PoliceStationMM", "MoTifRule"]
         subclasses_source = ["MT_pre__Station_S", "MT_pre__Male_S","MT_pre__Female_S"]
         subclasses_target = ["MT_pre__Station_T","MT_pre__Male_T","MT_pre__Female_T"]
- 
-        pyramify = PyRamify()
 
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_source, subclasses_target)
-
+        
         print("create state space")
         s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, \
                                    self.matchRulePatterns, 2)
