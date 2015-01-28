@@ -253,23 +253,6 @@ class Test(unittest.TestCase):
         s.build_path_conditions()
         ts1 = time.time()
  
-#         tv00 = time.time()
-#        s.verify_property(HS2StrivialtrueIsolatedLHS(), HS2StrivialtrueConnectedLHS(), HS2StrivialtrueCompleteLHS())
-#        pos=AtomicStateProperty(HS2StrivialtrueIsolatedLHS(), HS2StrivialtrueConnectedLHS(), HS2StrivialtrueCompleteLHS())
-#         pos = AtomicStateProperty(HFSMIsolated_run1LHS(), HFSMConnected_run1LHS(), HFSMComplete_run1LHS())
-#        finalresult = StateProperty.verifyCompositeStateProperty(s, pos)
-#        print('finalresult : ')
-#        print(finalresult)
-#         tv01 = time.time()
-#  
-#         tv10 = time.time()
-#         #s.verify_property(HF2FFIsolated_run1LHS(), HF2FFConnected_run1LHS(), HF2FFComplete_run1LHS())
-#         neg = AtomicStateProperty(HF2FFIsolated_run1LHS(), HF2FFConnected_run1LHS(), HF2FFComplete_run1LHS())
-#         finalresult = StateProperty.verifyCompositeStateProperty(s, neg)
-#         print('finalresult : ')
-#         print(finalresult)
-#         tv11 = time.time()
- 
         print("Time to build the set of path conditions: " + str(ts1 - ts0))
         print("Size of the set of path conditions: " + str(sys.getsizeof(s.pathConditionSet) / 1024))
         print("Number of path conditions: " + str(len(s.pathConditionSet)))
@@ -288,7 +271,22 @@ class Test(unittest.TestCase):
          
         s.print_path_conditions_file()        
 
-          
+#       tv00 = time.time()
+#       s.verify_property(HS2StrivialtrueIsolatedLHS(), HS2StrivialtrueConnectedLHS(), HS2StrivialtrueCompleteLHS())
+        pos=AtomicStateProperty(HS2StrivialtrueIsolatedLHS(), HS2StrivialtrueConnectedLHS(), HS2StrivialtrueCompleteLHS())
+#         pos = AtomicStateProperty(HFSMIsolated_run1LHS(), HFSMConnected_run1LHS(), HFSMComplete_run1LHS())
+        finalresult = StateProperty.verifyCompositeStateProperty(s, pos)
+        print('finalresult : ')
+        print(finalresult)
+#         tv01 = time.time()
+#  
+#         tv10 = time.time()
+#         #s.verify_property(HF2FFIsolated_run1LHS(), HF2FFConnected_run1LHS(), HF2FFComplete_run1LHS())
+#         neg = AtomicStateProperty(HF2FFIsolated_run1LHS(), HF2FFConnected_run1LHS(), HF2FFComplete_run1LHS())
+#         finalresult = StateProperty.verifyCompositeStateProperty(s, neg)
+#         print('finalresult : ')
+#         print(finalresult)
+#         tv11 = time.time()
           
         ####REAL EXPERIMENTATION: Proving the 4 types of constraints in our MODELS paper
         # The naming convention used for the properties (i.e., P1, P2..ETC) are the 

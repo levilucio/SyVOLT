@@ -82,7 +82,8 @@ class StateProperty(Property):
         found_counterexample=False
         curVerifResult=False
         
-        for state in StateSpace.symbStateSpace:
+        #for state in StateSpace.symbStateSpace:
+        for state in StateSpace.pathConditionSet:
             if state != ():
                 #Initially, merged_state has the first rule of the the current state being examined in the SymbolicStateSpace
                 #merged_state = deepcopy(state[0])
@@ -102,14 +103,16 @@ class StateProperty(Property):
                     s = Packet()
                     s.graph = deepcopy(merged_state)
                 
-                    if StateSpace.outputStates:
+                    #if StateSpace.outputStates:
+                    if StateSpace.verbosity >= 1:
                         graph_to_dot('out' + str(state_index), s.graph)                
                 
                     isolated.packet_in(s)
                     if isolated.is_success:
                         if StateSpace.verbosity >= 1:
                             print 'State ' + str(state_index)
-                            print StateSpace._pretty_print_state(state)
+                            #print StateSpace._pretty_print_state(state)
+                            print state.name
                             print '    Found Property Elements'
                         
                         # find first how many matches of the isolated elements of the property (if any) were found
@@ -152,8 +155,9 @@ class StateProperty(Property):
                             AtomicStatePropsInStateProp[atomicStatePropIndex].SETverifResult(True)
                     else: # did not succeed in matching isolated
                         if StateSpace.verbosity >= 1: 
-                            print 'State ' + str(state_index)
-                            print StateSpace._pretty_print_state(state)
+                            print 'State ' + str(state_index) + ' '
+                            #print StateSpace._pretty_print_state(state)
+                            print state.name
                             print '    Property Elements not found'            
                         numberOfIsolatedMatchesForAllAtomicStateProperties.append(-1)
                         cacheIsolatedPatternMatches.append(False)
@@ -168,7 +172,11 @@ class StateProperty(Property):
                     states_to_analyse = [merged_state]               
                     if StateSpace.verbosity >= 1: t0 = time.time()                
                     #states_to_analyse.extend(StateSpace.collapseFactory.collapse(state))
-                    states_to_analyse.extend(Disambiguator.disambiguate(state))
+                    #states_to_analyse.extend(Disambiguator.disambiguate(state))
+                    #new code -start
+                    disamb=Disambiguator(StateSpace.verbosity)
+                    states_to_analyse.extend(disamb.disambiguate(state))
+                    #new code -end
                     if StateSpace.verbosity >= 1: t1 = time.time()
                     if StateSpace.verbosity >= 1: print 'Time to collapse state: ' + str(t1-t0)
                     if StateSpace.verbosity >= 1: print '    Number of states to analyse: ' + str(len(states_to_analyse))
