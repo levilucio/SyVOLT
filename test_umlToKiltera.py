@@ -83,7 +83,7 @@ class Test(unittest.TestCase):
                               "MT_pre__Print", "MT_pre__Pattern", "MT_pre__ListenBranch", "MT_pre__ProcDef", "MT_pre__Trigger_T","MT_pre__Model_T"]
 
   
-        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_source, subclasses_target)
+        #pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_source, subclasses_target)
  
         print("create state space")
         s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, 2)# 
@@ -93,7 +93,7 @@ class Test(unittest.TestCase):
         s.build_path_conditions()
         ts1 = time.time()
          
-        print("Time to build the set of path conditions: " + str(ts1 - ts0))
+        print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
         print("Size of the set of path conditions: " + str(sys.getsizeof(s.pathConditionSet) / 1024))
         print("Number of path conditions: " + str(len(s.pathConditionSet)))
 # #         print

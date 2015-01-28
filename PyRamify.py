@@ -313,9 +313,9 @@ pass
             #print("\n\n\nNode: " + node["mm__"])
             #print("Attributes after: " + str(mm_attribs[node["mm__"]]))
 
-            if "trace_link" in node["mm__"] and "type" not in node.attribute_names():
-                print("Node: " + str(node))
-                node["type"] = "default"
+            # if "trace_link" in node["mm__"] and "type" not in node.attribute_names():
+            #     print("Node: " + str(node))
+            #     node["type"] = "default"
 
             #change attrib values
             #hacky, to fix some edge cases
@@ -1094,8 +1094,8 @@ pass
         apply_nodes = self.flood_find_nodes(apply_contain_node, graph, ["ApplyModel", "backward_link", "trace_link"])
         apply_nodes = list(set(apply_nodes))
 
-        for a in apply_nodes:
-            print(graph.vs[a]["mm__"])
+        #for a in apply_nodes:
+        #    print(graph.vs[a]["mm__"])
 
         backward_links = self.find_nodes_with_mm(graph, ["backward_link"])
         attached_apply = []

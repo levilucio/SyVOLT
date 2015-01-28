@@ -542,9 +542,17 @@ class PathConditionGenerator():
                                 # now go through the path conditions resulting from combination of the rule and the
                                 # path condition from the previous layer currently being treated in order to apply
                                 # the combinator's RHS to every possibility of match of the combinator's LHS
-                                
+
+                                if self.verbosity >= 2 :
+                                    if combinatorMatcher.is_success:
+                                        print("Matching was successful")
+                                    else:
+                                        print("Matching was not successful")
+
+
+
                                 if combinatorMatcher.is_success:  
-                                    
+
                                     # holds the result of combining the path conditions generated so far when combining
                                     # the rule with the path condition using the multiple combinators
                      
