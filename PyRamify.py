@@ -724,7 +724,6 @@ pass
         apply_contains = self.find_nodes_with_mm(graph, ["MT_pre__apply_contains"])
 
 
-
         # find the backward links
         backwards_links = self.find_nodes_with_mm(graph, ["MT_pre__trace_link"])
 
@@ -735,6 +734,7 @@ pass
             attached_to_backward_links += self.look_for_attached(bl, graph)
 
         nodes_to_delete = []
+        nodes_to_keep = []
 
         #look at the apply_contains link
         for apply_contain in apply_contains:
@@ -749,11 +749,30 @@ pass
                 #print(node)
 
                 if aan in attached_to_backward_links:
-                    #this node is attached to a backward link, so leave it
-                    pass
+                    #this node is attached to a backward link, so keep it
+                    nodes_to_keep.append(aan)
                 elif str(node["mm__"]) not in ["MT_pre__ApplyModel", "MT_pre__apply_contains", "MT_pre__paired_with", "MT_pre__hasAttribute_T"]:
                     #don't remove important nodes, but delete all others
                     nodes_to_delete.append(node)
+
+
+        #find all the hasAttribute nodes of the apply side
+        hasAttributeNodes = self.find_nodes_with_mm(graph, ["MT_pre__hasAttribute_T"])
+        for n in hasAttributeNodes:
+
+            #look at all the attached nodes to the hasAttribute node
+            attached = self.look_for_attached(n, graph)
+
+            #keep this hasAttribute node if it is connected to a node that is connected to a backward link
+            should_keep_attrib = False
+            for a in attached:
+                if a in nodes_to_keep:
+                    should_keep_attrib = True
+
+            #otherwise, delete this hasAttribute node and the attached nodes as well
+            if not should_keep_attrib:
+                nodes_to_delete.append(n)
+                nodes_to_delete += attached
 
         #print("Nodes to delete: " + str(len(nodes_to_delete)))
         return nodes_to_delete
@@ -848,7 +867,7 @@ pass
 
 
 
-        #graph_to_dot("base_graph_before", base_graph)
+        #graph_to_dot(base_graph.name + "_base_graph_before", base_graph)
         apply_links = self.get_links_in_apply(base_graph)
 
         base_graph.delete_nodes(structure_nums + apply_links + equation_nodes_to_remove)
@@ -883,8 +902,8 @@ pass
         nodes_to_remove = range(len(base_graph.vs))
 #        nodes_to_remove = [new_graph.vs[item] for item in nodes_to_remove if item not in nodes_to_keep]
 
-        attribute_nodes = self.find_nodes_with_mm(base_graph, ["MT_pre__hasAttr_S", "MT_pre__hasAttribute_S","MT_pre__hasAttr_T", "MT_pre__hasAttribute_T", "MT_pre__Attribute"])
-        nodes_to_keep += [self.get_node_num(base_graph, item) for item in attribute_nodes]
+        #attribute_nodes = self.find_nodes_with_mm(base_graph, ["MT_pre__hasAttr_S", "MT_pre__hasAttribute_S","MT_pre__hasAttr_T", "MT_pre__hasAttribute_T", "MT_pre__Attribute"])
+        #nodes_to_keep += [self.get_node_num(base_graph, item) for item in attribute_nodes]
 
 
         # don't consider removing the backward links and attached nodes
@@ -910,6 +929,11 @@ pass
 
 
         rewrite_name = rewriter_graph.name + "_rule_combinator_rewriter"
+
+        levis_tiny_hack = True
+        if levis_tiny_hack and len(output) > 1:
+            output = [output[0], output[-1]]
+
 
         j = 0
         for remove_set in reversed(output):
@@ -1362,7 +1386,7 @@ pass
             except OSError:
                 print("Warning: " + rule_dir + " does not exist")
                 files = []
-                
+
             for f in files:
                 if f == "__init__.py" or f.endswith(".pyc") or f.startswith("."):
                     continue
