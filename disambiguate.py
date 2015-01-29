@@ -106,6 +106,8 @@ class Disambiguator():
 
         p = Packet()        
         i = Iterator()
+        
+        p.graph = path_condition
 
         p = find_elements_collapse_match.packet_in(p)               
         if self.verbosity >= 2: print 'Found collapsable elements:' + str(find_elements_collapse_match.is_success)
