@@ -902,8 +902,8 @@ pass
         nodes_to_remove = range(len(base_graph.vs))
 #        nodes_to_remove = [new_graph.vs[item] for item in nodes_to_remove if item not in nodes_to_keep]
 
-        #attribute_nodes = self.find_nodes_with_mm(base_graph, ["MT_pre__hasAttr_S", "MT_pre__hasAttribute_S","MT_pre__hasAttr_T", "MT_pre__hasAttribute_T", "MT_pre__Attribute"])
-        #nodes_to_keep += [self.get_node_num(base_graph, item) for item in attribute_nodes]
+        attribute_nodes = self.find_nodes_with_mm(base_graph, ["MT_pre__hasAttr_S", "MT_pre__hasAttribute_S","MT_pre__hasAttr_T", "MT_pre__hasAttribute_T", "MT_pre__Attribute"])
+        nodes_to_keep += [self.get_node_num(base_graph, item) for item in attribute_nodes]
 
 
         # don't consider removing the backward links and attached nodes
