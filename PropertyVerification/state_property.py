@@ -123,13 +123,15 @@ class StateProperty(Property):
                         # verify the current state as the property holds in it
                 
                         smallerStateWithSameRulesExists = False
-                
-                        for alreadyVerifiedState in AtomicStatePropsInStateProp[atomicStatePropIndex].verifiedStateCache:
-                            # if all the rules in the path cond
-                            if len(set(state) - set(alreadyVerifiedState[0])) == len(set(state)) - len(set(alreadyVerifiedState[0]))\
-                            and numberOfIsolatedMatches == alreadyVerifiedState[1]:
-                                smallerStateWithSameRulesExists = True
-                                break                       
+                        ###UNdoooo
+                        ##if u comment the comming block between the comments tagged as UNdoo, the whole code will work 
+                        #for alreadyVerifiedState in AtomicStatePropsInStateProp[atomicStatePropIndex].verifiedStateCache:
+                        #    # if all the rules in the path cond
+                        #    if len(set(state) - set(alreadyVerifiedState[0])) == len(set(state)) - len(set(alreadyVerifiedState[0]))\
+                        #    and numberOfIsolatedMatches == alreadyVerifiedState[1]:
+                        #        smallerStateWithSameRulesExists = True
+                        #        break
+                        ###UNDooooo                       
                             # If 2 states, each has 1 different rule, then the first part of the if condition will evaluate to false,
                             # if 2 states, each with 1 same rules, then the first part of the above if condition will evaluate to true
                             # if one state has rules x,y,z and the other state has rule z, then the first part of the above if condition will evaluate to true
@@ -182,10 +184,11 @@ class StateProperty(Property):
                     if StateSpace.verbosity >= 1: print '    Number of states to analyse: ' + str(len(states_to_analyse))
                        
                     for collapsed_state in range(len(states_to_analyse)):
-                        if StateSpace.outputStates:
+                        #if StateSpace.outputStates:
+                        if StateSpace.verbosity >= 1:
                             s = Packet()
                             s.graph = states_to_analyse[collapsed_state]
-                            graph_to_dot('out' + str(state_index) + '.' + str(collapsed_state), s.graph)
+                            graph_to_dot('out' + str(state_index) + '_' + str(collapsed_state), s.graph)
                         if StateSpace.verbosity >= 1: print '    Collapsed state ' + str(collapsed_state)
                         
                         curVerifResult=stateprop.verify(states_to_analyse[collapsed_state],StateSpace)
