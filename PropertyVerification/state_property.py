@@ -135,20 +135,20 @@ class StateProperty(Property):
                         # if parsedRulesInPC size<2, collapse flag =false in
                         # if the cache has another PC whose name is a subset of the name of the current PC, then property holds
                         #check if where verifiedSTatecache was filled needs to be changed
-                        RulesInCurState=StateProperty.parseStateName2RuleNames(state.name)
-                        #for ruleInCurState in compositeRulesInState: 
+                        RulesInCurState=StateProperty.parseStateName2RuleNames(state.name) 
                         for alreadyVerifiedState in AtomicStatePropsInStateProp[atomicStatePropIndex].verifiedStateCache:
                             if numberOfIsolatedMatches != alreadyVerifiedState[1]:
                                 continue
-                            rulesInAlreadyVerifiedState= StateProperty.parseStateName2RuleNames(alreadyVerifiedState)
+                            rulesInAlreadyVerifiedState= StateProperty.parseStateName2RuleNames(alreadyVerifiedState[0].name)
                             for rule in rulesInAlreadyVerifiedState:
                                 if (rule in RulesInCurState)==False:
                                     break
                                 else:
                                     rulecounter=rulecounter+1
-                            if rulecounter==(RulesInCurState.count()):
+                            if rulecounter==len(rulesInAlreadyVerifiedState):
                                 smallerStateWithSameRulesExists=True
                                 break
+                            ####
                         ###UNdoooo
                         ##if u comment the comming block between the comments tagged as UNdoo, the whole code will work 
                         #for alreadyVerifiedState in AtomicStatePropsInStateProp[atomicStatePropIndex].verifiedStateCache:
