@@ -46,6 +46,12 @@ class StateProperty(Property):
         pass
     
     @staticmethod
+    def parseStateName2RuleNames (stateName):
+        result=[]
+        result=stateName.split('_')
+        return result[1:]
+        
+    @staticmethod
     def getAllAtomicStatePropsInStateProp (sprop, listResult):
         result=listResult
         if isinstance(sprop, PropertyVerification.atomic_state_property.AtomicStateProperty) :
@@ -123,6 +129,26 @@ class StateProperty(Property):
                         # verify the current state as the property holds in it
                 
                         smallerStateWithSameRulesExists = False
+                        rulecounter=0
+                        #NEW OPTIMIZATION HEURISTIC
+                        # parse name of PC into an ordered set/list - parsedRulesInPC
+                        # if parsedRulesInPC size<2, collapse flag =false in
+                        # if the cache has another PC whose name is a subset of the name of the current PC, then property holds
+                        #check if where verifiedSTatecache was filled needs to be changed
+                        RulesInCurState=StateProperty.parseStateName2RuleNames(state.name)
+                        #for ruleInCurState in compositeRulesInState: 
+                        for alreadyVerifiedState in AtomicStatePropsInStateProp[atomicStatePropIndex].verifiedStateCache:
+                            if numberOfIsolatedMatches != alreadyVerifiedState[1]:
+                                continue
+                            rulesInAlreadyVerifiedState= StateProperty.parseStateName2RuleNames(alreadyVerifiedState)
+                            for rule in rulesInAlreadyVerifiedState:
+                                if (rule in RulesInCurState)==False:
+                                    break
+                                else:
+                                    rulecounter=rulecounter+1
+                            if rulecounter==(RulesInCurState.count()):
+                                smallerStateWithSameRulesExists=True
+                                break
                         ###UNdoooo
                         ##if u comment the comming block between the comments tagged as UNdoo, the whole code will work 
                         #for alreadyVerifiedState in AtomicStatePropsInStateProp[atomicStatePropIndex].verifiedStateCache:
@@ -168,6 +194,7 @@ class StateProperty(Property):
                 collapseFlag=False          
                 for foundIsolated in cacheIsolatedPatternMatches:
                     collapseFlag=collapseFlag or foundIsolated
+                # ****
                 if collapseFlag==True:
                     # build set of collapsed states to analyse
                     #G- states_to_analyze will contain merged state (containing disjoint union of its composite rules), and all recursively, collapsed versions of the (composite rules of the) state
