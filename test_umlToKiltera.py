@@ -60,13 +60,16 @@ class Test(unittest.TestCase):
 
         pyramify = PyRamify()
 
-        print self
+        print self.rules.keys()
 
         a1 = self.rules['HState2ProcDef']
         b1 = self.rules['HBasicStateNoOutgoing2ProcDef']
-
-        transformation = [[a1], [b1]]
-         
+        b2 = self.rules['HBasicState2ProcDef']
+        b3 = self.rules['HCompositeState2ProcDef']
+        c1 = self.rules['HExitPoint2BProcDef_WhetherOrNotExitPtHasOutgoingTrans']
+ 
+        transformation = [[a1], [b1,b2,b3], [c1]]
+          
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
         post_metamodel = ["MT_post__UMLRT2Kiltera_MM", "MoTifRule"]
         subclasses_source = ["MT_pre__OPTIONAL1,","MT_pre__PhysicalThread", "MT_pre__PortRef", "MT_pre__PackageContainer", "MT_pre__Thread", "MT_pre__OUT2", "MT_pre__BASE0",\
@@ -81,18 +84,18 @@ class Test(unittest.TestCase):
                               "MT_pre__FuncDef", "MT_pre__Null", "MT_pre__Par", "MT_pre__Inst", "MT_pre__Listen", "MT_pre__Site",\
                               "MT_pre__New", "MT_pre__PythonRef", "MT_pre__Def", "MT_pre__Seq", "MT_pre__ParIndexed", "MT_pre__Condition",\
                               "MT_pre__Print", "MT_pre__Pattern", "MT_pre__ListenBranch", "MT_pre__ProcDef", "MT_pre__Trigger_T","MT_pre__Model_T"]
-
-  
-        #pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_source, subclasses_target)
  
+   
+        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_source, subclasses_target)
+  
         print("create state space")
         s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, 2)# 
- 
+  
         print("building path conditions")
         ts0 = time.time()
         s.build_path_conditions()
         ts1 = time.time()
-         
+          
         print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
         print("Size of the set of path conditions: " + str(sys.getsizeof(s.pathConditionSet) / 1024))
         print("Number of path conditions: " + str(len(s.pathConditionSet)))
@@ -108,6 +111,8 @@ class Test(unittest.TestCase):
 #  
         print("printing path conditions")
         s.print_path_conditions_screen()
+        
+        s.print_path_conditions_file()
 
 # 
 #         print("printing states")

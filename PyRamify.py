@@ -10,6 +10,7 @@ from himesis_utils import *
 from core.himesis import *
 from itertools import combinations
 import inspect
+from ubuntuone.controlpanel.gui import CONNECT_BUTTON_LABEL
 
 
 '''
@@ -38,7 +39,10 @@ class PyRamify:
     #hacky, as this is based on the node's attributes
     def get_node_num(self, graph, node):
         for i in range(len(graph.vs)):
-            if graph.vs[i].attributes() == node.attributes():
+            if graph.vs[i]["GUID__"] == node["GUID__"]:
+                
+                if not graph.vs[i]["mm__"] == node["mm__"]:
+                    raise Exception("get_node_num is wrong!!!")
                 return i
         return -1
 
@@ -57,11 +61,10 @@ class PyRamify:
         
         #check the edge list to see if there are attached edges
         for edge in graph.get_edgelist():
-            
             if node_num == edge[0]:
-               attached_node_nums.append(edge[1])
+                attached_node_nums.append(edge[1])
             elif node_num == edge[1]:
-               attached_node_nums.append(edge[0])
+                attached_node_nums.append(edge[0])
         
         attached_node_nums.append(node_num)
         
@@ -361,10 +364,13 @@ pass
 
                 #Hack for Attributes
                 if "Attribute" in node["mm__"] and attrib == "MT_pre__name":
-                    node[attrib] = "if attr_value == \"name\":\n    return True\nreturn False\n"
+                    node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
 
                 #Hack for Constants
                 elif "Constant" in node["mm__"] and attrib == "MT_post__value":
+                    node[attrib] = "return '" + node[attrib] + "'"
+                    
+                elif "Constant" in node["mm__"] and attrib == "MT_post__name":
                     node[attrib] = "return '" + node[attrib] + "'"
 
                 # Hack for trace_links
@@ -778,9 +784,53 @@ pass
         return nodes_to_delete
 
 
+    def get_all_links(self, graph):
+        pass
+    
+    def get_all_nodes(self, graph):
+        node_list = []
+        
+        for n in graph.vs:
+            
+            if n["mm__"] in ["MT_pre__match_contains", "MT_pre__apply_contains", \
+                             "MT_pre__paired_with",
+                             "MT_pre__MatchModel", "MT_pre__ApplyModel", \
+                             "MT_pre__hasAttribute_T", "MT_pre__hasAttribute_S", \
+                             "MT_pre__Attribute", "MT_pre__Equation", \
+                             "MT_pre__Constant", "MT_pre__Concat", \
+                             "MT_pre__leftExpr", "MT_pre__rightExpr", \
+                             "MT_pre__trace_link", "MT_pre__hasAttribute_S", \
+                             "MT_pre__directLink_S", "MT_pre__directLink_T", \
+                             "MT_pre__indirectLink_S", "MT_pre__indirectLink_T", \
+                             ]:
+                continue
+            
+            node_list.append(n)
+            
+        return node_list
+        
+    def get_all_nodes_with_equations(self, graph):
+        
+        #these are all nodes that are not part of the metamodel
+        all_nodes = self.get_all_nodes(graph)
+        
+        
+        all_nodes_w_eqs = {}
+        for n in all_nodes:
+            
+            node_num = self.get_node_num(graph, n)
+            
+            connected_nodes = self.flood_find_nodes(node_num, graph, ["MT_pre__match_contains", "MT_pre__apply_contains",
+                                                                "MT_pre__directLink_S", "MT_pre__directLink_T",
+                                                                "MT_pre__indirectLink_S", "MT_pre__indirectLink_T",
+                                                                "MT_pre__trace_link"], )
+            
+            all_nodes_w_eqs[n] = connected_nodes
+        return all_nodes_w_eqs
+
     # create the backward patterns for this file
     def get_rule_combinators(self, rule):
-        print("\nStarting get backward patterns")
+        print("\nStarting to get rule combinators")
         name = rule.keys()[0]
         graph = rule.values()[0]
 
@@ -798,6 +848,8 @@ pass
         if len(backwards_links) == 0:
             return {name: None}
 
+        print("There are backward links")
+        
         #there are backward links, so start RAMifying
         out_dir = "./patterns/"
         outfile = out_dir + self.get_RAMified_name(name) + ".py"
@@ -818,12 +870,7 @@ pass
         #So to be safe, find the backward/trace links again
         backwards_links = self.find_nodes_with_mm(graph, ["MT_pre__trace_link"])
 
-        #get the ids of the structural nodes
-        structure_nodes = self.find_nodes_with_mm(graph, ["MT_pre__MatchModel", "MT_pre__paired_with",
-                                                          "MT_pre__ApplyModel", "MT_pre__match_contains",
-                                                          "MT_pre__apply_contains"])
-        structure_nums = [self.get_node_num(graph, item) for item in structure_nodes]
-
+       
         # make sure to copy the graph, as we will make multiple smaller matchers from it
         new_graph = self.copy_graph(graph)
         new_graph = self.makePreConditionPattern(new_graph)
@@ -832,92 +879,193 @@ pass
 
         base_graph = self.copy_graph(new_graph)
 
-
+ #get the ids of the structural nodes
+        
         #TODO: Get rewriter graph from matcher rewriter
+        
+        structure_nodes = self.find_nodes_with_mm(return_graph, ["MT_pre__MatchModel", "MT_pre__paired_with",
+                                                          "MT_pre__ApplyModel", "MT_pre__match_contains",
+                                                          "MT_pre__apply_contains"])
+        structure_nums = [self.get_node_num(return_graph, item) for item in structure_nodes]
+        
+        
         rewriter_graph = self.make_rewriter(return_graph)
         #self.copy_graph(return_graph)
+        
+        
+        rewriter_graph.delete_nodes(structure_nums)
 
 
-        # #TODO: Handled by attr changing?
-        #
+        print("Made rewriter")
+
+
+        #make the base graph
+        nodes_w_eqs = self.get_all_nodes_with_equations(base_graph)
+
+        remove_nodes = []
+        keep_nodes = []
+        for n in nodes_w_eqs.keys():
+            
+            #node_num = self.get_node_num(graph, n)
+            connected = self.look_for_attached(n, base_graph)
+
+            in_match = False
+            in_apply = False
+            backward_link = False
+            
+            for c in connected:
+                if graph.vs[c]["mm__"] == "MT_pre__match_contains":
+                    in_match = True
+                    keep_nodes.append(n)
+                elif graph.vs[c]["mm__"] == "MT_pre__apply_contains":
+                    in_apply = True
+                elif graph.vs[c]["mm__"] == "MT_pre__trace_link":
+                    backward_link = True
+                    
+            if in_apply and not backward_link:
+                remove_nodes += nodes_w_eqs[n]
+                
+#         print("Keep nodes: ")
+#         for k in keep_nodes:
+#             print(k["mm__"])
+            
+        #print("Remove nodes: ")
+        #for r in remove_nodes:
+            #print(r["mm__"])
+            
+        for k in keep_nodes:
+            
+            k_num = self.get_node_num(base_graph, k)
+            try:
+                remove_nodes.remove(k_num)
+            except Exception:
+                pass
+
+
+        base_graph.delete_nodes(remove_nodes)
+        graph_to_dot("base_graph_" + base_graph.name + "_after_delete", base_graph)
+
+
+        
         # # turn the backward links into trace links
         #
         # backwards_links2 = self.find_nodes_with_mm(rewriter_graph, ["backward_link"])
         # #print(backwards_links2)
         #
         # for node in backwards_links2:
-        #      node["mm__"] = "trace_link"
+        #      node["mm__"] = "trace_link
+        
 
 
+        
+        
 
-        #remove the equation nodes for the base graph
-        #(not Attribute nodes)
-
-        equation_nodes = self.find_nodes_with_mm(base_graph, ["MT_pre__Equation"])
-
-        #print("Equation nodes: " + str(equation_nodes))
-
-        equation_nodes_to_remove = []
-        for equation in equation_nodes:
-            equation_num = self.get_node_num(base_graph, equation)
-            equation_nodes_to_remove += self.flood_find_nodes(equation_num, base_graph, ["MT_pre__Attribute"])
-
-        #print("Removing equation nodes: " + str(equation_nodes_to_remove))
+        structure_nodes = self.find_nodes_with_mm(base_graph, ["MT_pre__MatchModel", "MT_pre__paired_with",
+                                                          "MT_pre__ApplyModel", "MT_pre__match_contains",
+                                                          "MT_pre__apply_contains"])
+        structure_nums = [self.get_node_num(base_graph, item) for item in structure_nodes]
+        
+        link_nodes = self.find_nodes_with_mm(base_graph, ["MT_pre__directLink_T", "MT_pre__indirectLink_T"])
+        link_nums = [self.get_node_num(base_graph, item) for item in link_nodes]
 
 
-
-
-        #graph_to_dot(base_graph.name + "_base_graph_before", base_graph)
-        apply_links = self.get_links_in_apply(base_graph)
-
-        base_graph.delete_nodes(structure_nums + apply_links + equation_nodes_to_remove)
-        rewriter_graph.delete_nodes(structure_nums)
-
-
+        base_graph.delete_nodes(structure_nums + link_nums)
+        
         graph_to_dot("base_graph_" + base_graph.name, base_graph)
+        
+        
+        
+        link_nodes = self.find_nodes_with_mm(base_graph, ["MT_pre__directLink_S", "MT_pre__indirectLink_S"])
+        link_nums = [self.get_node_num(base_graph, item) for item in link_nodes]
+        
+        temp_input_nodes = []
+        
+#         for array in input_nodes:
+#             new_array = []
+#             for node in array:
+#                 node_num = self.get_node_num(base_graph, node)
+        
+        #input_nodes.append(link_nums)
 
-        #graph_to_dot("rewriter_graph_before", rewriter_graph)
-        #Turn rewriter_graph into RHS
-        #rewriter_graph = self.makePostConditionPattern(rewriter_graph)
+        nodes_w_eqs = self.get_all_nodes_with_equations(base_graph)
 
+        
+        input_nodes = []
+        for n in nodes_w_eqs.keys():
+            
+            print("Node w eqs: " + str(n["mm__"]))
+            print(nodes_w_eqs)
+            
+            #node_num = self.get_node_num(graph, n)
+            connected = self.look_for_attached(n, base_graph)
+            print("Connected: " + str(connected))
 
-        #graph_to_dot("rewriter_graph", rewriter_graph)
-
-        # keep the nodes attached to the backward link plus the 'structural' nodes
-        #that should be kept
-        nodes_to_keep = []  # + new_structure
-
-
-        #for each backward link found, create a matcher for the attached nodes
-        i = 0
-        for link in backwards_links:
-            #find the nodes attached to the backwards link
-            attached_nodes = self.look_for_attached(link, base_graph)
-            nodes_to_keep += attached_nodes
-
-
+            backward_link = False
+            
+            for c in connected:
+                print("Connected to: " + base_graph.vs[c]["mm__"])
+                if base_graph.vs[c]["mm__"] == "MT_pre__trace_link":
+                    print("Connected to backward link")
+                    backward_link = True
+                    
+            if not backward_link:
+                temp_array = []
+                
+                for actual_node in nodes_w_eqs[n]:
+                    temp_array.append(base_graph.vs[actual_node])
+                    
+                input_nodes.append(nodes_w_eqs[n])
+        # #TODO: Handled by attr changing?
+        #
 
         #get the list of nodes to remove
         #(which is all nodes that should not be kept)
-        nodes_to_remove = range(len(base_graph.vs))
-#        nodes_to_remove = [new_graph.vs[item] for item in nodes_to_remove if item not in nodes_to_keep]
-
-        attribute_nodes = self.find_nodes_with_mm(base_graph, ["MT_pre__hasAttr_S", "MT_pre__hasAttribute_S","MT_pre__hasAttr_T", "MT_pre__hasAttribute_T", "MT_pre__Attribute"])
-        nodes_to_keep += [self.get_node_num(base_graph, item) for item in attribute_nodes]
-
-
-        # don't consider removing the backward links and attached nodes
-        for n in nodes_to_keep:
-            nodes_to_remove.remove(n)
+#         nodes_to_remove = range(len(base_graph.vs))
+# #        nodes_to_remove = [new_graph.vs[item] for item in nodes_to_remove if item not in nodes_to_keep]
+# 
+#         nodes_to_keep = []
+#         match_contains = self.find_nodes_with_mm(base_graph, ["MT_pre__match_contains"])
+#         for mc in match_contains:
+#             mc_num = self.get_node_num(base_graph, mc)
+#             nodes_to_keep += self.flood_find_nodes(mc_num, base_graph, ["MT_pre__MatchModel", "MT_pre__apply_contains", "MT_pre__directLink_T", "MT_pre__indirectLink_T"])
+#         
+#         nodes_to_keep = list(set(nodes_to_keep))
+#         
+#         #attribute_nodes = self.find_nodes_with_mm(base_graph, ["MT_pre__hasAttr_S", "MT_pre__hasAttribute_S","MT_pre__hasAttr_T", "MT_pre__hasAttribute_T", "MT_pre__Attribute"])
+#         #nodes_to_keep += [self.get_node_num(base_graph, item) for item in attribute_nodes]
+# 
+#         # don't consider removing the backward links and attached nodes
+#         for n in nodes_to_keep:
+#             nodes_to_remove.remove(n)
+#             
+#         #delete all match contains
+#         #nodes_to_remove += self.find_nodes_with_mm(graph, ["MT_pre__match_contains"])
+#         nodes_to_remove = list(set(nodes_to_remove))
+# 
+#         #base_graph.delete_nodes(nodes_to_remove)
+#         print("Removed nodes")
+#         
+#         
+# 
+#         print("Made base graph")
 
         #print("Nodes to remove: " + str(nodes_to_remove))
         #print("Types:")
         #for n in nodes_to_remove:
         #    print(base_graph.vs[n]["mm__"])
 
-        input_nodes = nodes_to_remove
+        #knock nodes out of the base graph to create the matchers
+        #nodes_to_remove
 
+        print("Length: " + str(len(input_nodes)))
+        print(input_nodes)
+        #input nodes stores the node numbers for the nodes you want to knock out of the base graph
         output = sum([map(list, combinations(input_nodes, i)) for i in range(len(input_nodes) + 1)], [])
+        #output = []
+        
+        
+        
+        
         #print(input_nodes)
         #print(output)
 
@@ -941,10 +1089,41 @@ pass
             new_graph = self.copy_graph(base_graph)
 
 
+            print("Remove set")
+            print(remove_set)
+            
+            to_remove = []
+            for r in remove_set:
             #remove everything except for the attached nodes and the backward link
-            new_graph.delete_nodes(remove_set)
+                to_remove += r
+                
+                
+                
+                
+                
+            new_graph.delete_nodes(to_remove)
 
 
+            #delete links that are not connected to two nodes
+            remove_links = []
+            for n in new_graph.vs:
+                
+                if not ("directLink" in n["mm__"] or "indirectLink" in n["mm__"]):
+                    continue
+                     
+                connected = self.look_for_attached(n, base_graph)
+                if len(connected) < 3:
+                    remove_links.append(n)
+                    
+            new_graph.delete_nodes(remove_links)
+            
+            
+            
+            
+
+            remove_set = to_remove + remove_links
+            
+            
 
             #create the matcher
 
@@ -981,11 +1160,11 @@ pass
 
                 NAC_nodes_to_remove = []
 
-                for to_remove in nodes_to_remove:
-                    node = base_graph.vs[to_remove]
-                    if node["mm__"] in ["indirectLink_S", "indirectLink_T", "directLink_S", "directLink_T"] \
-                        and not node in remove_set:
-                        NAC_nodes_to_remove.append(to_remove)
+                for node_to_remove in to_remove:
+                    node = base_graph.vs[node_to_remove]
+                    if node["mm__"] in ["MT_pre__indirectLink_S", "MT_pre__indirectLink_T", "MT_pre__directLink_S", "MT_pre__directLink_T"] \
+                        and not node in to_remove:
+                        NAC_nodes_to_remove.append(node_to_remove)
 
                 #create the NAC if needed
                 NAC_graph = self.copy_graph(base_graph)
@@ -1064,6 +1243,7 @@ pass
             #bwPatterns2Rule[matcher] = name
 
             #print("bwPatterns: " + str(bwPatterns))
+            print("Returning from rule combinators")
         return {name: bwPatterns}
 
 
@@ -1085,12 +1265,17 @@ pass
         return graph
 
 
-    def flood_find_nodes(self, start_node, graph, stop_mms = []):
+    def flood_find_nodes(self, start_node, graph, stop_mms = [], stop_and_include_mms = []):
         node_stack = [start_node]
         return_nodes = []
         while len(node_stack) > 0:
             node = node_stack.pop()
 
+                
+            if graph.vs[node]["mm__"] in stop_and_include_mms:
+                return_nodes.append(node)
+                continue
+            
             if graph.vs[node]["mm__"] in stop_mms:
                 continue
 
@@ -1100,9 +1285,15 @@ pass
             return_nodes.append(node)
 
             for edge in graph.get_edgelist():
+                
+                mm1 = graph.vs[edge[0]]["mm__"]
+                mm2 = graph.vs[edge[1]]["mm__"]
+
+                    
                 if node == edge[0]:
                     node_stack.append(edge[1])
                 elif node == edge[1]:
+
                     node_stack.append(edge[0])
 
         return return_nodes

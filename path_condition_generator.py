@@ -290,7 +290,7 @@ class PathConditionGenerator():
 #                p = build_traceability_with_backward.packet_in(p)
                 p = build_traceability_for_rule.packet_in(p)                
                 self.transformation[layerIndex][ruleIndex] =  p.graph
-                graph_to_dot("rule" + str(layerIndex) + str(ruleIndex), p.graph)
+                graph_to_dot("traced_" + self.transformation[layerIndex][ruleIndex].name , self.transformation[layerIndex][ruleIndex])
 
             
         # calculate the partial order containing the containment order between the match patterns of the rules
@@ -404,6 +404,12 @@ class PathConditionGenerator():
             
             # build a dictionary to remember which path condition in the current layer is built from
             # which path condition from the previous layer
+            # This is needed because the layerPathCondAccumulator set keeps all path conditions generated
+            # for the current layer, starting from the same set as the ones accumulated for the previous layer.
+            # for every rule pass we need to know which path conditions for the current layer were built
+            # from which path condition from the previous layer, since they are all in a vector.
+            # this can be optimized by having a dictionary for each rule from the previous layer containing
+            # the path conditions generated for it, instead of going though the whole vector each time.
             
             parentPathCondition = {}
             for pc in layerPathCondAccumulator:
@@ -570,6 +576,8 @@ class PathConditionGenerator():
                                         # includes all the rules from the path condition of the previous layer the rule is being executed
                                         # against (pathCondition) and if the rule hasn't executed yet on that path condition
                                         
+                                        print "------------------------> " + layerPathCondAccumulator[currentPathCondition].name
+                                        
                                         if parentPathCondition[layerPathCondAccumulator[currentPathCondition]] == self.pathConditionSet[pathCondition].name:
                                                                      
                                             # if the combinator is not the total one, make a copy of the path condition in the set 
@@ -604,6 +612,9 @@ class PathConditionGenerator():
                                                 if isTotalCombinator:
                                                     # because the rule combines totally with a path condition in the accumulator we just copy it 
                                                     # directly on top of the accumulated path condition
+                                                    
+                                                    parentPathCondition[newPathCond] = parentPathCondition[layerPathCondAccumulator[currentPathCondition]]
+
                                                     layerPathCondAccumulator[currentPathCondition] = newPathCond
                                                                                  
                                                 else:
@@ -615,7 +626,11 @@ class PathConditionGenerator():
                                                     
                                                     # store the parent of the newly created path condition
                                                     parentPathCondition[newPathCond] = parentPathCondition[layerPathCondAccumulator[currentPathCondition]]
-                                             
+                                         
+                                                print "----------------------"
+                                                print "Adding: " + newPathCond.name
+                                                print "Parent is: " + parentPathCondition[layerPathCondAccumulator[currentPathCondition]]
+                                                print "----------------------"
                                                     
                                                 if self.verbosity >= 2: print "Created path condition with name: " + newPathCond.name                                          
                                             
