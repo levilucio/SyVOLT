@@ -87,7 +87,7 @@ class StateProperty(Property):
         state_index = 0
         found_counterexample=False
         curVerifResult=False
-        
+        StateSpace.pathConditionSet=StateSpace.pathConditionSet[1:]
         #for state in StateSpace.symbStateSpace:
         for state in StateSpace.pathConditionSet:
             if state != ():

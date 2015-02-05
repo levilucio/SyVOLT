@@ -126,6 +126,7 @@ from GM2AUTOSAR_MM.traceability_construction.Himesis.HBuildTraceabilityForRuleRH
 from PoliceStationMM.properties_transformation1.positiveProps_transformation1.himesis.HS2StrivialtrueIsolatedLHS import HS2StrivialtrueIsolatedLHS
 from PoliceStationMM.properties_transformation1.positiveProps_transformation1.himesis.HS2StrivialtrueConnectedLHS import HS2StrivialtrueConnectedLHS
 from PoliceStationMM.properties_transformation1.positiveProps_transformation1.himesis.HS2StrivialtrueCompleteLHS import HS2StrivialtrueCompleteLHS
+from PoliceStationMM.properties_transformation1.negativeProps_transformation1.himesis.HS2MtrivialfalseCompleteLHS import HS2MtrivialfalseCompleteLHS
 class Test(unittest.TestCase):
 
     def setUp(self):
@@ -274,8 +275,11 @@ class Test(unittest.TestCase):
 #       tv00 = time.time()
 #       s.verify_property(HS2StrivialtrueIsolatedLHS(), HS2StrivialtrueConnectedLHS(), HS2StrivialtrueCompleteLHS())
         pos=AtomicStateProperty(HS2StrivialtrueIsolatedLHS(), HS2StrivialtrueConnectedLHS(), HS2StrivialtrueCompleteLHS())
+        neg=AtomicStateProperty(HS2StrivialtrueIsolatedLHS(), HS2StrivialtrueConnectedLHS(), HS2MtrivialfalseCompleteLHS())
+        impprop=NotStateProperty(neg) # debug - gives wrong output 
+        #orprop=OrStateProperty(neg,pos) #debug gives right output
 #         pos = AtomicStateProperty(HFSMIsolated_run1LHS(), HFSMConnected_run1LHS(), HFSMComplete_run1LHS())
-        finalresult = StateProperty.verifyCompositeStateProperty(s, pos)
+        finalresult = StateProperty.verifyCompositeStateProperty(s, impprop)
         print('finalresult : ')
         print(finalresult)
 #         tv01 = time.time()
