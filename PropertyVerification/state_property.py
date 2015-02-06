@@ -199,15 +199,19 @@ class StateProperty(Property):
                     # build set of collapsed states to analyse
                     #G- states_to_analyze will contain merged state (containing disjoint union of its composite rules), and all recursively, collapsed versions of the (composite rules of the) state
                     states_to_analyse = [merged_state]               
-                    if StateSpace.verbosity >= 1: t0 = time.time()                
+                    #if StateSpace.verbosity >= 1: t0 = time.time()                
                     #states_to_analyse.extend(StateSpace.collapseFactory.collapse(state))
                     #states_to_analyse.extend(Disambiguator.disambiguate(state))
                     #new code -start
-                    disamb=Disambiguator(StateSpace.verbosity)
-                    states_to_analyse.extend(disamb.disambiguate(state))
-                    #new code -end
-                    if StateSpace.verbosity >= 1: t1 = time.time()
-                    if StateSpace.verbosity >= 1: print 'Time to collapse state: ' + str(t1-t0)
+                    if len(StateProperty.parseStateName2RuleNames(state.name))>1:
+                        if StateSpace.verbosity >= 1: t0 = time.time()   
+                        disamb=Disambiguator(StateSpace.verbosity)
+                        states_to_analyse.extend(disamb.disambiguate(state))
+                        #new code -end
+                        if StateSpace.verbosity >= 1: t1 = time.time()
+                        if StateSpace.verbosity >= 1: print 'Time to collapse state: ' + str(t1-t0)
+                    else: 
+                        if StateSpace.verbosity >= 1: print 'State contains only one rule; no collapse needed... '
                     if StateSpace.verbosity >= 1: print '    Number of states to analyse: ' + str(len(states_to_analyse))
                        
                     for collapsed_state in range(len(states_to_analyse)):

@@ -276,10 +276,10 @@ class Test(unittest.TestCase):
 #       s.verify_property(HS2StrivialtrueIsolatedLHS(), HS2StrivialtrueConnectedLHS(), HS2StrivialtrueCompleteLHS())
         pos=AtomicStateProperty(HS2StrivialtrueIsolatedLHS(), HS2StrivialtrueConnectedLHS(), HS2StrivialtrueCompleteLHS())
         neg=AtomicStateProperty(HS2StrivialtrueIsolatedLHS(), HS2StrivialtrueConnectedLHS(), HS2MtrivialfalseCompleteLHS())
-        impprop=NotStateProperty(neg) # debug - gives wrong output 
-        #orprop=OrStateProperty(neg,pos) #debug gives right output
-#         pos = AtomicStateProperty(HFSMIsolated_run1LHS(), HFSMConnected_run1LHS(), HFSMComplete_run1LHS())
-        finalresult = StateProperty.verifyCompositeStateProperty(s, impprop)
+        negprop=NotStateProperty(neg) # debug - gives wrong output 
+        orprop=ImplicationStateProperty(pos,neg) #debug gives right output
+        pos = AtomicStateProperty(HFSMIsolated_run1LHS(), HFSMConnected_run1LHS(), HFSMComplete_run1LHS())
+        finalresult = StateProperty.verifyCompositeStateProperty(s, negprop)
         print('finalresult : ')
         print(finalresult)
 #         tv01 = time.time()
