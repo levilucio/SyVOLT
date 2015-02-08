@@ -943,8 +943,6 @@ pass
 
 
         base_graph.delete_nodes(remove_nodes)
-        graph_to_dot("base_graph_" + base_graph.name + "_after_delete", base_graph)
-
 
         
         # # turn the backward links into trace links
@@ -954,9 +952,6 @@ pass
         #
         # for node in backwards_links2:
         #      node["mm__"] = "trace_link
-        
-
-
         
         
 
@@ -1083,171 +1078,362 @@ pass
             output = [output[0], output[-1]]
 
 
-        j = 0
-        for remove_set in reversed(output):
+        # LEVI: we only need the total and the partial combinator.
+        # the total combinator includes all the base graph as match and no NAC.
+        # the partial combinator includes only the backward links, and has as NAC the remaining base graph.
+        # FOR BENTLEY: I have changed the loop going through all the combinations of match nodes
+        # such that we only have these two combinators.
+        
+        # first build the total combinator (just the base graph)        
+        total_combinator_matcher = self.copy_graph(base_graph)
+        
+        # now build the partial combinator by removing everything except for the backward links
+        partial_combinator_matcher = self.copy_graph(base_graph)
+        
+        graph_to_dot("combinator_before" + base_graph.name, partial_combinator_matcher)
+        
+        # remove all nodes that are not connected to backward links
 
-            new_graph = self.copy_graph(base_graph)
+        backwards_links = self.find_nodes_with_mm(partial_combinator_matcher, ["MT_pre__trace_link"])
+
+        # keep the nodes attached to the backward link that should be kept
+        nodes_to_keep = []
 
 
-            print("Remove set")
-            print(remove_set)
+        #for each backward link found, create a matcher for the attached nodes
+        i = 0
+        for link in backwards_links:
+            #find the nodes attached to the backwards link
+            attached_nodes = self.look_for_attached(link,  partial_combinator_matcher)
+            nodes_to_keep += attached_nodes
+
+        #get the list of nodes to remove
+        #(which is all nodes that should not be kept)
+        nodes_to_remove = range(len(partial_combinator_matcher.vs))
+        nodes_to_remove = [partial_combinator_matcher.vs[item] for item in nodes_to_remove if item not in nodes_to_keep]
+
+        #remove everything except for the attached nodes and the backward link
+        partial_combinator_matcher.delete_nodes(nodes_to_remove)
+        
+        combinator_matchers = [partial_combinator_matcher, total_combinator_matcher]
+        
+        #graph_to_dot("combinator_after" + base_graph.name, partial_combinator_matcher) 
+        
+        #write out the combinator
+        
+        for i in range(len(combinator_matchers)):
             
-            to_remove = []
-            for r in remove_set:
-            #remove everything except for the attached nodes and the backward link
-                to_remove += r
-                
-                
-                
-                
-                
-            new_graph.delete_nodes(to_remove)
-
-
-            #delete links that are not connected to two nodes
-            remove_links = []
-            for n in new_graph.vs:
-                
-                if not ("directLink" in n["mm__"] or "indirectLink" in n["mm__"]):
-                    continue
-                     
-                connected = self.look_for_attached(n, base_graph)
-                if len(connected) < 3:
-                    remove_links.append(n)
-                    
-            new_graph.delete_nodes(remove_links)
-            
-            
-            
-            
-
-            remove_set = to_remove + remove_links
-            
-            
-
-            #create the matcher
-
-            j += 1
-
             #create a new name for this backward matcher
             #replace the pattern name with the partial pattern name
-            new_name = name + "_rule_combinator_matcher_" + str(i)
-            i += 1
-
-            #write out the file
-            new_graph.name = new_name
-            new_graph["name"] = new_name + "_rc_matcher"
-
-
+            new_name = combinator_matchers[i].name + "_rule_combinator_matcher_" + str(i)
+            
+            combinator_matchers[i].name = new_name
+            combinator_matchers[i]["name"] = new_name + "_rc_matcher"    
+    
             #BIG HACK
-            new_graph = self.fix_attrs_for_backward_patterns(new_graph)
-
-            file_name = new_graph.compile(out_dir)
+            combinator_matchers[i] = self.fix_attrs_for_backward_patterns(combinator_matchers[i])
+    
+            file_name = combinator_matchers[i].compile(out_dir)
             print("Rule combinator matcher compiled to: " + file_name)
-
+    
             rule = self.load_class(out_dir + "/" + new_name)
+            
+            # debug printout
+            graph_to_dot(combinator_matchers[i].name, combinator_matchers[i])
+            
             backward_pattern = rule.values()[0]
-
-
-            #graph_to_dot(new_name, backward_pattern)
-            #graph_to_dot("remove_graph" + str(j), new_graph)
-
-
-
-            if remove_set == []:
-                backward_pattern.NACs = []
-            else:
-
-                NAC_nodes_to_remove = []
-
-                for node_to_remove in to_remove:
-                    node = base_graph.vs[node_to_remove]
-                    if node["mm__"] in ["MT_pre__indirectLink_S", "MT_pre__indirectLink_T", "MT_pre__directLink_S", "MT_pre__directLink_T"] \
-                        and not node in to_remove:
-                        NAC_nodes_to_remove.append(node_to_remove)
-
-                #create the NAC if needed
+            
+            if i == 0:
+                # now build the NAC for the first combinator (just the complete base graph) 
+                
                 NAC_graph = self.copy_graph(base_graph)
-
-                NAC_graph.delete_nodes(NAC_nodes_to_remove)
-
-
                 NAC_graph = self.makePreConditionPatternNAC(NAC_graph)
-
                 NAC_graph.name += "_rule_combinator_NAC"
-
+                
                 NAC_graph.LHS = backward_pattern
-
+                
                 file_name = NAC_graph.compile(out_dir)
                 print("Nac graph compiled to: " + file_name)
-
+                
                 NAC_graph = self.load_class(out_dir + NAC_graph.name, [backward_pattern])
                 NAC_graph = NAC_graph.values()[0]
-
-
+                
+                # debug printout
+                graph_to_dot(NAC_graph.name, NAC_graph)
+                       
                 backward_pattern.NACs = [NAC_graph]
 
             #create the Matcher
             matcher = Matcher(backward_pattern)
-
-
-
-
-
+ 
+ 
             #TODO: Make rewriter code simpler, and same as match pattern rewriter
-
+ 
             rewriter_graph_copy = self.copy_graph(rewriter_graph)
-
+ 
             rewriter_graph_copy.pre = self.copy_graph(backward_pattern)
             #graph_to_dot(rewriter_graph_copy.pre.name + "_pre", rewriter_graph_copy.pre)
-
-
-            rewriter_graph_copy.name = rewrite_name + "_" + str(j)
+ 
+ 
+            rewriter_graph_copy.name = rewrite_name + "_" + str(i)
             file_name = rewriter_graph_copy.compile(out_dir)
             print("Rewriter graph compiled to: " + file_name)
-
+            
+            
+ 
             rewriter_graph2 = self.load_class(out_dir + rewriter_graph_copy.name)
             rewriter_graph2 = rewriter_graph2.values()[0]
-
+ 
             # print(inspect.getargspec(rewriter_graph2.execute))
             # print(rewriter_graph2.__class__)
             # print(rewriter_graph2.name)
             # print("Hierarchy:")
             # print(inspect.getmro(rewriter_graph2.__class__))
-
-            #graph_to_dot(rewriter_graph2.name + "_loaded_rewriter", rewriter_graph2)
-
+ 
+            # debug printout
+            graph_to_dot(rewriter_graph2.name, rewriter_graph2)
+ 
             rewriter_graph2.pre = self.copy_graph(backward_pattern)
-
-
+ 
+ 
             #rewrite_name = rewriter_graph2.name
             #rewriter_graph2.name += "_loaded_rewriter"
             #rewriter_graph2.compile("./patterns")
             #rewriter_graph2.name = rewrite_name
-
+ 
             rewriter_graph2.pre = self.copy_graph(backward_pattern)
-
+ 
             for n in range(len(rewriter_graph2.pre.vs)):
                 node = rewriter_graph2.pre.vs[n]
                 #print("mm2__: " + node["mm__"])
-
+ 
             rewriter = Rewriter(rewriter_graph2)
-
-
-
-
-
-
+ 
+ 
             #append the new backward pattern and name mapping
             bwPatterns.append([matcher, rewriter])
             #bwPatterns2Rule[matcher] = name
+ 
+        print("bwPatterns: " + str(bwPatterns))
+        print("Returning from rule combinators")
 
-            #print("bwPatterns: " + str(bwPatterns))
-            print("Returning from rule combinators")
-        return {name: bwPatterns}
+        return {name: bwPatterns}        
+        
+#         
+#         
+#         
+#         remove_set = output[1]
+#         
+#         to_remove = []
+#         #flatten the list of nodes to remove
+#         for r in remove_set:
+#         #remove everything except for the attached nodes and the backward link
+#             to_remove += r
+#                     
+#         print "<--------------------------->"
+#         print to_remove
+#         for l in remove_set:
+#             print partial_combinator_matcher.vs[l[0]]["mm__"]
+#         print "<--------------------------->"        
+#         
+#         partial_combinator_matcher.delete_nodes(to_remove)
+#         
+#         graph_to_dot("combinator_before" + base_graph.name, partial_combinator_matcher)        
+#         
+#         # remove also all the indirect and direct links attached to the nodes to remove
+# 
+#         remove_links = []
+# 
+#         for n in partial_combinator_matcher.vs:
+#              
+#             if not ("directLink" in n["mm__"] or "indirectLink" in n["mm__"]):
+#                 continue
+#              
+#             print "going in..."     
+#             connected = self.look_for_attached(n, partial_combinator_matcher)
+#             # remove only dangling links, that are not connected to two nodes
+#             print str(len(connected))
+#             if len(connected) < 3:
+#                 remove_links.append(n)
+#         
+#         print remove_links
+#               
+#         partial_combinator_matcher.delete_nodes(remove_links)        
+#         
+#         # finally remove all the equation-related nodes
+#         
+#         partial_combinator_matcher = self.remove_pre_equation_nodes(partial_combinator_matcher)
+# 
+#         graph_to_dot("combinator_after" + base_graph.name, partial_combinator_matcher)        
+        
+        
+#         #BIG HACK
+#         new_graph = self.fix_attrs_for_backward_patterns(new_graph)
+# 
+#         file_name = new_graph.compile(out_dir)
+#         print("Rule combinator matcher compiled to: " + file_name)
+# 
+#         rule = self.load_class(out_dir + "/" + new_name)
+#         backward_pattern = rule.values()[0]
+# 
+#         j = 0
+#         for remove_set in reversed(output):
+# 
+#             new_graph = self.copy_graph(base_graph)
+# 
+# 
+#             print("Remove set")
+#             print(remove_set)
+#             
+#             to_remove = []
+#             for r in remove_set:
+#             #remove everything except for the attached nodes and the backward link
+#                 to_remove += r
+#                 
+#                 
+#             graph_to_dot(new_graph.name + "_before", new_graph)    
+#                                
+#             new_graph.delete_nodes(to_remove)
+# 
+# 
+#             #delete links that are not connected to two nodes
+#             remove_links = []
+#             for n in new_graph.vs:
+#                 
+#                 if not ("directLink" in n["mm__"] or "indirectLink" in n["mm__"]):
+#                     continue
+#                      
+#                 connected = self.look_for_attached(n, base_graph)
+#                 if len(connected) < 3:
+#                     remove_links.append(n)
+#                     
+#             new_graph.delete_nodes(remove_links)
+#             
+#             graph_to_dot(new_graph.name + "_after", new_graph)            
+#             
+#             
+# 
+#             remove_set = to_remove + remove_links
+#             
+#             
+# 
+#             #create the matcher
+# 
+#             j += 1
+# 
+#             #create a new name for this backward matcher
+#             #replace the pattern name with the partial pattern name
+#             new_name = name + "_rule_combinator_matcher_" + str(i)
+#             i += 1
+# 
+#             #write out the file
+#             new_graph.name = new_name
+#             new_graph["name"] = new_name + "_rc_matcher"
+# 
+# 
+#             #BIG HACK
+#             new_graph = self.fix_attrs_for_backward_patterns(new_graph)
+# 
+#             file_name = new_graph.compile(out_dir)
+#             print("Rule combinator matcher compiled to: " + file_name)
+# 
+#             rule = self.load_class(out_dir + "/" + new_name)
+#             backward_pattern = rule.values()[0]
+# 
+# 
+#             #graph_to_dot(new_name, backward_pattern)
+#             #graph_to_dot("remove_graph" + str(j), new_graph)
+# 
+# 
+# 
+#             if remove_set == []:
+#                 backward_pattern.NACs = []
+#             else:
+# 
+#                 NAC_nodes_to_remove = []
+# 
+#                 for node_to_remove in to_remove:
+#                     node = base_graph.vs[node_to_remove]
+#                     if node["mm__"] in ["MT_pre__indirectLink_S", "MT_pre__indirectLink_T", "MT_pre__directLink_S", "MT_pre__directLink_T"] \
+#                         and not node in to_remove:
+#                         NAC_nodes_to_remove.append(node_to_remove)
+# 
+#                 #create the NAC if needed
+#                 NAC_graph = self.copy_graph(base_graph)
+# 
+#                 NAC_graph.delete_nodes(NAC_nodes_to_remove)
+# 
+# 
+#                 NAC_graph = self.makePreConditionPatternNAC(NAC_graph)
+# 
+#                 NAC_graph.name += "_rule_combinator_NAC"
+# 
+#                 NAC_graph.LHS = backward_pattern
+# 
+#                 file_name = NAC_graph.compile(out_dir)
+#                 print("Nac graph compiled to: " + file_name)
+# 
+#                 NAC_graph = self.load_class(out_dir + NAC_graph.name, [backward_pattern])
+#                 NAC_graph = NAC_graph.values()[0]
+# 
+# 
+#                 backward_pattern.NACs = [NAC_graph]
+# 
+#             #create the Matcher
+#             matcher = Matcher(backward_pattern)
+# 
+# 
+#             #TODO: Make rewriter code simpler, and same as match pattern rewriter
+# 
+#             rewriter_graph_copy = self.copy_graph(rewriter_graph)
+# 
+#             rewriter_graph_copy.pre = self.copy_graph(backward_pattern)
+#             #graph_to_dot(rewriter_graph_copy.pre.name + "_pre", rewriter_graph_copy.pre)
+# 
+# 
+#             rewriter_graph_copy.name = rewrite_name + "_" + str(j)
+#             file_name = rewriter_graph_copy.compile(out_dir)
+#             print("Rewriter graph compiled to: " + file_name)
+# 
+#             rewriter_graph2 = self.load_class(out_dir + rewriter_graph_copy.name)
+#             rewriter_graph2 = rewriter_graph2.values()[0]
+# 
+#             # print(inspect.getargspec(rewriter_graph2.execute))
+#             # print(rewriter_graph2.__class__)
+#             # print(rewriter_graph2.name)
+#             # print("Hierarchy:")
+#             # print(inspect.getmro(rewriter_graph2.__class__))
+# 
+#             #graph_to_dot(rewriter_graph2.name + "_loaded_rewriter", rewriter_graph2)
+# 
+#             rewriter_graph2.pre = self.copy_graph(backward_pattern)
+# 
+# 
+#             #rewrite_name = rewriter_graph2.name
+#             #rewriter_graph2.name += "_loaded_rewriter"
+#             #rewriter_graph2.compile("./patterns")
+#             #rewriter_graph2.name = rewrite_name
+# 
+#             rewriter_graph2.pre = self.copy_graph(backward_pattern)
+# 
+#             for n in range(len(rewriter_graph2.pre.vs)):
+#                 node = rewriter_graph2.pre.vs[n]
+#                 #print("mm2__: " + node["mm__"])
+# 
+#             rewriter = Rewriter(rewriter_graph2)
+# 
+# 
+#             #append the new backward pattern and name mapping
+#             bwPatterns.append([matcher, rewriter])
+#             #bwPatterns2Rule[matcher] = name
+# 
+#             #print("bwPatterns: " + str(bwPatterns))
+#             print("Returning from rule combinators")
+#        return {name: bwPatterns}
 
 
-    def remove_equation_nodes(self, graph):
+    def remove_equation_nodes(self, graph):        
+        
         eq_nodes = self.find_nodes_with_mm(graph, ["Equation"])
         nodes_to_remove = []
         for eq in eq_nodes:
@@ -1255,9 +1441,23 @@ pass
             nodes_to_remove += self.flood_find_nodes(eq_num, graph, ["Attribute"])
         nodes_to_remove = list(set(nodes_to_remove))
 
-
         graph.delete_nodes(nodes_to_remove)
         return graph
+    
+#     def remove_pre_equation_nodes(self, graph):        
+#         
+#         "going in..."
+#         
+#         eq_nodes = self.find_nodes_with_mm(graph, ["MT_pre__Equation"])
+#         nodes_to_remove = []
+#         for eq in eq_nodes:
+#             print "founf equation..."
+#             eq_num = self.get_node_num(graph, eq)
+#             nodes_to_remove += self.flood_find_nodes(eq_num, graph, ["MT_pre__Attribute"])
+#         nodes_to_remove = list(set(nodes_to_remove))
+# 
+#         graph.delete_nodes(nodes_to_remove)
+#         return graph
 
     def remove_structure_nodes(self, graph):
         structure_nodes = self.find_nodes_with_mm(graph, ["MatchModel", "match_contains", "paired_with", "ApplyModel", "apply_contains"])
