@@ -148,6 +148,8 @@ class PrologAttributeEquationEvaluator(AttributeEquationSolver):
         to the left hand side and to the right hand side of an equation
         """
         
+        print "------> Node: " + str(node)
+        
         # in case it's an attribute, return the object's ID
         if pathCondition.vs[node]['mm__'] == 'Attribute':
             variablesInExpression.append("X" + str(node))
@@ -161,6 +163,8 @@ class PrologAttributeEquationEvaluator(AttributeEquationSolver):
                 parentObject = pathCondition.neighbors(attrEdgeApply[0],2)[0]
             # check if a variable for an attribute having the same name and belonging to the same object has already been created  
             # and in case it has just return it, otherwise create a new variable
+            print "-----> " + str(parentObject)
+            
             attrName = pathCondition.vs[node]['name']
             
             print "-----------------> " + str(attrName)
@@ -191,7 +195,7 @@ class PrologAttributeEquationEvaluator(AttributeEquationSolver):
             arg1 = pathCondition.neighbors(arg1Edge,1)[0]
             arg2 = pathCondition.neighbors(arg2Edge,1)[0]
             newVar = self.newVarID()
-            
+ 
             # add the concat operation to the set of append predicates in the body of the rule 
             concatsInExpression.append("append(" + self.build_equation_expression(arg1, pathCondition, variablesInExpression, concatsInExpression, varParentObjects) + "," + self.build_equation_expression(arg2, pathCondition, variablesInExpression, concatsInExpression, varParentObjects) + "," + newVar + ")")
             
@@ -223,6 +227,7 @@ class PrologAttributeEquationEvaluator(AttributeEquationSolver):
                 leftExprNode = pathCondition.neighbors(leftExprEdge,1)[0]
                 rightExprNode = pathCondition.neighbors(rightExprEdge,1)[0] 
 
+                print "call from outside...."
                 leftExpr = self.build_equation_expression(leftExprNode, pathCondition, variablesInExpression, concatsInExpression, varParentObjects)
                 rightExpr = self.build_equation_expression(rightExprNode, pathCondition, variablesInExpression, concatsInExpression, varParentObjects)  
 
@@ -230,10 +235,9 @@ class PrologAttributeEquationEvaluator(AttributeEquationSolver):
                     clauseBody += leftExpr + "=" +  rightExpr + ","
                 else:
                     clauseBody += leftExpr + "=" +  rightExpr
-            
-            if concatsInExpression != []:
-                clauseBody += ","      
+              
             for concat in concatsInExpression:
+                clauseBody += "," 
                 clauseBody += concat
 
         clauseHead = "solve("

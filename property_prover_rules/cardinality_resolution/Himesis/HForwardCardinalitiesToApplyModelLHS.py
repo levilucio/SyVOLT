@@ -44,8 +44,6 @@ p1
 return True
 """
         self.vs[0]["MT_label__"] = """2"""
-        self.vs[0]["mm__"] = """MT_pre__MetaModelElement_T"""
-        self.vs[0]["MT_dirty__"] = False
         self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
 S'MT_pre__Name'
 p2
@@ -104,6 +102,8 @@ p28
 aS'MT_pre__Model_T'
 p29
 a.""")
+        self.vs[0]["MT_dirty__"] = False
+        self.vs[0]["mm__"] = """MT_pre__MetaModelElement_T"""
         self.vs[0]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -143,8 +143,6 @@ return True
 return True
 """
         self.vs[1]["MT_label__"] = """1"""
-        self.vs[1]["mm__"] = """MT_pre__MetaModelElement_S"""
-        self.vs[1]["MT_dirty__"] = False
         self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
 S'MT_pre__OPTIONAL1,'
 p2
@@ -227,6 +225,8 @@ p40
 aS'MT_pre__FIXED0'
 p41
 a.""")
+        self.vs[1]["MT_dirty__"] = False
+        self.vs[1]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[1]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.

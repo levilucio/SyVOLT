@@ -370,6 +370,11 @@ pass
                 elif "Constant" in node["mm__"] and attrib == "MT_post__value":
                     node[attrib] = "return '" + node[attrib] + "'"
                     
+                    
+                elif "Attribute" in node["mm__"] and attrib == "MT_post__name":
+                    node[attrib] = "return '" + node[attrib] + "'"
+                    
+                    
                 elif "Constant" in node["mm__"] and attrib == "MT_post__name":
                     node[attrib] = "return '" + node[attrib] + "'"
 

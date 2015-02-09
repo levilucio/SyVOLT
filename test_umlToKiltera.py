@@ -64,13 +64,21 @@ class Test(unittest.TestCase):
 
         a1 = self.rules['HState2ProcDef']
         b1 = self.rules['HBasicStateNoOutgoing2ProcDef']
-#        b2 = self.rules['HBasicState2ProcDef']
-#        b3 = self.rules['HCompositeState2ProcDef']
-#        c1 = self.rules['HExitPoint2BProcDef_WhetherOrNotExitPtHasOutgoingTrans']
- 
+        b2 = self.rules['HBasicState2ProcDef']
+        b3 = self.rules['HCompositeState2ProcDef']
+        c1 = self.rules['HExitPoint2BProcDef_WhetherOrNotExitPtHasOutgoingTrans']
+        c2 = self.rules['HState2HProcDef']
+        c3 = self.rules['HState2CProcDef']
+        d1 = self.rules['HTransition2QInstSIBLING']
+        d2 = self.rules['HTransition2QInstOUT']
+        d3 = self.rules['HTransition2Inst']
+        e1 = self.rules['HTransition2ListenBranch']
+        e2 = self.rules['HConnectOutputsOf_ExitPoint2BProcDef_Transition2QInst']
+        e3 = self.rules['HTransition2HListenBranch']
+            
 #        transformation = [[a1], [b1,b2,b3], [c1]]
         
-        transformation = [[a1], [b1]]
+        transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3]]
           
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
         post_metamodel = ["MT_post__UMLRT2Kiltera_MM", "MoTifRule"]
@@ -97,10 +105,10 @@ class Test(unittest.TestCase):
         ts0 = time.time()
         s.build_path_conditions()
         ts1 = time.time()
-#           
-#         print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
-#         print("Size of the set of path conditions: " + str(sys.getsizeof(s.pathConditionSet) / 1024))
-#         print("Number of path conditions: " + str(len(s.pathConditionSet)))
+           
+        print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
+        print("Size of the set of path conditions: " + str(sys.getsizeof(s.pathConditionSet) / 1024))
+        print("Number of path conditions: " + str(len(s.pathConditionSet)))
 # # #         print
 # # #         '\n'
 # # #         print
@@ -111,10 +119,10 @@ class Test(unittest.TestCase):
 # # #         'Time to verify False property: ' + str(tv11 - tv10)
 # #  
 # #  
-#         print("printing path conditions")
-#         s.print_path_conditions_screen()
-#         
-#         s.print_path_conditions_file()
+        print("printing path conditions")
+        s.print_path_conditions_screen()
+         
+#        s.print_path_conditions_file()
 
 # 
 #         print("printing states")

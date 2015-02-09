@@ -605,6 +605,8 @@ class PathConditionGenerator():
                                             
                                             # check if the equations on the attributes of the newly created path condition are satisfied
                                         
+                                            graph_to_dot("evaluating", newPathCond)
+                                        
                                             if self.attributeEquationEvaluator(newPathCond):
                                        
                                             #if True:
