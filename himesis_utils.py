@@ -117,6 +117,11 @@ def graph_to_dot(name, g, verbosity = 0):
             fillcolor = "#9999FF"
 
         elif "Constant" in node_type:
+            try:
+                vattr += "\\n Name = " + str(v['name'])
+            except KeyError:
+                pass
+            
             fillcolor = "#FF99FF"
             
         elif node_type in ['directLink_S', 'directLink_T', 'MT_pre__directLink_T', 'MT_pre__directLink_S', 'MT_post__directLink_T', 'MT_post__directLink_S']:
