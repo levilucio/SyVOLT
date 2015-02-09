@@ -112,23 +112,25 @@ class Disambiguator():
         p = find_elements_collapse_match.packet_in(p)               
         if self.verbosity >= 2: print 'Found collapsable elements:' + str(find_elements_collapse_match.is_success)
         
-        if find_elements_collapse_match.is_success:            
+        if find_elements_collapse_match.is_success:   #identifies 2 things in different rules         
             
-            p = i.packet_in(p)
+            p = i.packet_in(p) #iterates on all matches
             
             # continue while more pairs of elements can be collapsed
-            while i.is_success:
+            while i.is_success: #operation of iterator worked
                 
                 #                 p = merge_cardinalities_matchmodel.packet_in(p)
                 #                 if self.verbosity >= 2: print 'merge_cardinalities_matchmodel:' + str( merge_cardinalities_matchmodel.is_success) 
                         
                 p = move_input_repeated_direct.packet_in(p)
                 if self.verbosity >= 2: print 'move_input_repeated_direct_matchmodel:' + str(move_input_repeated_direct.is_success)  
-                if not move_input_repeated_direct.is_success:
-                    p = move_input_direct.packet_in(p) 
+                if not move_input_repeated_direct.is_success: #repeated already have a link of the same type
+                    #not repeated - dont have it there so u copy on top
+                    #direct/indirect and whether theyr going in/out of second element
+                    p = move_input_direct.packet_in(p) #direct link going in
                     if self.verbosity >= 2: print 'move_input_direct_matchmodel:' + str(move_input_direct.is_success) 
                       
-                p = move_output_repeated_direct.packet_in(p)
+                p = move_output_repeated_direct.packet_in(p) #direct link going out
                 if self.verbosity >= 2: print 'move_output_repeated_direct_matchmodel:' + str(move_output_repeated_direct.is_success)
                 if not move_output_repeated_direct.is_success:
                     p = move_output_direct.packet_in(p) 
