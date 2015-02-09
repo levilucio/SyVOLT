@@ -108,6 +108,11 @@ def graph_to_dot(name, g, verbosity = 0):
             fillcolor = "#FF6666"
 
         elif node_type in ['Attribute', 'MT_pre__Attribute', 'MT_post__Attribute']:
+            try:
+                vattr += "\\n Name = " + str(v['name'])
+            except KeyError:
+                pass
+
             fillcolor = "#FFCC00"
             
         elif node_type in ['directLink_S', 'directLink_T', 'MT_pre__directLink_T', 'MT_pre__directLink_S', 'MT_post__directLink_T', 'MT_post__directLink_S']:
