@@ -45,8 +45,8 @@ def get_attribute(s, attr):
 def graph_to_dot(name, g, verbosity = 0):
     """
     build a dot file from a himesis graph
-    verbosity = 0, no traceability in the dot graph
-    verbosity = 1, traceability in the dot graph
+    verbosity = 0, represent directLink, indirectLink, backward, etc. edges as just edges in the dot graph
+    verbosity = 1, represent these edges as their own node
     """
     
     if g == None:
@@ -56,20 +56,15 @@ def graph_to_dot(name, g, verbosity = 0):
     vattr=''
     nodes = {}
     graph = pydot.Dot(name, graph_type='digraph')
-    #print("graph_to_dot: " + str(g))
-    
-    #print("===================================================\n")
+
     i = 0
     for v in g.vs:
-        #print(v)
-        #print("============\n")
     
         node_type = str(v['mm__'])
         node_GUID = str(v['GUID__'])[-12:]
         
         vattr += node_type + str(i)
         i += 1
-        #vattr += node_GUID
         
         try:
             label = str(v["MT_label__"])
@@ -104,8 +99,8 @@ def graph_to_dot(name, g, verbosity = 0):
         elif node_type in ['hasAttr_S', 'MT_pre__hasAttr_S', 'MT_post__hasAttr_S']:
             fillcolor = "#FF8888"
 
-        elif node_type in ['hasAttr_T', 'MT_pre__hasAttr_T', 'MT_post__hasAttr_T']:
-            fillcolor = "#FF6666"
+        elif node_type in ['hasAttr_T', 'MT_pre__hasAttr_T', 'MT_post__hasAttr_T'] or "hasAttribute" in node_type:
+            fillcolor = "#FF9999"
 
         elif node_type in ['Attribute', 'MT_pre__Attribute', 'MT_post__Attribute']:
             try:
@@ -114,6 +109,15 @@ def graph_to_dot(name, g, verbosity = 0):
                 pass
 
             fillcolor = "#FFCC00"
+
+        elif "hasArgs" in node_type:
+            fillcolor = "#FFFF99"
+
+        elif "Concat" in node_type:
+            fillcolor = "#9999FF"
+
+        elif "Constant" in node_type:
+            fillcolor = "#FF99FF"
             
         elif node_type in ['directLink_S', 'directLink_T', 'MT_pre__directLink_T', 'MT_pre__directLink_S', 'MT_post__directLink_T', 'MT_post__directLink_S']:
             
@@ -173,20 +177,17 @@ def graph_to_dot(name, g, verbosity = 0):
         
         
     for e in g.es:
-        # if verbosity == 0:
-        #     if g.vs[e.source]['mm__'] != 'trace_link' and g.vs[e.target]['mm__'] != 'trace_link':
-        #         graph.add_edge(pydot.Edge(nodes[e.source],nodes[e.target]))
-        # else:
         graph.add_edge(pydot.Edge(nodes[e.source],nodes[e.target]))
 
     dot_filename = './dot/' + name + '.dot'
-    #print("Wrote to file: " + dot_filename)
+
     graph.write(dot_filename)
     
     command = "dot -Tsvg " + dot_filename + " -o " + dot_filename.replace(".dot", ".svg")
-    #print(command)
     subprocess.call(command, shell=True)
-#    graph.write('/home/gehan/OutputDotFiles/%s.dot'%name)    
+
+    command = "rm " + dot_filename
+    subprocess.call(command, shell=True)
 
     
 def disjoint_model_union(first, second):
