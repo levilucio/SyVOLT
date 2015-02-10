@@ -41,7 +41,7 @@ class Test(unittest.TestCase):
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
             pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation_reduced/Himesis/")
 
-        print(self.rules)
+        print("Rules: " + str(self.rules.keys()))
 
 
     def test_correct_uml2kiltera(self):
@@ -60,9 +60,9 @@ class Test(unittest.TestCase):
 #         b2 = self.rules['HBasicState2ProcDef']
 #         b3 = self.rules['HCompositeState2ProcDef']
 
-        pyramify = PyRamify()
+        pyramify = PyRamify(verbosity = 2)
 
-        print self.rules.keys()
+
 
         a1 = self.rules['HState2ProcDef']
         b1 = self.rules['HBasicStateNoOutgoing2ProcDef']

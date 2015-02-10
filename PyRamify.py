@@ -30,10 +30,11 @@ import inspect
     
 class PyRamify:
 
-    def __init__(self):
+    def __init__(self, verbosity = 0):
 
         #keep track of the next label to give a graph node
         self.next_label = 0
+        self.verbosity = verbosity
 
     '''
      changeAttrType (M): Changes the type of attributes to 'string', which allows conditions and actions to be specified on attribute values in patterns.
@@ -374,7 +375,9 @@ class PyRamify:
 
 
         file_name = new_graph.compile(out_dir)
-        print("Backward patterns compiled to: " + file_name)
+
+        if self.verbosity >= 2:
+            print("Backward patterns compiled to: " + file_name)
 
         rule = self.load_class(out_dir + "/" + new_name)
         backward_pattern = rule[rule.keys()[0]]
@@ -562,9 +565,6 @@ class PyRamify:
         rewriter_graph.delete_nodes(structure_nums)
 
 
-        print("Made rewriter")
-
-
         #make the base graph
         nodes_w_eqs = self.get_all_nodes_with_equations(base_graph)
 
@@ -718,8 +718,8 @@ class PyRamify:
         #knock nodes out of the base graph to create the matchers
         #nodes_to_remove
 
-        print("Length: " + str(len(input_nodes)))
-        print(input_nodes)
+        #print("Length: " + str(len(input_nodes)))
+        #print(input_nodes)
         #input nodes stores the node numbers for the nodes you want to knock out of the base graph
         output = sum([map(list, combinations(input_nodes, i)) for i in range(len(input_nodes) + 1)], [])
         #output = []
@@ -800,7 +800,8 @@ class PyRamify:
             combinator_matchers[i] = self.fix_attrs_for_backward_patterns(combinator_matchers[i])
     
             file_name = combinator_matchers[i].compile(out_dir)
-            print("Rule combinator matcher compiled to: " + file_name)
+            if self.verbosity >= 2:
+                print("Rule combinator matcher compiled to: " + file_name)
     
             rule = self.load_class(out_dir + "/" + new_name)
             
@@ -819,7 +820,8 @@ class PyRamify:
                 NAC_graph.LHS = backward_pattern
                 
                 file_name = NAC_graph.compile(out_dir)
-                print("Nac graph compiled to: " + file_name)
+                if self.verbosity >= 2:
+                    print("Nac graph compiled to: " + file_name)
                 
                 NAC_graph = self.load_class(out_dir + NAC_graph.name, [backward_pattern])
                 NAC_graph = NAC_graph.values()[0]
@@ -843,7 +845,8 @@ class PyRamify:
  
             rewriter_graph_copy.name = rewrite_name + "_" + str(i)
             file_name = rewriter_graph_copy.compile(out_dir)
-            print("Rewriter graph compiled to: " + file_name)
+            if self.verbosity >= 2:
+                print("Rewriter graph compiled to: " + file_name)
             
             
  
@@ -879,9 +882,6 @@ class PyRamify:
             #append the new backward pattern and name mapping
             bwPatterns.append([matcher, rewriter])
             #bwPatterns2Rule[matcher] = name
- 
-        print("bwPatterns: " + str(bwPatterns))
-        print("Returning from rule combinators")
 
         return {name: bwPatterns}        
         
@@ -1259,7 +1259,8 @@ class PyRamify:
 
         graph.name = old_name + "_match_pattern_matcher"
         file_name = graph.compile(out_dir)
-        print("Match pattern matcher compiled to: " + file_name)
+        if self.verbosity >= 2:
+            print("Match pattern matcher compiled to: " + file_name)
 
         graph_to_dot(graph.name, graph)
 
@@ -1273,7 +1274,8 @@ class PyRamify:
         #graph_to_dot("the_rewriter_graph" + rewriter.name, rewriter)
 
         file_name = rewriter.compile(out_dir)
-        print("Match pattern rewriter compiled to: " + file_name)
+        if self.verbosity >= 2:
+            print("Match pattern rewriter compiled to: " + file_name)
 
         rewriter_dict = self.load_class(out_dir + rewriter.name)
         rewriter = rewriter_dict.values()[0]
@@ -1372,6 +1374,9 @@ class PyRamify:
             rule5 = self.load_class(dir_name + "/" + f)
             rule_combinator = self.get_rule_combinators(rule5)
             ruleCombinators.update(rule_combinator)
+
+
+        print("Finished RAMification")
 
         return [rules, backwardPatterns, backwardPatterns2Rules, {}, matchRulePatterns, ruleCombinators]
 
