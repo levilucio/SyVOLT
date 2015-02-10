@@ -1,17 +1,13 @@
 from core.himesis import *
 
-#get the id number of a node in the graph
-#hacky, as this is based on the node's attributes
+#get the postion of this node in the Himesis graph
 def get_node_num(graph, node):
     for i in range(len(graph.vs)):
         if graph.vs[i]["GUID__"] == node["GUID__"]:
-
-            if not graph.vs[i]["mm__"] == node["mm__"]:
-                raise Exception("get_node_num is wrong!!!")
             return i
-    return -1
+    raise Exception("The node " + node["mm__"] + " was not found in this graph")
 
-#find the nodes with this mm name
+#find the nodes with these mm names
 def find_nodes_with_mm(graph, mm_names):
     nodes = []
     for node in graph.vs:
@@ -20,17 +16,12 @@ def find_nodes_with_mm(graph, mm_names):
     return nodes
 
 #=========================
-#look for the nodes attached to the node number 'num'
-#used to find backward links
-def look_for_attached(link, graph):
+#look for the nodes attached to the link_node
+def look_for_attached(link_node, graph):
     attached_node_nums = []
 
-
-    #hacky way of finding the index of the node
-    node_num = get_node_num(graph, link)
-
-    if node_num == -1:
-        print("Error: no link found")
+    #find the index of the node
+    node_num = get_node_num(graph, link_node)
 
     #check the edge list to see if there are attached edges
     for edge in graph.get_edgelist():
@@ -40,43 +31,51 @@ def look_for_attached(link, graph):
             attached_node_nums.append(edge[0])
 
     attached_node_nums.append(node_num)
-
     return attached_node_nums
 
 #do a lookup of the nodes that are attached to
 #the nodes attached to this link
-def look_for_attached_of_attached(link, graph):
-    attached_of_attached = []
-    attached = look_for_attached(link, graph)
+def look_for_attached_of_attached(link_node, graph):
+    attached = look_for_attached(link_node, graph)
 
+    attached_of_attached = []
     for a in attached:
         attached_of_attached += look_for_attached(graph.vs[a], graph)
 
+    #ignore duplicates
     return list(set(attached_of_attached))
 
 
-def flood_find_nodes(start_node, graph, stop_mms = [], stop_and_include_mms = []):
-    node_stack = [start_node]
+#flood fill throughout the graph starting at the start node
+#this flood occurs through the edges in the graph
+#until a stop mm is reached
+#stop mm nodes will not be included in the returned array
+#while stop_and_include mms will
+def flood_find_nodes(start_node, graph, stop_mms = None, stop_and_include_mms = None):
+
     return_nodes = []
+
+    node_stack = [start_node]
     while len(node_stack) > 0:
         node = node_stack.pop()
 
-        if graph.vs[node]["mm__"] in stop_and_include_mms:
+        #include this node, but don't add neighbours to the stack
+        if stop_and_include_mms is not None and graph.vs[node]["mm__"] in stop_and_include_mms:
             return_nodes.append(node)
             continue
 
-        if graph.vs[node]["mm__"] in stop_mms:
+        #don't add neighbours to the stack
+        if stop_mms is not None and graph.vs[node]["mm__"] in stop_mms:
             continue
 
+        #don't look at already-included nodes
         if node in return_nodes:
             continue
 
         return_nodes.append(node)
 
+        #add neighbours to the stack
         for edge in graph.get_edgelist():
-            mm1 = graph.vs[edge[0]]["mm__"]
-            mm2 = graph.vs[edge[1]]["mm__"]
-
             if node == edge[0]:
                 node_stack.append(edge[1])
             elif node == edge[1]:
@@ -90,7 +89,6 @@ def makePreConditionPattern(graph):
 
     #force the class to be different
     graph.__class__ = HimesisPreConditionPatternLHS
-
 
     #variables added in subclasses
 
@@ -155,14 +153,10 @@ def copy_graph(graph2):
     except AttributeError:
         pass
 
-
-
-
     try:
         graph1.nodes_pivot_in = copy.deepcopy(graph2.nodes_pivot_in)
     except AttributeError:
         pass
-
 
     graph1.import_name = copy.deepcopy(graph2.import_name)
 
@@ -171,34 +165,12 @@ def copy_graph(graph2):
     except AttributeError:
         pass
 
-
     try:
         graph1.pre = copy_graph(graph2.pre)
     except AttributeError:
         pass
 
     return graph1
-
-
-# helper function for the user, to list all of the
-#rules in the transformation that have backward links
-def getRulesIncludingBackLinks(transformation, backwardPatterns):
-    rulesIncludingBackLinks = []
-
-    for layer in transformation:
-        back_links = []
-        for rule in layer:
-            bp = backwardPatterns[rule.name]
-            if bp == []:
-                continue
-
-            #if the rule has a backwards pattern,
-            #then it has backwards links
-            back_links.append(rule)
-
-        #keep the layered structure
-        rulesIncludingBackLinks.append(back_links)
-    return rulesIncludingBackLinks
 
 
 #the default eval match code

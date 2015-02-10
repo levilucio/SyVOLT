@@ -1424,6 +1424,28 @@ class PyRamify:
         #graph_to_dot("the_rewriter_graph_after" + rewriter.name, rewriter)
 
         return {name : [Matcher(match_graph), Rewriter(rewriter)]}
+
+    # helper function for the user, to list all of the
+    # rules in the transformation that have backward links
+    def getRulesIncludingBackLinks(self, transformation, backwardPatterns):
+        rulesIncludingBackLinks = []
+
+        for layer in transformation:
+            back_links = []
+            for rule in layer:
+                bp = backwardPatterns[rule.name]
+                if bp is []:
+                    continue
+
+                #if the rule has a backwards pattern,
+                #then it has backwards links
+                back_links.append(rule)
+
+            #keep the layered structure
+            rulesIncludingBackLinks.append(back_links)
+        return rulesIncludingBackLinks
+
+
     #=========================
 
     #function to dynamically load a new class
