@@ -78,11 +78,11 @@ class Test(unittest.TestCase):
         e4 = self.rules['HConnectOP_State2CProcDef_Transition2Inst_OtherInTransitions']
         f1 = self.rules['HMapHeirarchyOfStates2HeirarchyOfProcs']
             
-        transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e3,e4], [f1]]
+#        transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e3,e4], [f1]]
 
 #        transformation = [[a1], [b1,b2,b3], [c1]]
         
-#        transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3]]
+        transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
           
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
         post_metamodel = ["MT_post__UMLRT2Kiltera_MM", "MoTifRule"]
@@ -105,26 +105,26 @@ class Test(unittest.TestCase):
         print("create state space")
         s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, 2)# 
    
-        print("building path conditions")
-        ts0 = time.time()
-        s.build_path_conditions()
-        ts1 = time.time()
-           
-        print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
-        print("Size of the set of path conditions: " + str(sys.getsizeof(s.pathConditionSet) / 1024))
-        print("Number of path conditions: " + str(len(s.pathConditionSet)))
-# # #         print
-# # #         '\n'
-# # #         print
-# # #         'Time to verify True property: ' + str(tv01 - tv00)
-# # #         print
-# # #         '\n'
-# # #         print
-# # #         'Time to verify False property: ' + str(tv11 - tv10)
-# #  
-# #  
-        print("printing path conditions")
-        s.print_path_conditions_screen()
+#         print("building path conditions")
+#         ts0 = time.time()
+#         s.build_path_conditions()
+#         ts1 = time.time()
+#            
+#         print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
+#         print("Size of the set of path conditions: " + str(sys.getsizeof(s.pathConditionSet) / 1024))
+#         print("Number of path conditions: " + str(len(s.pathConditionSet)))
+# # # #         print
+# # # #         '\n'
+# # # #         print
+# # # #         'Time to verify True property: ' + str(tv01 - tv00)
+# # # #         print
+# # # #         '\n'
+# # # #         print
+# # # #         'Time to verify False property: ' + str(tv11 - tv10)
+# # #  
+# # #  
+#         print("printing path conditions")
+#         s.print_path_conditions_screen()
          
 #s        s.print_path_conditions_file()
 
