@@ -14,7 +14,6 @@ from t_core.matcher import Matcher
 from t_core.messages import Packet
 
 from PyRamify import PyRamify
-from PyRamify_test import PyRamify_test
 
 from himesis_utils import graph_to_dot
 # all runs are the same transformation, but with different metamodel elements

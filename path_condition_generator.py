@@ -16,6 +16,7 @@ from copy import deepcopy
 from solver.prolog_attribute_equation_evaluator import PrologAttributeEquationEvaluator
 
 from PyRamify import PyRamify
+from PropertyProverTester import PropertyProverTester
 
 # the empty path condition
 from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
@@ -67,24 +68,13 @@ class PathConditionGenerator():
         self.transformation = transformation
         self.ruleCombinators = ruleCombinators
         self.ruleTraceCheckers = ruleTraceCheckers
-        
+        self.matchRulePatterns = matchRulePatterns
+
         self.ruleContainment = []
 
-        self.print_transformation()
-        self.print_ruleCombinators()
-        self.print_ruleTraceCheckers()
-
-
-
-#         self.backwardPatternsComplete = backwardPatternsComplete
-        self.matchRulePatterns = matchRulePatterns
         self.verbosity = verbosity
 #         self.outputStates = outputStates
 
-        self.print_matchRulePatterns()
-
-        # output suffix for graph files
-#        self.output_suffix = output_suffix
       
         # the path condition set starts with only the empty (None) path condition inside
         self.pathConditionSet = [HEmptyPathCondition()]        
@@ -93,25 +83,20 @@ class PathConditionGenerator():
 
         self._pre_process()
 
+        if verbosity >= 2:
+            self.debug()
+
     def print_transformation(self):
         for layer in self.transformation:
             for rule in layer:
                 graph_to_dot("rule_" + str(rule['name']), rule)
 
     def print_ruleCombinators(self):
-        print("RuleCombinators")
         for key in self.ruleCombinators.keys():
             value = self.ruleCombinators[key]
 
             if value is not None:
-                #print("Value")
-                #print(value)
-
                 for (m, r) in value:
-                    #print("Name: " + str(m.condition.name))
-
-                    #print(m)
-
                     graph_to_dot("ruleCombinator_match_" + str(m.condition.name), m.condition)
                     graph_to_dot("ruleCombinator_rewrite_" + str(r.condition.name), r.condition)
 
@@ -121,36 +106,27 @@ class PathConditionGenerator():
 
     def print_ruleTraceCheckers(self):
         for key in self.ruleTraceCheckers.keys():
-
             tc = self.ruleTraceCheckers[key]
             if tc is not None:
                 graph_to_dot("traceChecker_" + str(tc.condition.name), tc.condition)
 
-#    def print_backwardPatternsComplete(self):
-#        print("\n===\nbackwardPatternsComplete:")
-#         for backwardPatternsCompleteKey in sorted(self.backwardPatternsComplete.keys()):
-#             print("Key: " + str(backwardPatternsCompleteKey))
-#             val = self.backwardPatternsComplete[backwardPatternsCompleteKey]
-#             if val is None:
-#                 print("Val is None")
-#                 continue
-#             elif val ==[]:
-#                 print("Val is []")
-#                 continue
-#             for v in val:
-#                 print_graph(v.condition)
-#                 graph_to_dot("backComplete_" + str(backwardPatternsCompleteKey) + self.output_suffix, v.condition)
-
     def print_matchRulePatterns(self):
-        #print("\n===\nmatchRulePatterns:")
         for matchRulePattern in sorted(self.matchRulePatterns.keys()):
-            #print("\nKey: " + str(matchRulePattern))
-            #print("\nValue: ")
-
             matcher, rewriter = self.matchRulePatterns[matchRulePattern]
-            #print_graph(matcher.condition)
             graph_to_dot("matchPattern_matcher_" + str(matchRulePattern), matcher.condition)
             graph_to_dot("matchPattern_rewriter_" + str(matchRulePattern), rewriter.condition)
+
+
+    def debug(self):
+        self.print_transformation()
+        self.print_ruleCombinators()
+        self.print_ruleTraceCheckers()
+        self.print_matchRulePatterns()
+
+        ppt = PropertyProverTester()
+        ppt.set_artifacts(self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators)
+
+        ppt.test_matchers()
 
     def _pre_process(self):
         """
@@ -200,6 +176,7 @@ class PathConditionGenerator():
                     p = Packet()
                     p.graph = self.transformation[layer][0]
                     matchPatternCandidateRule.packet_in(p)                           
+
                     # check if the rules share the same match pattern such that we can merge them
                     if matchPatternCurrentRule.is_success and matchPatternCandidateRule.is_success:
                         
