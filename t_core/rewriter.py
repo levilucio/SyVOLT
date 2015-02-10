@@ -34,9 +34,10 @@ class Rewriter(RulePrimitive):
             return packet
         else:
             match = packet.match_sets[self.condition.pre[Himesis.Constants.GUID]].match2rewrite
-            mapping = match.to_label_mapping(packet.graph)
-            # Apply the transformation on the match
             try:
+                mapping = match.to_label_mapping(packet.graph)
+                # Apply the transformation on the match
+
                 self.condition.execute(packet, mapping)     # Sets dirty nodes as well
             except Exception, e:
 
