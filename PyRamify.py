@@ -9,8 +9,9 @@ from himesis_utils import *
 
 from core.himesis import *
 from itertools import combinations
+from himesis_plus import *
 import inspect
-from ubuntuone.controlpanel.gui import CONNECT_BUTTON_LABEL
+#from ubuntuone.controlpanel.gui import CONNECT_BUTTON_LABEL
 
 
 '''
@@ -33,210 +34,6 @@ class PyRamify:
 
         #keep track of the next label to give a graph node
         self.next_label = 0
-        
-
-    #get the id number of a node in the graph
-    #hacky, as this is based on the node's attributes
-    def get_node_num(self, graph, node):
-        for i in range(len(graph.vs)):
-            if graph.vs[i]["GUID__"] == node["GUID__"]:
-                
-                if not graph.vs[i]["mm__"] == node["mm__"]:
-                    raise Exception("get_node_num is wrong!!!")
-                return i
-        return -1
-
-    #=========================
-    #look for the nodes attached to the node number 'num'
-    #used to find backward links
-    def look_for_attached(self, link, graph):
-        attached_node_nums = []
-        
-        
-        #hacky way of finding the index of the node
-        node_num = self.get_node_num(graph, link)
-                
-        if node_num == -1:
-            print("Error: no link found")
-        
-        #check the edge list to see if there are attached edges
-        for edge in graph.get_edgelist():
-            if node_num == edge[0]:
-                attached_node_nums.append(edge[1])
-            elif node_num == edge[1]:
-                attached_node_nums.append(edge[0])
-        
-        attached_node_nums.append(node_num)
-        
-        return attached_node_nums
-
-    #do a lookup of the nodes that are attached to
-    #the nodes attached to this link
-    def look_for_attached_of_attached(self, link, graph):
-        attached_of_attached = []
-        attached = self.look_for_attached(link, graph)
-
-        for a in attached:
-            attached_of_attached += self.look_for_attached(graph.vs[a], graph)
-
-        return list(set(attached_of_attached))
-
-
-
-
-
-    #Very hacky way of making the graph a HimesisPreConditionPatternLHS
-    def makePreConditionPattern(self, graph):
-        
-        #force the class to be different
-        graph.__class__ = HimesisPreConditionPatternLHS
-        
-
-        #variables added in subclasses
-
-        #from HimesisPattern
-        graph.nodes_label = {}
-        graph.nodes_pivot_out = {}
-        
-        #from HimesisPreConditionPattern
-        graph.nodes_pivot_in = {}
-        
-        #from HimesisPreConditionPatternLHS
-        graph.import_name = 'HimesisPreConditionPatternLHS'
-        graph.NACs = []
-
-        return graph
-
-    def makePreConditionPatternNAC(self, graph):
-
-        graph = self.makePreConditionPattern(graph)
-
-        graph.__class__ = HimesisPreConditionPatternNAC
-
-        graph.LHS = None
-        graph.bridge = None
-        graph.init_params.append('LHS')
-        graph.import_name = 'HimesisPreConditionPatternNAC'
-
-        return graph
-
-
-    def makePostConditionPattern(self, old_graph):
-        graph = copy.deepcopy(old_graph)
-
-        # force the class to be different
-        graph.__class__ = HimesisPostConditionPattern
-
-        # variables added in subclasses
-
-        #from HimesisPattern
-        graph.nodes_label = {}
-        graph.nodes_pivot_out = {}
-
-        #from HimesisPostConditionPattern
-        graph.pre = None
-        graph.import_name = 'HimesisPostConditionPattern'
-
-        return graph
-
-
-    #FIXME to be proper
-    #could be smarter depending on the type
-    def copy_graph(self, graph2):
-        graph1 = copy.deepcopy(graph2)
-
-        try:
-            graph1.nodes_label = copy.deepcopy(graph2.nodes_label)
-        except AttributeError:
-            pass
-
-        try:
-            graph1.nodes_pivot_out = copy.deepcopy(graph2.nodes_pivot_out)
-        except AttributeError:
-            pass
-
-
-
-
-        try:
-            graph1.nodes_pivot_in = copy.deepcopy(graph2.nodes_pivot_in)
-        except AttributeError:
-            pass
-
-
-        graph1.import_name = copy.deepcopy(graph2.import_name)
-
-        try:
-            graph1.NACs = copy.deepcopy(graph2.NACs)
-        except AttributeError:
-            pass
-
-
-        try:
-            graph1.pre = self.copy_graph(graph2.pre)
-        except AttributeError:
-            pass
-
-        return graph1
-
-    #the default eval match code
-    #use to build the matchers
-    def get_default_match_code(self):
-
-        return """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
-
-    def get_default_rewrite_code(self):
-        return """
-#===============================================================================
-# You can access the value of the current node's attribute value by: attr_value.
-# If the current node shall be created you MUST initialize it here!
-# You can access a node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# Note that the attribute values are those before the match is rewritten.
-# The order in which this code is executed depends on the label value
-# of the encapsulating node.
-# The given action must return the new value of the attribute.
-#===============================================================================
-
-return attr_value
-"""
-
-    #the default constraint for each attribute
-    #as in the bottom of matchers
-    def get_default_constraint(self):
-        return """#===============================================================================
-# This code is executed after the nodes in the LHS have been matched.
-# You can access a matched node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# The given constraint must evaluate to a boolean expression:
-#    returning True enables the rule to be applied,
-#    returning False forbids the rule from being applied.
-#===============================================================================
-
-return True
-"""
-
-    def get_default_action(self):
-        return """#===============================================================================
-# This code is executed after the rule has been applied.
-# You can access a node labelled n matched by this rule by: PostNode('n').
-# To access attribute x of node n, use: PostNode('n')['x'].
-#===============================================================================
-
-pass
-"""
-
 
     '''
      changeAttrType (M): Changes the type of attributes to 'string', which allows conditions and actions to be specified on attribute values in patterns.
@@ -260,9 +57,9 @@ pass
 
         if make_pre:
             #set the default constraint
-            graph["MT_constraint__"] = self.get_default_constraint()
+            graph["MT_constraint__"] = get_default_constraint()
         else:
-            graph["MT_action__"] = self.get_default_action()
+            graph["MT_action__"] = get_default_action()
 
         attribs_to_skip = ["GUID__", "mm__", "MT_label__", "MT_subtypes__", "MT_dirty__", "MT_subtypeMatching__"]
 
@@ -385,9 +182,9 @@ pass
                 else:
                     #set the other values to the default match code
                     if make_pre:
-                        node[attrib] = self.get_default_match_code()
+                        node[attrib] = get_default_match_code()
                     else:
-                        node[attrib] = self.get_default_rewrite_code()
+                        node[attrib] = get_default_rewrite_code()
 
             #set these properties
 
@@ -445,13 +242,13 @@ pass
         #graph["name"] = self.get_RAMified_name(input_name)
 
         #turn the backward links into trace links
-        backwards_links = self.find_nodes_with_mm(graph, ["backward_link"])
+        backwards_links = find_nodes_with_mm(graph, ["backward_link"])
         for node in backwards_links:
             node["mm__"] = "trace_link"
 
         #in some cases, the 'structural' or 'rule' nodes are removed
         if remove_rule_nodes is True:
-            remove_nodes = self.find_nodes_with_mm(graph, ["MatchModel", "ApplyModel", "paired_with", "match_contains", "apply_contains", "directLink_T"])
+            remove_nodes = find_nodes_with_mm(graph, ["MatchModel", "ApplyModel", "paired_with", "match_contains", "apply_contains", "directLink_T"])
             print("Removing rule nodes")
             graph.delete_nodes(remove_nodes)
 
@@ -461,7 +258,7 @@ pass
         #         print(n)
 
         #make sure this graph becomes a precondition pattern
-        graph = self.makePreConditionPattern(graph)
+        graph = makePreConditionPattern(graph)
 
         # for n in graph.vs:
         #     if "Attribute" in n["mm__"]:
@@ -494,15 +291,7 @@ pass
             s = s + "LHS"
         return s
         
-        
-    #find the nodes with this mm name
-    def find_nodes_with_mm(self, graph, mm_names):
-        nodes = []
-        for node in graph.vs:
-            if node["mm__"] in mm_names:
-                nodes.append(node)
-        return nodes
-    
+
     #create the backward patterns for this file
     #could be combined with get_backward_patterns below
     def get_complete_backward_pattern(self, rule, skip_pausing):
@@ -611,7 +400,7 @@ pass
         return_graph = graph
 
         #check to see which nodes have backward links
-        backwards_links = self.find_nodes_with_mm(graph, ["backward_link"])
+        backwards_links = find_nodes_with_mm(graph, ["backward_link"])
 
         #no backward links in file, do nothing
         if len(backwards_links) == 0:
@@ -642,16 +431,16 @@ pass
 
         #The node mappings may have changed
         #So to be safe, find the backward/trace links again
-        backwards_links = self.find_nodes_with_mm(graph, ["MT_pre__trace_link"])
+        backwards_links = find_nodes_with_mm(graph, ["MT_pre__trace_link"])
 
         #get the ids of the structural nodes
-        structure_nodes = self.find_nodes_with_mm(graph, ["MT_pre__MatchModel", "MT_pre__paired_with", "MT_pre__ApplyModel", "MT_pre__match_contains", "MT_pre__apply_contains"])
-        structure_nums = [self.get_node_num(graph, item) for item in structure_nodes]
+        structure_nodes = find_nodes_with_mm(graph, ["MT_pre__MatchModel", "MT_pre__paired_with", "MT_pre__ApplyModel", "MT_pre__match_contains", "MT_pre__apply_contains"])
+        structure_nums = [get_node_num(graph, item) for item in structure_nodes]
 
 
         # make sure to copy the graph, as we will make multiple smaller matchers from it
         new_graph = copy.deepcopy(graph)
-        new_graph = self.makePreConditionPattern(new_graph)
+        new_graph = makePreConditionPattern(new_graph)
 
 
         # keep the nodes attached to the backward link plus the 'structural' nodes
@@ -663,7 +452,7 @@ pass
         i = 0
         for link in backwards_links:
             #find the nodes attached to the backwards link
-            attached_nodes = self.look_for_attached(link, new_graph)
+            attached_nodes = look_for_attached(link, new_graph)
 
 
             # #get the nodes attached to the nodes attached to the backward link
@@ -823,9 +612,9 @@ pass
         all_nodes_w_eqs = {}
         for n in all_nodes:
             
-            node_num = self.get_node_num(graph, n)
+            node_num = get_node_num(graph, n)
             
-            connected_nodes = self.flood_find_nodes(node_num, graph, ["MT_pre__match_contains", "MT_pre__apply_contains",
+            connected_nodes = flood_find_nodes(node_num, graph, ["MT_pre__match_contains", "MT_pre__apply_contains",
                                                                 "MT_pre__directLink_S", "MT_pre__directLink_T",
                                                                 "MT_pre__indirectLink_S", "MT_pre__indirectLink_T",
                                                                 "MT_pre__trace_link"], )
@@ -844,10 +633,10 @@ pass
             graph.vs[i]["MT_label__"] = str(label)
             label += 1
 
-        return_graph = self.copy_graph(graph)
+        return_graph = copy_graph(graph)
 
         # check to see which nodes have backward links
-        backwards_links = self.find_nodes_with_mm(graph, ["backward_link"])
+        backwards_links = find_nodes_with_mm(graph, ["backward_link"])
 
         #no backward links in file, do nothing
         if len(backwards_links) == 0:
@@ -873,25 +662,25 @@ pass
 
         #The node mappings may have changed
         #So to be safe, find the backward/trace links again
-        backwards_links = self.find_nodes_with_mm(graph, ["MT_pre__trace_link"])
+        backwards_links = find_nodes_with_mm(graph, ["MT_pre__trace_link"])
 
        
         # make sure to copy the graph, as we will make multiple smaller matchers from it
-        new_graph = self.copy_graph(graph)
-        new_graph = self.makePreConditionPattern(new_graph)
+        new_graph = copy_graph(graph)
+        new_graph = makePreConditionPattern(new_graph)
 
 
 
-        base_graph = self.copy_graph(new_graph)
+        base_graph = copy_graph(new_graph)
 
  #get the ids of the structural nodes
         
         #TODO: Get rewriter graph from matcher rewriter
         
-        structure_nodes = self.find_nodes_with_mm(return_graph, ["MT_pre__MatchModel", "MT_pre__paired_with",
+        structure_nodes = find_nodes_with_mm(return_graph, ["MT_pre__MatchModel", "MT_pre__paired_with",
                                                           "MT_pre__ApplyModel", "MT_pre__match_contains",
                                                           "MT_pre__apply_contains"])
-        structure_nums = [self.get_node_num(return_graph, item) for item in structure_nodes]
+        structure_nums = [get_node_num(return_graph, item) for item in structure_nodes]
         
         
         rewriter_graph = self.make_rewriter(return_graph)
@@ -912,7 +701,7 @@ pass
         for n in nodes_w_eqs.keys():
             
             #node_num = self.get_node_num(graph, n)
-            connected = self.look_for_attached(n, base_graph)
+            connected = look_for_attached(n, base_graph)
 
             in_match = False
             in_apply = False
@@ -940,7 +729,7 @@ pass
             
         for k in keep_nodes:
             
-            k_num = self.get_node_num(base_graph, k)
+            k_num = get_node_num(base_graph, k)
             try:
                 remove_nodes.remove(k_num)
             except Exception:
@@ -960,13 +749,13 @@ pass
         
         
 
-        structure_nodes = self.find_nodes_with_mm(base_graph, ["MT_pre__MatchModel", "MT_pre__paired_with",
+        structure_nodes = find_nodes_with_mm(base_graph, ["MT_pre__MatchModel", "MT_pre__paired_with",
                                                           "MT_pre__ApplyModel", "MT_pre__match_contains",
                                                           "MT_pre__apply_contains"])
-        structure_nums = [self.get_node_num(base_graph, item) for item in structure_nodes]
+        structure_nums = [get_node_num(base_graph, item) for item in structure_nodes]
         
-        link_nodes = self.find_nodes_with_mm(base_graph, ["MT_pre__directLink_T", "MT_pre__indirectLink_T"])
-        link_nums = [self.get_node_num(base_graph, item) for item in link_nodes]
+        link_nodes = find_nodes_with_mm(base_graph, ["MT_pre__directLink_T", "MT_pre__indirectLink_T"])
+        link_nums = [get_node_num(base_graph, item) for item in link_nodes]
 
 
         base_graph.delete_nodes(structure_nums + link_nums)
@@ -975,8 +764,8 @@ pass
         
         
         
-        link_nodes = self.find_nodes_with_mm(base_graph, ["MT_pre__directLink_S", "MT_pre__indirectLink_S"])
-        link_nums = [self.get_node_num(base_graph, item) for item in link_nodes]
+        link_nodes = find_nodes_with_mm(base_graph, ["MT_pre__directLink_S", "MT_pre__indirectLink_S"])
+        link_nums = [get_node_num(base_graph, item) for item in link_nodes]
         
         temp_input_nodes = []
         
@@ -993,19 +782,19 @@ pass
         input_nodes = []
         for n in nodes_w_eqs.keys():
             
-            print("Node w eqs: " + str(n["mm__"]))
-            print(nodes_w_eqs)
+            #print("Node w eqs: " + str(n["mm__"]))
+            #print(nodes_w_eqs)
             
             #node_num = self.get_node_num(graph, n)
-            connected = self.look_for_attached(n, base_graph)
-            print("Connected: " + str(connected))
+            connected = look_for_attached(n, base_graph)
+            #print("Connected: " + str(connected))
 
             backward_link = False
             
             for c in connected:
-                print("Connected to: " + base_graph.vs[c]["mm__"])
+                #print("Connected to: " + base_graph.vs[c]["mm__"])
                 if base_graph.vs[c]["mm__"] == "MT_pre__trace_link":
-                    print("Connected to backward link")
+                    #print("Connected to backward link")
                     backward_link = True
                     
             if not backward_link:
@@ -1090,16 +879,16 @@ pass
         # such that we only have these two combinators.
         
         # first build the total combinator (just the base graph)        
-        total_combinator_matcher = self.copy_graph(base_graph)
+        total_combinator_matcher = copy_graph(base_graph)
         
         # now build the partial combinator by removing everything except for the backward links
-        partial_combinator_matcher = self.copy_graph(base_graph)
+        partial_combinator_matcher = copy_graph(base_graph)
         
         graph_to_dot("combinator_before" + base_graph.name, partial_combinator_matcher)
         
         # remove all nodes that are not connected to backward links
 
-        backwards_links = self.find_nodes_with_mm(partial_combinator_matcher, ["MT_pre__trace_link"])
+        backwards_links = find_nodes_with_mm(partial_combinator_matcher, ["MT_pre__trace_link"])
 
         # keep the nodes attached to the backward link that should be kept
         nodes_to_keep = []
@@ -1109,7 +898,7 @@ pass
         i = 0
         for link in backwards_links:
             #find the nodes attached to the backwards link
-            attached_nodes = self.look_for_attached(link,  partial_combinator_matcher)
+            attached_nodes = look_for_attached(link,  partial_combinator_matcher)
             nodes_to_keep += attached_nodes
 
         #get the list of nodes to remove
@@ -1151,8 +940,8 @@ pass
             if i == 0:
                 # now build the NAC for the first combinator (just the complete base graph) 
                 
-                NAC_graph = self.copy_graph(base_graph)
-                NAC_graph = self.makePreConditionPatternNAC(NAC_graph)
+                NAC_graph = copy_graph(base_graph)
+                NAC_graph = makePreConditionPatternNAC(NAC_graph)
                 NAC_graph.name += "_rule_combinator_NAC"
                 
                 NAC_graph.LHS = backward_pattern
@@ -1174,9 +963,9 @@ pass
  
             #TODO: Make rewriter code simpler, and same as match pattern rewriter
  
-            rewriter_graph_copy = self.copy_graph(rewriter_graph)
+            rewriter_graph_copy = copy_graph(rewriter_graph)
  
-            rewriter_graph_copy.pre = self.copy_graph(backward_pattern)
+            rewriter_graph_copy.pre = copy_graph(backward_pattern)
             #graph_to_dot(rewriter_graph_copy.pre.name + "_pre", rewriter_graph_copy.pre)
  
  
@@ -1198,7 +987,7 @@ pass
             # debug printout
             graph_to_dot(rewriter_graph2.name, rewriter_graph2)
  
-            rewriter_graph2.pre = self.copy_graph(backward_pattern)
+            rewriter_graph2.pre = copy_graph(backward_pattern)
  
  
             #rewrite_name = rewriter_graph2.name
@@ -1206,7 +995,7 @@ pass
             #rewriter_graph2.compile("./patterns")
             #rewriter_graph2.name = rewrite_name
  
-            rewriter_graph2.pre = self.copy_graph(backward_pattern)
+            rewriter_graph2.pre = copy_graph(backward_pattern)
  
             for n in range(len(rewriter_graph2.pre.vs)):
                 node = rewriter_graph2.pre.vs[n]
@@ -1439,11 +1228,11 @@ pass
 
     def remove_equation_nodes(self, graph):        
         
-        eq_nodes = self.find_nodes_with_mm(graph, ["Equation"])
+        eq_nodes = find_nodes_with_mm(graph, ["Equation"])
         nodes_to_remove = []
         for eq in eq_nodes:
-            eq_num = self.get_node_num(graph, eq)
-            nodes_to_remove += self.flood_find_nodes(eq_num, graph, ["Attribute"])
+            eq_num = get_node_num(graph, eq)
+            nodes_to_remove += flood_find_nodes(eq_num, graph, ["Attribute"])
         nodes_to_remove = list(set(nodes_to_remove))
 
         graph.delete_nodes(nodes_to_remove)
@@ -1465,62 +1254,31 @@ pass
 #         return graph
 
     def remove_structure_nodes(self, graph):
-        structure_nodes = self.find_nodes_with_mm(graph, ["MatchModel", "match_contains", "paired_with", "ApplyModel", "apply_contains"])
+        structure_nodes = find_nodes_with_mm(graph, ["MatchModel", "match_contains", "paired_with", "ApplyModel", "apply_contains"])
         graph.delete_nodes(structure_nodes)
         return graph
 
 
-    def flood_find_nodes(self, start_node, graph, stop_mms = [], stop_and_include_mms = []):
-        node_stack = [start_node]
-        return_nodes = []
-        while len(node_stack) > 0:
-            node = node_stack.pop()
 
-                
-            if graph.vs[node]["mm__"] in stop_and_include_mms:
-                return_nodes.append(node)
-                continue
-            
-            if graph.vs[node]["mm__"] in stop_mms:
-                continue
-
-            if node in return_nodes:
-                continue
-
-            return_nodes.append(node)
-
-            for edge in graph.get_edgelist():
-                
-                mm1 = graph.vs[edge[0]]["mm__"]
-                mm2 = graph.vs[edge[1]]["mm__"]
-
-                    
-                if node == edge[0]:
-                    node_stack.append(edge[1])
-                elif node == edge[1]:
-
-                    node_stack.append(edge[0])
-
-        return return_nodes
 
     def get_match_graph(self, graph):
 
         graph_to_dot(graph.name + "_original", graph)
         graph = self.remove_equation_nodes(graph)
 
-        apply_contain_node = self.find_nodes_with_mm(graph, ["apply_contains"])
-        apply_contain_node = self.get_node_num(graph, apply_contain_node[0])
+        apply_contain_node = find_nodes_with_mm(graph, ["apply_contains"])
+        apply_contain_node = get_node_num(graph, apply_contain_node[0])
 
-        apply_nodes = self.flood_find_nodes(apply_contain_node, graph, ["ApplyModel", "backward_link", "trace_link"])
+        apply_nodes = flood_find_nodes(apply_contain_node, graph, ["ApplyModel", "backward_link", "trace_link"])
         apply_nodes = list(set(apply_nodes))
 
         #for a in apply_nodes:
         #    print(graph.vs[a]["mm__"])
 
-        backward_links = self.find_nodes_with_mm(graph, ["backward_link"])
+        backward_links = find_nodes_with_mm(graph, ["backward_link"])
         attached_apply = []
         for bl in backward_links:
-            attached_apply += self.look_for_attached(bl, graph)
+            attached_apply += look_for_attached(bl, graph)
 
         for an in attached_apply:
             try:
@@ -1536,24 +1294,24 @@ pass
 
     def make_rewriter(self, graph):
 
-        rewriter = self.copy_graph(graph)
+        rewriter = copy_graph(graph)
 
         #Add trace links
-        match_contains = self.find_nodes_with_mm(graph, ["match_contains"])
+        match_contains = find_nodes_with_mm(graph, ["match_contains"])
         match_attached = []
         for mc in match_contains:
-            match_attached += self.look_for_attached(mc, rewriter)
+            match_attached += look_for_attached(mc, rewriter)
 
-        apply_contains = self.find_nodes_with_mm(graph, ["apply_contains"])
+        apply_contains = find_nodes_with_mm(graph, ["apply_contains"])
         apply_attached = []
         for ac in apply_contains:
-            apply_attached += self.look_for_attached(ac, rewriter)
+            apply_attached += look_for_attached(ac, rewriter)
 
         linked_nodes = []
 
-        backward_links = self.find_nodes_with_mm(graph, ["backward_link", "trace_link"])
+        backward_links = find_nodes_with_mm(graph, ["backward_link", "trace_link"])
         for bl in backward_links:
-            bl_attached = self.look_for_attached(bl, rewriter)
+            bl_attached = look_for_attached(bl, rewriter)
             #print("BL attached: " + str(bl_attached))
 
             linked_nodes.append([bl_attached[0], bl_attached[1]])
@@ -1592,7 +1350,7 @@ pass
 
         rewriter = self.changeAttrType(rewriter, False)
 
-        rewriter = self.makePostConditionPattern(rewriter)
+        rewriter = makePostConditionPattern(rewriter)
 
         #graph_to_dot("the_rewriter_graph_after_post_" + rewriter.name, rewriter)
 
@@ -1623,7 +1381,7 @@ pass
         graph = self.do_RAMify(graph, out_dir, remove_rule_nodes = False)
 
         graph["mm__"] = [graph["mm__"][0], 'MoTifRule']
-        graph["MT_constraint__"] = self.get_default_constraint()
+        graph["MT_constraint__"] = get_default_constraint()
 
 
 
@@ -1742,26 +1500,7 @@ pass
 
         return [rules, backwardPatterns, backwardPatterns2Rules, backwardPatternsComplete, matchRulePatterns, ruleCombinators]
 
-    #helper function for the user, to list all of the
-    #rules in the transformation that have backward links
-    def getRulesIncludingBackLinks(self, transformation, backwardPatterns):
-        rulesIncludingBackLinks = []
 
-        for layer in transformation:
-            back_links = []
-            for rule in layer:
-                
-                bp = backwardPatterns[rule.name]
-                if bp == []:
-                    continue
-
-                #if the rule has a backwards pattern,
-                #then it has backwards links
-                back_links.append(rule)
-
-            #keep the layered structure
-            rulesIncludingBackLinks.append(back_links)
-        return rulesIncludingBackLinks
 
     def changePropertyProverMetamodel(self, pre_metamodel, post_metamodel, subclasses_source, subclasses_target):
         himesis_files = []
