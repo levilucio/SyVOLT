@@ -3,7 +3,7 @@ __built_traceability_for_rule_MDL.py____________________________________________
 
 Automatically generated AToM3 Model File (Do not modify directly)
 Author: levi
-Modified: Fri Nov 14 15:22:32 2014
+Modified: Tue Feb 10 15:32:21 2015
 _________________________________________________________________________________________
 """
 from stickylink import *
@@ -320,7 +320,7 @@ def built_traceability_for_rule_MDL(self, rootNode, MT_post__GM2AUTOSAR_MMRootNo
       self.obj77._setHierarchicalLink(False)
 
     # constraint
-    self.obj77.constraint.setValue('if (len([i for i in graph.neighbors(PreNode(\'1\').index) if graph.vs[i][\'mm__\'] == \'backward_link\']) == 0) and (len([i for i in graph.neighbors(PreNode(\'2\').index) if graph.vs[i][\'mm__\'] == \'backward_link\']) == 0):\n    return True\n\nreturn False\n')
+    self.obj77.constraint.setValue('#if (len([i for i in graph.neighbors(PreNode(\'1\').index) if graph.vs[i][\'mm__\'] == \'backward_link\']) == 0) and (len([i for i in graph.neighbors(PreNode(\'2\').index) if graph.vs[i][\'mm__\'] == \'backward_link\']) == 0):\n#    return True\n\n#return False\nreturn True\n')
     self.obj77.constraint.setHeight(15)
 
     self.obj77.graphClass_= graph_LHS

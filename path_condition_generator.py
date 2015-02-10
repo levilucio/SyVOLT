@@ -256,19 +256,6 @@ class PathConditionGenerator():
         # build traceability links-for each rule that got merged it produces traceability between them
         # to know which apply elems came from which match elems   
         
-        # TODO: now traceability is being built for all rules. We only need traceability for the rules that have no dependencies, 
-        # as the others are built by the combinators associated to the rule      
-        
-        for layerIndex in range(0, len(self.transformation)):
-            for ruleIndex in range(0, len(self.transformation[layerIndex])):
-                p = Packet()
-                p.graph = self.transformation[layerIndex][ruleIndex]
-#                p = build_traceability_no_backward.packet_in(p)
-#                p = build_traceability_with_backward.packet_in(p)
-                p = build_traceability_for_rule.packet_in(p)                
-                self.transformation[layerIndex][ruleIndex] =  p.graph
-                graph_to_dot("traced_" + self.transformation[layerIndex][ruleIndex].name , self.transformation[layerIndex][ruleIndex])
-
             
         # calculate the partial order containing the containment order between the match patterns of the rules
         # first calculate all the pairs according to the layers of the transformation
@@ -335,6 +322,20 @@ class PathConditionGenerator():
 
             orderedRules = []            
             orderedRules.extend(topRules)
+            
+        # TODO: now traceability is being built for all rules. We only need traceability for the rules that have no dependencies, 
+        # as the others are built by the combinators associated to the rule      
+        
+        for layerIndex in range(0, len(self.transformation)):
+            for ruleIndex in range(0, len(self.transformation[layerIndex])):
+                p = Packet()
+                p.graph = self.transformation[layerIndex][ruleIndex]
+#                p = build_traceability_no_backward.packet_in(p)
+#                p = build_traceability_with_backward.packet_in(p)
+                p = build_traceability_for_rule.packet_in(p)                
+                self.transformation[layerIndex][ruleIndex] =  p.graph
+                graph_to_dot("traced_" + self.transformation[layerIndex][ruleIndex].name , self.transformation[layerIndex][ruleIndex])
+
             
             # auxiliary function to order the nodes recursively, starting from the top nodes
             def _build_ordered_rules(topRules):

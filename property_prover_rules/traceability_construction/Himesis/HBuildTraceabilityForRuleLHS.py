@@ -23,11 +23,11 @@ p2
 aS'MoTifRule'
 p3
 a.""")
-        self["MT_constraint__"] = pickle.loads("""Vif (len([i for i in graph.neighbors(PreNode('1').index) if graph.vs[i]['mm__'] == 'backward_link']) == 0) and (len([i for i in graph.neighbors(PreNode('2').index) if graph.vs[i]['mm__'] == 'backward_link']) == 0):\u000a    return True\u000a\u000areturn False\u000a
+        self["MT_constraint__"] = pickle.loads("""V#if (len([i for i in graph.neighbors(PreNode('1').index) if graph.vs[i]['mm__'] == 'backward_link']) == 0) and (len([i for i in graph.neighbors(PreNode('2').index) if graph.vs[i]['mm__'] == 'backward_link']) == 0):\u000a#    return True\u000a\u000a#return False\u000areturn True\u000a
 p1
 .""")
         self["name"] = """"""
-        self["GUID__"] = UUID('5bd52345-790a-479d-8d0c-719a118b25a0')
+        self["GUID__"] = UUID('c14b94ac-d674-4162-b241-7f8fedb19e1a')
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = True
@@ -43,7 +43,7 @@ p1
 
 return True
 """
-        self.vs[0]["MT_pre__cardinality"] = """
+        self.vs[0]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -56,7 +56,6 @@ return True
 return True
 """
         self.vs[0]["MT_label__"] = """2"""
-        self.vs[0]["mm__"] = """MT_pre__MetaModelElement_T"""
         self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
 S'MT_pre__Name'
 p2
@@ -115,7 +114,9 @@ p28
 aS'MT_pre__Model_T'
 p29
 a.""")
-        self.vs[0]["MT_pre__name"] = """
+        self.vs[0]["mm__"] = """MT_pre__MetaModelElement_T"""
+        self.vs[0]["MT_dirty__"] = False
+        self.vs[0]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -127,8 +128,7 @@ a.""")
 
 return True
 """
-        self.vs[0]["MT_dirty__"] = False
-        self.vs[0]["GUID__"] = UUID('4c124bbd-e875-4b39-aa65-78ae5923d039')
+        self.vs[0]["GUID__"] = UUID('26892600-51c2-4580-9436-e8ef1ffa4da8')
         self.vs[1]["MT_subtypeMatching__"] = True
         self.vs[1]["MT_pre__classtype"] = """
 #===============================================================================
@@ -142,7 +142,7 @@ return True
 
 return True
 """
-        self.vs[1]["MT_pre__cardinality"] = """
+        self.vs[1]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -155,7 +155,6 @@ return True
 return True
 """
         self.vs[1]["MT_label__"] = """1"""
-        self.vs[1]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
 S'MT_pre__OPTIONAL1,'
 p2
@@ -238,7 +237,9 @@ p40
 aS'MT_pre__FIXED0'
 p41
 a.""")
-        self.vs[1]["MT_pre__name"] = """
+        self.vs[1]["mm__"] = """MT_pre__MetaModelElement_S"""
+        self.vs[1]["MT_dirty__"] = False
+        self.vs[1]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -250,24 +251,9 @@ a.""")
 
 return True
 """
-        self.vs[1]["MT_dirty__"] = False
-        self.vs[1]["GUID__"] = UUID('39a96a6c-614a-4bf9-8861-f1d4979533d9')
+        self.vs[1]["GUID__"] = UUID('df30b168-b42f-482d-8dbd-2fd1cf1fae82')
 
     def eval_classtype2(self, attr_value, this):
-        
-        #===============================================================================
-        # This code is executed when evaluating if a node shall be matched by this rule.
-        # You can access the value of the current node's attribute value by: attr_value.
-        # You can access any attribute x of this node by: this['x'].
-        # If the constraint relies on attribute values from other nodes,
-        # use the LHS/NAC constraint instead.
-        # The given constraint must evaluate to a boolean expression.
-        #===============================================================================
-        
-        return True
-
-
-    def eval_cardinality2(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.
@@ -295,7 +281,7 @@ return True
         return True
 
 
-    def eval_classtype1(self, attr_value, this):
+    def eval_cardinality2(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.
@@ -309,7 +295,7 @@ return True
         return True
 
 
-    def eval_cardinality1(self, attr_value, this):
+    def eval_classtype1(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.
@@ -337,14 +323,29 @@ return True
         return True
 
 
+    def eval_cardinality1(self, attr_value, this):
+        
+        #===============================================================================
+        # This code is executed when evaluating if a node shall be matched by this rule.
+        # You can access the value of the current node's attribute value by: attr_value.
+        # You can access any attribute x of this node by: this['x'].
+        # If the constraint relies on attribute values from other nodes,
+        # use the LHS/NAC constraint instead.
+        # The given constraint must evaluate to a boolean expression.
+        #===============================================================================
+        
+        return True
+
+
     def constraint(self, PreNode, graph):
         """
             Executable constraint code. 
             @param PreNode: Function taking an integer as parameter
                             and returns the node corresponding to that label.
         """
-        if (len([i for i in graph.neighbors(PreNode('1').index) if graph.vs[i]['mm__'] == 'backward_link']) == 0) and (len([i for i in graph.neighbors(PreNode('2').index) if graph.vs[i]['mm__'] == 'backward_link']) == 0):
-            return True
+        #if (len([i for i in graph.neighbors(PreNode('1').index) if graph.vs[i]['mm__'] == 'backward_link']) == 0) and (len([i for i in graph.neighbors(PreNode('2').index) if graph.vs[i]['mm__'] == 'backward_link']) == 0):
+        #    return True
         
-        return False
+        #return False
+        return True
 
