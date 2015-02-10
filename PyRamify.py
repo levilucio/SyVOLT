@@ -197,38 +197,6 @@ class PyRamify:
             #node["MT_label__"] = str(self.next_label)
             #self.next_label += 1
 
-
-            #very hacky, delete this attribute if possible
-            #there may be a bug with the node.attributes()
-            #returning more attributes than the node has
-            #--confirmed to be in igraph
-            # try:
-            #     del node["MT_pre__type"]
-            #
-            # except Exception:
-            #     pass
-            #
-
-
-            #very hacky
-            #why is this needed?
-            #TODO: Fix
-            # try:
-            #     #node["MT_pre__associationType"] = None
-            #     node["MT_pre__associationType"] = node["MT_pre__associationType"]
-            #     print("node[MT_pre__associationType]")
-            #     print(graph.name)
-            #     print(node["mm__"])
-            #     print(node["MT_pre__associationType"])
-            # except Exception:
-            #     pass
-            #
-            # try:
-            #     del node["MT_post__type"]
-            #     del node["MT_post__associationType"]
-            # except Exception:
-            #     pass
-
         return graph
 
     #RAMify this file
@@ -260,19 +228,10 @@ class PyRamify:
         #make sure this graph becomes a precondition pattern
         graph = makePreConditionPattern(graph)
 
-        # for n in graph.vs:
-        #     if "Attribute" in n["mm__"]:
-        #         print(n)
 
         #change the attribs in this graph
         graph = self.changeAttrType(graph)
-        
 
-        #this may be needed in future
-#       #see if there are stored evals for this graph
-#       #stored evals are so the matcher-writing person
-#       #can define evals ahead of time
-#       h = add_stored_evals(h, input_name)
 
         #compile the output pattern for future study + use
         #throw everything in the output dir
@@ -292,88 +251,6 @@ class PyRamify:
         return s
         
 
-    #create the backward patterns for this file
-    #could be combined with get_backward_patterns below
-    def get_complete_backward_pattern(self, rule, skip_pausing):
-        print("\nStarting get complete backward pattern")
-
-        #from the rule, grab the name and the graph
-        name = rule.keys()[0]
-        graph = rule[rule.keys()[0]]
-
-        label = 0
-        for i in range(len(graph.vs)):
-            graph.vs[i]["MT_label__"] = str(label)
-            label += 1
-
-
-        #check to see which nodes have backward links
-        backwards_links = self.find_nodes_with_mm(graph, ["backward_link"])
-        
-        #no backward links in file, do nothing
-        if len(backwards_links) == 0:
-            return {name:[]}
-            
-        #there are backward links, so start RAMifying
-        out_dir = "./patterns/"
-        outfile = out_dir + self.get_RAMified_name(name) + ".py"
-
-
-
-        # remove all apply nodes not connected to a backward link
-
-        # find the apply_contains
-        apply_contains = self.find_nodes_with_mm(graph, ["apply_contains"])
-
-        #find the backward links
-        backwards_links = self.find_nodes_with_mm(graph, ["backward_link"])
-
-        #find node nums attached to a backward link
-        attached_to_backward_links = []
-        for bl in backwards_links:
-            attached_to_backward_links += self.look_for_attached(bl, graph)
-
-        nodes_to_delete = []
-
-        #look at the apply_contains link
-        for apply_contain in apply_contains:
-
-            #find the attached nodes to this link
-            apply_attached_nodes = self.look_for_attached(apply_contain, graph)
-
-            #for the nodes
-            for aan in apply_attached_nodes:
-
-                #get the node
-                node = graph.vs[aan]
-
-                if aan in attached_to_backward_links:
-                    #this node is attached to a backward link, so leave it
-                    pass
-                elif str(node["mm__"]) not in ["ApplyModel", "apply_contains"]:
-                    #don't remove important nodes, but delete all others
-                    nodes_to_delete.append(node)
-
-        #remove the nodes
-        graph.delete_nodes(nodes_to_delete)
-
-
-        graph = self.do_RAMify(graph, out_dir)
-        
-        #we might want to pause to let the matcher-writer edit the complete matcher before continuing
-        #TODO: do we?
-        if not skip_pausing:
-            print("Please examine " + outfile + " and correct as necessary.")
-            temp = raw_input("Press ENTER to continue, or Ctrl-C to abort:\n")
-        
-        #create the actual matcher from the graph
-        complete_pattern = Matcher(graph)
-
-        #do debugging drawing
-        graph_to_dot(name, graph)
-
-        return {name:[complete_pattern]}
-
 
     #very hacky
     #removes this attribute in the graph nodes
@@ -387,7 +264,7 @@ class PyRamify:
         return graph
 
     # create the backward patterns for this file
-    def get_backward_patterns(self, rule, skip_pausing):
+    def get_backward_patterns(self, rule):
         print("\nStarting get backward patterns")
         name = rule.keys()[0]
         graph = rule[rule.keys()[0]]
@@ -413,12 +290,7 @@ class PyRamify:
         graph = copy.deepcopy(graph)
         graph = self.do_RAMify(graph, out_dir, remove_rule_nodes = False)
 
-        #we might want to pause to let the matcher-writer edit the complete matcher before continuing
-        #TODO: do we?
-        if not skip_pausing:
-            print("Please examine " + outfile + " and correct as necessary.")
-            temp = raw_input("Press ENTER to continue, or Ctrl-C to abort:\n")
-
+        
         #change the graph's name
         #graph.name = self.get_RAMified_name(name)
         #graph["name"] = self.get_RAMified_name(name)
@@ -1237,21 +1109,6 @@ class PyRamify:
 
         graph.delete_nodes(nodes_to_remove)
         return graph
-    
-#     def remove_pre_equation_nodes(self, graph):        
-#         
-#         "going in..."
-#         
-#         eq_nodes = self.find_nodes_with_mm(graph, ["MT_pre__Equation"])
-#         nodes_to_remove = []
-#         for eq in eq_nodes:
-#             print "founf equation..."
-#             eq_num = self.get_node_num(graph, eq)
-#             nodes_to_remove += self.flood_find_nodes(eq_num, graph, ["MT_pre__Attribute"])
-#         nodes_to_remove = list(set(nodes_to_remove))
-# 
-#         graph.delete_nodes(nodes_to_remove)
-#         return graph
 
     def remove_structure_nodes(self, graph):
         structure_nodes = find_nodes_with_mm(graph, ["MatchModel", "match_contains", "paired_with", "ApplyModel", "apply_contains"])
@@ -1469,7 +1326,7 @@ class PyRamify:
         return loaded_module
 
     #ramify a whole directory
-    def ramify_directory(self, dir_name, skip_pausing = True):
+    def ramify_directory(self, dir_name):
         print("Ramifying directory: " + dir_name)
         
         rules = {}
@@ -1496,14 +1353,10 @@ class PyRamify:
             #reload the rule
             #this is probably not needed
             #but there were problems with aliasing and copying
-            rule2 = self.load_class(dir_name + "/" + f)
-            #get the complete backwards pattern
-            BwPComplete = None#self.get_complete_backward_pattern(rule2, skip_pausing)
-            #backwardPatternsComplete.update(BwPComplete)
 
             #get the backwards pattern for this rule
             rule3 = self.load_class(dir_name + "/" + f)
-            (bwPattern, bwP2Rule) = self.get_backward_patterns(rule3, skip_pausing)
+            (bwPattern, bwP2Rule) = self.get_backward_patterns(rule3)
             backwardPatterns.update(bwPattern)
 
             if not bwP2Rule is None:
@@ -1520,7 +1373,7 @@ class PyRamify:
             rule_combinator = self.get_rule_combinators(rule5)
             ruleCombinators.update(rule_combinator)
 
-        return [rules, backwardPatterns, backwardPatterns2Rules, backwardPatternsComplete, matchRulePatterns, ruleCombinators]
+        return [rules, backwardPatterns, backwardPatterns2Rules, {}, matchRulePatterns, ruleCombinators]
 
 
 
