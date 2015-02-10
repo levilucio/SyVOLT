@@ -42,12 +42,6 @@ class Test(unittest.TestCase):
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
             pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation_reduced/Himesis/")
 
-        pyramify_test = PyRamify_test()
-        pyramify_test.set_artifacts(rules = self.rules, ruleTraceCheckers = self.ruleTraceCheckers,
-                                    matchRulePatterns = self.matchRulePatterns,
-                                    ruleCombinators = self.ruleCombinators)
-        pyramify_test.test_matchers()
-
         print(self.rules)
 
 
