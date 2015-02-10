@@ -204,7 +204,7 @@ class PyRamify:
     def do_RAMify(self, graph, output_dir, remove_rule_nodes = True):
         
         input_name = graph["name"]
-        print("Starting to ramify file: " + input_name)
+        #print("Starting to ramify file: " + input_name)
 
 
         #rename the class
@@ -266,7 +266,8 @@ class PyRamify:
 
     # create the backward patterns for this file
     def get_backward_patterns(self, rule):
-        print("\nStarting get backward patterns")
+        if self.verbosity >= 2:
+            print("\nStarting get backward patterns")
         name = rule.keys()[0]
         graph = rule[rule.keys()[0]]
 
@@ -499,7 +500,9 @@ class PyRamify:
 
     # create the backward patterns for this file
     def get_rule_combinators(self, rule):
-        print("\nStarting to get rule combinators")
+
+        if self.verbosity >= 2:
+            print("\nStarting to get rule combinators")
         name = rule.keys()[0]
         graph = rule.values()[0]
 
@@ -516,8 +519,6 @@ class PyRamify:
         #no backward links in file, do nothing
         if len(backwards_links) == 0:
             return {name: None}
-
-        print("There are backward links")
         
         #there are backward links, so start RAMifying
         out_dir = "./patterns/"
@@ -1346,7 +1347,7 @@ class PyRamify:
             if f.endswith(".pyc") or f == "__init__.py" or os.path.isdir(dir_name + "/" + f):
                 continue
 
-            print("\n\nFile: " + f)
+            print("\nFile: " + f)
 
             #add the rule to the rules dict
             rule = self.load_class(dir_name + "/" + f)
@@ -1376,13 +1377,15 @@ class PyRamify:
             ruleCombinators.update(rule_combinator)
 
 
-        print("Finished RAMification")
+        print("Finished PyRamify")
+        print("==================================\n")
 
         return [rules, backwardPatterns, backwardPatterns2Rules, {}, matchRulePatterns, ruleCombinators]
 
 
 
     def changePropertyProverMetamodel(self, pre_metamodel, post_metamodel, subclasses_source, subclasses_target):
+        print("Starting to change property prover metamodel")
         himesis_files = []
         property_prover_rules_dir = "./property_prover_rules/"
         for d in os.listdir(property_prover_rules_dir):
@@ -1393,7 +1396,7 @@ class PyRamify:
             if d.startswith('.'):
                 continue
 
-            print(d)
+            #print(d)
             rule_dir = property_prover_rules_dir + d + "/Himesis/"
 
             try:
@@ -1447,6 +1450,8 @@ class PyRamify:
                 graph.compile(rule_dir)
 
                 #os.chdir(curr_wd)
+
+        print("Finished changing property prover metamodel\n")
 
 if __name__ == "__main__":
      #No default action
