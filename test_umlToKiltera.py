@@ -75,10 +75,14 @@ class Test(unittest.TestCase):
         e1 = self.rules['HTransition2ListenBranch']
         e2 = self.rules['HConnectOutputsOf_ExitPoint2BProcDef_Transition2QInst']
         e3 = self.rules['HTransition2HListenBranch']
+        e4 = self.rules['HConnectOP_State2CProcDef_Transition2Inst_OtherInTransitions']
+        f1 = self.rules['HMapHeirarchyOfStates2HeirarchyOfProcs']
             
+        transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e3,e4], [f1]]
+
 #        transformation = [[a1], [b1,b2,b3], [c1]]
         
-        transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3]]
+#        transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3]]
           
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
         post_metamodel = ["MT_post__UMLRT2Kiltera_MM", "MoTifRule"]
@@ -122,7 +126,7 @@ class Test(unittest.TestCase):
         print("printing path conditions")
         s.print_path_conditions_screen()
          
-#        s.print_path_conditions_file()
+#s        s.print_path_conditions_file()
 
 # 
 #         print("printing states")

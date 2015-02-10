@@ -31,8 +31,9 @@ class PrologAttributeEquationEvaluator(AttributeEquationSolver):
 
     
     def newVarID(self):
-        return "V" + str(self.varID)
-        self.varID += 1    
+        old_varID = self.varID
+        self.varID += 1   
+        return "V" + str(old_varID) 
 
     
 #     def build_equation_expression(self, node, pathCondition, variablesInExpression, concatsInExpression):
