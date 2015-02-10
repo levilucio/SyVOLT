@@ -133,7 +133,7 @@ class Test(unittest.TestCase):
         pyramify = PyRamify()
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
-            pyramify.ramify_directory("PoliceStationMM/transformation_1/Himesis/", True)
+            pyramify.ramify_directory("PoliceStationMM/transformation_1/Himesis/")
 
         # print(self.rules)
 
