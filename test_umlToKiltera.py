@@ -14,6 +14,8 @@ from t_core.matcher import Matcher
 from t_core.messages import Packet
 
 from PyRamify import PyRamify
+from PyRamify_test import PyRamify_test
+
 from himesis_utils import graph_to_dot
 # all runs are the same transformation, but with different metamodel elements
 # the purpose is to do scalability testing with multiple configurations and multiple sets of rules
@@ -40,7 +42,14 @@ class Test(unittest.TestCase):
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
             pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation_reduced/Himesis/")
 
+        pyramify_test = PyRamify_test()
+        pyramify_test.set_artifacts(rules = self.rules, ruleTraceCheckers = self.ruleTraceCheckers,
+                                    matchRulePatterns = self.matchRulePatterns,
+                                    ruleCombinators = self.ruleCombinators)
+        pyramify_test.test_matchers()
+
         print(self.rules)
+
 
     def test_correct_uml2kiltera(self):
 
@@ -101,30 +110,31 @@ class Test(unittest.TestCase):
  
    
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_source, subclasses_target)
-  
+
         print("create state space")
-        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, 2)# 
-   
-#         print("building path conditions")
-#         ts0 = time.time()
-#         s.build_path_conditions()
-#         ts1 = time.time()
-#            
-#         print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
-#         print("Size of the set of path conditions: " + str(sys.getsizeof(s.pathConditionSet) / 1024))
-#         print("Number of path conditions: " + str(len(s.pathConditionSet)))
-# # # #         print
-# # # #         '\n'
-# # # #         print
-# # # #         'Time to verify True property: ' + str(tv01 - tv00)
-# # # #         print
-# # # #         '\n'
-# # # #         print
-# # # #         'Time to verify False property: ' + str(tv11 - tv10)
-# # #  
-# # #  
-#         print("printing path conditions")
-#         s.print_path_conditions_screen()
+
+        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, 2)#
+
+        print("building path conditions")
+        ts0 = time.time()
+        s.build_path_conditions()
+        ts1 = time.time()
+
+        print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
+        print("Size of the set of path conditions: " + str(sys.getsizeof(s.pathConditionSet) / 1024))
+        print("Number of path conditions: " + str(len(s.pathConditionSet)))
+# # #         print
+# # #         '\n'
+# # #         print
+# # #         'Time to verify True property: ' + str(tv01 - tv00)
+# # #         print
+# # #         '\n'
+# # #         print
+# # #         'Time to verify False property: ' + str(tv11 - tv10)
+# #
+# #
+        print("printing path conditions")
+        s.print_path_conditions_screen()
          
 #s        s.print_path_conditions_file()
 

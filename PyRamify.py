@@ -290,7 +290,7 @@ class PyRamify:
         graph = copy.deepcopy(graph)
         graph = self.do_RAMify(graph, out_dir, remove_rule_nodes = False)
 
-        
+
         #change the graph's name
         #graph.name = self.get_RAMified_name(name)
         #graph["name"] = self.get_RAMified_name(name)
