@@ -68,23 +68,23 @@ class Test(unittest.TestCase):
         b1 = self.rules['HBasicStateNoOutgoing2ProcDef']
         b2 = self.rules['HBasicState2ProcDef']
         b3 = self.rules['HCompositeState2ProcDef']
-        c1 = self.rules['HExitPoint2BProcDef_WhetherOrNotExitPtHasOutgoingTrans']
+        c1 = self.rules['HExitPoint2BProcDefxWhetherOrNotExitPtHasOutgoingTrans']
         c2 = self.rules['HState2HProcDef']
         c3 = self.rules['HState2CProcDef']
         d1 = self.rules['HTransition2QInstSIBLING']
         d2 = self.rules['HTransition2QInstOUT']
         d3 = self.rules['HTransition2Inst']
         e1 = self.rules['HTransition2ListenBranch']
-        e2 = self.rules['HConnectOutputsOf_ExitPoint2BProcDef_Transition2QInst']
+        e2 = self.rules['HConnectOutputsOfxExitPoint2BProcDefxTransition2QInst']
         e3 = self.rules['HTransition2HListenBranch']
-        e4 = self.rules['HConnectOP_State2CProcDef_Transition2Inst_OtherInTransitions']
+        e4 = self.rules['HConnectOPxState2CProcDefxTransition2InstxOtherInTransitions']
         f1 = self.rules['HMapHeirarchyOfStates2HeirarchyOfProcs']
             
 #        transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e3,e4], [f1]]
 
-        #transformation = [[a1], [b1,b2,b3], [c1]]
+        transformation = [[a1], [b1,b2,b3], [c1]]
         
-        transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
+#        transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
           
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
         post_metamodel = ["MT_post__UMLRT2Kiltera_MM", "MoTifRule"]
@@ -128,7 +128,7 @@ class Test(unittest.TestCase):
         print("printing path conditions")
         s.print_path_conditions_screen()
          
-#s        s.print_path_conditions_file()
+        s.print_path_conditions_file()
 
 # 
 #         print("printing states")
