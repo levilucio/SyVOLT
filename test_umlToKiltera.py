@@ -39,7 +39,7 @@ class Test(unittest.TestCase):
         pyramify = PyRamify()
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
-            pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation_reduced/Himesis/")
+            pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation/Himesis/")
 
         print("Rules: " + str(self.rules.keys()))
 
