@@ -9,6 +9,16 @@ import unittest
 class Test(unittest.TestCase):
 
 
+    def findPathCondition(self,pc,listpc):
+        foundit = False
+        for pc2 in listpc:
+            diffRule = [rule for rule in pc if rule not in pc2]
+            if diffRule == [] and len(pc) == len(pc2):
+                foundit = True
+                break 
+        return foundit          
+        
+
     def testCompare(self):
         
         with open("tmp/run_bentley_up_to_e1.txt") as f:
@@ -54,24 +64,12 @@ class Test(unittest.TestCase):
             split_levi_content.append(line.split("_"))
         
         for l1 in split_bentley_content:
-            foundit = False
-            for l2 in split_levi_content:
-                diffRule = [rule for rule in l1 if rule not in l2]
-                if diffRule == []:
-                    foundit = True
-                    break           
-            if not foundit: difference_bentley_levi.append(l1)          
+            if not self.findPathCondition(l1,split_levi_content): difference_bentley_levi.append(l1)          
 
         difference_levi_bentley = []
         
         for l1 in split_levi_content:
-            foundit = False
-            for l2 in split_bentley_content:
-                diffRule = [rule for rule in l1 if rule not in l2]
-                if diffRule == []:
-                    foundit = True
-                    break           
-            if not foundit: difference_levi_bentley.append(l1)  
+            if not self.findPathCondition(l1,split_bentley_content): difference_levi_bentley.append(l1)  
         
         print "\n"
         print "Difference size bentley levi: " + str(len(difference_bentley_levi))
@@ -79,6 +77,15 @@ class Test(unittest.TestCase):
         print "\n"
         print "Difference size levi bentley: " + str(len(difference_levi_bentley))
         print difference_levi_bentley
+        
+        pcdiff = difference_bentley_levi[0][:-1]
+        
+        print pcdiff
+        
+        if self.findPathCondition(pcdiff, split_levi_content):
+            print "Found smaller..."
+        
+        
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.test']

@@ -525,10 +525,7 @@ class PathConditionGenerator():
                                 p.graph = self.pathConditionSet[pathCondition]
                                 
                                 combinatorMatcher.packet_in(p)
-                                
-                                print "Combinator:"
-                                print combinatorMatcher.is_success
-                                
+                                                                
                                 # now go through the path conditions resulting from combination of the rule and the
                                 # path condition from the previous layer currently being treated in order to apply
                                 # the combinator's RHS to every possibility of match of the combinator's LHS
@@ -550,15 +547,13 @@ class PathConditionGenerator():
         
                                     for currentPathCondition in range(len(layerPathCondAccumulator)):  
                                         
-                                        if self.verbosity >= 2 :
-                                            print "--> Combining with path condition: " + layerPathCondAccumulator[currentPathCondition].name
+#                                         if self.verbosity >= 2 :
+#                                             print "--> Combining with path condition: " + layerPathCondAccumulator[currentPathCondition].name
                                         
                                         # only combine if the path condition in the accumulator currently being treated (currentPathCondition)
                                         # includes all the rules from the path condition of the previous layer the rule is being executed
                                         # against (pathCondition) and if the rule hasn't executed yet on that path condition
-                                        
-                                        print "------------------------> " + layerPathCondAccumulator[currentPathCondition].name
-                                        
+                                                                                
                                         if parentPathCondition[layerPathCondAccumulator[currentPathCondition]] == self.pathConditionSet[pathCondition].name:
                                                                      
                                             # if the combinator is not the total one, make a copy of the path condition in the set 
@@ -610,10 +605,10 @@ class PathConditionGenerator():
                                                     # store the parent of the newly created path condition
                                                     parentPathCondition[newPathCond] = parentPathCondition[layerPathCondAccumulator[currentPathCondition]]
                                          
-                                                print "----------------------"
-                                                print "Adding: " + newPathCond.name
-                                                print "Parent is: " + parentPathCondition[layerPathCondAccumulator[currentPathCondition]]
-                                                print "----------------------"
+#                                                 print "----------------------"
+#                                                 print "Adding: " + newPathCond.name
+#                                                 print "Parent is: " + parentPathCondition[layerPathCondAccumulator[currentPathCondition]]
+#                                                 print "----------------------"
                                                     
                                                 if self.verbosity >= 2: print "Created path condition with name: " + newPathCond.name                                          
                                             
