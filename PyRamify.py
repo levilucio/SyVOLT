@@ -5,14 +5,10 @@ import os
 from t_core.matcher import Matcher
 from t_core.rewriter import Rewriter
 from himesis_utils import *
-#from ramify_actions import *
+from himesis_plus import *
 
 from core.himesis import *
 from itertools import combinations
-from himesis_plus import *
-import inspect
-#from ubuntuone.controlpanel.gui import CONNECT_BUTTON_LABEL
-
 
 '''
 
@@ -26,8 +22,6 @@ import inspect
     3. Modification, which modifies the data type of attributes such
     that they can express constraints on attribute values or actions
     which compute the new value of the attribute.'''
-    
-    
 class PyRamify:
 
     def __init__(self, verbosity = 0):
@@ -45,7 +39,6 @@ class PyRamify:
     def changeAttrType(self, graph, make_pre = True):
 
         #change mm of the graph
-
         try:
             if make_pre:
                 graph["mm__"] = [str(Himesis.Constants.MT_PRECOND_PREFIX + graph["mm__"][0]), 'MoTifRule']
@@ -54,25 +47,28 @@ class PyRamify:
         except IndexError:
             graph["mm__"] = "MM"
 
-
-
+        # set the default constraint or action of the graph
         if make_pre:
-            #set the default constraint
             graph["MT_constraint__"] = get_default_constraint()
         else:
             graph["MT_action__"] = get_default_action()
 
+        #don't change some of the attributes
         attribs_to_skip = ["GUID__", "mm__", "MT_label__", "MT_subtypes__", "MT_dirty__", "MT_subtypeMatching__"]
 
 
-        #add 'MT_pre__' to all non-GUID attributes
+        #examine the nodes in order to change their attributes
         for i in range(len(graph.vs)):
             node = graph.vs[i]
-            #add MT_PRECOND_PREFIX to attrib names
 
-
+            #examine each attribute
+            #warning: node.attribute_names() may not
+            #produce the attribute names for only this node,
+            #but instead the set of all attributes for all nodes
             for attrib in node.attribute_names():
 
+                #we ignore the attributes that are None
+                #this works around the above bug
                 if node[attrib] is None:
                     continue
 
@@ -88,16 +84,14 @@ class PyRamify:
                 if Himesis.Constants.MT_POSTCOND_PREFIX in attrib:
                     continue
 
-
                 #make sure to copy the value
                 val = copy.deepcopy(node[attrib])
 
                 #delete the attrib from the node
+                #(not really deletion, but will be ignored in the future)
                 node[attrib] = None
 
-
                 #re-add the value with the new attribute name
-
                 if make_pre:
                     new_attrib_name = Himesis.Constants.MT_PRECOND_PREFIX + attrib
                 else:
@@ -105,32 +99,22 @@ class PyRamify:
 
                 node[new_attrib_name] = val
 
-
-
+        #go through the graph again,
+        #to fix some edge cases
         for i in range(len(graph.vs)):
             node = graph.vs[i]
 
-
-            #print("\n\n\nNode: " + node["mm__"])
-            #print("Attributes after: " + str(mm_attribs[node["mm__"]]))
-
-            # if "trace_link" in node["mm__"] and "type" not in node.attribute_names():
-            #     print("Node: " + str(node))
-            #     node["type"] = "default"
-
-            #change attrib values
-            #hacky, to fix some edge cases
             for attrib in node.attribute_names():
 
                 if node[attrib] is None:
                     continue
 
                 #add the prefix to the mm
+                #TODO: Fold this into above for loop
                 if attrib == "mm__":
 
                     if node["mm__"] == "backward_link":
                         node["mm__"] = "trace_link"
-
 
                     if make_pre:
                         node["mm__"] = Himesis.Constants.MT_PRECOND_PREFIX + node["mm__"]
@@ -142,24 +126,8 @@ class PyRamify:
                 if attrib in attribs_to_skip:
                     continue
 
-                #hacky, some attribs are set to none
-                # none_types = ["MT_pre__directLink_S", "MT_post__directLink_S",
-                #               "MT_pre__trace_link", "MT_post__trace_link",
-                #               "directLink_S", "trace_link"]
-                # none_attrib = ["MT_pre__cardinality", "MT_pre__classtype", "MT_pre__name",
-                #                "MT_post__cardinality", "MT_post__classtype", "MT_post__name"]
-                # if node["mm__"] in none_types and attrib in none_attrib:
-                #     node[attrib] = None
-                #     continue
-                #
-                # none_types2 = ["MT_pre__trace_link", "MT_post__trace_link", "trace_link", "backward_link"]
-                # none_attrib2 = ["MT_pre__associationType", "MT_post__associationType", "associationType"]
-                # if node["mm__"] in none_types2 and attrib in none_attrib2:
-                #     node[attrib] = None
-                #     continue
 
-
-
+                #TODO: Come up with a nice pattern for these attributes
                 #Hack for Attributes
                 if "Attribute" in node["mm__"] and attrib == "MT_pre__name":
                     node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
@@ -167,12 +135,10 @@ class PyRamify:
                 #Hack for Constants
                 elif "Constant" in node["mm__"] and attrib == "MT_post__value":
                     node[attrib] = "return '" + node[attrib] + "'"
-                    
-                    
+
                 elif "Attribute" in node["mm__"] and attrib == "MT_post__name":
                     node[attrib] = "return '" + node[attrib] + "'"
-                    
-                    
+
                 elif "Constant" in node["mm__"] and attrib == "MT_post__name":
                     node[attrib] = "return '" + node[attrib] + "'"
 
@@ -181,22 +147,17 @@ class PyRamify:
                     node[attrib] = None
 
                 else:
-                    #set the other values to the default match code
+                    #set the other values to the default match or rewrite code
                     if make_pre:
                         node[attrib] = get_default_match_code()
                     else:
                         node[attrib] = get_default_rewrite_code()
 
-            #set these properties
-
+            #set some other attribs for the node
             if make_pre:
                 node["MT_subtypeMatching__"] = False
                 node["MT_subtypes__"] = "[]"
                 node["MT_dirty__"] = False
-
-            #set the next label
-            #node["MT_label__"] = str(self.next_label)
-            #self.next_label += 1
 
         return graph
 
@@ -1310,7 +1271,7 @@ class PyRamify:
 
     #function to dynamically load a new class
     import importlib
-    def load_class(self, full_class_string, args = []):
+    def load_class(self, full_class_string, args = None):
         directory, module_name = os.path.split(full_class_string)
         module_name = os.path.splitext(module_name)[0]
 
@@ -1320,7 +1281,7 @@ class PyRamify:
         try:
             module = __import__(module_name)
 
-            if args == []:
+            if args is None:
                 loaded_module = {module_name : getattr(module, module_name)()}
             else:
                 loaded_module = {module_name : getattr(module, module_name)(args[0])}
@@ -1370,12 +1331,10 @@ class PyRamify:
             matchRulePattern = self.get_match_pattern(rule4)
             matchRulePatterns.update(matchRulePattern)
 
-
             # fresh rule for the rule combinators
             rule5 = self.load_class(dir_name + "/" + f)
             rule_combinator = self.get_rule_combinators(rule5)
             ruleCombinators.update(rule_combinator)
-
 
         print("Finished PyRamify")
         print("==================================\n")
@@ -1383,20 +1342,21 @@ class PyRamify:
         return [rules, backwardPatterns, backwardPatterns2Rules, {}, matchRulePatterns, ruleCombinators]
 
 
-
+    #change the proper prover matchers and rewriters to
+    #refer to the correct metamodel
     def changePropertyProverMetamodel(self, pre_metamodel, post_metamodel, subclasses_source, subclasses_target):
         print("Starting to change property prover metamodel")
-        himesis_files = []
+
         property_prover_rules_dir = "./property_prover_rules/"
         for d in os.listdir(property_prover_rules_dir):
 
             if not os.path.isdir(property_prover_rules_dir + d):
                 continue
 
+            #ignore svn dirs
             if d.startswith('.'):
                 continue
 
-            #print(d)
             rule_dir = property_prover_rules_dir + d + "/Himesis/"
 
             try:
@@ -1408,10 +1368,6 @@ class PyRamify:
             for f in files:
                 if f == "__init__.py" or f.endswith(".pyc") or f.startswith("."):
                     continue
-                #print f
-
-                #curr_wd = os.getcwd()
-                #os.chdir(rule_dir)
 
                 rule_file = rule_dir + f
                 try:
@@ -1423,33 +1379,29 @@ class PyRamify:
                 name = rule.keys()[0]
                 graph = rule[rule.keys()[0]]
 
+                #TODO: Make this less fragile
                 if f.endswith("LHS.py"):
                     graph["mm__"] = pre_metamodel
                 elif f.endswith("RHS.py"):
                     graph["mm__"] = post_metamodel
                 else:
-                    print "Error: Not LHS or RHS rule"
+                    print("Error: Not LHS or RHS rule")
 
                 for node in graph.vs:
 
+                    #the node doesn't match subtypes
                     if "MT_subtypeMatching__" in node.attributes().keys() and node["MT_subtypeMatching__"] == False:
                         continue
 
+                    #the node does look at subtypes
                     if "MT_subtypes__" in node.attributes().keys() and len(node["MT_subtypes__"]) >= 1:
-                        #print("\n" + node["mm__"])
-                        #print(node["MT_subtypes__"])
                         if node["mm__"] == "MT_pre__MetaModelElement_S":
-                            #print(subclasses_source)
                             node["MT_subtypes__"] = subclasses_source
                         elif node["mm__"] == "MT_pre__MetaModelElement_T":
-                            #print(subclasses_target)
                             node["MT_subtypes__"] = subclasses_target
 
-
-
+                #need to compile rule back in order to update the file
                 graph.compile(rule_dir)
-
-                #os.chdir(curr_wd)
 
         print("Finished changing property prover metamodel\n")
 
