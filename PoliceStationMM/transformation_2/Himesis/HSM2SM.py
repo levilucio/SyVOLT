@@ -66,9 +66,9 @@ a.""")
         self.vs[13]["GUID__"] = UUID('f8b336bd-7977-4dc5-a30b-81946e3ae4f9')
         self.vs[14]["mm__"] = """backward_link"""
         self.vs[14]["GUID__"] = UUID('f5e8ad89-6a7f-4b6b-8ea9-79bb9a5fb3eb')
-        self.vs[15]["mm__"] = """hasAttr_S"""
+        self.vs[15]["mm__"] = """hasAttribute_S"""
         self.vs[15]["GUID__"] = UUID('77a5a352-c428-4989-8104-21933dc4a19b')
-        self.vs[16]["mm__"] = """hasAttr_S"""
+        self.vs[16]["mm__"] = """hasAttribute_S"""
         self.vs[16]["GUID__"] = UUID('7b011782-412d-4b40-8b9b-9d6a8b650bd0')
         self.vs[17]["mm__"] = """Equation"""
         self.vs[17]["GUID__"] = UUID('489358bd-b1e1-4e95-969e-4e9e0c701560')
@@ -78,10 +78,10 @@ a.""")
         self.vs[19]["GUID__"] = UUID('a7a19687-d1ae-4cef-9abc-96c8b64b56ad')
         self.vs[20]["mm__"] = """match_contains"""
         self.vs[20]["GUID__"] = UUID('867d18d4-48c0-4918-84d2-8db502c91d52')
-        self.vs[21]["value"] = """somestation"""
+        self.vs[21]["name"] = """somestation"""
         self.vs[21]["mm__"] = """Constant"""
         self.vs[21]["GUID__"] = UUID('ae91b2ec-ed09-418a-a477-6dcaab1b4095')
-        self.vs[22]["value"] = """somemale"""
+        self.vs[22]["name"] = """somemale"""
         self.vs[22]["mm__"] = """Constant"""
         self.vs[22]["GUID__"] = UUID('9cb6452e-4344-42f5-ab79-26fe23be9f44')
         self.vs[23]["mm__"] = """rightExpr"""

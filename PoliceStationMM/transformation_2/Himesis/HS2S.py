@@ -31,7 +31,7 @@ a.""")
         self.vs[1]["GUID__"] = UUID('1adddf34-27c0-4e4a-b14b-584e658a5f35')
         self.vs[2]["mm__"] = """paired_with"""
         self.vs[2]["GUID__"] = UUID('6ca50e51-9441-43fb-ab88-dbc6f13f5982')
-        self.vs[3]["mm__"] = """hasAttr_S"""
+        self.vs[3]["mm__"] = """hasAttribute_S"""
         self.vs[3]["GUID__"] = UUID('2628ac14-c717-42e5-a517-51709611aed4')
         self.vs[4]["mm__"] = """ApplyModel"""
         self.vs[4]["GUID__"] = UUID('e5536838-ff23-46e8-9d43-7345c115f357')
@@ -48,7 +48,7 @@ a.""")
         self.vs[7]["GUID__"] = UUID('739071de-2bbc-427c-989d-f903906871b3')
         self.vs[8]["mm__"] = """match_contains"""
         self.vs[8]["GUID__"] = UUID('90a0ecdc-03af-4eb8-86da-2699eb9504b3')
-        self.vs[9]["value"] = """somestation"""
+        self.vs[9]["name"] = """somestation"""
         self.vs[9]["mm__"] = """Constant"""
         self.vs[9]["GUID__"] = UUID('0197e56c-8c0a-4fcf-a68d-a8f042c82fcb')
         self.vs[10]["mm__"] = """rightExpr"""

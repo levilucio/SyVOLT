@@ -27,13 +27,13 @@ a.""")
         # Set the node attributes
         self.vs[0]["mm__"] = """apply_contains"""
         self.vs[0]["GUID__"] = UUID('d57b1aa8-0fef-421b-b80a-1dec411cc1e7')
-        self.vs[1]["mm__"] = """hasAttr_T"""
+        self.vs[1]["mm__"] = """hasAttribute_T"""
         self.vs[1]["GUID__"] = UUID('ba7c8171-a56f-4ed1-8254-c5cc572371cc')
         self.vs[2]["mm__"] = """leftExpr"""
         self.vs[2]["GUID__"] = UUID('dccb63e0-3a24-4919-8f3d-ccd6821326cd')
         self.vs[3]["mm__"] = """paired_with"""
         self.vs[3]["GUID__"] = UUID('f4121763-dfb0-445f-bd33-82690726b0b8')
-        self.vs[4]["mm__"] = """hasAttr_S"""
+        self.vs[4]["mm__"] = """hasAttribute_S"""
         self.vs[4]["GUID__"] = UUID('756bae34-952e-400c-be0b-4f68fbbaa1fe')
         self.vs[5]["mm__"] = """ApplyModel"""
         self.vs[5]["GUID__"] = UUID('0a179e74-8b75-4dcc-ae9a-c454a3bb6b48')
