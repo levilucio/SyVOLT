@@ -353,10 +353,10 @@ class PathConditionGenerator():
             # continue adding nodes as we go down the tree
             _build_ordered_rules(topRules)
 
-            # remove from the layer the rules that need to be ordered
-            self.transformation[layerIndex] = list(set(self.transformation[layerIndex]) - set(orderedRules))   
-            # now place the reordered rules back in the layer, at the end
-            self.transformation[layerIndex].extend(list(reversed(orderedRules)))
+#             # remove from the layer the rules that need to be ordered
+#             self.transformation[layerIndex] = list(set(self.transformation[layerIndex]) - set(orderedRules))   
+#             # now place the reordered rules back in the layer, at the end
+#             self.transformation[layerIndex].extend(list(reversed(orderedRules)))
 
 
 
