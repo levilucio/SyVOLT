@@ -151,7 +151,6 @@ class PrologAttributeEquationEvaluator(AttributeEquationSolver):
         
         # in case it's an attribute, return the object's ID
         if pathCondition.vs[node]['mm__'] == 'Attribute':
-            variablesInExpression.append("X" + str(node))
             # get the parent object of the attribute
             
             attrEdgeMatch = [i for i in pathCondition.neighbors(node,2) if pathCondition.vs[i]['mm__'] == 'hasAttribute_S']
@@ -168,8 +167,10 @@ class PrologAttributeEquationEvaluator(AttributeEquationSolver):
             varDatabaseKey = str(parentObject) + attrName
             if not varDatabaseKey in set(self.varNameDatabase.keys()): 
                 self.varNameDatabase[varDatabaseKey] = "X" + str(node)
-                return "X" + str(node)
+                variablesInExpression.append(self.varNameDatabase[varDatabaseKey])
+                return self.varNameDatabase[varDatabaseKey]
             else:
+                variablesInExpression.append(self.varNameDatabase[varDatabaseKey])
                 return self.varNameDatabase[varDatabaseKey]
                 
 
@@ -236,7 +237,9 @@ class PrologAttributeEquationEvaluator(AttributeEquationSolver):
                 clauseBody += concat
 
         clauseHead = "solve("
+
 #        variablesInExpression = list(set(variablesInExpression))
+
         for var in range(0,len(variablesInExpression)):
             if var < len(variablesInExpression)-1:
                 clauseHead += variablesInExpression[var] + ","

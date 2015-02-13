@@ -14,6 +14,7 @@ from himesis_utils import print_graph
 from copy import deepcopy
 
 from solver.prolog_attribute_equation_evaluator import PrologAttributeEquationEvaluator
+from solver.simple_attribute_equation_evaluator import SimpleAttributeEquationEvaluator
 
 from PyRamify import PyRamify
 from PropertyProverTester import PropertyProverTester
@@ -78,7 +79,7 @@ class PathConditionGenerator():
       
         # the path condition set starts with only the empty (None) path condition inside
         self.pathConditionSet = [HEmptyPathCondition()]        
-        self.attributeEquationEvaluator = PrologAttributeEquationEvaluator(verbosity) 
+        self.attributeEquationEvaluator = SimpleAttributeEquationEvaluator(verbosity) 
 #        self.mergeInterLayerFactory = MergeInterLayerFactory(verbosity)
 
         self._pre_process()

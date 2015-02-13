@@ -257,7 +257,7 @@ class Test(unittest.TestCase):
 #         tv11 = time.time()
  
         print("Time to build the set of path conditions: " + str(ts1 - ts0))
-        print("Size of the set of path conditions: " + str(sys.getsizeof(s.pathConditionSet) / 1024))
+        print("Size of the set of path conditions: " + str(sys.getsizeof(s.pathConditionSet[0])))
         print("Number of path conditions: " + str(len(s.pathConditionSet)))
 #         print
 #         '\n'

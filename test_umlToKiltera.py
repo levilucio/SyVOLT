@@ -82,7 +82,7 @@ class Test(unittest.TestCase):
         e4 = self.rules['HConnectOPxState2CProcDefxTransition2InstxOtherInTransitions']
         f1 = self.rules['HMapHeirarchyOfStates2HeirarchyOfProcs']
             
-        transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1]]#e2,e3,e4], [f1]]
+        transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
 
 #        transformation = [[a1], [b1,b2,b3], [c1]]
         
@@ -115,7 +115,7 @@ class Test(unittest.TestCase):
         ts1 = time.time()
             
         print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
-        print("Size of the set of path conditions: " + str(sys.getsizeof(s.pathConditionSet) / 1024))
+        print("Size of the set of path conditions: " + str(float(sys.getsizeof(s.pathConditionSet) / 1024)))
         print("Number of path conditions: " + str(len(s.pathConditionSet)))
 # # #         print
 # # #         '\n'
