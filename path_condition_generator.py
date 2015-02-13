@@ -19,16 +19,7 @@ from solver.simple_attribute_equation_evaluator import SimpleAttributeEquationEv
 from PyRamify import PyRamify
 from PropertyProverTester import PropertyProverTester
 
-# the empty path condition
-from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 
-# transformation to forward the cardinalities to the apply models
-from property_prover_rules.cardinality_resolution.Himesis.HForwardCardinalitiesToApplyModelLHS import HForwardCardinalitiesToApplyModelLHS
-from property_prover_rules.cardinality_resolution.Himesis.HForwardCardinalitiesToApplyModelRHS import HForwardCardinalitiesToApplyModelRHS
-
-# transformation to built traceability for rules
-from property_prover_rules.traceability_construction.Himesis.HBuildTraceabilityForRuleLHS import HBuildTraceabilityForRuleLHS
-from property_prover_rules.traceability_construction.Himesis.HBuildTraceabilityForRuleRHS import HBuildTraceabilityForRuleRHS
 
 ##Backward Matchers -start
 # from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnectPPortPrototype_Back_CompositionType2ECULHS import HConnectPPortPrototype_Back_CompositionType2ECULHS
@@ -42,9 +33,7 @@ from property_prover_rules.traceability_construction.Himesis.HBuildTraceabilityF
 # from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnVirtualDevice2Distributable_Back_STEM2VirtualDeviceLHS import HConnVirtualDevice2Distributable_Back_STEM2VirtualDeviceLHS
 ##Backward Matchers -end
 
-# declare the necessary T-Core rules
-forward_cardinalities_to_apply = SRule(HForwardCardinalitiesToApplyModelLHS(), HForwardCardinalitiesToApplyModelRHS())
-build_traceability_for_rule = FRule(HBuildTraceabilityForRuleLHS(), HBuildTraceabilityForRuleRHS())
+
 
 
 class PathConditionGenerator():
@@ -66,6 +55,27 @@ class PathConditionGenerator():
     """
 
     def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, verbosity):
+        # the empty path condition
+        from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
+
+        # transformation to forward the cardinalities to the apply models
+        from property_prover_rules.cardinality_resolution.Himesis.HForwardCardinalitiesToApplyModelLHS import \
+            HForwardCardinalitiesToApplyModelLHS
+        from property_prover_rules.cardinality_resolution.Himesis.HForwardCardinalitiesToApplyModelRHS import \
+            HForwardCardinalitiesToApplyModelRHS
+
+        # transformation to built traceability for rules
+        from property_prover_rules.traceability_construction.Himesis.HBuildTraceabilityForRuleLHS import \
+            HBuildTraceabilityForRuleLHS
+        from property_prover_rules.traceability_construction.Himesis.HBuildTraceabilityForRuleRHS import \
+            HBuildTraceabilityForRuleRHS
+
+        # declare the necessary T-Core rules
+        self.forward_cardinalities_to_apply = SRule(HForwardCardinalitiesToApplyModelLHS(),
+                                               HForwardCardinalitiesToApplyModelRHS())
+        self.build_traceability_for_rule = FRule(HBuildTraceabilityForRuleLHS(), HBuildTraceabilityForRuleRHS())
+
+
         self.transformation = transformation
         self.ruleCombinators = ruleCombinators
         self.ruleTraceCheckers = ruleTraceCheckers
@@ -145,7 +155,7 @@ class PathConditionGenerator():
 #             for rule in layer:
 #                 p = Packet()
 #                 p.graph = rule
-#                 p = forward_cardinalities_to_apply.packet_in(p)
+#                 p = self.forward_cardinalities_to_apply.packet_in(p)
 #                 rule = p.graph
 #                 print(rule.name)
 #                 print(rule)
@@ -252,8 +262,8 @@ class PathConditionGenerator():
 #         for layerIndex in range(0,len(self.transformation)):
 #             p = Packet()
 #             p.graph = self.transformation[layerIndex][0]
-#             p = build_traceability_for_rule.packet_in(p)
-#             print build_traceability_for_rule.is_success
+#             p = self.build_traceability_for_rule.packet_in(p)
+#             print self.build_traceability_for_rule.is_success
 #             self.transformation[layerIndex][0] =  p.graph
 #         print '------------------------------------------'
 
@@ -336,7 +346,7 @@ class PathConditionGenerator():
                 p.graph = self.transformation[layerIndex][ruleIndex]
 #                p = build_traceability_no_backward.packet_in(p)
 #                p = build_traceability_with_backward.packet_in(p)
-                p = build_traceability_for_rule.packet_in(p)                
+                p = self.build_traceability_for_rule.packet_in(p)
                 self.transformation[layerIndex][ruleIndex] =  p.graph
                 graph_to_dot("traced_" + self.transformation[layerIndex][ruleIndex].name , self.transformation[layerIndex][ruleIndex])
 
