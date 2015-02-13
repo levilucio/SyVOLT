@@ -161,9 +161,7 @@ class PathConditionGenerator():
 #                 print(rule)
 #         
         # merge rules of the same layer that share common match patterns over those match patterns   
-        print("merge rules of the same layer that share common match patterns over those match patterns   ")
         for layer in range(0,len(self.transformation)):
-            print(layer)
             # loop until all the rules in the layer have been treated
             merged_layer = []
             while self.transformation[layer] != []:
@@ -314,8 +312,9 @@ class PathConditionGenerator():
         self.ruleContainment = ruleContainment
 
         if self.verbosity >= 2:
-            print 'Subsumption order between rules for all layers:'                    
+            print "Subsumption order between rules for all layers:"                   
             print ruleContainment
+            print "\n"
         
         # now reorder the rules within each layer of the transformation such that the rules that are
         # contained in others always appear first. This makes it possible to make it such that when

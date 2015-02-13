@@ -696,7 +696,7 @@ class PyRamify:
         # change the attribs in this graph
         #rewriter_graph = self.changeAttrType(rewriter_graph, False)
 
-        print("Rule combinators: Generating " + str(len(output)) + " different possibilities")
+#        print("Rule combinators: Generating " + str(len(output)) + " different possibilities")
 
 
         rewrite_name = rewriter_graph.name + "_rule_combinator_rewriter"
