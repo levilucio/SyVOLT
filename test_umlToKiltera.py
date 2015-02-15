@@ -82,9 +82,10 @@ class Test(unittest.TestCase):
         e4 = self.rules['HConnectOPxState2CProcDefxTransition2InstxOtherInTransitions']
         f1 = self.rules['HMapHeirarchyOfStates2HeirarchyOfProcs']
             
-        transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
+        #transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
 
-#        transformation = [[a1], [b1,b2,b3], [c1]]
+        
+        #transformation = [[a1], [b1,b2,b3], [c1]]
         
         transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
           

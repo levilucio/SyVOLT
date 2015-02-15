@@ -3,7 +3,7 @@ __graph_MT_pre__leftExpr.py_____________________________________________________
 
 Automatically generated LINK for entity MT_pre__leftExpr
 DO NOT MODIFY DIRECTLY
-______________________________________________________________________________
+______________________________________________________________________________________
 """
 from graphLink import *
 from stickylink import *
@@ -14,7 +14,7 @@ class graph_MT_pre__leftExpr(graphLink):
       self.semObject = semObject
       self.semanticObject = semObject
       from linkEditor import *
-      self.le=linkEditor(self,self.semObject, "MT_pre__leftExpr")
+      self.le=linkEditor(self,self.semObject, "leftExpr")
       self.le.FirstLink= stickylink()
       self.le.FirstLink.arrow=ATOM3Boolean()
       self.le.FirstLink.arrow.setValue((' ', 0))
@@ -23,7 +23,7 @@ class graph_MT_pre__leftExpr(graphLink):
       self.le.FirstLink.arrowShape2=ATOM3Integer(10)
       self.le.FirstLink.arrowShape3=ATOM3Integer(3)
       self.le.FirstLink.decoration=ATOM3Appearance()
-      self.le.FirstLink.decoration.setValue( ('MT_pre__leftExpr_1stLink', self.le.FirstLink))
+      self.le.FirstLink.decoration.setValue( ('leftExpr_1stLink', self.le.FirstLink))
       self.le.FirstSegment= widthXfillXdecoration()
       self.le.FirstSegment.width=ATOM3Integer(2)
       self.le.FirstSegment.fill=ATOM3String('black', 20)
@@ -35,10 +35,10 @@ class graph_MT_pre__leftExpr(graphLink):
       self.le.FirstSegment.arrowShape2=ATOM3Integer(10)
       self.le.FirstSegment.arrowShape3=ATOM3Integer(3)
       self.le.FirstSegment.decoration=ATOM3Appearance()
-      self.le.FirstSegment.decoration.setValue( ('MT_pre__leftExpr_1stSegment', self.le.FirstSegment))
+      self.le.FirstSegment.decoration.setValue( ('leftExpr_1stSegment', self.le.FirstSegment))
       self.le.FirstSegment.decoration_Position=ATOM3Enum(['Up', 'Down', 'Middle', 'No decoration'],3,0)
       self.le.Center=ATOM3Appearance()
-      self.le.Center.setValue( ('MT_pre__leftExpr_Center', self.le))
+      self.le.Center.setValue( ('leftExpr_Center', self.le))
       self.le.SecondSegment= widthXfillXdecoration()
       self.le.SecondSegment.width=ATOM3Integer(2)
       self.le.SecondSegment.fill=ATOM3String('black', 20)
@@ -50,7 +50,7 @@ class graph_MT_pre__leftExpr(graphLink):
       self.le.SecondSegment.arrowShape2=ATOM3Integer(10)
       self.le.SecondSegment.arrowShape3=ATOM3Integer(3)
       self.le.SecondSegment.decoration=ATOM3Appearance()
-      self.le.SecondSegment.decoration.setValue( ('MT_pre__leftExpr_2ndSegment', self.le.SecondSegment))
+      self.le.SecondSegment.decoration.setValue( ('leftExpr_2ndSegment', self.le.SecondSegment))
       self.le.SecondSegment.decoration_Position=ATOM3Enum(['Up', 'Down', 'Middle', 'No decoration'],3,0)
       self.le.SecondLink= stickylink()
       self.le.SecondLink.arrow=ATOM3Boolean()
@@ -60,18 +60,10 @@ class graph_MT_pre__leftExpr(graphLink):
       self.le.SecondLink.arrowShape2=ATOM3Integer(10)
       self.le.SecondLink.arrowShape3=ATOM3Integer(3)
       self.le.SecondLink.decoration=ATOM3Appearance()
-      self.le.SecondLink.decoration.setValue( ('MT_pre__leftExpr_2ndLink', self.le.SecondLink))
+      self.le.SecondLink.decoration.setValue( ('leftExpr_2ndLink', self.le.SecondLink))
       self.le.FirstLink.decoration.semObject=self.semObject
       self.le.FirstSegment.decoration.semObject=self.semObject
       self.le.Center.semObject=self.semObject
       self.le.SecondSegment.decoration.semObject=self.semObject
-        helv12 = tkFont.Font ( family="Helvetica", size=12, weight="bold" )
-        h = drawing.create_text(self.translate([-3, -3]), font=helv12,
-                                tags = (self.tag, self.semanticObject.getClass()), 
-                                fill = "black", 
-                                text=self.semanticObject.MT_label__.toString())
-        self.attr_display["MT_label__"] = h
-        self.gf_label = GraphicalForm(drawing, h, 'gf_label', fontObject=helv12)
-        self.graphForms.append(self.gf_label)
-              self.le.SecondLink.decoration.semObject=self.semObject
+      self.le.SecondLink.decoration.semObject=self.semObject
       graphLink.__init__(self, xc, yc, self.le,semObject)
