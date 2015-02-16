@@ -24,11 +24,13 @@ from itertools import combinations
     which compute the new value of the attribute.'''
 class PyRamify:
 
-    def __init__(self, verbosity = 0):
+    def __init__(self, verbosity = 0, draw_svg = True):
 
         #keep track of the next label to give a graph node
         self.next_label = 0
         self.verbosity = verbosity
+
+        self.draw_svg = draw_svg
 
     '''
      changeAttrType (M): Changes the type of attributes to 'string', which allows conditions and actions to be specified on attribute values in patterns.
@@ -344,7 +346,8 @@ class PyRamify:
         rule = self.load_class(out_dir + "/" + new_name)
         backward_pattern = rule[rule.keys()[0]]
 
-        graph_to_dot(new_name, backward_pattern)
+        if self.draw_svg:
+            graph_to_dot(new_name, backward_pattern)
 
         #create the Matcher
         matcher = Matcher(backward_pattern)
@@ -594,7 +597,8 @@ class PyRamify:
 
         base_graph.delete_nodes(structure_nums + link_nums)
         
-        graph_to_dot("base_graph_" + base_graph.name, base_graph)
+        if self.draw_svg:
+            graph_to_dot("base_graph_" + base_graph.name, base_graph)
         
         
         
@@ -718,7 +722,8 @@ class PyRamify:
         # now build the partial combinator by removing everything except for the backward links
         partial_combinator_matcher = copy_graph(base_graph)
         
-        graph_to_dot("combinator_before" + base_graph.name, partial_combinator_matcher)
+        if self.draw_svg:
+            graph_to_dot("combinator_before" + base_graph.name, partial_combinator_matcher)
         
         # remove all nodes that are not connected to backward links
 
@@ -768,7 +773,8 @@ class PyRamify:
             rule = self.load_class(out_dir + "/" + new_name)
             
             # debug printout
-            graph_to_dot(combinator_matchers[i].name, combinator_matchers[i])
+            if self.draw_svg:
+                graph_to_dot(combinator_matchers[i].name, combinator_matchers[i])
             
             backward_pattern = rule.values()[0]
             
@@ -789,7 +795,8 @@ class PyRamify:
                 NAC_graph = NAC_graph.values()[0]
                 
                 # debug printout
-                graph_to_dot(NAC_graph.name, NAC_graph)
+                if self.draw_svg:
+                    graph_to_dot(NAC_graph.name, NAC_graph)
                        
                 backward_pattern.NACs = [NAC_graph]
 
@@ -822,7 +829,8 @@ class PyRamify:
             # print(inspect.getmro(rewriter_graph2.__class__))
  
             # debug printout
-            graph_to_dot(rewriter_graph2.name, rewriter_graph2)
+            if self.draw_svg:
+                graph_to_dot(rewriter_graph2.name, rewriter_graph2)
  
             rewriter_graph2.pre = copy_graph(backward_pattern)
  
@@ -1082,7 +1090,8 @@ class PyRamify:
 
     def get_match_graph(self, graph):
 
-        graph_to_dot(graph.name + "_original", graph)
+        if self.draw_svg:
+            graph_to_dot(graph.name + "_original", graph)
         graph = self.remove_equation_nodes(graph)
 
         apply_contain_node = find_nodes_with_mm(graph, ["apply_contains"])
@@ -1224,7 +1233,8 @@ class PyRamify:
         if self.verbosity >= 2:
             print("Match pattern matcher compiled to: " + file_name)
 
-        graph_to_dot(graph.name, graph)
+        if self.draw_svg:
+            graph_to_dot(graph.name, graph)
 
         #have to reload the graph to define all the eval functions
         rule = self.load_class(out_dir + "/" + old_name + "_match_pattern_matcher")

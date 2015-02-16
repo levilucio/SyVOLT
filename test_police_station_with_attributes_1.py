@@ -127,10 +127,11 @@ from PoliceStationMM.properties_transformation1.positiveProps_transformation1.hi
 from PoliceStationMM.properties_transformation1.positiveProps_transformation1.himesis.HS2StrivialtrueConnectedLHS import HS2StrivialtrueConnectedLHS
 from PoliceStationMM.properties_transformation1.positiveProps_transformation1.himesis.HS2StrivialtrueCompleteLHS import HS2StrivialtrueCompleteLHS
 from PoliceStationMM.properties_transformation1.negativeProps_transformation1.himesis.HS2MtrivialfalseCompleteLHS import HS2MtrivialfalseCompleteLHS
-class Test(unittest.TestCase):
+class Test():
 
-    def setUp(self):
-        pyramify = PyRamify()
+    def setUp(self, args):
+
+        pyramify = PyRamify(draw_svg=args.draw_svg)
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
             pyramify.ramify_directory("PoliceStationMM/transformation_1/Himesis/")
@@ -235,8 +236,8 @@ class Test(unittest.TestCase):
 #             print("No")
 
     
-    def test_correct_police_station(self):
-        
+    def test_correct_police_station(self, args):
+
         pyramify = PyRamify()
 
         pre_metamodel = ["MT_pre__PoliceStationMM", "MoTifRule"]
@@ -248,7 +249,7 @@ class Test(unittest.TestCase):
         
         print("create state space")
         s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, \
-                                   self.matchRulePatterns, 2)
+                                   self.matchRulePatterns, 2, draw_svg=args.draw_svg, run_tests=args.run_tests)
  
         ts0 = time.time()
         s.build_path_conditions()
@@ -402,6 +403,18 @@ class Test(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.test']
-    unittest.main()
+    import argparse
+
+    parser = argparse.ArgumentParser(description='Run the police station with attributes test # 1.')
+    parser.add_argument('--run_tests', type=bool, default = False,
+                       help='Bool for whether extra testing should be performed (default: False)')
+    parser.add_argument('--draw_svg', default=True,
+                       help='Bool for whether svg files should be drawn (default: True)')
+
+    args = parser.parse_args()
+
+
+    ps1 = Test()
+    ps1.setUp(args)
+    ps1.test_correct_police_station(args)
 

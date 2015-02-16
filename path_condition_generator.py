@@ -54,7 +54,7 @@ class PathConditionGenerator():
         - verbosity: verbosity level (0 - no verbosity / 1 - verbose / 2 - debug)                          
     """
 
-    def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, verbosity):
+    def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, verbosity, draw_svg = True, run_tests=False):
         # the empty path condition
         from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 
@@ -81,6 +81,9 @@ class PathConditionGenerator():
         self.ruleTraceCheckers = ruleTraceCheckers
         self.matchRulePatterns = matchRulePatterns
 
+        self.draw_svg = draw_svg
+        self.run_tests = run_tests
+
         self.ruleContainment = []
 
         self.verbosity = verbosity
@@ -94,8 +97,7 @@ class PathConditionGenerator():
 
         self._pre_process()
 
-        if verbosity >= 2:
-            self.debug()
+        self.debug()
 
     def print_transformation(self):
         for layer in self.transformation:
@@ -129,17 +131,20 @@ class PathConditionGenerator():
 
 
     def debug(self):
-        self.print_transformation()
-        self.print_ruleCombinators()
-        self.print_ruleTraceCheckers()
-        self.print_matchRulePatterns()
 
-        ppt = PropertyProverTester()
-        ppt.set_artifacts(self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators)
+        if self.draw_svg:
+            self.print_transformation()
+            self.print_ruleCombinators()
+            self.print_ruleTraceCheckers()
+            self.print_matchRulePatterns()
 
-        ppt.test_matchRulePatterns()
-        ppt.test_ruleTraceCheckers()
-        ppt.test_ruleCombinators()
+        if self.run_tests:
+            ppt = PropertyProverTester()
+            ppt.set_artifacts(self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators)
+
+            ppt.test_matchRulePatterns()
+            ppt.test_ruleTraceCheckers()
+            ppt.test_ruleCombinators()
 
 
     def _pre_process(self):
