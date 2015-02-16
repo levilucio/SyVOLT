@@ -175,73 +175,117 @@ class PathConditionGenerator():
 
 
         # merge rules of the same layer that share common match patterns over those match patterns   
-        for layer in range(0,len(self.transformation)):
-            # loop until all the rules in the layer have been treated
-            merged_layer = []
-            while self.transformation[layer] != []:
-                # compare the first rule to the remaining ones
-                mergeResult = self.transformation[layer][0]
-                markedForRemoval = [self.transformation[layer][0]]
-                   
-                matchPatternCurrentRule = self.matchRulePatterns[self.transformation[layer][0].name][0]
-  
-#                 print("MPCR: ")
-#                 print_graph(matchPatternCurrentRule.condition)
-#                 for r in self.transformation[layer]:
-#                     print(r)
-                for candidateToMerge in range(1,len(self.transformation[layer])):
-                    matchPatternCandidateRule = self.matchRulePatterns[self.transformation[layer][candidateToMerge].name][0]
-#                     print("MPCRNAme: " + self.transformation[layer][candidateToMerge].name)
-                    # check whether the rules can be merged, if both have the same match pattern
-                    # check if the current rule's (first rule) match is a subset of the candidate's rule match
-                    p = Packet()
-                    p.graph = self.transformation[layer][candidateToMerge]
-#                     print("First name: " + p.graph.name)
-                    matchPatternCurrentRule.packet_in(p)
-                    # now check if the candidate rule's match is a subset of the current rule's match
-                    p = Packet()
-                    p.graph = self.transformation[layer][0]
-                    matchPatternCandidateRule.packet_in(p)                           
-
-                    # check if the rules share the same match pattern such that we can merge them
-                    if matchPatternCurrentRule.is_success and matchPatternCandidateRule.is_success:
-                        
-                        # merge the rules by copying the candidate to merge on top of the results of merging
-                        # all rules so far with the same matcher
-                        mergeResultNameBefore = mergeResult.name
-                        p = Packet()
-                        p.graph = mergeResult
-                        p = self.matchRulePatterns[self.transformation[layer][candidateToMerge].name][1].packet_in(p)
-                        mergeResult = p.graph
-                        mergeResult.name = mergeResult + self.transformation[layer][candidateToMerge].name
-                        
-                        # mark the rule for removal
-                        markedForRemoval.append(self.transformation[layer][candidateToMerge])
-  
-                # copy the result of the merge or the unmerged rule to the merged layer
-                merged_layer.append(mergeResult)
-                # merge backwardPatterns matchers for the merged rules
-                # gather all the backwardPattern matchers from the rules that got merged
-                # and are to be removed, only if any rule got merged during this pass
-                  
-                if len(markedForRemoval) > 1:                  
-                    # rebuild the auxiliary structures
-                    # matchRulePatterns
-                    self.matchRulePatterns[mergeResult.name] = self.matchRulePatterns[markedForRemoval[0].name]
-                    
-                    # rebuild the rule combinators for the merged rule
-#                     pyramify = PyRamify()
-#                     self.ruleCombinators = pyramify.get_rule_combinators(mergeResult)
-                                     
-                    # remove from the backwardPatterns dictionary the references to rules that got merged
-                    for rule in markedForRemoval:
-                        del self.matchRulePatterns[rule.name]
-
-                # remove the rules that got merged during the previous pass
-                self.transformation[layer] = [rule for rule in self.transformation[layer] if rule not in markedForRemoval]               
-            # the layer has been treated and can be put back into the transformation               
-            self.transformation[layer] = merged_layer
-
+#         for layer in range(0,len(self.transformation)):
+#             # loop until all the rules in the layer have been treated
+#             merged_layer = []
+#             while self.transformation[layer] != []:
+#                 # compare the first rule to the remaining ones
+#                 mergeResult = self.transformation[layer][0]
+#                 markedForRemoval = [self.transformation[layer][0]]
+#                    
+#                 matchPatternCurrentRule = self.matchRulePatterns[self.transformation[layer][0].name][0]
+#   
+# #                 print("MPCR: ")
+# #                 print_graph(matchPatternCurrentRule.condition)
+# #                 for r in self.transformation[layer]:
+# #                     print(r)
+#                 for candidateToMerge in range(1,len(self.transformation[layer])):
+#                     matchPatternCandidateRule = self.matchRulePatterns[self.transformation[layer][candidateToMerge].name][0]
+# #                     print("MPCRNAme: " + self.transformation[layer][candidateToMerge].name)
+#                     # check whether the rules can be merged, if both have the same match pattern
+#                     # check if the current rule's (first rule) match is a subset of the candidate's rule match
+#                     p = Packet()
+#                     p.graph = self.transformation[layer][candidateToMerge]
+# #                     print("First name: " + p.graph.name)
+#                     matchPatternCurrentRule.packet_in(p)
+#                     # now check if the candidate rule's match is a subset of the current rule's match
+#                     p = Packet()
+#                     p.graph = self.transformation[layer][0]
+#                     matchPatternCandidateRule.packet_in(p)                           
+# 
+#                     # check if the rules share the same match pattern such that we can merge them
+#                     if matchPatternCurrentRule.is_success and matchPatternCandidateRule.is_success:
+#                         
+#                         # merge the rules by copying the candidate to merge on top of the results of merging
+#                         # all rules so far with the same matcher
+#                         mergeResultNameBefore = mergeResult.name
+#                         p = Packet()
+#                         p.graph = mergeResult
+#                         p = self.matchRulePatterns[self.transformation[layer][candidateToMerge].name][1].packet_in(p)
+#                         mergeResult = p.graph
+#                         mergeResult.name = mergeResult + self.transformation[layer][candidateToMerge].name
+#                         
+#                         # mark the rule for removal
+#                         markedForRemoval.append(self.transformation[layer][candidateToMerge])
+#   
+#                 # copy the result of the merge or the unmerged rule to the merged layer
+#                 merged_layer.append(mergeResult)
+#                 # merge backwardPatterns matchers for the merged rules
+#                 # gather all the backwardPattern matchers from the rules that got merged
+#                 # and are to be removed, only if any rule got merged during this pass
+#                   
+#                 if len(markedForRemoval) > 1:                  
+#                     # rebuild the auxiliary structures
+#                     # matchRulePatterns
+#                     self.matchRulePatterns[mergeResult.name] = self.matchRulePatterns[markedForRemoval[0].name]
+#                     
+#                     # rebuild the rule combinators for the merged rule
+# #                     pyramify = PyRamify()
+# #                     self.ruleCombinators = pyramify.get_rule_combinators(mergeResult)
+#                                      
+#                     # remove from the backwardPatterns dictionary the references to rules that got merged
+#                     for rule in markedForRemoval:
+#                         del self.matchRulePatterns[rule.name]
+# 
+#                 # remove the rules that got merged during the previous pass
+#                 self.transformation[layer] = [rule for rule in self.transformation[layer] if rule not in markedForRemoval]               
+#             # the layer has been treated and can be put back into the transformation               
+#             self.transformation[layer] = merged_layer
+# #             
+# #        print 'Transformation:'
+# #        for layer in range(0,len(self.transformation)):
+# #            print 'Layer ' + str(layer)
+# #            for rule in self.transformation[layer]:
+# #                print rule
+# #
+# #        print '\nRules:'
+# #        print self.rules
+# #        
+# #        print '\nRules Including Backward Links:'
+# #        for layer in range(0,len(self.rulesIncludingBackwardLinks)):
+# #            print 'Layer: ' + str(layer)
+# #            for rule in self.rulesIncludingBackwardLinks[layer]:
+# #                print rule
+# #              
+# #        print '\nBackward Pattern Matchers:'
+# #        print self.backwardPatterns
+# #        
+# #        print '\nBackward Pattern 2 Rules Matchers:'
+# #        print self.backwardPatterns2Rules             
+# #        
+# #        print '\nBackward Complete Matchers:'
+# #        print self.backwardPatternsComplete
+# #        
+# #        print '\nMatch Rule Patterns:'
+# #        print self.matchRulePatterns
+#             
+# 
+# #         print 'Buiding traceability---------------------'
+# #         for layerIndex in range(0,len(self.transformation)):
+# #             p = Packet()
+# #             p.graph = self.transformation[layerIndex][0]
+# #             p = self.build_traceability_for_rule.packet_in(p)
+# #             print self.build_traceability_for_rule.is_success
+# #             self.transformation[layerIndex][0] =  p.graph
+# #         print '------------------------------------------'
+# 
+#         # build traceability links-for each rule that got merged it produces traceability between them
+#         # to know which apply elems came from which match elems   
+#         
+#             
+#         # calculate the partial order containing the containment order between the match patterns of the rules
+#         # first calculate all the pairs according to the layers of the transformation
+#         layerpairs = []
 #
 #        print '\nRules:'
 #        print self.rules
@@ -267,83 +311,71 @@ class PathConditionGenerator():
 
 #         print 'Buiding traceability---------------------'
 #         for layerIndex in range(0,len(self.transformation)):
-#             p = Packet()
-#             p.graph = self.transformation[layerIndex][0]
-#             p = self.build_traceability_for_rule.packet_in(p)
-#             print self.build_traceability_for_rule.is_success
-#             self.transformation[layerIndex][0] =  p.graph
-#         print '------------------------------------------'
-
-        # build traceability links-for each rule that got merged it produces traceability between them
-        # to know which apply elems came from which match elems   
+#             layerpairs.append(list(permutations(self.transformation[layerIndex],2)))
+#              
+#         # now build the partial order of rules as a dictionary per layer
+#         # the keys are rules that are larger than the elements in the order 
+#         ruleContainment = []
+#         
+#         for layerIndex in range(0,len(layerpairs)):
+#             ruleContainment.append({})
+#             for pair in layerpairs[layerIndex]:
+#                 p = Packet()
+#                 p.graph = pair[1]
+#                 p = self.matchRulePatterns[pair[0].name][0].packet_in(p)
+#                 if self.matchRulePatterns[pair[0].name][0].is_success:
+#                     # Test for the satisfaction of the attribute equations when the two rules combine.
+#                     # If the attribute equations are satisfied for at least one of the combination of the two rules, 
+#                     # then the two rules are dependent, otherwise they are not dependent
+#                     
+#                     dependentRules = False
+#                     
+#                     i = Iterator()
+#                     p = i.packet_in(p)
+#                     while i.is_success:
+#                         p.graph = pair[0]
+#                         p = self.matchRulePatterns[pair[0].name][1].packet_in(p)
+#                         if self.evaluate_attribute_equations(p.graph):
+#                             dependentRules = True
+#                             break
+#                         p = i.next_in(p)                                                                   
+#                     
+#                     if dependentRules:
+#                         # the partial order may branch, so we need lists to store the smaller elements
+#                         if pair[1] not in ruleContainment[layerIndex].keys():
+#                             ruleContainment[layerIndex][pair[1]] = [pair[0]]
+#                         else:
+#                             ruleContainment[layerIndex][pair[1]].append(pair[0])
+#                             
+#         self.ruleContainment = ruleContainment
         
-            
-        # calculate the partial order containing the containment order between the match patterns of the rules
-        # first calculate all the pairs according to the layers of the transformation
-        layerpairs = []
-        for layerIndex in range(0,len(self.transformation)):
-            layerpairs.append(list(permutations(self.transformation[layerIndex],2)))
-             
-        # now build the partial order of rules as a dictionary per layer
-        # the keys are rules that are larger than the elements in the order 
-        ruleContainment = []
+        # remove this, just added it such that path condition construction runs
+        self.ruleContainment = [{} for layer in self.transformation]
         
-        for layerIndex in range(0,len(layerpairs)):
-            ruleContainment.append({})
-            for pair in layerpairs[layerIndex]:
-                p = Packet()
-                p.graph = pair[1]
-                p = self.matchRulePatterns[pair[0].name][0].packet_in(p)
-                if self.matchRulePatterns[pair[0].name][0].is_success:
-                    # Test for the satisfaction of the attribute equations when the two rules combine.
-                    # If the attribute equations are satisfied for at least one of the combination of the two rules, 
-                    # then the two rules are dependent, otherwise they are not dependent
-                    
-                    dependentRules = False
-                    
-                    i = Iterator()
-                    p = i.packet_in(p)
-                    while i.is_success:
-                        p.graph = pair[0]
-                        p = self.matchRulePatterns[pair[0].name][1].packet_in(p)
-                        if self.evaluate_attribute_equations(p.graph):
-                            dependentRules = True
-                            break
-                        p = i.next_in(p)                                                                   
-                    
-                    if dependentRules:
-                        # the partial order may branch, so we need lists to store the smaller elements
-                        if pair[1] not in ruleContainment[layerIndex].keys():
-                            ruleContainment[layerIndex][pair[1]] = [pair[0]]
-                        else:
-                            ruleContainment[layerIndex][pair[1]].append(pair[0])
-                            
-        self.ruleContainment = ruleContainment
-
         if self.verbosity >= 2:
             print "Subsumption order between rules for all layers:"                   
-            print ruleContainment
+            print self.ruleContainment
             print "\n"
         
-        # now reorder the rules within each layer of the transformation such that the rules that are
-        # contained in others always appear first. This makes it possible to make it such that when
-        # rules are symbolically executed to build the path conditions, we can force subsumed rules
-        # to executed with the rules that subsume them.
-                     
-        for layerIndex in range(0,len(self.transformation)):
-
-            # first find all the top nodes
-            topRules = []
-
-            for rule in ruleContainment[layerIndex].keys():
-                toprule = True
-                for rulepass in ruleContainment.keys():
-                    if rule in set(ruleContainment[rulepass]):
-                        toprule = False
-                if toprule: topRules.append(rule)
-
-            orderedRules = []            
-            orderedRules.extend(topRules)
+#         # now reorder the rules within each layer of the transformation such that the rules that are
+#         # contained in others always appear first. This makes it possible to make it such that when
+#         # rules are symbolically executed to build the path conditions, we can force subsumed rules
+#         # to executed with the rules that subsume them.
+#                      
+#         for layerIndex in range(0,len(self.transformation)):
+# 
+#             # first find all the top nodes
+#             topRules = []
+# 
+#             for rule in ruleContainment[layerIndex].keys():
+#                 toprule = True
+#                 for rulepass in ruleContainment.keys():
+#                     if rule in set(ruleContainment[rulepass]):
+#                         toprule = False
+#                 if toprule: topRules.append(rule)
+# 
+#             orderedRules = []            
+#             orderedRules.extend(topRules)
             
         # TODO: now traceability is being built for all rules. We only need traceability for the rules that have no dependencies, 
         # as the others are built by the combinators associated to the rule      
@@ -359,18 +391,18 @@ class PathConditionGenerator():
                 graph_to_dot("traced_" + self.transformation[layerIndex][ruleIndex].name , self.transformation[layerIndex][ruleIndex])
 
             
-            # auxiliary function to order the nodes recursively, starting from the top nodes
-            def _build_ordered_rules(topRules):
-                newTopRules = []
-                for rule in topRules:
-                    if rule in set(self.partialOrder.keys()):
-                        newTopRules.extend(self.partialOrder[rule])
-                        orderedRules.extend(self.partialOrder[rule])
-                
-                if newTopRules != [] : _build_ordered_rules(newTopRules)
-            
-            # continue adding nodes as we go down the tree
-            _build_ordered_rules(topRules)
+#             # auxiliary function to order the nodes recursively, starting from the top nodes
+#             def _build_ordered_rules(topRules):
+#                 newTopRules = []
+#                 for rule in topRules:
+#                     if rule in set(self.partialOrder.keys()):
+#                         newTopRules.extend(self.partialOrder[rule])
+#                         orderedRules.extend(self.partialOrder[rule])
+#                 
+#                 if newTopRules != [] : _build_ordered_rules(newTopRules)
+#             
+#             # continue adding nodes as we go down the tree
+#             _build_ordered_rules(topRules)
 
 #             # remove from the layer the rules that need to be ordered
 #             self.transformation[layerIndex] = list(set(self.transformation[layerIndex]) - set(orderedRules))   

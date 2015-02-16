@@ -130,7 +130,8 @@ class PyRamify:
 
 
                 #TODO: Come up with a nice pattern for these attributes
-                #Hack for Attributes
+                #Hack for Attributes         
+                
                 if "Attribute" in node["mm__"] and attrib == "MT_pre__name":
                     node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
 

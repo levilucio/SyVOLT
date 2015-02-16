@@ -33,18 +33,18 @@ from PropertyVerification.Or import Or #StateSpace Prop
 from PropertyVerification.BACKUP_atomic_state_property import BKUPAtomicStateProperty
 #from lib2to3.fixer_util import p1
 
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2procdef_IsolatedLHS import HState2procdef_IsolatedLHS
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2procdef_CompleteLHS import HState2procdef_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrue_IsolatedLHS import HExitpoint2procdefparTrue_IsolatedLHS
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrue_ConnectedLHS import HExitpoint2procdefparTrue_ConnectedLHS
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrue_CompleteLHS import HExitpoint2procdefparTrue_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrueNOATTR_IsolatedLHS import HExitpoint2procdefparTrueNOATTR_IsolatedLHS
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrueNOATTR_ConnectedLHS import HExitpoint2procdefparTrueNOATTR_ConnectedLHS
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrueNOATTR_CompleteLHS import HExitpoint2procdefparTrueNOATTR_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.negative.Himesis.HState2funcdefNEG_CompleteLHS import HState2funcdefNEG_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2trans2exitptTrue_IsolatedLHS import HState2trans2exitptTrue_IsolatedLHS
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2trans2exitptTrue_ConnectedLHS import HState2trans2exitptTrue_ConnectedLHS
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2trans2exitptTrue_CompleteLHS import HState2trans2exitptTrue_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2procdef_IsolatedLHS import HState2procdef_IsolatedLHS
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2procdef_CompleteLHS import HState2procdef_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrue_IsolatedLHS import HExitpoint2procdefparTrue_IsolatedLHS
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrue_ConnectedLHS import HExitpoint2procdefparTrue_ConnectedLHS
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrue_CompleteLHS import HExitpoint2procdefparTrue_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrueNOATTR_IsolatedLHS import HExitpoint2procdefparTrueNOATTR_IsolatedLHS
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrueNOATTR_ConnectedLHS import HExitpoint2procdefparTrueNOATTR_ConnectedLHS
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrueNOATTR_CompleteLHS import HExitpoint2procdefparTrueNOATTR_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.negative.Himesis.HState2funcdefNEG_CompleteLHS import HState2funcdefNEG_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2trans2exitptTrue_IsolatedLHS import HState2trans2exitptTrue_IsolatedLHS
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2trans2exitptTrue_ConnectedLHS import HState2trans2exitptTrue_ConnectedLHS
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2trans2exitptTrue_CompleteLHS import HState2trans2exitptTrue_CompleteLHS
 
 class Test():
 
@@ -144,14 +144,14 @@ class Test():
         s.print_path_conditions_screen()
          
         s.print_path_conditions_file()
-        atprop=AtomicStateProperty(HState2procdef_IsolatedLHS(),HState2procdef_IsolatedLHS(), HState2procdef_CompleteLHS())
-        exitpt2procdefparprop_withattr=AtomicStateProperty(HExitpoint2procdefparTrue_IsolatedLHS(),HExitpoint2procdefparTrue_ConnectedLHS(),HExitpoint2procdefparTrue_CompleteLHS())
-        exitpt2procdefparprop_noattr=AtomicStateProperty(HExitpoint2procdefparTrueNOATTR_IsolatedLHS(),HExitpoint2procdefparTrueNOATTR_ConnectedLHS(),HExitpoint2procdefparTrueNOATTR_CompleteLHS())
-        atpropneg=AtomicStateProperty(HState2procdef_IsolatedLHS(), HState2procdef_IsolatedLHS(), HState2funcdefNEG_CompleteLHS())
-        atpropNeedscollapse=AtomicStateProperty(HState2trans2exitptTrue_IsolatedLHS(),HState2trans2exitptTrue_ConnectedLHS(),HState2trans2exitptTrue_CompleteLHS())
-        finalresult=StateProperty.verifyCompositeStateProperty(s, atpropNeedscollapse)
-        print ('finalresult : ')
-        print (finalresult)
+#         atprop=AtomicStateProperty(HState2procdef_IsolatedLHS(),HState2procdef_IsolatedLHS(), HState2procdef_CompleteLHS())
+#         exitpt2procdefparprop_withattr=AtomicStateProperty(HExitpoint2procdefparTrue_IsolatedLHS(),HExitpoint2procdefparTrue_ConnectedLHS(),HExitpoint2procdefparTrue_CompleteLHS())
+#         exitpt2procdefparprop_noattr=AtomicStateProperty(HExitpoint2procdefparTrueNOATTR_IsolatedLHS(),HExitpoint2procdefparTrueNOATTR_ConnectedLHS(),HExitpoint2procdefparTrueNOATTR_CompleteLHS())
+#         atpropneg=AtomicStateProperty(HState2procdef_IsolatedLHS(), HState2procdef_IsolatedLHS(), HState2funcdefNEG_CompleteLHS())
+#         atpropNeedscollapse=AtomicStateProperty(HState2trans2exitptTrue_IsolatedLHS(),HState2trans2exitptTrue_ConnectedLHS(),HState2trans2exitptTrue_CompleteLHS())
+#         finalresult=StateProperty.verifyCompositeStateProperty(s, atpropNeedscollapse)
+#         print ('finalresult : ')
+#         print (finalresult)
 # 
 #         print("printing states")
 #         self._print_states(s)

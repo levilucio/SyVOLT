@@ -18,7 +18,7 @@ class HMoveOneTraceRHS(HimesisPostConditionPattern):
         self.add_edges([[0, 2], [1, 0]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__UMLRT2Kiltera_MM'
+S'MT_post__PoliceStationMM'
 p2
 aS'MoTifRule'
 p3

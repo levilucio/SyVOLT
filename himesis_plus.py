@@ -138,6 +138,12 @@ def makePostConditionPattern(old_graph):
     return graph
 
 
+def buildPreListFromClassNames(classNameList):
+    '''
+    adds the 'MT_pre__' prefix to a set of class names
+    '''
+    return ["MT_pre__" + className for className in classNameList]
+
 #FIXME to be proper
 #could be smarter depending on the type
 def copy_graph(graph2):
