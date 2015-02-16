@@ -15,7 +15,7 @@ class HExitpoint2procdefparTrue_IsolatedLHS(HimesisPreConditionPatternLHS):
         super(HExitpoint2procdefparTrue_IsolatedLHS, self).__init__(name='HExitpoint2procdefparTrue_IsolatedLHS', num_nodes=8, edges=[])
         
         # Add the edges
-        self.add_edges([(4, 0), (3, 0), (1, 3), (5, 4), (5, 6), (6, 7)])
+        self.add_edges([(3, 0), (4, 0), (1, 3), (5, 4), (5, 6), (6, 7)])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
 S'MT_pre__UMLRT2Kiltera_MM'
@@ -35,22 +35,22 @@ a.""")
 return True
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('a1f25919-c156-4049-bc4a-10f1815b4650')
+        self["GUID__"] = UUID('a7771c96-bd00-4c4f-bd58-c5f945c3213a')
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
-        self.vs[0]["MT_pre__Type"] = pickle.loads("""V\u000a#===============================================================================\u000a# This code is executed when evaluating if a node shall be matched by this rule.\u000a# You can access the value of the current node's attribute value by: attr_value.\u000a# You can access any attribute x of this node by: this['x'].\u000a# If the constraint relies on attribute values from other nodes,\u000a# use the LHS/NAC constraint instead.\u000a# The given constraint must evaluate to a boolean expression.\u000a#===============================================================================\u000a\u000areturn attr_value==Bool\u000a
+        self.vs[0]["MT_pre__Type"] = pickle.loads("""V\u000a#===============================================================================\u000a# This code is executed when evaluating if a node shall be matched by this rule.\u000a# You can access the value of the current node's attribute value by: attr_value.\u000a# You can access any attribute x of this node by: this['x'].\u000a# If the constraint relies on attribute values from other nodes,\u000a# use the LHS/NAC constraint instead.\u000a# The given constraint must evaluate to a boolean expression.\u000a#===============================================================================\u000a\u000areturn attr_value=='Bool'\u000a
 p1
 .""")
         self.vs[0]["MT_label__"] = """isComposite"""
         self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[0]["mm__"] = """MT_pre__Attribute"""
-        self.vs[0]["MT_pre__name"] = pickle.loads("""V\u000a#===============================================================================\u000a# This code is executed when evaluating if a node shall be matched by this rule.\u000a# You can access the value of the current node's attribute value by: attr_value.\u000a# You can access any attribute x of this node by: this['x'].\u000a# If the constraint relies on attribute values from other nodes,\u000a# use the LHS/NAC constraint instead.\u000a# The given constraint must evaluate to a boolean expression.\u000a#===============================================================================\u000a\u000areturn attr_value==isComposite\u000a
+        self.vs[0]["MT_pre__name"] = pickle.loads("""V\u000a#===============================================================================\u000a# This code is executed when evaluating if a node shall be matched by this rule.\u000a# You can access the value of the current node's attribute value by: attr_value.\u000a# You can access any attribute x of this node by: this['x'].\u000a# If the constraint relies on attribute values from other nodes,\u000a# use the LHS/NAC constraint instead.\u000a# The given constraint must evaluate to a boolean expression.\u000a#===============================================================================\u000a\u000areturn attr_value=='isComposite'\u000a
 p1
 .""")
         self.vs[0]["MT_dirty__"] = False
-        self.vs[0]["GUID__"] = UUID('ac9cb242-29a0-495b-99aa-1110d9566682')
+        self.vs[0]["GUID__"] = UUID('d4343abf-4f14-441b-b9e2-ef72c4c27e0f')
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_pre__classtype"] = """
 #===============================================================================
@@ -93,7 +93,7 @@ return True
 return True
 """
         self.vs[1]["MT_dirty__"] = False
-        self.vs[1]["GUID__"] = UUID('8b966fcc-4b66-4daa-b315-0e95a5354042')
+        self.vs[1]["GUID__"] = UUID('61c3ad23-df05-4eee-8dfc-81649663adaa')
         self.vs[2]["MT_subtypeMatching__"] = False
         self.vs[2]["MT_pre__classtype"] = """
 #===============================================================================
@@ -136,21 +136,21 @@ return True
 return True
 """
         self.vs[2]["MT_dirty__"] = False
-        self.vs[2]["GUID__"] = UUID('00798d76-f66e-40ce-a094-72bf7032c2f6')
+        self.vs[2]["GUID__"] = UUID('e0674d80-943d-4555-ab33-dce8d7aa4bb5')
         self.vs[3]["MT_subtypeMatching__"] = False
         self.vs[3]["MT_label__"] = """11"""
         self.vs[3]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[3]["mm__"] = """MT_pre__hasAttribute_S"""
         self.vs[3]["MT_dirty__"] = False
-        self.vs[3]["GUID__"] = UUID('0161b327-cf28-426f-ade9-3a3b1e1219f4')
+        self.vs[3]["GUID__"] = UUID('f1a05063-61bf-45ed-9df4-f948d31ae60b')
         self.vs[4]["MT_subtypeMatching__"] = False
         self.vs[4]["MT_label__"] = """9"""
         self.vs[4]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[4]["mm__"] = """MT_pre__leftExpr"""
         self.vs[4]["MT_dirty__"] = False
-        self.vs[4]["GUID__"] = UUID('31b9ae5b-a3d9-451b-992f-ce2022272664')
+        self.vs[4]["GUID__"] = UUID('8a083c29-21f7-4e93-a460-b99f8a33832f')
         self.vs[5]["MT_subtypeMatching__"] = False
         self.vs[5]["MT_label__"] = """8"""
         self.vs[5]["MT_subtypes__"] = pickle.loads("""(lp1
@@ -169,27 +169,27 @@ return True
 return True
 """
         self.vs[5]["MT_dirty__"] = False
-        self.vs[5]["GUID__"] = UUID('cb036245-1a0e-44fb-b9c8-e0c3f8454049')
+        self.vs[5]["GUID__"] = UUID('277b70cc-a980-480e-a7b3-312e013e2fde')
         self.vs[6]["MT_subtypeMatching__"] = False
         self.vs[6]["MT_label__"] = """10"""
         self.vs[6]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[6]["mm__"] = """MT_pre__rightExpr"""
         self.vs[6]["MT_dirty__"] = False
-        self.vs[6]["GUID__"] = UUID('29ed42ab-9dc3-492f-a739-0df435ccb560')
+        self.vs[6]["GUID__"] = UUID('7d711b6c-e6f8-45f7-b9ee-d04d36af50f6')
         self.vs[7]["MT_subtypeMatching__"] = False
-        self.vs[7]["MT_pre__Type"] = pickle.loads("""V\u000a#===============================================================================\u000a# This code is executed when evaluating if a node shall be matched by this rule.\u000a# You can access the value of the current node's attribute value by: attr_value.\u000a# You can access any attribute x of this node by: this['x'].\u000a# If the constraint relies on attribute values from other nodes,\u000a# use the LHS/NAC constraint instead.\u000a# The given constraint must evaluate to a boolean expression.\u000a#===============================================================================\u000a\u000areturn attr_value==Bool\u000a
+        self.vs[7]["MT_pre__Type"] = pickle.loads("""V\u000a#===============================================================================\u000a# This code is executed when evaluating if a node shall be matched by this rule.\u000a# You can access the value of the current node's attribute value by: attr_value.\u000a# You can access any attribute x of this node by: this['x'].\u000a# If the constraint relies on attribute values from other nodes,\u000a# use the LHS/NAC constraint instead.\u000a# The given constraint must evaluate to a boolean expression.\u000a#===============================================================================\u000a\u000areturn attr_value=='Bool'\u000a
 p1
 .""")
         self.vs[7]["MT_label__"] = """7"""
         self.vs[7]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[7]["mm__"] = """MT_pre__Constant"""
-        self.vs[7]["MT_pre__name"] = pickle.loads("""V\u000a#===============================================================================\u000a# This code is executed when evaluating if a node shall be matched by this rule.\u000a# You can access the value of the current node's attribute value by: attr_value.\u000a# You can access any attribute x of this node by: this['x'].\u000a# If the constraint relies on attribute values from other nodes,\u000a# use the LHS/NAC constraint instead.\u000a# The given constraint must evaluate to a boolean expression.\u000a#===============================================================================\u000a\u000areturn attr_value==true\u000a
+        self.vs[7]["MT_pre__name"] = pickle.loads("""V\u000a#===============================================================================\u000a# This code is executed when evaluating if a node shall be matched by this rule.\u000a# You can access the value of the current node's attribute value by: attr_value.\u000a# You can access any attribute x of this node by: this['x'].\u000a# If the constraint relies on attribute values from other nodes,\u000a# use the LHS/NAC constraint instead.\u000a# The given constraint must evaluate to a boolean expression.\u000a#===============================================================================\u000a\u000areturn attr_value=='true'\u000a
 p1
 .""")
         self.vs[7]["MT_dirty__"] = False
-        self.vs[7]["GUID__"] = UUID('e1dd9c83-bbf2-4a62-8de5-84538072251c')
+        self.vs[7]["GUID__"] = UUID('1c1eeed5-f04b-488c-b7fa-787c15e4534a')
 
     def eval_TypeisComposite(self, attr_value, this):
         
@@ -202,7 +202,7 @@ p1
         # The given constraint must evaluate to a boolean expression.
         #===============================================================================
         
-        return attr_value==Bool
+        return attr_value=='Bool'
 
 
     def eval_nameisComposite(self, attr_value, this):
@@ -216,7 +216,7 @@ p1
         # The given constraint must evaluate to a boolean expression.
         #===============================================================================
         
-        return attr_value==isComposite
+        return attr_value=='isComposite'
 
 
     def eval_classtype1(self, attr_value, this):
@@ -328,7 +328,7 @@ p1
         # The given constraint must evaluate to a boolean expression.
         #===============================================================================
         
-        return attr_value==Bool
+        return attr_value=='Bool'
 
 
     def eval_name7(self, attr_value, this):
@@ -342,7 +342,7 @@ p1
         # The given constraint must evaluate to a boolean expression.
         #===============================================================================
         
-        return attr_value==true
+        return attr_value=='true'
 
 
     def constraint(self, PreNode, graph):
