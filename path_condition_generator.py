@@ -54,7 +54,7 @@ class PathConditionGenerator():
         - verbosity: verbosity level (0 - no verbosity / 1 - verbose / 2 - debug)                          
     """
 
-    def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, verbosity, draw_svg = True, run_tests=False):
+    def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, verbosity, draw_svg = True, run_tests=True):
         # the empty path condition
         from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 

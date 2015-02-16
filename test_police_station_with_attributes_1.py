@@ -258,6 +258,11 @@ class Test():
         print("Time to build the set of path conditions: " + str(ts1 - ts0))
         print("Size of the set of path conditions: " + str(sys.getsizeof(s.pathConditionSet) / 1024))
         print("Number of path conditions: " + str(len(s.pathConditionSet)))
+
+        #check if the correct number of path conditions were produced
+        if not int(args.num_pcs) == -1 and not int(args.num_pcs) == len(s.pathConditionSet):
+            raise Exception("The number of produced path conditions is incorrect.\n" + args.num_pcs + " were expected, but " + str(len(s.pathConditionSet)) + " were produced.")
+
 #         print
 #         '\n'
 #         print
@@ -406,10 +411,13 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description='Run the police station with attributes test # 1.')
-    parser.add_argument('--run_tests', type=bool, default = False,
-                       help='Bool for whether extra testing should be performed (default: False)')
+    parser.add_argument('--run_tests', type=bool, default = True,
+                       help='Bool for whether extra testing should be performed (default: True)')
     parser.add_argument('--draw_svg', default=True,
                        help='Bool for whether svg files should be drawn (default: True)')
+    parser.add_argument('--num_pcs', default=-1,
+                       help='Number of path conditions which should be produced by this test (default: -1)')
+
 
     args = parser.parse_args()
 
