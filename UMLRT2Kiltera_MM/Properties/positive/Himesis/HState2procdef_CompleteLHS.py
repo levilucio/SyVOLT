@@ -34,8 +34,8 @@ a.""")
 
 return True
 """
-        self["name"] = """state2procdef_Complete"""
-        self["GUID__"] = UUID('9ab18bf7-6c71-4c2c-96f9-229a745d93c2')
+        self["name"] = """"""
+        self["GUID__"] = UUID('b71d84f3-4e5a-4674-b53c-ded8b4808bec')
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
@@ -44,7 +44,7 @@ return True
 .""")
         self.vs[0]["mm__"] = """MT_pre__trace_link"""
         self.vs[0]["MT_dirty__"] = False
-        self.vs[0]["GUID__"] = UUID('572b7bf5-eff7-4070-b460-72597e147b5d')
+        self.vs[0]["GUID__"] = UUID('a8acae0f-379f-4d97-9098-888256606bbe')
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_pre__classtype"] = """
 #===============================================================================
@@ -89,7 +89,7 @@ a.""")
 
 return True
 """
-        self.vs[1]["GUID__"] = UUID('b6db3d8f-387b-4361-9383-f4a13cb51cd5')
+        self.vs[1]["GUID__"] = UUID('98b92ba8-faaa-495f-ad57-99d9fc0513ad')
         self.vs[2]["MT_subtypeMatching__"] = False
         self.vs[2]["MT_pre__classtype"] = """
 #===============================================================================
@@ -132,7 +132,7 @@ return True
 
 return True
 """
-        self.vs[2]["GUID__"] = UUID('7ea5d030-6a59-4caa-b2b0-2e4a30201fc1')
+        self.vs[2]["GUID__"] = UUID('f05fc35b-333d-40a0-ab10-fdc69ce15618')
 
     def eval_classtype2(self, attr_value, this):
         

@@ -136,7 +136,7 @@ class Test(unittest.TestCase):
         s.print_path_conditions_file()
         atprop=AtomicStateProperty(HState2procdef_IsolatedLHS(),HState2procdef_IsolatedLHS(), HState2procdef_CompleteLHS())
         atprop2=AtomicStateProperty(HExitpoint2procdefparTrue_IsolatedLHS(),HExitpoint2procdefparTrue_ConnectedLHS(),HExitpoint2procdefparTrue_CompleteLHS())
-        finalresult=StateProperty.verifyCompositeStateProperty(s, atprop2)
+        finalresult=StateProperty.verifyCompositeStateProperty(s, atprop)
         print ('finalresult : ')
         print (finalresult)
 # 

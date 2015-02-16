@@ -35,7 +35,7 @@ a.""")
 return True
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('b67eb5b5-712c-4bc2-8dcd-d566b2c4649f')
+        self["GUID__"] = UUID('1d59bfb3-c4b1-4b86-95d9-2210767e81e8')
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
@@ -80,7 +80,7 @@ return True
 
 return True
 """
-        self.vs[0]["GUID__"] = UUID('5624df27-ee44-4b57-a2b7-f23ea2b919ee')
+        self.vs[0]["GUID__"] = UUID('6b7b52d5-e365-413a-acd3-8d9a4101248b')
 
     def eval_classtype1(self, attr_value, this):
         
