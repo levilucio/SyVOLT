@@ -122,10 +122,10 @@ from police_station_transformation.property.run1.negative.HF2FFComplete_run1LHS 
 from GM2AUTOSAR_MM.traceability_construction.Himesis.HBuildTraceabilityForRuleLHS import HBuildTraceabilityForRuleLHS
 from GM2AUTOSAR_MM.traceability_construction.Himesis.HBuildTraceabilityForRuleRHS import HBuildTraceabilityForRuleRHS
 
-class Test(unittest.TestCase):
+class Test():
 
-    def setUp(self):
-        pyramify = PyRamify()
+    def setUp(self, args):
+        pyramify = PyRamify(draw_svg=args.draw_svg)
         
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
@@ -222,7 +222,7 @@ class Test(unittest.TestCase):
 #             print("No")
 
     
-    def test_correct_police_station(self):
+    def test_correct_police_station(self, args):
 
         pre_metamodel = ["MT_pre__PoliceStationMM", "MoTifRule"]
         post_metamodel = ["MT_post__PoliceStationMM", "MoTifRule"]
@@ -234,7 +234,7 @@ class Test(unittest.TestCase):
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_source, subclasses_target)
  
         s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, \
-                                   self.matchRulePatterns, 2)
+                                   self.matchRulePatterns, 2, draw_svg=args.draw_svg, run_tests=args.run_tests)
  
         ts0 = time.time()
         s.build_path_conditions()
@@ -259,6 +259,11 @@ class Test(unittest.TestCase):
         print("Time to build the set of path conditions: " + str(ts1 - ts0))
         print("Size of the set of path conditions: " + str(sys.getsizeof(s.pathConditionSet[0])))
         print("Number of path conditions: " + str(len(s.pathConditionSet)))
+
+        #check if the correct number of path conditions were produced
+        if not int(args.num_pcs) == -1 and not int(args.num_pcs) == len(s.pathConditionSet):
+            raise Exception("The number of produced path conditions is incorrect.\n" + args.num_pcs + " were expected, but " + str(len(s.pathConditionSet)) + " were produced.")
+
 #         print
 #         '\n'
 #         print
@@ -387,6 +392,21 @@ class Test(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.test']
-    unittest.main()
+    import argparse
+
+    parser = argparse.ArgumentParser(description='Run the police station with attributes test # 2.')
+    parser.add_argument('--run_tests', type=bool, default = True,
+                       help='Bool for whether extra testing should be performed (default: True)')
+    parser.add_argument('--draw_svg', default=True,
+                       help='Bool for whether svg files should be drawn (default: True)')
+    parser.add_argument('--num_pcs', default=-1,
+                       help='Number of path conditions which should be produced by this test (default: -1)')
+
+
+    args = parser.parse_args()
+
+
+    ps2 = Test()
+    ps2.setUp(args)
+    ps2.test_correct_police_station(args)
 

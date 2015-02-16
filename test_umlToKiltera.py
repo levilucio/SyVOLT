@@ -46,18 +46,18 @@ from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2trans2exitptTrue_Isolat
 from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2trans2exitptTrue_ConnectedLHS import HState2trans2exitptTrue_ConnectedLHS
 from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2trans2exitptTrue_CompleteLHS import HState2trans2exitptTrue_CompleteLHS
 
-class Test(unittest.TestCase):
+class Test():
 
-    def setUp(self):
-        pyramify = PyRamify()
+    def setUp(self, args):
+        pyramify = PyRamify(draw_svg=args.draw_svg)
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
             pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation/Himesis/")
 
-        print("Rules: " + str(self.rules.keys()))
+        #print("Rules: " + str(self.rules.keys()))
 
 
-    def test_correct_uml2kiltera(self):
+    def test_correct_uml2kiltera(self,args):
 
 #'HMapHeirarchyOfStates2HeirarchyOfProcs':  'HTransition2QInstSIBLING': < 'HState2HProcDef': 'HCompositeState2ProcDef':  'HTransition2ListenBranch':  'HExitPoint2BProcDef_WhetherOrNotExitPtHasOutgoingTrans':  'HBasicStateNoOutgoing2ProcDef':  'HBasicState2ProcDef': , 'HState2ProcDef'
 
@@ -92,13 +92,11 @@ class Test(unittest.TestCase):
         e3 = self.rules['HTransition2HListenBranch']
         e4 = self.rules['HConnectOPxState2CProcDefxTransition2InstxOtherInTransitions']
         f1 = self.rules['HMapHeirarchyOfStates2HeirarchyOfProcs']
-            
-        #transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
 
-        
-        transformation = [[a1], [b1,b2,b3], [c1,c3]]
-        
-        #transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
+        #get the expected num from the args
+        #TODO: Change this number if you are modifying the transformation at all
+        expected_num_pcs = args.num_pcs
+        transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
           
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
         post_metamodel = ["MT_post__UMLRT2Kiltera_MM", "MoTifRule"]
@@ -118,7 +116,7 @@ class Test(unittest.TestCase):
    
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_source, subclasses_target)
 
-        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, 2)# 
+        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, 2, draw_svg=args.draw_svg, run_tests=args.run_tests)#
    
         ts0 = time.time()
         s.build_path_conditions()
@@ -127,6 +125,11 @@ class Test(unittest.TestCase):
         print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
 #        print("Size of the set of path conditions: " + str(float(sys.getsizeof(s.pathConditionSet) / 1024)))
         print("Number of path conditions: " + str(len(s.pathConditionSet)))
+
+        #check if the correct number of path conditions were produced
+        if not int(expected_num_pcs) == -1 and not int(expected_num_pcs) == len(s.pathConditionSet):
+            raise Exception("The number of produced path conditions is incorrect.\n" + args.num_pcs + " were expected, but " + str(len(s.pathConditionSet)) + " were produced.")
+
 # # #         print
 # # #         '\n'
 # # #         print
@@ -273,6 +276,22 @@ class Test(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.test']
-    unittest.main()
+    import argparse
+
+    parser = argparse.ArgumentParser(description='Run the uml to kiltera test.')
+    parser.add_argument('--run_tests', type=bool, default = True,
+                       help='Bool for whether extra testing should be performed (default: True)')
+    parser.add_argument('--draw_svg', default=True,
+                       help='Bool for whether svg files should be drawn (default: True)')
+    parser.add_argument('--num_pcs', default=-1,
+                       help='Number of path conditions which should be produced by this test (default: -1)')
+
+
+    args = parser.parse_args()
+
+
+    uml2kiltera = Test()
+    uml2kiltera.setUp(args)
+    uml2kiltera.test_correct_uml2kiltera(args)
+
     

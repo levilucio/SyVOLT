@@ -164,7 +164,16 @@ class PathConditionGenerator():
 #                 rule = p.graph
 #                 print(rule.name)
 #                 print(rule)
-#         
+#
+
+        print('Transformation:')
+        for layer in range(len(self.transformation)):
+           print('Layer ' + str(layer))
+           for rule in self.transformation[layer]:
+               print(rule.name)
+           print('\n')
+
+
         # merge rules of the same layer that share common match patterns over those match patterns   
         for layer in range(0,len(self.transformation)):
             # loop until all the rules in the layer have been treated
@@ -232,12 +241,7 @@ class PathConditionGenerator():
                 self.transformation[layer] = [rule for rule in self.transformation[layer] if rule not in markedForRemoval]               
             # the layer has been treated and can be put back into the transformation               
             self.transformation[layer] = merged_layer
-#             
-#        print 'Transformation:'
-#        for layer in range(0,len(self.transformation)):
-#            print 'Layer ' + str(layer)
-#            for rule in self.transformation[layer]:
-#                print rule
+
 #
 #        print '\nRules:'
 #        print self.rules
