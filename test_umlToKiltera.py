@@ -35,6 +35,9 @@ from PropertyVerification.BACKUP_atomic_state_property import BKUPAtomicStatePro
 
 from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2procdef_IsolatedLHS import HState2procdef_IsolatedLHS
 from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2procdef_CompleteLHS import HState2procdef_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrue_IsolatedLHS import HExitpoint2procdefparTrue_IsolatedLHS
+from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrue_ConnectedLHS import HExitpoint2procdefparTrue_ConnectedLHS
+from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrue_CompleteLHS import HExitpoint2procdefparTrue_CompleteLHS
 
 class Test(unittest.TestCase):
 
@@ -132,7 +135,8 @@ class Test(unittest.TestCase):
          
         s.print_path_conditions_file()
         atprop=AtomicStateProperty(HState2procdef_IsolatedLHS(),HState2procdef_IsolatedLHS(), HState2procdef_CompleteLHS())
-        finalresult=StateProperty.verifyCompositeStateProperty(s, atprop)
+        atprop2=AtomicStateProperty(HExitpoint2procdefparTrue_IsolatedLHS(),HExitpoint2procdefparTrue_ConnectedLHS(),HExitpoint2procdefparTrue_CompleteLHS())
+        finalresult=StateProperty.verifyCompositeStateProperty(s, atprop2)
         print ('finalresult : ')
         print (finalresult)
 # 
