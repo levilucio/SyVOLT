@@ -142,7 +142,7 @@ class Test(unittest.TestCase):
         exitpt2procdefparprop_withattr=AtomicStateProperty(HExitpoint2procdefparTrue_IsolatedLHS(),HExitpoint2procdefparTrue_ConnectedLHS(),HExitpoint2procdefparTrue_CompleteLHS())
         exitpt2procdefparprop_noattr=AtomicStateProperty(HExitpoint2procdefparTrueNOATTR_IsolatedLHS(),HExitpoint2procdefparTrueNOATTR_ConnectedLHS(),HExitpoint2procdefparTrueNOATTR_CompleteLHS())
         atpropneg=AtomicStateProperty(HState2procdef_IsolatedLHS(), HState2procdef_IsolatedLHS(), HState2funcdefNEG_CompleteLHS())
-        finalresult=StateProperty.verifyCompositeStateProperty(s, exitpt2procdefparprop_noattr)
+        finalresult=StateProperty.verifyCompositeStateProperty(s, exitpt2procdefparprop_withattr)
         print ('finalresult : ')
         print (finalresult)
 # 
