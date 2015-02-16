@@ -38,6 +38,9 @@ from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2procdef_CompleteLHS imp
 from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrue_IsolatedLHS import HExitpoint2procdefparTrue_IsolatedLHS
 from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrue_ConnectedLHS import HExitpoint2procdefparTrue_ConnectedLHS
 from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrue_CompleteLHS import HExitpoint2procdefparTrue_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrueNOATTR_IsolatedLHS import HExitpoint2procdefparTrueNOATTR_IsolatedLHS
+from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrueNOATTR_ConnectedLHS import HExitpoint2procdefparTrueNOATTR_ConnectedLHS
+from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrueNOATTR_CompleteLHS import HExitpoint2procdefparTrueNOATTR_CompleteLHS
 from UMLRT2Kiltera_MM.Properties.negative.Himesis.HState2funcdefNEG_CompleteLHS import HState2funcdefNEG_CompleteLHS
 
 class Test(unittest.TestCase):
@@ -136,9 +139,10 @@ class Test(unittest.TestCase):
          
         s.print_path_conditions_file()
         atprop=AtomicStateProperty(HState2procdef_IsolatedLHS(),HState2procdef_IsolatedLHS(), HState2procdef_CompleteLHS())
-        atprop2=AtomicStateProperty(HExitpoint2procdefparTrue_IsolatedLHS(),HExitpoint2procdefparTrue_ConnectedLHS(),HExitpoint2procdefparTrue_CompleteLHS())
+        exitpt2procdefparprop_withattr=AtomicStateProperty(HExitpoint2procdefparTrue_IsolatedLHS(),HExitpoint2procdefparTrue_ConnectedLHS(),HExitpoint2procdefparTrue_CompleteLHS())
+        exitpt2procdefparprop_noattr=AtomicStateProperty(HExitpoint2procdefparTrueNOATTR_IsolatedLHS(),HExitpoint2procdefparTrueNOATTR_ConnectedLHS(),HExitpoint2procdefparTrueNOATTR_CompleteLHS())
         atpropneg=AtomicStateProperty(HState2procdef_IsolatedLHS(), HState2procdef_IsolatedLHS(), HState2funcdefNEG_CompleteLHS())
-        finalresult=StateProperty.verifyCompositeStateProperty(s, atpropneg)
+        finalresult=StateProperty.verifyCompositeStateProperty(s, exitpt2procdefparprop_noattr)
         print ('finalresult : ')
         print (finalresult)
 # 
