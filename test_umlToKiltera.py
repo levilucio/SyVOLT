@@ -33,7 +33,8 @@ from PropertyVerification.Or import Or #StateSpace Prop
 from PropertyVerification.BACKUP_atomic_state_property import BKUPAtomicStateProperty
 #from lib2to3.fixer_util import p1
 
-
+from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2procdef_IsolatedLHS import HState2procdef_IsolatedLHS
+from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2procdef_CompleteLHS import HState2procdef_CompleteLHS
 
 class Test(unittest.TestCase):
 
@@ -85,9 +86,9 @@ class Test(unittest.TestCase):
         #transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
 
         
-        #transformation = [[a1], [b1,b2,b3], [c1]]
+        transformation = [[a1], [b1,b2,b3], [c1,c3]]
         
-        transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
+        #transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
           
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
         post_metamodel = ["MT_post__UMLRT2Kiltera_MM", "MoTifRule"]
@@ -129,8 +130,11 @@ class Test(unittest.TestCase):
         print("printing path conditions")
         s.print_path_conditions_screen()
          
-#        s.print_path_conditions_file()
-
+        s.print_path_conditions_file()
+        atprop=AtomicStateProperty(HState2procdef_IsolatedLHS(),HState2procdef_IsolatedLHS(), HState2procdef_CompleteLHS())
+        finalresult=StateProperty.verifyCompositeStateProperty(s, atprop)
+        print ('finalresult : ')
+        print (finalresult)
 # 
 #         print("printing states")
 #         self._print_states(s)
