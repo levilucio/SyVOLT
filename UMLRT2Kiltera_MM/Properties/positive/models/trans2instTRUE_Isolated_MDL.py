@@ -3,7 +3,7 @@ __trans2instTRUE_Isolated_MDL.py________________________________________________
 
 Automatically generated AToM3 Model File (Do not modify directly)
 Author: gehan
-Modified: Tue Feb 17 14:39:20 2015
+Modified: Tue Feb 17 16:20:26 2015
 _____________________________________________________________________________________
 """
 from stickylink import *
@@ -11,11 +11,9 @@ from widthXfillXdecoration import *
 from LHS import *
 from MT_pre__State import *
 from MT_pre__SIBLING0 import *
-from MT_pre__directLink_S import *
 from MT_pre__Transition import *
 from graph_MT_pre__SIBLING0 import *
 from graph_MT_pre__State import *
-from graph_MT_pre__directLink_S import *
 from graph_MT_pre__Transition import *
 from graph_LHS import *
 from ATOM3Enum import *
@@ -66,271 +64,187 @@ def trans2instTRUE_Isolated_MDL(self, rootNode, MT_pre__UMLRT2Kiltera_MMRootNode
     # --- ASG attributes over ---
 
 
-    self.obj123=LHS(self)
-    self.obj123.isGraphObjectVisual = True
+    self.obj42180=LHS(self)
+    self.obj42180.isGraphObjectVisual = True
 
-    if(hasattr(self.obj123, '_setHierarchicalLink')):
-      self.obj123._setHierarchicalLink(False)
+    if(hasattr(self.obj42180, '_setHierarchicalLink')):
+      self.obj42180._setHierarchicalLink(False)
 
     # constraint
-    self.obj123.constraint.setValue('#===============================================================================\n# This code is executed after the nodes in the LHS have been matched.\n# You can access a matched node labelled n by: PreNode(\'n\').\n# To access attribute x of node n, use: PreNode(\'n\')[\'x\'].\n# The given constraint must evaluate to a boolean expression:\n#    returning True enables the rule to be applied,\n#    returning False forbids the rule from being applied.\n#===============================================================================\n\nreturn True\n')
-    self.obj123.constraint.setHeight(15)
+    self.obj42180.constraint.setValue('#===============================================================================\n# This code is executed after the nodes in the LHS have been matched.\n# You can access a matched node labelled n by: PreNode(\'n\').\n# To access attribute x of node n, use: PreNode(\'n\')[\'x\'].\n# The given constraint must evaluate to a boolean expression:\n#    returning True enables the rule to be applied,\n#    returning False forbids the rule from being applied.\n#===============================================================================\n\nreturn True\n')
+    self.obj42180.constraint.setHeight(15)
 
-    self.obj123.graphClass_= graph_LHS
+    self.obj42180.graphClass_= graph_LHS
     if self.genGraphics:
-       new_obj = graph_LHS(20.0,40.0,self.obj123)
+       new_obj = graph_LHS(20.0,40.0,self.obj42180)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("LHS", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
        new_obj.layConstraints['scale'] = [1.0, 1.0]
     else: new_obj = None
-    self.obj123.graphObject_ = new_obj
+    self.obj42180.graphObject_ = new_obj
 
     # Add node to the root: rootNode
-    rootNode.addNode(self.obj123)
-    self.globalAndLocalPostcondition(self.obj123, rootNode)
-    self.obj123.postAction( rootNode.CREATE )
+    rootNode.addNode(self.obj42180)
+    self.globalAndLocalPostcondition(self.obj42180, rootNode)
+    self.obj42180.postAction( rootNode.CREATE )
 
-    self.obj10634=MT_pre__State(self)
-    self.obj10634.isGraphObjectVisual = True
+    self.obj42181=MT_pre__State(self)
+    self.obj42181.isGraphObjectVisual = True
 
-    if(hasattr(self.obj10634, '_setHierarchicalLink')):
-      self.obj10634._setHierarchicalLink(False)
+    if(hasattr(self.obj42181, '_setHierarchicalLink')):
+      self.obj42181._setHierarchicalLink(False)
 
     # MT_pivotOut__
-    self.obj10634.MT_pivotOut__.setValue('')
-    self.obj10634.MT_pivotOut__.setNone()
+    self.obj42181.MT_pivotOut__.setValue('')
+    self.obj42181.MT_pivotOut__.setNone()
 
     # MT_subtypeMatching__
-    self.obj10634.MT_subtypeMatching__.setValue(('True', 0))
-    self.obj10634.MT_subtypeMatching__.config = 0
+    self.obj42181.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj42181.MT_subtypeMatching__.config = 0
 
     # MT_pre__classtype
-    self.obj10634.MT_pre__classtype.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
-    self.obj10634.MT_pre__classtype.setHeight(15)
+    self.obj42181.MT_pre__classtype.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
+    self.obj42181.MT_pre__classtype.setHeight(15)
 
     # MT_pivotIn__
-    self.obj10634.MT_pivotIn__.setValue('')
-    self.obj10634.MT_pivotIn__.setNone()
+    self.obj42181.MT_pivotIn__.setValue('')
+    self.obj42181.MT_pivotIn__.setNone()
 
     # MT_label__
-    self.obj10634.MT_label__.setValue('2')
+    self.obj42181.MT_label__.setValue('2')
 
     # MT_pre__cardinality
-    self.obj10634.MT_pre__cardinality.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
-    self.obj10634.MT_pre__cardinality.setHeight(15)
+    self.obj42181.MT_pre__cardinality.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
+    self.obj42181.MT_pre__cardinality.setHeight(15)
 
     # MT_pre__name
-    self.obj10634.MT_pre__name.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
-    self.obj10634.MT_pre__name.setHeight(15)
+    self.obj42181.MT_pre__name.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
+    self.obj42181.MT_pre__name.setHeight(15)
 
-    self.obj10634.graphClass_= graph_MT_pre__State
+    self.obj42181.graphClass_= graph_MT_pre__State
     if self.genGraphics:
-       new_obj = graph_MT_pre__State(40.0,80.0,self.obj10634)
+       new_obj = graph_MT_pre__State(40.0,80.0,self.obj42181)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("MT_pre__State", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
        new_obj.layConstraints['scale'] = [1.0, 1.0]
     else: new_obj = None
-    self.obj10634.graphObject_ = new_obj
+    self.obj42181.graphObject_ = new_obj
 
     # Add node to the root: rootNode
-    rootNode.addNode(self.obj10634)
-    self.globalAndLocalPostcondition(self.obj10634, rootNode)
-    self.obj10634.postAction( rootNode.CREATE )
+    rootNode.addNode(self.obj42181)
+    self.globalAndLocalPostcondition(self.obj42181, rootNode)
+    self.obj42181.postAction( rootNode.CREATE )
 
-    self.obj10636=MT_pre__SIBLING0(self)
-    self.obj10636.isGraphObjectVisual = True
+    self.obj42187=MT_pre__SIBLING0(self)
+    self.obj42187.isGraphObjectVisual = True
 
-    if(hasattr(self.obj10636, '_setHierarchicalLink')):
-      self.obj10636._setHierarchicalLink(False)
+    if(hasattr(self.obj42187, '_setHierarchicalLink')):
+      self.obj42187._setHierarchicalLink(False)
 
     # MT_label__
-    self.obj10636.MT_label__.setValue('4')
+    self.obj42187.MT_label__.setValue('4')
 
     # MT_pivotOut__
-    self.obj10636.MT_pivotOut__.setValue('')
-    self.obj10636.MT_pivotOut__.setNone()
+    self.obj42187.MT_pivotOut__.setValue('')
+    self.obj42187.MT_pivotOut__.setNone()
 
     # MT_subtypeMatching__
-    self.obj10636.MT_subtypeMatching__.setValue(('True', 0))
-    self.obj10636.MT_subtypeMatching__.config = 0
+    self.obj42187.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj42187.MT_subtypeMatching__.config = 0
 
     # MT_pre__classtype
-    self.obj10636.MT_pre__classtype.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
-    self.obj10636.MT_pre__classtype.setHeight(15)
+    self.obj42187.MT_pre__classtype.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
+    self.obj42187.MT_pre__classtype.setHeight(15)
 
     # MT_pre__cardinality
-    self.obj10636.MT_pre__cardinality.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
-    self.obj10636.MT_pre__cardinality.setHeight(15)
+    self.obj42187.MT_pre__cardinality.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
+    self.obj42187.MT_pre__cardinality.setHeight(15)
 
     # MT_pre__name
-    self.obj10636.MT_pre__name.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
-    self.obj10636.MT_pre__name.setHeight(15)
+    self.obj42187.MT_pre__name.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
+    self.obj42187.MT_pre__name.setHeight(15)
 
     # MT_pivotIn__
-    self.obj10636.MT_pivotIn__.setValue('')
-    self.obj10636.MT_pivotIn__.setNone()
+    self.obj42187.MT_pivotIn__.setValue('')
+    self.obj42187.MT_pivotIn__.setNone()
 
-    self.obj10636.graphClass_= graph_MT_pre__SIBLING0
+    self.obj42187.graphClass_= graph_MT_pre__SIBLING0
     if self.genGraphics:
-       new_obj = graph_MT_pre__SIBLING0(240.0,120.0,self.obj10636)
+       new_obj = graph_MT_pre__SIBLING0(240.0,140.0,self.obj42187)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("MT_pre__SIBLING0", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
        new_obj.layConstraints['scale'] = [1.0, 1.0]
     else: new_obj = None
-    self.obj10636.graphObject_ = new_obj
+    self.obj42187.graphObject_ = new_obj
 
     # Add node to the root: rootNode
-    rootNode.addNode(self.obj10636)
-    self.globalAndLocalPostcondition(self.obj10636, rootNode)
-    self.obj10636.postAction( rootNode.CREATE )
+    rootNode.addNode(self.obj42187)
+    self.globalAndLocalPostcondition(self.obj42187, rootNode)
+    self.obj42187.postAction( rootNode.CREATE )
 
-    self.obj10635=MT_pre__directLink_S(self)
-    self.obj10635.isGraphObjectVisual = True
+    self.obj42186=MT_pre__Transition(self)
+    self.obj42186.isGraphObjectVisual = True
 
-    if(hasattr(self.obj10635, '_setHierarchicalLink')):
-      self.obj10635._setHierarchicalLink(False)
-
-    # MT_label__
-    self.obj10635.MT_label__.setValue('3')
+    if(hasattr(self.obj42186, '_setHierarchicalLink')):
+      self.obj42186._setHierarchicalLink(False)
 
     # MT_pivotOut__
-    self.obj10635.MT_pivotOut__.setValue('')
-    self.obj10635.MT_pivotOut__.setNone()
+    self.obj42186.MT_pivotOut__.setValue('')
+    self.obj42186.MT_pivotOut__.setNone()
 
     # MT_subtypeMatching__
-    self.obj10635.MT_subtypeMatching__.setValue(('True', 0))
-    self.obj10635.MT_subtypeMatching__.config = 0
-
-    # MT_pivotIn__
-    self.obj10635.MT_pivotIn__.setValue('')
-    self.obj10635.MT_pivotIn__.setNone()
-
-    # MT_pre__associationType
-    self.obj10635.MT_pre__associationType.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
-    self.obj10635.MT_pre__associationType.setHeight(15)
-
-    self.obj10635.graphClass_= graph_MT_pre__directLink_S
-    if self.genGraphics:
-       new_obj = graph_MT_pre__directLink_S(277.0,245.0,self.obj10635)
-       new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("MT_pre__directLink_S", new_obj.tag)
-       new_obj.layConstraints = dict() # Graphical Layout Constraints 
-    else: new_obj = None
-    self.obj10635.graphObject_ = new_obj
-
-    # Add node to the root: rootNode
-    rootNode.addNode(self.obj10635)
-    self.globalAndLocalPostcondition(self.obj10635, rootNode)
-    self.obj10635.postAction( rootNode.CREATE )
-
-    self.obj10637=MT_pre__directLink_S(self)
-    self.obj10637.isGraphObjectVisual = True
-
-    if(hasattr(self.obj10637, '_setHierarchicalLink')):
-      self.obj10637._setHierarchicalLink(False)
-
-    # MT_label__
-    self.obj10637.MT_label__.setValue('5')
-
-    # MT_pivotOut__
-    self.obj10637.MT_pivotOut__.setValue('')
-    self.obj10637.MT_pivotOut__.setNone()
-
-    # MT_subtypeMatching__
-    self.obj10637.MT_subtypeMatching__.setValue(('True', 0))
-    self.obj10637.MT_subtypeMatching__.config = 0
-
-    # MT_pivotIn__
-    self.obj10637.MT_pivotIn__.setValue('')
-    self.obj10637.MT_pivotIn__.setNone()
-
-    # MT_pre__associationType
-    self.obj10637.MT_pre__associationType.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
-    self.obj10637.MT_pre__associationType.setHeight(15)
-
-    self.obj10637.graphClass_= graph_MT_pre__directLink_S
-    if self.genGraphics:
-       new_obj = graph_MT_pre__directLink_S(377.0,265.0,self.obj10637)
-       new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("MT_pre__directLink_S", new_obj.tag)
-       new_obj.layConstraints = dict() # Graphical Layout Constraints 
-    else: new_obj = None
-    self.obj10637.graphObject_ = new_obj
-
-    # Add node to the root: rootNode
-    rootNode.addNode(self.obj10637)
-    self.globalAndLocalPostcondition(self.obj10637, rootNode)
-    self.obj10637.postAction( rootNode.CREATE )
-
-    self.obj124=MT_pre__Transition(self)
-    self.obj124.isGraphObjectVisual = True
-
-    if(hasattr(self.obj124, '_setHierarchicalLink')):
-      self.obj124._setHierarchicalLink(False)
-
-    # MT_pivotOut__
-    self.obj124.MT_pivotOut__.setValue('')
-    self.obj124.MT_pivotOut__.setNone()
-
-    # MT_subtypeMatching__
-    self.obj124.MT_subtypeMatching__.setValue(('True', 0))
-    self.obj124.MT_subtypeMatching__.config = 0
+    self.obj42186.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj42186.MT_subtypeMatching__.config = 0
 
     # MT_pre__classtype
-    self.obj124.MT_pre__classtype.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
-    self.obj124.MT_pre__classtype.setHeight(15)
+    self.obj42186.MT_pre__classtype.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
+    self.obj42186.MT_pre__classtype.setHeight(15)
 
     # MT_pivotIn__
-    self.obj124.MT_pivotIn__.setValue('')
-    self.obj124.MT_pivotIn__.setNone()
+    self.obj42186.MT_pivotIn__.setValue('')
+    self.obj42186.MT_pivotIn__.setNone()
 
     # MT_label__
-    self.obj124.MT_label__.setValue('1')
+    self.obj42186.MT_label__.setValue('3')
 
     # MT_pre__cardinality
-    self.obj124.MT_pre__cardinality.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
-    self.obj124.MT_pre__cardinality.setHeight(15)
+    self.obj42186.MT_pre__cardinality.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
+    self.obj42186.MT_pre__cardinality.setHeight(15)
 
     # MT_pre__name
-    self.obj124.MT_pre__name.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
-    self.obj124.MT_pre__name.setHeight(15)
+    self.obj42186.MT_pre__name.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n')
+    self.obj42186.MT_pre__name.setHeight(15)
 
-    self.obj124.graphClass_= graph_MT_pre__Transition
+    self.obj42186.graphClass_= graph_MT_pre__Transition
     if self.genGraphics:
-       new_obj = graph_MT_pre__Transition(120.0,260.0,self.obj124)
+       new_obj = graph_MT_pre__Transition(100.0,260.0,self.obj42186)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("MT_pre__Transition", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
        new_obj.layConstraints['scale'] = [1.0, 1.0]
     else: new_obj = None
-    self.obj124.graphObject_ = new_obj
+    self.obj42186.graphObject_ = new_obj
 
     # Add node to the root: rootNode
-    rootNode.addNode(self.obj124)
-    self.globalAndLocalPostcondition(self.obj124, rootNode)
-    self.obj124.postAction( rootNode.CREATE )
+    rootNode.addNode(self.obj42186)
+    self.globalAndLocalPostcondition(self.obj42186, rootNode)
+    self.obj42186.postAction( rootNode.CREATE )
 
-    # Connections for obj123 (graphObject_: Obj0) of type LHS
+    # Connections for obj42180 (graphObject_: Obj17) of type LHS
     self.drawConnections(
  )
-    # Connections for obj10634 (graphObject_: Obj3) of type MT_pre__State
-    self.drawConnections(
-(self.obj10634,self.obj10635,[237.0, 155.0, 277.0, 245.0],"true", 2) )
-    # Connections for obj10636 (graphObject_: Obj5) of type MT_pre__SIBLING0
+    # Connections for obj42181 (graphObject_: Obj18) of type MT_pre__State
     self.drawConnections(
  )
-    # Connections for obj10635 (graphObject_: Obj4) of type MT_pre__directLink_S
+    # Connections for obj42187 (graphObject_: Obj24) of type MT_pre__SIBLING0
     self.drawConnections(
-(self.obj10635,self.obj124,[277.0, 245.0, 317.0, 335.0],"true", 2) )
-    # Connections for obj10637 (graphObject_: Obj6) of type MT_pre__directLink_S
+ )
+    # Connections for obj42186 (graphObject_: Obj23) of type MT_pre__Transition
     self.drawConnections(
-(self.obj10637,self.obj10636,[377.0, 265.0, 437.0, 195.0],"true", 2) )
-    # Connections for obj124 (graphObject_: Obj1) of type MT_pre__Transition
-    self.drawConnections(
-(self.obj124,self.obj10637,[317.0, 335.0, 377.0, 265.0],"true", 2) )
+ )
 
 newfunction = trans2instTRUE_Isolated_MDL
 
