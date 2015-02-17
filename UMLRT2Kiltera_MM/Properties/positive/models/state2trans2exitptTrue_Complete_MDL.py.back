@@ -3,7 +3,7 @@ __state2trans2exitptTrue_Complete_MDL.py________________________________________
 
 Automatically generated AToM3 Model File (Do not modify directly)
 Author: gehan
-Modified: Mon Feb 16 19:03:02 2015
+Modified: Mon Feb 16 19:21:04 2015
 _____________________________________________________________________________________________
 """
 from stickylink import *
@@ -468,7 +468,7 @@ def state2trans2exitptTrue_Complete_MDL(self, rootNode, MT_pre__UMLRT2Kiltera_MM
     self.obj21183.MT_pivotIn__.setNone()
 
     # MT_pre__associationType
-    self.obj21183.MT_pre__associationType.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn attr_value==\'initialTransition\'\n')
+    self.obj21183.MT_pre__associationType.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn true\n')
     self.obj21183.MT_pre__associationType.setHeight(15)
 
     self.obj21183.graphClass_= graph_MT_pre__directLink_S
