@@ -35,7 +35,7 @@ a.""")
 return True
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('4d84fccf-7be4-4f08-8ddc-db9be34473e6')
+        self["GUID__"] = UUID('ab12d55f-2022-4877-bec9-c361b125ffe9')
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
@@ -80,7 +80,7 @@ return True
 
 return True
 """
-        self.vs[0]["GUID__"] = UUID('271abce1-908b-4f88-897e-197d343c2251')
+        self.vs[0]["GUID__"] = UUID('a95b343e-988f-4b45-a2c2-8ccf195d9465')
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_pre__classtype"] = """
 #===============================================================================
@@ -123,7 +123,7 @@ return True
 
 return True
 """
-        self.vs[1]["GUID__"] = UUID('807a4c4c-e171-4f40-94b1-319bda4bb263')
+        self.vs[1]["GUID__"] = UUID('ba1745bd-ec69-4f9f-a91c-3d0bc9d7dce8')
         self.vs[2]["MT_subtypeMatching__"] = False
         self.vs[2]["MT_pre__classtype"] = """
 #===============================================================================
@@ -166,7 +166,7 @@ return True
 
 return True
 """
-        self.vs[2]["GUID__"] = UUID('abf20c1e-dc53-4d18-9de9-96b580491084')
+        self.vs[2]["GUID__"] = UUID('107f768b-64eb-4e50-b469-a1d0c1f96093')
         self.vs[3]["MT_subtypeMatching__"] = False
         self.vs[3]["MT_pre__associationType"] = pickle.loads("""V\u000a#===============================================================================\u000a# This code is executed when evaluating if a node shall be matched by this rule.\u000a# You can access the value of the current node's attribute value by: attr_value.\u000a# You can access any attribute x of this node by: this['x'].\u000a# If the constraint relies on attribute values from other nodes,\u000a# use the LHS/NAC constraint instead.\u000a# The given constraint must evaluate to a boolean expression.\u000a#===============================================================================\u000a\u000areturn True\u000a
 p1
@@ -176,7 +176,7 @@ p1
 .""")
         self.vs[3]["MT_dirty__"] = False
         self.vs[3]["mm__"] = """MT_pre__directLink_S"""
-        self.vs[3]["GUID__"] = UUID('04aa0c6b-c544-428e-b7af-a8c8686ab9b4')
+        self.vs[3]["GUID__"] = UUID('5dd2607f-6f39-49e3-a9bb-0b47c0ff5461')
         self.vs[4]["MT_subtypeMatching__"] = False
         self.vs[4]["MT_pre__associationType"] = pickle.loads("""V\u000a#===============================================================================\u000a# This code is executed when evaluating if a node shall be matched by this rule.\u000a# You can access the value of the current node's attribute value by: attr_value.\u000a# You can access any attribute x of this node by: this['x'].\u000a# If the constraint relies on attribute values from other nodes,\u000a# use the LHS/NAC constraint instead.\u000a# The given constraint must evaluate to a boolean expression.\u000a#===============================================================================\u000a\u000areturn True\u000a
 p1
@@ -186,7 +186,7 @@ p1
 .""")
         self.vs[4]["MT_dirty__"] = False
         self.vs[4]["mm__"] = """MT_pre__directLink_S"""
-        self.vs[4]["GUID__"] = UUID('808c2d85-4d9c-4923-97f3-1de7cf4ee0f1')
+        self.vs[4]["GUID__"] = UUID('64a0633d-32b9-4fc0-942f-722bbb0ae549')
 
     def eval_classtype13(self, attr_value, this):
         
