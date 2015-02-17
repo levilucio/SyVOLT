@@ -96,8 +96,8 @@ class Test():
         #get the expected num from the args
         expected_num_pcs = args.num_pcs
         #TODO: Change this number if you are modifying the transformation at all
-        transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
-        #transformation=  [[a1], [b1,b2,b3], [c1,c2,c3]]
+        #transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
+        transformation=  [[a1], [b1,b2,b3], [c1,c3]]
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
         post_metamodel = ["MT_post__UMLRT2Kiltera_MM", "MoTifRule"]
         subclasses_source = ["MT_pre__OPTIONAL1,","MT_pre__PhysicalThread", "MT_pre__PortRef", "MT_pre__PackageContainer", "MT_pre__Thread", "MT_pre__OUT2", "MT_pre__BASE0",\
