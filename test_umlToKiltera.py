@@ -131,9 +131,9 @@ class Test():
         if not int(expected_num_pcs) == -1 and not int(expected_num_pcs) == len(s.pathConditionSet):
 
             #TODO: Make this an exception
-            s = "The number of produced path conditions is incorrect.\n" + args.num_pcs + " were expected, but " + str(len(s.pathConditionSet)) + " were produced."
-            print(s)
-            #raise Exception(s)
+            num_pcs_s = "The number of produced path conditions is incorrect.\n" + args.num_pcs + " were expected, but " + str(len(s.pathConditionSet)) + " were produced."
+            print(num_pcs_s)
+            #raise Exception(num_pcs_s)
 
 
 # # #         print
