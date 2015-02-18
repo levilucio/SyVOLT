@@ -235,7 +235,7 @@ class StateProperty(Property):
                     #If the curVerifResult== false, don't make this addition to the verifiedStateCaches of the atomicStateProperties - you won't be using them any more.
                     if curVerifResult==True:
                         for atomicPropIndex in range(len(AtomicStatePropsInStateProp)):
-                            if ((AtomicStatePropsInStateProp[atomicPropIndex].propFalseForAtleastOneCollapsedState==False) and (AtomicStatePropsInStateProp[atomicPropIndex].NumberOfTimesPropWasChecked==len(states_to_analyse))):
+                            if ((AtomicStatePropsInStateProp[atomicPropIndex].propFalseForAtleastOneCollapsedState==False) and (AtomicStatePropsInStateProp[atomicPropIndex].NumberOfTimesPropWasChecked==len(states_to_analyse))and (AtomicStatePropsInStateProp[atomicPropIndex].NumberOfTimesPropWasChecked==AtomicStatePropsInStateProp[atomicPropIndex].NumberOfTimesFoundMatch)):
                                 AtomicStatePropsInStateProp[atomicPropIndex].verifiedStateCache.append((state,numberOfIsolatedMatchesForAllAtomicStateProperties[atomicPropIndex]))
                                           
                 else:
@@ -253,6 +253,7 @@ class StateProperty(Property):
                     curatomicprop.resetpropFalseForAtleastOneCollapsedState()
                     curatomicprop.resetVerifResultToFalse()
                     curatomicprop.resetNumberOfTimesPropWasChecked()
+                    curatomicprop.resetNumberOfTimesFoundMatch()
                     #In AtomicStateProperty, we added "NumberOfTimesPropWasChecked" to be used when adding entries to the AtomicStateProperty's verifiedStateCache
                     #i.e., sometimes if you are verifying an AndStateProperty, if the first atomicStateProperty evaluates to False, then the second AtomicStateProperty is not evaluated at all..
                     #In that case, you cannot add an entry to the verifiedStateCache of the second AtomicStateProperty since that AtomicStateProperty was not even evaluated for all the collapsed state of that merged state...

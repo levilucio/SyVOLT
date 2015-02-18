@@ -18,6 +18,7 @@ class AtomicStateProperty(StateProperty):
     verifiedStateCache = None
     propFalseForAtleastOneCollapsedState=None
     NumberOfTimesPropWasChecked=None
+    NumberOfTimesFoundMatch=None
     #"propFalseForAtleastOneCollapsedState" is added as a flag to know whether or not the last record in an AtomiStateProperty's verifiedStateCache needs to be removed, if the atomicStateProperty's complete pattern had no match for one of the collapsed states of the current state being checked
 
     def __init__(self, isolated, connected, completeQuantified): #isolated was the first param after self
@@ -32,6 +33,7 @@ class AtomicStateProperty(StateProperty):
         self.verifiedStateCache = []
         self.propFalseForAtleastOneCollapsedState=False
         self.NumberOfTimesPropWasChecked=0
+        self.NumberOfTimesFoundMatch=0
         #In AtomicStateProperty, we added the attribute "NumberOfTimesPropWasChecked" to be used when adding entries to the AtomicStateProperty's verifiedStateCache
         #i.e., sometimes if you are verifying an AndStateProperty, if the first atomicStateProperty evaluates to False, then the second AtomicStateProperty is not evaluated at all..
         #In that case, you cannot add an entry to the verifiedStateCache of the second AtomicStateProperty since that AtomicStateProperty was not even evaluated for all the collapsed state of that merged state...
@@ -39,7 +41,13 @@ class AtomicStateProperty(StateProperty):
         
     def incrementNumberOfTimesPropWasChecked(self):
         self.NumberOfTimesPropWasChecked+=1
-                            
+             
+    def incrementNumberOfTimesFoundMatch(self):
+        self.NumberOfTimesFoundMatch+=1
+    
+    def resetNumberOfTimesFoundMatch(self):
+        self.NumberOfTimesFoundMatch=0
+                   
     def resetNumberOfTimesPropWasChecked(self):
         self.NumberOfTimesPropWasChecked=0
         
@@ -76,6 +84,7 @@ class AtomicStateProperty(StateProperty):
                 total.packet_in(s)
                 if total.is_success:
                     #self.verifiedStateCache.append((inputstate,numberOfIsolatedMatches))
+                    self.incrementNumberOfTimesFoundMatch()
                     if StateSpace.verbosity >= 1: print '        Found Apply!'
                 else:
                     if StateSpace.verbosity >= 1: print '        Could not find Apply!'
