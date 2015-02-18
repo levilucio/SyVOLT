@@ -186,6 +186,4 @@ class Disambiguator():
             for disamb_path_cond in collapse_step_result:
                 disambiguated_path_conditions.extend(self.disambiguate(disamb_path_cond))
                 
-        return disambiguated_path_conditions
-        
-                                              
+        return disambiguated_path_conditions            

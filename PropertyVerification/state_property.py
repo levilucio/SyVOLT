@@ -91,6 +91,8 @@ class StateProperty(Property):
         #for state in StateSpace.symbStateSpace:
         for state in StateSpace.pathConditionSet:
             if state != ():
+                if (state_index)==10:
+                    print ("Start debugging here")
                 #Initially, merged_state has the first rule of the the current state being examined in the SymbolicStateSpace
                 #merged_state = deepcopy(state[0])
                 merged_state = deepcopy(state)
