@@ -20,6 +20,8 @@ from PyRamify import PyRamify
 from PropertyProverTester import PropertyProverTester
 
 
+#set up cProfile
+#and the do_cprofile wrapper
 import cProfile
 import pstats
 import StringIO
@@ -38,6 +40,11 @@ def do_cprofile(func):
             ps.print_stats()
             print(s.getvalue())
     return profiled_func
+
+
+
+
+
 
 ##Backward Matchers -start
 # from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnectPPortPrototype_Back_CompositionType2ECULHS import HConnectPPortPrototype_Back_CompositionType2ECULHS
@@ -115,7 +122,25 @@ class PathConditionGenerator():
         self.attributeEquationEvaluator = SimpleAttributeEquationEvaluator(verbosity) 
 #        self.mergeInterLayerFactory = MergeInterLayerFactory(verbosity)
 
+
+        self.profile_memory = False
+
+        if self.profile_memory:
+
+            #import heapy
+            from guppy import hpy
+
+            #create the heapy object
+            self.hp = hpy()
+            self.hp.setrelheap()
+
+            print("Memory")
+            print(self.hp.heap())
+
         self._pre_process()
+
+        h = self.hp.heap()
+        print(h)
 
         self.debug()
 
@@ -169,6 +194,7 @@ class PathConditionGenerator():
             ppt.test_ruleCombinators()
 
 
+    #@do_cprofile
     def _pre_process(self):
         """
         1) Forward the cardinalities to the apply part of the rules
@@ -434,7 +460,7 @@ class PathConditionGenerator():
 #             self.transformation[layerIndex].extend(list(reversed(orderedRules)))
 
 
-
+    #@do_cprofile
     def build_path_conditions(self):     
         """
         Build the set of path conditions by combining rules of a given layer with the
@@ -697,7 +723,7 @@ class PathConditionGenerator():
             self.pathConditionSet = layerPathCondAccumulator
                 
 
-        
+    #@do_cprofile
     def _buildTraceabilityLinks(self,layer):
         """
         build traceability (for the time being apply all rules until exhaustion)
