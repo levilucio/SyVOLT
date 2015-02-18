@@ -20,6 +20,24 @@ from PyRamify import PyRamify
 from PropertyProverTester import PropertyProverTester
 
 
+import cProfile
+import pstats
+import StringIO
+def do_cprofile(func):
+    def profiled_func(*args, **kwargs):
+        profile = cProfile.Profile()
+        try:
+            profile.enable()
+            result = func(*args, **kwargs)
+            profile.disable()
+            return result
+        finally:
+            s = StringIO.StringIO()
+            sortby = 'cumulative'
+            ps = pstats.Stats(profile, stream=s).sort_stats(sortby)
+            ps.print_stats()
+            print(s.getvalue())
+    return profiled_func
 
 ##Backward Matchers -start
 # from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnectPPortPrototype_Back_CompositionType2ECULHS import HConnectPPortPrototype_Back_CompositionType2ECULHS
@@ -54,7 +72,8 @@ class PathConditionGenerator():
         - verbosity: verbosity level (0 - no verbosity / 1 - verbose / 2 - debug)                          
     """
 
-    def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, verbosity, draw_svg = True, run_tests=True):
+    #@do_cprofile
+    def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, verbosity, draw_svg = "True", run_tests="True"):
         # the empty path condition
         from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 
@@ -81,8 +100,9 @@ class PathConditionGenerator():
         self.ruleTraceCheckers = ruleTraceCheckers
         self.matchRulePatterns = matchRulePatterns
 
-        self.draw_svg = draw_svg
-        self.run_tests = run_tests
+        self.draw_svg = (draw_svg == "True")
+
+        self.run_tests = (run_tests == "True")
 
         self.ruleContainment = []
 
@@ -133,6 +153,8 @@ class PathConditionGenerator():
     def debug(self):
 
         if self.draw_svg:
+            print("Drawing svgs...")
+            print(self.draw_svg)
             self.print_transformation()
             self.print_ruleCombinators()
             self.print_ruleTraceCheckers()
@@ -388,7 +410,9 @@ class PathConditionGenerator():
 #                p = build_traceability_with_backward.packet_in(p)
                 p = self.build_traceability_for_rule.packet_in(p)
                 self.transformation[layerIndex][ruleIndex] =  p.graph
-                graph_to_dot("traced_" + self.transformation[layerIndex][ruleIndex].name , self.transformation[layerIndex][ruleIndex])
+
+                if self.draw_svg:
+                    graph_to_dot("traced_" + self.transformation[layerIndex][ruleIndex].name , self.transformation[layerIndex][ruleIndex])
 
             
 #             # auxiliary function to order the nodes recursively, starting from the top nodes
@@ -632,7 +656,8 @@ class PathConditionGenerator():
                                             
                                             # check if the equations on the attributes of the newly created path condition are satisfied
                                         
-                                            graph_to_dot("evaluating", newPathCond)
+                                            if self.draw_svg:
+                                                graph_to_dot("evaluating", newPathCond)
                                         
                                             if self.attributeEquationEvaluator(newPathCond):
                                        

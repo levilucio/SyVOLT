@@ -24,13 +24,13 @@ from itertools import combinations
     which compute the new value of the attribute.'''
 class PyRamify:
 
-    def __init__(self, verbosity = 0, draw_svg = True):
+    def __init__(self, verbosity = 0, draw_svg = "True"):
 
         #keep track of the next label to give a graph node
         self.next_label = 0
         self.verbosity = verbosity
 
-        self.draw_svg = draw_svg
+        self.draw_svg =(draw_svg == "True")
 
     '''
      changeAttrType (M): Changes the type of attributes to 'string', which allows conditions and actions to be specified on attribute values in patterns.
