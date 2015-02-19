@@ -139,8 +139,9 @@ class PathConditionGenerator():
 
         self._pre_process()
 
-        h = self.hp.heap()
-        print(h)
+        if self.profile_memory:
+            h = self.hp.heap()
+            print(h)
 
         self.debug()
 
