@@ -40,18 +40,18 @@ from PropertyVerification.BACKUP_atomic_state_property import BKUPAtomicStatePro
 
 
 
-class Test(unittest.TestCase):
+class Test():
 
-    def setUp(self):
-        pyramify = PyRamify()
+    def setUp(self, args):
+        pyramify = PyRamify(draw_svg=args.draw_svg)
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
             pyramify.ramify_directory("mbeddr2C_MM/real_transformation")
 
-        print("Rules: " + str(self.rules.keys()))
+        #print("Rules: " + str(self.rules.keys()))
 
 
-    def test_correct_uml2kiltera(self):
+    def test_correct_mbeddr(self, args):
 
         pyramify = PyRamify(verbosity = 2)
 
@@ -109,14 +109,23 @@ class Test(unittest.TestCase):
    
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_source, subclasses_target)
  
-        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, 2)
-    
+        s = PathConditionGenerator(transformation, self.ruleCombinators,
+                                   self.ruleTraceCheckers, self.matchRulePatterns, 2, draw_svg = args.draw_svg, run_tests = args.run_tests)
         ts0 = time.time()
         s.build_path_conditions()
         ts1 = time.time()
              
         print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
         print("Number of path conditions: " + str(len(s.pathConditionSet)))
+
+        # check if the correct number of path conditions were produced
+        if not int(expected_num_pcs) == -1 and not int(expected_num_pcs) == len(s.pathConditionSet):
+            #TODO: Make this an exception
+            num_pcs_s = "The number of produced path conditions is incorrect.\n" + args.num_pcs + " were expected, but " + str(
+                len(s.pathConditionSet)) + " were produced."
+            print(num_pcs_s)
+            #raise Exception(num_pcs_s)
+
 #         print("printing path conditions")
 #         s.print_path_conditions_screen()
 #          
@@ -135,6 +144,19 @@ class Test(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.test']
-    unittest.main()
+    import argparse
+
+    parser = argparse.ArgumentParser(description = 'Run the mbeddr test.')
+    parser.add_argument('--run_tests', type = bool, default = True,
+                        help = 'Bool for whether extra testing should be performed (default: True)')
+    parser.add_argument('--draw_svg', default = True,
+                        help = 'Bool for whether svg files should be drawn (default: True)')
+    parser.add_argument('--num_pcs', default = -1,
+                        help = 'Number of path conditions which should be produced by this test (default: -1)')
+
+    args = parser.parse_args()
+
+    mbeddr = Test()
+    mbeddr.setUp(args)
+    mbeddr.test_correct_mbeddr(args)
     
