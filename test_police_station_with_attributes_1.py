@@ -261,7 +261,7 @@ class Test():
 
         #check if the correct number of path conditions were produced
         if not int(args.num_pcs) == -1 and not int(args.num_pcs) == len(s.pathConditionSet):
-            raise Exception("The number of produced path conditions is incorrect.\n" + args.num_pcs + " were expected, but " + str(len(s.pathConditionSet)) + " were produced.")
+            raise Exception("The number of produced path conditions is incorrect.\n" + str(args.num_pcs) + " were expected, but " + str(len(s.pathConditionSet)) + " were produced.")
 
 #         print
 #         '\n'
@@ -411,13 +411,21 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description='Run the police station with attributes test # 1.')
-    parser.add_argument('--run_tests', type=bool, default = True,
-                       help='Bool for whether extra testing should be performed (default: True)')
-    parser.add_argument('--draw_svg', type=bool, default = True,
-                       help='Bool for whether svg files should be drawn (default: True)')
-    parser.add_argument('--num_pcs', default=-1,
+
+    parser.add_argument('--skip_tests', dest='run_tests', action='store_false',
+                       help='Option to skip the running of matching tests')
+    parser.set_defaults(run_tests = True)
+
+    parser.add_argument('--no_svg', dest='draw_svg', action='store_false',
+                       help='Flag to force svg files to not be drawn')
+    parser.set_defaults(draw_svg = True)
+
+    parser.add_argument('--num_pcs', type=int, default=-1,
                        help='Number of path conditions which should be produced by this test (default: -1)')
 
+    # TODO: remove these
+    parser.add_argument('--draw_svg')
+    parser.add_argument('--run_tests')
 
     args = parser.parse_args()
 
