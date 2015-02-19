@@ -23,27 +23,27 @@ p2
 aS'MoTifRule'
 p3
 a.""")
-        self["MT_constraint__"] = pickle.loads("""Vif PreNode('1')['MT_pre__classtype'] == PreNode('2')['MT_pre__classtype']:\u000a    return True\u000areturn False\u000a
+        self["MT_constraint__"] = pickle.loads("""Vif PreNode('1')['classtype'] == PreNode('2')['classtype']:\u000a    return True\u000areturn False\u000a
 p1
 .""")
         self["name"] = """"""
-        self["GUID__"] = UUID('e24241e4-be4b-4706-b692-e2b00448c7d7')
+        self["GUID__"] = UUID('a90310d0-38f4-4ef8-bf83-7c9196ac3ce3')
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
         self.vs[0]["MT_label__"] = """5"""
-        self.vs[0]["mm__"] = """MT_pre__match_contains"""
         self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
+        self.vs[0]["mm__"] = """MT_pre__match_contains"""
         self.vs[0]["MT_dirty__"] = False
-        self.vs[0]["GUID__"] = UUID('923dba2d-ef7f-405d-be49-764ac4c98d5c')
+        self.vs[0]["GUID__"] = UUID('02105097-094b-4106-aed2-2917d5e81e21')
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_label__"] = """6"""
-        self.vs[1]["mm__"] = """MT_pre__match_contains"""
         self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
+        self.vs[1]["mm__"] = """MT_pre__match_contains"""
         self.vs[1]["MT_dirty__"] = False
-        self.vs[1]["GUID__"] = UUID('02286338-8302-4451-ac88-0b362a785fc7')
+        self.vs[1]["GUID__"] = UUID('2585bbc4-d7d9-4cde-b14a-37ba801e8980')
         self.vs[2]["MT_pivotOut__"] = """element1"""
         self.vs[2]["MT_subtypeMatching__"] = True
         self.vs[2]["MT_pre__classtype"] = """
@@ -58,7 +58,7 @@ p1
 
 return True
 """
-        self.vs[2]["MT_pre__cardinality"] = """
+        self.vs[2]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -71,7 +71,6 @@ return True
 return True
 """
         self.vs[2]["MT_label__"] = """1"""
-        self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
 S'MT_pre__OPTIONAL1,'
 p2
@@ -154,8 +153,9 @@ p40
 aS'MT_pre__FIXED0'
 p41
 a.""")
+        self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[2]["MT_dirty__"] = False
-        self.vs[2]["MT_pre__name"] = """
+        self.vs[2]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -167,7 +167,7 @@ a.""")
 
 return True
 """
-        self.vs[2]["GUID__"] = UUID('ff77afc0-d89c-4eca-8473-1b1a07e24f61')
+        self.vs[2]["GUID__"] = UUID('b019a162-86a2-459f-9654-c9e8f2a55792')
         self.vs[3]["MT_pivotOut__"] = """element2"""
         self.vs[3]["MT_subtypeMatching__"] = True
         self.vs[3]["MT_pre__classtype"] = """
@@ -182,7 +182,7 @@ return True
 
 return True
 """
-        self.vs[3]["MT_pre__cardinality"] = """
+        self.vs[3]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -195,7 +195,6 @@ return True
 return True
 """
         self.vs[3]["MT_label__"] = """2"""
-        self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[3]["MT_subtypes__"] = pickle.loads("""(lp1
 S'MT_pre__OPTIONAL1,'
 p2
@@ -278,8 +277,9 @@ p40
 aS'MT_pre__FIXED0'
 p41
 a.""")
+        self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[3]["MT_dirty__"] = False
-        self.vs[3]["MT_pre__name"] = """
+        self.vs[3]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -291,37 +291,23 @@ a.""")
 
 return True
 """
-        self.vs[3]["GUID__"] = UUID('8ee87ea7-35d7-4f10-90f1-c545e85f726f')
+        self.vs[3]["GUID__"] = UUID('bc7e7249-36c6-4a95-974f-4469dc79173c')
         self.vs[4]["MT_subtypeMatching__"] = False
         self.vs[4]["MT_label__"] = """3"""
-        self.vs[4]["mm__"] = """MT_pre__MatchModel"""
         self.vs[4]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
+        self.vs[4]["mm__"] = """MT_pre__MatchModel"""
         self.vs[4]["MT_dirty__"] = False
-        self.vs[4]["GUID__"] = UUID('7eac6d94-e7b4-45dc-a733-2c3775a1d428')
+        self.vs[4]["GUID__"] = UUID('925702a1-c3cb-4d0f-9b5f-dc531d1c38f4')
         self.vs[5]["MT_subtypeMatching__"] = False
         self.vs[5]["MT_label__"] = """4"""
-        self.vs[5]["mm__"] = """MT_pre__MatchModel"""
         self.vs[5]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
+        self.vs[5]["mm__"] = """MT_pre__MatchModel"""
         self.vs[5]["MT_dirty__"] = False
-        self.vs[5]["GUID__"] = UUID('ffc76288-2a0b-436b-ab1b-bc824329090e')
+        self.vs[5]["GUID__"] = UUID('1d9cc547-40a5-4c85-841b-9b5474d2793c')
 
     def eval_classtype1(self, attr_value, this):
-        
-        #===============================================================================
-        # This code is executed when evaluating if a node shall be matched by this rule.
-        # You can access the value of the current node's attribute value by: attr_value.
-        # You can access any attribute x of this node by: this['x'].
-        # If the constraint relies on attribute values from other nodes,
-        # use the LHS/NAC constraint instead.
-        # The given constraint must evaluate to a boolean expression.
-        #===============================================================================
-        
-        return True
-
-
-    def eval_cardinality1(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.
@@ -349,7 +335,7 @@ return True
         return True
 
 
-    def eval_classtype2(self, attr_value, this):
+    def eval_cardinality1(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.
@@ -363,7 +349,7 @@ return True
         return True
 
 
-    def eval_cardinality2(self, attr_value, this):
+    def eval_classtype2(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.
@@ -391,13 +377,27 @@ return True
         return True
 
 
+    def eval_cardinality2(self, attr_value, this):
+        
+        #===============================================================================
+        # This code is executed when evaluating if a node shall be matched by this rule.
+        # You can access the value of the current node's attribute value by: attr_value.
+        # You can access any attribute x of this node by: this['x'].
+        # If the constraint relies on attribute values from other nodes,
+        # use the LHS/NAC constraint instead.
+        # The given constraint must evaluate to a boolean expression.
+        #===============================================================================
+        
+        return True
+
+
     def constraint(self, PreNode, graph):
         """
             Executable constraint code. 
             @param PreNode: Function taking an integer as parameter
                             and returns the node corresponding to that label.
         """
-        if PreNode('1')['MT_pre__classtype'] == PreNode('2')['MT_pre__classtype']:
+        if PreNode('1')['classtype'] == PreNode('2')['classtype']:
             return True
         return False
 
