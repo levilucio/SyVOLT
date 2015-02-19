@@ -80,7 +80,7 @@ class PathConditionGenerator():
     """
 
     #@do_cprofile
-    def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, verbosity, draw_svg = "True", run_tests="True"):
+    def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, verbosity, draw_svg = True, run_tests=True):
         # the empty path condition
         from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 
@@ -107,9 +107,9 @@ class PathConditionGenerator():
         self.ruleTraceCheckers = ruleTraceCheckers
         self.matchRulePatterns = matchRulePatterns
 
-        self.draw_svg = (draw_svg == "True")
+        self.draw_svg = draw_svg
 
-        self.run_tests = (run_tests == "True")
+        self.run_tests = run_tests
 
         self.ruleContainment = []
 
@@ -178,9 +178,9 @@ class PathConditionGenerator():
 
     def debug(self):
 
+
         if self.draw_svg:
             print("Drawing svgs...")
-            print(self.draw_svg)
             self.print_transformation()
             self.print_ruleCombinators()
             self.print_ruleTraceCheckers()

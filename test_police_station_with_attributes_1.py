@@ -413,14 +413,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Run the police station with attributes test # 1.')
     parser.add_argument('--run_tests', type=bool, default = True,
                        help='Bool for whether extra testing should be performed (default: True)')
-    parser.add_argument('--draw_svg', default=True,
+    parser.add_argument('--draw_svg', type=bool, default = True,
                        help='Bool for whether svg files should be drawn (default: True)')
     parser.add_argument('--num_pcs', default=-1,
                        help='Number of path conditions which should be produced by this test (default: -1)')
 
 
     args = parser.parse_args()
-
 
     ps1 = Test()
     ps1.setUp(args)

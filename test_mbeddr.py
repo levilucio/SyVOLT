@@ -82,7 +82,7 @@ class Test():
         b11 = self.rules['Hlayer1rule11']
         b12 = self.rules['Hlayer1rule12']
         b13 = self.rules['Hlayer1rule13']
-        b15 = self.rules['Hlayer1rule14']
+        b14 = self.rules['Hlayer1rule14']
         b15 = self.rules['Hlayer1rule15']
 
         c0 = self.rules['Hlayer2rule0']
@@ -98,7 +98,7 @@ class Test():
         d5 = self.rules['Hlayer3rule5']
 
         expected_num_pcs = args.num_pcs
-        transformation = [[a0,a1,a2,a3,a4,a5,a6],[b3,b4,b5,b6,b7,b8],[c0,c1,c2,c3],[d0,d1,d2,d3,d4,d5]]
+        transformation = [[a0,a1,a2,a3,a4,a5,a6, a7, a8, a9, a10, a11]]#,[b0, b1, b2, b3,b4,b5,b6,b7,b8, b9, b10, b11, b12, b13,b14,b15]]#,[c0,c1,c2,c3],[d0,d1,d2,d3,d4,d5]]
           
         pre_metamodel = ["MT_pre__mbeddr_MM", "MoTifRule"]
         post_metamodel = ["MT_post__mbeddr", "MoTifRule"]
@@ -150,7 +150,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description = 'Run the mbeddr test.')
     parser.add_argument('--run_tests', type = bool, default = True,
                         help = 'Bool for whether extra testing should be performed (default: True)')
-    parser.add_argument('--draw_svg', default = True,
+    parser.add_argument('--draw_svg', type=bool, default = True,
                         help = 'Bool for whether svg files should be drawn (default: True)')
     parser.add_argument('--num_pcs', default = -1,
                         help = 'Number of path conditions which should be produced by this test (default: -1)')
