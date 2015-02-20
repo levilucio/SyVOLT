@@ -1355,7 +1355,7 @@ class PyRamify:
 
     #change the proper prover matchers and rewriters to
     #refer to the correct metamodel
-    def changePropertyProverMetamodel(self, pre_metamodel, post_metamodel, subclasses_source, subclasses_target):
+    def changePropertyProverMetamodel(self, pre_metamodel, post_metamodel, subclasses_dict):
         print("Starting to change property prover metamodel")
 
         property_prover_rules_dir = "./property_prover_rules/"
@@ -1391,12 +1391,12 @@ class PyRamify:
                 graph = rule[rule.keys()[0]]
 
                 #TODO: Make this less fragile
-                if f.endswith("LHS.py"):
+                if "LHS" in f:
                     graph["mm__"] = pre_metamodel
-                elif f.endswith("RHS.py"):
+                elif "RHS" in f:
                     graph["mm__"] = post_metamodel
                 else:
-                    print("Error: Not LHS or RHS rule")
+                    raise Exception("Error: Not LHS or RHS rule")
 
                 for node in graph.vs:
 
@@ -1406,10 +1406,13 @@ class PyRamify:
 
                     #the node does look at subtypes
                     if "MT_subtypes__" in node.attributes().keys() and len(node["MT_subtypes__"]) >= 1:
-                        if node["mm__"] == "MT_pre__MetaModelElement_S":
-                            node["MT_subtypes__"] = subclasses_source
-                        elif node["mm__"] == "MT_pre__MetaModelElement_T":
-                            node["MT_subtypes__"] = subclasses_target
+
+                        # we are not changing this mm's subtypes
+                        if not node["mm__"] in subclasses_dict.keys():
+                            continue
+
+                        #set the new subtypes
+                        node["MT_subtypes__"] = subclasses_dict[node["mm__"]]
 
                 #need to compile rule back in order to update the file
                 graph.compile(rule_dir)

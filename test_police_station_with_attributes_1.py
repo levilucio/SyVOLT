@@ -242,10 +242,12 @@ class Test():
 
         pre_metamodel = ["MT_pre__PoliceStationMM", "MoTifRule"]
         post_metamodel = ["MT_post__PoliceStationMM", "MoTifRule"]
-        subclasses_source = ["MT_pre__Station_S", "MT_pre__Male_S","MT_pre__Female_S"]
-        subclasses_target = ["MT_pre__Station_T","MT_pre__Male_T","MT_pre__Female_T"]
 
-        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_source, subclasses_target)
+        subclasses_dict = {}
+        subclasses_dict["MT_pre__MetaModelElement_S"] = ["MT_pre__Station_S", "MT_pre__Male_S","MT_pre__Female_S"]
+        subclasses_dict["MT_pre__MetaModelElement_T"] = ["MT_pre__Station_T","MT_pre__Male_T","MT_pre__Female_T"]
+
+        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
         
         print("create state space")
         s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, \
@@ -422,10 +424,6 @@ if __name__ == "__main__":
 
     parser.add_argument('--num_pcs', type=int, default=-1,
                        help='Number of path conditions which should be produced by this test (default: -1)')
-
-    # TODO: remove these
-    parser.add_argument('--draw_svg')
-    parser.add_argument('--run_tests')
 
     args = parser.parse_args()
 

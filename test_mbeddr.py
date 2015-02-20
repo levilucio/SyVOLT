@@ -102,13 +102,14 @@ class Test():
           
         pre_metamodel = ["MT_pre__mbeddr_MM", "MoTifRule"]
         post_metamodel = ["MT_post__mbeddr", "MoTifRule"]
-        
+
+        subclasses_dict = {}
         eu1 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/Module.ecore") 
-        subclasses_source = buildPreListFromClassNames(eu1.getMetamodelClassNames())
+        subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(eu1.getMetamodelClassNames())
         eu2 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/C.ecore") 
-        subclasses_target = buildPreListFromClassNames(eu2.getMetamodelClassNames())
+        subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(eu2.getMetamodelClassNames())
    
-        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_source, subclasses_target)
+        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
  
         s = PathConditionGenerator(transformation, self.ruleCombinators,
                                    self.ruleTraceCheckers, self.matchRulePatterns, 2, draw_svg = args.draw_svg, run_tests = args.run_tests)
@@ -159,10 +160,6 @@ if __name__ == "__main__":
 
     parser.add_argument('--num_pcs', type = int, default = -1,
                         help = 'Number of path conditions which should be produced by this test (default: -1)')
-
-    #TODO: remove these
-    parser.add_argument('--draw_svg')
-    parser.add_argument('--run_tests')
     
     args = parser.parse_args()
 

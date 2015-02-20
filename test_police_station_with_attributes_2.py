@@ -226,12 +226,14 @@ class Test():
 
         pre_metamodel = ["MT_pre__PoliceStationMM", "MoTifRule"]
         post_metamodel = ["MT_post__PoliceStationMM", "MoTifRule"]
-        subclasses_source = ["MT_pre__Station_S", "MT_pre__Male_S","MT_pre__Female_S"]
-        subclasses_target = ["MT_pre__Station_T","MT_pre__Male_T","MT_pre__Female_T"]
- 
+
+        subclasses_dict = {}
+        subclasses_dict["MT_pre__MetaModelElement_S"] = ["MT_pre__Station_S", "MT_pre__Male_S","MT_pre__Female_S"]
+        subclasses_dict["MT_pre__MetaModelElement_T"] = ["MT_pre__Station_T","MT_pre__Male_T","MT_pre__Female_T"]
+
         pyramify = PyRamify()
 
-        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_source, subclasses_target)
+        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
  
         s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, \
                                    self.matchRulePatterns, 2, draw_svg=args.draw_svg, run_tests=args.run_tests)
