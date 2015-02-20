@@ -19,6 +19,20 @@ from solver.simple_attribute_equation_evaluator import SimpleAttributeEquationEv
 from PyRamify import PyRamify
 from PropertyProverTester import PropertyProverTester
 
+#profile memory
+global global_profile_memory
+global global_hp
+
+global_profile_memory= False
+
+if global_profile_memory:
+
+    #import heapy
+    from guppy import hpy
+
+    #create the heapy object
+    global_hp = hpy()
+
 
 #set up cProfile
 #and the do_cprofile wrapper
@@ -29,6 +43,8 @@ def do_cprofile(func):
     def profiled_func(*args, **kwargs):
         profile = cProfile.Profile()
         try:
+            if global_profile_memory:
+                global_hp.setref()
             profile.enable()
             result = func(*args, **kwargs)
             profile.disable()
@@ -38,7 +54,23 @@ def do_cprofile(func):
             sortby = 'cumulative'
             ps = pstats.Stats(profile, stream=s).sort_stats(sortby)
             ps.print_stats()
-            print(s.getvalue())
+
+            print("\nFunction: " + str(func.__name__))
+            print("Time usage:")
+            time_table = str(s.getvalue()).split("\n")
+            for i in range(15):
+                if i >= len(time_table):
+                    break
+
+                if time_table[i].strip() == "":
+                    continue
+
+                print(time_table[i])
+
+            if global_profile_memory:
+                print("\nMemory usage:")
+                print(global_hp.heap())
+            print("")
     return profiled_func
 
 
@@ -96,6 +128,9 @@ class PathConditionGenerator():
         from property_prover_rules.traceability_construction.Himesis.HBuildTraceabilityForRuleRHS import \
             HBuildTraceabilityForRuleRHS
 
+
+
+
         # declare the necessary T-Core rules
         self.forward_cardinalities_to_apply = SRule(HForwardCardinalitiesToApplyModelLHS(),
                                                HForwardCardinalitiesToApplyModelRHS())
@@ -122,28 +157,10 @@ class PathConditionGenerator():
         self.attributeEquationEvaluator = SimpleAttributeEquationEvaluator(verbosity) 
 #        self.mergeInterLayerFactory = MergeInterLayerFactory(verbosity)
 
-
-        self.profile_memory = False
-
-        if self.profile_memory:
-
-            #import heapy
-            from guppy import hpy
-
-            #create the heapy object
-            self.hp = hpy()
-            self.hp.setrelheap()
-
-            print("Memory")
-            print(self.hp.heap())
-
         self._pre_process()
 
-        if self.profile_memory:
-            h = self.hp.heap()
-            print(h)
-
         self.debug()
+
 
     def print_transformation(self):
         for layer in self.transformation:
@@ -177,8 +194,6 @@ class PathConditionGenerator():
 
 
     def debug(self):
-
-
         if self.draw_svg:
             print("Drawing svgs...")
             self.print_transformation()
