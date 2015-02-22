@@ -102,7 +102,8 @@ class Test():
         #TODO: Change this number if you are modifying the transformation at all
         #transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
         transformation=  [[a1], [b1,b2,b3], [c3], [d1]]
-
+        #transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
+        
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
         post_metamodel = ["MT_post__UMLRT2Kiltera_MM", "MoTifRule"]
 
@@ -156,7 +157,7 @@ class Test():
 # #  
 # #  
         print("printing path conditions")
-        s.print_path_conditions_screen()
+        #s.print_path_conditions_screen()
          
         s.print_path_conditions_file()
         atprop=AtomicStateProperty(HState2procdef_IsolatedLHS(),HState2procdef_IsolatedLHS(), HState2procdef_CompleteLHS())
@@ -165,9 +166,9 @@ class Test():
         atpropneg=AtomicStateProperty(HState2procdef_IsolatedLHS(), HState2procdef_IsolatedLHS(), HState2funcdefNEG_CompleteLHS())
         atpropNeedscollapse_no=AtomicStateProperty(HState2trans2exitptTrue_IsolatedLHS(),HState2trans2exitptTrue_ConnectedLHS(),HState2trans2exitptTrue_CompleteLHS())
         collapsable=AtomicStateProperty(HTrans2instTRUE_IsolatedLHS(), HTrans2instTRUE_ConnectedLHS(),HTrans2instTRUE_CompleteLHS())
-        finalresult=StateProperty.verifyCompositeStateProperty(s, collapsable) 
-        print ('finalresult : ')
-        print (finalresult)
+        #finalresult=StateProperty.verifyCompositeStateProperty(s, collapsable) 
+        #print ('finalresult : ')
+        #print (finalresult)
 # 
 #         print("printing states")
 #         self._print_states(s)

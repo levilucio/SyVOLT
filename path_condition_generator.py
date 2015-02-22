@@ -776,8 +776,13 @@ class PathConditionGenerator():
 
     def print_path_conditions_file(self):
         if self.draw_svg:
+            i=0
             for pathCond in self.pathConditionSet:
                 try:
-                    graph_to_dot(pathCond.name, pathCond, 1)
+                    print  ( str(i)+"---"+pathCond.name)
+                    print  ( " ")
+                    opname="pc"+str(i)
+                    graph_to_dot(opname, pathCond, 1)
+                    i=i+1
                 except IOError:
                     print("Graph name is too long: " + pathCond.name)
