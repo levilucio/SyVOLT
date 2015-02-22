@@ -49,7 +49,9 @@ from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2trans2exitptTrue_Comple
 from UMLRT2Kiltera_MM.Properties.positive.Himesis.HTrans2instTRUE_IsolatedLHS import HTrans2instTRUE_IsolatedLHS
 from UMLRT2Kiltera_MM.Properties.positive.Himesis.HTrans2instTRUE_ConnectedLHS import HTrans2instTRUE_ConnectedLHS
 from UMLRT2Kiltera_MM.Properties.positive.Himesis.HTrans2instTRUE_CompleteLHS import HTrans2instTRUE_CompleteLHS
-
+from UMLRT2Kiltera_MM.Properties.negative.Himesis.HPar2ProcsPart1_CompleteLHS import HPar2ProcsPart1_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.negative.Himesis.HPar2ProcsPart2_CompleteLHS import HPar2ProcsPart2_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.negative.Himesis.HPar2ProcsPart1_2_IsolatedLHS import HPar2ProcsPart1_2_IsolatedLHS
 class Test():
 
     def setUp(self, args):
@@ -101,7 +103,8 @@ class Test():
         expected_num_pcs = args.num_pcs
         #TODO: Change this number if you are modifying the transformation at all
         #transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
-        transformation=  [[a1], [b1,b2,b3], [c3], [d1]]
+        #transformation=  [[a1], [b1,b2,b3], [c3], [d1]]#collapsable
+        transformation=  [[a1], [b1,b2,b3], [c1]]
         #transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
         
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
@@ -165,10 +168,13 @@ class Test():
         exitpt2procdefparprop_noattr=AtomicStateProperty(HExitpoint2procdefparTrueNOATTR_IsolatedLHS(),HExitpoint2procdefparTrueNOATTR_ConnectedLHS(),HExitpoint2procdefparTrueNOATTR_CompleteLHS())
         atpropneg=AtomicStateProperty(HState2procdef_IsolatedLHS(), HState2procdef_IsolatedLHS(), HState2funcdefNEG_CompleteLHS())
         atpropNeedscollapse_no=AtomicStateProperty(HState2trans2exitptTrue_IsolatedLHS(),HState2trans2exitptTrue_ConnectedLHS(),HState2trans2exitptTrue_CompleteLHS())
-        collapsable=AtomicStateProperty(HTrans2instTRUE_IsolatedLHS(), HTrans2instTRUE_ConnectedLHS(),HTrans2instTRUE_CompleteLHS())
+        collapsable=AtomicStateProperty(HTrans2instTRUE_IsolatedLHS(), HTrans2instTRUE_ConnectedLHS(),HTrans2instTRUE_CompleteLHS()) 
+        par2ProcsIfClause=AtomicStateProperty(HPar2ProcsPart1_2_IsolatedLHS(), HPar2ProcsPart1_2_IsolatedLHS(), HPar2ProcsPart1_CompleteLHS())
+        par2ProcsThenClause=AtomicStateProperty(HPar2ProcsPart1_2_IsolatedLHS(), HPar2ProcsPart1_2_IsolatedLHS(), HPar2ProcsPart2_CompleteLHS())
+        finalresult=StateProperty.verifyCompositeStateProperty(s, ImplicationStateProperty(par2ProcsIfClause, par2ProcsThenClause))
         #finalresult=StateProperty.verifyCompositeStateProperty(s, collapsable) 
-        #print ('finalresult : ')
-        #print (finalresult)
+        print ('finalresult : ')
+        print (finalresult)
 # 
 #         print("printing states")
 #         self._print_states(s)
