@@ -91,8 +91,8 @@ class StateProperty(Property):
         #for state in StateSpace.symbStateSpace:
         for state in StateSpace.pathConditionSet:
             if state != ():
-                if (state_index)==10:
-                    print ("Start debugging here")
+                #if (state_index)==10:
+                #    print ("Start debugging here")
                 #Initially, merged_state has the first rule of the the current state being examined in the SymbolicStateSpace
                 #merged_state = deepcopy(state[0])
                 merged_state = deepcopy(state)
@@ -132,25 +132,28 @@ class StateProperty(Property):
                 
                         smallerStateWithSameRulesExists = False
                         rulecounter=0
-                        #NEW OPTIMIZATION HEURISTIC
-                        # parse name of PC into an ordered set/list - parsedRulesInPC
-                        # if parsedRulesInPC size<2, collapse flag =false in
-                        # if the cache has another PC whose name is a subset of the name of the current PC, then property holds
-                        #check if where verifiedSTatecache was filled needs to be changed
-                        RulesInCurState=StateProperty.parseStateName2RuleNames(state.name) 
-                        for alreadyVerifiedState in AtomicStatePropsInStateProp[atomicStatePropIndex].verifiedStateCache:
-                            if numberOfIsolatedMatches != alreadyVerifiedState[1]:
-                                continue
-                            rulesInAlreadyVerifiedState= StateProperty.parseStateName2RuleNames(alreadyVerifiedState[0].name)
-                            for rule in rulesInAlreadyVerifiedState:
-                                if (rule in RulesInCurState)==False:
-                                    break
-                                else:
-                                    rulecounter=rulecounter+1
-                            if rulecounter==len(rulesInAlreadyVerifiedState):
-                                smallerStateWithSameRulesExists=True
-                                break
-                            ####
+#                         #NEW OPTIMIZATION HEURISTIC
+#                         # parse name of PC into an ordered set/list - parsedRulesInPC
+#                         # if parsedRulesInPC size<2, collapse flag =false in
+#                         # if the cache has another PC whose name is a subset of the name of the current PC, then property holds
+#                         #check if where verifiedSTatecache was filled needs to be changed
+#                         RulesInCurState=StateProperty.parseStateName2RuleNames(state.name) 
+#                         for alreadyVerifiedState in AtomicStatePropsInStateProp[atomicStatePropIndex].verifiedStateCache:
+#                             if numberOfIsolatedMatches != alreadyVerifiedState[1]:
+#                                 continue
+#                             rulesInAlreadyVerifiedState= StateProperty.parseStateName2RuleNames(alreadyVerifiedState[0].name)
+#                             for rule in rulesInAlreadyVerifiedState:
+#                                 if (rule in RulesInCurState)==False:
+#                                     break
+#                                 else:
+#                                     rulecounter=rulecounter+1
+#                             if rulecounter==len(rulesInAlreadyVerifiedState):
+#                                 smallerStateWithSameRulesExists=True
+#                                 break
+#                             ####
+#                         #NEW OPTIMIZATION HEURISTIC
+                           
+                           
                         ###UNdoooo
                         ##if u comment the comming block between the comments tagged as UNdoo, the whole code will work 
                         #for alreadyVerifiedState in AtomicStatePropsInStateProp[atomicStatePropIndex].verifiedStateCache:
