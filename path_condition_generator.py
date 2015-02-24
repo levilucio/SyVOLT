@@ -68,8 +68,18 @@ def do_cprofile(func):
                 print(time_table[i])
 
             if global_profile_memory:
+                h = global_hp.heap()
                 print("\nMemory usage:")
-                print(global_hp.heap())
+                print(h)
+
+                print("\nBy id:")
+                print(h.byid)
+
+                print("\nGraph:")
+                print(h.byid[0].byvia)
+                print(h.byid[0].byrcs)
+
+
             print("")
     return profiled_func
 
