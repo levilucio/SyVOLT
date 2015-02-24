@@ -126,8 +126,8 @@ class Himesis(ig.Graph):
     def add_node(self):
         new_node = self.vcount()
         self.add_vertices(1)
-        id = uuid.uuid4()
-        self.vs[new_node][Himesis.Constants.GUID] = id
+        short_id = str(uuid.uuid4())[-8:]
+        self.vs[new_node][Himesis.Constants.GUID] = int(short_id, 16)
         # self.nodes_id[id] = new_node
         return new_node
     
