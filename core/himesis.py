@@ -101,7 +101,7 @@ class Himesis(ig.Graph):
         return self.copy()
     
     def __deepcopy__(self, memo):
-        return self.__copy__()
+        return self.copy()
     
     def __str__(self):
         s = super(Himesis, self).__str__()

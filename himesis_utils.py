@@ -206,31 +206,27 @@ def disjoint_model_union(first, second):
     if second.vcount() == 0:
         return deepcopy(first)
 
-    nb_nodes_first = len(first.vs)
+    nb_nodes_first = first.vcount()
      
     # first copy the nodes
-    for index_v in range(len(second.vs)):
-        new_node = first.add_node()
+    for index_v in second.node_iter():
+        new_node_index = first.add_node()
+        new_node = first.vs[new_node_index]
 
-        for attrib in second.vs[index_v].attributes().keys():
+        for attrib in second.vs[index_v].attribute_names():
 
             #skip copying the GUID
             if attrib == "GUID__":
                 continue
 
-            try:
-                #skip None attribs
-                if second.vs[index_v][attrib] is None:
-                    continue
-
+            #skip None attribs
+            if second.vs[index_v][attrib] is not None:
                 #copy the other attribs
-                first.vs[new_node][attrib] = second.vs[index_v][attrib]
-            except KeyError:
-                #deal with the error where too many attributes are reported for each node
-                pass
+                new_node[attrib] = second.vs[index_v][attrib]
+
  
     # then copy the edges
-    for index_e in range(len(second.es)):
+    for index_e in second.edge_iter():
         first.add_edges([(nb_nodes_first + second.es[index_e].tuple[0],nb_nodes_first + second.es[index_e].tuple[1])])
   
     return first
