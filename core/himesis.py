@@ -73,18 +73,19 @@ class Himesis(ig.Graph):
             for n in self.node_iter():
                 self.vs[n][Himesis.Constants.GUID] = uuid.uuid4()
         # A fast lookup of the node's index by its guid
-        self.nodes_id = {}
-        
+        # - disable this lookup to save memory
+        #self.nodes_id = {}
+
         # The following attributes are used by the compiler
         self.execute_body = ''          # holds the content of the execute method
         self.execute_parameters = []    # holds the arguments of the execute method
         self.execute_doc = ''           # holds the docstring of the execute method
         self.init_params = []           # If any further parameters are required for instantiating a sub-class
         self.import_name = 'Himesis'    # holds the name of the super-class (one of those in this module) of this instance
-    
+
     def copy(self):
         cpy = ig.Graph.copy(self)
-        cpy.nodes_id = copy.deepcopy(self.nodes_id)
+        # cpy.nodes_id = copy.deepcopy(self.nodes_id)
         cpy.execute_body = copy.deepcopy(self.execute_body)
         cpy.execute_parameters = copy.deepcopy(self.execute_parameters)
         cpy.execute_doc = copy.deepcopy(self.execute_doc)
@@ -127,26 +128,30 @@ class Himesis(ig.Graph):
         self.add_vertices(1)
         id = uuid.uuid4()
         self.vs[new_node][Himesis.Constants.GUID] = id
-        self.nodes_id[id] = new_node
+        # self.nodes_id[id] = new_node
         return new_node
     
     def delete_nodes(self, nodes):
         self.delete_vertices(nodes)
         # Regenerate the lookup because node indices have changed
-        self.nodes_id = dict([(self.vs[node][Himesis.Constants.GUID], node) for node in self.node_iter()])
+        # self.nodes_id = dict([(self.vs[node][Himesis.Constants.GUID], node) for node in self.node_iter()])
     
     def get_node(self, id):
         """
             Retrieves the node instance with the specified label.
             @param label: The label of the node.
         """
-        if len(self.nodes_id) < self.vcount():
-            self.nodes_id = dict([(self.vs[node][Himesis.Constants.GUID], node) for node in self.node_iter()])
-        if id in self.nodes_id:
-            return self.nodes_id[id]
-        else:
-            #TODO: This should be a TransformationLanguageSpecificException
-            raise Exception('No node was found with the given id')
+
+        for node in self.node_iter():
+            if id == self.vs[node][Himesis.Constants.GUID]:
+                return node
+        #if len(self.nodes_id) < self.vcount():
+        # nodes_id = dict([(self.vs[node][Himesis.Constants.GUID], node) for node in self.node_iter()])
+        # if id in nodes_id:
+        #     return nodes_id[id]
+        # else:
+        #TODO: This should be a TransformationLanguageSpecificException
+        raise Exception('No node was found with the given id')
     
     def draw(self, visual_style={}, label=None, show_guid=False, show_id=False, debug=False, width=600, height=900):
         """
