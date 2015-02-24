@@ -5,7 +5,7 @@ import util.misc as misc
 from epsilon_parser import EpsilonParser
 from util.misc import indent_text
 import random
-import numpy.random as nprnd
+#import numpy.random as nprnd
 
 
 class HConstants:
@@ -129,7 +129,8 @@ class Himesis(ig.Graph):
         new_node = self.vcount()
         self.add_vertices(1)
 
-        self.vs[new_node][Himesis.Constants.GUID] = nprnd.randint(9223372036854775806)
+        #self.vs[new_node][Himesis.Constants.GUID] = nprnd.randint(9223372036854775806)
+        self.vs[new_node][Himesis.Constants.GUID] = random.randint(0, 9223372036854775806)
         # self.nodes_id[id] = new_node
         return new_node
     
@@ -675,8 +676,7 @@ class HimesisPostConditionPattern(HimesisPattern):
                                      you must specify the mapping from the pre-condition pattern in the form:
                                      {label: meta-model name}.
         """
-        assert(self.is_compiled or (not self.is_compiled and pre_label_MM_mapping),
-               'The mapping {label: meta-model name} of the pre-condition pattern must be specified')
+        assert self.is_compiled or (not self.is_compiled and pre_label_MM_mapping), 'The mapping {label: meta-model name} of the pre-condition pattern must be specified'
         # Augment the graph with the following attribute just for compilation purposes
         self.pre_label_MM_mapping = pre_label_MM_mapping
         return super(HimesisPostConditionPattern, self).compile(file_path)
@@ -741,7 +741,7 @@ class HimesisPostConditionPattern(HimesisPattern):
         
         # The execute method
         self.set_execute_body()
-        assert(len(self.execute_body) > 0, 'The execute method has no body')
+        assert len(self.execute_body) > 0, 'The execute method has no body'
         self.execute_parameters = ['packet', 'match'] 
         self.execute_doc = '''"""
     Transforms the current match of the packet according to the rule %s.
