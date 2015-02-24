@@ -50,12 +50,26 @@ def do_cprofile(func):
             profile.disable()
             return result
         finally:
-            s = StringIO.StringIO()
-            sortby = 'cumulative'
-            ps = pstats.Stats(profile, stream=s).sort_stats(sortby)
-            ps.print_stats()
+
 
             print("\nFunction: " + str(func.__name__))
+
+            if global_profile_memory:
+                h = global_hp.heap()
+                print("\nMemory usage:")
+                print(h)
+
+                print("\nBy id:")
+                print(h.byid)
+                print(h.byvia)
+                print(h.byrcs)
+                print(h.referents)
+
+            s = StringIO.StringIO()
+            sortby = 'time'
+            ps = pstats.Stats(profile, stream = s).sort_stats(sortby)
+            ps.print_stats()
+
             print("Time usage:")
             time_table = str(s.getvalue()).split("\n")
             for i in range(15):
@@ -67,17 +81,7 @@ def do_cprofile(func):
 
                 print(time_table[i])
 
-            if global_profile_memory:
-                h = global_hp.heap()
-                print("\nMemory usage:")
-                print(h)
 
-                print("\nBy id:")
-                print(h.byid)
-
-                print("\nGraph:")
-                print(h.byid[0].byvia)
-                print(h.byid[0].byrcs)
 
 
             print("")
