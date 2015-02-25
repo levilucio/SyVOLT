@@ -62,7 +62,7 @@ class HimesisMatcher(object):
         Represents a pattern matching algorithm for typed attributed multi-graphs.
         The pattern matching algorithm is based on VF2.
     """
-    def __init__(self, source_graph, pattern_graph, priority=Priority(), pred1={}, succ1={}):
+    def __init__(self, source_graph, pattern_graph, pred1={}, succ1={}):
         """
             Represents a pattern matching algorithm for typed attributed multi-graphs.
             @param source_graph: The source graph.
@@ -76,11 +76,12 @@ class HimesisMatcher(object):
         self.G2 = pattern_graph
         self.pred1 = pred1
         self.succ1 = succ1
-        
-        assert(isinstance(priority, Priority))
-        self.priority = priority
-        self.priority.source_graph = source_graph
-        self.priority.pattern_graph = pattern_graph
+
+        # removed priority for speed
+        #assert(isinstance(priority, Priority))
+        #self.priority = priority
+        #self.priority.source_graph = source_graph
+        #self.priority.pattern_graph = pattern_graph
 
         # Set recursion limit
         self.old_recursion_limit = sys.getrecursionlimit()
@@ -99,7 +100,8 @@ class HimesisMatcher(object):
         # Scan the two graphs to cache required information.
         # Typically stores the results of expensive operation on the graphs.
         # This speeds up the algorithm significantly.
-        self.cache_info()
+        # (disabled)
+        # self.cache_info()
     
     def cache_info(self):
         """
@@ -215,40 +217,40 @@ class HimesisMatcher(object):
         
         # First try the nodes that are in both Ti_in and Ti_out
         if len(self.inout_1) > len(self.core_1) and len(self.inout_2) > len(self.core_2):
-            for patt_node in self.priority.order_pattern(self.inout_2):
+            for patt_node in sorted(self.inout_2):
                 if patt_node not in self.core_2:
                     break
-            for src_node in self.priority.order_source(self.inout_1):
+            for src_node in sorted(self.inout_1):
                 if src_node not in self.core_1:
                     yield src_node, patt_node
         
         # If T1_out and T2_out are both non-empty:
         # P(s) = T1_out x {min T2_out}
         elif len(self.out_1) > len(self.core_1) and len(self.out_2) > len(self.core_2):
-            for patt_node in self.priority.order_pattern(self.out_2):
+            for patt_node in sorted(self.out_2):
                 if patt_node not in self.core_2:
                     break
-            for src_node in self.priority.order_source(self.out_1):
+            for src_node in sorted(self.out_1):
                 if src_node not in self.core_1:
                     yield src_node, patt_node
     
         # If T1_in and T2_in are both non-empty:
         # P(s) = T1_in x {min T2_in}
         elif len(self.in_1) > len(self.core_1) and len(self.in_2) > len(self.core_2):
-            for patt_node in self.priority.order_pattern(self.in_2):
+            for patt_node in sorted(self.in_2):
                 if patt_node not in self.core_2:
                     break
-            for src_node in self.priority.order_source(self.in_1):
+            for src_node in sorted(self.in_1):
                 if src_node not in self.core_1:
                     yield src_node, patt_node
     
         # If all terminal sets are empty:
         # P(s) = (N_1 - M_1) x {min (N_2 - M_2)}
         else:
-            for patt_node in self.priority.order_all_pattern(self.G2_nodes):
+            for patt_node in self.G2.node_iter():
                 if patt_node not in self.core_2:
                     break
-            for src_node in self.priority.order_all_source(self.G1_nodes):
+            for src_node in self.G1.node_iter():
                 if src_node not in self.core_1:
                     yield src_node, patt_node
     
