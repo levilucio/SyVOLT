@@ -4,8 +4,7 @@ import igraph as ig
 import util.misc as misc
 from epsilon_parser import EpsilonParser
 from util.misc import indent_text
-import random
-#import numpy.random as nprnd
+import numpy.random as nprnd
 
 
 class HConstants:
@@ -129,8 +128,8 @@ class Himesis(ig.Graph):
         new_node = self.vcount()
         self.add_vertices(1)
 
-        #self.vs[new_node][Himesis.Constants.GUID] = nprnd.randint(9223372036854775806)
-        self.vs[new_node][Himesis.Constants.GUID] = random.randint(0, 9223372036854775806)
+        self.vs[new_node][Himesis.Constants.GUID] = nprnd.randint(9223372036854775806)
+        #self.vs[new_node][Himesis.Constants.GUID] = random.randint(0, 9223372036854775806)
         # self.nodes_id[id] = new_node
         return new_node
     
