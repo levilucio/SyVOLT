@@ -52,6 +52,18 @@ from UMLRT2Kiltera_MM.Properties.positive.Himesis.HTrans2instTRUE_CompleteLHS im
 from UMLRT2Kiltera_MM.Properties.negative.Himesis.HPar2ProcsPart1_CompleteLHS import HPar2ProcsPart1_CompleteLHS
 from UMLRT2Kiltera_MM.Properties.negative.Himesis.HPar2ProcsPart2_CompleteLHS import HPar2ProcsPart2_CompleteLHS
 from UMLRT2Kiltera_MM.Properties.negative.Himesis.HPar2ProcsPart1_2_IsolatedLHS import HPar2ProcsPart1_2_IsolatedLHS
+
+##Multiplicity INvariants- Begin
+from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HEmpty_IsolatedConnectedLHS import HEmpty_IsolatedConnectedLHS
+from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HTrigger01ExprPart1_CompleteLHS import HTrigger01ExprPart1_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HTrigger01ExprPart2_CompleteLHS import HTrigger01ExprPart2_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HTrigger01ExprPart3_CompleteLHS import HTrigger01ExprPart3_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HTrigger01ExprPart4_CompleteLHS import HTrigger01ExprPart4_CompleteLHS
+##Multiplicity INvariants- End
+
+##SYntactic COntracts - Begin
+from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstStateSameNamePart1_2_IsolatedConnectedLHS import HInstStateSameNamePart1_2_IsolatedConnectedLHS
+##SYntactic COntracts - End
 class Test():
 
     def setUp(self, args):
@@ -104,7 +116,7 @@ class Test():
         #TODO: Change this number if you are modifying the transformation at all
         #transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
         #transformation=  [[a1], [b1,b2,b3], [c3], [d1]]#collapsable
-        transformation=  [[a1], [b1,b2,b3 ], [c1]]
+        transformation=  [[a1], [b3 ], [c1]]
         #transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
         
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
@@ -169,9 +181,25 @@ class Test():
         atpropneg=AtomicStateProperty(HState2procdef_IsolatedLHS(), HState2procdef_IsolatedLHS(), HState2funcdefNEG_CompleteLHS())
         atpropNeedscollapse_no=AtomicStateProperty(HState2trans2exitptTrue_IsolatedLHS(),HState2trans2exitptTrue_ConnectedLHS(),HState2trans2exitptTrue_CompleteLHS())
         collapsable=AtomicStateProperty(HTrans2instTRUE_IsolatedLHS(), HTrans2instTRUE_ConnectedLHS(),HTrans2instTRUE_CompleteLHS()) 
+        
+        ######Multiplicity Invariants - Begin
+        #Par2Procs
         par2ProcsIfClause=AtomicStateProperty(HPar2ProcsPart1_2_IsolatedLHS(), HPar2ProcsPart1_2_IsolatedLHS(), HPar2ProcsPart1_CompleteLHS())
         par2ProcsThenClause=AtomicStateProperty(HPar2ProcsPart1_2_IsolatedLHS(), HPar2ProcsPart1_2_IsolatedLHS(), HPar2ProcsPart2_CompleteLHS())
-        finalresult=StateProperty.verifyCompositeStateProperty(s, ImplicationStateProperty(par2ProcsIfClause, par2ProcsThenClause))
+        par2ProcsFULL=ImplicationStateProperty(par2ProcsIfClause, par2ProcsThenClause)
+        #Trigger01Expr
+        Trigger01Expr_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(), HTrigger01ExprPart1_CompleteLHS())
+        Trigger01Expr_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(), HTrigger01ExprPart2_CompleteLHS())
+        Trigger01Expr_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(), HTrigger01ExprPart3_CompleteLHS())
+        Trigger01Expr_part4=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(), HTrigger01ExprPart4_CompleteLHS())
+        Trigger01ExprFULL=ImplicationStateProperty (Trigger01Expr_part1,OrStateProperty(AndStateProperty(Trigger01Expr_part2, NotStateProperty(Trigger01Expr_part3)),NotStateProperty(Trigger01Expr_part4)))
+        ######Multiplicity INvariants - End
+        
+        ######Syntactic COntracts - Begin
+        InstStateSameName=AtomicStateProperty(HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart1_2_IsolatedConnectedLHS())
+        ######Syntactic COntracts - ENd
+        finalresult=StateProperty.verifyCompositeStateProperty(s,InstStateSameName)
+        #to debug tomorrow par2ProcsFULL
         #finalresult=StateProperty.verifyCompositeStateProperty(s, collapsable) 
         print ('finalresult : ')
         print (finalresult)
