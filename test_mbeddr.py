@@ -4,7 +4,6 @@ Created on 2015-02-14
 @author: levi
 '''
 
-
 import unittest
 import time
 import sys
@@ -31,28 +30,42 @@ from PropertyVerification.and_state_property import AndStateProperty
 from PropertyVerification.or_state_property import OrStateProperty
 from PropertyVerification.not_state_property import NotStateProperty
 from PropertyVerification.implication_state_property import ImplicationStateProperty
-from PropertyVerification.Not import Not #StateSpace Prop
-from PropertyVerification.Implication import Implication #StateSpace Prop
-from PropertyVerification.And import And #StateSpace Prop
-from PropertyVerification.Or import Or #StateSpace Prop
+from PropertyVerification.Not import Not  # StateSpace Prop
+from PropertyVerification.Implication import Implication  # StateSpace Prop
+from PropertyVerification.And import And  # StateSpace Prop
+from PropertyVerification.Or import Or  # StateSpace Prop
 from PropertyVerification.BACKUP_atomic_state_property import BKUPAtomicStateProperty
-#from lib2to3.fixer_util import p1
+# from lib2to3.fixer_util import p1
 
 
 
 class Test():
-
     def setUp(self, args):
-        pyramify = PyRamify(draw_svg=args.draw_svg)
+        pyramify = PyRamify(draw_svg = args.draw_svg)
 
-        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
+        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns,
+         self.ruleCombinators] = \
             pyramify.ramify_directory("mbeddr2C_MM/real_transformation")
 
-        #print("Rules: " + str(self.rules.keys()))
+        # print("Rules: " + str(self.rules.keys()))
+
+    def select_rules(self, full_transformation, num_rules):
+        selected_transformation = []
+
+        print("Selecting " + str(num_rules) + " rules")
+
+        i = 1
+        for layer in range(len(full_transformation)):
+            selected_transformation.append([])
+            for rule in full_transformation[layer]:
+                selected_transformation[layer].append(rule)
+                i += 1
+                if i > num_rules:
+                    print("Returning: " + str(selected_transformation))
+                    return selected_transformation
 
 
     def test_correct_mbeddr(self, args):
-
         pyramify = PyRamify(verbosity = 2)
 
         a0 = self.rules['Hlayer0rule0']
@@ -98,51 +111,59 @@ class Test():
         d5 = self.rules['Hlayer3rule5']
 
         expected_num_pcs = args.num_pcs
-        transformation = [[a0,a1,a2,a3,a4,a5,a6, a7, a8, a9, a10, a11],[b0, b1, b2, b3,b4,b5,b6,b7,b8, b9, b10, b11, b12,b13]]#,b14,b15]],[c0,c1,c2,c3],[d0,d1,d2,d3,d4,d5]]
-          
+
+        if args.num_rules == -1:
+            # change this to select by hand the number of rules to execute
+            transformation = [[a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11],[b0, b1, b2, b3,b4]]  # ,b5,b6,b7,b8, b9, b10, b11, b12, b13,b14,b15]]#,[c0,c1,c2,c3],[d0,d1,d2,d3,d4,d5]]
+        else:
+            transformation = self.select_rules([[a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11],[b0, b1, b2, b3,b4 ,b5,b6,b7,b8, b9, b10, b11, b12, b13,b14,b15],[c0,c1,c2,c3],[d0,d1,d2,d3,d4,d5]], args.num_rules)
+
+
         pre_metamodel = ["MT_pre__mbeddr_MM", "MoTifRule"]
         post_metamodel = ["MT_post__mbeddr", "MoTifRule"]
 
         subclasses_dict = {}
-        eu1 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/Module.ecore") 
+        eu1 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/Module.ecore")
         subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(eu1.getMetamodelClassNames())
-        eu2 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/C.ecore") 
+        eu2 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/C.ecore")
         subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(eu2.getMetamodelClassNames())
-   
+
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
- 
+
         s = PathConditionGenerator(transformation, self.ruleCombinators,
                                    self.ruleTraceCheckers, self.matchRulePatterns, 1, draw_svg = args.draw_svg, run_tests = args.run_tests)
         ts0 = time.time()
         s.build_path_conditions()
         ts1 = time.time()
-             
+
         print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
         print("Number of path conditions: " + str(len(s.pathConditionSet)))
 
         # check if the correct number of path conditions were produced
         if not int(expected_num_pcs) == -1 and not int(expected_num_pcs) == len(s.pathConditionSet):
-            #TODO: Make this an exception
-            num_pcs_s = "The number of produced path conditions is incorrect.\n" + str(expected_num_pcs) + " were expected, but " + str(
+            # TODO: Make this an exception
+            num_pcs_s = "The number of produced path conditions is incorrect.\n" + str(
+                expected_num_pcs) + " were expected, but " + str(
                 len(s.pathConditionSet)) + " were produced."
             print(num_pcs_s)
-            #raise Exception(num_pcs_s)
+            # raise Exception(num_pcs_s)
 
-#         print("printing path conditions")
-#         s.print_path_conditions_screen()
-#          
-#        s.print_path_conditions_file()
+        # print("printing path conditions")
+        # s.print_path_conditions_screen()
+        #
+        # s.print_path_conditions_file()
 
-
-
-    def _print_states(self,s):
+    def _print_states(self, s):
         for state in s.symbStateSpace:
-            print "----------"
+            print
+            "----------"
             if state == ():
-                print 'Empty'
+                print
+                'Empty'
             else:
                 for s in state:
-                    print s.name
+                    print
+                    s.name
 
 
 if __name__ == "__main__":
@@ -160,7 +181,10 @@ if __name__ == "__main__":
 
     parser.add_argument('--num_pcs', type = int, default = -1,
                         help = 'Number of path conditions which should be produced by this test (default: -1)')
-    
+
+    parser.add_argument('--num_rules', type = int, default = -1,
+                        help = 'Number of rules in the transformation (default: -1)')
+
     args = parser.parse_args()
 
     mbeddr = Test()
