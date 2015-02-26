@@ -116,7 +116,7 @@ class Test():
         #TODO: Change this number if you are modifying the transformation at all
         #transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
         #transformation=  [[a1], [b1,b2,b3], [c3], [d1]]#collapsable
-        transformation=  [[a1], [b3 ], [c1]]
+        transformation=  [[a1], [b3], [c1]]
         #transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
         
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
@@ -198,8 +198,8 @@ class Test():
         ######Syntactic COntracts - Begin
         InstStateSameName=AtomicStateProperty(HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart1_2_IsolatedConnectedLHS())
         ######Syntactic COntracts - ENd
-        finalresult=StateProperty.verifyCompositeStateProperty(s,InstStateSameName)
-        #to debug tomorrow par2ProcsFULL
+        finalresult=StateProperty.verifyCompositeStateProperty(s,par2ProcsFULL)
+        #to debug tomorrow par2ProcsFULL InstStateSameName
         #finalresult=StateProperty.verifyCompositeStateProperty(s, collapsable) 
         print ('finalresult : ')
         print (finalresult)
