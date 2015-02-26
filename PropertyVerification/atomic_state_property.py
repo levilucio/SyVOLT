@@ -86,6 +86,8 @@ class AtomicStateProperty(StateProperty):
                     #self.verifiedStateCache.append((inputstate,numberOfIsolatedMatches))
                     self.incrementNumberOfTimesFoundMatch()
                     if StateSpace.verbosity >= 1: print '        Found Apply!'
+                    #debug1=s.match_sets[s.current].matches[0]
+                    #print (str(len(s.match_sets[s.current].matches)))
                 else:
                     if StateSpace.verbosity >= 1: print '        Could not find Apply!'
                     found_counterexample = True
