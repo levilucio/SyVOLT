@@ -26,10 +26,10 @@ global global_hp
 global_profile_memory= False
 
 if global_profile_memory:
-
+ 
     #import heapy
     from guppy import hpy
-
+ 
     #create the heapy object
     global_hp = hpy()
 
@@ -246,10 +246,10 @@ class PathConditionGenerator():
 
         print('Transformation:')
         for layer in range(len(self.transformation)):
-           print('Layer ' + str(layer))
-           for rule in self.transformation[layer]:
-               print(rule.name)
-           print('\n')
+            print('Layer ' + str(layer))
+            for rule in self.transformation[layer]:
+                print(rule.name)
+                #print('\n')
 
 
         # merge rules of the same layer that share common match patterns over those match patterns   
@@ -543,6 +543,9 @@ class PathConditionGenerator():
                         print rule.name
                         print "Combining with:"
                         print "Path Condition:" + self.pathConditionSet[pathCondition].name
+                    if self.verbosity >= 1:
+                        print "Number of Path Conditions generated so far: " +  str(len(layerPathCondAccumulator))
+                        print "Number of Path Conditions to go in this layer: " +  str(len(self.pathConditionSet) - pathCondition)
                         
                     # first check if the rule requires any other rules to execute with it,
                     # in case of rule overlapping. If all the rules that are required to execute
@@ -587,7 +590,7 @@ class PathConditionGenerator():
                     
                     # the rule is disjointly added to the path condition
                     if self.ruleCombinators[rule.name] == None:
-                        if self.verbosity >= 1 : print "Case 1: Rule has no dependencies"
+                        if self.verbosity >= 2 : print "Case 1: Rule has no dependencies"
                         
                         localPathConditionLayerAccumulator = []
                         
@@ -626,7 +629,7 @@ class PathConditionGenerator():
                         p.graph = self.pathConditionSet[pathCondition]  
                         ruleBackwardLinksMatcher.packet_in(p)
                         if not ruleBackwardLinksMatcher.is_success:
-                            if self.verbosity >= 1 : print "Case 2: Rule has dependencies but cannot execute"
+                            if self.verbosity >= 2 : print "Case 2: Rule has dependencies but cannot execute"
                     
                         else:
 
@@ -634,7 +637,7 @@ class PathConditionGenerator():
                             # Case 3: Rule has dependencies that may or will execute     
                             ######################################################################### 
         
-                            if self.verbosity >= 1 : print "Case 3: Rule has dependencies that may or will execute"
+                            if self.verbosity >= 2 : print "Case 3: Rule has dependencies that may or will execute"
                             
                             # go through all LHS (matchers) in rule combinators
                             for combinator in range(len(self.ruleCombinators[rule.name])):
@@ -742,7 +745,9 @@ class PathConditionGenerator():
 #                                                 print "Parent is: " + parentPathCondition[layerPathCondAccumulator[currentPathCondition]]
 #                                                 print "----------------------"
                                                     
-                                                if self.verbosity >= 2: print "Created path condition with name: " + newPathCond.name                                          
+                                                if self.verbosity >= 2:
+                                                    print "Created path condition with name: " + newPathCond.name   
+                                                                                   
                                             
                                     layerPathCondAccumulator.extend(partialTotalPathCondLayerAccumulator)
                            

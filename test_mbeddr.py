@@ -98,7 +98,7 @@ class Test():
         d5 = self.rules['Hlayer3rule5']
 
         expected_num_pcs = args.num_pcs
-        transformation = [[a0,a1,a2,a3,a4,a5,a6, a7, a8, a9, a10, a11]]#,[b0, b1, b2, b3,b4,b5,b6,b7,b8, b9, b10, b11, b12, b13,b14,b15]]#,[c0,c1,c2,c3],[d0,d1,d2,d3,d4,d5]]
+        transformation = [[a0,a1,a2,a3,a4,a5,a6, a7, a8, a9, a10, a11],[b0, b1, b2, b3,b4,b5,b6,b7,b8, b9, b10, b11, b12,b13]]#,b14,b15]],[c0,c1,c2,c3],[d0,d1,d2,d3,d4,d5]]
           
         pre_metamodel = ["MT_pre__mbeddr_MM", "MoTifRule"]
         post_metamodel = ["MT_post__mbeddr", "MoTifRule"]
@@ -112,7 +112,7 @@ class Test():
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
  
         s = PathConditionGenerator(transformation, self.ruleCombinators,
-                                   self.ruleTraceCheckers, self.matchRulePatterns, 2, draw_svg = args.draw_svg, run_tests = args.run_tests)
+                                   self.ruleTraceCheckers, self.matchRulePatterns, 1, draw_svg = args.draw_svg, run_tests = args.run_tests)
         ts0 = time.time()
         s.build_path_conditions()
         ts1 = time.time()
