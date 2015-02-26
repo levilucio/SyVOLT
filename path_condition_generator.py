@@ -517,10 +517,14 @@ class PathConditionGenerator():
         for layer in range(len(self.transformation)):
             
             # for each path condition built so far, combine it with each of the rules from the current layer
-           
+
+            #store the old length
+            pathConSetLength = len(self.pathConditionSet)
+
             # the path condition set generated for the layer being treated starts off with the set of path
             # conditions generated for the previous layer
-            layerPathCondAccumulator = deepcopy(self.pathConditionSet)
+            # layerPathCondAccumulator = deepcopy(self.pathConditionSet)
+            layerPathCondAccumulator = self.pathConditionSet
             
             # build a dictionary to remember which path condition in the current layer is built from
             # which path condition from the previous layer
@@ -535,11 +539,13 @@ class PathConditionGenerator():
             for pc in layerPathCondAccumulator:
                 parentPathCondition[pc] = pc.name
             
-            for pathCondition in range(len(self.pathConditionSet)):
+            for pathConditionIndex in range(pathConSetLength):
 
                 # for each rule in the current layer, combine it with the path condition.
                 # start with the local path condition set with just a copy of the path condition being combined.
-                
+
+                pathCondition = self.pathConditionSet[pathConditionIndex]
+
 #                 pathConditionCopy = deepcopy(self.pathConditionSet[pathCondition])
 #                 pathCondAndRuleCombAccumulator = [pathConditionCopy]
                 
@@ -550,10 +556,10 @@ class PathConditionGenerator():
                         print "Treating rule:"
                         print rule.name
                         print "Combining with:"
-                        print "Path Condition:" + self.pathConditionSet[pathCondition].name
+                        print "Path Condition:" + pathCondition.name
                     if self.verbosity >= 1:
                         print "Number of Path Conditions generated so far: " +  str(len(layerPathCondAccumulator))
-                        print "Number of Path Conditions to go in this layer: " +  str(len(self.pathConditionSet) - pathCondition)
+                        print "Number of Path Conditions to go in this layer: " +  str(pathConSetLength - pathConditionIndex)
                         
                     # first check if the rule requires any other rules to execute with it,
                     # in case of rule overlapping. If all the rules that are required to execute
@@ -578,7 +584,7 @@ class PathConditionGenerator():
                     # the rule name separator, so rules names cannot have underscores
                    
                     combinationIsPossible = True                
-                    if requiredRules != []:
+                    if requiredRules is not []:
                         namesOfRulesinPathCond = pathCondition.name.split("_")
                         for rule in requiredRules:
                             if rule.name not in set(namesOfRulesinPathCond):
@@ -597,7 +603,7 @@ class PathConditionGenerator():
                     ######################################
                     
                     # the rule is disjointly added to the path condition
-                    if self.ruleCombinators[rule.name] == None:
+                    if self.ruleCombinators[rule.name] is None:
                         if self.verbosity >= 2 : print "Case 1: Rule has no dependencies"
                         
                         localPathConditionLayerAccumulator = []
@@ -605,7 +611,7 @@ class PathConditionGenerator():
                         for currentPathCondition in range(len(layerPathCondAccumulator)):
 
                             # look for the right path conditions
-                            if parentPathCondition[layerPathCondAccumulator[currentPathCondition]] == self.pathConditionSet[pathCondition].name:                          
+                            if parentPathCondition[layerPathCondAccumulator[currentPathCondition]] == pathCondition.name:
                                 # create a new path condition which is the result of combining the rule with the current path condition being examined
                                 newPathCond = deepcopy(layerPathCondAccumulator[currentPathCondition])
                                 newPathCond = disjoint_model_union(newPathCond,rule)
@@ -634,7 +640,7 @@ class PathConditionGenerator():
                         # check if the backward links cannot be found by matching them on the path condition
                         
                         p = Packet()
-                        p.graph = self.pathConditionSet[pathCondition]  
+                        p.graph = pathCondition
                         ruleBackwardLinksMatcher.packet_in(p)
                         if not ruleBackwardLinksMatcher.is_success:
                             if self.verbosity >= 2 : print "Case 2: Rule has dependencies but cannot execute"
@@ -664,7 +670,7 @@ class PathConditionGenerator():
                                 # find all the matches of the rule combinator in the path condition that the rule combines with
                                 
                                 p = Packet()
-                                p.graph = self.pathConditionSet[pathCondition]
+                                p.graph = pathCondition
                                 
                                 combinatorMatcher.packet_in(p)
                                                                 
@@ -696,7 +702,7 @@ class PathConditionGenerator():
                                         # includes all the rules from the path condition of the previous layer the rule is being executed
                                         # against (pathCondition) and if the rule hasn't executed yet on that path condition
                                                                                 
-                                        if parentPathCondition[layerPathCondAccumulator[currentPathCondition]] == self.pathConditionSet[pathCondition].name:
+                                        if parentPathCondition[layerPathCondAccumulator[currentPathCondition]] == pathCondition.name:
                                                                      
                                             # if the combinator is not the total one, make a copy of the path condition in the set 
                                             # of combinations generated so far.
