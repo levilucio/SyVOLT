@@ -43,9 +43,10 @@ def do_cprofile(func):
     def profiled_func(*args, **kwargs):
         profile = cProfile.Profile()
         try:
+            profile.enable()
             if global_profile_memory:
                 global_hp.setref()
-            profile.enable()
+
             result = func(*args, **kwargs)
             profile.disable()
             return result
@@ -65,6 +66,14 @@ def do_cprofile(func):
                 print(h.byrcs)
                 print(h.referents)
 
+                print("\nreferents[0]:")
+                print(h.referents[0].byid)
+                print(h.referents[0].byvia)
+                print(h.referents[0].byrcs)
+                print(h.referents[0].referents)
+
+
+
             s = StringIO.StringIO()
             sortby = 'time'
             ps = pstats.Stats(profile, stream = s).sort_stats(sortby)
@@ -72,7 +81,7 @@ def do_cprofile(func):
 
             print("Time usage:")
             time_table = str(s.getvalue()).split("\n")
-            for i in range(15):
+            for i in range(25):
                 if i >= len(time_table):
                     break
 
@@ -129,26 +138,6 @@ class PathConditionGenerator():
     def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, verbosity, draw_svg = True, run_tests=True):
         # the empty path condition
         from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
-
-        # transformation to forward the cardinalities to the apply models
-        from property_prover_rules.cardinality_resolution.Himesis.HForwardCardinalitiesToApplyModelLHS import \
-            HForwardCardinalitiesToApplyModelLHS
-        from property_prover_rules.cardinality_resolution.Himesis.HForwardCardinalitiesToApplyModelRHS import \
-            HForwardCardinalitiesToApplyModelRHS
-
-        # transformation to built traceability for rules
-        from property_prover_rules.traceability_construction.Himesis.HBuildTraceabilityForRuleLHS import \
-            HBuildTraceabilityForRuleLHS
-        from property_prover_rules.traceability_construction.Himesis.HBuildTraceabilityForRuleRHS import \
-            HBuildTraceabilityForRuleRHS
-
-
-
-
-        # declare the necessary T-Core rules
-        self.forward_cardinalities_to_apply = SRule(HForwardCardinalitiesToApplyModelLHS(),
-                                               HForwardCardinalitiesToApplyModelRHS())
-        self.build_traceability_for_rule = FRule(HBuildTraceabilityForRuleLHS(), HBuildTraceabilityForRuleRHS())
 
 
         self.transformation = transformation
@@ -231,6 +220,15 @@ class PathConditionGenerator():
         2) Merge rules of the same layer that share common match patterns over those match patterns (G- while merging their cardinalities too using cardinality algebra ?)
         3) G - Build traceability links for merged rules
         """
+
+        # transformation to forward the cardinalities to the apply models
+        # from property_prover_rules.cardinality_resolution.Himesis.HForwardCardinalitiesToApplyModelLHS import \
+        #    HForwardCardinalitiesToApplyModelLHS
+        #from property_prover_rules.cardinality_resolution.Himesis.HForwardCardinalitiesToApplyModelRHS import \
+        #    HForwardCardinalitiesToApplyModelRHS
+        # declare the necessary T-Core rules
+        # self.forward_cardinalities_to_apply = SRule(HForwardCardinalitiesToApplyModelLHS(),
+        # HForwardCardinalitiesToApplyModelRHS())
 
 #         print("----------------Start pre-process")
 #         # forward the cardinalities to the apply part of the rules
@@ -456,16 +454,26 @@ class PathConditionGenerator():
 #             orderedRules.extend(topRules)
             
         # TODO: now traceability is being built for all rules. We only need traceability for the rules that have no dependencies, 
-        # as the others are built by the combinators associated to the rule      
-        
+        # as the others are built by the combinators associated to the rule
+
+        # transformation to built traceability for rules
+        from property_prover_rules.traceability_construction.Himesis.HBuildTraceabilityForRuleLHS import \
+            HBuildTraceabilityForRuleLHS
+        from property_prover_rules.traceability_construction.Himesis.HBuildTraceabilityForRuleRHS import \
+            HBuildTraceabilityForRuleRHS
+
+        build_traceability_for_rule = FRule(HBuildTraceabilityForRuleLHS(), HBuildTraceabilityForRuleRHS())
+
         for layerIndex in range(0, len(self.transformation)):
             for ruleIndex in range(0, len(self.transformation[layerIndex])):
                 p = Packet()
                 p.graph = self.transformation[layerIndex][ruleIndex]
 #                p = build_traceability_no_backward.packet_in(p)
 #                p = build_traceability_with_backward.packet_in(p)
-                p = self.build_traceability_for_rule.packet_in(p)
-                self.transformation[layerIndex][ruleIndex] =  p.graph
+                p = build_traceability_for_rule.packet_in(p)
+
+
+                self.transformation[layerIndex][ruleIndex] = p.graph
 
                 if self.draw_svg:
                     graph_to_dot("traced_" + self.transformation[layerIndex][ruleIndex].name , self.transformation[layerIndex][ruleIndex])
