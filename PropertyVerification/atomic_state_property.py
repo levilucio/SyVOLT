@@ -86,7 +86,10 @@ class AtomicStateProperty(StateProperty):
                     #self.verifiedStateCache.append((inputstate,numberOfIsolatedMatches))
                     self.incrementNumberOfTimesFoundMatch()
                     if StateSpace.verbosity >= 1: print '        Found Apply!'
-                    #debug1=s.match_sets[s.current].matches[0]
+                    debug1=s.match_sets[s.current].matches[0]
+                    #debug1 is a dictionary structure
+                    #str(debug1['1']) ... u can find a function that returns all keys of a dictionary
+                    #then iterate on all the keys and convert them to string to use them for cross matching
                     #print (str(len(s.match_sets[s.current].matches)))
                 else:
                     if StateSpace.verbosity >= 1: print '        Could not find Apply!'
