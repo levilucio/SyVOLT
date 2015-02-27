@@ -85,8 +85,20 @@ class StateProperty(Property):
                 #curlist=listDictionaries2ListLists(prop.get_matchesOfTotal())
                 listOfListsOfMatches.append(curlist)
         
-        for i in len(listOfListsOfMatches):
-            listOfMatchesCurAtProp=listOfListsOfMatches[i]
+        for atpropindex in len(listOfListsOfMatches):
+                curmatches = listOfListsOfMatches[atpropindex]
+                for match in curmatches:
+                    for anotherAtPropIndex in len(listOfListsOfMatches):
+                        if anotherAtPropIndex==atpropindex :
+                            continue
+                        foundoverlap=False
+                        curMatchesInAnotherAtProp = listOfListsOfMatches[anotherAtPropIndex]
+                        for matchInAnotherAtProp in curMatchesInAnotherAtProp:
+                            if (len(set(match).intersection(set(matchInAnotherAtProp)))>0):
+                                foundoverlap=True
+                                break
+                        if foundoverlap==False:
+                            return False    
         return True
     
 #     @staticmethod
