@@ -70,27 +70,34 @@ class Himesis(ig.Graph):
         # Set universally unique identifiers for the graph and each node
         if not hasattr(self, 'is_compiled'):
             self.is_compiled = False    # this instance is not yet compiled
-            self[Himesis.Constants.GUID] = uuid.uuid4()
+            self[Himesis.Constants.GUID] = nprnd.randint(9223372036854775806)
             for n in self.node_iter():
-                self.vs[n][Himesis.Constants.GUID] = uuid.uuid4()
+                self.vs[n][Himesis.Constants.GUID] = nprnd.randint(9223372036854775806)
         # A fast lookup of the node's index by its guid
         # - disable this lookup to save memory
         #self.nodes_id = {}
 
         # The following attributes are used by the compiler
-        self.execute_body = ''          # holds the content of the execute method
-        self.execute_parameters = []    # holds the arguments of the execute method
-        self.execute_doc = ''           # holds the docstring of the execute method
-        self.init_params = []           # If any further parameters are required for instantiating a sub-class
+
+        #disable these attributes to save memory
+        #self.execute_body = None        # holds the content of the execute method
+        #self.execute_parameters = []    # holds the arguments of the execute method
+        #self.execute_doc = ''           # holds the docstring of the execute method
+
+        #self.init_params = []           # If any further parameters are required for instantiating a sub-class
         #self.import_name = 'Himesis'    # holds the name of the super-class (one of those in this module) of this instance
 
     def copy(self):
         cpy = ig.Graph.copy(self)
         # cpy.nodes_id = copy.deepcopy(self.nodes_id)
-        cpy.execute_body = copy.deepcopy(self.execute_body)
-        cpy.execute_parameters = copy.deepcopy(self.execute_parameters)
-        cpy.execute_doc = copy.deepcopy(self.execute_doc)
-        cpy.init_params = copy.deepcopy(self.init_params)
+
+        # only copy these if necessary
+        if hasattr(self, "execute_body"):
+            cpy.execute_body = copy.deepcopy(self.execute_body)
+            cpy.execute_parameters = copy.deepcopy(self.execute_parameters)
+            cpy.execute_doc = copy.deepcopy(self.execute_doc)
+
+        # cpy.init_params = copy.deepcopy(self.init_params)
         #cpy.import_name = copy.deepcopy(self.import_name)
         cpy.is_compiled = copy.deepcopy(self.is_compiled)
         cpy.name = copy.deepcopy(self.name)
@@ -192,11 +199,10 @@ class Himesis(ig.Graph):
         return ig.plot(self, bbox=(0, 0, width, height), **visual_style)
     
     def _compile_additional_info(self, file):
-        s = ''
-        if self.execute_body:
+        if hasattr(self, "execute_body"):
             s = '''
     def execute(self'''
-            if self.execute_parameters:
+            if hasattr(self, "execute_parameters"):
                 params = ', %s' * len(self.execute_parameters)
                 s += params % tuple(self.execute_parameters)
             s += '''):
@@ -231,13 +237,13 @@ class Himesis(ig.Graph):
             return '''
         %s = pickle.loads("""%s""")''' % (access, pickle.dumps(value))
     
-    def compile(self, file_path):
+    def compile(self, file_path, init_params = []):
         """
         Compiles the graph into a Python file.
         Compilation is recursive: i.e., all sub-graphs are also compiled.
         @param file_path: The path of the output file.
         """
-        
+
         # Make sure the directory exists
         # If the path contains the output file name, it will be replaced by the default one
         if os.path.isfile(file_path):
@@ -290,15 +296,15 @@ from core.himesis import Himesis''')
             if class_name != 'Himesis':
                 file.write(''', %s''' % class_name)
             
-            init_params = ''
+            init_params2 = ''
             init_params_values = ''
-            if len(self.init_params) > 0:
-                init_params = reduce(lambda p1, p2: p1 + p2,
+            if len(init_params) > 0:
+                init_params2 = reduce(lambda p1, p2: p1 + p2,
                                     map(lambda p: ', %s' % p,
-                                        self.init_params))
+                                        init_params))
                 init_params_values = reduce(lambda p1, p2: p1 + p2,
                                             map(lambda p: ', %s=%s' % (p, p),
-                                                self.init_params))
+                                                init_params))
             file.write('''
 import cPickle as pickle
 from uuid import UUID
@@ -314,7 +320,7 @@ class %s(%s):
         super(%s, self).__init__(name='%s', num_nodes=%d, edges=[]%s)
 ''' % (self.name,
        class_name,
-       init_params,
+       init_params2,
        self.name,
        self.name,
        self.name,
@@ -534,9 +540,12 @@ class HimesisPreConditionPatternNAC(HimesisPreConditionPattern):
         super(HimesisPreConditionPatternNAC, self).__init__(name, num_nodes, edges)
         self.LHS = LHS
         self.bridge = None
-        self.init_params.append('LHS')
+        #self.init_params.append('LHS')
         #self.import_name = 'HimesisPreConditionPatternNAC'
-    
+
+    def compile(self, file_path):
+        super(HimesisPreConditionPatternNAC, self).compile(file_path, ['LHS'])
+
     def _compile_additional_info(self, file):
         """
         Compiles the bridge between this NAC and its LHS.

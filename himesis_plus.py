@@ -100,7 +100,7 @@ def makePreConditionPattern(graph):
     graph.nodes_pivot_in = {}
 
     #from HimesisPreConditionPatternLHS
-    graph.import_name = 'HimesisPreConditionPatternLHS'
+    #graph.import_name = 'HimesisPreConditionPatternLHS'
     graph.NACs = []
 
     return graph
@@ -113,8 +113,7 @@ def makePreConditionPatternNAC(graph):
 
     graph.LHS = None
     graph.bridge = None
-    graph.init_params.append('LHS')
-    graph.import_name = 'HimesisPreConditionPatternNAC'
+    #graph.import_name = 'HimesisPreConditionPatternNAC'
 
     return graph
 
@@ -133,7 +132,7 @@ def makePostConditionPattern(old_graph):
 
     #from HimesisPostConditionPattern
     graph.pre = None
-    graph.import_name = 'HimesisPostConditionPattern'
+    #graph.import_name = 'HimesisPostConditionPattern'
 
     return graph
 
