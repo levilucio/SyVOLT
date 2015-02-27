@@ -82,7 +82,7 @@ class Himesis(ig.Graph):
         self.execute_parameters = []    # holds the arguments of the execute method
         self.execute_doc = ''           # holds the docstring of the execute method
         self.init_params = []           # If any further parameters are required for instantiating a sub-class
-        self.import_name = 'Himesis'    # holds the name of the super-class (one of those in this module) of this instance
+        #self.import_name = 'Himesis'    # holds the name of the super-class (one of those in this module) of this instance
 
     def copy(self):
         cpy = ig.Graph.copy(self)
@@ -91,7 +91,7 @@ class Himesis(ig.Graph):
         cpy.execute_parameters = copy.deepcopy(self.execute_parameters)
         cpy.execute_doc = copy.deepcopy(self.execute_doc)
         cpy.init_params = copy.deepcopy(self.init_params)
-        cpy.import_name = copy.deepcopy(self.import_name)
+        #cpy.import_name = copy.deepcopy(self.import_name)
         cpy.is_compiled = copy.deepcopy(self.is_compiled)
         cpy.name = copy.deepcopy(self.name)
         return cpy
@@ -266,12 +266,29 @@ class Himesis(ig.Graph):
             # We save the list as an object attribute, because it might be used by a sub-class' compiler
             self.ordered_nodes = sorted(self.node_iter(),
                                    key=lambda v: meta_models[self.vs[v][Himesis.Constants.META_MODEL]])
-            
+
+            himesis_classes = ["Himesis", "HimesisPattern",
+                               "HimesisPreConditionPattern", "HimesisPreConditionPatternLHS",
+                               "HimesisPreConditionPatternNAC", "HimesisPostConditionPattern"]
+            class_name = str(self.__class__.__name__)
+
+            if class_name not in himesis_classes:
+                # This class is not a himesis class
+                # so we need to get the name of the first base class
+                # (probably HimesisPreConditionPatternLHS)
+                base_class = self.__class__.__bases__[0]
+                class_name = str(base_class.__name__)
+
+            #if class_name != str(self.import_name):
+             #   raise Exception("Could not find the same name as self.import_name!")
+
             file.write('''
 
 from core.himesis import Himesis''')
-            if self.import_name != 'Himesis':
-                file.write(''', %s''' % self.import_name)
+
+
+            if class_name != 'Himesis':
+                file.write(''', %s''' % class_name)
             
             init_params = ''
             init_params_values = ''
@@ -296,7 +313,7 @@ class %s(%s):
         
         super(%s, self).__init__(name='%s', num_nodes=%d, edges=[]%s)
 ''' % (self.name,
-       self.import_name,
+       class_name,
        init_params,
        self.name,
        self.name,
@@ -406,7 +423,7 @@ class HimesisPattern(Himesis):
 class HimesisPreConditionPattern(HimesisPattern):
     def __init__(self, name='', num_nodes=0, edges=[]):
         super(HimesisPreConditionPattern, self).__init__(name, num_nodes, edges)
-        self.import_name = 'HimesisPreConditionPattern'
+        #self.import_name = 'HimesisPreConditionPattern'
         self.nodes_pivot_in = {}
     
     def get_pivot_in(self, pivot):
@@ -474,7 +491,7 @@ class HimesisPreConditionPattern(HimesisPattern):
 class HimesisPreConditionPatternLHS(HimesisPreConditionPattern):
     def __init__(self, name='', num_nodes=0, edges=[]):
         super(HimesisPreConditionPatternLHS, self).__init__(name, num_nodes, edges)
-        self.import_name = 'HimesisPreConditionPatternLHS'
+        #self.import_name = 'HimesisPreConditionPatternLHS'
         self.NACs = []
     
     def _compile_additional_info(self, file):
@@ -518,7 +535,7 @@ class HimesisPreConditionPatternNAC(HimesisPreConditionPattern):
         self.LHS = LHS
         self.bridge = None
         self.init_params.append('LHS')
-        self.import_name = 'HimesisPreConditionPatternNAC'
+        #self.import_name = 'HimesisPreConditionPatternNAC'
     
     def _compile_additional_info(self, file):
         """
@@ -645,7 +662,7 @@ class HimesisPostConditionPattern(HimesisPattern):
     def __init__(self, name='', num_nodes=0, edges=[]):
         super(HimesisPostConditionPattern, self).__init__(name, num_nodes, edges)
         self.pre = None
-        self.import_name = 'HimesisPostConditionPattern'
+        #self.import_name = 'HimesisPostConditionPattern'
     
     def action(self, MTpre, MTpost):
         """

@@ -146,6 +146,8 @@ def buildPreListFromClassNames(classNameList):
 
 #FIXME to be proper
 #could be smarter depending on the type
+
+#TODO: Use Himesis' copy operation to do this
 def copy_graph(graph2):
     graph1 = copy.deepcopy(graph2)
 
@@ -164,7 +166,7 @@ def copy_graph(graph2):
     except AttributeError:
         pass
 
-    graph1.import_name = copy.deepcopy(graph2.import_name)
+    #graph1.import_name = copy.deepcopy(graph2.import_name)
 
     try:
         graph1.NACs = copy.deepcopy(graph2.NACs)
