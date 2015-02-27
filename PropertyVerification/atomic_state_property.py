@@ -19,6 +19,7 @@ class AtomicStateProperty(StateProperty):
     propFalseForAtleastOneCollapsedState=None
     NumberOfTimesPropWasChecked=None
     NumberOfTimesFoundMatch=None
+    matchesOfTotal=None
     #"propFalseForAtleastOneCollapsedState" is added as a flag to know whether or not the last record in an AtomiStateProperty's verifiedStateCache needs to be removed, if the atomicStateProperty's complete pattern had no match for one of the collapsed states of the current state being checked
 
     def __init__(self, isolated, connected, completeQuantified): #isolated was the first param after self
@@ -34,6 +35,7 @@ class AtomicStateProperty(StateProperty):
         self.propFalseForAtleastOneCollapsedState=False
         self.NumberOfTimesPropWasChecked=0
         self.NumberOfTimesFoundMatch=0
+        self.matchesOfTotal=[]
         #In AtomicStateProperty, we added the attribute "NumberOfTimesPropWasChecked" to be used when adding entries to the AtomicStateProperty's verifiedStateCache
         #i.e., sometimes if you are verifying an AndStateProperty, if the first atomicStateProperty evaluates to False, then the second AtomicStateProperty is not evaluated at all..
         #In that case, you cannot add an entry to the verifiedStateCache of the second AtomicStateProperty since that AtomicStateProperty was not even evaluated for all the collapsed state of that merged state...
@@ -53,7 +55,17 @@ class AtomicStateProperty(StateProperty):
         
     def resetpropFalseForAtleastOneCollapsedState(self):
         self.propFalseForAtleastOneCollapsedState=False
-          
+    
+    def reset_matchesOfTotal(self):
+        self.matchesOfTotal=[]
+        
+    def set_matchesOfTotal(self,inputmatches):
+        self.matchesOfTotal=inputmatches 
+        
+    def get_matchesOfTotal(self):
+        return self.matchesOfTotal  
+    
+    
     def verify(self,inputstate, StateSpace=None):
         #Check if the AtomicStateProp verification result was preset to some value. 
         ###### If yes, return that value. 
@@ -86,7 +98,7 @@ class AtomicStateProperty(StateProperty):
                     #self.verifiedStateCache.append((inputstate,numberOfIsolatedMatches))
                     self.incrementNumberOfTimesFoundMatch()
                     if StateSpace.verbosity >= 1: print '        Found Apply!'
-                    debug1=s.match_sets[s.current].matches[0]
+                    self.set_matchesOfTotal(s.match_sets[s.current].matches)
                     #debug1 is a dictionary structure
                     #str(debug1['1']) ... u can find a function that returns all keys of a dictionary
                     #then iterate on all the keys and convert them to string to use them for cross matching
@@ -94,6 +106,7 @@ class AtomicStateProperty(StateProperty):
                 else:
                     if StateSpace.verbosity >= 1: print '        Could not find Apply!'
                     found_counterexample = True
+                    self.set_matchesOfTotal([])
                     # match part of the property was found, but apply not, thus we found a counterexample
             else:
                 if StateSpace.verbosity >= 1:  print '        Could not find Match!'

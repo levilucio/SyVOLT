@@ -63,6 +63,38 @@ class StateProperty(Property):
                 StateProperty.getAllAtomicStatePropsInStateProp(op,result)
         return result
     
+    @staticmethod
+    def twoOrMoreAtomicPropsAreTrue (atomicProps):
+        if (len(atomicProps)>1):
+            ctr=0
+            for prop in atomicProps:
+                if (prop.GETverifResult()==True) and (prop.GEThasDefaultVerifResult()==True) and (len(prop.get_matchesOfTotal())>0):
+                    ctr=ctr+1
+                    if (ctr == 2):
+                        return True
+        return False
+    
+    @staticmethod
+    def CheckConsistencyFunc (atomicProps):
+        listOfListsOfMatches=[]
+        for prop in atomicProps:
+            if ((len(prop.get_matchesOfTotal())>0) and (prop.GEThasDefaultVerifResult()==True) and (prop.GETverifResult()==True)):
+                curlist=[]
+                for dict in prop.get_matchesOfTotal():
+                    curlist.append(dict.values())
+                #curlist=listDictionaries2ListLists(prop.get_matchesOfTotal())
+                listOfListsOfMatches.append(curlist)
+        
+        for i in len(listOfListsOfMatches):
+            listOfMatchesCurAtProp=listOfListsOfMatches[i]
+        return True
+    
+#     @staticmethod
+#     def listDictionaries2ListOfLists (listDicts):
+#         oplist=[]
+#         for dict in listDicts:
+#             oplist.append( dict.values())
+    
     @staticmethod    
     def verifyCompositeStateProperty(StateSpace, stateprop):
         """
@@ -88,7 +120,7 @@ class StateProperty(Property):
         found_counterexample=False
         curVerifResult=False
         StateSpace.pathConditionSet=StateSpace.pathConditionSet[1:]
-        #for state in StateSpace.symbStateSpace:
+        
         for state in StateSpace.pathConditionSet:
             if state != ():
                 if (state_index)==2:
@@ -228,13 +260,17 @@ class StateProperty(Property):
                         if StateSpace.verbosity >= 1: print '    Collapsed state ' + str(collapsed_state)
                         
                         curVerifResult=stateprop.verify(states_to_analyse[collapsed_state],StateSpace)
+                        if ((curVerifResult==True)) and (StateProperty.twoOrMoreAtomicPropsAreTrue(AtomicStatePropsInStateProp)):
+                            curVerifResult=curVerifResult and (StateProperty.CheckConsistencyFunc(AtomicStatePropsInStateProp))
                         
                         if curVerifResult==False: break
                         #"Remove from an AtomicStateProperty's verifiedStateCache the last tuple of (state,#ofmatches), if the complete pattern had no match"
                         for curatomicprop in AtomicStatePropsInStateProp:
+                            curatomicprop.reset_matchesOfTotal()
                             if ((curatomicprop.propFalseForAtleastOneCollapsedState==False) and (curatomicprop.GEThasDefaultVerifResult()==True) and (curatomicprop.GETverifResult()==False)):
                                 curatomicprop.propFalseForAtleastOneCollapsedState= True
                         
+
                     
                     #Add to AtomicStateProperty's verifiedStateCache the tuple (state,#ofmatches), if the complete pattern had a match
                     #If the curVerifResult== false, don't make this addition to the verifiedStateCaches of the atomicStateProperties - you won't be using them any more.
@@ -245,7 +281,11 @@ class StateProperty(Property):
                                           
                 else:
                     curVerifResult=stateprop.verify(merged_state, StateSpace)
-                
+                    #should I update verified state cache here too ? I think yes
+                    if ((curVerifResult==True)) and (StateProperty.twoOrMoreAtomicPropsAreTrue(AtomicStatePropsInStateProp)):
+                        curVerifResult=curVerifResult and (StateProperty.CheckConsistencyFunc(AtomicStatePropsInStateProp))
+                    for curatomicprop in AtomicStatePropsInStateProp:
+                            curatomicprop.reset_matchesOfTotal()
                 #if the composite state property does not hold for atleast one state, break out of the loop
                 found_counterexample=not(curVerifResult) 
                 if found_counterexample == True:
@@ -254,11 +294,13 @@ class StateProperty(Property):
                 #reset 'propFalseForAtleastOneCollapsedState' & 'verifResult' of all 
                 #    atomicStateProperties in the compositeStateProperty to false, so that they can be 
                 #    refilled when checking the compositeStateProperty for the next state
+                
                 for curatomicprop in AtomicStatePropsInStateProp:
                     curatomicprop.resetpropFalseForAtleastOneCollapsedState()
                     curatomicprop.resetVerifResultToFalse()
                     curatomicprop.resetNumberOfTimesPropWasChecked()
                     curatomicprop.resetNumberOfTimesFoundMatch()
+                    curatomicprop.reset_matchesOfTotal()
                     #In AtomicStateProperty, we added "NumberOfTimesPropWasChecked" to be used when adding entries to the AtomicStateProperty's verifiedStateCache
                     #i.e., sometimes if you are verifying an AndStateProperty, if the first atomicStateProperty evaluates to False, then the second AtomicStateProperty is not evaluated at all..
                     #In that case, you cannot add an entry to the verifiedStateCache of the second AtomicStateProperty since that AtomicStateProperty was not even evaluated for all the collapsed state of that merged state...
