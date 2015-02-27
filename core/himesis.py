@@ -402,45 +402,61 @@ class %s(%s):
 class HimesisPattern(Himesis):
     def __init__(self, name='', num_nodes=0, edges=[]):
         super(HimesisPattern, self).__init__(name, num_nodes, edges)
-        self.nodes_label = {}
-        self.nodes_pivot_out = {}
+
+        #disable these attributes to save memory
+        #self.nodes_label = {}
+        #self.nodes_pivot_out = {}
     
     def get_node_with_label(self, label):
         """
             Retrieves the index of the node with the specified label.
             @param label: The label of the node.
         """
-        if not self.nodes_label:
-            self.nodes_label = dict([(self.vs[i][Himesis.Constants.MT_LABEL], i) for i in self.node_iter()])
-        if label in self.nodes_label:
-            return self.nodes_label[label]
+        #if not self.nodes_label:
+        #    self.nodes_label = dict([(self.vs[i][Himesis.Constants.MT_LABEL], i) for i in self.node_iter()])
+        #if label in self.nodes_label:
+        #    return self.nodes_label[label]
+
+        for i in xrange(self.vcount()):
+            if label == self.vs[i][Himesis.Constants.MT_LABEL]:
+                return i
     
     def get_pivot_out(self, pivot):
         """
             Retrieves the index of the pivot node
             @param pivot: The label of the pivot.
         """
-        if not self.nodes_pivot_out and Himesis.Constants.MT_PIVOT_OUT in self.vs.attribute_names():
-            self.nodes_pivot_out = dict([(i, self.vs[i][Himesis.Constants.MT_PIVOT_OUT]) for i in self.node_iter()])
-        if pivot in self.nodes_pivot_out:
-            return self.nodes_pivot_out[pivot]
+        # if not self.nodes_pivot_out and Himesis.Constants.MT_PIVOT_OUT in self.vs.attribute_names():
+        #     self.nodes_pivot_out = dict([(i, self.vs[i][Himesis.Constants.MT_PIVOT_OUT]) for i in self.node_iter()])
+        # if pivot in self.nodes_pivot_out:
+        #     return self.nodes_pivot_out[pivot]
+
+        if Himesis.Constants.MT_PIVOT_OUT in self.vs.attribute_names():
+            for i in xrange(self.vcount()):
+                if pivot == self.vs[i][Himesis.Constants.MT_PIVOT_OUT]:
+                    return i
 
 
 class HimesisPreConditionPattern(HimesisPattern):
     def __init__(self, name='', num_nodes=0, edges=[]):
         super(HimesisPreConditionPattern, self).__init__(name, num_nodes, edges)
         #self.import_name = 'HimesisPreConditionPattern'
-        self.nodes_pivot_in = {}
+        #self.nodes_pivot_in = {}
     
     def get_pivot_in(self, pivot):
         """
             Retrieves the index of the pivot node
             @param pivot: The label of the pivot.
         """
-        if not self.nodes_pivot_in and Himesis.Constants.MT_PIVOT_IN in self.vs.attribute_names():
-            self.nodes_pivot_in = dict([(self.vs[i][Himesis.Constants.MT_PIVOT_IN], i) for i in self.node_iter()])
-        if pivot in self.nodes_pivot_in:
-            return self.nodes_pivot_in[pivot]
+        # if not self.nodes_pivot_in and Himesis.Constants.MT_PIVOT_IN in self.vs.attribute_names():
+        #     self.nodes_pivot_in = dict([(self.vs[i][Himesis.Constants.MT_PIVOT_IN], i) for i in self.node_iter()])
+        # if pivot in self.nodes_pivot_in:
+        #     return self.nodes_pivot_in[pivot]
+
+        if Himesis.Constants.MT_PIVOT_IN in self.vs.attribute_names():
+            for i in xrange(self.vcount()):
+                if pivot == self.vs[i][Himesis.Constants.MT_PIVOT_IN]:
+                    return i
     
     def constraint(self, PreMatch, graph):
         """
