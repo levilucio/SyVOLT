@@ -24,6 +24,7 @@ class StateProperty(Property):
     __metaclass__=ABCMeta
     hasDefaultVerifResult=None
     verifResult=None
+
     def SETverifResult (self, boolres):
         self.hasDefaultVerifResult= True
         self.verifResult=boolres
@@ -158,7 +159,7 @@ class StateProperty(Property):
                     s.graph = deepcopy(merged_state)
                 
                     #if StateSpace.outputStates:
-                    if StateSpace.verbosity >= 1:
+                    if StateSpace.draw_svg:
                         graph_to_dot('out' + str(state_index), s.graph)                
                 
                     isolated.packet_in(s)
@@ -270,7 +271,9 @@ class StateProperty(Property):
                         if StateSpace.verbosity >= 1:
                             s = Packet()
                             s.graph = states_to_analyse[collapsed_state]
-                            graph_to_dot('out' + str(state_index) + '_' + str(collapsed_state), s.graph)
+
+                            if StateSpace.draw_svg:
+                                graph_to_dot('out' + str(state_index) + '_' + str(collapsed_state), s.graph)
                         if StateSpace.verbosity >= 1: print '    Collapsed state ' + str(collapsed_state)
                         
                         curVerifResult=stateprop.verify(states_to_analyse[collapsed_state],StateSpace)

@@ -75,6 +75,21 @@ class Test():
         #print("Rules: " + str(self.rules.keys()))
 
 
+    def select_rules(self, full_transformation, num_rules):
+        selected_transformation = []
+
+        print("Selecting " + str(num_rules) + " rules")
+
+        i = 1
+        for layer in range(len(full_transformation)):
+            selected_transformation.append([])
+            for rule in full_transformation[layer]:
+                selected_transformation[layer].append(rule)
+                i += 1
+                if i > num_rules:
+                    print("Returning: " + str(selected_transformation))
+                    return selected_transformation
+
     def test_correct_uml2kiltera(self,args):
 
 #'HMapHeirarchyOfStates2HeirarchyOfProcs':  'HTransition2QInstSIBLING': < 'HState2HProcDef': 'HCompositeState2ProcDef':  'HTransition2ListenBranch':  'HExitPoint2BProcDef_WhetherOrNotExitPtHasOutgoingTrans':  'HBasicStateNoOutgoing2ProcDef':  'HBasicState2ProcDef': , 'HState2ProcDef'
@@ -114,10 +129,11 @@ class Test():
         #get the expected num from the args
         expected_num_pcs = args.num_pcs
         #TODO: Change this number if you are modifying the transformation at all
-        #transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
-        #transformation=  [[a1], [b1,b2,b3], [c3], [d1]]#collapsable
-        transformation=  [[a1], [b3], [c1]]
-        #transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
+        if args.num_rules == -1:
+            transformation = [[a1], [b1,b2,b3]]#, [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
+        else:
+            transformation = self.select_rules([[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
+
         
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
         post_metamodel = ["MT_post__UMLRT2Kiltera_MM", "MoTifRule"]
@@ -173,15 +189,16 @@ class Test():
 # #  
         print("printing path conditions")
         #s.print_path_conditions_screen()
-         
+
         s.print_path_conditions_file()
+
         atprop=AtomicStateProperty(HState2procdef_IsolatedLHS(),HState2procdef_IsolatedLHS(), HState2procdef_CompleteLHS())
         exitpt2procdefparprop_withattr=AtomicStateProperty(HExitpoint2procdefparTrue_IsolatedLHS(),HExitpoint2procdefparTrue_ConnectedLHS(),HExitpoint2procdefparTrue_CompleteLHS())
         exitpt2procdefparprop_noattr=AtomicStateProperty(HExitpoint2procdefparTrueNOATTR_IsolatedLHS(),HExitpoint2procdefparTrueNOATTR_ConnectedLHS(),HExitpoint2procdefparTrueNOATTR_CompleteLHS())
         atpropneg=AtomicStateProperty(HState2procdef_IsolatedLHS(), HState2procdef_IsolatedLHS(), HState2funcdefNEG_CompleteLHS())
         atpropNeedscollapse_no=AtomicStateProperty(HState2trans2exitptTrue_IsolatedLHS(),HState2trans2exitptTrue_ConnectedLHS(),HState2trans2exitptTrue_CompleteLHS())
-        collapsable=AtomicStateProperty(HTrans2instTRUE_IsolatedLHS(), HTrans2instTRUE_ConnectedLHS(),HTrans2instTRUE_CompleteLHS()) 
-        
+        collapsable=AtomicStateProperty(HTrans2instTRUE_IsolatedLHS(), HTrans2instTRUE_ConnectedLHS(),HTrans2instTRUE_CompleteLHS())
+
         ######Multiplicity Invariants - Begin
         #Par2Procs
         par2ProcsIfClause=AtomicStateProperty(HPar2ProcsPart1_2_IsolatedLHS(), HPar2ProcsPart1_2_IsolatedLHS(), HPar2ProcsPart1_CompleteLHS())
@@ -194,16 +211,16 @@ class Test():
         Trigger01Expr_part4=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(), HTrigger01ExprPart4_CompleteLHS())
         Trigger01ExprFULL=ImplicationStateProperty (Trigger01Expr_part1,OrStateProperty(AndStateProperty(Trigger01Expr_part2, NotStateProperty(Trigger01Expr_part3)),NotStateProperty(Trigger01Expr_part4)))
         ######Multiplicity INvariants - End
-        
+
         ######Syntactic COntracts - Begin
         InstStateSameName=AtomicStateProperty(HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart1_2_IsolatedConnectedLHS())
         ######Syntactic COntracts - ENd
         finalresult=StateProperty.verifyCompositeStateProperty(s,InstStateSameName)
         #to debug tomorrow par2ProcsFULL InstStateSameName
-        #finalresult=StateProperty.verifyCompositeStateProperty(s, collapsable) 
+        #finalresult=StateProperty.verifyCompositeStateProperty(s, collapsable)
         print ('finalresult : ')
         print (finalresult)
-# 
+#
 #         print("printing states")
 #         self._print_states(s)
 #         
@@ -341,6 +358,8 @@ if __name__ == "__main__":
     parser.add_argument('--num_pcs', type = int, default = -1,
                         help = 'Number of path conditions which should be produced by this test (default: -1)')
 
+    parser.add_argument('--num_rules', type = int, default = -1,
+                        help = 'Number of rules in the transformation (default: -1)')
     args = parser.parse_args()
 
 
