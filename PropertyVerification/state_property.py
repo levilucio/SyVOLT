@@ -85,10 +85,10 @@ class StateProperty(Property):
                 #curlist=listDictionaries2ListLists(prop.get_matchesOfTotal())
                 listOfListsOfMatches.append(curlist)
         
-        for atpropindex in len(listOfListsOfMatches):
+        for atpropindex in range(len(listOfListsOfMatches)):
                 curmatches = listOfListsOfMatches[atpropindex]
                 for match in curmatches:
-                    for anotherAtPropIndex in len(listOfListsOfMatches):
+                    for anotherAtPropIndex in range(len(listOfListsOfMatches)):
                         if anotherAtPropIndex==atpropindex :
                             continue
                         foundoverlap=False
@@ -98,7 +98,9 @@ class StateProperty(Property):
                                 foundoverlap=True
                                 break
                         if foundoverlap==False:
+                            print('Pivots of the state property are not consistent :(')
                             return False    
+        print('Pivots of the state property are consistent :)')
         return True
     
 #     @staticmethod
@@ -296,8 +298,8 @@ class StateProperty(Property):
                     #should I update verified state cache here too ? I think yes
                     if ((curVerifResult==True)) and (StateProperty.twoOrMoreAtomicPropsAreTrue(AtomicStatePropsInStateProp)):
                         curVerifResult=curVerifResult and (StateProperty.CheckConsistencyFunc(AtomicStatePropsInStateProp))
-                    for curatomicprop in AtomicStatePropsInStateProp:
-                            curatomicprop.reset_matchesOfTotal()
+                    #for curatomicprop in AtomicStatePropsInStateProp:
+                    #        curatomicprop.reset_matchesOfTotal()
                 #if the composite state property does not hold for atleast one state, break out of the loop
                 found_counterexample=not(curVerifResult) 
                 if found_counterexample == True:

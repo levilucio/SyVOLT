@@ -198,7 +198,7 @@ class Test():
         ######Syntactic COntracts - Begin
         InstStateSameName=AtomicStateProperty(HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart1_2_IsolatedConnectedLHS())
         ######Syntactic COntracts - ENd
-        finalresult=StateProperty.verifyCompositeStateProperty(s,par2ProcsFULL)
+        finalresult=StateProperty.verifyCompositeStateProperty(s,InstStateSameName)
         #to debug tomorrow par2ProcsFULL InstStateSameName
         #finalresult=StateProperty.verifyCompositeStateProperty(s, collapsable) 
         print ('finalresult : ')
