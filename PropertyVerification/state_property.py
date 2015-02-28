@@ -83,7 +83,6 @@ class StateProperty(Property):
                 curlist=[]
                 for dict in prop.get_matchesOfTotal():
                     curlist.append(dict.values())
-                #curlist=listDictionaries2ListLists(prop.get_matchesOfTotal())
                 listOfListsOfMatches.append(curlist)
         
         for atpropindex in range(len(listOfListsOfMatches)):
@@ -104,11 +103,6 @@ class StateProperty(Property):
         print('Pivots of the state property are consistent :)')
         return True
     
-#     @staticmethod
-#     def listDictionaries2ListOfLists (listDicts):
-#         oplist=[]
-#         for dict in listDicts:
-#             oplist.append( dict.values())
     
     @staticmethod    
     def verifyCompositeStateProperty(StateSpace, stateprop):
@@ -158,7 +152,6 @@ class StateProperty(Property):
                     s = Packet()
                     s.graph = deepcopy(merged_state)
                 
-                    #if StateSpace.outputStates:
                     if StateSpace.draw_svg:
                         graph_to_dot('out' + str(state_index), s.graph)                
                 
@@ -166,7 +159,6 @@ class StateProperty(Property):
                     if isolated.is_success:
                         if StateSpace.verbosity >= 1:
                             print 'State ' + str(state_index)
-                            #print StateSpace._pretty_print_state(state)
                             print state.name
                             print '    Found Property Elements'
                         
@@ -227,16 +219,12 @@ class StateProperty(Property):
                             #AtomicStatePropsInStateProp[atomicStatePropIndex].verifiedStateCache.append((state,numberOfIsolatedMatches))
                             cacheIsolatedPatternMatches.append(True)
                         else:
-                            #if StateSpace.verbosity >= 1: print '        Will not check state, property holds...'
-                            #cacheIsolatedPatternMatches.append(False)
-                            #AtomicStatePropsInStateProp[atomicStatePropIndex].SETverifResult(True)
                             if StateSpace.verbosity >= 1: print '        Will not check state, property holds...'
                             cacheIsolatedPatternMatches.append(False)
                             AtomicStatePropsInStateProp[atomicStatePropIndex].SETverifResult(True)
                     else: # did not succeed in matching isolated
                         if StateSpace.verbosity >= 1: 
                             print 'State ' + str(state_index) + ' '
-                            #print StateSpace._pretty_print_state(state)
                             print state.name
                             print '    Property Elements not found'            
                         numberOfIsolatedMatchesForAllAtomicStateProperties.append(-1)
@@ -267,7 +255,6 @@ class StateProperty(Property):
                     if StateSpace.verbosity >= 1: print '    Number of states to analyse: ' + str(len(states_to_analyse))
                        
                     for collapsed_state in range(len(states_to_analyse)):
-                        #if StateSpace.outputStates:
                         if StateSpace.verbosity >= 1:
                             s = Packet()
                             s.graph = states_to_analyse[collapsed_state]

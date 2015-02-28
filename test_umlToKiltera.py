@@ -134,7 +134,7 @@ class Test():
         else:
             transformation = self.select_rules([[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
 
-        
+        #transformation =[[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
         post_metamodel = ["MT_post__UMLRT2Kiltera_MM", "MoTifRule"]
 
@@ -175,20 +175,9 @@ class Test():
             num_pcs_s = "The number of produced path conditions is incorrect.\n" + str(expected_num_pcs) + " were expected, but " + str(len(s.pathConditionSet)) + " were produced."
             print(num_pcs_s)
             #raise Exception(num_pcs_s)
-
-
-# # #         print
-# # #         '\n'
-# # #         print
-# # #         'Time to verify True property: ' + str(tv01 - tv00)
-# # #         print
-# # #         '\n'
-# # #         print
-# # #         'Time to verify False property: ' + str(tv11 - tv10)
-# #  
-# #  
+ 
         print("printing path conditions")
-        #s.print_path_conditions_screen()
+        s.print_path_conditions_screen()
 
         s.print_path_conditions_file()
 
@@ -217,7 +206,7 @@ class Test():
         ######Syntactic COntracts - ENd
         #StateProperty.SETverifVerbosity(2)
         ts2 = time.time()
-        finalresult=StateProperty.verifyCompositeStateProperty(s,InstStateSameName)
+        finalresult=StateProperty.verifyCompositeStateProperty(s,par2ProcsFULL)
         ts3 = time.time()
         print("\n\nTime to verify the input property: " + str(ts3 - ts2))
         #to debug tomorrow par2ProcsFULL InstStateSameName
