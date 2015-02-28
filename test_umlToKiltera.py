@@ -215,7 +215,11 @@ class Test():
         ######Syntactic COntracts - Begin
         InstStateSameName=AtomicStateProperty(HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart1_2_IsolatedConnectedLHS())
         ######Syntactic COntracts - ENd
+        #StateProperty.SETverifVerbosity(2)
+        ts2 = time.time()
         finalresult=StateProperty.verifyCompositeStateProperty(s,InstStateSameName)
+        ts3 = time.time()
+        print("\n\nTime to verify the input property: " + str(ts3 - ts2))
         #to debug tomorrow par2ProcsFULL InstStateSameName
         #finalresult=StateProperty.verifyCompositeStateProperty(s, collapsable)
         print ('finalresult : ')
