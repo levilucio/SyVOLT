@@ -137,13 +137,13 @@ class Test():
         #get the expected num from the args
         expected_num_pcs = args.num_pcs
         #TODO: Change this number if you are modifying the transformation at all
-#         if args.num_rules == -1:
-#             transformation = [[a1], [b1,b2,b3]]#, [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
-#         else:
-#             transformation = self.select_rules([[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
+        if args.num_rules == -1:
+            transformation = [[a1], [b1,b2,b3]]#, [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
+        else:
+            transformation = self.select_rules([[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
 
         #transformation =[[a1], [b3], [c1,c2]]
-        transformation =[[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
+        #transformation =[[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
         post_metamodel = ["MT_post__UMLRT2Kiltera_MM", "MoTifRule"]
 
