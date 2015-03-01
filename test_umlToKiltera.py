@@ -66,6 +66,12 @@ from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstStateSameNamePart1_2_Iso
 from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstStateSameNamePart1_CompleteLHS import HInstStateSameNamePart1_CompleteLHS
 from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstStateSameNamePart2_CompleteLHS import HInstStateSameNamePart2_CompleteLHS
 ##SYntactic COntracts - End
+
+##Pattern COntract - BEGIN
+from UMLRT2Kiltera_MM.Properties.Pattern.Himesis.HNestedStates2nestedProcDefs_IsolatedLHS import HNestedStates2nestedProcDefs_IsolatedLHS
+from UMLRT2Kiltera_MM.Properties.Pattern.Himesis.HNestedStates2nestedProcDefs_ConnectedLHS import HNestedStates2nestedProcDefs_ConnectedLHS
+from UMLRT2Kiltera_MM.Properties.Pattern.Himesis.HNestedStates2nestedProcDefs_CompleteLHS import HNestedStates2nestedProcDefs_CompleteLHS
+##Pattern COntract - END
 class Test():
 
     def setUp(self, args):
@@ -131,12 +137,13 @@ class Test():
         #get the expected num from the args
         expected_num_pcs = args.num_pcs
         #TODO: Change this number if you are modifying the transformation at all
-        if args.num_rules == -1:
-            transformation = [[a1], [b1,b2,b3]]#, [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
-        else:
-            transformation = self.select_rules([[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
+#         if args.num_rules == -1:
+#             transformation = [[a1], [b1,b2,b3]]#, [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
+#         else:
+#             transformation = self.select_rules([[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
 
-        #transformation =[[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
+        #transformation =[[a1], [b3], [c1,c2]]
+        transformation =[[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
         post_metamodel = ["MT_post__UMLRT2Kiltera_MM", "MoTifRule"]
 
@@ -208,9 +215,13 @@ class Test():
         InstStateSameName_part2=AtomicStateProperty(HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart2_CompleteLHS)
         InstSTateSameName_FULL=ImplicationStateProperty(InstStateSameName_part1, InstStateSameName_part2)
         ######Syntactic COntracts - ENd
+        
+        ##PatternContracts - BEGIN
+        nestedStates2NestedProcDefs_FULL=AtomicStateProperty(HNestedStates2nestedProcDefs_IsolatedLHS(),HNestedStates2nestedProcDefs_ConnectedLHS(),HNestedStates2nestedProcDefs_CompleteLHS())
+        ##PatternContracts - END
         #StateProperty.SETverifVerbosity(2)
         ts2 = time.time()
-        finalresult=StateProperty.verifyCompositeStateProperty(s,par2ProcsFULL)
+        finalresult=StateProperty.verifyCompositeStateProperty(s,nestedStates2NestedProcDefs_FULL)
         ts3 = time.time()
         print("\n\nTime to verify the input property: " + str(ts3 - ts2))
         #to debug tomorrow par2ProcsFULL InstStateSameName

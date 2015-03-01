@@ -237,17 +237,14 @@ class StateProperty(Property):
                 # ****
                 if collapseFlag==True:
                     # build set of collapsed states to analyse
-                    #G- states_to_analyze will contain merged state (containing disjoint union of its composite rules), and all recursively, collapsed versions of the (composite rules of the) state
+                    #G- states_to_analyze will contain merged state, and all recursively, collapsed versions of the (composite rules of the) state
                     states_to_analyse = [merged_state]               
-                    #if StateSpace.verbosity >= 1: t0 = time.time()                
-                    #states_to_analyse.extend(StateSpace.collapseFactory.collapse(state))
-                    #states_to_analyse.extend(Disambiguator.disambiguate(state))
-                    #new code -start
+                    ###new code -start
                     if len(StateProperty.parseStateName2RuleNames(state.name))>1:
                         if StateSpace.verbosity >= 1: t0 = time.time()   
-                        disamb=Disambiguator(StateSpace.verbosity)
-                        states_to_analyse.extend(disamb.disambiguate(state))
-                        #new code -end
+                        #disamb=Disambiguator(StateSpace.verbosity)
+                        #states_to_analyse.extend(disamb.disambiguate(state))
+                        ###new code -end
                         if StateSpace.verbosity >= 1: t1 = time.time()
                         if StateSpace.verbosity >= 1: print 'Time to collapse state: ' + str(t1-t0)
                     else: 
