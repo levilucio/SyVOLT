@@ -59,6 +59,8 @@ from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HTrigger01ExprPart1_Comple
 from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HTrigger01ExprPart2_CompleteLHS import HTrigger01ExprPart2_CompleteLHS
 from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HTrigger01ExprPart3_CompleteLHS import HTrigger01ExprPart3_CompleteLHS
 from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HTrigger01ExprPart4_CompleteLHS import HTrigger01ExprPart4_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListen1orMoreListenBranchPart1_CompleteLHS import HListen1orMoreListenBranchPart1_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListen1orMoreListenBranchPart2_CompleteLHS import HListen1orMoreListenBranchPart2_CompleteLHS
 ##Multiplicity INvariants- End
 
 ##SYntactic COntracts - Begin
@@ -137,13 +139,13 @@ class Test():
         #get the expected num from the args
         expected_num_pcs = args.num_pcs
         #TODO: Change this number if you are modifying the transformation at all
-        if args.num_rules == -1:
-            transformation = [[a1], [b1,b2,b3]]#, [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
-        else:
-            transformation = self.select_rules([[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
+#         if args.num_rules == -1:
+#             transformation = [[a1], [b1,b2,b3]]#, [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
+#         else:
+#             transformation = self.select_rules([[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
 
         #transformation =[[a1], [b3], [c1,c2]]
-        #transformation =[[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
+        transformation =[[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
         post_metamodel = ["MT_post__UMLRT2Kiltera_MM", "MoTifRule"]
 
@@ -208,6 +210,9 @@ class Test():
         Trigger01Expr_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(), HTrigger01ExprPart3_CompleteLHS())
         Trigger01Expr_part4=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(), HTrigger01ExprPart4_CompleteLHS())
         Trigger01ExprFULL=ImplicationStateProperty (Trigger01Expr_part1,OrStateProperty(AndStateProperty(Trigger01Expr_part2, NotStateProperty(Trigger01Expr_part3)),NotStateProperty(Trigger01Expr_part4)))
+        Listen1orMoreListenBranch_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(), HListen1orMoreListenBranchPart1_CompleteLHS())
+        Listen1orMoreListenBranch_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(), HListen1orMoreListenBranchPart2_CompleteLHS())
+        Listen1orMoreListenBranch_FULL=ImplicationStateProperty(Listen1orMoreListenBranch_part1, Listen1orMoreListenBranch_part2)
         ######Multiplicity INvariants - End
 
         ######Syntactic COntracts - Begin
@@ -221,7 +226,7 @@ class Test():
         ##PatternContracts - END
         #StateProperty.SETverifVerbosity(2)
         ts2 = time.time()
-        finalresult=StateProperty.verifyCompositeStateProperty(s,nestedStates2NestedProcDefs_FULL)
+        finalresult=StateProperty.verifyCompositeStateProperty(s,Listen1orMoreListenBranch_FULL)
         ts3 = time.time()
         print("\n\nTime to verify the input property: " + str(ts3 - ts2))
         #to debug tomorrow par2ProcsFULL InstStateSameName
