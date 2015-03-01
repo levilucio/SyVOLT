@@ -233,7 +233,7 @@ def disjoint_model_union(first, second):
     return first
 
 def clean_graph(graph):
-    shrink the size of the uuids into ints
+    #shrink the size of the uuids into ints
     if isinstance(graph["GUID__"], uuid.UUID):
         # get the uuid as an int
         #and fit it in 24 bytes
