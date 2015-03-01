@@ -538,7 +538,7 @@ class PathConditionGenerator():
             
             parentPathCondition = {}
             for pc in layerPathCondAccumulator:
-                parentPathCondition[pc] = pc.name
+                parentPathCondition[pc.name] = pc.name
             
             for pathConditionIndex in range(pathConSetLength):
 
@@ -611,18 +611,19 @@ class PathConditionGenerator():
                         
                         for currentPathCondition in range(len(layerPathCondAccumulator)):
 
+                            cpc = layerPathCondAccumulator[currentPathCondition]
                             # look for the right path conditions
-                            if parentPathCondition[layerPathCondAccumulator[currentPathCondition]] == pathCondition.name:
+                            if parentPathCondition[cpc.name] == pathCondition.name:
                                 # create a new path condition which is the result of combining the rule with the current path condition being examined
-                                newPathCond = deepcopy(layerPathCondAccumulator[currentPathCondition])
+                                newPathCond = deepcopy(cpc)
                                 newPathCond = disjoint_model_union(newPathCond,rule)
                                 # name the new path condition as the combination of the previous path condition and the rule               
-                                newPathCond.name = layerPathCondAccumulator[currentPathCondition].name + '_' + rule.name
+                                newPathCond.name = cpc.name + '_' + rule.name
                                 if self.verbosity >= 2 : print "Created path condition with name: " + newPathCond.name
                                 localPathConditionLayerAccumulator.append(newPathCond)
                                 
                                 # store the parent of the newly created path condition
-                                parentPathCondition[newPathCond] = parentPathCondition[layerPathCondAccumulator[currentPathCondition]]
+                                parentPathCondition[newPathCond.name] = parentPathCondition[cpc.name]
                             
                         layerPathCondAccumulator.extend(localPathConditionLayerAccumulator)
                     
@@ -702,17 +703,18 @@ class PathConditionGenerator():
                                         # only combine if the path condition in the accumulator currently being treated (currentPathCondition)
                                         # includes all the rules from the path condition of the previous layer the rule is being executed
                                         # against (pathCondition) and if the rule hasn't executed yet on that path condition
-                                                                                
-                                        if parentPathCondition[layerPathCondAccumulator[currentPathCondition]] == pathCondition.name:
+
+                                        cpc = layerPathCondAccumulator[currentPathCondition]
+                                        if parentPathCondition[cpc.name] == pathCondition.name:
                                                                      
                                             # if the combinator is not the total one, make a copy of the path condition in the set 
                                             # of combinations generated so far.
                                             # the total combinator is always the one at the end of the combinator list for the rule.
                                             
                                             # name the new path condition as the combination of the previous path condition and the rule
-                                            newPathCondName = layerPathCondAccumulator[currentPathCondition].name + "_" + rule.name
+                                            newPathCondName = cpc.name + "_" + rule.name
                                             
-                                            newPathCond = deepcopy(layerPathCondAccumulator[currentPathCondition])                               
+                                            newPathCond = deepcopy(cpc)
         
                                             # now combine the rule with the newly created path condition using the current combinator
                                             # in all the places where the rule matched on top of the path condition
@@ -741,7 +743,7 @@ class PathConditionGenerator():
                                                     # because the rule combines totally with a path condition in the accumulator we just copy it 
                                                     # directly on top of the accumulated path condition
                                                     
-                                                    parentPathCondition[newPathCond] = parentPathCondition[layerPathCondAccumulator[currentPathCondition]]
+                                                    parentPathCondition[newPathCond.name] = parentPathCondition[cpc.name]
 
                                                     layerPathCondAccumulator[currentPathCondition] = newPathCond
                                                                                  
@@ -753,7 +755,7 @@ class PathConditionGenerator():
                                                     partialTotalPathCondLayerAccumulator.append(newPathCond)  
                                                     
                                                     # store the parent of the newly created path condition
-                                                    parentPathCondition[newPathCond] = parentPathCondition[layerPathCondAccumulator[currentPathCondition]]
+                                                    parentPathCondition[newPathCond.name] = parentPathCondition[cpc.name]
                                          
 #                                                 print "----------------------"
 #                                                 print "Adding: " + newPathCond.name
