@@ -711,7 +711,11 @@ class PathConditionGenerator():
 
                                     partialTotalPathCondLayerAccumulator = []
 
-                                    for currentPathCondition in range(len(layerPathCondAccumulator)):
+                                    child_length = len(childrenPathConditions[pathCondition.name])
+                                    for child_pc_index in range(child_length):
+                                        child_pc_name = childrenPathConditions[pathCondition.name][child_pc_index]
+                                        cpc = pc_dict[child_pc_name]
+
 
 #                                         if self.verbosity >= 2 :
 #                                             print "--> Combining with path condition: " + layerPathCondAccumulator[currentPathCondition].name
@@ -720,67 +724,69 @@ class PathConditionGenerator():
                                         # includes all the rules from the path condition of the previous layer the rule is being executed
                                         # against (pathCondition) and if the rule hasn't executed yet on that path condition
 
-                                        cpc = layerPathCondAccumulator[currentPathCondition]
-                                        if cpc.name in childrenPathConditions[pathCondition.name]:
 
-                                            # if the combinator is not the total one, make a copy of the path condition in the set
-                                            # of combinations generated so far.
-                                            # the total combinator is always the one at the end of the combinator list for the rule.
+                                        # if the combinator is not the total one, make a copy of the path condition in the set
+                                        # of combinations generated so far.
+                                        # the total combinator is always the one at the end of the combinator list for the rule.
 
-                                            # name the new path condition as the combination of the previous path condition and the rule
-                                            newPathCondName = cpc.name + "_" + rule.name
+                                        # name the new path condition as the combination of the previous path condition and the rule
+                                        newPathCondName = cpc.name + "_" + rule.name
 
-                                            newPathCond = deepcopy(cpc)
+                                        newPathCond = deepcopy(cpc)
 
-                                            # now combine the rule with the newly created path condition using the current combinator
-                                            # in all the places where the rule matched on top of the path condition
-                                            i = Iterator()
-                                            p_copy = deepcopy(p)
-                                            p_copy.graph = newPathCond
-                                            p_copy = i.packet_in(p_copy)
+                                        # now combine the rule with the newly created path condition using the current combinator
+                                        # in all the places where the rule matched on top of the path condition
+                                        i = Iterator()
+                                        p_copy = deepcopy(p)
+                                        p_copy.graph = newPathCond
+                                        p_copy = i.packet_in(p_copy)
 
-                                            while i.is_success:
-                                                p_copy = self.ruleCombinators[rule.name][combinator][1].packet_in(p_copy)
-                                                p_copy = i.next_in(p_copy)
+                                        while i.is_success:
+                                            p_copy = self.ruleCombinators[rule.name][combinator][1].packet_in(p_copy)
+                                            p_copy = i.next_in(p_copy)
 
-                                            newPathCond = p_copy.graph
-                                            newPathCond.name = newPathCondName
+                                        newPathCond = p_copy.graph
+                                        newPathCond.name = newPathCondName
 
-                                            # check if the equations on the attributes of the newly created path condition are satisfied
 
-                                            if self.draw_svg:
-                                                graph_to_dot("evaluating", newPathCond)
 
-                                            if self.attributeEquationEvaluator(newPathCond):
+                                        # check if the equations on the attributes of the newly created path condition are satisfied
 
-                                            #if True:
+                                        if self.draw_svg:
+                                            graph_to_dot("evaluating", newPathCond)
 
-                                                if isTotalCombinator:
-                                                    # because the rule combines totally with a path condition in the accumulator we just copy it
-                                                    # directly on top of the accumulated path condition
+                                        if self.attributeEquationEvaluator(newPathCond):
 
-                                                    #childrenPathConditions[newPathCond.name] = pathCondition.name
+                                        #if True:
 
-                                                    layerPathCondAccumulator[currentPathCondition] = newPathCond
+                                            if isTotalCombinator:
+                                                # because the rule combines totally with a path condition in the accumulator we just copy it
+                                                # directly on top of the accumulated path condition
 
-                                                else:
-                                                    # we are dealing with a partial combination of the rule.
-                                                    # create a copy of the path condition in the accumulator because this match of the rule is partial.
+                                                #childrenPathConditions[newPathCond.name] = pathCondition.name
 
-                                                    # add the result to the local accumulator
-                                                    partialTotalPathCondLayerAccumulator.append(newPathCond)
+                                                layerPathCondAccumulator[currentPathCondition] = newPathCond
 
-                                                    # store the parent of the newly created path condition
-                                                    #childrenPathConditions[newPathCond.name] = pathCondition.name
+                                            else:
+                                                # we are dealing with a partial combination of the rule.
+                                                # create a copy of the path condition in the accumulator because this match of the rule is partial.
 
-                                                childrenPathConditions[pathCondition.name].append(newPathCond.name)
-#                                                 print "----------------------"
-#                                                 print "Adding: " + newPathCond.name
-#                                                 print "Parent is: " + parentPathCondition[layerPathCondAccumulator[currentPathCondition]]
-#                                                 print "----------------------"
+                                                # add the result to the local accumulator
+                                                partialTotalPathCondLayerAccumulator.append(newPathCond)
 
-                                                if self.verbosity >= 2:
-                                                    print "Created path condition with name: " + newPathCond.name
+                                                # store the parent of the newly created path condition
+                                                #childrenPathConditions[newPathCond.name] = pathCondition.name
+
+                                            childrenPathConditions[pathCondition.name].append(newPathCond.name)
+                                            pc_dict[newPathCond.name] = newPathCond
+
+                                            # print "----------------------"
+                                            # print "Adding: " + newPathCond.name
+                                            # print "Parent is: " + parentPathCondition[layerPathCondAccumulator[currentPathCondition]]
+                                            # print "----------------------"
+
+                                            if self.verbosity >= 2:
+                                                print "Created path condition with name: " + newPathCond.name
 
 
                                     layerPathCondAccumulator.extend(partialTotalPathCondLayerAccumulator)
