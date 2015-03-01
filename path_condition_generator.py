@@ -138,7 +138,6 @@ class PathConditionGenerator():
     #@do_cprofile
     def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, verbosity, draw_svg = True, run_tests=True):
         # the empty path condition
-        from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 
 
         self.transformation = transformation
@@ -157,7 +156,7 @@ class PathConditionGenerator():
 
       
         # the path condition set starts with only the empty (None) path condition inside
-        self.pathConditionSet = [clean_graph(HEmptyPathCondition())]
+
         self.attributeEquationEvaluator = SimpleAttributeEquationEvaluator(verbosity) 
 #        self.mergeInterLayerFactory = MergeInterLayerFactory(verbosity)
 
@@ -508,10 +507,15 @@ class PathConditionGenerator():
         http://msdl.cs.mcgill.ca/people/levi/30_publications/files/A_Technique_for_Symbolically_Verifying_Properties_of_Model_Transf.pdf
         """
 
+        from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
+
+        currentpathConditionSet = [clean_graph(HEmptyPathCondition())]
+
         # start with a set (list) of path conditions containing only the empty path condition (declared in the constructor)
         # a path condition is a list of where the elements are rules (or combinations of rules) with traceability information
 
         if self.verbosity >= 1 : print("Start building path conditions")
+
 
         # now go through the layers one-by-one
 
@@ -520,12 +524,12 @@ class PathConditionGenerator():
             # for each path condition built so far, combine it with each of the rules from the current layer
 
             #store the old length
-            pathConSetLength = len(self.pathConditionSet)
+            pathConSetLength = len(currentpathConditionSet)
 
             # the path condition set generated for the layer being treated starts off with the set of path
             # conditions generated for the previous layer
             # layerPathCondAccumulator = deepcopy(self.pathConditionSet)
-            layerPathCondAccumulator = self.pathConditionSet
+            layerPathCondAccumulator = currentpathConditionSet
             
             # build a dictionary to remember which path condition in the current layer is built from
             # which path condition from the previous layer
@@ -545,7 +549,7 @@ class PathConditionGenerator():
                 # for each rule in the current layer, combine it with the path condition.
                 # start with the local path condition set with just a copy of the path condition being combined.
 
-                pathCondition = self.pathConditionSet[pathConditionIndex]
+                pathCondition = currentpathConditionSet[pathConditionIndex]
 
 #                 pathConditionCopy = deepcopy(self.pathConditionSet[pathCondition])
 #                 pathCondAndRuleCombAccumulator = [pathConditionCopy]
@@ -695,7 +699,7 @@ class PathConditionGenerator():
                      
                                     partialTotalPathCondLayerAccumulator = []             
         
-                                    for currentPathCondition in range(len(layerPathCondAccumulator)):  
+                                    for currentPathCondition in range(len(layerPathCondAccumulator)):
                                         
 #                                         if self.verbosity >= 2 :
 #                                             print "--> Combining with path condition: " + layerPathCondAccumulator[currentPathCondition].name
@@ -763,17 +767,18 @@ class PathConditionGenerator():
 #                                                 print "----------------------"
                                                     
                                                 if self.verbosity >= 2:
-                                                    print "Created path condition with name: " + newPathCond.name   
-                                                                                   
-                                            
+                                                    print "Created path condition with name: " + newPathCond.name
+
+
                                     layerPathCondAccumulator.extend(partialTotalPathCondLayerAccumulator)
                            
                 
             # when the layer treatment is finished the set of path conditions for the transformation can receive the
             # accumulated path condition set for the layer
 
-            self.pathConditionSet = layerPathCondAccumulator
-                
+            currentpathConditionSet = layerPathCondAccumulator
+
+        self.pathConditionSet = currentpathConditionSet
 
     #@do_cprofile
     def _buildTraceabilityLinks(self,layer):
