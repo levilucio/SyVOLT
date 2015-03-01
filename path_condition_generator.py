@@ -9,6 +9,7 @@ from itertools import permutations
 
 from himesis_utils import disjoint_model_union
 from himesis_utils import graph_to_dot
+from himesis_utils import clean_graph
 from himesis_utils import print_graph
 
 from copy import deepcopy
@@ -156,7 +157,7 @@ class PathConditionGenerator():
 
       
         # the path condition set starts with only the empty (None) path condition inside
-        self.pathConditionSet = [HEmptyPathCondition()]        
+        self.pathConditionSet = [clean_graph(HEmptyPathCondition())]
         self.attributeEquationEvaluator = SimpleAttributeEquationEvaluator(verbosity) 
 #        self.mergeInterLayerFactory = MergeInterLayerFactory(verbosity)
 
@@ -462,7 +463,7 @@ class PathConditionGenerator():
         from property_prover_rules.traceability_construction.Himesis.HBuildTraceabilityForRuleRHS import \
             HBuildTraceabilityForRuleRHS
 
-        build_traceability_for_rule = FRule(HBuildTraceabilityForRuleLHS(), HBuildTraceabilityForRuleRHS())
+        build_traceability_for_rule = FRule(clean_graph(HBuildTraceabilityForRuleLHS()), clean_graph(HBuildTraceabilityForRuleRHS()))
 
         for layerIndex in range(0, len(self.transformation)):
             for ruleIndex in range(0, len(self.transformation[layerIndex])):
@@ -473,7 +474,7 @@ class PathConditionGenerator():
                 p = build_traceability_for_rule.packet_in(p)
 
 
-                self.transformation[layerIndex][ruleIndex] = p.graph
+                self.transformation[layerIndex][ruleIndex] = clean_graph(p.graph)
 
                 if self.draw_svg:
                     graph_to_dot("traced_" + self.transformation[layerIndex][ruleIndex].name , self.transformation[layerIndex][ruleIndex])

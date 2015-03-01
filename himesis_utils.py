@@ -14,6 +14,7 @@ import subprocess
 import re
 import sys
 import os
+import uuid
 
 from copy import deepcopy
 
@@ -231,10 +232,30 @@ def disjoint_model_union(first, second):
   
     return first
 
+def clean_graph(graph):
+    shrink the size of the uuids into ints
+    if isinstance(graph["GUID__"], uuid.UUID):
+        # get the uuid as an int
+        #and fit it in 24 bytes
+        uuid_int = graph["GUID__"].int
+        uuid_int %= 9223372036854775806
+
+        #have to do this to get in into 24 bytes
+        graph["GUID__"] = int(str(uuid_int))
+
+    for i in range(graph.vcount()):
+        node = graph.vs[i]
+        if isinstance(node["GUID__"], uuid.UUID):
+            uuid_int = node["GUID__"].int
+            uuid_int %= 9223372036854775806
+            node["GUID__"] = int(str(uuid_int))
+
+    return graph
+
 
 #function to dynamically load a new class
 import importlib
-def load_class(full_class_string):
+def load_class(full_class_string, args = None):
     directory, module_name = os.path.split(full_class_string)
     module_name = os.path.splitext(module_name)[0]
 
@@ -243,9 +264,18 @@ def load_class(full_class_string):
 
     try:
         module = __import__(module_name)
+        if args is None:
+            loaded_class = getattr(module, module_name)()
+        else:
+            loaded_class = getattr(module, module_name)(args[0])
+
+        clean_graph(loaded_class)
+
+        loaded_module = {module_name : loaded_class}
+
     finally:
         sys.path[:] = path # restore
-    return {module_name : getattr(module, module_name)()}
+    return loaded_module
 
 
 def print_file(file_name):

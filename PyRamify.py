@@ -7,6 +7,8 @@ from t_core.rewriter import Rewriter
 from himesis_utils import *
 from himesis_plus import *
 
+import uuid
+
 from core.himesis import *
 from itertools import combinations
 
@@ -344,7 +346,7 @@ class PyRamify:
         if self.verbosity >= 2:
             print("Backward patterns compiled to: " + file_name)
 
-        rule = self.load_class(out_dir + "/" + new_name)
+        rule = load_class(out_dir + "/" + new_name)
         backward_pattern = rule[rule.keys()[0]]
 
         if self.draw_svg:
@@ -771,7 +773,7 @@ class PyRamify:
             if self.verbosity >= 2:
                 print("Rule combinator matcher compiled to: " + file_name)
     
-            rule = self.load_class(out_dir + "/" + new_name)
+            rule = load_class(out_dir + "/" + new_name)
             
             # debug printout
             if self.draw_svg:
@@ -792,7 +794,7 @@ class PyRamify:
                 if self.verbosity >= 2:
                     print("Nac graph compiled to: " + file_name)
                 
-                NAC_graph = self.load_class(out_dir + NAC_graph.name, [backward_pattern])
+                NAC_graph = load_class(out_dir + NAC_graph.name, [backward_pattern])
                 NAC_graph = NAC_graph.values()[0]
                 
                 # debug printout
@@ -820,7 +822,7 @@ class PyRamify:
             
             
  
-            rewriter_graph2 = self.load_class(out_dir + rewriter_graph_copy.name)
+            rewriter_graph2 = load_class(out_dir + rewriter_graph_copy.name)
             rewriter_graph2 = rewriter_graph2.values()[0]
  
             # print(inspect.getargspec(rewriter_graph2.execute))
@@ -910,7 +912,7 @@ class PyRamify:
 #         file_name = new_graph.compile(out_dir)
 #         print("Rule combinator matcher compiled to: " + file_name)
 # 
-#         rule = self.load_class(out_dir + "/" + new_name)
+#         rule = load_class(out_dir + "/" + new_name)
 #         backward_pattern = rule.values()[0]
 # 
 #         j = 0
@@ -974,7 +976,7 @@ class PyRamify:
 #             file_name = new_graph.compile(out_dir)
 #             print("Rule combinator matcher compiled to: " + file_name)
 # 
-#             rule = self.load_class(out_dir + "/" + new_name)
+#             rule = load_class(out_dir + "/" + new_name)
 #             backward_pattern = rule.values()[0]
 # 
 # 
@@ -1010,7 +1012,7 @@ class PyRamify:
 #                 file_name = NAC_graph.compile(out_dir)
 #                 print("Nac graph compiled to: " + file_name)
 # 
-#                 NAC_graph = self.load_class(out_dir + NAC_graph.name, [backward_pattern])
+#                 NAC_graph = load_class(out_dir + NAC_graph.name, [backward_pattern])
 #                 NAC_graph = NAC_graph.values()[0]
 # 
 # 
@@ -1032,7 +1034,7 @@ class PyRamify:
 #             file_name = rewriter_graph_copy.compile(out_dir)
 #             print("Rewriter graph compiled to: " + file_name)
 # 
-#             rewriter_graph2 = self.load_class(out_dir + rewriter_graph_copy.name)
+#             rewriter_graph2 = load_class(out_dir + rewriter_graph_copy.name)
 #             rewriter_graph2 = rewriter_graph2.values()[0]
 # 
 #             # print(inspect.getargspec(rewriter_graph2.execute))
@@ -1238,7 +1240,7 @@ class PyRamify:
             graph_to_dot(graph.name, graph)
 
         #have to reload the graph to define all the eval functions
-        rule = self.load_class(out_dir + "/" + old_name + "_match_pattern_matcher")
+        rule = load_class(out_dir + "/" + old_name + "_match_pattern_matcher")
         match_graph = rule.values()[0]
 
 
@@ -1250,7 +1252,7 @@ class PyRamify:
         if self.verbosity >= 2:
             print("Match pattern rewriter compiled to: " + file_name)
 
-        rewriter_dict = self.load_class(out_dir + rewriter.name)
+        rewriter_dict = load_class(out_dir + rewriter.name)
         rewriter = rewriter_dict.values()[0]
 
         #graph_to_dot("the_rewriter_graph_after" + rewriter.name, rewriter)
@@ -1280,25 +1282,7 @@ class PyRamify:
 
     #=========================
 
-    #function to dynamically load a new class
-    import importlib
-    def load_class(self, full_class_string, args = None):
-        directory, module_name = os.path.split(full_class_string)
-        module_name = os.path.splitext(module_name)[0]
 
-        path = list(sys.path)
-        sys.path.insert(0, directory)
-
-        try:
-            module = __import__(module_name)
-
-            if args is None:
-                loaded_module = {module_name : getattr(module, module_name)()}
-            else:
-                loaded_module = {module_name : getattr(module, module_name)(args[0])}
-        finally:
-            sys.path[:] = path # restore
-        return loaded_module
 
     #ramify a whole directory
     def ramify_directory(self, dir_name):
@@ -1322,7 +1306,7 @@ class PyRamify:
             print("\nFile: " + f)
 
             #add the rule to the rules dict
-            rule = self.load_class(dir_name + "/" + f)
+            rule = load_class(dir_name + "/" + f)
             rules.update(rule)
 
             #reload the rule
@@ -1330,7 +1314,7 @@ class PyRamify:
             #but there were problems with aliasing and copying
 
             #get the backwards pattern for this rule
-            rule3 = self.load_class(dir_name + "/" + f)
+            rule3 = load_class(dir_name + "/" + f)
             (bwPattern, bwP2Rule) = self.get_backward_patterns(rule3)
             backwardPatterns.update(bwPattern)
 
@@ -1338,12 +1322,12 @@ class PyRamify:
                 backwardPatterns2Rules.update(bwP2Rule)
 
             #fresh rule for the match pattern
-            rule4 = self.load_class(dir_name + "/" + f)
+            rule4 = load_class(dir_name + "/" + f)
             matchRulePattern = self.get_match_pattern(rule4)
             matchRulePatterns.update(matchRulePattern)
 
             # fresh rule for the rule combinators
-            rule5 = self.load_class(dir_name + "/" + f)
+            rule5 = load_class(dir_name + "/" + f)
             rule_combinator = self.get_rule_combinators(rule5)
             ruleCombinators.update(rule_combinator)
 
@@ -1382,7 +1366,7 @@ class PyRamify:
 
                 rule_file = rule_dir + f
                 try:
-                    rule = self.load_class(rule_file)
+                    rule = load_class(rule_file)
                 except ImportError:
                     print("ERROR " + rule_file)
                     continue
