@@ -528,8 +528,6 @@ class PathConditionGenerator():
 
             # the path condition set generated for the layer being treated starts off with the set of path
             # conditions generated for the previous layer
-            # layerPathCondAccumulator = deepcopy(self.pathConditionSet)
-            layerPathCondAccumulator = currentpathConditionSet
             
             # build a dictionary to remember which path condition in the current layer is built from
             # which path condition from the previous layer
@@ -541,13 +539,13 @@ class PathConditionGenerator():
             # the path conditions generated for it, instead of going though the whole vector each time.
             
             childrenPathConditions = {}
-            for pc in layerPathCondAccumulator:
+            for pc in currentpathConditionSet:
                 childrenPathConditions[pc.name] = [pc.name]
 
 
             #store a dictionary from pc name to pc
             pc_dict = {}
-            for pc in layerPathCondAccumulator:
+            for pc in currentpathConditionSet:
                 pc_dict[pc.name] = pc
             
             for pathConditionIndex in range(pathConSetLength):
@@ -569,7 +567,7 @@ class PathConditionGenerator():
                         print "Combining with:"
                         print "Path Condition:" + pathCondition.name
                     if self.verbosity >= 1:
-                        print "Number of Path Conditions generated so far: " +  str(len(layerPathCondAccumulator))
+                        print "Number of Path Conditions generated so far: " +  str(len(currentpathConditionSet))
                         print "Number of Path Conditions to go in this layer: " +  str(pathConSetLength - pathConditionIndex)
                         
                     # first check if the rule requires any other rules to execute with it,
@@ -640,8 +638,8 @@ class PathConditionGenerator():
 
                             # store the newly created path condition as a child
                             childrenPathConditions[pathCondition.name].append(newPathCond.name)
-                            
-                        layerPathCondAccumulator.extend(localPathConditionLayerAccumulator)
+
+                        currentpathConditionSet.extend(localPathConditionLayerAccumulator)
                     
                     else:
 
@@ -711,7 +709,7 @@ class PathConditionGenerator():
 
                                     partialTotalPathCondLayerAccumulator = []
 
-                                    for currentPathCondition in range(len(layerPathCondAccumulator)):
+                                    for currentPathCondition in range(len(currentpathConditionSet)):
 
 #                                         if self.verbosity >= 2 :
 #                                             print "--> Combining with path condition: " + layerPathCondAccumulator[currentPathCondition].name
@@ -720,7 +718,7 @@ class PathConditionGenerator():
                                         # includes all the rules from the path condition of the previous layer the rule is being executed
                                         # against (pathCondition) and if the rule hasn't executed yet on that path condition
 
-                                        cpc = layerPathCondAccumulator[currentPathCondition]
+                                        cpc = currentpathConditionSet[currentPathCondition]
                                         if cpc.name in childrenPathConditions[pathCondition.name]:
 
                                             # if the combinator is not the total one, make a copy of the path condition in the set
@@ -761,7 +759,7 @@ class PathConditionGenerator():
 
                                                     #childrenPathConditions[newPathCond.name] = pathCondition.name
 
-                                                    layerPathCondAccumulator[currentPathCondition] = newPathCond
+                                                    currentpathConditionSet[currentPathCondition] = newPathCond
 
                                                 else:
                                                     # we are dealing with a partial combination of the rule.
@@ -782,14 +780,12 @@ class PathConditionGenerator():
                                                 if self.verbosity >= 2:
                                                     print "Created path condition with name: " + newPathCond.name
 
-
-                                    layerPathCondAccumulator.extend(partialTotalPathCondLayerAccumulator)
+                                    currentpathConditionSet.extend(partialTotalPathCondLayerAccumulator)
 
 
             # when the layer treatment is finished the set of path conditions for the transformation can receive the
             # accumulated path condition set for the layer
 
-            currentpathConditionSet = layerPathCondAccumulator
 
         self.pathConditionSet = currentpathConditionSet
 
