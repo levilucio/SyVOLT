@@ -543,6 +543,12 @@ class PathConditionGenerator():
             childrenPathConditions = {}
             for pc in layerPathCondAccumulator:
                 childrenPathConditions[pc.name] = [pc.name]
+
+
+            #store a dictionary from pc name to pc
+            pc_dict = {}
+            for pc in layerPathCondAccumulator:
+                pc_dict[pc.name] = pc
             
             for pathConditionIndex in range(pathConSetLength):
 
@@ -612,24 +618,28 @@ class PathConditionGenerator():
                         if self.verbosity >= 2 : print "Case 1: Rule has no dependencies"
                         
                         localPathConditionLayerAccumulator = []
-                        
-                        for currentPathCondition in range(len(layerPathCondAccumulator)):
 
-                            cpc = layerPathCondAccumulator[currentPathCondition]
+                        #save child length as we will add to this list
+                        child_length = len(childrenPathConditions[pathCondition.name])
+                        for child_pc_index in range(child_length):
 
-                            # look for the right path conditions
-                            if cpc.name in childrenPathConditions[pathCondition.name]:
-                                # create a new path condition which is the result of combining the rule with the current path condition being examined
-                                newPathCond = deepcopy(cpc)
-                                newPathCond = disjoint_model_union(newPathCond,rule)
-                                # name the new path condition as the combination of the previous path condition and the rule               
-                                newPathCond.name = cpc.name + '_' + rule.name
-                                if self.verbosity >= 2 : print "Created path condition with name: " + newPathCond.name
-                                localPathConditionLayerAccumulator.append(newPathCond)
-                                
-                                # store the parent of the newly created path condition
-                                #childrenPathConditions[newPathCond.name] = pathCondition.name
-                                childrenPathConditions[pathCondition.name].append(newPathCond.name)
+                            child_pc_name = childrenPathConditions[pathCondition.name][child_pc_index]
+                            cpc = pc_dict[child_pc_name]
+
+                            # create a new path condition which is the result of combining the rule with the current path condition being examined
+                            newPathCond = deepcopy(cpc)
+                            newPathCond = disjoint_model_union(newPathCond,rule)
+                            # name the new path condition as the combination of the previous path condition and the rule
+                            newPathCond.name = cpc.name + '_' + rule.name
+
+                            pc_dict[newPathCond.name] = newPathCond
+
+
+                            if self.verbosity >= 2 : print "Created path condition with name: " + newPathCond.name
+                            localPathConditionLayerAccumulator.append(newPathCond)
+
+                            # store the newly created path condition as a child
+                            childrenPathConditions[pathCondition.name].append(newPathCond.name)
                             
                         layerPathCondAccumulator.extend(localPathConditionLayerAccumulator)
                     
