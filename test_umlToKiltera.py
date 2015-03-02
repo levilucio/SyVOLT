@@ -121,6 +121,7 @@ class Test():
 
 
         a1 = self.rules['HState2ProcDef']
+        a2 = self.rules['HState2ProcDefCopy']
         b1 = self.rules['HBasicStateNoOutgoing2ProcDef']
         b2 = self.rules['HBasicState2ProcDef']
         b3 = self.rules['HCompositeState2ProcDef']
@@ -137,15 +138,18 @@ class Test():
         f1 = self.rules['HMapHeirarchyOfStates2HeirarchyOfProcs']
 
         #get the expected num from the args
-        expected_num_pcs = args.num_pcs
+        #expected_num_pcs = args.num_pcs
+        expected_num_pcs = 330
+                
         #TODO: Change this number if you are modifying the transformation at all
-#         if args.num_rules == -1:
-#             transformation = [[a1], [b1,b2,b3]]#, [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
-#         else:
-#             transformation = self.select_rules([[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
+        if args.num_rules == -1:
+            transformation = [[a1,a2], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
+        else:
+            transformation = self.select_rules([[a1,a2], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
+
 
         #transformation =[[a1], [b3], [c1,c2]]
-        transformation =[[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
+        #transformation =[[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
         post_metamodel = ["MT_post__UMLRT2Kiltera_MM", "MoTifRule"]
 
@@ -190,7 +194,7 @@ class Test():
         print("printing path conditions")
         s.print_path_conditions_screen()
 
-        s.print_path_conditions_file()
+#        s.print_path_conditions_file()
 
         atprop=AtomicStateProperty(HState2procdef_IsolatedLHS(),HState2procdef_IsolatedLHS(), HState2procdef_CompleteLHS())
         exitpt2procdefparprop_withattr=AtomicStateProperty(HExitpoint2procdefparTrue_IsolatedLHS(),HExitpoint2procdefparTrue_ConnectedLHS(),HExitpoint2procdefparTrue_CompleteLHS())
