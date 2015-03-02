@@ -12,6 +12,8 @@ from himesis_utils import graph_to_dot
 from himesis_utils import clean_graph
 from himesis_utils import print_graph
 
+from PCDict import PCDict
+
 from copy import deepcopy
 
 from solver.prolog_attribute_equation_evaluator import PrologAttributeEquationEvaluator
@@ -520,7 +522,10 @@ class PathConditionGenerator():
 
 
         # store a dictionary from pc name to pc
-        pc_dict = {HEmptyPathCondition.name:HEmptyPathCondition}
+        #pc_dict = {HEmptyPathCondition.name:HEmptyPathCondition}
+
+        pc_dict = {} #PCDict(10)
+        pc_dict[HEmptyPathCondition.name] = HEmptyPathCondition
 
 
         # now go through the layers one-by-one
