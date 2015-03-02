@@ -511,7 +511,7 @@ class PathConditionGenerator():
 
         HEmptyPathCondition = clean_graph(HEmptyPathCondition())
 
-        currentpathConditionSet = [HEmptyPathCondition]
+        currentpathConditionSet = [HEmptyPathCondition.name]
 
         # start with a set (list) of path conditions containing only the empty path condition (declared in the constructor)
         # a path condition is a list of where the elements are rules (or combinations of rules) with traceability information
@@ -555,10 +555,12 @@ class PathConditionGenerator():
                 # for each rule in the current layer, combine it with the path condition.
                 # start with the local path condition set with just a copy of the path condition being combined.
 
-                pathCondition = currentpathConditionSet[pathConditionIndex]
+                pathCondition_name = currentpathConditionSet[pathConditionIndex]
 
-                if isinstance(pathCondition, str):
-                    pathCondition = pc_dict[pathCondition]
+                if not isinstance(pathCondition_name, str):
+                    raise Exception("Not string")
+
+                pathCondition = pc_dict[pathCondition_name]
 
 #                 pathConditionCopy = deepcopy(self.pathConditionSet[pathCondition])
 #                 pathCondAndRuleCombAccumulator = [pathConditionCopy]
@@ -800,7 +802,10 @@ class PathConditionGenerator():
             # accumulated path condition set for the layer
 
 
-        self.pathConditionSet = currentpathConditionSet
+        self.pathConditionSet = []
+
+        for pc_name in currentpathConditionSet:
+            self.pathConditionSet.append(pc_dict[pc_name])
 
     #@do_cprofile
     def _buildTraceabilityLinks(self,layer):
