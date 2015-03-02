@@ -524,7 +524,7 @@ class PathConditionGenerator():
         # store a dictionary from pc name to pc
         #pc_dict = {HEmptyPathCondition.name:HEmptyPathCondition}
 
-        pc_dict = {} #PCDict(10)
+        pc_dict = PCDict(1000)
         pc_dict[HEmptyPathCondition.name] = HEmptyPathCondition
 
 

@@ -87,6 +87,13 @@ class Himesis(ig.Graph):
         #self.init_params = []           # If any further parameters are required for instantiating a sub-class
         #self.import_name = 'Himesis'    # holds the name of the super-class (one of those in this module) of this instance
 
+
+    def __reduce__(self):
+        igraph_reduce = ig.Graph.__reduce__(self)
+        dict = [igraph_reduce, self.name, self.is_compiled]
+
+        return dict
+
     def copy(self):
         cpy = ig.Graph.copy(self)
         # cpy.nodes_id = copy.deepcopy(self.nodes_id)

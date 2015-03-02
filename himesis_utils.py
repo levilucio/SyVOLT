@@ -15,6 +15,9 @@ import re
 import sys
 import os
 import uuid
+import cPickle as pickle
+import igraph
+from core.himesis import Himesis
 
 from copy import deepcopy
 
@@ -195,7 +198,40 @@ def graph_to_dot(name, g, verbosity = 0):
     command = "rm " + dot_filename
     subprocess.call(command, shell=True)
 
-    
+
+
+
+
+# shrink a graph into an array
+def shrink_graph(graph):
+    return graph.__reduce__()
+
+
+#expand the graph from an array
+def expand_graph(arr):
+
+
+    igraph_dict, name, is_compiled = arr
+
+    #constructor = igraph_dict[0]
+    vcount, edgelist, is_directed, gattrs, vattrs, eattrs = igraph_dict[1]
+    dict = igraph_dict[2]
+
+    graph = igraph.Graph(n=vcount, edges=edgelist, directed=is_directed, graph_attrs=gattrs, vertex_attrs=vattrs, edge_attrs=eattrs)
+    graph.__dict__ = dict
+
+
+    graph.name = name
+    graph.is_compiled = is_compiled
+
+    graph.__class__ = Himesis
+
+    return graph
+
+
+
+
+
 def disjoint_model_union(first, second):
     """
     merge two himesis graphs
