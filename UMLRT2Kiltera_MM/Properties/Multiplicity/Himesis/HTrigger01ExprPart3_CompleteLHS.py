@@ -34,10 +34,11 @@ a.""")
 
 return True
 """
-        self["name"] = """Trigger01ExprPart3_Complete"""
-        self["GUID__"] = UUID('3b705d1b-8f56-464b-96b2-fffe61de45fb')
+        self["name"] = """"""
+        self["GUID__"] = UUID('c2f023c8-1035-47e6-b317-a094d9f4a732')
         
         # Set the node attributes
+        self.vs[0]["MT_pivotOut__"] = """element1"""
         self.vs[0]["MT_subtypeMatching__"] = True
         self.vs[0]["MT_pre__classtype"] = """
 #===============================================================================
@@ -81,7 +82,7 @@ return True
 
 return True
 """
-        self.vs[0]["GUID__"] = UUID('01ec2b4e-f114-44ad-a5a8-264d3a364c99')
+        self.vs[0]["GUID__"] = UUID('6d18e6b6-c8c0-49f8-892d-6049f35c1484')
         self.vs[1]["MT_subtypeMatching__"] = True
         self.vs[1]["MT_pre__classtype"] = """
 #===============================================================================
@@ -124,7 +125,7 @@ return True
 
 return True
 """
-        self.vs[1]["GUID__"] = UUID('418fa244-28f2-4f2b-9759-c503d3a2db15')
+        self.vs[1]["GUID__"] = UUID('a6b63804-b6d5-4e59-96d5-19f613861ecd')
         self.vs[2]["MT_subtypeMatching__"] = True
         self.vs[2]["MT_pre__classtype"] = """
 #===============================================================================
@@ -167,7 +168,7 @@ return True
 
 return True
 """
-        self.vs[2]["GUID__"] = UUID('60a6a622-0901-470b-ab45-82990e097c88')
+        self.vs[2]["GUID__"] = UUID('1d7d89de-0d01-4734-ace7-3427a5acc7f9')
         self.vs[3]["MT_subtypeMatching__"] = False
         self.vs[3]["MT_pre__associationType"] = """
 #===============================================================================
@@ -186,7 +187,7 @@ return True
 .""")
         self.vs[3]["MT_dirty__"] = False
         self.vs[3]["mm__"] = """MT_pre__directLink_T"""
-        self.vs[3]["GUID__"] = UUID('2cf70b8c-b5d1-4d4f-b69c-eb758ae48585')
+        self.vs[3]["GUID__"] = UUID('85fa92dc-149d-4c7a-a2f4-d92b6c8910e8')
         self.vs[4]["MT_subtypeMatching__"] = False
         self.vs[4]["MT_pre__associationType"] = """
 #===============================================================================
@@ -205,7 +206,7 @@ return True
 .""")
         self.vs[4]["MT_dirty__"] = False
         self.vs[4]["mm__"] = """MT_pre__directLink_T"""
-        self.vs[4]["GUID__"] = UUID('c075af24-6ebd-4584-adb7-d859afb376d6')
+        self.vs[4]["GUID__"] = UUID('d617ba09-4ba2-49e7-b0e2-93cd1792e3d8')
 
     def eval_classtype2(self, attr_value, this):
         

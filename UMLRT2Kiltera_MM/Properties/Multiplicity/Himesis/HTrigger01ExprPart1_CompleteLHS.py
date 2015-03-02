@@ -34,8 +34,8 @@ a.""")
 
 return True
 """
-        self["name"] = """Trigger01ExprPart1_Complete"""
-        self["GUID__"] = UUID('f83c5de6-e7a5-4512-b972-d84963043fbd')
+        self["name"] = """"""
+        self["GUID__"] = UUID('f76ace00-d2e6-46ed-a052-7df8e9956754')
         
         # Set the node attributes
         self.vs[0]["MT_pivotOut__"] = """element1"""
@@ -81,7 +81,7 @@ return True
 
 return True
 """
-        self.vs[0]["GUID__"] = UUID('a1338245-637a-46c0-84b8-66cfe3d90d48')
+        self.vs[0]["GUID__"] = UUID('f6a5e78c-4dba-4d29-b432-edf91f4d2621')
 
     def eval_classtype1(self, attr_value, this):
         

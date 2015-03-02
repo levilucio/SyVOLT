@@ -34,8 +34,8 @@ a.""")
 
 return True
 """
-        self["name"] = """Trigger01ExprPart4_Complete"""
-        self["GUID__"] = UUID('5bf743f5-44aa-4365-b223-439ba4a0b1e1')
+        self["name"] = """"""
+        self["GUID__"] = UUID('384af3cb-bfc8-4272-9c22-dbacb821c0f0')
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = True
@@ -80,7 +80,7 @@ return True
 
 return True
 """
-        self.vs[0]["GUID__"] = UUID('2e90ffbe-5437-4421-8807-d276b3dc8d09')
+        self.vs[0]["GUID__"] = UUID('61f1d2e4-cb75-472b-83b5-4a24157db830')
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_pre__associationType"] = """
 #===============================================================================
@@ -99,7 +99,8 @@ return True
 .""")
         self.vs[1]["MT_dirty__"] = False
         self.vs[1]["mm__"] = """MT_pre__directLink_T"""
-        self.vs[1]["GUID__"] = UUID('b0811e06-28cc-4655-94e2-fe76f7faffe3')
+        self.vs[1]["GUID__"] = UUID('cd1313fc-3210-45c5-8784-b692b4fd123e')
+        self.vs[2]["MT_pivotOut__"] = """element1"""
         self.vs[2]["MT_subtypeMatching__"] = True
         self.vs[2]["MT_pre__classtype"] = """
 #===============================================================================
@@ -143,7 +144,7 @@ return True
 
 return True
 """
-        self.vs[2]["GUID__"] = UUID('5331cff2-0eb3-4ec9-88a8-ad37c92089b4')
+        self.vs[2]["GUID__"] = UUID('ea555be1-7bd6-4f53-83f6-daa46d41b9de')
 
     def eval_classtype2(self, attr_value, this):
         
