@@ -98,8 +98,8 @@ class StateProperty(Property):
         for prop in atomicProps:
             if ((len(prop.get_matchesOfTotal())>0) and (prop.GEThasDefaultVerifResult()==True) and (prop.GETverifResult()==True)):
                 curlist=[]
-                for dict in prop.get_matchesOfTotal():
-                    curlist.append(dict.values())
+                for dict1 in prop.get_matchesOfTotal():
+                    curlist.append(dict1.values())
                 listOfListsOfMatches.append(curlist)
         
         for atpropindex in range(len(listOfListsOfMatches)):
