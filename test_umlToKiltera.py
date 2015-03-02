@@ -230,7 +230,7 @@ class Test():
         ##PatternContracts - END
         #StateProperty.SETverifVerbosity(2)
         ts2 = time.time()
-        finalresult=StateProperty.verifyCompositeStateProperty(s,Trigger01ExprFULL)
+        finalresult=StateProperty.verifyCompositeStateProperty(s,nestedStates2NestedProcDefs_FULL)
         ##for Levi - properties to try Listen1orMoreListenBranch_FULL, par2ProcsFULL, Trigger01ExprFULL
         ts3 = time.time()
         print("\n\nTime to verify the input property: " + str(ts3 - ts2))
