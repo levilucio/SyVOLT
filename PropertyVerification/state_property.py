@@ -51,6 +51,23 @@ class StateProperty(Property):
         result=[]
         result=stateName.split('_')
         return result[1:]
+      
+    @staticmethod    
+    def checkRuleReachability (ruleName2Check, pathCondSet):
+        ts0 = time.time()
+        reachable=False
+        for pathCond in pathCondSet:
+            rulesInPathCond=StateProperty.parseStateName2RuleNames(pathCond.name)
+            if (ruleName2Check in rulesInPathCond):
+                reachable= True
+                break
+        ts1 = time.time()
+        if (reachable==True):
+            print("\nRule "+ruleName2Check+ " is reachable through at least one path condition !")
+        else:
+            print("\nRule "+ruleName2Check+ " is not reachable through any path condition !")
+        print("Time to verify reachability: " + str(ts1 - ts0))
+        return reachable
         
     @staticmethod
     def getAllAtomicStatePropsInStateProp (sprop, listResult):

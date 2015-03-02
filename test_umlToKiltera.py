@@ -148,8 +148,8 @@ class Test():
             transformation = self.select_rules([[a1,a2], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
 
 
-        #transformation =[[a1], [b3], [c1,c2]]
-        #transformation =[[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
+        #transformation =[[a1], [b1, b2, b3], [c1,c2]]
+        #transformation =[[a1,a2], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
         post_metamodel = ["MT_post__UMLRT2Kiltera_MM", "MoTifRule"]
 
@@ -238,6 +238,10 @@ class Test():
         #finalresult=StateProperty.verifyCompositeStateProperty(s, collapsable)
         print ('finalresult : ')
         print (finalresult)
+        
+        #CHecking Rule Reachability
+        StateProperty.checkRuleReachability('HMapHeirarchyOfStates2HeirarchyOfProcs', s.pathConditionSet)
+        StateProperty.checkRuleReachability('HCompositeState2ProcDef', s.pathConditionSet)
 #
 #         print("printing states")
 #         self._print_states(s)
