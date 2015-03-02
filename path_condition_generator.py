@@ -629,9 +629,8 @@ class PathConditionGenerator():
                         
                         localPathConditionLayerAccumulator = []
 
-                        #save child length as we will add to this list
-                        child_length = len(childrenPathConditions[pathCondition.name])
-                        for child_pc_index in range(child_length):
+
+                        for child_pc_index in range(len(childrenPathConditions[pathCondition.name])):
 
                             child_pc_name = childrenPathConditions[pathCondition.name][child_pc_index]
                             cpc = pc_dict[child_pc_name]
@@ -721,6 +720,9 @@ class PathConditionGenerator():
 
                                     partialTotalPathCondLayerAccumulator = []
 
+                                    #for child_pc_index in range(len(childrenPathConditions[pathCondition.name])):
+
+                                        #child_pc_name = childrenPathConditions[pathCondition.name][child_pc_index]
                                     for currentPathCondition in range(len(currentpathConditionSet)):
 
 #                                         if self.verbosity >= 2 :
@@ -731,7 +733,7 @@ class PathConditionGenerator():
                                         # against (pathCondition) and if the rule hasn't executed yet on that path condition
 
                                         cpc = currentpathConditionSet[currentPathCondition]
-
+                                        #cpc = child_pc_name
 
                                         if isinstance(cpc, str):
                                             cpc = pc_dict[cpc]
@@ -776,7 +778,9 @@ class PathConditionGenerator():
 
                                                     #childrenPathConditions[newPathCond.name] = pathCondition.name
 
-                                                    currentpathConditionSet[currentPathCondition] = newPathCond.name
+                                                    for pathConditionIndex in range(len(currentpathConditionSet)):
+                                                        if currentpathConditionSet[pathConditionIndex] == cpc.name:
+                                                            currentpathConditionSet[pathConditionIndex] = newPathCond.name
 
                                                 else:
                                                     # we are dealing with a partial combination of the rule.
