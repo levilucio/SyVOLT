@@ -70,6 +70,10 @@ from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HLocalDef1orMoreDefPart2_C
 from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ExprPart1_CompleteLHS import HConditionBranch1ExprPart1_CompleteLHS
 from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ExprPart2_CompleteLHS import HConditionBranch1ExprPart2_CompleteLHS
 from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ExprPart3_CompleteLHS import HConditionBranch1ExprPart3_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch01PatternPart1_CompleteLHS import HListenBranch01PatternPart1_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch01PatternPart2_CompleteLHS import HListenBranch01PatternPart2_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch01PatternPart3_CompleteLHS import HListenBranch01PatternPart3_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch01PatternPart4_CompleteLHS import HListenBranch01PatternPart4_CompleteLHS
 ##Multiplicity INvariants- End
 
 ##SYntactic COntracts - Begin
@@ -153,14 +157,14 @@ class Test():
         expected_num_pcs = 330
                 
         #TODO: Change this number if you are modifying the transformation at all
-        if args.num_rules == -1:
-            transformation = [[a1,a2], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
-        else:
-            transformation = self.select_rules([[a1,a2], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
+#         if args.num_rules == -1:
+#             transformation = [[a1,a2], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
+#         else:
+#             transformation = self.select_rules([[a1,a2], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
 
 
         #transformation =[[a1], [ b3]]
-        #transformation =[[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
+        transformation =[[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
         post_metamodel = ["MT_post__UMLRT2Kiltera_MM", "MoTifRule"]
 
@@ -246,6 +250,12 @@ class Test():
         ConditionBranch1Expr_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionBranch1ExprPart2_CompleteLHS())
         ConditionBranch1Expr_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionBranch1ExprPart3_CompleteLHS())
         ConditionBranch1Expr_FULL=ImplicationStateProperty(ConditionBranch1Expr_part1,AndStateProperty(ConditionBranch1Expr_part2,NotStateProperty(ConditionBranch1Expr_part3)))
+        #ListenBranch01Pattern
+        ListenBranch01Pattern_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HListenBranch01PatternPart1_CompleteLHS())
+        ListenBranch01Pattern_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HListenBranch01PatternPart2_CompleteLHS())
+        ListenBranch01Pattern_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HListenBranch01PatternPart3_CompleteLHS())
+        ListenBranch01Pattern_part4=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HListenBranch01PatternPart4_CompleteLHS())
+        ListenBranch01Pattern_FULL=ImplicationStateProperty(ListenBranch01Pattern_part1,OrStateProperty(AndStateProperty(ListenBranch01Pattern_part2,NotStateProperty(ListenBranch01Pattern_part3)),NotStateProperty(ListenBranch01Pattern_part4)))
         ######Multiplicity INvariants - End
 
         ######Syntactic COntracts - Begin
@@ -259,8 +269,8 @@ class Test():
         ##PatternContracts - END
         #StateProperty.SETverifVerbosity(2)
         ts2 = time.time()
-        finalresult=StateProperty.verifyCompositeStateProperty(s,ConditionBranch1Expr_FULL)
-        ##for Levi - properties to try Listen1orMoreListenBranch_FULL, par2ProcsFULL, Trigger01ExprFULL,nestedStates2NestedProcDefs_FULL, New1orMoreName_FULL, ConditionSet1orMoreConditionBranch_FULL, LocalDef1orMoreDef_FULL
+        finalresult=StateProperty.verifyCompositeStateProperty(s,ListenBranch01Pattern_FULL)
+        ##for Levi - properties to try Listen1orMoreListenBranch_FULL, par2ProcsFULL, Trigger01ExprFULL,nestedStates2NestedProcDefs_FULL, New1orMoreName_FULL, ConditionSet1orMoreConditionBranch_FULL, LocalDef1orMoreDef_FULL, ConditionBranch1Expr_FULL
         ts3 = time.time()
         print("\n\nTime to verify the input property: " + str(ts3 - ts2))
         #to debug tomorrow par2ProcsFULL InstStateSameName
