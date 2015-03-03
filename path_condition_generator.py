@@ -630,6 +630,7 @@ class PathConditionGenerator():
                         localPathConditionLayerAccumulator = []
 
 
+                        num = 0
                         for child_pc_index in range(len(childrenPathConditions[pathCondition.name])):
 
                             child_pc_name = childrenPathConditions[pathCondition.name][child_pc_index]
@@ -639,7 +640,8 @@ class PathConditionGenerator():
                             newPathCond = deepcopy(cpc)
                             newPathCond = disjoint_model_union(newPathCond,rule)
                             # name the new path condition as the combination of the previous path condition and the rule
-                            newPathCond.name = cpc.name + '_' + rule.name
+                            newPathCond.name = cpc.name + '_' + rule.name + str(num)
+                            num += 1
 
                             pc_dict[newPathCond.name] = newPathCond
 
@@ -721,6 +723,7 @@ class PathConditionGenerator():
                                     partialTotalPathCondLayerAccumulator = []
 
                                     #go through all the children of this path condition
+                                    num = 0
                                     for child_pc_index in range(len(childrenPathConditions[pathCondition.name])):
 
                                         #get the name of the child
@@ -741,7 +744,8 @@ class PathConditionGenerator():
                                         # the total combinator is always the one at the end of the combinator list for the rule.
 
                                         # name the new path condition as the combination of the previous path condition and the rule
-                                        newPathCondName = cpc.name + "_" + rule.name
+                                        newPathCondName = cpc.name + "_" + rule.name + str(num)
+                                        num += 1
 
                                         newPathCond = deepcopy(cpc)
 
