@@ -67,6 +67,9 @@ from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet1orMoreCondit
 from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet1orMoreConditionBranchPart2_CompleteLHS import HConditionSet1orMoreConditionBranchPart2_CompleteLHS
 from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HLocalDef1orMoreDefPart1_CompleteLHS import HLocalDef1orMoreDefPart1_CompleteLHS
 from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HLocalDef1orMoreDefPart2_CompleteLHS import HLocalDef1orMoreDefPart2_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ExprPart1_CompleteLHS import HConditionBranch1ExprPart1_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ExprPart2_CompleteLHS import HConditionBranch1ExprPart2_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ExprPart3_CompleteLHS import HConditionBranch1ExprPart3_CompleteLHS
 ##Multiplicity INvariants- End
 
 ##SYntactic COntracts - Begin
@@ -238,6 +241,11 @@ class Test():
         LocalDef1orMoreDef_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HLocalDef1orMoreDefPart1_CompleteLHS())
         LocalDef1orMoreDef_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HLocalDef1orMoreDefPart2_CompleteLHS())
         LocalDef1orMoreDef_FULL=ImplicationStateProperty(LocalDef1orMoreDef_part1,LocalDef1orMoreDef_part2)
+        #COnditionBranch1Expr
+        ConditionBranch1Expr_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionBranch1ExprPart1_CompleteLHS())
+        ConditionBranch1Expr_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionBranch1ExprPart2_CompleteLHS())
+        ConditionBranch1Expr_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionBranch1ExprPart3_CompleteLHS())
+        ConditionBranch1Expr_FULL=ImplicationStateProperty(ConditionBranch1Expr_part1,AndStateProperty(ConditionBranch1Expr_part2,NotStateProperty(ConditionBranch1Expr_part3)))
         ######Multiplicity INvariants - End
 
         ######Syntactic COntracts - Begin
@@ -251,8 +259,8 @@ class Test():
         ##PatternContracts - END
         #StateProperty.SETverifVerbosity(2)
         ts2 = time.time()
-        finalresult=StateProperty.verifyCompositeStateProperty(s,LocalDef1orMoreDef_FULL)
-        ##for Levi - properties to try Listen1orMoreListenBranch_FULL, par2ProcsFULL, Trigger01ExprFULL,nestedStates2NestedProcDefs_FULL, New1orMoreName_FULL, ConditionSet1orMoreConditionBranch_FULL
+        finalresult=StateProperty.verifyCompositeStateProperty(s,ConditionBranch1Expr_FULL)
+        ##for Levi - properties to try Listen1orMoreListenBranch_FULL, par2ProcsFULL, Trigger01ExprFULL,nestedStates2NestedProcDefs_FULL, New1orMoreName_FULL, ConditionSet1orMoreConditionBranch_FULL, LocalDef1orMoreDef_FULL
         ts3 = time.time()
         print("\n\nTime to verify the input property: " + str(ts3 - ts2))
         #to debug tomorrow par2ProcsFULL InstStateSameName
