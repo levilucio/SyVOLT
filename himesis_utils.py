@@ -199,17 +199,32 @@ def graph_to_dot(name, g, verbosity = 0):
     subprocess.call(command, shell=True)
 
 
-
-
+import gzip
+use_pickle = False
 
 # shrink a graph into an array
 def shrink_graph(graph):
-    return graph.__reduce__()
+    value = graph.__reduce__()
+
+    if use_pickle:
+        fname = "pickle/" + graph.name
+        f = gzip.open(fname, "wb")
+        pickle.dump(value, f)
+        f.close()
+        return fname
+    else:
+        return value
 
 
 #expand the graph from an array
-def expand_graph(arr):
+def expand_graph(small_value):
 
+    if use_pickle:
+        f = gzip.open(small_value, "rb")
+        arr = pickle.load(f)
+        f.close()
+    else:
+        arr = small_value
 
     igraph_dict, name, is_compiled = arr
 

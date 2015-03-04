@@ -249,7 +249,7 @@ class PyRamify:
 
         #no backward links in file, do nothing
         if len(backwards_links) == 0:
-            return [{graph: None}, []]
+            return [{graph.name: None}, []]
 
         #there are backward links, so start RAMifying
         out_dir = "./patterns/"

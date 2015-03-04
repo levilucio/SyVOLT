@@ -251,6 +251,33 @@ class PathConditionGenerator():
                 print(rule.name)
                 #print('\n')
 
+        self.rule_names = {}
+        # change rules names to be shorter
+
+        for layer in range(len(self.transformation)):
+            i = 0
+            for rule in self.transformation[layer]:
+                new_name = "L" + str(layer) + "R" + str(i)
+                i += 1
+                self.rule_names[new_name] = rule.name
+
+                self.ruleCombinators[new_name] = self.ruleCombinators[rule.name]
+                del self.ruleCombinators[rule.name]
+
+                self.ruleTraceCheckers[new_name] = self.ruleTraceCheckers[rule.name]
+                del self.ruleTraceCheckers[rule.name]
+
+                self.matchRulePatterns[new_name] = self.matchRulePatterns[rule.name]
+                del self.matchRulePatterns[rule.name]
+
+                rule.name = new_name
+
+        print('Transformation:')
+        for layer in range(len(self.transformation)):
+            print('Layer ' + str(layer))
+            for rule in self.transformation[layer]:
+                print(rule.name)
+
 
         # merge rules of the same layer that share common match patterns over those match patterns   
 #         for layer in range(0,len(self.transformation)):
@@ -512,6 +539,7 @@ class PathConditionGenerator():
         from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 
         HEmptyPathCondition = clean_graph(HEmptyPathCondition())
+        HEmptyPathCondition.name = "HEmpty"
 
         currentpathConditionSet = [HEmptyPathCondition.name]
 
@@ -523,6 +551,8 @@ class PathConditionGenerator():
 
         # store a dictionary from pc name to pc
         #pc_dict = {HEmptyPathCondition.name:HEmptyPathCondition}
+
+        #global_hp.setref()
 
         pc_dict = PCDict(1000)
         pc_dict[HEmptyPathCondition.name] = HEmptyPathCondition
@@ -640,7 +670,7 @@ class PathConditionGenerator():
                             newPathCond = deepcopy(cpc)
                             newPathCond = disjoint_model_union(newPathCond,rule)
                             # name the new path condition as the combination of the previous path condition and the rule
-                            newPathCond.name = cpc.name + '_' + rule.name + str(num)
+                            newPathCond.name = cpc.name + '_' + rule.name + "_" + str(num)
                             num += 1
 
                             pc_dict[newPathCond.name] = newPathCond
@@ -744,7 +774,7 @@ class PathConditionGenerator():
                                         # the total combinator is always the one at the end of the combinator list for the rule.
 
                                         # name the new path condition as the combination of the previous path condition and the rule
-                                        newPathCondName = cpc.name + "_" + rule.name + str(num)
+                                        newPathCondName = cpc.name + "_" + rule.name + "_" + str(num)
                                         num += 1
 
                                         newPathCond = deepcopy(cpc)
@@ -812,6 +842,9 @@ class PathConditionGenerator():
             # when the layer treatment is finished the set of path conditions for the transformation can receive the
             # accumulated path condition set for the layer
 
+        # h = global_hp.heap()
+        # print("\nMemory usage:")
+        # print(h)
 
         self.pathConditionSet = []
 

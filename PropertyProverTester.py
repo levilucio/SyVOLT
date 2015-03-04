@@ -55,6 +55,9 @@ class PropertyProverTester:
 
             matcher = self.ruleTraceCheckers[rule_name]
 
+            if matcher is None:
+                continue
+
             matcher.packet_in(p)
 
             if not matcher.is_success:
