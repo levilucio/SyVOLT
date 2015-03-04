@@ -109,14 +109,30 @@ class Test():
         d3 = self.rules['Hlayer3rule3']
         d4 = self.rules['Hlayer3rule4']
         d5 = self.rules['Hlayer3rule5']
+        
+        e0 = self.rules['Hlayer4rule0']
+        e1 = self.rules['Hlayer4rule1']
+        e2 = self.rules['Hlayer4rule2']
+        e3 = self.rules['Hlayer4rule3']
+
+        f0 = self.rules['Hlayer5rule0']
+        f1 = self.rules['Hlayer5rule1']
+        f2 = self.rules['Hlayer5rule2']
+        f3 = self.rules['Hlayer5rule3']
+        f4 = self.rules['Hlayer5rule4']
+        f5 = self.rules['Hlayer5rule5']
+        
+        g0 = self.rules['Hlayer6rule0']        
 
         expected_num_pcs = args.num_pcs
 
         if args.num_rules == -1:
             # change this to select by hand the number of rules to execute
-            transformation = [[a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11],[b0, b1, b2, b3,b4]]  # ,b5,b6,b7,b8, b9, b10, b11, b12, b13,b14,b15]]#,[c0,c1,c2,c3],[d0,d1,d2,d3,d4,d5]]
+            transformation = [[a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11],[b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15],\
+                              [c0, c1, c2, c3], [d0, d1, d2, d3, d4, d5], [e0, e1, e2, e3], [f0, f1, f2, f3, f4, f5], [g0]]
         else:
-            transformation = self.select_rules([[a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11],[b0, b1, b2, b3,b4 ,b5,b6,b7,b8, b9, b10, b11, b12, b13,b14,b15],[c0,c1,c2,c3],[d0,d1,d2,d3,d4,d5]], args.num_rules)
+            transformation = self.select_rules([[a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11],[b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15],\
+                              [c0, c1, c2, c3], [d0, d1, d2, d3, d4, d5], [e0, e1, e2, e3], [f0, f1, f2, f3, f4, f5], [g0]], args.num_rules)
 
 
         pre_metamodel = ["MT_pre__mbeddr_MM", "MoTifRule"]
