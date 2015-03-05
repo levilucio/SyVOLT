@@ -90,6 +90,9 @@ from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HNew1ProcPart3_CompleteLHS
 from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HLocalDef1ProcPart1_CompleteLHS import HLocalDef1ProcPart1_CompleteLHS
 from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HLocalDef1ProcPart2_CompleteLHS import HLocalDef1ProcPart2_CompleteLHS
 from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HLocalDef1ProcPart3_CompleteLHS import HLocalDef1ProcPart3_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ProcPart1_CompleteLHS import HConditionBranch1ProcPart1_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ProcPart2_CompleteLHS import HConditionBranch1ProcPart2_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ProcPart3_CompleteLHS import HConditionBranch1ProcPart3_CompleteLHS
 ##Multiplicity INvariants- End
 
 ##SYntactic COntracts - Begin
@@ -298,6 +301,11 @@ class Test():
         LocalDef1Proc_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HLocalDef1ProcPart2_CompleteLHS())
         LocalDef1Proc_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HLocalDef1ProcPart3_CompleteLHS())
         LocalDef1Proc_FULL=ImplicationStateProperty(LocalDef1Proc_part1,AndStateProperty(LocalDef1Proc_part2,NotStateProperty(LocalDef1Proc_part3)))
+        #ConditionBranch1Proc
+        ConditionBranch1Proc_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionBranch1ProcPart1_CompleteLHS())
+        ConditionBranch1Proc_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionBranch1ProcPart2_CompleteLHS())
+        ConditionBranch1Proc_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionBranch1ProcPart3_CompleteLHS())
+        ConditionBranch1Proc_FULL=ImplicationStateProperty(ConditionBranch1Proc_part1,AndStateProperty(ConditionBranch1Proc_part2,NotStateProperty(ConditionBranch1Proc_part3)))
         ######Multiplicity INvariants - End
 
         ######Syntactic COntracts - Begin
