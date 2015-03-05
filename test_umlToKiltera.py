@@ -78,6 +78,9 @@ from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet01ProcPart1_C
 from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet01ProcPart2_CompleteLHS import HConditionSet01ProcPart2_CompleteLHS
 from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet01ProcPart3_CompleteLHS import HConditionSet01ProcPart3_CompleteLHS
 from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet01ProcPart4_CompleteLHS import HConditionSet01ProcPart4_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HProcDef1ProcPart1_CompleteLHS import HProcDef1ProcPart1_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HProcDef1ProcPart2_CompleteLHS import HProcDef1ProcPart2_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HProcDef1ProcPart3_CompleteLHS import HProcDef1ProcPart3_CompleteLHS
 ##Multiplicity INvariants- End
 
 ##SYntactic COntracts - Begin
@@ -266,6 +269,11 @@ class Test():
         ConditionSet01Proc_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionSet01ProcPart3_CompleteLHS())
         ConditionSet01Proc_part4=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionSet01ProcPart4_CompleteLHS())
         ConditionSet01Proc_FULL=ImplicationStateProperty(ConditionSet01Proc_part1,OrStateProperty(AndStateProperty(ConditionSet01Proc_part2, NotStateProperty(ConditionSet01Proc_part3)),NotStateProperty(ConditionSet01Proc_part4)))
+        #ProcDef1Proc
+        ProcDef1Proc_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HProcDef1ProcPart1_CompleteLHS())
+        ProcDef1Proc_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HProcDef1ProcPart2_CompleteLHS())
+        ProcDef1Proc_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HProcDef1ProcPart3_CompleteLHS())
+        ProcDef1Proc_FULL=ImplicationStateProperty(ProcDef1Proc_part1,AndStateProperty(ProcDef1Proc_part2, NotStateProperty(ProcDef1Proc_part3)))
         ######Multiplicity INvariants - End
 
         ######Syntactic COntracts - Begin
@@ -279,8 +287,8 @@ class Test():
         ##PatternContracts - END
         #StateProperty.SETverifVerbosity(2)
         ts2 = time.time()
-        finalresult=StateProperty.verifyCompositeStateProperty(s,ConditionSet01Proc_FULL)
-        ##for Levi - properties to try Listen1orMoreListenBranch_FULL, par2ProcsFULL, Trigger01ExprFULL,nestedStates2NestedProcDefs_FULL, New1orMoreName_FULL, ConditionSet1orMoreConditionBranch_FULL, LocalDef1orMoreDef_FULL, ConditionBranch1Expr_FULL, LocalDef1orMoreDef_FULL
+        finalresult=StateProperty.verifyCompositeStateProperty(s,ProcDef1Proc_FULL)
+        ##for Levi - properties to try Listen1orMoreListenBranch_FULL, par2ProcsFULL, Trigger01ExprFULL,nestedStates2NestedProcDefs_FULL, New1orMoreName_FULL, ConditionSet1orMoreConditionBranch_FULL, LocalDef1orMoreDef_FULL, ConditionBranch1Expr_FULL, LocalDef1orMoreDef_FULL,ConditionSet01Proc_FULL
         ts3 = time.time()
         print("\n\nTime to verify the input property: " + str(ts3 - ts2))
         #to debug tomorrow par2ProcsFULL InstStateSameName
