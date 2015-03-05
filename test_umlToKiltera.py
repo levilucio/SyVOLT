@@ -319,8 +319,8 @@ class Test():
         ##PatternContracts - END
         #StateProperty.SETverifVerbosity(2)
         ts2 = time.time()
-        finalresult=StateProperty.verifyCompositeStateProperty(s,LocalDef1Proc_FULL)
-        ##for Levi - properties to try Listen1orMoreListenBranch_FULL, par2ProcsFULL, Trigger01ExprFULL,nestedStates2NestedProcDefs_FULL, New1orMoreName_FULL, ConditionSet1orMoreConditionBranch_FULL, LocalDef1orMoreDef_FULL, ConditionBranch1Expr_FULL, LocalDef1orMoreDef_FULL,ConditionSet01Proc_FULL, ProcDef1Proc_FULL, ListenBranch1Proc_FULL
+        finalresult=StateProperty.verifyCompositeStateProperty(s,ConditionBranch1Proc_FULL)
+        ##for Levi - properties to try Listen1orMoreListenBranch_FULL, par2ProcsFULL, Trigger01ExprFULL,nestedStates2NestedProcDefs_FULL, New1orMoreName_FULL, ConditionSet1orMoreConditionBranch_FULL, LocalDef1orMoreDef_FULL, ConditionBranch1Expr_FULL, LocalDef1orMoreDef_FULL,ConditionSet01Proc_FULL, ProcDef1Proc_FULL, ListenBranch1Proc_FULL,LocalDef1Proc_FULL
         #New1Proc_FULL
         ts3 = time.time()
         print("\n\nTime to verify the input property: " + str(ts3 - ts2))
