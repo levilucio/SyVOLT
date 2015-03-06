@@ -99,6 +99,7 @@ from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ProcPart3
 from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstStateSameNamePart1_2_IsolatedConnectedLHS import HInstStateSameNamePart1_2_IsolatedConnectedLHS
 from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstStateSameNamePart1_CompleteLHS import HInstStateSameNamePart1_CompleteLHS
 from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstStateSameNamePart2_CompleteLHS import HInstStateSameNamePart2_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstHProcDefHpart1_CompleteLHS import HInstHProcDefHpart1_CompleteLHS
 ##SYntactic COntracts - End
 
 ##Pattern COntract - BEGIN
@@ -312,6 +313,8 @@ class Test():
         InstStateSameName_part1=AtomicStateProperty(HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart1_CompleteLHS)
         InstStateSameName_part2=AtomicStateProperty(HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart2_CompleteLHS)
         InstSTateSameName_FULL=ImplicationStateProperty(InstStateSameName_part1, InstStateSameName_part2)
+        InstHProcDefH=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstHProcDefHpart1_CompleteLHS())
+        InstHProcDefH_FULL=ImplicationStateProperty(InstHProcDefH,InstHProcDefH)
         ######Syntactic COntracts - ENd
         
         ##PatternContracts - BEGIN
@@ -319,7 +322,7 @@ class Test():
         ##PatternContracts - END
         #StateProperty.SETverifVerbosity(2)
         ts2 = time.time()
-        finalresult=StateProperty.verifyCompositeStateProperty(s,ConditionBranch1Proc_FULL)
+        finalresult=StateProperty.verifyCompositeStateProperty(s,InstHProcDefH_FULL)
         ##for Levi - properties to try Listen1orMoreListenBranch_FULL, par2ProcsFULL, Trigger01ExprFULL,nestedStates2NestedProcDefs_FULL, New1orMoreName_FULL, ConditionSet1orMoreConditionBranch_FULL, LocalDef1orMoreDef_FULL, ConditionBranch1Expr_FULL, LocalDef1orMoreDef_FULL,ConditionSet01Proc_FULL, ProcDef1Proc_FULL, ListenBranch1Proc_FULL,LocalDef1Proc_FULL
         #New1Proc_FULL
         ts3 = time.time()
