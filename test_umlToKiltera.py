@@ -103,6 +103,10 @@ from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstHProcDefHpart1_CompleteL
 from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstHProcDefHpart2_CompleteLHS import HInstHProcDefHpart2_CompleteLHS
 from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstCProcDefCpart1_CompleteLHS import HInstCProcDefCpart1_CompleteLHS
 from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstCProcDefCpart2_CompleteLHS import HInstCProcDefCpart2_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstProcDefParamspart1_CompleteLHS import HInstProcDefParamspart1_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstProcDefParamspart2_CompleteLHS import HInstProcDefParamspart2_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstProcDefParamspart3_CompleteLHS import HInstProcDefParamspart3_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstProcDefParamspart4_CompleteLHS import HInstProcDefParamspart4_CompleteLHS
 ##SYntactic COntracts - End
 
 ##Pattern COntract - BEGIN
@@ -324,6 +328,11 @@ class Test():
         InstCProcDefC_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstCProcDefCpart1_CompleteLHS())
         InstCProcDefC_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstCProcDefCpart2_CompleteLHS())
         InstCProcDefC_FULL=ImplicationStateProperty(InstCProcDefC_part1,InstCProcDefC_part2)
+        HInstProcDefParams_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstProcDefParamspart1_CompleteLHS())
+        HInstProcDefParams_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstProcDefParamspart2_CompleteLHS())
+        HInstProcDefParams_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstProcDefParamspart3_CompleteLHS())
+        HInstProcDefParams_part4=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstProcDefParamspart4_CompleteLHS())
+        HInstProcDefParams_FULL=ImplicationStateProperty(AndStateProperty(HInstProcDefParams_part1,NotStateProperty(HInstProcDefParams_part2)),AndStateProperty(HInstProcDefParams_part3,NotStateProperty(HInstProcDefParams_part4)))
         ######Syntactic COntracts - ENd
         
         ##PatternContracts - BEGIN
@@ -331,7 +340,7 @@ class Test():
         ##PatternContracts - END
         #StateProperty.SETverifVerbosity(2)
         ts2 = time.time()
-        finalresult=StateProperty.verifyCompositeStateProperty(s,InstCProcDefC_FULL)
+        finalresult=StateProperty.verifyCompositeStateProperty(s,HInstProcDefParams_FULL)
         ##for Levi - properties to try Listen1orMoreListenBranch_FULL, par2ProcsFULL, Trigger01ExprFULL,nestedStates2NestedProcDefs_FULL, New1orMoreName_FULL, ConditionSet1orMoreConditionBranch_FULL, LocalDef1orMoreDef_FULL, ConditionBranch1Expr_FULL, LocalDef1orMoreDef_FULL,ConditionSet01Proc_FULL, ProcDef1Proc_FULL, ListenBranch1Proc_FULL,LocalDef1Proc_FULL
         #New1Proc_FULL, InstHProcDefH_FULL, InstCProcDefC_FULL
         ts3 = time.time()
