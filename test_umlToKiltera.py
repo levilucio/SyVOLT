@@ -101,6 +101,8 @@ from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstStateSameNamePart1_Compl
 from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstStateSameNamePart2_CompleteLHS import HInstStateSameNamePart2_CompleteLHS
 from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstHProcDefHpart1_CompleteLHS import HInstHProcDefHpart1_CompleteLHS
 from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstHProcDefHpart2_CompleteLHS import HInstHProcDefHpart2_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstCProcDefCpart1_CompleteLHS import HInstCProcDefCpart1_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstCProcDefCpart2_CompleteLHS import HInstCProcDefCpart2_CompleteLHS
 ##SYntactic COntracts - End
 
 ##Pattern COntract - BEGIN
@@ -317,6 +319,9 @@ class Test():
         InstHProcDefH_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstHProcDefHpart1_CompleteLHS())
         InstHProcDefH_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstHProcDefHpart2_CompleteLHS())
         InstHProcDefH_FULL=ImplicationStateProperty(InstHProcDefH_part1,InstHProcDefH_part2)
+        InstCProcDefC_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstCProcDefCpart1_CompleteLHS())
+        InstCProcDefC_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstCProcDefCpart2_CompleteLHS())
+        InstCProcDefC_FULL=ImplicationStateProperty(InstCProcDefC_part1,InstCProcDefC_part2)
         ######Syntactic COntracts - ENd
         
         ##PatternContracts - BEGIN
@@ -324,9 +329,9 @@ class Test():
         ##PatternContracts - END
         #StateProperty.SETverifVerbosity(2)
         ts2 = time.time()
-        finalresult=StateProperty.verifyCompositeStateProperty(s,InstHProcDefH_FULL)
+        finalresult=StateProperty.verifyCompositeStateProperty(s,InstCProcDefC_FULL)
         ##for Levi - properties to try Listen1orMoreListenBranch_FULL, par2ProcsFULL, Trigger01ExprFULL,nestedStates2NestedProcDefs_FULL, New1orMoreName_FULL, ConditionSet1orMoreConditionBranch_FULL, LocalDef1orMoreDef_FULL, ConditionBranch1Expr_FULL, LocalDef1orMoreDef_FULL,ConditionSet01Proc_FULL, ProcDef1Proc_FULL, ListenBranch1Proc_FULL,LocalDef1Proc_FULL
-        #New1Proc_FULL
+        #New1Proc_FULL, InstHProcDefH_FULL
         ts3 = time.time()
         print("\n\nTime to verify the input property: " + str(ts3 - ts2))
         #to debug tomorrow par2ProcsFULL InstStateSameName
