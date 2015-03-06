@@ -26,8 +26,8 @@ a.""")
         self["MT_constraint__"] = pickle.loads("""V#===============================================================================\u000a# This code is executed after the nodes in the LHS have been matched.\u000a# You can access a matched node labelled n by: PreNode('n').\u000a# To access attribute x of node n, use: PreNode('n')['x'].\u000a# The given constraint must evaluate to a boolean expression:\u000a#    returning True enables the rule to be applied,\u000a#    returning False forbids the rule from being applied.\u000a#===============================================================================\u000a\u000aif (PreNode('2')['name']=='name') and (PreNode('3')['name']=='H'):\u000a   return True\u000areturn False\u000a
 p1
 .""")
-        self["name"] = """InstHProcDefHpart1_Complete"""
-        self["GUID__"] = UUID('e2223ffd-0f5a-4b52-90d6-591c6ea852a9')
+        self["name"] = """"""
+        self["GUID__"] = UUID('3e421290-7133-4144-a908-3f2e80a3aeb0')
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
@@ -60,21 +60,22 @@ return True
 return True
 """
         self.vs[0]["MT_dirty__"] = False
-        self.vs[0]["GUID__"] = UUID('ec11332e-c804-476a-9b96-9a67edb7fe89')
+        self.vs[0]["GUID__"] = UUID('38d5673a-8589-40dc-a9e4-81ad9150b277')
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_label__"] = """4"""
         self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[1]["mm__"] = """MT_pre__hasAttribute_T"""
         self.vs[1]["MT_dirty__"] = False
-        self.vs[1]["GUID__"] = UUID('3d23c79a-4b39-4300-aefb-0d0a09f581ac')
+        self.vs[1]["GUID__"] = UUID('ec86a70e-d4e3-43a7-a250-c63e44a1043c')
         self.vs[2]["MT_subtypeMatching__"] = False
         self.vs[2]["MT_label__"] = """6"""
         self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[2]["mm__"] = """MT_pre__leftExpr"""
         self.vs[2]["MT_dirty__"] = False
-        self.vs[2]["GUID__"] = UUID('33a50676-9103-445f-93d3-5e21646ef2c5')
+        self.vs[2]["GUID__"] = UUID('43bef3cd-712f-44b7-b6ba-80601b04322c')
+        self.vs[3]["MT_pivotOut__"] = """element1"""
         self.vs[3]["MT_subtypeMatching__"] = False
         self.vs[3]["MT_pre__classtype"] = """
 #===============================================================================
@@ -117,7 +118,7 @@ return True
 return True
 """
         self.vs[3]["MT_dirty__"] = False
-        self.vs[3]["GUID__"] = UUID('8d58b548-633f-4f8a-9958-00be8d837c38')
+        self.vs[3]["GUID__"] = UUID('c9e5b8cc-3df3-4459-bc79-b071612cbbe1')
         self.vs[4]["MT_subtypeMatching__"] = False
         self.vs[4]["MT_label__"] = """5"""
         self.vs[4]["MT_subtypes__"] = pickle.loads("""(lp1
@@ -136,14 +137,14 @@ return True
 return True
 """
         self.vs[4]["MT_dirty__"] = False
-        self.vs[4]["GUID__"] = UUID('9c26d020-8a14-45a8-bab5-7ca525b09ddf')
+        self.vs[4]["GUID__"] = UUID('cc45af33-0c24-43dc-81c0-8ff255ba7364')
         self.vs[5]["MT_subtypeMatching__"] = False
         self.vs[5]["MT_label__"] = """7"""
         self.vs[5]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[5]["mm__"] = """MT_pre__rightExpr"""
         self.vs[5]["MT_dirty__"] = False
-        self.vs[5]["GUID__"] = UUID('0967765c-b57b-4492-af4f-608085c38d9f')
+        self.vs[5]["GUID__"] = UUID('fc6079dd-f87d-4f6d-9452-a211285fecc6')
         self.vs[6]["MT_subtypeMatching__"] = False
         self.vs[6]["MT_pre__Type"] = """
 #===============================================================================
@@ -174,7 +175,7 @@ return True
 return True
 """
         self.vs[6]["MT_dirty__"] = False
-        self.vs[6]["GUID__"] = UUID('dabe40b6-62f6-4434-bc56-9439b85ce5ed')
+        self.vs[6]["GUID__"] = UUID('29f4da3b-fd8d-4e72-99a4-83a8d3a58397')
 
     def eval_Type2(self, attr_value, this):
         
