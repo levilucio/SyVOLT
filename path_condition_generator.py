@@ -251,7 +251,7 @@ class PathConditionGenerator():
                 print(rule.name)
                 #print('\n')
 
-        self.rule_names = {}
+        self.rule_names = {"HEmpty":"HEmptyPathCondition"}
         # change rules names to be shorter
 
         for layer in range(len(self.transformation)):
@@ -536,6 +536,8 @@ class PathConditionGenerator():
         http://msdl.cs.mcgill.ca/people/levi/30_publications/files/A_Technique_for_Symbolically_Verifying_Properties_of_Model_Transf.pdf
         """
 
+        self.num_path_conditions = 0
+
         from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 
         HEmptyPathCondition = clean_graph(HEmptyPathCondition())
@@ -670,7 +672,7 @@ class PathConditionGenerator():
                             newPathCond = deepcopy(cpc)
                             newPathCond = disjoint_model_union(newPathCond,rule)
                             # name the new path condition as the combination of the previous path condition and the rule
-                            newPathCond.name = cpc.name + '_' + rule.name + "_" + str(num)
+                            newPathCond.name = cpc.name + '_' + rule.name + "-" + str(num)
                             num += 1
 
                             pc_dict[newPathCond.name] = newPathCond
@@ -774,7 +776,7 @@ class PathConditionGenerator():
                                         # the total combinator is always the one at the end of the combinator list for the rule.
 
                                         # name the new path condition as the combination of the previous path condition and the rule
-                                        newPathCondName = cpc.name + "_" + rule.name + "_" + str(num)
+                                        newPathCondName = cpc.name + "_" + rule.name + "-" + str(num)
                                         num += 1
 
                                         newPathCond = deepcopy(cpc)
@@ -846,10 +848,24 @@ class PathConditionGenerator():
         # print("\nMemory usage:")
         # print(h)
 
-        self.pathConditionSet = []
+        self.pc_dict = pc_dict
+        self.currentpathConditionSet = currentpathConditionSet
+        self.num_path_conditions = len(currentpathConditionSet)
 
-        for pc_name in currentpathConditionSet:
-            self.pathConditionSet.append(pc_dict[pc_name])
+
+    def get_all_path_conditions(self):
+        path_conditions = []
+        for pc in self.get_path_conditions():
+            path_conditions.append(pc)
+        return path_conditions
+
+    def get_path_conditions(self):
+
+        for pc_name in self.currentpathConditionSet:
+            pc = self.pc_dict[pc_name]
+
+            pc.name = self.expand_pc_name(pc_name)
+            yield pc
 
     #@do_cprofile
     def _buildTraceabilityLinks(self,layer):
@@ -878,18 +894,25 @@ class PathConditionGenerator():
 #             for fragment in pathCondition:
 #                 backLinksCacheKeys[backMatcherPosition].append((backLinkMatchers[backMatcherPosition].condition.name + fragment.name, fragment))
 #         return backLinksCacheKeys
-    
+
+    def expand_pc_name(self, name):
+        new_name = ""
+        for token in name.split("_"):
+            token = token.split("-")[0]
+            new_name += self.rule_names[token] + "_"
+        new_name = new_name[:-1]
+        return new_name
 
     def print_path_conditions_screen(self):
-        for pathCond in self.pathConditionSet:
-            print "----------"
-            print pathCond.name
+        for pathCondName in self.currentpathConditionSet:
+            print("----------")
+            print(self.expand_pc_name(pathCondName))
 
 
     def print_path_conditions_file(self):
         if self.draw_svg:
             i=0
-            for pathCond in self.pathConditionSet:
+            for pathCond in self.get_path_conditions():
                 try:
                     print  ( str(i)+"---"+pathCond.name)
                     print  ( " ")

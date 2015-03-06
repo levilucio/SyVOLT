@@ -53,7 +53,9 @@ class StateProperty(Property):
         return result[1:]
       
     @staticmethod    
-    def checkRuleReachability (ruleName2Check, pathCondSet):
+    def checkRuleReachability (ruleName2Check, StateSpace):
+        pathCondSet = StateSpace.get_all_path_conditions()
+
         ts0 = time.time()
         reachable=False
         for pathCond in pathCondSet:
@@ -145,6 +147,8 @@ class StateProperty(Property):
         state_index = 0
         found_counterexample=False
         curVerifResult=False
+
+        StateSpace.pathConditionSet = StateSpace.get_all_path_conditions()
         StateSpace.pathConditionSet=StateSpace.pathConditionSet[1:]
         
         for state in StateSpace.pathConditionSet:

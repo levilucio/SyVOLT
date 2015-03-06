@@ -216,16 +216,18 @@ class Test():
         ts0 = time.time()
         s.build_path_conditions()
         ts1 = time.time()
+
+        print(s.num_path_conditions)
             
         print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
 #        print("Size of the set of path conditions: " + str(float(sys.getsizeof(s.pathConditionSet) / 1024)))
-        print("Number of path conditions: " + str(len(s.pathConditionSet)))
+        print("Number of path conditions: " + str(s.num_path_conditions))
 
         #check if the correct number of path conditions were produced
-        if not int(expected_num_pcs) == -1 and not int(expected_num_pcs) == len(s.pathConditionSet):
+        if not int(expected_num_pcs) == -1 and not int(expected_num_pcs) == s.num_path_conditions:
 
             #TODO: Make this an exception
-            num_pcs_s = "The number of produced path conditions is incorrect.\n" + str(expected_num_pcs) + " were expected, but " + str(len(s.pathConditionSet)) + " were produced."
+            num_pcs_s = "The number of produced path conditions is incorrect.\n" + str(expected_num_pcs) + " were expected, but " + str(s.num_path_conditions) + " were produced."
             print(num_pcs_s)
             #raise Exception(num_pcs_s)
  
@@ -340,8 +342,8 @@ class Test():
         print (finalresult)
         
         #CHecking Rule Reachability
-        StateProperty.checkRuleReachability('HMapHeirarchyOfStates2HeirarchyOfProcs', s.pathConditionSet)
-        StateProperty.checkRuleReachability('HCompositeState2ProcDef', s.pathConditionSet)
+        StateProperty.checkRuleReachability('HMapHeirarchyOfStates2HeirarchyOfProcs', s)
+        StateProperty.checkRuleReachability('HCompositeState2ProcDef', s)
 #
 #         print("printing states")
 #         self._print_states(s)
