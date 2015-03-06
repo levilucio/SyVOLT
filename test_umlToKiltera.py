@@ -100,6 +100,7 @@ from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstStateSameNamePart1_2_Iso
 from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstStateSameNamePart1_CompleteLHS import HInstStateSameNamePart1_CompleteLHS
 from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstStateSameNamePart2_CompleteLHS import HInstStateSameNamePart2_CompleteLHS
 from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstHProcDefHpart1_CompleteLHS import HInstHProcDefHpart1_CompleteLHS
+from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstHProcDefHpart2_CompleteLHS import HInstHProcDefHpart2_CompleteLHS
 ##SYntactic COntracts - End
 
 ##Pattern COntract - BEGIN
@@ -313,8 +314,9 @@ class Test():
         InstStateSameName_part1=AtomicStateProperty(HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart1_CompleteLHS)
         InstStateSameName_part2=AtomicStateProperty(HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart2_CompleteLHS)
         InstSTateSameName_FULL=ImplicationStateProperty(InstStateSameName_part1, InstStateSameName_part2)
-        InstHProcDefH=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstHProcDefHpart1_CompleteLHS())
-        InstHProcDefH_FULL=ImplicationStateProperty(InstHProcDefH,InstHProcDefH)
+        InstHProcDefH_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstHProcDefHpart1_CompleteLHS())
+        InstHProcDefH_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstHProcDefHpart2_CompleteLHS())
+        InstHProcDefH_FULL=ImplicationStateProperty(InstHProcDefH_part1,InstHProcDefH_part2)
         ######Syntactic COntracts - ENd
         
         ##PatternContracts - BEGIN
