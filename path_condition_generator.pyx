@@ -527,6 +527,13 @@ cdef class PathConditionGenerator(object):
 #             # now place the reordered rules back in the layer, at the end
 #             self.transformation[layerIndex].extend(list(reversed(orderedRules)))
 
+    def calc_required(self, list rules, int layer):
+        cdef list requiredRules = []
+        for rule in rules:
+            if rule in set(self.ruleContainment[layer].keys()):
+                requiredRules = self.ruleContainment[layer][rule]
+                requiredRules.extend(self.calc_required(self.ruleContainment[layer][rule], layer))
+        return requiredRules
 
     # @do_cprofile
     def build_path_conditions(self):     
@@ -544,7 +551,7 @@ cdef class PathConditionGenerator(object):
         HEmptyPathCondition = clean_graph(HEmptyPathCondition())
         HEmptyPathCondition.name = "HEmpty"
 
-        currentpathConditionSet = [HEmptyPathCondition.name]
+        cdef list currentpathConditionSet = [HEmptyPathCondition.name]
 
         # start with a set (list) of path conditions containing only the empty path condition (declared in the constructor)
         # a path condition is a list of where the elements are rules (or combinations of rules) with traceability information
@@ -563,7 +570,27 @@ cdef class PathConditionGenerator(object):
 
         # now go through the layers one-by-one
 
-        for layer in range(len(self.transformation)):
+        cdef int layer
+        cdef int len_transformation = len(self.transformation)
+
+        cdef dict childrenPathConditions
+
+        cdef int pathConditionIndex
+        cdef int pathConSetLength
+
+        cdef list requiredRules
+
+        cdef int child_pc_index
+        cdef char * child_pc_name
+
+        cdef int num
+
+        cdef list partialTotalPathCondLayerAccumulator
+        cdef list localPathConditionLayerAccumulator
+
+        cdef int combinator
+
+        for layer in range(len_transformation):
 
             # for each path condition built so far, combine it with each of the rules from the current layer
 
@@ -583,10 +610,8 @@ cdef class PathConditionGenerator(object):
             # the path conditions generated for it, instead of going though the whole vector each time.
 
             childrenPathConditions = {}
-            for pc in currentpathConditionSet:
-                if isinstance(pc, str):
-                    pc = pc_dict[pc]
-                childrenPathConditions[pc.name] = [pc.name]
+            for pc_name in currentpathConditionSet:
+                childrenPathConditions[pc_name] = [pc_name]
             
             for pathConditionIndex in range(pathConSetLength):
 
@@ -621,17 +646,7 @@ cdef class PathConditionGenerator(object):
                     # If they are not, then the combination is not possible and we can skip it.
                     
                     # function to return all the rules that have to execute if the current rule executes.
-                    
-                    def calc_required(rules):
-                        requiredRules = []
-                        for rule in rules:
-                            if rule in set(self.ruleContainment[layer].keys()):
-                                requiredRules = self.ruleContainment[layer][rule]
-                                requiredRules.extend(self.calc_required(self.ruleContainment[layer][rule]))
-                        return requiredRules
-                    
-                    
-                    requiredRules = calc_required([rule])
+                    requiredRules = self.calc_required([rule], layer)
                     
                     # now check if all the required rules exist in the path condition
                     # by checking the path condition's name. Note that "_" (underscore) is
