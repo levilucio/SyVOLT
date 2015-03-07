@@ -1,11 +1,9 @@
-
 import uuid, os.path, copy, cPickle as pickle    # Pickle is used to save the attribute values as pickled strings
 import igraph as ig
 import util.misc as misc
 from epsilon_parser import EpsilonParser
 from util.misc import indent_text
 import numpy.random as nprnd
-
 
 class HConstants:
     GUID = 'GUID__'
@@ -20,7 +18,6 @@ class HConstants:
     MT_PIVOT_OUT = 'MT_pivotOut__'
     MT_PRECOND_PREFIX = 'MT_pre__'
     MT_POSTCOND_PREFIX = 'MT_post__'
-
 
 
 class Himesis(ig.Graph):
@@ -169,41 +166,41 @@ class Himesis(ig.Graph):
         #TODO: This should be a TransformationLanguageSpecificException
         raise Exception('No node was found with the given id')
     
-    def draw(self, visual_style={}, label=None, show_guid=False, show_id=False, debug=False, width=600, height=900):
-        """
-        Visual graphic rendering of the graph.
-        @param label: The attribute to use as node label in the figure.
-                      If not provided, the index of the node is used.
-        @param visual_style: More drawing options
-        (see http://igraph.sourceforge.net/doc/python/igraph.Graph-class.html#__plot__ for more details).
-        """
-        if 'layout' not in visual_style:
-            visual_style["layout"] = 'fr'
-        if 'margin' not in visual_style:
-            visual_style["margin"] = 10
-        
-        # Set the labels
-        if not label:
-            if show_guid:
-                visual_style["vertex_label"] = [str(self.vs[i][Himesis.Constants.GUID])[:4] for i in self.node_iter()]
-            elif show_id:
-                visual_style["vertex_label"] = [str(i) for i in self.node_iter()]
-            else:
-                visual_style["vertex_label"] = [''] *  self.vcount()
-        else:
-            try:
-                visual_style["vertex_label"] = self.vs[label]
-                for n in self.node_iter():
-                    if not visual_style["vertex_label"][n]:
-                        visual_style["vertex_label"][n] = self.vs[n][Himesis.Constants.META_MODEL]
-                        if debug:
-                            visual_style["vertex_label"][n] = str(n) + ':' + visual_style["vertex_label"][n] 
-                    elif debug:
-                        visual_style["vertex_label"][n] = str(n) + ':' + visual_style["vertex_label"][n]
-            except:
-                raise Exception('%s is not a valid attribute' % label)
-        
-        return ig.plot(self, bbox=(0, 0, width, height), **visual_style)
+    # def draw(self, visual_style={}, label=None, show_guid=False, show_id=False, debug=False, width=600, height=900):
+    #     """
+    #     Visual graphic rendering of the graph.
+    #     @param label: The attribute to use as node label in the figure.
+    #                   If not provided, the index of the node is used.
+    #     @param visual_style: More drawing options
+    #     (see http://igraph.sourceforge.net/doc/python/igraph.Graph-class.html#__plot__ for more details).
+    #     """
+    #     if 'layout' not in visual_style:
+    #         visual_style["layout"] = 'fr'
+    #     if 'margin' not in visual_style:
+    #         visual_style["margin"] = 10
+    #
+    #     # Set the labels
+    #     if not label:
+    #         if show_guid:
+    #             visual_style["vertex_label"] = [str(self.vs[i][Himesis.Constants.GUID])[:4] for i in self.node_iter()]
+    #         elif show_id:
+    #             visual_style["vertex_label"] = [str(i) for i in self.node_iter()]
+    #         else:
+    #             visual_style["vertex_label"] = [''] *  self.vcount()
+    #     else:
+    #         try:
+    #             visual_style["vertex_label"] = self.vs[label]
+    #             for n in self.node_iter():
+    #                 if not visual_style["vertex_label"][n]:
+    #                     visual_style["vertex_label"][n] = self.vs[n][Himesis.Constants.META_MODEL]
+    #                     if debug:
+    #                         visual_style["vertex_label"][n] = str(n) + ':' + visual_style["vertex_label"][n]
+    #                 elif debug:
+    #                     visual_style["vertex_label"][n] = str(n) + ':' + visual_style["vertex_label"][n]
+    #         except:
+    #             raise Exception('%s is not a valid attribute' % label)
+    #
+    #     return plot(self, bbox=(0, 0, width, height), **visual_style)
     
     def _compile_additional_info(self, file):
         if hasattr(self, "execute_body"):
