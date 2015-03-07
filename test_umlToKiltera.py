@@ -7,6 +7,8 @@ Created on 2013-01-22
 #subprocess.call("python2 setup.py build_ext --inplace", shell=True)
 
 import pyximport; pyximport.install()
+import compile
+
 
 import unittest
 import time
