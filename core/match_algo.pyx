@@ -1,4 +1,3 @@
-# cython: profile=False
 
 import sys
 from himesis import Himesis
@@ -58,7 +57,7 @@ class Priority(object):
         return candidate_list
 
 
-cdef class HimesisMatcher(object):
+class HimesisMatcher(object):
     """
         Represents a pattern matching algorithm for typed attributed multi-graphs.
         The pattern matching algorithm is based on VF2.
@@ -138,7 +137,7 @@ cdef class HimesisMatcher(object):
         """
         sys.setrecursionlimit(self.old_recursion_limit)
     
-    cdef initialize(self):
+    def initialize(self):
         """
             (Re)Initializes the state of the algorithm.
         """
@@ -179,7 +178,7 @@ cdef class HimesisMatcher(object):
         # Provide a convenient way to access the isomorphism mapping.
         self.mapping = self.core_2.copy()
     
-    cdef bint are_compatibile(self, int src_node, int patt_node):
+    def are_compatibile(self, int src_node, int patt_node):
         """
             Verifies if a candidate pair is compatible.
             More specifically, verify degree and meta-model compatibility.
@@ -420,7 +419,7 @@ cdef class HimesisMatcher(object):
             if callable(checkConstraint):
                 try:
                     # This is equivalent to: if not eval_attrLbl(attr_value, currNode)
-                    if not checkConstraint(src_node[Himesis.to_non_RAM_attribute(attr)], src_node):
+                    if not checkConstraint(src_node[to_non_RAM_attribute(attr)], src_node):
                         return False
                 except Exception as e:
                     #TODO: This should be a TransformationLanguageSpecificException
@@ -433,7 +432,7 @@ cdef class HimesisMatcher(object):
                             print("MM: " + n["mm__"])
                         except KeyError:
                             pass
-                    raise Exception("An error has occurred while checking the constraint of the attribute '" + Himesis.to_non_RAM_attribute(attr) + "'"
+                    raise Exception("An error has occurred while checking the constraint of the attribute '" + to_non_RAM_attribute(attr) + "'"
                                    + " in node '" + src_node["mm__"] + "' in graph: '" + self.G1.name + "'", e)
             else:
                 raise Exception('The method %s was not found in the pattern graph' % methName)
@@ -506,7 +505,7 @@ cdef class HimesisMatcher(object):
             yield mapping
 
 
-cdef class HimesisMatcherState(object):
+class HimesisMatcherState(object):
     """
         Internal representation of state for the HimesisMatcher class.
         

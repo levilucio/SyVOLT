@@ -1,5 +1,3 @@
-# cython: profile=False
-
 import uuid, os.path, copy, cPickle as pickle    # Pickle is used to save the attribute values as pickled strings
 import igraph as ig
 import util.misc as misc
@@ -459,7 +457,7 @@ class HimesisPreConditionPattern(HimesisPattern):
             Returns the name of the method to call to evaluate the constraint of the given attribute.
             @param attr_name: The name of the attribute.
         """
-        return 'eval_%s%s' % (Himesis.to_non_RAM_attribute(attr_name), self.vs[node][Himesis.Constants.MT_LABEL])
+        return 'eval_%s%s' % (to_non_RAM_attribute(attr_name), self.vs[node]['MT_label__'])
     
     def _compile_additional_info(self, file):
         """
@@ -687,7 +685,7 @@ class HimesisPostConditionPattern(HimesisPattern):
             Returns the name of the method to call to execute the action of the given attribute.
             @param attr_name: The name of the attribute.
         """
-        return 'set_%s%s' % (Himesis.to_non_RAM_attribute(attr_name), self.vs[node][Himesis.Constants.MT_LABEL])
+        return 'set_%s%s' % (to_non_RAM_attribute(attr_name), self.vs[node][Himesis.Constants.MT_LABEL])
     
     # This method must be overridden by every sub-class.
     # There lies the code of the rewriting part of the rule.

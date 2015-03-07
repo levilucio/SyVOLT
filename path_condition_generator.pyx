@@ -1,4 +1,3 @@
-# cython: profile=False
 
 from t_core.messages import Packet
 from t_core.matcher import Matcher
@@ -529,7 +528,7 @@ cdef class PathConditionGenerator(object):
 #             self.transformation[layerIndex].extend(list(reversed(orderedRules)))
 
 
-    #@do_cprofile
+    # @do_cprofile
     def build_path_conditions(self):     
         """
         Build the set of path conditions by combining rules of a given layer with the

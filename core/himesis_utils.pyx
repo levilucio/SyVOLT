@@ -9,7 +9,6 @@ Useful Himesis-related operations
 
 '''
 
-# cython: profile=False
 
 import pydot
 import subprocess
@@ -19,7 +18,7 @@ import os
 import uuid
 import cPickle as pickle
 import igraph
-from core.himesis import Himesis
+
 
 from copy import deepcopy
 
@@ -220,6 +219,7 @@ def shrink_graph(graph):
 
 #expand the graph from an array
 def expand_graph(small_value):
+    from himesis import Himesis
 
     if use_pickle:
         f = gzip.open(small_value, "rb")
@@ -294,11 +294,11 @@ def standardize_name(char * name):
         return name
     return 'H%s%s' % (name[0].capitalize(), name[1:])
 
-cdef bint is_RAM_attribute(char * attr_name):
+def is_RAM_attribute(char * attr_name):
     return (attr_name.startswith('MT_pre__')
             or attr_name.startswith('MT_post__'))
 
-cdef char * to_non_RAM_attribute(char * attr_name):
+def to_non_RAM_attribute(char * attr_name):
     if attr_name.startswith('MT_pre__'):
         return attr_name[8:]
     elif attr_name.startswith('MT_post__'):

@@ -12,6 +12,7 @@ extensions = [
 
 setup(
   name = 'PropertyProver',
-  ext_modules = cythonize(extensions
+  ext_modules = cythonize(extensions,
+  compiler_directives={'profile': True}
   ),
 )
