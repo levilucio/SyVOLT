@@ -3,6 +3,8 @@ Created on 2013-01-22
 
 @author: levi
 '''
+import subprocess
+subprocess.call("python2 setup.py build_ext --inplace", shell=True)
 
 import unittest
 import time
