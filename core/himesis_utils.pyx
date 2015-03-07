@@ -9,6 +9,8 @@ Useful Himesis-related operations
 
 '''
 
+# cython: profile=False
+
 import pydot
 import subprocess
 import re
@@ -292,11 +294,11 @@ def standardize_name(char * name):
         return name
     return 'H%s%s' % (name[0].capitalize(), name[1:])
 
-def is_RAM_attribute(char * attr_name):
+cdef bint is_RAM_attribute(char * attr_name):
     return (attr_name.startswith('MT_pre__')
             or attr_name.startswith('MT_post__'))
 
-def to_non_RAM_attribute(char * attr_name):
+cdef char * to_non_RAM_attribute(char * attr_name):
     if attr_name.startswith('MT_pre__'):
         return attr_name[8:]
     elif attr_name.startswith('MT_post__'):

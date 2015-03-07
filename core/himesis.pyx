@@ -1,4 +1,4 @@
-# cython: profile=True
+# cython: profile=False
 
 import uuid, os.path, copy, cPickle as pickle    # Pickle is used to save the attribute values as pickled strings
 import igraph as ig
@@ -7,7 +7,7 @@ from epsilon_parser import EpsilonParser
 from util.misc import indent_text
 import numpy.random as nprnd
 
-from himesis_utils
+from himesis_utils import standardize_name, is_RAM_attribute, to_non_RAM_attribute
 
 class HConstants:
     GUID = 'GUID__'
@@ -44,7 +44,7 @@ class Himesis(ig.Graph):
         ig.Graph.__init__(self, directed=True, n=num_nodes, edges=edges)
         if not name:
             name = self.__class__.__name__
-        self.name = Himesis.standardize_name(name)
+        self.name = standardize_name(name)
         
         # Set universally unique identifiers for the graph and each node
         if not hasattr(self, 'is_compiled'):
@@ -473,7 +473,7 @@ class HimesisPreConditionPattern(HimesisPattern):
                 if not self.vs[v][attr]:
                     # There is no action for this attribute
                     continue
-                if Himesis.is_RAM_attribute(attr):
+                if is_RAM_attribute(attr):
                     file.write('''
     def %s(self, attr_value, this):
 %s
@@ -521,17 +521,17 @@ class HimesisPreConditionPatternLHS(HimesisPreConditionPattern):
         from %s import %s""" % (NAC_name, NAC_name))
                 file.write('''
         self.NACs = %s
-''' % str(map(lambda NAC: '%s(LHS=self)' % Himesis.standardize_name(NAC.__class__.__name__),
+''' % str(map(lambda NAC: '%s(LHS=self)' % standardize_name(NAC.__class__.__name__),
                     self.NACs)).replace("'", ""))
             
             else:
                 # self.NACs = ['NAC1', 'NAC2', ..., 'NACn']
                 for NAC_name in self.NACs:
                     file.write("""
-        from %s import %s""" % (Himesis.standardize_name(NAC_name), Himesis.standardize_name(NAC_name)))
+        from %s import %s""" % (standardize_name(NAC_name), standardize_name(NAC_name)))
                 file.write('''
         self.NACs = %s
-''' % str(map(lambda NAC: '%s(LHS=self)' % Himesis.standardize_name(NAC), self.NACs)).replace("'", ""))
+''' % str(map(lambda NAC: '%s(LHS=self)' % standardize_name(NAC), self.NACs)).replace("'", ""))
         
         super(HimesisPreConditionPatternLHS, self)._compile_additional_info(file)
 
@@ -622,7 +622,7 @@ class HimesisPreConditionPatternNAC(HimesisPreConditionPattern):
                     # Ignore the GUID attribute, it will be automatically set at run-time
                     elif attr == Himesis.Constants.GUID:
                         continue
-                    elif Himesis.is_RAM_attribute(attr):
+                    elif is_RAM_attribute(attr):
                         if not v2[attr]:
                             # There is no constraint for this attribute
                             continue
@@ -735,7 +735,7 @@ class HimesisPostConditionPattern(HimesisPattern):
             file.write('''
         from %s import %s
         self.pre = %s()
-    ''' % tuple([Himesis.standardize_name(self.pre)] * 3))
+    ''' % tuple([standardize_name(self.pre)] * 3))
         
         # Attributes action code
         for v in self.node_iter():
@@ -743,7 +743,7 @@ class HimesisPostConditionPattern(HimesisPattern):
                 if not self.vs[v][attr]:
                     # There is no action for this attribute
                     continue
-                if Himesis.is_RAM_attribute(attr):
+                if is_RAM_attribute(attr):
                     code = self.vs[v][attr]
                     if self.attribute_is_specified(code):
                         file.write('''
@@ -787,23 +787,23 @@ class HimesisPostConditionPattern(HimesisPattern):
         def set_attributes(node, index, has_old_values):
             transformationCode = []
             for attrName in self.vs[node].attribute_names():
-                if Himesis.is_RAM_attribute(attrName):
+                if is_RAM_attribute(attrName):
                     attr = self.vs[node][attrName]
                     if not attr:
                         # No action to perform for this attribute
                         continue
-                    attrName = Himesis.to_non_RAM_attribute(attrName)
+                    attrName = to_non_RAM_attribute(attrName)
                     if self.attribute_is_specified(attr):
                         old_value = 'None'
                         if has_old_values:
-                            old_value = "graph.vs[%s]['%s']" % (index, Himesis.to_non_RAM_attribute(attrName))
+                            old_value = "graph.vs[%s]['%s']" % (index, to_non_RAM_attribute(attrName))
                         #TODO: This should be a TransformationLanguageSpecificException
                         transformationCode.append("""try:
     graph.vs[%s]['%s'] = self.%s(%s, lambda i: graph.vs[match[i]], graph)
 except Exception, e:
     raise Exception('An error has occurred while computing the value of the attribute \\'%s\\'', e)
 """ \
-    % (index, Himesis.to_non_RAM_attribute(attrName),
+    % (index, to_non_RAM_attribute(attrName),
        self.get_attr_action_name(node, attrName),
        old_value, attrName))
             return ''.join(transformationCode)
@@ -837,7 +837,7 @@ labels = match.copy()
             updateCode = set_attributes(rhsNode, "labels['%s']" % label, has_old_values=True)
             if len(updateCode) > 0:
                 transformationCode.append("""# %s%s
-%s""" % (Himesis.to_non_RAM_attribute(self.vs[rhsNode][Himesis.Constants.META_MODEL]), label, updateCode))
+%s""" % (to_non_RAM_attribute(self.vs[rhsNode][Himesis.Constants.META_MODEL]), label, updateCode))
                 # Only set the dirty flag if there was a modification in the attributes
                 transformationCode.append("""
 graph.vs[labels['%s']][Himesis.Constants.MT_DIRTY] = True
@@ -854,7 +854,7 @@ graph.vs[labels['%s']][Himesis.Constants.MT_DIRTY] = True
             rhsNode = self.get_node_with_label(label)
             if label not in LHS_labels:
                 new_labels += [label]
-                className = Himesis.to_non_RAM_attribute(self.vs[rhsNode][Himesis.Constants.META_MODEL])
+                className = to_non_RAM_attribute(self.vs[rhsNode][Himesis.Constants.META_MODEL])
                 transformationCode.append("""# %s%s
 new_node = graph.add_node()
 labels['%s'] = new_node
@@ -877,9 +877,9 @@ graph.vs[new_node][Himesis.Constants.META_MODEL] = '%s'
                 tar_label = self.vs[edge.target][Himesis.Constants.MT_LABEL]
                 transformationCode.append("""# %s%s -> %s%s
 graph.add_edges([(labels['%s'], labels['%s'])])
-""" % (Himesis.to_non_RAM_attribute(self.vs[edge.source][Himesis.Constants.META_MODEL]),
+""" % (to_non_RAM_attribute(self.vs[edge.source][Himesis.Constants.META_MODEL]),
        src_label,
-       Himesis.to_non_RAM_attribute(self.vs[edge.target][Himesis.Constants.META_MODEL]),
+       to_non_RAM_attribute(self.vs[edge.target][Himesis.Constants.META_MODEL]),
        tar_label,
        src_label,
        tar_label))
@@ -898,7 +898,7 @@ graph.add_edges([(labels['%s'], labels['%s'])])
                 transformationCode.append(
 """# %s%s
 packet.global_pivots['%s'] = graph.vs[labels['%s']][Himesis.Constants.GUID]
-""" % (Himesis.to_non_RAM_attribute(self.vs[node][Himesis.Constants.META_MODEL]), label, self.vs[node][Himesis.Constants.MT_PIVOT_OUT], label))
+""" % (to_non_RAM_attribute(self.vs[node][Himesis.Constants.META_MODEL]), label, self.vs[node][Himesis.Constants.MT_PIVOT_OUT], label))
         #TODO: This should be a TransformationLanguageSpecificException
         transformationCode.append("""
 #===============================================================================

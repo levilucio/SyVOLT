@@ -1,7 +1,8 @@
+# cython: profile=False
 
 import sys
 from himesis import Himesis
-
+from himesis_utils import standardize_name, is_RAM_attribute, to_non_RAM_attribute
 
 class Priority(object):
     """
@@ -62,7 +63,7 @@ cdef class HimesisMatcher(object):
         Represents a pattern matching algorithm for typed attributed multi-graphs.
         The pattern matching algorithm is based on VF2.
     """
-    def __init__(self, source_graph, pattern_graph, pred1={}, succ1={}):
+    def __init__(self, object source_graph, object pattern_graph, dict pred1={}, dict succ1={}):
         """
             Represents a pattern matching algorithm for typed attributed multi-graphs.
             @param source_graph: The source graph.
@@ -137,7 +138,7 @@ cdef class HimesisMatcher(object):
         """
         sys.setrecursionlimit(self.old_recursion_limit)
     
-    def initialize(self):
+    cdef initialize(self):
         """
             (Re)Initializes the state of the algorithm.
         """
@@ -178,7 +179,7 @@ cdef class HimesisMatcher(object):
         # Provide a convenient way to access the isomorphism mapping.
         self.mapping = self.core_2.copy()
     
-    cdef are_compatibile(self, src_node, patt_node):
+    cdef bint are_compatibile(self, int src_node, int patt_node):
         """
             Verifies if a candidate pair is compatible.
             More specifically, verify degree and meta-model compatibility.
@@ -189,7 +190,7 @@ cdef class HimesisMatcher(object):
         patternNode = self.G2.vs[patt_node]
         
         # First check if they are of the same type
-        if sourceNode["mm__"] == Himesis.to_non_RAM_attribute(patternNode["mm__"]):
+        if sourceNode["mm__"] == to_non_RAM_attribute(patternNode["mm__"]):
             # Then check for the degree compatibility
             return (self.pred2[patt_node][0] <= self.pred1[src_node][0]
                     and self.succ2[patt_node][0] <= self.succ1[src_node][0])
@@ -201,7 +202,7 @@ cdef class HimesisMatcher(object):
         else:
             return (patternNode['MT_subtypeMatching__']
                     and sourceNode["mm__"]
-                    in map(lambda x:Himesis.to_non_RAM_attribute(x), patternNode['MT_subtypes__']))
+                    in map(lambda x:to_non_RAM_attribute(x), patternNode['MT_subtypes__']))
     
     def candidate_pairs_iter(self):
         """
@@ -505,7 +506,7 @@ cdef class HimesisMatcher(object):
             yield mapping
 
 
-class HimesisMatcherState(object):
+cdef class HimesisMatcherState(object):
     """
         Internal representation of state for the HimesisMatcher class.
         
