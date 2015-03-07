@@ -9,8 +9,8 @@ from t_core.messages import Packet
 from t_core.matcher import Matcher
 
 #from himesis_utils import merge_models
-from himesis_utils import disjoint_model_union
-from himesis_utils import graph_to_dot
+from core.himesis_utils import disjoint_model_union
+from core.himesis_utils import graph_to_dot
 from copy import deepcopy
 
 import time

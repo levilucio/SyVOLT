@@ -1,9 +1,13 @@
+# cython: profile=True
+
 import uuid, os.path, copy, cPickle as pickle    # Pickle is used to save the attribute values as pickled strings
 import igraph as ig
 import util.misc as misc
 from epsilon_parser import EpsilonParser
 from util.misc import indent_text
 import numpy.random as nprnd
+
+from himesis_utils
 
 class HConstants:
     GUID = 'GUID__'
@@ -29,29 +33,7 @@ class Himesis(ig.Graph):
     Constants = HConstants
     EDGE_LIST_THRESHOLD = 10**3
     
-    @staticmethod
-    def standardize_name(name):
-        """
-            Converts the given name into a standard Himesis name.
-            @param name: The name of the Himesis graph
-        """
-        if name.startswith('H'):
-            return name
-        return 'H%s%s' % (name[0].capitalize(), name[1:])
-    
-    @staticmethod
-    def is_RAM_attribute(attr_name):
-        return (attr_name.startswith(Himesis.Constants.MT_PRECOND_PREFIX)
-                or attr_name.startswith(Himesis.Constants.MT_POSTCOND_PREFIX))
-    
-    @staticmethod
-    def to_non_RAM_attribute(attr_name):
-        if attr_name.startswith(Himesis.Constants.MT_PRECOND_PREFIX):
-            return attr_name[len(Himesis.Constants.MT_PRECOND_PREFIX):]
-        elif attr_name.startswith(Himesis.Constants.MT_POSTCOND_PREFIX):
-            return attr_name[len(Himesis.Constants.MT_POSTCOND_PREFIX):]
-        else:
-            return attr_name
+
     
     def __init__(self, name='', num_nodes=0, edges=[]):
         """

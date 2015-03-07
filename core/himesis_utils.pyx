@@ -283,6 +283,27 @@ def disjoint_model_union(first, second):
   
     return first
 
+def standardize_name(char * name):
+    """
+        Converts the given name into a standard Himesis name.
+        @param name: The name of the Himesis graph
+    """
+    if name.startswith('H'):
+        return name
+    return 'H%s%s' % (name[0].capitalize(), name[1:])
+
+def is_RAM_attribute(char * attr_name):
+    return (attr_name.startswith('MT_pre__')
+            or attr_name.startswith('MT_post__'))
+
+def to_non_RAM_attribute(char * attr_name):
+    if attr_name.startswith('MT_pre__'):
+        return attr_name[8:]
+    elif attr_name.startswith('MT_post__'):
+        return attr_name[9:]
+    else:
+        return attr_name
+
 def clean_graph(graph):
     #shrink the size of the uuids into ints
     if isinstance(graph["GUID__"], uuid.UUID):

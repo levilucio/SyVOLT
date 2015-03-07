@@ -5,7 +5,7 @@ import sys
 import collections
 
 
-from himesis_utils import shrink_graph, expand_graph
+from core.himesis_utils import shrink_graph, expand_graph
 
 class PCDict(object):
     def __init__(self, capacity):

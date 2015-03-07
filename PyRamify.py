@@ -4,8 +4,8 @@ import sys
 import os
 from t_core.matcher import Matcher
 from t_core.rewriter import Rewriter
-from himesis_utils import *
-from himesis_plus import *
+from core.himesis_utils import *
+from core.himesis_plus import *
 
 import uuid
 

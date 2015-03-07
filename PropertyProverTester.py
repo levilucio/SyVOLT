@@ -5,7 +5,7 @@ from t_core.iterator import Iterator
 from t_core.matcher import Matcher
 from t_core.rewriter import Rewriter
 
-from himesis_plus import *
+from core.himesis_plus import *
 
 class PropertyProverTester:
 

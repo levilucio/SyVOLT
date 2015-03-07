@@ -17,7 +17,7 @@ from t_core.messages import Packet
 
 from PyRamify import PyRamify
 
-from himesis_utils import graph_to_dot
+from core.himesis_utils import graph_to_dot
 # all runs are the same transformation, but with different metamodel elements
 # the purpose is to do scalability testing with multiple configurations and multiple sets of rules
 
@@ -187,7 +187,7 @@ class Test():
                 
         #TODO: Change this number if you are modifying the transformation at all
         if args.num_rules == -1:
-            transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
+            transformation = [[a1, a2], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
         else:
             transformation = self.select_rules([[a1,a2], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
 
@@ -237,124 +237,124 @@ class Test():
             print(num_pcs_s)
             #raise Exception(num_pcs_s)
  
-        print("printing path conditions")
-        s.print_path_conditions_screen()
-
-#        s.print_path_conditions_file()
-
-        atprop=AtomicStateProperty(HState2procdef_IsolatedLHS(),HState2procdef_IsolatedLHS(), HState2procdef_CompleteLHS())
-        exitpt2procdefparprop_withattr=AtomicStateProperty(HExitpoint2procdefparTrue_IsolatedLHS(),HExitpoint2procdefparTrue_ConnectedLHS(),HExitpoint2procdefparTrue_CompleteLHS())
-        exitpt2procdefparprop_noattr=AtomicStateProperty(HExitpoint2procdefparTrueNOATTR_IsolatedLHS(),HExitpoint2procdefparTrueNOATTR_ConnectedLHS(),HExitpoint2procdefparTrueNOATTR_CompleteLHS())
-        atpropneg=AtomicStateProperty(HState2procdef_IsolatedLHS(), HState2procdef_IsolatedLHS(), HState2funcdefNEG_CompleteLHS())
-        atpropNeedscollapse_no=AtomicStateProperty(HState2trans2exitptTrue_IsolatedLHS(),HState2trans2exitptTrue_ConnectedLHS(),HState2trans2exitptTrue_CompleteLHS())
-        collapsable=AtomicStateProperty(HTrans2instTRUE_IsolatedLHS(), HTrans2instTRUE_ConnectedLHS(),HTrans2instTRUE_CompleteLHS())
-
-        ######Multiplicity Invariants - Begin
-        #Par2Procs
-        par2ProcsIfClause=AtomicStateProperty(HPar2ProcsPart1_2_IsolatedLHS(), HPar2ProcsPart1_2_IsolatedLHS(), HPar2ProcsPart1_CompleteLHS())
-        par2ProcsThenClause=AtomicStateProperty(HPar2ProcsPart1_2_IsolatedLHS(), HPar2ProcsPart1_2_IsolatedLHS(), HPar2ProcsPart2_CompleteLHS())
-        par2ProcsFULL=ImplicationStateProperty(par2ProcsIfClause, par2ProcsThenClause)
-        #Trigger01Expr
-        Trigger01Expr_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(), HTrigger01ExprPart1_CompleteLHS())
-        Trigger01Expr_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(), HTrigger01ExprPart2_CompleteLHS())
-        Trigger01Expr_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(), HTrigger01ExprPart3_CompleteLHS())
-        Trigger01Expr_part4=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(), HTrigger01ExprPart4_CompleteLHS())
-        Trigger01ExprFULL=ImplicationStateProperty (Trigger01Expr_part1,OrStateProperty(AndStateProperty(Trigger01Expr_part2, NotStateProperty(Trigger01Expr_part3)),NotStateProperty(Trigger01Expr_part4)))
-        #Listen 1 or more listenBranch
-        Listen1orMoreListenBranch_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(), HListen1orMoreListenBranchPart1_CompleteLHS())
-        Listen1orMoreListenBranch_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(), HListen1orMoreListenBranchPart2_CompleteLHS())
-        Listen1orMoreListenBranch_FULL=ImplicationStateProperty(Listen1orMoreListenBranch_part1, Listen1orMoreListenBranch_part2)
-        #New1OrMoreName
-        New1orMoreName_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HNew1orMoreNamePart1_CompleteLHS())
-        New1orMoreName_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HNew1orMoreNamePart2_CompleteLHS())
-        New1orMoreName_FULL=ImplicationStateProperty(New1orMoreName_part1,New1orMoreName_part2)
-        #COnditionSet1orMOreCOnditionBranch
-        ConditionSet1orMoreConditionBranch_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionSet1orMoreConditionBranchPart1_CompleteLHS())
-        ConditionSet1orMoreConditionBranch_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionSet1orMoreConditionBranchPart2_CompleteLHS())
-        ConditionSet1orMoreConditionBranch_FULL=ImplicationStateProperty(ConditionSet1orMoreConditionBranch_part1,ConditionSet1orMoreConditionBranch_part2)
-        #localDef1orMoreDef
-        LocalDef1orMoreDef_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HLocalDef1orMoreDefPart1_CompleteLHS())
-        LocalDef1orMoreDef_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HLocalDef1orMoreDefPart2_CompleteLHS())
-        LocalDef1orMoreDef_FULL=ImplicationStateProperty(LocalDef1orMoreDef_part1,LocalDef1orMoreDef_part2)
-        #COnditionBranch1Expr
-        ConditionBranch1Expr_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionBranch1ExprPart1_CompleteLHS())
-        ConditionBranch1Expr_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionBranch1ExprPart2_CompleteLHS())
-        ConditionBranch1Expr_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionBranch1ExprPart3_CompleteLHS())
-        ConditionBranch1Expr_FULL=ImplicationStateProperty(ConditionBranch1Expr_part1,AndStateProperty(ConditionBranch1Expr_part2,NotStateProperty(ConditionBranch1Expr_part3)))
-        #ListenBranch01Pattern
-        ListenBranch01Pattern_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HListenBranch01PatternPart1_CompleteLHS())
-        ListenBranch01Pattern_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HListenBranch01PatternPart2_CompleteLHS())
-        ListenBranch01Pattern_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HListenBranch01PatternPart3_CompleteLHS())
-        ListenBranch01Pattern_part4=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HListenBranch01PatternPart4_CompleteLHS())
-        ListenBranch01Pattern_FULL=ImplicationStateProperty(ListenBranch01Pattern_part1,OrStateProperty(AndStateProperty(ListenBranch01Pattern_part2,NotStateProperty(ListenBranch01Pattern_part3)),NotStateProperty(ListenBranch01Pattern_part4)))
-        #ConditionSet01Proc
-        ConditionSet01Proc_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionSet01ProcPart1_CompleteLHS())
-        ConditionSet01Proc_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionSet01ProcPart2_CompleteLHS())
-        ConditionSet01Proc_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionSet01ProcPart3_CompleteLHS())
-        ConditionSet01Proc_part4=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionSet01ProcPart4_CompleteLHS())
-        ConditionSet01Proc_FULL=ImplicationStateProperty(ConditionSet01Proc_part1,OrStateProperty(AndStateProperty(ConditionSet01Proc_part2, NotStateProperty(ConditionSet01Proc_part3)),NotStateProperty(ConditionSet01Proc_part4)))
-        #ProcDef1Proc
-        ProcDef1Proc_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HProcDef1ProcPart1_CompleteLHS())
-        ProcDef1Proc_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HProcDef1ProcPart2_CompleteLHS())
-        ProcDef1Proc_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HProcDef1ProcPart3_CompleteLHS())
-        ProcDef1Proc_FULL=ImplicationStateProperty(ProcDef1Proc_part1,AndStateProperty(ProcDef1Proc_part2, NotStateProperty(ProcDef1Proc_part3)))
-        #ListenBranch1Proc
-        ListenBranch1Proc_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HListenBranch1ProcPart1_CompleteLHS())
-        ListenBranch1Proc_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HListenBranch1ProcPart2_CompleteLHS())
-        ListenBranch1Proc_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HListenBranch1ProcPart3_CompleteLHS())
-        ListenBranch1Proc_FULL=ImplicationStateProperty(ListenBranch1Proc_part1,AndStateProperty(ListenBranch1Proc_part2,NotStateProperty(ListenBranch1Proc_part3)))
-        #New1Proc
-        New1Proc_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HNew1ProcPart1_CompleteLHS())
-        New1Proc_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HNew1ProcPart2_CompleteLHS())
-        New1Proc_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HNew1ProcPart3_CompleteLHS())
-        New1Proc_FULL=ImplicationStateProperty(New1Proc_part1, AndStateProperty(New1Proc_part2, NotStateProperty(New1Proc_part3)))
-        #LocalDef1Proc
-        LocalDef1Proc_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HLocalDef1ProcPart1_CompleteLHS())
-        LocalDef1Proc_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HLocalDef1ProcPart2_CompleteLHS())
-        LocalDef1Proc_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HLocalDef1ProcPart3_CompleteLHS())
-        LocalDef1Proc_FULL=ImplicationStateProperty(LocalDef1Proc_part1,AndStateProperty(LocalDef1Proc_part2,NotStateProperty(LocalDef1Proc_part3)))
-        #ConditionBranch1Proc
-        ConditionBranch1Proc_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionBranch1ProcPart1_CompleteLHS())
-        ConditionBranch1Proc_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionBranch1ProcPart2_CompleteLHS())
-        ConditionBranch1Proc_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionBranch1ProcPart3_CompleteLHS())
-        ConditionBranch1Proc_FULL=ImplicationStateProperty(ConditionBranch1Proc_part1,AndStateProperty(ConditionBranch1Proc_part2,NotStateProperty(ConditionBranch1Proc_part3)))
-        ######Multiplicity INvariants - End
-
-        ######Syntactic COntracts - Begin
-        InstStateSameName_part1=AtomicStateProperty(HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart1_CompleteLHS)
-        InstStateSameName_part2=AtomicStateProperty(HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart2_CompleteLHS)
-        InstSTateSameName_FULL=ImplicationStateProperty(InstStateSameName_part1, InstStateSameName_part2)
-        InstHProcDefH_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstHProcDefHpart1_CompleteLHS())
-        InstHProcDefH_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstHProcDefHpart2_CompleteLHS())
-        InstHProcDefH_FULL=ImplicationStateProperty(InstHProcDefH_part1,InstHProcDefH_part2)
-        InstCProcDefC_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstCProcDefCpart1_CompleteLHS())
-        InstCProcDefC_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstCProcDefCpart2_CompleteLHS())
-        InstCProcDefC_FULL=ImplicationStateProperty(InstCProcDefC_part1,InstCProcDefC_part2)
-        HInstProcDefParams_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstProcDefParamspart1_CompleteLHS())
-        HInstProcDefParams_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstProcDefParamspart2_CompleteLHS())
-        HInstProcDefParams_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstProcDefParamspart3_CompleteLHS())
-        HInstProcDefParams_part4=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstProcDefParamspart4_CompleteLHS())
-        HInstProcDefParams_FULL=ImplicationStateProperty(AndStateProperty(HInstProcDefParams_part1,NotStateProperty(HInstProcDefParams_part2)),AndStateProperty(HInstProcDefParams_part3,NotStateProperty(HInstProcDefParams_part4)))
-        ######Syntactic COntracts - ENd
-        
-        ##PatternContracts - BEGIN
-        nestedStates2NestedProcDefs_FULL=AtomicStateProperty(HNestedStates2nestedProcDefs_IsolatedLHS(),HNestedStates2nestedProcDefs_ConnectedLHS(),HNestedStates2nestedProcDefs_CompleteLHS())
-        ##PatternContracts - END
-        #StateProperty.SETverifVerbosity(2)
-        ts2 = time.time()
-        finalresult=StateProperty.verifyCompositeStateProperty(s,HInstProcDefParams_FULL)
-        ##for Levi - properties to try Listen1orMoreListenBranch_FULL, par2ProcsFULL, Trigger01ExprFULL,nestedStates2NestedProcDefs_FULL, New1orMoreName_FULL, ConditionSet1orMoreConditionBranch_FULL, LocalDef1orMoreDef_FULL, ConditionBranch1Expr_FULL, LocalDef1orMoreDef_FULL,ConditionSet01Proc_FULL, ProcDef1Proc_FULL, ListenBranch1Proc_FULL,LocalDef1Proc_FULL
-        #New1Proc_FULL, InstHProcDefH_FULL, InstCProcDefC_FULL
-        ts3 = time.time()
-        print("\n\nTime to verify the input property: " + str(ts3 - ts2))
-        #to debug tomorrow par2ProcsFULL InstStateSameName
-        #finalresult=StateProperty.verifyCompositeStateProperty(s, collapsable)
-        print ('finalresult : ')
-        print (finalresult)
-        
-        #CHecking Rule Reachability
-        StateProperty.checkRuleReachability('HMapHeirarchyOfStates2HeirarchyOfProcs', s)
-        StateProperty.checkRuleReachability('HCompositeState2ProcDef', s)
+#         print("printing path conditions")
+#         s.print_path_conditions_screen()
+#
+# #        s.print_path_conditions_file()
+#
+#         atprop=AtomicStateProperty(HState2procdef_IsolatedLHS(),HState2procdef_IsolatedLHS(), HState2procdef_CompleteLHS())
+#         exitpt2procdefparprop_withattr=AtomicStateProperty(HExitpoint2procdefparTrue_IsolatedLHS(),HExitpoint2procdefparTrue_ConnectedLHS(),HExitpoint2procdefparTrue_CompleteLHS())
+#         exitpt2procdefparprop_noattr=AtomicStateProperty(HExitpoint2procdefparTrueNOATTR_IsolatedLHS(),HExitpoint2procdefparTrueNOATTR_ConnectedLHS(),HExitpoint2procdefparTrueNOATTR_CompleteLHS())
+#         atpropneg=AtomicStateProperty(HState2procdef_IsolatedLHS(), HState2procdef_IsolatedLHS(), HState2funcdefNEG_CompleteLHS())
+#         atpropNeedscollapse_no=AtomicStateProperty(HState2trans2exitptTrue_IsolatedLHS(),HState2trans2exitptTrue_ConnectedLHS(),HState2trans2exitptTrue_CompleteLHS())
+#         collapsable=AtomicStateProperty(HTrans2instTRUE_IsolatedLHS(), HTrans2instTRUE_ConnectedLHS(),HTrans2instTRUE_CompleteLHS())
+#
+#         ######Multiplicity Invariants - Begin
+#         #Par2Procs
+#         par2ProcsIfClause=AtomicStateProperty(HPar2ProcsPart1_2_IsolatedLHS(), HPar2ProcsPart1_2_IsolatedLHS(), HPar2ProcsPart1_CompleteLHS())
+#         par2ProcsThenClause=AtomicStateProperty(HPar2ProcsPart1_2_IsolatedLHS(), HPar2ProcsPart1_2_IsolatedLHS(), HPar2ProcsPart2_CompleteLHS())
+#         par2ProcsFULL=ImplicationStateProperty(par2ProcsIfClause, par2ProcsThenClause)
+#         #Trigger01Expr
+#         Trigger01Expr_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(), HTrigger01ExprPart1_CompleteLHS())
+#         Trigger01Expr_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(), HTrigger01ExprPart2_CompleteLHS())
+#         Trigger01Expr_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(), HTrigger01ExprPart3_CompleteLHS())
+#         Trigger01Expr_part4=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(), HTrigger01ExprPart4_CompleteLHS())
+#         Trigger01ExprFULL=ImplicationStateProperty (Trigger01Expr_part1,OrStateProperty(AndStateProperty(Trigger01Expr_part2, NotStateProperty(Trigger01Expr_part3)),NotStateProperty(Trigger01Expr_part4)))
+#         #Listen 1 or more listenBranch
+#         Listen1orMoreListenBranch_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(), HListen1orMoreListenBranchPart1_CompleteLHS())
+#         Listen1orMoreListenBranch_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(), HListen1orMoreListenBranchPart2_CompleteLHS())
+#         Listen1orMoreListenBranch_FULL=ImplicationStateProperty(Listen1orMoreListenBranch_part1, Listen1orMoreListenBranch_part2)
+#         #New1OrMoreName
+#         New1orMoreName_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HNew1orMoreNamePart1_CompleteLHS())
+#         New1orMoreName_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HNew1orMoreNamePart2_CompleteLHS())
+#         New1orMoreName_FULL=ImplicationStateProperty(New1orMoreName_part1,New1orMoreName_part2)
+#         #COnditionSet1orMOreCOnditionBranch
+#         ConditionSet1orMoreConditionBranch_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionSet1orMoreConditionBranchPart1_CompleteLHS())
+#         ConditionSet1orMoreConditionBranch_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionSet1orMoreConditionBranchPart2_CompleteLHS())
+#         ConditionSet1orMoreConditionBranch_FULL=ImplicationStateProperty(ConditionSet1orMoreConditionBranch_part1,ConditionSet1orMoreConditionBranch_part2)
+#         #localDef1orMoreDef
+#         LocalDef1orMoreDef_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HLocalDef1orMoreDefPart1_CompleteLHS())
+#         LocalDef1orMoreDef_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HLocalDef1orMoreDefPart2_CompleteLHS())
+#         LocalDef1orMoreDef_FULL=ImplicationStateProperty(LocalDef1orMoreDef_part1,LocalDef1orMoreDef_part2)
+#         #COnditionBranch1Expr
+#         ConditionBranch1Expr_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionBranch1ExprPart1_CompleteLHS())
+#         ConditionBranch1Expr_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionBranch1ExprPart2_CompleteLHS())
+#         ConditionBranch1Expr_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionBranch1ExprPart3_CompleteLHS())
+#         ConditionBranch1Expr_FULL=ImplicationStateProperty(ConditionBranch1Expr_part1,AndStateProperty(ConditionBranch1Expr_part2,NotStateProperty(ConditionBranch1Expr_part3)))
+#         #ListenBranch01Pattern
+#         ListenBranch01Pattern_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HListenBranch01PatternPart1_CompleteLHS())
+#         ListenBranch01Pattern_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HListenBranch01PatternPart2_CompleteLHS())
+#         ListenBranch01Pattern_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HListenBranch01PatternPart3_CompleteLHS())
+#         ListenBranch01Pattern_part4=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HListenBranch01PatternPart4_CompleteLHS())
+#         ListenBranch01Pattern_FULL=ImplicationStateProperty(ListenBranch01Pattern_part1,OrStateProperty(AndStateProperty(ListenBranch01Pattern_part2,NotStateProperty(ListenBranch01Pattern_part3)),NotStateProperty(ListenBranch01Pattern_part4)))
+#         #ConditionSet01Proc
+#         ConditionSet01Proc_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionSet01ProcPart1_CompleteLHS())
+#         ConditionSet01Proc_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionSet01ProcPart2_CompleteLHS())
+#         ConditionSet01Proc_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionSet01ProcPart3_CompleteLHS())
+#         ConditionSet01Proc_part4=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionSet01ProcPart4_CompleteLHS())
+#         ConditionSet01Proc_FULL=ImplicationStateProperty(ConditionSet01Proc_part1,OrStateProperty(AndStateProperty(ConditionSet01Proc_part2, NotStateProperty(ConditionSet01Proc_part3)),NotStateProperty(ConditionSet01Proc_part4)))
+#         #ProcDef1Proc
+#         ProcDef1Proc_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HProcDef1ProcPart1_CompleteLHS())
+#         ProcDef1Proc_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HProcDef1ProcPart2_CompleteLHS())
+#         ProcDef1Proc_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HProcDef1ProcPart3_CompleteLHS())
+#         ProcDef1Proc_FULL=ImplicationStateProperty(ProcDef1Proc_part1,AndStateProperty(ProcDef1Proc_part2, NotStateProperty(ProcDef1Proc_part3)))
+#         #ListenBranch1Proc
+#         ListenBranch1Proc_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HListenBranch1ProcPart1_CompleteLHS())
+#         ListenBranch1Proc_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HListenBranch1ProcPart2_CompleteLHS())
+#         ListenBranch1Proc_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HListenBranch1ProcPart3_CompleteLHS())
+#         ListenBranch1Proc_FULL=ImplicationStateProperty(ListenBranch1Proc_part1,AndStateProperty(ListenBranch1Proc_part2,NotStateProperty(ListenBranch1Proc_part3)))
+#         #New1Proc
+#         New1Proc_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HNew1ProcPart1_CompleteLHS())
+#         New1Proc_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HNew1ProcPart2_CompleteLHS())
+#         New1Proc_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HNew1ProcPart3_CompleteLHS())
+#         New1Proc_FULL=ImplicationStateProperty(New1Proc_part1, AndStateProperty(New1Proc_part2, NotStateProperty(New1Proc_part3)))
+#         #LocalDef1Proc
+#         LocalDef1Proc_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HLocalDef1ProcPart1_CompleteLHS())
+#         LocalDef1Proc_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HLocalDef1ProcPart2_CompleteLHS())
+#         LocalDef1Proc_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HLocalDef1ProcPart3_CompleteLHS())
+#         LocalDef1Proc_FULL=ImplicationStateProperty(LocalDef1Proc_part1,AndStateProperty(LocalDef1Proc_part2,NotStateProperty(LocalDef1Proc_part3)))
+#         #ConditionBranch1Proc
+#         ConditionBranch1Proc_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionBranch1ProcPart1_CompleteLHS())
+#         ConditionBranch1Proc_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionBranch1ProcPart2_CompleteLHS())
+#         ConditionBranch1Proc_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HConditionBranch1ProcPart3_CompleteLHS())
+#         ConditionBranch1Proc_FULL=ImplicationStateProperty(ConditionBranch1Proc_part1,AndStateProperty(ConditionBranch1Proc_part2,NotStateProperty(ConditionBranch1Proc_part3)))
+#         ######Multiplicity INvariants - End
+#
+#         ######Syntactic COntracts - Begin
+#         InstStateSameName_part1=AtomicStateProperty(HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart1_CompleteLHS)
+#         InstStateSameName_part2=AtomicStateProperty(HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart1_2_IsolatedConnectedLHS(), HInstStateSameNamePart2_CompleteLHS)
+#         InstSTateSameName_FULL=ImplicationStateProperty(InstStateSameName_part1, InstStateSameName_part2)
+#         InstHProcDefH_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstHProcDefHpart1_CompleteLHS())
+#         InstHProcDefH_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstHProcDefHpart2_CompleteLHS())
+#         InstHProcDefH_FULL=ImplicationStateProperty(InstHProcDefH_part1,InstHProcDefH_part2)
+#         InstCProcDefC_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstCProcDefCpart1_CompleteLHS())
+#         InstCProcDefC_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstCProcDefCpart2_CompleteLHS())
+#         InstCProcDefC_FULL=ImplicationStateProperty(InstCProcDefC_part1,InstCProcDefC_part2)
+#         HInstProcDefParams_part1=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstProcDefParamspart1_CompleteLHS())
+#         HInstProcDefParams_part2=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstProcDefParamspart2_CompleteLHS())
+#         HInstProcDefParams_part3=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstProcDefParamspart3_CompleteLHS())
+#         HInstProcDefParams_part4=AtomicStateProperty(HEmpty_IsolatedConnectedLHS(),HEmpty_IsolatedConnectedLHS(),HInstProcDefParamspart4_CompleteLHS())
+#         HInstProcDefParams_FULL=ImplicationStateProperty(AndStateProperty(HInstProcDefParams_part1,NotStateProperty(HInstProcDefParams_part2)),AndStateProperty(HInstProcDefParams_part3,NotStateProperty(HInstProcDefParams_part4)))
+#         ######Syntactic COntracts - ENd
+#
+#         ##PatternContracts - BEGIN
+#         nestedStates2NestedProcDefs_FULL=AtomicStateProperty(HNestedStates2nestedProcDefs_IsolatedLHS(),HNestedStates2nestedProcDefs_ConnectedLHS(),HNestedStates2nestedProcDefs_CompleteLHS())
+#         ##PatternContracts - END
+#         #StateProperty.SETverifVerbosity(2)
+#         ts2 = time.time()
+#         finalresult=StateProperty.verifyCompositeStateProperty(s,HInstProcDefParams_FULL)
+#         ##for Levi - properties to try Listen1orMoreListenBranch_FULL, par2ProcsFULL, Trigger01ExprFULL,nestedStates2NestedProcDefs_FULL, New1orMoreName_FULL, ConditionSet1orMoreConditionBranch_FULL, LocalDef1orMoreDef_FULL, ConditionBranch1Expr_FULL, LocalDef1orMoreDef_FULL,ConditionSet01Proc_FULL, ProcDef1Proc_FULL, ListenBranch1Proc_FULL,LocalDef1Proc_FULL
+#         #New1Proc_FULL, InstHProcDefH_FULL, InstCProcDefC_FULL
+#         ts3 = time.time()
+#         print("\n\nTime to verify the input property: " + str(ts3 - ts2))
+#         #to debug tomorrow par2ProcsFULL InstStateSameName
+#         #finalresult=StateProperty.verifyCompositeStateProperty(s, collapsable)
+#         print ('finalresult : ')
+#         print (finalresult)
+#
+#         #CHecking Rule Reachability
+#         StateProperty.checkRuleReachability('HMapHeirarchyOfStates2HeirarchyOfProcs', s)
+#         StateProperty.checkRuleReachability('HCompositeState2ProcDef', s)
 #
 #         print("printing states")
 #         self._print_states(s)

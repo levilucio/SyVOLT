@@ -57,7 +57,7 @@ class Priority(object):
         return candidate_list
 
 
-class HimesisMatcher(object):
+cdef class HimesisMatcher(object):
     """
         Represents a pattern matching algorithm for typed attributed multi-graphs.
         The pattern matching algorithm is based on VF2.
@@ -178,7 +178,7 @@ class HimesisMatcher(object):
         # Provide a convenient way to access the isomorphism mapping.
         self.mapping = self.core_2.copy()
     
-    def are_compatibile(self, src_node, patt_node):
+    cdef are_compatibile(self, src_node, patt_node):
         """
             Verifies if a candidate pair is compatible.
             More specifically, verify degree and meta-model compatibility.
@@ -189,7 +189,7 @@ class HimesisMatcher(object):
         patternNode = self.G2.vs[patt_node]
         
         # First check if they are of the same type
-        if sourceNode[Himesis.Constants.META_MODEL] == Himesis.to_non_RAM_attribute(patternNode[Himesis.Constants.META_MODEL]):
+        if sourceNode["mm__"] == Himesis.to_non_RAM_attribute(patternNode["mm__"]):
             # Then check for the degree compatibility
             return (self.pred2[patt_node][0] <= self.pred1[src_node][0]
                     and self.succ2[patt_node][0] <= self.succ1[src_node][0])
@@ -199,9 +199,9 @@ class HimesisMatcher(object):
             return False
         # Then check sub-types compatibility
         else:
-            return (patternNode[Himesis.Constants.MT_SUBTYPE_MATCH]
-                    and sourceNode[Himesis.Constants.META_MODEL]
-                    in map(lambda x:Himesis.to_non_RAM_attribute(x), patternNode[Himesis.Constants.MT_SUBTYPES]))
+            return (patternNode['MT_subtypeMatching__']
+                    and sourceNode["mm__"]
+                    in map(lambda x:Himesis.to_non_RAM_attribute(x), patternNode['MT_subtypes__']))
     
     def candidate_pairs_iter(self):
         """

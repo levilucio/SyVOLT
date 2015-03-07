@@ -8,9 +8,9 @@ from property import Property
 #from atomic_state_property import AtomicStateProperty
 
 from disambiguate import Disambiguator
-from himesis_utils import disjoint_model_union
+from core.himesis_utils import disjoint_model_union
 from copy import deepcopy
-from himesis_utils import graph_to_dot
+from core.himesis_utils import graph_to_dot
 from t_core.messages import Packet
 from t_core.matcher import Matcher
 

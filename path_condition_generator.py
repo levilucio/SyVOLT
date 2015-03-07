@@ -7,10 +7,10 @@ from t_core.tc_python.frule import FRule
 
 from itertools import permutations
 
-from himesis_utils import disjoint_model_union
-from himesis_utils import graph_to_dot
-from himesis_utils import clean_graph
-from himesis_utils import print_graph
+from core.himesis_utils import disjoint_model_union
+from core.himesis_utils import graph_to_dot
+from core.himesis_utils import clean_graph
+from core.himesis_utils import print_graph
 
 from PCDict import PCDict
 
@@ -527,7 +527,7 @@ class PathConditionGenerator():
 #             self.transformation[layerIndex].extend(list(reversed(orderedRules)))
 
 
-    #@do_cprofile
+    @do_cprofile
     def build_path_conditions(self):     
         """
         Build the set of path conditions by combining rules of a given layer with the
