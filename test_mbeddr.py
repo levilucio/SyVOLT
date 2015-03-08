@@ -3,6 +3,8 @@ Created on 2015-02-14
 
 @author: levi
 '''
+import pyximport; pyximport.install()
+import compile
 
 import unittest
 import time
@@ -15,10 +17,10 @@ from t_core.messages import Packet
 
 from PyRamify import PyRamify
 
-from himesis_utils import graph_to_dot
+from core.himesis_utils import graph_to_dot
 
 from ecore_utils import EcoreUtils
-from himesis_plus import buildPreListFromClassNames
+from core.himesis_plus import buildPreListFromClassNames
 
 # all runs are the same transformation, but with different metamodel elements
 # the purpose is to do scalability testing with multiple configurations and multiple sets of rules
