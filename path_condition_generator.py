@@ -23,6 +23,11 @@ from solver.simple_attribute_equation_evaluator import SimpleAttributeEquationEv
 from PyRamify import PyRamify
 from PropertyProverTester import PropertyProverTester
 
+
+from multiprocessing import Pool
+
+
+
 #profile memory
 global global_profile_memory
 global global_hp
@@ -120,7 +125,7 @@ def do_cprofile(func):
 
 
 
-cdef class PathConditionGenerator(object):
+class PathConditionGenerator(object):
     """
     Builds the set of path conditions for a transformation
     
@@ -527,8 +532,8 @@ cdef class PathConditionGenerator(object):
 #             # now place the reordered rules back in the layer, at the end
 #             self.transformation[layerIndex].extend(list(reversed(orderedRules)))
 
-    def calc_required(self, list rules, int layer):
-        cdef list requiredRules = []
+    def calc_required(self, rules, layer):
+        requiredRules = []
         for rule in rules:
             if rule in set(self.ruleContainment[layer].keys()):
                 requiredRules = self.ruleContainment[layer][rule]
@@ -544,6 +549,11 @@ cdef class PathConditionGenerator(object):
         http://msdl.cs.mcgill.ca/people/levi/30_publications/files/A_Technique_for_Symbolically_Verifying_Properties_of_Model_Transf.pdf
         """
 
+
+        pool = Pool()
+        print("Pool: " + str(pool))
+
+
         self.num_path_conditions = 0
 
         from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
@@ -551,7 +561,7 @@ cdef class PathConditionGenerator(object):
         HEmptyPathCondition = clean_graph(HEmptyPathCondition())
         HEmptyPathCondition.name = "HEmpty"
 
-        cdef list currentpathConditionSet = [HEmptyPathCondition.name]
+        currentpathConditionSet = [HEmptyPathCondition.name]
 
         # start with a set (list) of path conditions containing only the empty path condition (declared in the constructor)
         # a path condition is a list of where the elements are rules (or combinations of rules) with traceability information
@@ -570,27 +580,7 @@ cdef class PathConditionGenerator(object):
 
         # now go through the layers one-by-one
 
-        cdef int layer
-        cdef int len_transformation = len(self.transformation)
-
-        cdef dict childrenPathConditions
-
-        cdef int pathConditionIndex
-        cdef int pathConSetLength
-
-        cdef list requiredRules
-
-        cdef int child_pc_index
-        cdef char * child_pc_name
-
-        cdef int num
-
-        cdef list partialTotalPathCondLayerAccumulator
-        cdef list localPathConditionLayerAccumulator
-
-        cdef int combinator
-
-        for layer in range(len_transformation):
+        for layer in range(len(self.transformation)):
 
             # for each path condition built so far, combine it with each of the rules from the current layer
 
