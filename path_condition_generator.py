@@ -24,9 +24,9 @@ from PyRamify import PyRamify
 from PropertyProverTester import PropertyProverTester
 
 
-from multiprocessing import Pool
+from multiprocessing import Pool, Manager, Process
 
-
+from path_condition_generator_worker import *
 
 #profile memory
 global global_profile_memory
@@ -575,9 +575,11 @@ class PathConditionGenerator(object):
         #global_hp.setref()
 
         pc_dict = PCDict(1000)
+
+        #manager = Manager()
+        #pc_dict = manager.dict()
         pc_dict[HEmptyPathCondition.name] = HEmptyPathCondition
-
-
+        
         # now go through the layers one-by-one
 
         for layer in range(len(self.transformation)):
