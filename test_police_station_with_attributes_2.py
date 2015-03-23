@@ -16,7 +16,7 @@ from t_core.messages import Packet
 
 from PyRamify import PyRamify
 
-from himesis_utils import graph_to_dot
+from core.himesis_utils  import graph_to_dot
 
 from t_core.tc_python.frule import FRule
 # all runs are the same transformation, but with different metamodel elements
@@ -259,8 +259,8 @@ class Test():
 #         tv11 = time.time()
  
         print("Time to build the set of path conditions: " + str(ts1 - ts0))
-        print("Size of the set of path conditions: " + str(sys.getsizeof(s.pathConditionSet[0])))
-        print("Number of path conditions: " + str(len(s.pathConditionSet)))
+        print("Size of the set of path conditions: " + str(sys.getsizeof(s.get_all_path_conditions())))
+        print("Number of path conditions: " + str(len(s.get_all_path_conditions())))
 
         #check if the correct number of path conditions were produced
         if not int(args.num_pcs) == -1 and not int(args.num_pcs) == len(s.pathConditionSet):
