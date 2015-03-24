@@ -165,6 +165,140 @@ class PyRamify:
                 node["MT_dirty__"] = False
 
         return graph
+    
+    
+    '''
+     changeAttrType (M): Changes the type of attributes to 'string', which allows conditions and actions to be specified on attribute values in patterns.
+     Also appends '__' to attributes starting with '__'. This is because the pLabel and pMatchSubtypes attributes (introduced in one of the next steps) need to be scoped appropriately for HOTs. 
+     The first time a metamodel is ramified, each class will have a __pLabel and __pMatchSubtypes attribute.
+     The next time, these attributes are renamed to ____pLabel and ____pMatchSubtypes, to allow a condition/action to be specified for the __pLabel and __pMatchSubtypes attributes which were introduced in the first RAMified metamodel.
+    '''
+    def changeAttrTypeWithBack(self, graph, make_pre = True):
+
+        #change mm of the graph
+        try:
+            if make_pre:
+                graph["mm__"] = [str(Himesis.Constants.MT_PRECOND_PREFIX + graph["mm__"][0]), 'MoTifRule']
+            else:
+                graph["mm__"] = [str(Himesis.Constants.MT_POSTCOND_PREFIX + graph["mm__"][0]), 'MoTifRule']
+        except IndexError:
+            graph["mm__"] = "MM"
+
+        # set the default constraint or action of the graph
+        if make_pre:
+            graph["MT_constraint__"] = get_default_constraint()
+        else:
+            graph["MT_action__"] = get_default_action()
+
+        #don't change some of the attributes
+        attribs_to_skip = ["GUID__", "mm__", "MT_label__", "MT_subtypes__", "MT_dirty__", "MT_subtypeMatching__"]
+
+
+        #examine the nodes in order to change their attributes
+        for i in range(len(graph.vs)):
+            node = graph.vs[i]
+
+            #examine each attribute
+            #warning: node.attribute_names() may not
+            #produce the attribute names for only this node,
+            #but instead the set of all attributes for all nodes
+            for attrib in node.attribute_names():
+
+                #we ignore the attributes that are None
+                #this works around the above bug
+                if node[attrib] is None:
+                    continue
+
+                #skip some of the attribs
+                if attrib in attribs_to_skip:
+                    continue
+
+                #skip already RAMified attribs
+                #TODO: Fix for double RAMification
+                if Himesis.Constants.MT_PRECOND_PREFIX in attrib:
+                    continue
+
+                if Himesis.Constants.MT_POSTCOND_PREFIX in attrib:
+                    continue
+
+                #make sure to copy the value
+                val = copy.deepcopy(node[attrib])
+
+                #delete the attrib from the node
+                #(not really deletion, but will be ignored in the future)
+                node[attrib] = None
+
+                #re-add the value with the new attribute name
+                if make_pre:
+                    new_attrib_name = Himesis.Constants.MT_PRECOND_PREFIX + attrib
+                else:
+                    new_attrib_name = Himesis.Constants.MT_POSTCOND_PREFIX + attrib
+
+                node[new_attrib_name] = val
+
+        #go through the graph again,
+        #to fix some edge cases
+        for i in range(len(graph.vs)):
+            node = graph.vs[i]
+
+            for attrib in node.attribute_names():
+
+                if node[attrib] is None:
+                    continue
+
+                #add the prefix to the mm
+                #TODO: Fold this into above for loop
+                if attrib == "mm__":
+
+#                     if node["mm__"] == "backward_link":
+#                         node["mm__"] = "trace_link"
+
+                    if make_pre:
+                        node["mm__"] = Himesis.Constants.MT_PRECOND_PREFIX + node["mm__"]
+                    else:
+                        node["mm__"] = Himesis.Constants.MT_POSTCOND_PREFIX + node["mm__"]
+                    continue
+
+                #skip the other attribs
+                if attrib in attribs_to_skip:
+                    continue
+
+
+                #TODO: Come up with a nice pattern for these attributes
+                #Hack for Attributes         
+                
+                if "Attribute" in node["mm__"] and attrib == "MT_pre__name":
+                    node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
+
+                #Hack for Constants
+                elif "Constant" in node["mm__"] and attrib == "MT_post__value":
+                    node[attrib] = "return '" + node[attrib] + "'"
+
+                elif "Attribute" in node["mm__"] and attrib == "MT_post__name":
+                    node[attrib] = "return '" + node[attrib] + "'"
+
+                elif "Constant" in node["mm__"] and attrib == "MT_post__name":
+                    node[attrib] = "return '" + node[attrib] + "'"
+
+                # Hack for trace_links
+                elif "trace_link" in node["mm__"] and attrib == "MT_pre__type":
+                    node[attrib] = None
+
+                else:
+                    #set the other values to the default match or rewrite code
+                    if make_pre:
+                        node[attrib] = get_default_match_code()
+                    else:
+                        node[attrib] = get_default_rewrite_code()
+
+            #set some other attribs for the node
+            if make_pre:
+                node["MT_subtypeMatching__"] = False
+                node["MT_subtypes__"] = "[]"
+                node["MT_dirty__"] = False
+
+        return graph
+
 
     #RAMify this file
     def do_RAMify(self, graph, output_dir, remove_rule_nodes = True):
@@ -206,6 +340,45 @@ class PyRamify:
 
         return graph
 
+
+    #RAMify this file keeping backward links
+    def do_RAMify_with_back(self, graph, output_dir, remove_rule_nodes = True):
+        
+        input_name = graph["name"]
+        #print("Starting to ramify file: " + input_name)
+
+
+        #rename the class
+        #graph["name"] = self.get_RAMified_name(input_name)
+
+#         backwards_links = find_nodes_with_mm(graph, ["backward_link"])
+#         for node in backwards_links:
+#             node["mm__"] = "trace_link"
+
+        #in some cases, the 'structural' or 'rule' nodes are removed
+        if remove_rule_nodes is True:
+            remove_nodes = find_nodes_with_mm(graph, ["MatchModel", "ApplyModel", "paired_with", "match_contains", "apply_contains", "directLink_T"])
+            print("Removing rule nodes")
+            graph.delete_nodes(remove_nodes)
+
+        #
+        # for n in graph.vs:
+        #     if "Attribute" in n["mm__"]:
+        #         print(n)
+
+        #make sure this graph becomes a precondition pattern
+        graph = makePreConditionPattern(graph)
+
+
+        #change the attribs in this graph
+        graph = self.changeAttrTypeWithBack(graph)
+
+
+        #compile the output pattern for future study + use
+        #throw everything in the output dir
+        #graph.compile(output_dir)
+
+        return graph
 
     #=========================
     #=========================
@@ -1122,7 +1295,6 @@ class PyRamify:
 
         return graph
 
-
     def make_rewriter(self, graph):
 
         rewriter = copy_graph(graph)
@@ -1188,6 +1360,72 @@ class PyRamify:
 
         return rewriter
 
+
+    def make_rewriter_with_back(self, graph):
+
+        rewriter = copy_graph(graph)
+
+        #Add trace links
+        match_contains = find_nodes_with_mm(graph, ["match_contains"])
+        match_attached = []
+        for mc in match_contains:
+            match_attached += look_for_attached(mc, rewriter)
+
+        apply_contains = find_nodes_with_mm(graph, ["apply_contains"])
+        apply_attached = []
+        for ac in apply_contains:
+            apply_attached += look_for_attached(ac, rewriter)
+
+        linked_nodes = []
+
+        backward_links = find_nodes_with_mm(graph, ["backward_link", "trace_link"])
+        for bl in backward_links:
+            bl_attached = look_for_attached(bl, rewriter)
+            #print("BL attached: " + str(bl_attached))
+
+            linked_nodes.append([bl_attached[0], bl_attached[1]])
+
+        for match_node in match_attached:
+
+            #print("Match node: " + str(rewriter.vs[match_node]["mm__"]))
+            if rewriter.vs[match_node]["mm__"] in ["MatchModel", "match_contains"]:
+                continue
+
+            for apply_node in apply_attached:
+                #print("Apply node: " + str(rewriter.vs[apply_node]["mm__"]))
+                if rewriter.vs[apply_node]["mm__"] in ["ApplyModel", "apply_contains"]:
+                    continue
+
+                found_link = False
+                for a, b in linked_nodes:
+
+                    if a == apply_node or b == apply_node:
+                        #there is already a link here
+                        found_link = True
+                        #print("Found the link")
+
+                if not found_link:
+                    #print("Did not find link")
+                    new_node = rewriter.add_node()
+                    rewriter.vs[new_node]["mm__"] = "trace_link"
+                    rewriter.vs[new_node]["MT_label__"] = str(new_node)
+                    #print("New label: " + str(rewriter.vs[new_node]["MT_label__"]))
+
+                    rewriter.add_edge(apply_node, new_node)
+                    rewriter.add_edge(new_node, match_node)
+
+
+        #graph_to_dot("the_rewriter_graph_" + rewriter.name, rewriter)
+
+        rewriter = self.changeAttrTypeWithBack(rewriter, False)
+
+        rewriter = makePostConditionPattern(rewriter)
+
+        #graph_to_dot("the_rewriter_graph_after_post_" + rewriter.name, rewriter)
+
+
+        return rewriter
+
     def get_match_pattern(self, rule):
     
         name = rule.keys()[0]
@@ -1199,7 +1437,7 @@ class PyRamify:
             graph.vs[i]["MT_label__"] = str(label)
             label += 1
 
-        rewriter = self.make_rewriter(graph)
+        rewriter = self.make_rewriter_with_back(graph)
         
         #graph_to_dot("rewriter_pyr", rewriter)
 
@@ -1209,7 +1447,7 @@ class PyRamify:
 
         graph = self.get_match_graph(graph)     
         
-        graph = self.do_RAMify(graph, out_dir, remove_rule_nodes = False)
+        graph = self.do_RAMify_with_back(graph, out_dir, remove_rule_nodes = False)
 
         graph["mm__"] = [graph["mm__"][0], 'MoTifRule']
         graph["MT_constraint__"] = get_default_constraint()

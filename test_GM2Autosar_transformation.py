@@ -15,7 +15,7 @@ from t_core.messages import Packet
 
 from PyRamify import PyRamify
 
-from himesis_utils import graph_to_dot
+from core.himesis_utils import graph_to_dot
 # all runs are the same transformation, but with different metamodel elements
 # the purpose is to do scalability testing with multiple configurations and multiple sets of rules
 
@@ -138,11 +138,17 @@ from PropertyVerification.Implication import Implication #StateSpace Prop
 from PropertyVerification.And import And #StateSpace Prop
 from PropertyVerification.Or import Or #StateSpace Prop
 from PropertyVerification.BACKUP_atomic_state_property import BKUPAtomicStateProperty
+from guppy.gsl.Main import Args
 #from lib2to3.fixer_util import p1
 
-class Test(unittest.TestCase):
+class Test():
 
-    def setUp(self):
+    def setUp(self,args):
+        
+        pyramify = PyRamify(draw_svg=args.draw_svg)
+
+        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
+            pyramify.ramify_directory("GM2AUTOSAR_MM/transformation/Himesis/")
 
 #         self.rules = {                'HMapECU2FiveElements': HMapECU2FiveElementsFAULTY(),
 #                                       'HMapDistributable': HMapDistributable(),
@@ -152,59 +158,64 @@ class Test(unittest.TestCase):
 #                                       'HConnECU2VirtualDevice': HConnECU2VirtualDevice(),
 #                                       'HConnVirtualDeviceToDistributable': HConnVirtualDeviceToDistributable()}
 
-        ConnectPPortPrototype_Back_CompositionType2ECU = Matcher(HConnectPPortPrototype_Back_CompositionType2ECULHS())
-        ConnectRPortPrototype_Back_CompositionType2ECU = Matcher(HConnectRPortPrototype_Back_CompositionType2ECULHS())
-        ConnECU2VirtualDevice_Back_EcuInst2ECU = Matcher(HConnECU2VirtualDevice_Back_EcuInst2ECULHS())
-        ConnECU2VirtualDevice_Back_STEM2VirtualDevice = Matcher(HConnECU2VirtualDevice_Back_STEM2VirtualDeviceLHS())
-        ConnECU2VirtualDevice_Back_SystemMapping2ECU = Matcher(HConnECU2VirtualDevice_Back_SystemMapping2ECULHS())
-        ConnVirtualDevice2Distributable_Back_ComponentPrototype2Distributable = Matcher(HConnVirtualDevice2Distributable_Back_ComponentPrototype2DistributableLHS())
-        ConnVirtualDevice2Distributable_Back_CompositionType2ECU = Matcher(HConnVirtualDevice2Distributable_Back_CompositionType2ECULHS())
-        ConnVirtualDevice2Distributable_Back_SCTEMc2Distributable = Matcher(HConnVirtualDevice2Distributable_Back_SCTEMc2DistributableLHS())
-        ConnVirtualDevice2Distributable_Back_STEM2VirtualDevice = Matcher(HConnVirtualDevice2Distributable_Back_STEM2VirtualDeviceLHS())
-        
-        self.rules = {                'HMapECU2FiveElements': HMapECU2FiveElements(),
-                                      'HMapDistributable': HMapDistributable(),
-                                      'HMapVirtualDevice': HMapVirtualDevice(),
-                                      'HConnectPPortPrototype': HConnectPPortPrototype(),
-                                      'HConnectRPortPrototype': HConnectRPortPrototype(),
-                                      'HConnECU2VirtualDevice': HConnECU2VirtualDevice(),
-                                      'HConnVirtualDeviceToDistributable': HConnVirtualDeviceToDistributable()}
+        self.transformation = [[self.rules['HMapDistributable'], self.rules['HMapECU2FiveElements'], self.rules['HMapVirtualDevice']],
+                          [self.rules['HConnECU2VirtualDevice'], self.rules['HConnVirtualDeviceToDistributable']],
+                          [self.rules['HConnectPPortPrototype'], self.rules['HConnectRPortPrototype']]]
+        # 
+#         ConnectPPortPrototype_Back_CompositionType2ECU = Matcher(HConnectPPortPrototype_Back_CompositionType2ECULHS())
+#         ConnectRPortPrototype_Back_CompositionType2ECU = Matcher(HConnectRPortPrototype_Back_CompositionType2ECULHS())
+#         ConnECU2VirtualDevice_Back_EcuInst2ECU = Matcher(HConnECU2VirtualDevice_Back_EcuInst2ECULHS())
+#         ConnECU2VirtualDevice_Back_STEM2VirtualDevice = Matcher(HConnECU2VirtualDevice_Back_STEM2VirtualDeviceLHS())
+#         ConnECU2VirtualDevice_Back_SystemMapping2ECU = Matcher(HConnECU2VirtualDevice_Back_SystemMapping2ECULHS())
+#         ConnVirtualDevice2Distributable_Back_ComponentPrototype2Distributable = Matcher(HConnVirtualDevice2Distributable_Back_ComponentPrototype2DistributableLHS())
+#         ConnVirtualDevice2Distributable_Back_CompositionType2ECU = Matcher(HConnVirtualDevice2Distributable_Back_CompositionType2ECULHS())
+#         ConnVirtualDevice2Distributable_Back_SCTEMc2Distributable = Matcher(HConnVirtualDevice2Distributable_Back_SCTEMc2DistributableLHS())
+#         ConnVirtualDevice2Distributable_Back_STEM2VirtualDevice = Matcher(HConnVirtualDevice2Distributable_Back_STEM2VirtualDeviceLHS())
 
-        self.backwardPatterns = {     'HMapECU2FiveElements': [],
-                                      'HMapDistributable': [],
-                                      'HMapVirtualDevice': [],
-                                      'HConnectPPortPrototype': [ConnectPPortPrototype_Back_CompositionType2ECU],
-                                      'HConnectRPortPrototype': [ConnectRPortPrototype_Back_CompositionType2ECU],
-                                      'HConnECU2VirtualDevice': [ConnECU2VirtualDevice_Back_EcuInst2ECU, ConnECU2VirtualDevice_Back_STEM2VirtualDevice, ConnECU2VirtualDevice_Back_SystemMapping2ECU],
-                                      'HConnVirtualDeviceToDistributable': [ConnVirtualDevice2Distributable_Back_ComponentPrototype2Distributable, ConnVirtualDevice2Distributable_Back_CompositionType2ECU, ConnVirtualDevice2Distributable_Back_SCTEMc2Distributable, ConnVirtualDevice2Distributable_Back_STEM2VirtualDevice]}
-         
-        self.backwardPatterns2Rules = {
-                                      ConnectPPortPrototype_Back_CompositionType2ECU: 'HConnectPPortPrototype',
-                                      ConnectRPortPrototype_Back_CompositionType2ECU: 'HConnectRPortPrototype',
-                                      ConnECU2VirtualDevice_Back_EcuInst2ECU: 'HConnECU2VirtualDevice',
-                                      ConnECU2VirtualDevice_Back_STEM2VirtualDevice: 'HConnECU2VirtualDevice',
-                                      ConnECU2VirtualDevice_Back_SystemMapping2ECU: 'HConnECU2VirtualDevice',
-                                      ConnVirtualDevice2Distributable_Back_ComponentPrototype2Distributable: 'HConnVirtualDeviceToDistributable', 
-                                      ConnVirtualDevice2Distributable_Back_CompositionType2ECU: 'HConnVirtualDeviceToDistributable', 
-                                      ConnVirtualDevice2Distributable_Back_SCTEMc2Distributable: 'HConnVirtualDeviceToDistributable', 
-                                      ConnVirtualDevice2Distributable_Back_STEM2VirtualDevice: 'HConnVirtualDeviceToDistributable'}
-        
-        self.backwardPatternsComplete = {
-                                      'HMapECU2FiveElements': [],
-                                      'HMapDistributable': [],
-                                      'HMapVirtualDevice': [],
-                                      'HConnectPPortPrototype': [Matcher(HConnectPPortPrototype_Back_CompleteLHS())],
-                                      'HConnectRPortPrototype': [Matcher(HConnectRPortPrototype_Back_CompleteLHS())],
-                                      'HConnECU2VirtualDevice': [Matcher(HConnECU2VirtualDevice_Back_CompleteLHS())],
-                                      'HConnVirtualDeviceToDistributable': [Matcher(HConnVirtualDevice2Distributable_Back_CompleteLHS())]}
-        
-        self.matchRulePatterns = {    'HMapECU2FiveElements': Matcher(HMapECU2FiveElements_overlapLHS()),
-                                      'HMapDistributable': Matcher(HMapDistributable_overlapLHS()),
-                                      'HMapVirtualDevice': Matcher(HMapVirtualDevice_overlapLHS()),
-                                      'HConnectPPortPrototype': Matcher(HConnectPPortPrototype_overlapLHS()),
-                                      'HConnectRPortPrototype': Matcher(HConnectRPortPrototype_overlapLHS()),
-                                      'HConnECU2VirtualDevice': Matcher(HConnECU2VirtualDevice_overlapLHS()),
-                                      'HConnVirtualDeviceToDistributable': Matcher(HConnVirtualDeviceToDistributable_overlapLHS())}
+#         
+#         self.rules = {                'HMapECU2FiveElements': HMapECU2FiveElements(),
+#                                       'HMapDistributable': HMapDistributable(),
+#                                       'HMapVirtualDevice': HMapVirtualDevice(),
+#                                       'HConnectPPortPrototype': HConnectPPortPrototype(),
+#                                       'HConnectRPortPrototype': HConnectRPortPrototype(),
+#                                       'HConnECU2VirtualDevice': HConnECU2VirtualDevice(),
+#                                       'HConnVirtualDeviceToDistributable': HConnVirtualDeviceToDistributable()}
+
+#         self.backwardPatterns = {     'HMapECU2FiveElements': [],
+#                                       'HMapDistributable': [],
+#                                       'HMapVirtualDevice': [],
+#                                       'HConnectPPortPrototype': [ConnectPPortPrototype_Back_CompositionType2ECU],
+#                                       'HConnectRPortPrototype': [ConnectRPortPrototype_Back_CompositionType2ECU],
+#                                       'HConnECU2VirtualDevice': [ConnECU2VirtualDevice_Back_EcuInst2ECU, ConnECU2VirtualDevice_Back_STEM2VirtualDevice, ConnECU2VirtualDevice_Back_SystemMapping2ECU],
+#                                       'HConnVirtualDeviceToDistributable': [ConnVirtualDevice2Distributable_Back_ComponentPrototype2Distributable, ConnVirtualDevice2Distributable_Back_CompositionType2ECU, ConnVirtualDevice2Distributable_Back_SCTEMc2Distributable, ConnVirtualDevice2Distributable_Back_STEM2VirtualDevice]}
+#          
+#         self.backwardPatterns2Rules = {
+#                                       ConnectPPortPrototype_Back_CompositionType2ECU: 'HConnectPPortPrototype',
+#                                       ConnectRPortPrototype_Back_CompositionType2ECU: 'HConnectRPortPrototype',
+#                                       ConnECU2VirtualDevice_Back_EcuInst2ECU: 'HConnECU2VirtualDevice',
+#                                       ConnECU2VirtualDevice_Back_STEM2VirtualDevice: 'HConnECU2VirtualDevice',
+#                                       ConnECU2VirtualDevice_Back_SystemMapping2ECU: 'HConnECU2VirtualDevice',
+#                                       ConnVirtualDevice2Distributable_Back_ComponentPrototype2Distributable: 'HConnVirtualDeviceToDistributable', 
+#                                       ConnVirtualDevice2Distributable_Back_CompositionType2ECU: 'HConnVirtualDeviceToDistributable', 
+#                                       ConnVirtualDevice2Distributable_Back_SCTEMc2Distributable: 'HConnVirtualDeviceToDistributable', 
+#                                       ConnVirtualDevice2Distributable_Back_STEM2VirtualDevice: 'HConnVirtualDeviceToDistributable'}
+#         
+#         self.backwardPatternsComplete = {
+#                                       'HMapECU2FiveElements': [],
+#                                       'HMapDistributable': [],
+#                                       'HMapVirtualDevice': [],
+#                                       'HConnectPPortPrototype': [Matcher(HConnectPPortPrototype_Back_CompleteLHS())],
+#                                       'HConnectRPortPrototype': [Matcher(HConnectRPortPrototype_Back_CompleteLHS())],
+#                                       'HConnECU2VirtualDevice': [Matcher(HConnECU2VirtualDevice_Back_CompleteLHS())],
+#                                       'HConnVirtualDeviceToDistributable': [Matcher(HConnVirtualDevice2Distributable_Back_CompleteLHS())]}
+#         
+#         self.matchRulePatterns = {    'HMapECU2FiveElements': Matcher(HMapECU2FiveElements_overlapLHS()),
+#                                       'HMapDistributable': Matcher(HMapDistributable_overlapLHS()),
+#                                       'HMapVirtualDevice': Matcher(HMapVirtualDevice_overlapLHS()),
+#                                       'HConnectPPortPrototype': Matcher(HConnectPPortPrototype_overlapLHS()),
+#                                       'HConnectRPortPrototype': Matcher(HConnectRPortPrototype_overlapLHS()),
+#                                       'HConnECU2VirtualDevice': Matcher(HConnECU2VirtualDevice_overlapLHS()),
+#                                       'HConnVirtualDeviceToDistributable': Matcher(HConnVirtualDeviceToDistributable_overlapLHS())}
 
 
         # print("\n===\nrules:")
@@ -227,96 +238,93 @@ class Test(unittest.TestCase):
         # for matchRulePattern in sorted(self.matchRulePatterns):
         #     print(str(matchRulePattern))
 
-    def test_correct_GM_transformation(self):
+    def test_correct_GM_transformation(self,args):
         
 #         transformation = [[HMapDistributable(), HMapECU2FiveElementsFAULTY(), HMapVirtualDeviceFAULTY()],
 #                           [HConnECU2VirtualDevice(), HConnVirtualDeviceToDistributable()],
 #                           [HConnectPPortPrototype(), HConnectRPortPrototype()]]
 
-        transformation = [[self.rules['HMapDistributable'], self.rules['HMapECU2FiveElements'], self.rules['HMapVirtualDevice']],
-                          [self.rules['HConnECU2VirtualDevice'], self.rules['HConnVirtualDeviceToDistributable']],
-                          [self.rules['HConnectPPortPrototype'], self.rules['HConnectRPortPrototype']]]
+#         transformation = [[self.rules['HMapDistributable'], self.rules['HMapECU2FiveElements'], self.rules['HMapVirtualDevice']],
+#                           [self.rules['HConnECU2VirtualDevice'], self.rules['HConnVirtualDeviceToDistributable']],
+#                           [self.rules['HConnectPPortPrototype'], self.rules['HConnectRPortPrototype']]]
+#  
+#       
+#         self.rulesIncludingBackLinks = [[],\
+#                                    [transformation[1][0], transformation[1][1]],\
+#                                    [transformation[2][0], transformation[2][1]]]
+
+        pyramify = PyRamify(draw_svg=args.draw_svg)
+        #self.rulesIncludingBackLinks = pyramify.getRulesIncludingBackLinks(transformation, self.backwardPatterns)
  
-      
-        self.rulesIncludingBackLinks = [[],\
-                                   [transformation[1][0], transformation[1][1]],\
-                                   [transformation[2][0], transformation[2][1]]]
+        pre_metamodel = ["MT_pre__GM2AUTOSAR_MM", "MoTifRule"]
+        post_metamodel = ["MT_post__GM2AUTOSAR_MM", "MoTifRule"]
 
-#         pyramify = PyRamify()
-#         #self.rulesIncludingBackLinks = pyramify.getRulesIncludingBackLinks(transformation, self.backwardPatterns)
-# 
-#         #transformation = [[HMapECU2FiveElements(), HMapVirtualDevice(), HMapDistributable()]]
-# 
-#         #rulesIncludingBackLinks = [[]]
-# 
-# 
-#         pre_metamodel = ["MT_pre__GM2AUTOSAR_MM", "MoTifRule"]
-#         post_metamodel = ["MT_post__GM2AUTOSAR_MM", "MoTifRule"]
-#         subclasses_source = ["MT_pre__VirtualDevice", 'MT_pre__Distributable','MT_pre__ExecFrame', 'MT_pre__Signal', 'MT_pre__ECU']
-#         subclasses_target = ['MT_pre__EcuInstance','MT_pre__System','MT_pre__SystemMapping','MT_pre__ComponentPrototype','MT_pre__SwCompToEcuMapping_component','MT_pre__CompositionType','MT_pre__PPortPrototype','MT_pre__SwcToEcuMapping','MT_pre__SoftwareComposition','MT_pre__RPortPrototype','MT_pre__PortPrototype', 'MT_pre__ComponentType']
+        subclasses_dict = {}
+        subclasses_dict["MT_pre__MetaModelElement_S"] =  ["MT_pre__VirtualDevice", 'MT_pre__Distributable','MT_pre__ExecFrame', 'MT_pre__Signal', 'MT_pre__ECU']
+        subclasses_dict["MT_pre__MetaModelElement_T"] = ['MT_pre__EcuInstance','MT_pre__System','MT_pre__SystemMapping','MT_pre__ComponentPrototype','MT_pre__SwCompToEcuMapping_component','MT_pre__CompositionType','MT_pre__PPortPrototype','MT_pre__SwcToEcuMapping','MT_pre__SoftwareComposition','MT_pre__RPortPrototype','MT_pre__PortPrototype', 'MT_pre__ComponentType']
+ 
+ 
+        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
+
+
+        print("create path conditions")
+        s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, \
+                                   self.matchRulePatterns, 2, draw_svg=args.draw_svg, run_tests=args.run_tests)
 # 
 # 
-#         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_source, subclasses_target)
-
-
-        print("create state space")
-        s = PathConditionGenerator(self.rules, transformation, self.rulesIncludingBackLinks, self.backwardPatterns, self.backwardPatterns2Rules,\
-                               self.backwardPatternsComplete, self.matchRulePatterns, 2, False)
-
-
-        print("starting build")
-        s.build_path_conditions()
-
-
-        print("printing states")
-        self._print_states(s)
-        
-#         graph_to_dot('symbolic_exec', s.symbStateSpace[1][0], 1) 
-         
-         
-        ####REAL EXPERIMENTATION: Proving the 4 types of constraints in our MODELS paper
-        # The naming convention used for the properties (i.e., P1, P2..ETC) are the 
-        # same convention used in my MODELS paper in Table 2.
-
-
-        print("create property")
-        P1atomic=AtomicStateProperty(HP1IsolatedLHS(),HP1ConnectedLHS(), HP1CompleteLHS())
-        P2atomic=AtomicStateProperty(HP2IsolatedLHS(),HP2ConnectedLHS(), HP2CompleteLHS())
-        S1IfClause=AtomicStateProperty(HS1IfClauseIsolatedConnectedLHS(), HS1IfClauseIsolatedConnectedLHS(), HS1IfClauseCompleteLHS())
-        S1ThenClause=AtomicStateProperty(HS1ThenClauseIsolatedConnectedLHS(), HS1ThenClauseIsolatedConnectedLHS(), HS1ThenClauseCompleteLHS())
-        M1IfClause=AtomicStateProperty(HM1IfClauseIsolatedConnectedLHS(),HM1IfClauseIsolatedConnectedLHS(),HM1IfClauseCompleteLHS())
-        M1ThenClause=AtomicStateProperty(HM1ThenClausePart1IsolatedConnectedLHS(),HM1ThenClausePart1IsolatedConnectedLHS(),HM1ThenClausePart1CompleteLHS())
-        M3IfClause=AtomicStateProperty(HM3IfClauseIsolatedConnectedLHS(),HM3IfClauseIsolatedConnectedLHS(), HM3IfClauseCompleteLHS())
-        M3ThenClause=AtomicStateProperty(HM3ThenClausePart1IsolatedConnectedLHS(), HM3ThenClausePart1IsolatedConnectedLHS(),HM3ThenClausePart1CompleteLHS())
-        M2IfClause=AtomicStateProperty(HM2IfClauseIsolatedConnectedLHS(),HM2IfClauseIsolatedConnectedLHS(),HM2IfClauseCompleteLHS())
-        M2ThenClause=AndStateProperty(AtomicStateProperty(HM2ThenClausePart1IsolatedConnectedLHS(),HM2ThenClausePart1IsolatedConnectedLHS(), HM2ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM2ThenClausePart2IsolatedConnectedLHS(),HM2ThenClausePart2IsolatedConnectedLHS(),HM2ThenClausePart2CompleteLHS())))
-        M4IfClause=AtomicStateProperty(HM4IfClauseIsolatedConnectedLHS(),HM4IfClauseIsolatedConnectedLHS(),HM4IfClauseCompleteLHS())
-        M4ThenClause=AndStateProperty(AtomicStateProperty(HM4ThenClausePart1IsolatedConnectedLHS(),HM4ThenClausePart1IsolatedConnectedLHS(), HM4ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM4ThenClausePart2IsolatedConnectedLHS(),HM4ThenClausePart2IsolatedConnectedLHS(),HM4ThenClausePart2CompleteLHS())))
-        M5IfClause=AtomicStateProperty(HM5IfClauseIsolatedConnectedLHS(),HM5IfClauseIsolatedConnectedLHS(),HM5IfClauseCompleteLHS())
-        M5ThenClause=AndStateProperty(AtomicStateProperty(HM5ThenClausePart1IsolatedConnectedLHS(),HM5ThenClausePart1IsolatedConnectedLHS(), HM5ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM5ThenClausePart2IsolatedConnectedLHS(),HM5ThenClausePart2IsolatedConnectedLHS(),HM5ThenClausePart2CompleteLHS())))
-        M6IfClause=AtomicStateProperty(HM6IfClauseIsolatedConnectedLHS(),HM6IfClauseIsolatedConnectedLHS(),HM6IfClauseCompleteLHS())
-        M6ThenClause=AndStateProperty(AtomicStateProperty(HM6ThenClausePart1IsolatedConnectedLHS(),HM6ThenClausePart1IsolatedConnectedLHS(), HM6ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM6ThenClausePart2IsolatedConnectedLHS(),HM6ThenClausePart2IsolatedConnectedLHS(),HM6ThenClausePart2CompleteLHS())))
-         
-        #andprop=AndStateProperty(AndStateProperty(atomic1,atomic2),atomic1)
-        #P1atomicOldImpl=BKUPAtomicStateProperty(HP1IsolatedLHS(),HP1ConnectedLHS(), HP1CompleteLHS())
-        #P2atomicOldImpl=BKUPAtomicStateProperty(HP2IsolatedLHS(),HP2ConnectedLHS(), HP2CompleteLHS())
-         
-#        trivatomicprop=AtomicStateProperty(HECUSysTrivialTrueIsolatedLHS(),HECUSysTrivialTrueConnectedLHS(), HECUSysTrivialTrueCompleteLHS())
-         
-        #NOTE: Even if you are verifying an ANDstateProperty where the 2 operands are the same AtomicStateProperty, then store two copies of the AtomicStateProperty in 2 different variables
-        #Why? variables in this case are references to objects. So if you want the 2 copies of the same AtomicStateProperty to have different values set for certain attributes, then you must store them in 2 different variables
-#        trivnegativeprop=AtomicStateProperty(HTrivialFalseECUplusSystem1IsolatedLHS(),HTrivialFalseECUplusSystem1ConnectedLHS(),HTrivialFalseECUplusSystem1CompleteLHS())
-#        trivnegativepropcopy=AtomicStateProperty(HTrivialFalseECUplusSystem1IsolatedLHS(),HTrivialFalseECUplusSystem1ConnectedLHS(),HTrivialFalseECUplusSystem1CompleteLHS())
-#        trivatomicpropOldImpl=BKUPAtomicStateProperty(HECUSysTrivialTrueIsolatedLHS(),HECUSysTrivialTrueConnectedLHS(), HECUSysTrivialTrueCompleteLHS())
-#        trivnegativepropOldImpl=BKUPAtomicStateProperty(HTrivialFalseECUplusSystem1IsolatedLHS(),HTrivialFalseECUplusSystem1ConnectedLHS(),HTrivialFalseECUplusSystem1CompleteLHS())
-#        IsolHasNoMatch=AtomicStateProperty(HIsolHasNoMatchIsolatedLHS(), HIsolHasNoMatchConnectedLHS(), HIsolHasNoMatchCompleteLHS())
-        #trivnegativepropOldImpl.verify(s)
-        #finalresult=StateProperty.verifyCompositeStateProperty(s, P1atomic)
-        #StateProperty.verifyCompositeStateProperty(s, OrStateProperty(P2atomic,trivnegativeprop))
-        finalresult=StateProperty.verifyCompositeStateProperty(s, ImplicationStateProperty(M5IfClause, M5ThenClause))
-        #finalresult=StateProperty.verifyCompositeStateProperty(s, ImplicationStateProperty(S1IfClause,S1ThenClause))
-        print ('finalresult : ')
-        print (finalresult)
+#         print("starting build")
+#         s.build_path_conditions()
+# 
+# 
+#         print("printing states")
+#         self._print_states(s)
+#         
+# #         graph_to_dot('symbolic_exec', s.symbStateSpace[1][0], 1) 
+#          
+#          
+#         ####REAL EXPERIMENTATION: Proving the 4 types of constraints in our MODELS paper
+#         # The naming convention used for the properties (i.e., P1, P2..ETC) are the 
+#         # same convention used in my MODELS paper in Table 2.
+# 
+# 
+#         print("create property")
+#         P1atomic=AtomicStateProperty(HP1IsolatedLHS(),HP1ConnectedLHS(), HP1CompleteLHS())
+#         P2atomic=AtomicStateProperty(HP2IsolatedLHS(),HP2ConnectedLHS(), HP2CompleteLHS())
+#         S1IfClause=AtomicStateProperty(HS1IfClauseIsolatedConnectedLHS(), HS1IfClauseIsolatedConnectedLHS(), HS1IfClauseCompleteLHS())
+#         S1ThenClause=AtomicStateProperty(HS1ThenClauseIsolatedConnectedLHS(), HS1ThenClauseIsolatedConnectedLHS(), HS1ThenClauseCompleteLHS())
+#         M1IfClause=AtomicStateProperty(HM1IfClauseIsolatedConnectedLHS(),HM1IfClauseIsolatedConnectedLHS(),HM1IfClauseCompleteLHS())
+#         M1ThenClause=AtomicStateProperty(HM1ThenClausePart1IsolatedConnectedLHS(),HM1ThenClausePart1IsolatedConnectedLHS(),HM1ThenClausePart1CompleteLHS())
+#         M3IfClause=AtomicStateProperty(HM3IfClauseIsolatedConnectedLHS(),HM3IfClauseIsolatedConnectedLHS(), HM3IfClauseCompleteLHS())
+#         M3ThenClause=AtomicStateProperty(HM3ThenClausePart1IsolatedConnectedLHS(), HM3ThenClausePart1IsolatedConnectedLHS(),HM3ThenClausePart1CompleteLHS())
+#         M2IfClause=AtomicStateProperty(HM2IfClauseIsolatedConnectedLHS(),HM2IfClauseIsolatedConnectedLHS(),HM2IfClauseCompleteLHS())
+#         M2ThenClause=AndStateProperty(AtomicStateProperty(HM2ThenClausePart1IsolatedConnectedLHS(),HM2ThenClausePart1IsolatedConnectedLHS(), HM2ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM2ThenClausePart2IsolatedConnectedLHS(),HM2ThenClausePart2IsolatedConnectedLHS(),HM2ThenClausePart2CompleteLHS())))
+#         M4IfClause=AtomicStateProperty(HM4IfClauseIsolatedConnectedLHS(),HM4IfClauseIsolatedConnectedLHS(),HM4IfClauseCompleteLHS())
+#         M4ThenClause=AndStateProperty(AtomicStateProperty(HM4ThenClausePart1IsolatedConnectedLHS(),HM4ThenClausePart1IsolatedConnectedLHS(), HM4ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM4ThenClausePart2IsolatedConnectedLHS(),HM4ThenClausePart2IsolatedConnectedLHS(),HM4ThenClausePart2CompleteLHS())))
+#         M5IfClause=AtomicStateProperty(HM5IfClauseIsolatedConnectedLHS(),HM5IfClauseIsolatedConnectedLHS(),HM5IfClauseCompleteLHS())
+#         M5ThenClause=AndStateProperty(AtomicStateProperty(HM5ThenClausePart1IsolatedConnectedLHS(),HM5ThenClausePart1IsolatedConnectedLHS(), HM5ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM5ThenClausePart2IsolatedConnectedLHS(),HM5ThenClausePart2IsolatedConnectedLHS(),HM5ThenClausePart2CompleteLHS())))
+#         M6IfClause=AtomicStateProperty(HM6IfClauseIsolatedConnectedLHS(),HM6IfClauseIsolatedConnectedLHS(),HM6IfClauseCompleteLHS())
+#         M6ThenClause=AndStateProperty(AtomicStateProperty(HM6ThenClausePart1IsolatedConnectedLHS(),HM6ThenClausePart1IsolatedConnectedLHS(), HM6ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM6ThenClausePart2IsolatedConnectedLHS(),HM6ThenClausePart2IsolatedConnectedLHS(),HM6ThenClausePart2CompleteLHS())))
+#          
+#         #andprop=AndStateProperty(AndStateProperty(atomic1,atomic2),atomic1)
+#         #P1atomicOldImpl=BKUPAtomicStateProperty(HP1IsolatedLHS(),HP1ConnectedLHS(), HP1CompleteLHS())
+#         #P2atomicOldImpl=BKUPAtomicStateProperty(HP2IsolatedLHS(),HP2ConnectedLHS(), HP2CompleteLHS())
+#          
+# #        trivatomicprop=AtomicStateProperty(HECUSysTrivialTrueIsolatedLHS(),HECUSysTrivialTrueConnectedLHS(), HECUSysTrivialTrueCompleteLHS())
+#          
+#         #NOTE: Even if you are verifying an ANDstateProperty where the 2 operands are the same AtomicStateProperty, then store two copies of the AtomicStateProperty in 2 different variables
+#         #Why? variables in this case are references to objects. So if you want the 2 copies of the same AtomicStateProperty to have different values set for certain attributes, then you must store them in 2 different variables
+# #        trivnegativeprop=AtomicStateProperty(HTrivialFalseECUplusSystem1IsolatedLHS(),HTrivialFalseECUplusSystem1ConnectedLHS(),HTrivialFalseECUplusSystem1CompleteLHS())
+# #        trivnegativepropcopy=AtomicStateProperty(HTrivialFalseECUplusSystem1IsolatedLHS(),HTrivialFalseECUplusSystem1ConnectedLHS(),HTrivialFalseECUplusSystem1CompleteLHS())
+# #        trivatomicpropOldImpl=BKUPAtomicStateProperty(HECUSysTrivialTrueIsolatedLHS(),HECUSysTrivialTrueConnectedLHS(), HECUSysTrivialTrueCompleteLHS())
+# #        trivnegativepropOldImpl=BKUPAtomicStateProperty(HTrivialFalseECUplusSystem1IsolatedLHS(),HTrivialFalseECUplusSystem1ConnectedLHS(),HTrivialFalseECUplusSystem1CompleteLHS())
+# #        IsolHasNoMatch=AtomicStateProperty(HIsolHasNoMatchIsolatedLHS(), HIsolHasNoMatchConnectedLHS(), HIsolHasNoMatchCompleteLHS())
+#         #trivnegativepropOldImpl.verify(s)
+#         #finalresult=StateProperty.verifyCompositeStateProperty(s, P1atomic)
+#         #StateProperty.verifyCompositeStateProperty(s, OrStateProperty(P2atomic,trivnegativeprop))
+#         finalresult=StateProperty.verifyCompositeStateProperty(s, ImplicationStateProperty(M5IfClause, M5ThenClause))
+#         #finalresult=StateProperty.verifyCompositeStateProperty(s, ImplicationStateProperty(S1IfClause,S1ThenClause))
+#         print ('finalresult : ')
+#         print (finalresult)
         
         #Experimenting with using framework1 and framework 2 together
         #Not(StateProperty.verifyCompositeStateProperty(s, OrStateProperty(trivnegativeprop,trivnegativeprop))).verify()
@@ -391,6 +399,30 @@ class Test(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.test']
-    unittest.main()
+    import argparse
+
+    parser = argparse.ArgumentParser(description='Run the police station with attributes test # 2.')
+
+    parser.add_argument('--skip_tests', dest = 'run_tests', action = 'store_false',
+                        help = 'Option to skip the running of matching tests')
+    parser.set_defaults(run_tests = True)
+
+    parser.add_argument('--no_svg', dest = 'draw_svg', action = 'store_false',
+                        help = 'Flag to force svg files to not be drawn')
+    parser.set_defaults(draw_svg = True)
+
+    parser.add_argument('--num_pcs', type = int, default = -1,
+                        help = 'Number of path conditions which should be produced by this test (default: -1)')
+
+
+    #TODO: remove these
+    parser.add_argument('--draw_svg')
+    parser.add_argument('--run_tests')
+
+    args = parser.parse_args()
+
+
+    ps2 = Test()
+    ps2.setUp(args)
+    ps2.test_correct_GM_transformation(args)
     
