@@ -1304,11 +1304,13 @@ class PyRamify:
         match_attached = []
         for mc in match_contains:
             match_attached += look_for_attached(mc, rewriter)
+        match_attached = list(set(match_attached))
 
         apply_contains = find_nodes_with_mm(graph, ["apply_contains"])
         apply_attached = []
         for ac in apply_contains:
             apply_attached += look_for_attached(ac, rewriter)
+        apply_attached = list(set(apply_attached))
 
         linked_nodes = []
 
@@ -1318,7 +1320,20 @@ class PyRamify:
             #print("BL attached: " + str(bl_attached))
 
             linked_nodes.append([bl_attached[0], bl_attached[1]])
+            
+        graph_to_dot("the_rewriter_graph_before_" + rewriter.name, rewriter)
 
+        if rewriter.name == "HConnectPPortPrototypeHConnectRPortPrototype":        
+            for match_node in match_attached:
+                if rewriter.vs[match_node]["mm__"] in ["MatchModel", "match_contains"]:
+                    continue   
+                print("Match node: " + str(rewriter.vs[match_node]["mm__"]))
+         
+            for apply_node in apply_attached:
+                if rewriter.vs[apply_node]["mm__"] in ["ApplyModel", "apply_contains"]:
+                    continue
+                print("Apply node: " + str(rewriter.vs[apply_node]["mm__"]))        
+        
         for match_node in match_attached:
 
             #print("Match node: " + str(rewriter.vs[match_node]["mm__"]))
@@ -1339,7 +1354,11 @@ class PyRamify:
                         #print("Found the link")
 
                 if not found_link:
-                    #print("Did not find link")
+#                     print("Did not find link")
+#                     if rewriter.name == "HConnectPPortPrototypeHConnectRPortPrototype":
+#                         print "Connecting:"
+#                         print "    Apply node: " + rewriter.vs[apply_node]['mm__']
+#                         print "    Match node: " + rewriter.vs[match_node]['mm__']
                     new_node = rewriter.add_node()
                     rewriter.vs[new_node]["mm__"] = "trace_link"
                     rewriter.vs[new_node]["MT_label__"] = str(new_node)
@@ -1349,7 +1368,7 @@ class PyRamify:
                     rewriter.add_edge(new_node, match_node)
 
 
-        #graph_to_dot("the_rewriter_graph_" + rewriter.name, rewriter)
+        graph_to_dot("the_rewriter_graph_after" + rewriter.name, rewriter)
 
         rewriter = self.changeAttrType(rewriter, False)
 
@@ -1385,34 +1404,34 @@ class PyRamify:
 
             linked_nodes.append([bl_attached[0], bl_attached[1]])
 
-        for match_node in match_attached:
+#        for match_node in match_attached:
 
             #print("Match node: " + str(rewriter.vs[match_node]["mm__"]))
-            if rewriter.vs[match_node]["mm__"] in ["MatchModel", "match_contains"]:
-                continue
+#             if rewriter.vs[match_node]["mm__"] in ["MatchModel", "match_contains"]:
+#                 continue
+# 
+#             for apply_node in apply_attached:
+#                 #print("Apply node: " + str(rewriter.vs[apply_node]["mm__"]))
+#                 if rewriter.vs[apply_node]["mm__"] in ["ApplyModel", "apply_contains"]:
+#                     continue
 
-            for apply_node in apply_attached:
-                #print("Apply node: " + str(rewriter.vs[apply_node]["mm__"]))
-                if rewriter.vs[apply_node]["mm__"] in ["ApplyModel", "apply_contains"]:
-                    continue
-
-                found_link = False
-                for a, b in linked_nodes:
-
-                    if a == apply_node or b == apply_node:
-                        #there is already a link here
-                        found_link = True
-                        #print("Found the link")
-
-                if not found_link:
-                    #print("Did not find link")
-                    new_node = rewriter.add_node()
-                    rewriter.vs[new_node]["mm__"] = "trace_link"
-                    rewriter.vs[new_node]["MT_label__"] = str(new_node)
-                    #print("New label: " + str(rewriter.vs[new_node]["MT_label__"]))
-
-                    rewriter.add_edge(apply_node, new_node)
-                    rewriter.add_edge(new_node, match_node)
+#                 found_link = False
+#                 for a, b in linked_nodes:
+# 
+#                     if a == apply_node or b == apply_node:
+#                         #there is already a link here
+#                         found_link = True
+#                         #print("Found the link")
+# 
+#                 if not found_link:
+#                     #print("Did not find link")
+#                     new_node = rewriter.add_node()
+#                     rewriter.vs[new_node]["mm__"] = "trace_link"
+#                     rewriter.vs[new_node]["MT_label__"] = str(new_node)
+#                     #print("New label: " + str(rewriter.vs[new_node]["MT_label__"]))
+# 
+#                     rewriter.add_edge(apply_node, new_node)
+#                     rewriter.add_edge(new_node, match_node)
 
 
         #graph_to_dot("the_rewriter_graph_" + rewriter.name, rewriter)
