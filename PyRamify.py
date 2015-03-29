@@ -898,9 +898,6 @@ class PyRamify:
         # now build the partial combinator by removing everything except for the backward links
         partial_combinator_matcher = copy_graph(base_graph)
         
-        if self.draw_svg:
-            graph_to_dot("combinator_before" + base_graph.name, partial_combinator_matcher)
-        
         # remove all nodes that are not connected to backward links
 
         backwards_links = find_nodes_with_mm(partial_combinator_matcher, ["MT_pre__trace_link"])
@@ -1271,13 +1268,24 @@ class PyRamify:
         graph = self.remove_equation_nodes(graph)
 
         apply_contain_node = find_nodes_with_mm(graph, ["apply_contains"])
-        apply_contain_node = get_node_num(graph, apply_contain_node[0])
-
-        apply_nodes = flood_find_nodes(apply_contain_node, graph, ["ApplyModel", "backward_link", "trace_link"])
+#         apply_contain_node = get_node_num(graph, apply_contain_node[0])
+# 
+#         apply_nodes = flood_find_nodes(apply_contain_node, graph, ["ApplyModel", "backward_link", "trace_link"])
+#         apply_nodes = list(set(apply_nodes))
+        
+        apply_nodes = []
+        for node in apply_contain_node:
+            node_num = get_node_num(graph, node)
+            apply_nodes.extend(flood_find_nodes(node_num, graph, ["ApplyModel", "backward_link", "trace_link"]))
         apply_nodes = list(set(apply_nodes))
 
-        #for a in apply_nodes:
-        #    print(graph.vs[a]["mm__"])
+#         print "-----------------------------"
+#         print graph.name
+#         print "found: "
+#         print "-----"
+#         for a in apply_nodes:
+#             print(graph.vs[a]["mm__"])
+#         print "-----------------------------"
 
         backward_links = find_nodes_with_mm(graph, ["backward_link"])
         attached_apply = []
@@ -1291,6 +1299,7 @@ class PyRamify:
                 pass
 
         graph.delete_nodes(apply_nodes)
+        
         graph = self.remove_structure_nodes(graph)
 
         return graph
@@ -1320,19 +1329,15 @@ class PyRamify:
             #print("BL attached: " + str(bl_attached))
 
             linked_nodes.append([bl_attached[0], bl_attached[1]])
-            
-        graph_to_dot("the_rewriter_graph_before_" + rewriter.name, rewriter)
 
         if rewriter.name == "HConnectPPortPrototypeHConnectRPortPrototype":        
             for match_node in match_attached:
                 if rewriter.vs[match_node]["mm__"] in ["MatchModel", "match_contains"]:
                     continue   
-                print("Match node: " + str(rewriter.vs[match_node]["mm__"]))
          
             for apply_node in apply_attached:
                 if rewriter.vs[apply_node]["mm__"] in ["ApplyModel", "apply_contains"]:
-                    continue
-                print("Apply node: " + str(rewriter.vs[apply_node]["mm__"]))        
+                    continue   
         
         for match_node in match_attached:
 
@@ -1367,8 +1372,6 @@ class PyRamify:
                     rewriter.add_edge(apply_node, new_node)
                     rewriter.add_edge(new_node, match_node)
 
-
-        graph_to_dot("the_rewriter_graph_after" + rewriter.name, rewriter)
 
         rewriter = self.changeAttrType(rewriter, False)
 
@@ -1457,10 +1460,6 @@ class PyRamify:
             label += 1
 
         rewriter = self.make_rewriter_with_back(graph)
-        
-        #graph_to_dot("rewriter_pyr", rewriter)
-
-
         
         out_dir = "./patterns/"
 
