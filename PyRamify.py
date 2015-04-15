@@ -138,6 +138,14 @@ class PyRamify:
                     node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
 
                 #Hack for Constants
+                
+                    
+                elif "Constant" in node["mm__"] and attrib == "MT_pre__name":
+                    node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
+                    
+                elif "Constant" in node["mm__"] and attrib == "MT_pre__value":
+                    node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
+                    
                 elif "Constant" in node["mm__"] and attrib == "MT_post__value":
                     node[attrib] = "return '" + node[attrib] + "'"
 
@@ -271,6 +279,13 @@ class PyRamify:
                     node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
 
                 #Hack for Constants
+                
+                elif "Constant" in node["mm__"] and attrib == "MT_pre__name":
+                    node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
+                    
+                elif "Constant" in node["mm__"] and attrib == "MT_pre__value":
+                    node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
+                    
                 elif "Constant" in node["mm__"] and attrib == "MT_post__value":
                     node[attrib] = "return '" + node[attrib] + "'"
 
@@ -1247,7 +1262,22 @@ class PyRamify:
         nodes_to_remove = []
         for eq in eq_nodes:
             eq_num = get_node_num(graph, eq)
-            nodes_to_remove += flood_find_nodes(eq_num, graph, ["Attribute"])
+            equation_attrib_nodes = flood_find_nodes(eq_num, graph, None, ["Attribute", "Constant"])
+            equation_attrib_nodes = [node for node in  equation_attrib_nodes if graph.vs[node]["mm__"] == "Attribute"]
+#            print "---------------- " + str(eq_num) + " -----------------------> Number of attribute nodes: " + str(len(equation_attrib_nodes))
+            
+            # equation is between an attribute of the match model and an attribute of the apply model
+            if len(equation_attrib_nodes) == 2:
+                nodes_to_remove += flood_find_nodes(eq_num, graph, None, ["hasAttribute_S", "hasAttribute_T"])
+#                print flood_find_nodes(eq_num, graph, None, ["hasAttribute_S", "hasAttribute_T"])
+            # check if the equation is part of the elements of the apply model and remove it in that case
+            # don't remove the equation if it is part of the elements of the match model
+            else:
+                nodes_equation_is_connected_to = flood_find_nodes(equation_attrib_nodes[0], graph, ["paired_with", "backward_link","Equation"])         
+                for node in nodes_equation_is_connected_to:
+                    if graph.vs[node]["mm__"] == "ApplyModel":
+                        nodes_to_remove += flood_find_nodes(eq_num, graph, ["Attribute"])
+                
         nodes_to_remove = list(set(nodes_to_remove))
 
         graph.delete_nodes(nodes_to_remove)
