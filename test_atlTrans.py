@@ -162,9 +162,13 @@ class Test():
 
 
 
-        a1 = self.rules['HHouseholdsToCommunity']
-        b1 = self.rules['HFatherToMan']
-        c1 = self.rules['HBuildCommunity']
+        a1 = self.rules['HRootRule']
+        b1 = self.rules['HWomanRule']
+        c1 = self.rules['HManRule']
+
+
+        d1 = self.rules['HUnionWomanRule']
+        e1 = self.rules['HUnionManRule']
 
 
 
@@ -174,7 +178,7 @@ class Test():
                 
         #TODO: Change this number if you are modifying the transformation at all
         #if args.num_rules == -1:
-        transformation = [[a1], [b1], [c1]]
+        transformation = [[a1], [b1], [c1], [d1], [e1]]
         #else:
         #    transformation = self.select_rules([[a1,a2], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
 
@@ -224,8 +228,8 @@ class Test():
             print(num_pcs_s)
             #raise Exception(num_pcs_s)
  
-#         print("printing path conditions")
-#         s.print_path_conditions_screen()
+        print("printing path conditions")
+        s.print_path_conditions_screen()
 #
 # #        s.print_path_conditions_file()
 #
