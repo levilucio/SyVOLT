@@ -3,7 +3,7 @@ __MT_pre__Member.py_____________________________________________________
 
 Automatically generated AToM3 syntactic object (DO NOT MODIFY DIRECTLY)
 Author: levi
-Modified: Fri Apr 17 11:09:48 2015
+Modified: Fri Apr 17 14:23:22 2015
 ________________________________________________________________________
 """
 from ASGNode import *

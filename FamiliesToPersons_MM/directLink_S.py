@@ -3,7 +3,7 @@ __directLink_S.py_____________________________________________________
 
 Automatically generated AToM3 syntactic object (DO NOT MODIFY DIRECTLY)
 Author: levi
-Modified: Fri Apr 17 11:06:50 2015
+Modified: Fri Apr 17 14:22:16 2015
 ______________________________________________________________________
 """
 from ASGNode import *

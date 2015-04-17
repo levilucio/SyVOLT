@@ -3,7 +3,7 @@ __ASG_FamiliesToPersonsMM.py____________________________________________________
 
 Automatically generated AToM3 ASGroot node (DO NOT MODIFY DIRECTLY)
 Author: levi
-Modified: Fri Apr 17 11:06:50 2015
+Modified: Fri Apr 17 14:22:16 2015
 _________________________________________________________________________________
 """
 from ASG import *
@@ -13,7 +13,7 @@ from ATOM3Text import *
 class ASG_FamiliesToPersonsMM(ASG, ATOM3Type):
 
    def __init__(self, parent= None, ASGroot = None):
-      ASG.__init__(self, 'FamiliesToPersonsMM', ASGroot, ['ASG_FamiliesToPersonsMM' ,'MetaModelElement_S' ,'HouseholdRoot' ,'Family' ,'Member' ,'MatchModel' ,'ApplyModel' ,'MetaModelElement_T' ,'CommunityRoot' ,'Person' ,'Man' ,'Woman' ,'match_contains' ,'apply_contains' ,'backward_link' ,'indirectLink_S' ,'directLink_T' ,'directLink_S' ,'paired_with' ,'trace_link'])
+      ASG.__init__(self, 'FamiliesToPersonsMM', ASGroot, ['ASG_FamiliesToPersonsMM' ,'MetaModelElement_S' ,'HouseholdRoot' ,'Family' ,'Member' ,'MatchModel' ,'ApplyModel' ,'MetaModelElement_T' ,'CommunityRoot' ,'Person' ,'Man' ,'Attribute' ,'Equation' ,'Expression' ,'Constant' ,'Concat' ,'Woman' ,'match_contains' ,'apply_contains' ,'backward_link' ,'indirectLink_S' ,'directLink_T' ,'directLink_S' ,'paired_with' ,'trace_link' ,'hasAttr_S' ,'hasAttr_T' ,'leftExpr' ,'rightExpr' ,'arg_1' ,'arg_2'])
 
       ATOM3Type.__init__(self)
       self.parent = parent

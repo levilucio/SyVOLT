@@ -3,7 +3,7 @@ __ASG_MT_post__FamiliesToPersonsMM.py___________________________________________
 
 Automatically generated AToM3 ASGroot node (DO NOT MODIFY DIRECTLY)
 Author: levi
-Modified: Fri Apr 17 11:10:17 2015
+Modified: Fri Apr 17 14:23:54 2015
 __________________________________________________________________________________________
 """
 from ASG import *
@@ -13,7 +13,7 @@ from ATOM3Text import *
 class ASG_MT_post__FamiliesToPersonsMM(ASG, ATOM3Type):
 
    def __init__(self, parent= None, ASGroot = None):
-      ASG.__init__(self, 'MT_post__FamiliesToPersonsMM', ASGroot, ['ASG_MT_post__FamiliesToPersonsMM' ,'MT_post__MetaModelElement_S' ,'MT_post__HouseholdRoot' ,'MT_post__Family' ,'MT_post__Member' ,'MT_post__MatchModel' ,'MT_post__ApplyModel' ,'MT_post__MetaModelElement_T' ,'MT_post__CommunityRoot' ,'MT_post__Person' ,'MT_post__Man' ,'MT_post__Woman' ,'MT_post__GenericNode_FamiliesToPersonsMM' ,'MT_post__match_contains' ,'MT_post__apply_contains' ,'MT_post__backward_link' ,'MT_post__indirectLink_S' ,'MT_post__directLink_T' ,'MT_post__directLink_S' ,'MT_post__paired_with' ,'MT_post__trace_link' ,'MT_post__GenericEdge_FamiliesToPersonsMM'])
+      ASG.__init__(self, 'MT_post__FamiliesToPersonsMM', ASGroot, ['ASG_MT_post__FamiliesToPersonsMM' ,'MT_post__MetaModelElement_S' ,'MT_post__HouseholdRoot' ,'MT_post__Family' ,'MT_post__Member' ,'MT_post__MatchModel' ,'MT_post__ApplyModel' ,'MT_post__MetaModelElement_T' ,'MT_post__CommunityRoot' ,'MT_post__Person' ,'MT_post__Man' ,'MT_post__Attribute' ,'MT_post__Equation' ,'MT_post__Expression' ,'MT_post__Constant' ,'MT_post__Concat' ,'MT_post__Woman' ,'MT_post__GenericNode_FamiliesToPersonsMM' ,'MT_post__match_contains' ,'MT_post__apply_contains' ,'MT_post__backward_link' ,'MT_post__indirectLink_S' ,'MT_post__directLink_T' ,'MT_post__directLink_S' ,'MT_post__paired_with' ,'MT_post__trace_link' ,'MT_post__hasAttr_S' ,'MT_post__hasAttr_T' ,'MT_post__leftExpr' ,'MT_post__rightExpr' ,'MT_post__arg_1' ,'MT_post__arg_2' ,'MT_post__GenericEdge_FamiliesToPersonsMM'])
 
       ATOM3Type.__init__(self)
       self.parent = parent

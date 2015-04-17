@@ -3,7 +3,7 @@ __MT_pre__MetaModelElement_T.py_________________________________________________
 
 Automatically generated AToM3 syntactic object (DO NOT MODIFY DIRECTLY)
 Author: levi
-Modified: Fri Apr 17 11:09:48 2015
+Modified: Fri Apr 17 14:23:22 2015
 ____________________________________________________________________________________
 """
 from ASGNode import *
