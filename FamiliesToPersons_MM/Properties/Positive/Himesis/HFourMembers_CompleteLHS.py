@@ -716,7 +716,7 @@ return True
         # The given constraint must evaluate to a boolean expression.
         #===============================================================================
         
-        return return attr_value == "daughter"
+        return attr_value == "daughter"
 
 
     def eval_associationType15(self, attr_value, this):
