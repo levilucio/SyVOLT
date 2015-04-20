@@ -38,7 +38,7 @@ return True
         self["GUID__"] = UUID('74f3afcb-42b5-460e-b4e9-019c2024210b')
         
         # Set the node attributes
-        self.vs[0]["MT_subtypeMatching__"] = False
+        self.vs[0]["MT_subtypeMatching__"] = True
         self.vs[0]["MT_pre__classtype"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -52,8 +52,7 @@ return True
 return True
 """
         self.vs[0]["MT_label__"] = """2"""
-        self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
-.""")
+        self.vs[0]["MT_subtypes__"] = ["MT_pre__Man","MT_pre__Woman"]
         self.vs[0]["mm__"] = """MT_pre__Person"""
         self.vs[0]["MT_pre__name"] = """
 #===============================================================================

@@ -69,7 +69,7 @@ return True
 """
         self.vs[0]["MT_dirty__"] = False
         self.vs[0]["GUID__"] = UUID('a4f7723b-6abb-424f-a8e2-e471cb1f81fd')
-        self.vs[1]["MT_subtypeMatching__"] = False
+        self.vs[1]["MT_subtypeMatching__"] = True
         self.vs[1]["MT_pre__classtype"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -83,8 +83,7 @@ return True
 return True
 """
         self.vs[1]["MT_label__"] = """2"""
-        self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
-.""")
+        self.vs[1]["MT_subtypes__"] = ["MT_pre__Man","MT_pre__Woman"]
         self.vs[1]["mm__"] = """MT_pre__Person"""
         self.vs[1]["MT_pre__name"] = """
 #===============================================================================
@@ -100,13 +99,12 @@ return True
 """
         self.vs[1]["MT_dirty__"] = False
         self.vs[1]["GUID__"] = UUID('0d1970f1-31e8-40fe-8104-65bef155ad37')
-        self.vs[2]["MT_subtypeMatching__"] = False
+        self.vs[2]["MT_subtypeMatching__"] = True
         self.vs[2]["MT_pre__classtype"] = pickle.loads("""V\u000a#===============================================================================\u000a# This code is executed when evaluating if a node shall be matched by this rule.\u000a# You can access the value of the current node's attribute value by: attr_value.\u000a# You can access any attribute x of this node by: this['x'].\u000a# If the constraint relies on attribute values from other nodes,\u000a# use the LHS/NAC constraint instead.\u000a# The given constraint must evaluate to a boolean expression.\u000a#===============================================================================\u000a\u000areturn True\u000a
 p1
 .""")
         self.vs[2]["MT_label__"] = """4"""
-        self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
-.""")
+        self.vs[2]["MT_subtypes__"] = ["MT_pre__Man","MT_pre__Woman"]
         self.vs[2]["mm__"] = """MT_pre__Person"""
         self.vs[2]["MT_pre__name"] = """
 #===============================================================================
