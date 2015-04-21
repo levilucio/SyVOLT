@@ -3,7 +3,7 @@ __find_two_match_elements_same_type_diff_rules_MDL.py___________________________
 
 Automatically generated AToM3 Model File (Do not modify directly)
 Author: levi
-Modified: Tue Apr 21 15:12:28 2015
+Modified: Tue Apr 21 15:19:41 2015
 __________________________________________________________________________________________________________
 """
 from stickylink import *
@@ -307,7 +307,7 @@ def find_two_match_elements_same_type_diff_rules_MDL(self, rootNode, MT_pre__GM2
       self.obj53._setHierarchicalLink(False)
 
     # constraint
-    self.obj53.constraint.setValue('guid1 = graph.vs[PreNode(\'1\').index][\'GUID__\']\nguid2 = graph.vs[PreNode(\'2\').index][\'GUID__\']        \n        \nif PreNode(\'1\')[\'classtype\'] == PreNode(\'2\')[\'classtype\'] and guid1.int < guid2.int:\n    return True\nreturn False\n')
+    self.obj53.constraint.setValue('guid1 = graph.vs[PreNode(\'1\').index][\'GUID__\']\nguid2 = graph.vs[PreNode(\'2\').index][\'GUID__\']        \n\nif PreNode(\'1\')[\'classtype\'] == PreNode(\'2\')[\'classtype\'] and int(guid1) < int(guid2):\n    return True\nreturn False\n')
     self.obj53.constraint.setHeight(15)
 
     self.obj53.graphClass_= graph_LHS
