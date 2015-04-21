@@ -27,7 +27,7 @@ a.""")
 p1
 .""")
         self["name"] = """"""
-        self["GUID__"] = UUID('a90310d0-38f4-4ef8-bf83-7c9196ac3ce3')
+        self["GUID__"] = 7174163642143570127
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
@@ -36,14 +36,14 @@ p1
         self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[0]["MT_dirty__"] = False
-        self.vs[0]["GUID__"] = UUID('02105097-094b-4106-aed2-2917d5e81e21')
+        self.vs[0]["GUID__"] = 3968633842521416251
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_label__"] = """6"""
         self.vs[1]["mm__"] = """MT_pre__match_contains"""
         self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[1]["MT_dirty__"] = False
-        self.vs[1]["GUID__"] = UUID('2585bbc4-d7d9-4cde-b14a-37ba801e8980')
+        self.vs[1]["GUID__"] = 5143434915093921020
         self.vs[2]["MT_pivotOut__"] = """element1"""
         self.vs[2]["MT_subtypeMatching__"] = True
         self.vs[2]["MT_pre__classtype"] = """
@@ -167,7 +167,7 @@ a.""")
 
 return True
 """
-        self.vs[2]["GUID__"] = UUID('b019a162-86a2-459f-9654-c9e8f2a55792')
+        self.vs[2]["GUID__"] = 6249676263467675162
         self.vs[3]["MT_pivotOut__"] = """element2"""
         self.vs[3]["MT_subtypeMatching__"] = True
         self.vs[3]["MT_pre__classtype"] = """
@@ -291,21 +291,21 @@ a.""")
 
 return True
 """
-        self.vs[3]["GUID__"] = UUID('bc7e7249-36c6-4a95-974f-4469dc79173c')
+        self.vs[3]["GUID__"] = 669080926257562014
         self.vs[4]["MT_subtypeMatching__"] = False
         self.vs[4]["MT_label__"] = """3"""
         self.vs[4]["mm__"] = """MT_pre__MatchModel"""
         self.vs[4]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[4]["MT_dirty__"] = False
-        self.vs[4]["GUID__"] = UUID('925702a1-c3cb-4d0f-9b5f-dc531d1c38f4')
+        self.vs[4]["GUID__"] = 7258649049157954874
         self.vs[5]["MT_subtypeMatching__"] = False
         self.vs[5]["MT_label__"] = """4"""
         self.vs[5]["mm__"] = """MT_pre__MatchModel"""
         self.vs[5]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[5]["MT_dirty__"] = False
-        self.vs[5]["GUID__"] = UUID('1d9cc547-40a5-4c85-841b-9b5474d2793c')
+        self.vs[5]["GUID__"] = 8831189920701197138
 
     def eval_classtype1(self, attr_value, this):
         
@@ -396,8 +396,12 @@ return True
             Executable constraint code. 
             @param PreNode: Function taking an integer as parameter
                             and returns the node corresponding to that label.
-        """
-        if PreNode('1')['classtype'] == PreNode('2')['classtype']:
+        """        
+        guid1 = graph.vs[PreNode('1').index]['GUID__']
+        guid2 = graph.vs[PreNode('2').index]['GUID__']        
+        
+        return False
+        if PreNode('1')['classtype'] == PreNode('2')['classtype'] and guid1.int < guid2.int:
             return True
         return False
 
