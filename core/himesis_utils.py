@@ -130,21 +130,26 @@ def graph_to_dot(name, g, verbosity = 0):
             fillcolor = "#FF99FF"
             
         elif node_type in ['directLink_S', 'directLink_T', 'MT_pre__directLink_T', 'MT_pre__directLink_S', 'MT_post__directLink_T', 'MT_post__directLink_S']:
-            
-            vattr += '\\n'     
+
+            vattr += '\\n'
             if node_type in ['directLink_S', 'directLink_T']:
-                #vattr += "Association Type = " + str(v['associationType'])
-                pass
+                vattr += "A_Type = " + str(v['associationType'])
+
             elif node_type in ['MT_pre__directLink_T', 'MT_pre__directLink_S']:
                 try:
-                    vattr += get_attribute("\\n Association Type = ", v['MT_pre__associationType'])
+                    vattr += get_attribute("\\nA_Type = ", v['MT_pre__associationType'])
                 except KeyError:
                     pass
                 
             fillcolor="lightyellow"  
                        
         elif node_type in ['indirectLink_S', 'indirectLink_T', 'MT_pre__indirectLink_S', 'MT_pre__indirectLink_T', 'MT_post__indirectLink_S', 'MT_post__indirectLink_T']:
-            fillcolor="lightgreen"          
+            fillcolor="lightgreen"
+            try:
+                vattr += "\\n Classtype = " + str(v['associationType'])
+            except Exception:
+                pass
+
                  
         elif node_type in ['backward_link', "MT_pre__backward_link", "MT_post__backward_link"]:
             fillcolor="coral" 
@@ -156,15 +161,15 @@ def graph_to_dot(name, g, verbosity = 0):
               
               
         else:
-            try:
-                vattr += "\\n Classtype = " + str(v['classtype'])
-            except Exception:
-                pass
+            # try:
+            #     vattr += "\\n Classtype = " + str(v['classtype'])
+            # except Exception:
+            #     pass
                 
-            try:
-                vattr += "\\n Name = " + str(v['name'])
-            except Exception:
-                pass
+            # try:
+            #     vattr += "\\n Name = " + str(v['name'])
+            # except Exception:
+            #     pass
                 
             # try:
             #     vattr += get_attribute("\\n Classtype = ", v['MT_pre__classtype'])
@@ -175,6 +180,16 @@ def graph_to_dot(name, g, verbosity = 0):
             #     vattr += get_attribute("\\n Name = ", v['MT_pre__name'])
             # except Exception:
             #     pass
+
+            try:
+              vattr += get_attribute("\\nPivotIn = ", v['MT_pivotIn__'])
+            except Exception:
+                pass
+
+            try:
+                vattr += get_attribute("\\nPivotOut = ", v['MT_pivotOut__'])
+            except Exception:
+                pass
                 
             fillcolor="lightblue"
                 
