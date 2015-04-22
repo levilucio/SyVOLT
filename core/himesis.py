@@ -137,17 +137,17 @@ class Himesis(ig.Graph):
             Retrieves the node instance with the specified label.
             @param label: The label of the node.
         """
-
         for node in self.node_iter():
-            if id == self.vs[node][Himesis.Constants.GUID]:
+            if id == self.vs[node]['GUID__']:
                 return node
+
         #if len(self.nodes_id) < self.vcount():
         # nodes_id = dict([(self.vs[node][Himesis.Constants.GUID], node) for node in self.node_iter()])
         # if id in nodes_id:
         #     return nodes_id[id]
         # else:
         #TODO: This should be a TransformationLanguageSpecificException
-        raise Exception('No node was found with the given id')
+        raise Exception('No node was found with the given id: ' + str(id))
     
     # def draw(self, visual_style={}, label=None, show_guid=False, show_id=False, debug=False, width=600, height=900):
     #     """
@@ -418,10 +418,11 @@ class HimesisPattern(Himesis):
         # if pivot in self.nodes_pivot_out:
         #     return self.nodes_pivot_out[pivot]
 
-        if Himesis.Constants.MT_PIVOT_OUT in self.vs.attribute_names():
-            for i in xrange(self.vcount()):
-                if pivot == self.vs[i][Himesis.Constants.MT_PIVOT_OUT]:
-                    return i
+        try:
+            return self.vs[pivot]['MT_pivotOut__']
+        except Exception as e:
+            print("Node " + str(pivot) + " does not have a pivot out")
+
 
 
 class HimesisPreConditionPattern(HimesisPattern):
@@ -442,7 +443,7 @@ class HimesisPreConditionPattern(HimesisPattern):
 
         if Himesis.Constants.MT_PIVOT_IN in self.vs.attribute_names():
             for i in xrange(self.vcount()):
-                if pivot == self.vs[i][Himesis.Constants.MT_PIVOT_IN]:
+                if pivot == self.vs[i]['MT_pivotIn__']:
                     return i
     
     def constraint(self, PreMatch, graph):
