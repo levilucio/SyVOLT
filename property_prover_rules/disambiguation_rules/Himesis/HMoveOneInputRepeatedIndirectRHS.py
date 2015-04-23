@@ -18,7 +18,7 @@ class HMoveOneInputRepeatedIndirectRHS(HimesisPostConditionPattern):
         self.add_edges([[0, 1], [3, 0]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__PoliceStationMM'
+S'MT_post__UMLRT2Kiltera_MM'
 p2
 aS'MoTifRule'
 p3
@@ -32,12 +32,12 @@ a.""")
 pass
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('f3c84169-a172-48bd-aa24-877c3a328495')
+        self["GUID__"] = 8738545832371660697
         
         # Set the node attributes
         self.vs[0]["MT_label__"] = """10"""
         self.vs[0]["mm__"] = """MT_post__indirectLink_S"""
-        self.vs[0]["GUID__"] = UUID('95a6697d-cb8c-4585-bacd-4b06dbf0dd3a')
+        self.vs[0]["GUID__"] = 1253954520151618394
         self.vs[1]["MT_pivotOut__"] = """element1"""
         self.vs[1]["MT_post__cardinality"] = """
 #===============================================================================
@@ -83,7 +83,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[1]["GUID__"] = UUID('435bc434-653b-4286-9e48-2f0482f939ec')
+        self.vs[1]["GUID__"] = 3150056653125469194
         self.vs[2]["MT_pivotOut__"] = """element2"""
         self.vs[2]["MT_post__cardinality"] = """
 #===============================================================================
@@ -129,7 +129,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[2]["GUID__"] = UUID('b5289342-4b06-4374-9cab-fa2f0796d3f1')
+        self.vs[2]["GUID__"] = 8164541481180193229
         self.vs[3]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -174,7 +174,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[3]["GUID__"] = UUID('dabfb6e8-2e32-4314-8ba3-786f5713629e')
+        self.vs[3]["GUID__"] = 8548487470664937212
 
         from HMoveOneInputRepeatedIndirectLHS import HMoveOneInputRepeatedIndirectLHS
         self.pre = HMoveOneInputRepeatedIndirectLHS()

@@ -18,7 +18,7 @@ class HMoveOneOutputRepeatedDirectRHS(HimesisPostConditionPattern):
         self.add_edges([[1, 0], [0, 3]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__PoliceStationMM'
+S'MT_post__UMLRT2Kiltera_MM'
 p2
 aS'MoTifRule'
 p3
@@ -32,7 +32,7 @@ a.""")
 pass
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('92d95c54-6254-4c20-921e-e4a9b941ce16')
+        self["GUID__"] = 6738605480095186592
         
         # Set the node attributes
         self.vs[0]["MT_post__associationType"] = """
@@ -51,7 +51,7 @@ return attr_value
 """
         self.vs[0]["MT_label__"] = """10"""
         self.vs[0]["mm__"] = """MT_post__directLink_S"""
-        self.vs[0]["GUID__"] = UUID('983be4d2-bf66-484c-87d2-3d5fe66e42e6')
+        self.vs[0]["GUID__"] = 7548543882838369312
         self.vs[1]["MT_pivotOut__"] = """element1"""
         self.vs[1]["MT_post__cardinality"] = """
 #===============================================================================
@@ -97,7 +97,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[1]["GUID__"] = UUID('0d7b916b-3f6f-451a-9a83-97f68f926159')
+        self.vs[1]["GUID__"] = 5796657889922741699
         self.vs[2]["MT_pivotOut__"] = """element2"""
         self.vs[2]["MT_post__cardinality"] = """
 #===============================================================================
@@ -143,7 +143,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[2]["GUID__"] = UUID('4895b9a9-4cb5-455c-8d3a-f0eea8a875ed')
+        self.vs[2]["GUID__"] = 3427757821448260451
         self.vs[3]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -188,7 +188,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[3]["GUID__"] = UUID('cfc1eb37-6f19-4ce4-9e34-9dc2149d51c8')
+        self.vs[3]["GUID__"] = 6718326794396796262
 
         from HMoveOneOutputRepeatedDirectLHS import HMoveOneOutputRepeatedDirectLHS
         self.pre = HMoveOneOutputRepeatedDirectLHS()

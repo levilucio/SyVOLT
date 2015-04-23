@@ -3,7 +3,7 @@ __find_two_match_elements_same_type_diff_rules_MDL.py___________________________
 
 Automatically generated AToM3 Model File (Do not modify directly)
 Author: levi
-Modified: Tue Apr 21 15:19:13 2015
+Modified: Tue Apr 21 15:42:22 2015
 __________________________________________________________________________________________________________
 """
 from stickylink import *
@@ -154,8 +154,7 @@ def find_two_match_elements_same_type_diff_rules_MDL(self, rootNode, MT_pre__GM2
     self.obj49.MT_pre__classtype.setHeight(15)
 
     # MT_pivotIn__
-    self.obj49.MT_pivotIn__.setValue('')
-    self.obj49.MT_pivotIn__.setNone()
+    self.obj49.MT_pivotIn__.setValue('element1')
 
     # MT_label__
     self.obj49.MT_label__.setValue('1')
@@ -201,8 +200,7 @@ def find_two_match_elements_same_type_diff_rules_MDL(self, rootNode, MT_pre__GM2
     self.obj50.MT_pre__classtype.setHeight(15)
 
     # MT_pivotIn__
-    self.obj50.MT_pivotIn__.setValue('')
-    self.obj50.MT_pivotIn__.setNone()
+    self.obj50.MT_pivotIn__.setValue('element2')
 
     # MT_label__
     self.obj50.MT_label__.setValue('2')

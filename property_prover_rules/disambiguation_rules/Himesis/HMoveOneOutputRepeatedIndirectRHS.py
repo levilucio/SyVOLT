@@ -18,7 +18,7 @@ class HMoveOneOutputRepeatedIndirectRHS(HimesisPostConditionPattern):
         self.add_edges([])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__PoliceStationMM'
+S'MT_post__UMLRT2Kiltera_MM'
 p2
 aS'MoTifRule'
 p3
@@ -32,7 +32,7 @@ a.""")
 pass
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('fc5ffa72-1f63-411c-b2b4-9d2f186e617d')
+        self["GUID__"] = 2608858482085684735
         
         # Set the node attributes
         self.vs[0]["MT_pivotOut__"] = """element1"""
@@ -80,7 +80,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[0]["GUID__"] = UUID('928fc72d-80f2-48b8-bb32-d4a0205165fe')
+        self.vs[0]["GUID__"] = 392359994833144042
         self.vs[1]["MT_pivotOut__"] = """element2"""
         self.vs[1]["MT_post__cardinality"] = """
 #===============================================================================
@@ -126,7 +126,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[1]["GUID__"] = UUID('0b236cc0-1741-4acf-8e99-846abc80a781')
+        self.vs[1]["GUID__"] = 4262436505458692799
         self.vs[2]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -171,7 +171,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[2]["GUID__"] = UUID('2d6fecc6-585c-4cc8-9c45-cb2650749cb2')
+        self.vs[2]["GUID__"] = 5910268898026311638
 
         from HMoveOneOutputRepeatedIndirectLHS import HMoveOneOutputRepeatedIndirectLHS
         self.pre = HMoveOneOutputRepeatedIndirectLHS()

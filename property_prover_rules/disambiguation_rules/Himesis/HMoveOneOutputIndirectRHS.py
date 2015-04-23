@@ -18,7 +18,7 @@ class HMoveOneOutputIndirectRHS(HimesisPostConditionPattern):
         self.add_edges([[1, 0], [0, 3]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__PoliceStationMM'
+S'MT_post__UMLRT2Kiltera_MM'
 p2
 aS'MoTifRule'
 p3
@@ -26,12 +26,12 @@ a.""")
         self["MT_action__"] = """PostNode('19')['associationType'] = PostNode('9')['associationType']
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('51f41b0e-5933-4c2b-9c66-4635d094d85a')
+        self["GUID__"] = 7221155243241900300
         
         # Set the node attributes
         self.vs[0]["MT_label__"] = """7"""
         self.vs[0]["mm__"] = """MT_post__indirectLink_S"""
-        self.vs[0]["GUID__"] = UUID('9907440b-4f7e-45c8-988e-bf4343dfee6b')
+        self.vs[0]["GUID__"] = 8983501963842356629
         self.vs[1]["MT_pivotOut__"] = """element1"""
         self.vs[1]["MT_post__cardinality"] = """
 #===============================================================================
@@ -77,7 +77,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[1]["GUID__"] = UUID('d4795780-fdb1-4a2f-beef-338b66d550e2')
+        self.vs[1]["GUID__"] = 1212754244606261678
         self.vs[2]["MT_pivotOut__"] = """element2"""
         self.vs[2]["MT_post__cardinality"] = """
 #===============================================================================
@@ -123,7 +123,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[2]["GUID__"] = UUID('7c644870-1068-4216-9453-ba58c079d39f')
+        self.vs[2]["GUID__"] = 424706264847277057
         self.vs[3]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -168,7 +168,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[3]["GUID__"] = UUID('a5fb4033-76b1-4de0-804e-5b97fc30dcfd')
+        self.vs[3]["GUID__"] = 1746090873004102793
 
         from HMoveOneOutputIndirectLHS import HMoveOneOutputIndirectLHS
         self.pre = HMoveOneOutputIndirectLHS()

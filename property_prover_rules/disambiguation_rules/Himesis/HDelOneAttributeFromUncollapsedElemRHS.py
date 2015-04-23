@@ -18,7 +18,7 @@ class HDelOneAttributeFromUncollapsedElemRHS(HimesisPostConditionPattern):
         self.add_edges([])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__PoliceStationMM'
+S'MT_post__UMLRT2Kiltera_MM'
 p2
 aS'MoTifRule'
 p3
@@ -27,7 +27,7 @@ a.""")
 p1
 .""")
         self["name"] = """"""
-        self["GUID__"] = UUID('663a6e5b-9e58-43d0-9ef9-6edb41e29104')
+        self["GUID__"] = 4027106788938850380
         
         # Set the node attributes
         self.vs[0]["MT_pivotOut__"] = """element2"""
@@ -75,7 +75,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[0]["GUID__"] = UUID('a765651e-d585-4f4d-a900-3b6575bb4af3')
+        self.vs[0]["GUID__"] = 5086199918583908403
 
         from HDelOneAttributeFromUncollapsedElemLHS import HDelOneAttributeFromUncollapsedElemLHS
         self.pre = HDelOneAttributeFromUncollapsedElemLHS()

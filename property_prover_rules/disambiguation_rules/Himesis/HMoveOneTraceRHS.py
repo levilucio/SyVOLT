@@ -18,7 +18,7 @@ class HMoveOneTraceRHS(HimesisPostConditionPattern):
         self.add_edges([[0, 2], [1, 0]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__PoliceStationMM'
+S'MT_post__UMLRT2Kiltera_MM'
 p2
 aS'MoTifRule'
 p3
@@ -32,12 +32,12 @@ a.""")
 pass
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('e4517f2c-cf20-4823-992b-f1f0fb18d21b')
+        self["GUID__"] = 3058488011036160695
         
         # Set the node attributes
         self.vs[0]["MT_label__"] = """10"""
         self.vs[0]["mm__"] = """MT_post__trace_link"""
-        self.vs[0]["GUID__"] = UUID('4df1d56f-bedd-465d-b116-413e412d5ce7')
+        self.vs[0]["GUID__"] = 7556361764185732705
         self.vs[1]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -82,7 +82,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[1]["GUID__"] = UUID('792caa6d-3d37-44e2-9950-02439c69cc3d')
+        self.vs[1]["GUID__"] = 9080008882809921485
         self.vs[2]["MT_pivotOut__"] = """element1"""
         self.vs[2]["MT_post__cardinality"] = """
 #===============================================================================
@@ -128,7 +128,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[2]["GUID__"] = UUID('15eae8a9-ac32-438c-b0d0-bf692c4399d1')
+        self.vs[2]["GUID__"] = 611471469688170501
         self.vs[3]["MT_pivotOut__"] = """element2"""
         self.vs[3]["MT_post__cardinality"] = """
 #===============================================================================
@@ -174,7 +174,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[3]["GUID__"] = UUID('b570c99a-c0cb-49d8-aa88-88feecac4204')
+        self.vs[3]["GUID__"] = 21303492783729010
 
         from HMoveOneTraceLHS import HMoveOneTraceLHS
         self.pre = HMoveOneTraceLHS()

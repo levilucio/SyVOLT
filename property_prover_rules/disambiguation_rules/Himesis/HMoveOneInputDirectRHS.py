@@ -18,7 +18,7 @@ class HMoveOneInputDirectRHS(HimesisPostConditionPattern):
         self.add_edges([[0, 1], [3, 0]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__PoliceStationMM'
+S'MT_post__UMLRT2Kiltera_MM'
 p2
 aS'MoTifRule'
 p3
@@ -26,7 +26,7 @@ a.""")
         self["MT_action__"] = """PostNode('19')['associationType'] = PostNode('9')['associationType']
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('389deccf-395e-41c0-af06-35a432328123')
+        self["GUID__"] = 1260419524196010025
         
         # Set the node attributes
         self.vs[0]["MT_post__associationType"] = """
@@ -45,7 +45,7 @@ return attr_value
 """
         self.vs[0]["MT_label__"] = """19"""
         self.vs[0]["mm__"] = """MT_post__directLink_S"""
-        self.vs[0]["GUID__"] = UUID('892ebe9a-35b4-4d30-b410-27ff386bd0e4')
+        self.vs[0]["GUID__"] = 6398245525937522094
         self.vs[1]["MT_pivotOut__"] = """element1"""
         self.vs[1]["MT_post__cardinality"] = """
 #===============================================================================
@@ -91,7 +91,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[1]["GUID__"] = UUID('98c2e3f9-5e3d-4655-93b7-fa5b63a971c2')
+        self.vs[1]["GUID__"] = 8557835728117992224
         self.vs[2]["MT_pivotOut__"] = """element2"""
         self.vs[2]["MT_post__cardinality"] = """
 #===============================================================================
@@ -137,7 +137,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[2]["GUID__"] = UUID('94a70856-ad17-4b24-87e2-6e2407e29654')
+        self.vs[2]["GUID__"] = 6520807084966003438
         self.vs[3]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -182,7 +182,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[3]["GUID__"] = UUID('0ed9bca9-ec26-4d3d-a131-345b26f3fbde')
+        self.vs[3]["GUID__"] = 6672125741109162196
 
         from HMoveOneInputDirectLHS import HMoveOneInputDirectLHS
         self.pre = HMoveOneInputDirectLHS()

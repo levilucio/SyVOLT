@@ -18,7 +18,7 @@ class HDelOneAttributeFromUncollapsedElemLHS(HimesisPreConditionPatternLHS):
         self.add_edges([[2, 0], [1, 2]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_pre__PoliceStationMM'
+S'MT_pre__UMLRT2Kiltera_MM'
 p2
 aS'MoTifRule'
 p3
@@ -35,14 +35,14 @@ a.""")
 return True
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('fcd37e78-3cfc-4dc2-863f-e7c004c0121d')
+        self["GUID__"] = 8758904931788867893
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
         self.vs[0]["MT_label__"] = """2"""
+        self.vs[0]["mm__"] = """MT_pre__Attribute"""
         self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
-        self.vs[0]["mm__"] = """MT_pre__Attribute"""
         self.vs[0]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -56,7 +56,7 @@ return True
 return True
 """
         self.vs[0]["MT_dirty__"] = False
-        self.vs[0]["GUID__"] = UUID('69159658-c81a-4170-953f-1d520dbf46e5')
+        self.vs[0]["GUID__"] = 4149353152227331245
         self.vs[1]["MT_pivotOut__"] = """element2"""
         self.vs[1]["MT_subtypeMatching__"] = True
         self.vs[1]["MT_pre__classtype"] = """
@@ -85,15 +85,89 @@ return True
 """
         self.vs[1]["MT_pivotIn__"] = """element2"""
         self.vs[1]["MT_label__"] = """1"""
-        self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__Station_S'
-p2
-aS'MT_pre__Male_S'
-p3
-aS'MT_pre__Female_S'
-p4
-a.""")
         self.vs[1]["mm__"] = """MT_pre__MetaModelElement_S"""
+        self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
+S'MT_pre__OPTIONAL1,'
+p2
+aS'MT_pre__PhysicalThread'
+p3
+aS'MT_pre__PortRef'
+p4
+aS'MT_pre__PackageContainer'
+p5
+aS'MT_pre__Thread'
+p6
+aS'MT_pre__OUT2'
+p7
+aS'MT_pre__BASE0'
+p8
+aS'MT_pre__NamedElement'
+p9
+aS'MT_pre__Element'
+p10
+aS'MT_pre__OUT1'
+p11
+aS'MT_pre__Signal'
+p12
+aS'MT_pre__Package'
+p13
+aS'MT_pre__PortType'
+p14
+aS'MT_pre__PortConnectorRef'
+p15
+aS'MT_pre__IN1'
+p16
+aS'MT_pre__IN0'
+p17
+aS'MT_pre__LogicalThread'
+p18
+aS'MT_pre__RoleType'
+p19
+aS'MT_pre__Vertex'
+p20
+aS'MT_pre__SIBLING0'
+p21
+aS'MT_pre__InitialPoint'
+p22
+aS'MT_pre__PortConnector'
+p23
+aS'MT_pre__SignalType'
+p24
+aS'MT_pre__Transition'
+p25
+aS'MT_pre__EntryPoint'
+p26
+aS'MT_pre__CONJUGATE1'
+p27
+aS'MT_pre__Protocol'
+p28
+aS'MT_pre__StateMachine'
+p29
+aS'MT_pre__Model_S'
+p30
+aS'MT_pre__StateMachineElement'
+p31
+aS'MT_pre__Port'
+p32
+aS'MT_pre__TransitionType'
+p33
+aS'MT_pre__Capsule'
+p34
+aS'MT_pre__Trigger_S'
+p35
+aS'MT_pre__State'
+p36
+aS'MT_pre__PLUGIN2'
+p37
+aS'MT_pre__Action'
+p38
+aS'MT_pre__CapsuleRole'
+p39
+aS'MT_pre__ExitPoint'
+p40
+aS'MT_pre__FIXED0'
+p41
+a.""")
         self.vs[1]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -107,14 +181,14 @@ a.""")
 return True
 """
         self.vs[1]["MT_dirty__"] = False
-        self.vs[1]["GUID__"] = UUID('6f064e9b-d0dc-40d2-a292-af2a33008720')
+        self.vs[1]["GUID__"] = 6821802905909168752
         self.vs[2]["MT_subtypeMatching__"] = False
         self.vs[2]["MT_label__"] = """3"""
+        self.vs[2]["mm__"] = """MT_pre__hasAttr_S"""
         self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
-        self.vs[2]["mm__"] = """MT_pre__hasAttr_S"""
         self.vs[2]["MT_dirty__"] = False
-        self.vs[2]["GUID__"] = UUID('9372760e-2b13-42e4-9bbe-516eebbc1518')
+        self.vs[2]["GUID__"] = 7604373770602094770
 
     def eval_name2(self, attr_value, this):
         

@@ -18,7 +18,7 @@ class HDeleteUncollapsedElementRHS(HimesisPostConditionPattern):
         self.add_edges([[3, 1], [1, 0], [4, 2], [2, 0]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__PoliceStationMM'
+S'MT_post__UMLRT2Kiltera_MM'
 p2
 aS'MoTifRule'
 p3
@@ -32,7 +32,7 @@ a.""")
 pass
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('131a2955-7c8f-466a-a001-c5db8233ca60')
+        self["GUID__"] = 7812174363778671626
         
         # Set the node attributes
         self.vs[0]["MT_pivotOut__"] = """element1"""
@@ -80,19 +80,19 @@ return attr_value
 
 return attr_value
 """
-        self.vs[0]["GUID__"] = UUID('30c31075-ce59-4532-93f0-472bb0e16d70')
+        self.vs[0]["GUID__"] = 6268035427006317116
         self.vs[1]["MT_label__"] = """5"""
         self.vs[1]["mm__"] = """MT_post__match_contains"""
-        self.vs[1]["GUID__"] = UUID('4028fad5-d019-4699-82d1-444310bf2d52')
+        self.vs[1]["GUID__"] = 249157694221731772
         self.vs[2]["MT_label__"] = """6"""
         self.vs[2]["mm__"] = """MT_post__match_contains"""
-        self.vs[2]["GUID__"] = UUID('8664a4f7-cd20-4fb1-9ead-823a24308f36')
+        self.vs[2]["GUID__"] = 4053263962751487492
         self.vs[3]["MT_label__"] = """3"""
         self.vs[3]["mm__"] = """MT_post__MatchModel"""
-        self.vs[3]["GUID__"] = UUID('ca049417-793a-4f33-88a0-c5df7e279e92')
+        self.vs[3]["GUID__"] = 3509172987562613612
         self.vs[4]["MT_label__"] = """4"""
         self.vs[4]["mm__"] = """MT_post__MatchModel"""
-        self.vs[4]["GUID__"] = UUID('563805aa-a64f-4ecd-9877-cc628ef19172')
+        self.vs[4]["GUID__"] = 8167246094907919532
 
         from HDeleteUncollapsedElementLHS import HDeleteUncollapsedElementLHS
         self.pre = HDeleteUncollapsedElementLHS()
