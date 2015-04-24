@@ -296,7 +296,7 @@ class Test():
         print("Number of path conditions: " + str(s.num_path_conditions))
 
 
-        expected_num_pcs = 36
+        expected_num_pcs = 3
         # check if the correct number of path conditions were produced
         if not int(expected_num_pcs) == -1 and not int(expected_num_pcs) == s.num_path_conditions:
             #TODO: Make this an exception

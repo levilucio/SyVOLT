@@ -45,12 +45,6 @@ from property_prover_rules.disambiguation_rules.Himesis.HMoveOneOutputRepeatedIn
 from property_prover_rules.disambiguation_rules.Himesis.HMoveOneTraceLHS import HMoveOneTraceLHS
 from property_prover_rules.disambiguation_rules.Himesis.HMoveOneTraceRHS import HMoveOneTraceRHS
 
-from property_prover_rules.disambiguation_rules.Himesis.HMoveOneEquationsRightExpressionLHS import HMoveOneEquationsRightExpressionLHS
-from property_prover_rules.disambiguation_rules.Himesis.HMoveOneEquationsRightExpressionRHS import HMoveOneEquationsRightExpressionRHS
-
-from property_prover_rules.disambiguation_rules.Himesis.HMoveOneEquationsLeftExpressionLHS import HMoveOneEquationsLeftExpressionLHS
-from property_prover_rules.disambiguation_rules.Himesis.HMoveOneEquationsLeftExpressionRHS import HMoveOneEquationsLeftExpressionRHS
-
 from property_prover_rules.disambiguation_rules.Himesis.HDelOneAttributeFromUncollapsedElemLHS import HDelOneAttributeFromUncollapsedElemLHS
 from property_prover_rules.disambiguation_rules.Himesis.HDelOneAttributeFromUncollapsedElemRHS import HDelOneAttributeFromUncollapsedElemRHS
 
@@ -76,9 +70,6 @@ move_output_indirect = FRule(HMoveOneOutputIndirectLHS(), HMoveOneOutputIndirect
 move_output_repeated_indirect = FRule(HMoveOneOutputRepeatedIndirectLHS(), HMoveOneOutputRepeatedIndirectRHS())
 
 move_trace = FRule(HMoveOneTraceLHS(), HMoveOneTraceRHS())
-
-move_right_expression_of_equation = FRule(HMoveOneEquationsRightExpressionLHS(), HMoveOneEquationsRightExpressionRHS())
-move_left_expression_of_equation = FRule(HMoveOneEquationsLeftExpressionLHS(), HMoveOneEquationsLeftExpressionRHS())
 
 delete_uncollapsed_element = FRule(HDeleteUncollapsedElementLHS(), HDeleteUncollapsedElementRHS())
 delete_attributes_from_uncollapsed_element = FRule(HDelOneAttributeFromUncollapsedElemLHS(), HDelOneAttributeFromUncollapsedElemRHS())
