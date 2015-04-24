@@ -15,21 +15,17 @@ class HDeleteUncollapsedElementLHS(HimesisPreConditionPatternLHS):
         super(HDeleteUncollapsedElementLHS, self).__init__(name='HDeleteUncollapsedElementLHS', num_nodes=6, edges=[])
         
         # Add the edges
-        self.add_edges([(4, 0), (0, 3), (5, 1), (1, 2)])
+        self.add_edges([[4, 0], [0, 3], [5, 1], [1, 2]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_pre__GM2AUTOSAR_MM'
+S'MT_pre__FamiliesToPersons_MM'
 p2
 aS'MoTifRule'
 p3
 a.""")
-        self["MT_constraint__"] = """if len([i for i in graph.neighbors(PreNode('2').index) if graph.vs[i]['mm__'] == 'match_contains']) == 0:
-    return True
-
-return False
-"""
+        self["MT_constraint__"] = """return True"""
         self["name"] = """"""
-        self["GUID__"] = UUID('dacfaa8a-73b8-406a-8c31-09cafbdf736c')
+        self["GUID__"] = 8606295276883309858
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
@@ -38,14 +34,14 @@ return False
 .""")
         self.vs[0]["mm__"] = """MT_pre__match_contains"""
         self.vs[0]["MT_dirty__"] = False
-        self.vs[0]["GUID__"] = UUID('1be2ccdc-c316-43ce-b30c-7abc32a02228')
+        self.vs[0]["GUID__"] = 2492652436716073316
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_label__"] = """6"""
         self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[1]["mm__"] = """MT_pre__match_contains"""
         self.vs[1]["MT_dirty__"] = False
-        self.vs[1]["GUID__"] = UUID('dbc4ceba-d43b-43ad-a3c1-b86397de04a0')
+        self.vs[1]["GUID__"] = 1356976907983983460
         self.vs[2]["MT_pivotOut__"] = """element2"""
         self.vs[2]["MT_pre__name"] = """
 #===============================================================================
@@ -75,16 +71,12 @@ return True
         self.vs[2]["MT_pivotIn__"] = """element2"""
         self.vs[2]["MT_label__"] = """2"""
         self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__VirtualDevice'
+S'MT_pre__HouseholdRoot'
 p2
-aS'MT_pre__Distributable'
+aS'MT_pre__Family'
 p3
-aS'MT_pre__Signal'
+aS'MT_pre__Member'
 p4
-aS'MT_pre__ExecFrame'
-p5
-aS'MT_pre__ECU'
-p6
 a.""")
         self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[2]["MT_dirty__"] = False
@@ -100,7 +92,7 @@ a.""")
 
 return True
 """
-        self.vs[2]["GUID__"] = UUID('c7207bb7-589f-47aa-a9bd-18283def9aed')
+        self.vs[2]["GUID__"] = 5061772226935437731
         self.vs[3]["MT_pivotOut__"] = """element1"""
         self.vs[3]["MT_pre__name"] = """
 #===============================================================================
@@ -130,16 +122,12 @@ return True
         self.vs[3]["MT_pivotIn__"] = """element1"""
         self.vs[3]["MT_label__"] = """1"""
         self.vs[3]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__VirtualDevice'
+S'MT_pre__HouseholdRoot'
 p2
-aS'MT_pre__Distributable'
+aS'MT_pre__Family'
 p3
-aS'MT_pre__Signal'
+aS'MT_pre__Member'
 p4
-aS'MT_pre__ExecFrame'
-p5
-aS'MT_pre__ECU'
-p6
 a.""")
         self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[3]["MT_dirty__"] = False
@@ -155,21 +143,21 @@ a.""")
 
 return True
 """
-        self.vs[3]["GUID__"] = UUID('3390bb24-448c-4640-8e50-dbb0ee95b3f9')
+        self.vs[3]["GUID__"] = 6670895658872261885
         self.vs[4]["MT_subtypeMatching__"] = False
         self.vs[4]["MT_label__"] = """3"""
         self.vs[4]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[4]["mm__"] = """MT_pre__MatchModel"""
         self.vs[4]["MT_dirty__"] = False
-        self.vs[4]["GUID__"] = UUID('7d7bb9a0-5fa8-40ac-b2b8-efb15aa7e603')
+        self.vs[4]["GUID__"] = 2929545596509939901
         self.vs[5]["MT_subtypeMatching__"] = False
         self.vs[5]["MT_label__"] = """4"""
         self.vs[5]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[5]["mm__"] = """MT_pre__MatchModel"""
         self.vs[5]["MT_dirty__"] = False
-        self.vs[5]["GUID__"] = UUID('9f3535db-f09c-41f9-8b59-ca4ce8ad7c67')
+        self.vs[5]["GUID__"] = 589586432928941143
 
     def eval_name2(self, attr_value, this):
         
@@ -261,8 +249,5 @@ return True
             @param PreNode: Function taking an integer as parameter
                             and returns the node corresponding to that label.
         """
-        if len([i for i in graph.neighbors(PreNode('2').index) if graph.vs[i]['mm__'] == 'match_contains']) == 0:
-            return True
-        
-        return False
+        return True
 
