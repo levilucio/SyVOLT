@@ -2,15 +2,15 @@ from core.himesis import Himesis
 import cPickle as pickle
 import uuid
 
-class HUnionManRule(Himesis):
+class HUnionSonRule(Himesis):
     def __init__(self):
         """
-        Creates the himesis graph representing the DSLTrans rule UnionManRule.
+        Creates the himesis graph representing the DSLTrans rule UnionSonRule.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(HUnionManRule, self).__init__(name='HUnionManRule', num_nodes=0, edges=[])
+        super(HUnionSonRule, self).__init__(name='HUnionSonRule', num_nodes=0, edges=[])
         
         
         # Set the graph attributes
@@ -21,23 +21,23 @@ S'HimesisMM'
 p2
 a.""")
         
-        self["name"] = """UnionManRule"""
-        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'UnionManRule')
+        self["name"] = """UnionSonRule"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'UnionSonRule')
         
         # match model. We only support one match model
         self.add_node()
         self.vs[0]["mm__"] = """MatchModel"""
-        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'UnionManRulematchmodel0')
+        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'UnionSonRulematchmodel0')
         
         # apply model node
         self.add_node()
         self.vs[1]["mm__"] = """ApplyModel"""
-        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'UnionManRuleapplymodel1')
+        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'UnionSonRuleapplymodel1')
         
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'UnionManRulepairedwith2')
+        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'UnionSonRulepairedwith2')
         
     	# match class Family() node
     	self.add_node()
@@ -50,25 +50,25 @@ a.""")
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         #self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains4')
-    	# match class Member() node
+    	# match class HouseholdRoot() node
     	self.add_node()
     	self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """Member"""
-        self.vs[5]["mm__"] = """Member"""
+        self.vs[5]["classtype"] = """HouseholdRoot"""
+        self.vs[5]["mm__"] = """HouseholdRoot"""
         self.vs[5]["cardinality"] = """+"""
         #self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# match_contains node for class Member()
+    	# match_contains node for class HouseholdRoot()
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
         #self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains6')
-    	# match class HouseholdRoot() node
+    	# match class Member() node
     	self.add_node()
     	self.vs[7]["name"] = """"""
-        self.vs[7]["classtype"] = """HouseholdRoot"""
-        self.vs[7]["mm__"] = """HouseholdRoot"""
+        self.vs[7]["classtype"] = """Member"""
+        self.vs[7]["mm__"] = """Member"""
         self.vs[7]["cardinality"] = """+"""
         #self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# match_contains node for class HouseholdRoot()
+    	# match_contains node for class Member()
         self.add_node()
         self.vs[8]["mm__"] = """match_contains"""
         #self.vs[8]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains8')
@@ -98,14 +98,14 @@ a.""")
         #self.vs[12]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains12')
         
         
-    	# match association Family--father-->Member node
-    	self.add_node()
-    	self.vs[13]["associationType"] = """father"""
-        self.vs[13]["mm__"] = """directLink_S"""
-        #self.vs[13]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc13')
     	# match association HouseholdRoot--have-->Family node
     	self.add_node()
-    	self.vs[14]["associationType"] = """have"""
+    	self.vs[13]["associationType"] = """have"""
+        self.vs[13]["mm__"] = """directLink_S"""
+        #self.vs[13]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc13')
+    	# match association Family--son-->Member node
+    	self.add_node()
+    	self.vs[14]["associationType"] = """son"""
         self.vs[14]["mm__"] = """directLink_S"""
         #self.vs[14]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc14')
         
@@ -115,17 +115,17 @@ a.""")
         self.vs[15]["mm__"] = """directLink_T"""
         #self.vs[15]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc15')
         
-    	# backward association Member---->Man node
+    	# backward association HouseholdRoot---->CommunityRoot node
     	self.add_node()
     	self.vs[16]["type"] = """ruleDef"""
         self.vs[16]["mm__"] = """backward_link"""
         #self.vs[16]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink16')
-    	# backward association HouseholdRoot---->CommunityRoot node
+    	# backward association Family---->Man node
     	self.add_node()
     	self.vs[17]["type"] = """ruleDef"""
         self.vs[17]["mm__"] = """backward_link"""
         #self.vs[17]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink17')
-    	# backward association Family---->Man node
+    	# backward association Member---->Man node
     	self.add_node()
     	self.vs[18]["type"] = """ruleDef"""
         self.vs[18]["mm__"] = """backward_link"""
@@ -159,7 +159,7 @@ a.""")
         #self.vs[23]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
     	# apply attribute atom ApplyAttribute() node
     	self.add_node()
-    	self.vs[24]["name"] = """famMemberFather"""
+    	self.vs[24]["name"] = """famMemberSon"""
         self.vs[24]["mm__"] = """Constant"""
         self.vs[24]["Type"] = """'String'"""
         #self.vs[24]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom24')
@@ -199,25 +199,25 @@ a.""")
     		(0,4), # matchmodel -> match_contains
     		(4,3), # match_contains -> match_class Family()
     		(0,6), # matchmodel -> match_contains
-    		(6,5), # match_contains -> match_class Member()
+    		(6,5), # match_contains -> match_class HouseholdRoot()
     		(0,8), # matchmodel -> match_contains
-    		(8,7), # match_contains -> match_class HouseholdRoot()
+    		(8,7), # match_contains -> match_class Member()
     		(1,10), # applymodel -> apply_contains
     		(10,9), # apply_contains -> apply_class Man()
     		(1,12), # applymodel -> apply_contains
     		(12,11), # apply_contains -> apply_class CommunityRoot()
-    		(3,13), # match_class Family() -> association father
-    		(13,5), # association father  -> match_class Member()
-    		(7,14), # match_class HouseholdRoot() -> association have
-    		(14,3), # association have  -> match_class Family()
+    		(5,13), # match_class HouseholdRoot() -> association have
+    		(13,3), # association have  -> match_class Family()
+    		(3,14), # match_class Family() -> association son
+    		(14,7), # association son  -> match_class Member()
     		(11,15), # apply_class CommunityRoot() -> association has
     		(15,9), # association has  -> apply_class Man()
-    		(9,16), # apply_class Man() -> backward_association
-    		(16,5), #  backward_association -> apply_class Member()
-    		(11,17), # apply_class CommunityRoot() -> backward_association
-    		(17,7), #  backward_association -> apply_class HouseholdRoot()
+    		(11,16), # apply_class CommunityRoot() -> backward_association
+    		(16,5), #  backward_association -> apply_class HouseholdRoot()
+    		(9,17), # apply_class Man() -> backward_association
+    		(17,3), #  backward_association -> apply_class Family()
     		(9,18), # apply_class Man() -> backward_association
-    		(18,3), #  backward_association -> apply_class Family()
+    		(18,7), #  backward_association -> apply_class Member()
     		(9,19), # apply_class Man() -> has_apply_attribute ApplyAttribute ()
     		(19,20), #  has_apply_attribute ApplyAttribute () -> apply_attribute ApplyAttribute ()
     		(21,22), #  equation of apply attribute ApplyAttribute () -> left_expr

@@ -101,11 +101,11 @@ def graph_to_dot(name, g, verbosity = 0):
         elif node_type in ['leftExpr', 'MT_pre__leftExpr', 'MT_post__leftExpr', "rightExpr", "MT_pre__rightExpr", 'MT_post__rightExpr']:
             fillcolor = "#22DDFF"
 
-        elif node_type in ['hasAttr_S', 'MT_pre__hasAttr_S', 'MT_post__hasAttr_S']:
-            fillcolor = "#FF8888"
+        elif node_type in ['hasAttr_S', 'MT_pre__hasAttr_S', 'MT_post__hasAttr_S', "hasAttribute_S"]:
+            fillcolor = "#E34A0E"
 
         elif node_type in ['hasAttr_T', 'MT_pre__hasAttr_T', 'MT_post__hasAttr_T'] or "hasAttribute" in node_type:
-            fillcolor = "#FF9999"
+            fillcolor = "#C75C0D"
 
         elif node_type in ['Attribute', 'MT_pre__Attribute', 'MT_post__Attribute']:
             try:

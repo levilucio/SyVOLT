@@ -5,7 +5,7 @@ Created on 2015-08-08
 '''
 
 from copy import deepcopy
-
+import igraph as ig
 
 from core.himesis_utils import graph_to_dot
 from t_core.tc_python.arule import ARule
@@ -48,6 +48,9 @@ from property_prover_rules.disambiguation_rules.Himesis.HMoveOneTraceRHS import 
 from property_prover_rules.disambiguation_rules.Himesis.HDelOneAttributeFromUncollapsedElemLHS import HDelOneAttributeFromUncollapsedElemLHS
 from property_prover_rules.disambiguation_rules.Himesis.HDelOneAttributeFromUncollapsedElemRHS import HDelOneAttributeFromUncollapsedElemRHS
 
+from property_prover_rules.disambiguation_rules.Himesis.HMoveOneAttributeLHS import HMoveOneAttributeLHS
+from property_prover_rules.disambiguation_rules.Himesis.HMoveOneAttributeRHS import HMoveOneAttributeRHS
+
 from property_prover_rules.disambiguation_rules.Himesis.HDeleteUncollapsedElementLHS import HDeleteUncollapsedElementLHS
 from property_prover_rules.disambiguation_rules.Himesis.HDeleteUncollapsedElementRHS import HDeleteUncollapsedElementRHS
 
@@ -74,6 +77,7 @@ move_trace = FRule(HMoveOneTraceLHS(), HMoveOneTraceRHS())
 delete_uncollapsed_element = FRule(HDeleteUncollapsedElementLHS(), HDeleteUncollapsedElementRHS())
 delete_attributes_from_uncollapsed_element = FRule(HDelOneAttributeFromUncollapsedElemLHS(), HDelOneAttributeFromUncollapsedElemRHS())
 
+move_one_attribute = FRule(HMoveOneAttributeLHS(), HMoveOneAttributeRHS())
 
 class Disambiguator():
     """
@@ -87,6 +91,9 @@ class Disambiguator():
     def __init__(self, verbosity):
         self.verbosity = verbosity
         self.attributeEquationEvaluator = SimpleAttributeEquationEvaluator(verbosity)
+
+        self.already_produced = {}
+
 
         if True:
             graph_to_dot("HFindTwoMatchElementsSameTypeDiffRulesLHS", HFindTwoMatchElementsSameTypeDiffRulesLHS())
@@ -106,6 +113,12 @@ class Disambiguator():
 
             graph_to_dot("HDeleteUncollapsedElementLHS", HDeleteUncollapsedElementLHS())
             graph_to_dot("HDeleteUncollapsedElementRHS", HDeleteUncollapsedElementRHS())
+
+            graph_to_dot("HDelOneAttributeFromUncollapsedElemLHS", HDelOneAttributeFromUncollapsedElemLHS())
+            graph_to_dot("HDelOneAttributeFromUncollapsedElemRHS", HDelOneAttributeFromUncollapsedElemRHS())
+
+            graph_to_dot("HMoveOneAttributeLHS", HMoveOneAttributeLHS())
+            graph_to_dot("HMoveOneAttributeRHS", HMoveOneAttributeRHS())
 
     def _collapse_step(self, path_condition):
         """
@@ -197,29 +210,52 @@ class Disambiguator():
                     p2 = move_output_indirect.packet_in(p2)
                     if self.verbosity >= 2: print 'move_output_indirect_matchmodel:' + str(move_output_indirect.is_success)
 
-                graph_to_dot("before_move_trace", p2.graph)
-
                 p2 = move_trace.packet_in(p2)
                 if self.verbosity >= 2: print 'move_backwardlink:' + str(move_trace.is_success)
 
-                graph_to_dot("before_delete_uncollapsed", p2.graph)
+                graph_to_dot("before_move_one_attribute", p2.graph)
+                p2 = move_one_attribute.packet_in(p2)
+                # #if not delete_attributes_from_uncollapsed_element.is_success:
+                #    raise Exception("Attributes were not deleted from uncollapsed element")
+                if self.verbosity >= 2: print 'move_one_attribute:' + str(move_one_attribute.is_success)
+
+                # graph_to_dot("before_delete_attributes_from_uncollapsed_element", p2.graph)
+                # p2 = delete_attributes_from_uncollapsed_element.packet_in(p2)
+                # #if not delete_attributes_from_uncollapsed_element.is_success:
+                # #    raise Exception("Attributes were not deleted from uncollapsed element")
+                # if self.verbosity >= 2: print 'delete_attributes_from_uncollapsed_element:' + str(delete_attributes_from_uncollapsed_element.is_success)
+
+
+                graph_to_dot("before_delete_uncollapsed_element", p2.graph)
                 p2 = delete_uncollapsed_element.packet_in(p2)
                 if not delete_uncollapsed_element.is_success:
                     raise Exception("Uncollapsed element was not deleted")
-
                 if self.verbosity >= 2: print 'delete_uncollapsed_element_match:' + str(delete_uncollapsed_element.is_success)
+
+
+
 
                 # check if the equations on the attributes of the disambiguated solution can be satisfied
 
-                attribute = self.attributeEquationEvaluator(p.graph)
-                print("Attribute Evaluator: " + str(attribute))
-                if attribute:
-                    #print("Adding")
-                    # store the current disambiguated solution
-                    disambiguated_solutions.append(p2.graph)
-                    #print("Disambig: " + str(disambiguated_solutions))
+                reduction = ig.Graph.__reduce__(p2.graph)
+                reduction_str = ""
+                for e in reduction:
+                    reduction_str += str(e).replace("'", "")
 
-                # advance to the next pair of elements to be collapsed
+                if not reduction_str in self.already_produced:
+
+                    attribute = self.attributeEquationEvaluator(p2.graph)
+                    if attribute:
+
+                        #record which solutions have already been produced
+                        self.already_produced[reduction_str] = ""
+
+                        # store the current disambiguated solution
+                        disambiguated_solutions.append(p2.graph)
+
+                        #print("Disambig: " + str(disambiguated_solutions))
+
+            # advance to the next pair of elements to be collapsed
             p = i.next_in(p)
 
         return disambiguated_solutions
@@ -243,23 +279,23 @@ class Disambiguator():
 
         disambiguated_path_conditions = []
 
-        graph_to_dot("path_condition", path_condition)
+        #graph_to_dot("path_condition", path_condition)
 
         collapse_step_result = self._collapse_step(path_condition)
 
-        print("Collapse Result: " + str(collapse_step_result))
+        #print("Collapse Result: " + str(collapse_step_result))
 
         for i in range(len(collapse_step_result)):
-            graph_to_dot(path_condition.name + "_collapsed" + str(i), collapse_step_result[i])
+            #graph_to_dot(path_condition.name + "_collapsed" + str(i), collapse_step_result[i])
             collapse_step_result[i].name += str(i)
 
         if collapse_step_result != []:
             disambiguated_path_conditions.extend(collapse_step_result)
         #    print("Collapse Length: " + str(len(collapse_step_result)))
 
-            for disamb_path_cond in collapse_step_result:
-                disamb_path_cond = deepcopy(disamb_path_cond)
-
-                disambiguated_path_conditions.extend(self.disambiguate(disamb_path_cond, level))
-                
+            # for disamb_path_cond in collapse_step_result:
+            #     disamb_path_cond = deepcopy(disamb_path_cond)
+            #
+            #     disambiguated_path_conditions.extend(self.disambiguate(disamb_path_cond, level))
+            #
         return disambiguated_path_conditions            
