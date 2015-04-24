@@ -280,8 +280,8 @@ class PathConditionGenerator(object):
                     # now check if the candidate rule's match is a subset of the current rule's match
                     p = Packet()
                     p.graph = mergedResult
-                    p = matchPatternCandidateRule.packet_in(p)                  
- 
+                    p = matchPatternCandidateRule.packet_in(p)
+                    
                     # check if the rules share the same match pattern such that we can merge them
                     if matchPatternCurrentRule.is_success and matchPatternCandidateRule.is_success:
                                                 
@@ -290,11 +290,15 @@ class PathConditionGenerator(object):
                         i = Iterator()
                         p = i.packet_in(p)
                         p = self.matchRulePatterns[self.transformation[layerIndex][candidateToMerge].name][1].packet_in(p)
-                        mergedResult = p.graph
-                        mergedResult.name = mergedResult.name + self.transformation[layerIndex][candidateToMerge].name
-                                                 
-                        # mark the rule for removal
-                        markedForRemoval.append(self.transformation[layerIndex][candidateToMerge])
+                        mergedResultBeforeEquationEval = p.graph
+                        
+                        # check the result of merging the rules for consistency of equations over the attribute
+                        if self.attributeEquationEvaluator(mergedResultBeforeEquationEval):
+                        
+                            mergedResult = mergedResultBeforeEquationEval
+                            mergedResult.name = mergedResult.name + self.transformation[layerIndex][candidateToMerge].name                                                  
+                            # mark the rule for removal
+                            markedForRemoval.append(self.transformation[layerIndex][candidateToMerge])
    
                 # copy the result of the merged or the unmerged rule to the merged layer              
                 

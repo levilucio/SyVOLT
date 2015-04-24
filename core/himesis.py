@@ -421,7 +421,7 @@ class HimesisPattern(Himesis):
         try:
             return self.vs[pivot]['MT_pivotOut__']
         except Exception as e:
-            print("Node " + str(pivot) + " does not have a pivot out")
+            return None
 
 
 
