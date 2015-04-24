@@ -45,7 +45,7 @@ def test_disambiguate():
 
     pyramify = PyRamify(verbosity = 0)
 
-    do_ATL = True
+    do_ATL = False
 
     if do_ATL:
         pre_metamodel = ["MT_pre__FamiliesToPersons_MM", "MoTifRule"]
@@ -110,10 +110,14 @@ def test_disambiguate():
 
     graph_to_dot("merged", merged_rules)
 
+
     r = disamb.disambiguate(merged_rules)
 
-    print("Disambiguated: " + str(r))
+    r.append(merged_rules)
+
+    print("Disambiguated: ")
     for dis in r:
+        print(dis.name)
         graph_to_dot(dis.name, dis)
         
         

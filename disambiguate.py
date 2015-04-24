@@ -135,7 +135,10 @@ class Disambiguator():
         
         p.graph = path_condition
 
+        print("Path condition name: " + str(path_condition.name))
         #graph_to_dot("packet", p.graph)
+
+        #print("Packet: " + str(p))
 
         p = find_elements_collapse_match.packet_in(p)
 
@@ -194,21 +197,23 @@ class Disambiguator():
                 #print("Checking move_output_repeated_direct_matchmodel")
                 p2 = move_output_repeated_direct.packet_in(p2) #direct link going out
                 if self.verbosity >= 2: print 'move_output_repeated_direct_matchmodel: ' + str(move_output_repeated_direct.is_success)
-                if not move_output_repeated_direct.is_success:
-                    p2 = move_output_direct.packet_in(p2)
-                    if self.verbosity >= 2: print 'move_output_direct_matchmodel: ' + str(move_output_direct.is_success)
+                #if not move_output_repeated_direct.is_success:
 
-                p2 = move_input_repeated_indirect.packet_in(p2)
-                if self.verbosity >= 2: print 'move_input_repeated_indirect_matchmodel: ' + str(move_input_repeated_indirect.is_success)
-                if not move_input_repeated_indirect.is_success:
-                    p2 = move_input_indirect.packet_in(p2)
-                    if self.verbosity >= 2: print 'move_input_indirect_matchmodel: ' + str(move_input_indirect.is_success)
+                p2 = move_output_direct.packet_in(p2)
+                if self.verbosity >= 2: print 'move_output_direct_matchmodel: ' + str(move_output_direct.is_success)
 
-                p2 = move_output_repeated_indirect.packet_in(p2)
-                if self.verbosity >= 2: print 'move_output_repeated_indirect_matchmodel:' + str(move_output_repeated_indirect.is_success)
-                if not move_output_repeated_indirect.is_success:
-                    p2 = move_output_indirect.packet_in(p2)
-                    if self.verbosity >= 2: print 'move_output_indirect_matchmodel:' + str(move_output_indirect.is_success)
+                #TODO: Re-enable indirect links
+                # p2 = move_input_repeated_indirect.packet_in(p2)
+                # if self.verbosity >= 2: print 'move_input_repeated_indirect_matchmodel: ' + str(move_input_repeated_indirect.is_success)
+                # if not move_input_repeated_indirect.is_success:
+                #     p2 = move_input_indirect.packet_in(p2)
+                #     if self.verbosity >= 2: print 'move_input_indirect_matchmodel: ' + str(move_input_indirect.is_success)
+                #
+                # p2 = move_output_repeated_indirect.packet_in(p2)
+                # if self.verbosity >= 2: print 'move_output_repeated_indirect_matchmodel:' + str(move_output_repeated_indirect.is_success)
+                # if not move_output_repeated_indirect.is_success:
+                #     p2 = move_output_indirect.packet_in(p2)
+                #     if self.verbosity >= 2: print 'move_output_indirect_matchmodel:' + str(move_output_indirect.is_success)
 
                 p2 = move_trace.packet_in(p2)
                 if self.verbosity >= 2: print 'move_backwardlink:' + str(move_trace.is_success)
@@ -245,6 +250,8 @@ class Disambiguator():
                 if not reduction_str in self.already_produced:
 
                     attribute = self.attributeEquationEvaluator(p2.graph)
+
+                    print("Graph is valid: " + str(attribute))
                     if attribute:
 
                         #record which solutions have already been produced
@@ -293,9 +300,9 @@ class Disambiguator():
             disambiguated_path_conditions.extend(collapse_step_result)
         #    print("Collapse Length: " + str(len(collapse_step_result)))
 
-            # for disamb_path_cond in collapse_step_result:
-            #     disamb_path_cond = deepcopy(disamb_path_cond)
-            #
-            #     disambiguated_path_conditions.extend(self.disambiguate(disamb_path_cond, level))
-            #
+            for disamb_path_cond in collapse_step_result:
+                disamb_path_cond = deepcopy(disamb_path_cond)
+
+                disambiguated_path_conditions.extend(self.disambiguate(disamb_path_cond, level))
+
         return disambiguated_path_conditions            
