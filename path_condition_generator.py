@@ -620,29 +620,27 @@ class PathConditionGenerator(object):
             # this can be optimized by having a dictionary for each rule from the previous layer containing
             # the path conditions generated for it, instead of going though the whole vector each time.
 
-            childrenPathConditions = {}
-            for pc_name in currentpathConditionSet:
-                childrenPathConditions[pc_name] = [pc_name]
-            
+#             for pc_name in currentpathConditionSet:
+#                 childrenPathConditions[pc_name] = [pc_name]
+                
             for pathConditionIndex in range(pathConSetLength):
 
                 # for each rule in the current layer, combine it with the path condition.
                 # start with the local path condition set with just a copy of the path condition being combined.
 
                 pathCondition_name = currentpathConditionSet[pathConditionIndex]
+                pathCondition = pc_dict[pathCondition_name]
+                
+                childrenPathConditions = [pathCondition_name]
+                
+                # produce a fresh copy of the path condition in pc_dict, associated with the name of the path condition.
+                # this frees up the original parent path condition that will not be changed throughout the execution of
+                # the rules in the layer, while its copy will. This will avoid matching over a rewritten parent path condition. 
+                pc_dict[pathCondition_name] = deepcopy(pathCondition)
 
                 if not isinstance(pathCondition_name, str):
                     raise Exception("Not string")
-
-                pathCondition = pc_dict[pathCondition_name]
-
-#                 pathConditionCopy = deepcopy(self.pathConditionSet[pathCondition])
-#                 pathCondAndRuleCombAccumulator = [pathConditionCopy]
-
-                # hold the changes done to the original path condition through total matches of the rule, if any.
-                # note that the original path condition being matched by the rules can never be changed as long as the rules in the layer are being matched on it
-                changedPathCondition = deepcopy(pathCondition)
-                
+               
                 for rule in self.transformation[layer]:
                     
                     if self.verbosity >= 2:
@@ -653,7 +651,7 @@ class PathConditionGenerator(object):
                         print "Path Condition:" + self.expand_pc_name(pathCondition.name)
                     if self.verbosity >= 1:
                         print "Number of Path Conditions generated so far: " +  str(len(currentpathConditionSet))
-                        print "Number of Path Conditions to go in this layer: " +  str(pathConSetLength - pathConditionIndex)
+                        print "Number of Path Conditions to go in this layer: " +  str(pathConSetLength-1)
                         
                     # first check if the rule requires any other rules to execute with it,
                     # in case of rule overlapping. If all the rules that are required to execute
@@ -695,9 +693,9 @@ class PathConditionGenerator(object):
 
 
                         num = 0
-                        for child_pc_index in range(len(childrenPathConditions[pathCondition.name])):
+                        for child_pc_index in range(len(childrenPathConditions)):
 
-                            child_pc_name = childrenPathConditions[pathCondition.name][child_pc_index]
+                            child_pc_name = childrenPathConditions[child_pc_index]
                             
 #                             # TODO: delete this when the overlapping is finished with the new algorithm
 #                             # Check if the child being treated already contains the rule.
@@ -734,7 +732,7 @@ class PathConditionGenerator(object):
                             localPathConditionLayerAccumulator.append(newPathCond.name)
 
                             # store the newly created path condition as a child
-                            childrenPathConditions[pathCondition.name].append(newPathCond.name)
+                            childrenPathConditions.append(newPathCond.name)
 
                         currentpathConditionSet.extend(localPathConditionLayerAccumulator)
                     
@@ -797,8 +795,6 @@ class PathConditionGenerator(object):
                                     else:
                                         print("Matching was not successful")
 
-
-
                                 if combinatorMatcher.is_success:
 
                                     # holds the result of combining the path conditions generated so far when combining
@@ -808,10 +804,10 @@ class PathConditionGenerator(object):
 
                                     #go through all the children of this path condition
                                     num = 0
-                                    for child_pc_index in range(len(childrenPathConditions[pathCondition.name])):
+                                    for child_pc_index in range(len(childrenPathConditions)):
 
                                         #get the name of the child
-                                        child_pc_name = childrenPathConditions[pathCondition.name][child_pc_index]
+                                        child_pc_name = childrenPathConditions[child_pc_index]
 
                                         if self.verbosity >= 2 :
                                             print "--> Combining with path condition: " + self.expand_pc_name(child_pc_name)
@@ -862,6 +858,8 @@ class PathConditionGenerator(object):
 
                                             if isTotalCombinator:
                                                 
+                                                print "---------------------------------------> IS TOTAL!!!"
+                                                
                                                 # because the rule combines totally with a path condition in the accumulator we just copy it
                                                 # directly on top of the accumulated path condition
 
@@ -871,8 +869,8 @@ class PathConditionGenerator(object):
                                                     if currentpathConditionSet[pathConditionIndex] == cpc.name:
                                                         currentpathConditionSet[pathConditionIndex] = newPathCond.name
      
-                                                #change the child's name in the parent's array
-                                                childrenPathConditions[pathCondition.name][child_pc_index] = newPathCond.name
+                                                #change the child's name in the child's array
+                                                childrenPathConditions[child_pc_index] = newPathCond.name
 
                                             else:
                                                 # we are dealing with a partial combination of the rule.
@@ -882,7 +880,7 @@ class PathConditionGenerator(object):
                                                 partialTotalPathCondLayerAccumulator.append(newPathCond.name)
 
                                                 # store the parent of the newly created path condition
-                                                childrenPathConditions[pathCondition.name].append(newPathCond.name)
+                                                childrenPathConditions.append(newPathCond.name)
 
                                             # store the new path condition
                                             pc_dict[newPathCond.name] = newPathCond
@@ -897,6 +895,7 @@ class PathConditionGenerator(object):
 
                                     currentpathConditionSet.extend(partialTotalPathCondLayerAccumulator)
 
+                #pathConSetLength-=1
 
             # when the layer treatment is finished the set of path conditions for the transformation can receive the
             # accumulated path condition set for the layer
