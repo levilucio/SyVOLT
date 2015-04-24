@@ -1,6 +1,7 @@
 
 import copy, traceback
-from core.himesis import Himesis 
+from core.himesis import Himesis
+from core.himesis_utils import graph_to_dot
 
 # Abstract class
 class Message(object): pass
@@ -162,8 +163,16 @@ class MatchSet:
 # TODO: Should we store all the matches and let the iterator explicitly choose one randomly? Or rely on the matching algorithm and save memory space?
     
     def __str__(self):
-        s = '''MatchSet (%s): %s''' % (self.match2rewrite, self.matches)
+        s = '''MatchSet (''' + str(self.match2rewrite) + '''):\n'''
+        for match in self.matches:
+            s += str(match) + "\n"
         return s
+
+    #prints the matches for this graph
+    def print_matches(self, graph):
+        print("MatchSet:")
+        for match in self.matches:
+            match.print_match(graph)
     
     def __copy__(self):
         cpy = MatchSet()
@@ -187,6 +196,17 @@ class Match(dict):
     def __init__(self):
         super(Match, self).__init__()   # {pattern node label : source node guid}
         self.local_pivots = Pivots()    # {pivot name : source node guid}
+
+    def print_match(self, graph):
+        s = "Match:\n"
+        for k in self.keys():
+            guid = self[k]
+            node = graph.get_node(guid)
+            name = graph.vs[node]["mm__"] + str(node)
+
+            s += "Label " + str(k) + " : [" + name + "]\n"
+        s += "\nPivots: " + str(self.local_pivots) + "\n"
+        print(s)
     
     def __copy__(self):
         cpy = copy.copy(super(Match, self))
@@ -226,8 +246,15 @@ class Match(dict):
         '''
             Converts the match to a mapping dictionary {label: source node index}.
         '''
+        #print("Starting to_label_mapping")
+        #print("Pivots: " + str(self.local_pivots))
+        #print(self)
         mapping = {}
         for label in self.iterkeys():
+            #print("Looking for label: " + str(label))
+            #print("Source Graph: " + source_graph.name)
+            #graph_to_dot("source_graph", source_graph)
+
             sourceNode = source_graph.get_node(self[label])
             if sourceNode is not None:
                 mapping[label] = sourceNode
@@ -259,6 +286,8 @@ class Match(dict):
             self[label] = guid
         
         self.local_pivots.from_mapping(mapping, source_graph, pattern_graph)
+        #print("Local pivots: " + str(self.local_pivots))
+
 
 
 
@@ -309,6 +338,7 @@ class Pivots(dict):
             Extracts all pivots from a mapping dictionary {pattern node index: source node index}
             and adds them to this object in the form {pivot name: source node guid}.
         '''
+
         for p in mapping:
             pivot = pattern_graph.get_pivot_out(p)
             if pivot is not None:
