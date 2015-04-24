@@ -15,10 +15,10 @@ class HDeleteUncollapsedElementRHS(HimesisPostConditionPattern):
         super(HDeleteUncollapsedElementRHS, self).__init__(name='HDeleteUncollapsedElementRHS', num_nodes=5, edges=[])
         
         # Add the edges
-        self.add_edges([[3, 1], [1, 0], [4, 2], [2, 0]])
+        self.add_edges([(3, 1), (1, 0), (4, 2), (2, 0)])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__UMLRT2Kiltera_MM'
+S'MT_post__GM2AUTOSAR_MM'
 p2
 aS'MoTifRule'
 p3
@@ -32,7 +32,7 @@ a.""")
 pass
 """
         self["name"] = """"""
-        self["GUID__"] = 7812174363778671626
+        self["GUID__"] = UUID('a0cddbf7-e016-411e-b950-5bfbbd8ec77b')
         
         # Set the node attributes
         self.vs[0]["MT_pivotOut__"] = """element1"""
@@ -80,19 +80,19 @@ return attr_value
 
 return attr_value
 """
-        self.vs[0]["GUID__"] = 6268035427006317116
+        self.vs[0]["GUID__"] = UUID('77019aff-4dff-44a1-b613-d2849daf7e2a')
         self.vs[1]["MT_label__"] = """5"""
         self.vs[1]["mm__"] = """MT_post__match_contains"""
-        self.vs[1]["GUID__"] = 249157694221731772
-        self.vs[2]["MT_label__"] = """6"""
+        self.vs[1]["GUID__"] = UUID('6dafd5bc-96ec-4900-9b7c-ea05e43dd2ab')
+        self.vs[2]["MT_label__"] = """10"""
         self.vs[2]["mm__"] = """MT_post__match_contains"""
-        self.vs[2]["GUID__"] = 4053263962751487492
+        self.vs[2]["GUID__"] = UUID('d05ea45e-43b4-473a-9d7d-8b7ee52af0c4')
         self.vs[3]["MT_label__"] = """3"""
         self.vs[3]["mm__"] = """MT_post__MatchModel"""
-        self.vs[3]["GUID__"] = 3509172987562613612
+        self.vs[3]["GUID__"] = UUID('d641a549-25ed-4748-a199-cce018347555')
         self.vs[4]["MT_label__"] = """4"""
         self.vs[4]["mm__"] = """MT_post__MatchModel"""
-        self.vs[4]["GUID__"] = 8167246094907919532
+        self.vs[4]["GUID__"] = UUID('90814eec-f662-4f5a-a822-8aae8a7651ee')
 
         from HDeleteUncollapsedElementLHS import HDeleteUncollapsedElementLHS
         self.pre = HDeleteUncollapsedElementLHS()
@@ -132,10 +132,18 @@ return attr_value
         #===============================================================================
         # Create new nodes
         #===============================================================================
+        # match_contains10
+        new_node = graph.add_node()
+        labels['10'] = new_node
+        graph.vs[new_node][Himesis.Constants.META_MODEL] = 'match_contains'
         
         #===============================================================================
         # Create new edges
         #===============================================================================
+        # MatchModel4 -> match_contains10
+        graph.add_edges((labels['4'], labels['10']))
+        # match_contains10 -> MetaModelElement_S1
+        graph.add_edges((labels['10'], labels['1']))
         
         #===============================================================================
         # Set the output pivots
@@ -153,6 +161,6 @@ return attr_value
         #===============================================================================
         # Finally, delete nodes (this will automatically delete the adjacent edges)
         #===============================================================================
-        # MT_pre__MetaModelElement_S2
-        graph.delete_nodes([labels["2"]])
+        # MT_pre__MetaModelElement_S2, MT_pre__match_contains6
+        graph.delete_nodes([labels["2"], labels["6"]])
     

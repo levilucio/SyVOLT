@@ -15,10 +15,10 @@ class HDeleteUncollapsedElementLHS(HimesisPreConditionPatternLHS):
         super(HDeleteUncollapsedElementLHS, self).__init__(name='HDeleteUncollapsedElementLHS', num_nodes=6, edges=[])
         
         # Add the edges
-        self.add_edges([[4, 0], [0, 3], [5, 1], [1, 2]])
+        self.add_edges([(4, 0), (0, 3), (5, 1), (1, 2)])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_pre__UMLRT2Kiltera_MM'
+S'MT_pre__GM2AUTOSAR_MM'
 p2
 aS'MoTifRule'
 p3
@@ -29,7 +29,7 @@ a.""")
 return False
 """
         self["name"] = """"""
-        self["GUID__"] = 8758931012258818883
+        self["GUID__"] = UUID('dacfaa8a-73b8-406a-8c31-09cafbdf736c')
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
@@ -38,14 +38,14 @@ return False
 .""")
         self.vs[0]["mm__"] = """MT_pre__match_contains"""
         self.vs[0]["MT_dirty__"] = False
-        self.vs[0]["GUID__"] = 3146878326288297982
+        self.vs[0]["GUID__"] = UUID('1be2ccdc-c316-43ce-b30c-7abc32a02228')
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_label__"] = """6"""
         self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[1]["mm__"] = """MT_pre__match_contains"""
         self.vs[1]["MT_dirty__"] = False
-        self.vs[1]["GUID__"] = 8418318398493542014
+        self.vs[1]["GUID__"] = UUID('dbc4ceba-d43b-43ad-a3c1-b86397de04a0')
         self.vs[2]["MT_pivotOut__"] = """element2"""
         self.vs[2]["MT_pre__name"] = """
 #===============================================================================
@@ -75,86 +75,16 @@ return True
         self.vs[2]["MT_pivotIn__"] = """element2"""
         self.vs[2]["MT_label__"] = """2"""
         self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__OPTIONAL1,'
+S'MT_pre__VirtualDevice'
 p2
-aS'MT_pre__PhysicalThread'
+aS'MT_pre__Distributable'
 p3
-aS'MT_pre__PortRef'
-p4
-aS'MT_pre__PackageContainer'
-p5
-aS'MT_pre__Thread'
-p6
-aS'MT_pre__OUT2'
-p7
-aS'MT_pre__BASE0'
-p8
-aS'MT_pre__NamedElement'
-p9
-aS'MT_pre__Element'
-p10
-aS'MT_pre__OUT1'
-p11
 aS'MT_pre__Signal'
-p12
-aS'MT_pre__Package'
-p13
-aS'MT_pre__PortType'
-p14
-aS'MT_pre__PortConnectorRef'
-p15
-aS'MT_pre__IN1'
-p16
-aS'MT_pre__IN0'
-p17
-aS'MT_pre__LogicalThread'
-p18
-aS'MT_pre__RoleType'
-p19
-aS'MT_pre__Vertex'
-p20
-aS'MT_pre__SIBLING0'
-p21
-aS'MT_pre__InitialPoint'
-p22
-aS'MT_pre__PortConnector'
-p23
-aS'MT_pre__SignalType'
-p24
-aS'MT_pre__Transition'
-p25
-aS'MT_pre__EntryPoint'
-p26
-aS'MT_pre__CONJUGATE1'
-p27
-aS'MT_pre__Protocol'
-p28
-aS'MT_pre__StateMachine'
-p29
-aS'MT_pre__Model_S'
-p30
-aS'MT_pre__StateMachineElement'
-p31
-aS'MT_pre__Port'
-p32
-aS'MT_pre__TransitionType'
-p33
-aS'MT_pre__Capsule'
-p34
-aS'MT_pre__Trigger_S'
-p35
-aS'MT_pre__State'
-p36
-aS'MT_pre__PLUGIN2'
-p37
-aS'MT_pre__Action'
-p38
-aS'MT_pre__CapsuleRole'
-p39
-aS'MT_pre__ExitPoint'
-p40
-aS'MT_pre__FIXED0'
-p41
+p4
+aS'MT_pre__ExecFrame'
+p5
+aS'MT_pre__ECU'
+p6
 a.""")
         self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[2]["MT_dirty__"] = False
@@ -170,7 +100,7 @@ a.""")
 
 return True
 """
-        self.vs[2]["GUID__"] = 3476602272828169936
+        self.vs[2]["GUID__"] = UUID('c7207bb7-589f-47aa-a9bd-18283def9aed')
         self.vs[3]["MT_pivotOut__"] = """element1"""
         self.vs[3]["MT_pre__name"] = """
 #===============================================================================
@@ -200,86 +130,16 @@ return True
         self.vs[3]["MT_pivotIn__"] = """element1"""
         self.vs[3]["MT_label__"] = """1"""
         self.vs[3]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__OPTIONAL1,'
+S'MT_pre__VirtualDevice'
 p2
-aS'MT_pre__PhysicalThread'
+aS'MT_pre__Distributable'
 p3
-aS'MT_pre__PortRef'
-p4
-aS'MT_pre__PackageContainer'
-p5
-aS'MT_pre__Thread'
-p6
-aS'MT_pre__OUT2'
-p7
-aS'MT_pre__BASE0'
-p8
-aS'MT_pre__NamedElement'
-p9
-aS'MT_pre__Element'
-p10
-aS'MT_pre__OUT1'
-p11
 aS'MT_pre__Signal'
-p12
-aS'MT_pre__Package'
-p13
-aS'MT_pre__PortType'
-p14
-aS'MT_pre__PortConnectorRef'
-p15
-aS'MT_pre__IN1'
-p16
-aS'MT_pre__IN0'
-p17
-aS'MT_pre__LogicalThread'
-p18
-aS'MT_pre__RoleType'
-p19
-aS'MT_pre__Vertex'
-p20
-aS'MT_pre__SIBLING0'
-p21
-aS'MT_pre__InitialPoint'
-p22
-aS'MT_pre__PortConnector'
-p23
-aS'MT_pre__SignalType'
-p24
-aS'MT_pre__Transition'
-p25
-aS'MT_pre__EntryPoint'
-p26
-aS'MT_pre__CONJUGATE1'
-p27
-aS'MT_pre__Protocol'
-p28
-aS'MT_pre__StateMachine'
-p29
-aS'MT_pre__Model_S'
-p30
-aS'MT_pre__StateMachineElement'
-p31
-aS'MT_pre__Port'
-p32
-aS'MT_pre__TransitionType'
-p33
-aS'MT_pre__Capsule'
-p34
-aS'MT_pre__Trigger_S'
-p35
-aS'MT_pre__State'
-p36
-aS'MT_pre__PLUGIN2'
-p37
-aS'MT_pre__Action'
-p38
-aS'MT_pre__CapsuleRole'
-p39
-aS'MT_pre__ExitPoint'
-p40
-aS'MT_pre__FIXED0'
-p41
+p4
+aS'MT_pre__ExecFrame'
+p5
+aS'MT_pre__ECU'
+p6
 a.""")
         self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[3]["MT_dirty__"] = False
@@ -295,21 +155,21 @@ a.""")
 
 return True
 """
-        self.vs[3]["GUID__"] = 6416759362577785433
+        self.vs[3]["GUID__"] = UUID('3390bb24-448c-4640-8e50-dbb0ee95b3f9')
         self.vs[4]["MT_subtypeMatching__"] = False
         self.vs[4]["MT_label__"] = """3"""
         self.vs[4]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[4]["mm__"] = """MT_pre__MatchModel"""
         self.vs[4]["MT_dirty__"] = False
-        self.vs[4]["GUID__"] = 372631274086516471
+        self.vs[4]["GUID__"] = UUID('7d7bb9a0-5fa8-40ac-b2b8-efb15aa7e603')
         self.vs[5]["MT_subtypeMatching__"] = False
         self.vs[5]["MT_label__"] = """4"""
         self.vs[5]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[5]["mm__"] = """MT_pre__MatchModel"""
         self.vs[5]["MT_dirty__"] = False
-        self.vs[5]["GUID__"] = 1462897934630174981
+        self.vs[5]["GUID__"] = UUID('9f3535db-f09c-41f9-8b59-ca4ce8ad7c67')
 
     def eval_name2(self, attr_value, this):
         
