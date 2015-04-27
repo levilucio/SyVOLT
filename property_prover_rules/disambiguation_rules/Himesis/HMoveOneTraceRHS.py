@@ -15,10 +15,10 @@ class HMoveOneTraceRHS(HimesisPostConditionPattern):
         super(HMoveOneTraceRHS, self).__init__(name='HMoveOneTraceRHS', num_nodes=4, edges=[])
         
         # Add the edges
-        self.add_edges([[0, 2], [1, 0]])
+        self.add_edges([(0, 2), (1, 0)])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__UMLRT2Kiltera_MM'
+S'MT_post__GM2AUTOSAR_MM'
 p2
 aS'MoTifRule'
 p3
@@ -32,12 +32,12 @@ a.""")
 pass
 """
         self["name"] = """"""
-        self["GUID__"] = 3058488011036160695
+        self["GUID__"] = UUID('359f3443-305f-432b-a705-d1fb610a15e4')
         
         # Set the node attributes
-        self.vs[0]["MT_label__"] = """10"""
+        self.vs[0]["MT_label__"] = """20"""
         self.vs[0]["mm__"] = """MT_post__trace_link"""
-        self.vs[0]["GUID__"] = 7556361764185732705
+        self.vs[0]["GUID__"] = UUID('1023d6b6-d995-4737-a8ee-660ad0ec38c6')
         self.vs[1]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -82,7 +82,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[1]["GUID__"] = 9080008882809921485
+        self.vs[1]["GUID__"] = UUID('8e08b0cc-9681-431e-b429-a53357f46a85')
         self.vs[2]["MT_pivotOut__"] = """element1"""
         self.vs[2]["MT_post__cardinality"] = """
 #===============================================================================
@@ -128,7 +128,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[2]["GUID__"] = 611471469688170501
+        self.vs[2]["GUID__"] = UUID('e70692cf-6f4b-4c3c-81a5-913cea880388')
         self.vs[3]["MT_pivotOut__"] = """element2"""
         self.vs[3]["MT_post__cardinality"] = """
 #===============================================================================
@@ -174,7 +174,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[3]["GUID__"] = 21303492783729010
+        self.vs[3]["GUID__"] = UUID('a1932e2e-950c-4a50-89dd-4c58f014aba2')
 
         from HMoveOneTraceLHS import HMoveOneTraceLHS
         self.pre = HMoveOneTraceLHS()
@@ -214,10 +214,18 @@ return attr_value
         #===============================================================================
         # Create new nodes
         #===============================================================================
+        # trace_link20
+        new_node = graph.add_node()
+        labels['20'] = new_node
+        graph.vs[new_node][Himesis.Constants.META_MODEL] = 'trace_link'
         
         #===============================================================================
         # Create new edges
         #===============================================================================
+        # trace_link20 -> MetaModelElement_S7
+        graph.add_edges((labels['20'], labels['7']))
+        # MetaModelElement_T9 -> trace_link20
+        graph.add_edges((labels['9'], labels['20']))
         
         #===============================================================================
         # Set the output pivots
@@ -237,4 +245,6 @@ return attr_value
         #===============================================================================
         # Finally, delete nodes (this will automatically delete the adjacent edges)
         #===============================================================================
+        # MT_pre__trace_link10
+        graph.delete_nodes([labels["10"]])
     

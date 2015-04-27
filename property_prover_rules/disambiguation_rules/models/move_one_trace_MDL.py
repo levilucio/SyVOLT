@@ -3,7 +3,7 @@ __move_one_trace_MDL.py_____________________________________________________
 
 Automatically generated AToM3 Model File (Do not modify directly)
 Author: levi
-Modified: Thu Jan  8 11:15:18 2015
+Modified: Mon Apr 27 13:54:28 2015
 ____________________________________________________________________________
 """
 from stickylink import *
@@ -227,40 +227,40 @@ def move_one_trace_MDL(self, rootNode, MT_pre__GM2AUTOSAR_MMRootNode=None, MT_po
     self.globalAndLocalPostcondition(self.obj73, rootNode)
     self.obj73.postAction( rootNode.CREATE )
 
-    self.obj81=MT_pre__trace_link(self)
-    self.obj81.isGraphObjectVisual = True
+    self.obj74=MT_pre__trace_link(self)
+    self.obj74.isGraphObjectVisual = True
 
-    if(hasattr(self.obj81, '_setHierarchicalLink')):
-      self.obj81._setHierarchicalLink(False)
+    if(hasattr(self.obj74, '_setHierarchicalLink')):
+      self.obj74._setHierarchicalLink(False)
 
     # MT_label__
-    self.obj81.MT_label__.setValue('10')
+    self.obj74.MT_label__.setValue('10')
 
     # MT_pivotOut__
-    self.obj81.MT_pivotOut__.setValue('')
-    self.obj81.MT_pivotOut__.setNone()
+    self.obj74.MT_pivotOut__.setValue('')
+    self.obj74.MT_pivotOut__.setNone()
 
     # MT_subtypeMatching__
-    self.obj81.MT_subtypeMatching__.setValue(('True', 0))
-    self.obj81.MT_subtypeMatching__.config = 0
+    self.obj74.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj74.MT_subtypeMatching__.config = 0
 
     # MT_pivotIn__
-    self.obj81.MT_pivotIn__.setValue('')
-    self.obj81.MT_pivotIn__.setNone()
+    self.obj74.MT_pivotIn__.setValue('')
+    self.obj74.MT_pivotIn__.setNone()
 
-    self.obj81.graphClass_= graph_MT_pre__trace_link
+    self.obj74.graphClass_= graph_MT_pre__trace_link
     if self.genGraphics:
-       new_obj = graph_MT_pre__trace_link(549.0,403.5,self.obj81)
+       new_obj = graph_MT_pre__trace_link(549.0,403.5,self.obj74)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("MT_pre__trace_link", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
     else: new_obj = None
-    self.obj81.graphObject_ = new_obj
+    self.obj74.graphObject_ = new_obj
 
     # Add node to the root: rootNode
-    rootNode.addNode(self.obj81)
-    self.globalAndLocalPostcondition(self.obj81, rootNode)
-    self.obj81.postAction( rootNode.CREATE )
+    rootNode.addNode(self.obj74)
+    self.globalAndLocalPostcondition(self.obj74, rootNode)
+    self.obj74.postAction( rootNode.CREATE )
 
     self.obj75=MT_post__MetaModelElement_S(self)
     self.obj75.isGraphObjectVisual = True
@@ -380,32 +380,32 @@ def move_one_trace_MDL(self, rootNode, MT_pre__GM2AUTOSAR_MMRootNode=None, MT_po
     self.globalAndLocalPostcondition(self.obj77, rootNode)
     self.obj77.postAction( rootNode.CREATE )
 
-    self.obj82=MT_post__trace_link(self)
-    self.obj82.isGraphObjectVisual = True
+    self.obj78=MT_post__trace_link(self)
+    self.obj78.isGraphObjectVisual = True
 
-    if(hasattr(self.obj82, '_setHierarchicalLink')):
-      self.obj82._setHierarchicalLink(False)
+    if(hasattr(self.obj78, '_setHierarchicalLink')):
+      self.obj78._setHierarchicalLink(False)
 
     # MT_label__
-    self.obj82.MT_label__.setValue('10')
+    self.obj78.MT_label__.setValue('20')
 
     # MT_pivotOut__
-    self.obj82.MT_pivotOut__.setValue('')
-    self.obj82.MT_pivotOut__.setNone()
+    self.obj78.MT_pivotOut__.setValue('')
+    self.obj78.MT_pivotOut__.setNone()
 
-    self.obj82.graphClass_= graph_MT_post__trace_link
+    self.obj78.graphClass_= graph_MT_post__trace_link
     if self.genGraphics:
-       new_obj = graph_MT_post__trace_link(1035.5,493.0,self.obj82)
+       new_obj = graph_MT_post__trace_link(1035.5,493.0,self.obj78)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("MT_post__trace_link", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
     else: new_obj = None
-    self.obj82.graphObject_ = new_obj
+    self.obj78.graphObject_ = new_obj
 
     # Add node to the root: rootNode
-    rootNode.addNode(self.obj82)
-    self.globalAndLocalPostcondition(self.obj82, rootNode)
-    self.obj82.postAction( rootNode.CREATE )
+    rootNode.addNode(self.obj78)
+    self.globalAndLocalPostcondition(self.obj78, rootNode)
+    self.obj78.postAction( rootNode.CREATE )
 
     self.obj79=RHS(self)
     self.obj79.isGraphObjectVisual = True
@@ -465,10 +465,10 @@ def move_one_trace_MDL(self, rootNode, MT_pre__GM2AUTOSAR_MMRootNode=None, MT_po
  )
     # Connections for obj73 (graphObject_: Obj2) of type MT_pre__MetaModelElement_T
     self.drawConnections(
-(self.obj73,self.obj81,[608.0, 493.0, 549.0, 403.5],"true", 2) )
-    # Connections for obj81 (graphObject_: Obj10) of type MT_pre__trace_link
+(self.obj73,self.obj74,[608.0, 493.0, 549.0, 403.5],"true", 2) )
+    # Connections for obj74 (graphObject_: Obj3) of type MT_pre__trace_link
     self.drawConnections(
-(self.obj81,self.obj72,[549.0, 403.5, 490.0, 314.0],"true", 2) )
+(self.obj74,self.obj72,[549.0, 403.5, 490.0, 314.0],"true", 2) )
     # Connections for obj75 (graphObject_: Obj4) of type MT_post__MetaModelElement_S
     self.drawConnections(
  )
@@ -477,10 +477,10 @@ def move_one_trace_MDL(self, rootNode, MT_pre__GM2AUTOSAR_MMRootNode=None, MT_po
  )
     # Connections for obj77 (graphObject_: Obj6) of type MT_post__MetaModelElement_T
     self.drawConnections(
-(self.obj77,self.obj82,[1141.0, 492.0, 1035.5, 493.0],"true", 2) )
-    # Connections for obj82 (graphObject_: Obj11) of type MT_post__trace_link
+(self.obj77,self.obj78,[1141.0, 492.0, 1035.5, 493.0],"true", 2) )
+    # Connections for obj78 (graphObject_: Obj7) of type MT_post__trace_link
     self.drawConnections(
-(self.obj82,self.obj75,[1035.5, 493.0, 930.0, 494.0],"true", 2) )
+(self.obj78,self.obj75,[1035.5, 493.0, 930.0, 494.0],"true", 2) )
     # Connections for obj79 (graphObject_: Obj8) of type RHS
     self.drawConnections(
  )
