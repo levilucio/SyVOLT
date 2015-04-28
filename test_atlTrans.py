@@ -110,12 +110,19 @@ class Test():
 
 
         a1 = self.rules['HRootRule']
-        b1 = self.rules['HWomanRule']
-        c1 = self.rules['HManRule']
+
+        b1 = self.rules['HMotherRule']
+        c1 = self.rules['HFatherRule']
+
+        d1 = self.rules['HSonRule']
+        e1 = self.rules['HDaughterRule']
 
 
-        d1 = self.rules['HUnionWomanRule']
-        e1 = self.rules['HUnionManRule']
+        f1 = self.rules['HUnionMotherRule']
+        g1 = self.rules['HUnionManRule']
+
+        h1 = self.rules['HUnionDaughterRule']
+        i1 = self.rules['HUnionSonRule']
 
 
 
@@ -125,7 +132,7 @@ class Test():
                 
         #TODO: Change this number if you are modifying the transformation at all
         #if args.num_rules == -1:
-        transformation = [[a1], [b1], [c1], [d1], [e1]]
+        transformation = [[a1], [b1], [c1], [d1], [e1], [f1], [g1], [h1], [i1]]
         #else:
         #    transformation = self.select_rules([[a1,a2], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
 
@@ -139,7 +146,7 @@ class Test():
 
         subclasses_dict["MT_pre__MetaModelElement_S"] =  ["MT_pre__HouseholdRoot","MT_pre__Family", "MT_pre__Member"]
 
-        subclasses_dict["MT_pre__MetaModelElement_T"] = ["MT_pre__CommunityRoot","MT_pre__Person","MT_pre__Man","MT_pre__Woman"]
+        subclasses_dict["MT_pre__MetaModelElement_T"] = ["MT_pre__CommunityRoot","MT_pre__Person","MT_pre__Man", "MT_pre__Woman"]
 
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
 
@@ -170,7 +177,7 @@ class Test():
 #
         print("create property")
 
-        s.verbosity = 0
+        s.verbosity = 2
 
 
         HFourMembers_atomic = AtomicStateProperty(HFourMembers_IsolatedLHS(), HFourMembers_ConnectedLHS(), HFourMembers_CompleteLHS())
@@ -192,24 +199,54 @@ class Test():
                 AtomicStateProperty(HCommunityPerson2_IsolatedLHS(), HCommunityPerson2_ConnectedLHS(),
                     HCommunityPerson2_CompleteLHS())))
 
+
+        graph_to_dot("HDaughterMother_ConnectedLHS", HDaughterMother_ConnectedLHS())
+        graph_to_dot("HDaughterMother_CompleteLHS", HDaughterMother_CompleteLHS())
+
+        if args.draw_svg:
+            #graph_to_dot("HMotherFather_IsolatedLHS", HMotherFather_IsolatedLHS())
+            #graph_to_dot("HMotherFather_ConnectedLHS", HMotherFather_ConnectedLHS())
+            #graph_to_dot("HMotherFather_CompleteLHS", HMotherFather_CompleteLHS())
+
+            graph_to_dot("HMotherFather_CompleteLHS", HMotherFather_CompleteLHS())
+            graph_to_dot("HDaughterMother_CompleteLHS", HDaughterMother_CompleteLHS())
+
+            graph_to_dot("HCommunityPerson1_CompleteLHS", HCommunityPerson1_CompleteLHS())
+            graph_to_dot("HCommunityPerson2_CompleteLHS", HCommunityPerson2_CompleteLHS())
+
+
+            for state in s.get_path_conditions():
+                graph_to_dot(state.name, state)
+
+        #atomic_properties = [["HDaughterMother_atomic", HDaughterMother_atomic]]
         atomic_properties = [["HFourMembers_atomic", HFourMembers_atomic], ["HMotherFather_atomic", HMotherFather_atomic], ["HDaughterMother_atomic", HDaughterMother_atomic]]
 
         if_then_properties = [["HCommunityPerson", HCommunityPersonIfClause, HCommunityPersonThenClause]]
 
 
-        for name, atomic_prop in atomic_properties:
-            finalresult = StateProperty.verifyCompositeStateProperty(s, atomic_prop)
-            if finalresult:
-                print("Atomic property: " + name + " holds")
-            else:
-                print("Atomic property: " + name + " does not hold")
+        #s.verbosity = 2
 
-        for name, i, t in if_then_properties:
-            finalresult = StateProperty.verifyCompositeStateProperty(s, ImplicationStateProperty(i, t))
-            if finalresult:
-                print("If-then property: " + name + " holds")
-            else:
-                print("If-then property: " + name + " does not hold")
+
+        # finalresult = StateProperty.verifyCompositeStateProperty(s, HMotherFather_atomic)
+        # if finalresult:
+        #     print("Atomic property: " +"HMotherFather_atomic" + " holds")
+        # else:
+        #     print("Atomic property: " + "HMotherFather_atomic" + " does not hold")
+
+
+        # for name, atomic_prop in atomic_properties:
+        #     finalresult = StateProperty.verifyCompositeStateProperty(s, atomic_prop)
+        #     if finalresult:
+        #         print("Atomic property: " + name + " holds")
+        #     else:
+        #         print("Atomic property: " + name + " does not hold")
+        #
+        # for name, i, t in if_then_properties:
+        #     finalresult = StateProperty.verifyCompositeStateProperty(s, ImplicationStateProperty(i, t))
+        #     if finalresult:
+        #         print("If-then property: " + name + " holds")
+        #     else:
+        #         print("If-then property: " + name + " does not hold")
 
         ts1 = time.time()
 

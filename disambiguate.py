@@ -74,7 +74,7 @@ move_output_repeated_indirect = FRule(HMoveOneOutputRepeatedIndirectLHS(), HMove
 
 move_trace = FRule(HMoveOneTraceLHS(), HMoveOneTraceRHS())
 
-delete_uncollapsed_element = FRule(HDeleteUncollapsedElementLHS(), HDeleteUncollapsedElementRHS())
+delete_uncollapsed_element = ARule(HDeleteUncollapsedElementLHS(), HDeleteUncollapsedElementRHS())
 delete_attributes_from_uncollapsed_element = FRule(HDelOneAttributeFromUncollapsedElemLHS(), HDelOneAttributeFromUncollapsedElemRHS())
 
 move_one_attribute = FRule(HMoveOneAttributeLHS(), HMoveOneAttributeRHS())
@@ -94,8 +94,9 @@ class Disambiguator():
 
         self.already_produced = {}
 
+        self.debug = False
 
-        if True:
+        if self.debug:
             graph_to_dot("HFindTwoMatchElementsSameTypeDiffRulesLHS", HFindTwoMatchElementsSameTypeDiffRulesLHS())
 
             graph_to_dot("HMoveOneInputDirectLHS", HMoveOneInputDirectLHS())
@@ -135,7 +136,12 @@ class Disambiguator():
         
         p.graph = path_condition
 
-        print("Path condition name: " + str(path_condition.name))
+        #print("Path condition name: " + str(path_condition.name))
+
+        # if path_condition.name == "HEmptyPathCondition_HRootRule_HMotherRule_HFatherRule_HUnionMotherRule":
+        #     self.debug = True
+        #     self.verbosity = 2
+
         #graph_to_dot("packet", p.graph)
 
         #print("Packet: " + str(p))
@@ -151,10 +157,36 @@ class Disambiguator():
             print("Could not find two elements to collapse")
             return []
 
+        if self.debug:
+            for k in p.match_sets.keys():
+                match_set = p.match_sets[k]
+                match_set.print_matches(path_condition)
 
-        for k in p.match_sets.keys():
-            match_set = p.match_sets[k]
-            match_set.print_matches(path_condition)
+        if self.debug:
+            graph_to_dot("HFindTwoMatchElementsSameTypeDiffRulesLHS",
+                         HFindTwoMatchElementsSameTypeDiffRulesLHS())
+
+            graph_to_dot("HMoveOneInputDirectLHS", HMoveOneInputDirectLHS())
+            graph_to_dot("HMoveOneInputRepeatedDirectLHS", HMoveOneInputRepeatedDirectLHS())
+            graph_to_dot("HMoveOneOutputDirectLHS", HMoveOneOutputDirectLHS())
+            graph_to_dot("HMoveOneOutputRepeatedDirectLHS", HMoveOneOutputRepeatedDirectLHS())
+
+            graph_to_dot("HMoveOneInputDirectRHS", HMoveOneInputDirectRHS())
+            graph_to_dot("HMoveOneInputRepeatedDirectRHS", HMoveOneInputRepeatedDirectRHS())
+            graph_to_dot("HMoveOneOutputDirectRHS", HMoveOneOutputDirectRHS())
+            graph_to_dot("HMoveOneOutputRepeatedDirectRHS", HMoveOneOutputRepeatedDirectRHS())
+
+            graph_to_dot("HMoveOneTraceLHS", HMoveOneTraceLHS())
+            graph_to_dot("HMoveOneTraceRHS", HMoveOneTraceRHS())
+
+            graph_to_dot("HDeleteUncollapsedElementLHS", HDeleteUncollapsedElementLHS())
+            graph_to_dot("HDeleteUncollapsedElementRHS", HDeleteUncollapsedElementRHS())
+
+            graph_to_dot("HDelOneAttributeFromUncollapsedElemLHS", HDelOneAttributeFromUncollapsedElemLHS())
+            graph_to_dot("HDelOneAttributeFromUncollapsedElemRHS", HDelOneAttributeFromUncollapsedElemRHS())
+
+            graph_to_dot("HMoveOneAttributeLHS", HMoveOneAttributeLHS())
+            graph_to_dot("HMoveOneAttributeRHS", HMoveOneAttributeRHS())
 
 
         p = i.packet_in(p) #iterates on all matches
@@ -191,6 +223,9 @@ class Disambiguator():
                 #print("Checking move_input_direct_matchmodel: " + str(j))
                 j +=1
                 #print("Global pivots: " + str(p2.global_pivots))
+
+                if self.debug:
+                    graph_to_dot("move_input_direct_matchmodel", p2.graph)
                 p2 = move_input_direct.packet_in(p2) #direct link going in
                 if self.verbosity >= 2: print 'move_input_direct_matchmodel: ' + str(move_input_direct.is_success)
 
@@ -198,6 +233,9 @@ class Disambiguator():
                 p2 = move_output_repeated_direct.packet_in(p2) #direct link going out
                 if self.verbosity >= 2: print 'move_output_repeated_direct_matchmodel: ' + str(move_output_repeated_direct.is_success)
                 #if not move_output_repeated_direct.is_success:
+
+                if self.debug:
+                    graph_to_dot("move_output_direct_matchmodel", p2.graph)
 
                 p2 = move_output_direct.packet_in(p2)
                 if self.verbosity >= 2: print 'move_output_direct_matchmodel: ' + str(move_output_direct.is_success)
@@ -215,10 +253,19 @@ class Disambiguator():
                 #     p2 = move_output_indirect.packet_in(p2)
                 #     if self.verbosity >= 2: print 'move_output_indirect_matchmodel:' + str(move_output_indirect.is_success)
 
-                p2 = move_trace.packet_in(p2)
-                if self.verbosity >= 2: print 'move_backwardlink:' + str(move_trace.is_success)
+                if self.debug:
+                    graph_to_dot("before_move_trace", p2.graph)
 
-                graph_to_dot("before_move_one_attribute", p2.graph)
+                p2 = move_trace.packet_in(p2)
+                if self.verbosity >= 2:
+                    print 'move_trace:' + str(move_trace.is_success)
+                    if self.debug:
+                        #print(p2)
+                        graph_to_dot("before_move_trace_" + str(move_trace.is_success), p2.graph)
+
+                if self.debug:
+                    graph_to_dot("before_move_one_attribute", p2.graph)
+
                 p2 = move_one_attribute.packet_in(p2)
                 # #if not delete_attributes_from_uncollapsed_element.is_success:
                 #    raise Exception("Attributes were not deleted from uncollapsed element")
@@ -231,7 +278,9 @@ class Disambiguator():
                 # if self.verbosity >= 2: print 'delete_attributes_from_uncollapsed_element:' + str(delete_attributes_from_uncollapsed_element.is_success)
 
 
-                graph_to_dot("before_delete_uncollapsed_element", p2.graph)
+                if self.debug:
+                    graph_to_dot("before_delete_uncollapsed_element", p2.graph)
+
                 p2 = delete_uncollapsed_element.packet_in(p2)
                 if not delete_uncollapsed_element.is_success:
                     raise Exception("Uncollapsed element was not deleted")
@@ -251,7 +300,7 @@ class Disambiguator():
 
                     attribute = self.attributeEquationEvaluator(p2.graph)
 
-                    print("Graph is valid: " + str(attribute))
+                    #print("Graph is valid: " + str(attribute))
                     if attribute:
 
                         #record which solutions have already been produced
@@ -286,7 +335,7 @@ class Disambiguator():
 
         disambiguated_path_conditions = []
 
-        #graph_to_dot("path_condition", path_condition)
+        graph_to_dot(path_condition.name, path_condition)
 
         collapse_step_result = self._collapse_step(path_condition)
 
@@ -300,9 +349,9 @@ class Disambiguator():
             disambiguated_path_conditions.extend(collapse_step_result)
         #    print("Collapse Length: " + str(len(collapse_step_result)))
 
-            for disamb_path_cond in collapse_step_result:
-                disamb_path_cond = deepcopy(disamb_path_cond)
-
-                disambiguated_path_conditions.extend(self.disambiguate(disamb_path_cond, level))
+            # for disamb_path_cond in collapse_step_result:
+            #     disamb_path_cond = deepcopy(disamb_path_cond)
+            #
+            #     disambiguated_path_conditions.extend(self.disambiguate(disamb_path_cond, level))
 
         return disambiguated_path_conditions            
