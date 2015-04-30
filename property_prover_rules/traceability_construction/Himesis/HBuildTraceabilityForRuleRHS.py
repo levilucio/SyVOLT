@@ -18,7 +18,7 @@ class HBuildTraceabilityForRuleRHS(HimesisPostConditionPattern):
         self.add_edges([[1, 0], [2, 1]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__PoliceStationMM'
+S'MT_post__FamiliesToPersons_MM'
 p2
 aS'MoTifRule'
 p3
@@ -32,7 +32,7 @@ a.""")
 pass
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('b2b17d6c-2131-48b9-8637-1389d6cd78d2')
+        self["GUID__"] = 5835830838391118786
         
         # Set the node attributes
         self.vs[0]["MT_post__cardinality"] = """
@@ -79,10 +79,10 @@ return attr_value
 
 return attr_value
 """
-        self.vs[0]["GUID__"] = UUID('5d469ee7-4813-4eec-b62a-db06ff12964e')
+        self.vs[0]["GUID__"] = 3117993579924935174
         self.vs[1]["MT_label__"] = """3"""
         self.vs[1]["mm__"] = """MT_post__trace_link"""
-        self.vs[1]["GUID__"] = UUID('2211a2eb-edf9-46e7-ba67-6e178434a905')
+        self.vs[1]["GUID__"] = 4804771011576317093
         self.vs[2]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -127,7 +127,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[2]["GUID__"] = UUID('336d2ada-8206-4e2c-9435-f418066bfcc2')
+        self.vs[2]["GUID__"] = 7055627147167479158
 
         from HBuildTraceabilityForRuleLHS import HBuildTraceabilityForRuleLHS
         self.pre = HBuildTraceabilityForRuleLHS()

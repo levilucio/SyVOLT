@@ -45,7 +45,13 @@ def get_attribute(s, attr):
     elif str(attr) == "return True":
         return ""
     else:
-        return s + str(attr)
+        attribute = str(attr).splitlines()
+        for a in attribute:
+            a = a.strip()
+            if a.startswith("#"):
+                continue
+            s += a
+        return s
 
 def graph_to_dot(name, g, verbosity = 0):
     """
@@ -86,7 +92,8 @@ def graph_to_dot(name, g, verbosity = 0):
             fillcolor="#E15C34"
             
         elif node_type in ['match_contains', 'MT_pre__match_contains', 'MT_post__match_contains']:
-            fillcolor="#F798A1" 
+            fillcolor="#F798A1"
+            vattr += "\\n" + str(v['GUID__'])
             
         elif node_type in ['ApplyModel', 'MT_pre__ApplyModel', 'MT_post__ApplyModel']:
             fillcolor="#FED017"  
@@ -131,7 +138,7 @@ def graph_to_dot(name, g, verbosity = 0):
             
         elif node_type in ['directLink_S', 'directLink_T', 'MT_pre__directLink_T', 'MT_pre__directLink_S', 'MT_post__directLink_T', 'MT_post__directLink_S']:
 
-            vattr += '\\n'
+            #vattr += '\\n'
             if node_type in ['directLink_S', 'directLink_T']:
                 vattr += "A_Type = " + str(v['associationType'])
 
@@ -192,6 +199,8 @@ def graph_to_dot(name, g, verbosity = 0):
                 pass
                 
             fillcolor="lightblue"
+
+            vattr += "\\n" + str(v['GUID__'])
                 
         nodes[v.index] = pydot.Node(vattr, style="filled", fillcolor=fillcolor)
         graph.add_node(nodes[v.index])  

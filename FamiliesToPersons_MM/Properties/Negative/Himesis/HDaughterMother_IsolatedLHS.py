@@ -81,7 +81,7 @@ return True
 return True
 """
         self.vs[0]["GUID__"] = UUID('33a94580-f576-4f8b-8c92-f42c29d30c5e')
-        self.vs[1]["MT_subtypeMatching__"] = False
+        self.vs[1]["MT_subtypeMatching__"] = True
         self.vs[1]["MT_pre__classtype"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.

@@ -16,22 +16,44 @@ class ImplicationStateProperty(StateProperty):
         '''
         Constructor
         '''
-        print ("Initializing an ImplicationStateProp Object")
+        #print ("Initializing an ImplicationStateProp Object")
         self.propArg1=arg1
         self.propArg2=arg2
         self.hasDefaultVerifResult=False
         self.verifResult=False
+
+        self.counterexamples = []
+
+        self.debug = False
     
     def getAllOperands(self):
         return [self.propArg1, self.propArg2]
         
     def verify(self,state, StateSpace=None):
-        print ("Started running function verify of Class ImplicationStateProp")
+        #print ("Started running function verify of Class ImplicationStateProp")
         #intermediateNot=NotProp(self.propArg1)
-        result=(  not(self.propArg1.verify(state, StateSpace))  ) or (self.propArg2.verify(state,StateSpace))
-        if (result):
-            print ("ImplicationStateProp Holds !")
-        else:
-            print ("ImplicationStateProp Does Not Hold !")
+
+        propArg1b = self.propArg1.verify(state, StateSpace)
+
+        if self.debug:
+            print("\nPropArg1 Holds: " + str(propArg1b))
+
+        propArg2b = self.propArg2.verify(state, StateSpace)
+
+        if self.debug:
+            print("PropArg2 Holds: " + str(propArg2b))
+
+        result=(  not propArg1b  ) or propArg2b
+
+        if self.debug and not result:
+            print("Implication does not hold")
+            self.propArg2.print_counterexamples()
+            # for c in self.propArg2.counterexamples:
+            #     print(c.name)
+
+        # if (result):
+        #     print ("ImplicationStateProp Holds !")
+        # else:
+        #     print ("ImplicationStateProp Does Not Hold !")
         self.SETverifResult(result)
         return self.GETverifResult()

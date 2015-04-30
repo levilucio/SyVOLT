@@ -15,10 +15,10 @@ class HMoveOneAttributeLHS(HimesisPreConditionPatternLHS):
         super(HMoveOneAttributeLHS, self).__init__(name='HMoveOneAttributeLHS', num_nodes=4, edges=[])
         
         # Add the edges
-        self.add_edges([(1, 0), (2, 1)])
+        self.add_edges([[1, 0], [2, 1]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_pre__PoliceStationMM'
+S'MT_pre__FamiliesToPersons_MM'
 p2
 aS'MoTifRule'
 p3
@@ -35,7 +35,7 @@ a.""")
 return True
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('ff2b9d30-5865-469b-93c1-1c11a8f4e0c0')
+        self["GUID__"] = 1184324463111043902
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
@@ -56,14 +56,14 @@ return True
 return True
 """
         self.vs[0]["MT_dirty__"] = False
-        self.vs[0]["GUID__"] = UUID('149fb724-74ab-45f8-8516-b00c7f7ec6c7')
+        self.vs[0]["GUID__"] = 6311105064440946345
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_label__"] = """4"""
         self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
-        self.vs[1]["mm__"] = """MT_pre__hasAttr_S"""
+        self.vs[1]["mm__"] = """MT_pre__hasAttribute_S"""
         self.vs[1]["MT_dirty__"] = False
-        self.vs[1]["GUID__"] = UUID('9621bea3-ac8d-4837-9f87-a33d3a20107a')
+        self.vs[1]["GUID__"] = 8651025433394229600
         self.vs[2]["MT_pivotOut__"] = """element2"""
         self.vs[2]["MT_subtypeMatching__"] = True
         self.vs[2]["MT_pre__classtype"] = """
@@ -93,11 +93,11 @@ return True
         self.vs[2]["MT_pivotIn__"] = """element2"""
         self.vs[2]["MT_label__"] = """2"""
         self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__Station_S'
+S'MT_pre__HouseholdRoot'
 p2
-aS'MT_pre__Female_S'
+aS'MT_pre__Family'
 p3
-aS'MT_pre__Male_S'
+aS'MT_pre__Member'
 p4
 a.""")
         self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
@@ -114,7 +114,7 @@ a.""")
 return True
 """
         self.vs[2]["MT_dirty__"] = False
-        self.vs[2]["GUID__"] = UUID('0226f2d8-964a-4da3-b71c-6b455660a348')
+        self.vs[2]["GUID__"] = 4591479913936706006
         self.vs[3]["MT_pivotOut__"] = """element1"""
         self.vs[3]["MT_subtypeMatching__"] = True
         self.vs[3]["MT_pre__classtype"] = """
@@ -144,11 +144,11 @@ return True
         self.vs[3]["MT_pivotIn__"] = """element1"""
         self.vs[3]["MT_label__"] = """1"""
         self.vs[3]["MT_subtypes__"] = pickle.loads("""(lp1
-S'MT_pre__Station_S'
+S'MT_pre__HouseholdRoot'
 p2
-aS'MT_pre__Female_S'
+aS'MT_pre__Family'
 p3
-aS'MT_pre__Male_S'
+aS'MT_pre__Member'
 p4
 a.""")
         self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
@@ -165,7 +165,7 @@ a.""")
 return True
 """
         self.vs[3]["MT_dirty__"] = False
-        self.vs[3]["GUID__"] = UUID('bda59d71-4306-44ae-811b-806d7079ed06')
+        self.vs[3]["GUID__"] = 8624945458090016714
 
     def eval_name3(self, attr_value, this):
         

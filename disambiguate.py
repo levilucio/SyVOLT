@@ -63,9 +63,9 @@ find_elements_collapse_match = Matcher(HFindTwoMatchElementsSameTypeDiffRulesLHS
 # merge_cardinalities_matchmodel = ARule(HMergeCardinalitiesMatchDiffRulesLHS(), HMergeCardi1nalitiesMatchDiffRulesRHS())
 
 move_input_direct = FRule(HMoveOneInputDirectLHS(), HMoveOneInputDirectRHS())
-move_input_repeated_direct = FRule(HMoveOneInputRepeatedDirectLHS(), HMoveOneInputRepeatedDirectRHS())
+move_input_repeated_direct = ARule(HMoveOneInputRepeatedDirectLHS(), HMoveOneInputRepeatedDirectRHS())
 move_output_direct = FRule(HMoveOneOutputDirectLHS(), HMoveOneOutputDirectRHS())
-move_output_repeated_direct = FRule(HMoveOneOutputRepeatedDirectLHS(), HMoveOneOutputRepeatedDirectRHS())
+move_output_repeated_direct = ARule(HMoveOneOutputRepeatedDirectLHS(), HMoveOneOutputRepeatedDirectRHS())
 
 move_input_indirect = FRule(HMoveOneInputIndirectLHS(), HMoveOneInputIndirectRHS())
 move_input_repeated_indirect = FRule(HMoveOneInputRepeatedIndirectLHS(), HMoveOneInputRepeatedIndirectRHS())
@@ -95,6 +95,15 @@ class Disambiguator():
         self.already_produced = {}
 
         self.debug = False
+
+        #hack matcher to not disambiguate Member elements
+        match = find_elements_collapse_match
+
+        for n in range(len(match.condition.vs)):
+            node = match.condition.vs[n]
+            if node["mm__"] == "MT_pre__MetaModelElement_S":
+                node["MT_subtypes__"] = ["MT_pre__HouseholdRoot", "MT_pre__Family"]
+
 
         if self.debug:
             graph_to_dot("HFindTwoMatchElementsSameTypeDiffRulesLHS", HFindTwoMatchElementsSameTypeDiffRulesLHS())
@@ -138,9 +147,9 @@ class Disambiguator():
 
         #print("Path condition name: " + str(path_condition.name))
 
-        # if path_condition.name == "HEmptyPathCondition_HRootRule_HMotherRule_HFatherRule_HUnionMotherRule":
-        #     self.debug = True
-        #     self.verbosity = 2
+        # if "HEmptyPathCondition_HMotherRule_HFatherRule_HSonRule_HDaughterRule" in path_condition.name:
+        #      self.debug = True
+        #      self.verbosity = 2
 
         #graph_to_dot("packet", p.graph)
 
@@ -154,7 +163,7 @@ class Disambiguator():
 
         
         if not find_elements_collapse_match.is_success:   #identifies 2 things in different rules
-            print("Could not find two elements to collapse")
+            if self.verbosity >= 2: print("Could not find two elements to collapse")
             return []
 
         if self.debug:
@@ -286,28 +295,25 @@ class Disambiguator():
                     raise Exception("Uncollapsed element was not deleted")
                 if self.verbosity >= 2: print 'delete_uncollapsed_element_match:' + str(delete_uncollapsed_element.is_success)
 
-
-
-
                 # check if the equations on the attributes of the disambiguated solution can be satisfied
 
-                reduction = ig.Graph.__reduce__(p2.graph)
-                reduction_str = ""
-                for e in reduction:
-                    reduction_str += str(e).replace("'", "")
+                # reduction = ig.Graph.__reduce__(p2.graph)
+                # reduction_str = ""
+                # for e in reduction:
+                #     reduction_str += str(e).replace("'", "")
+                #
+                # if not reduction_str in self.already_produced:
 
-                if not reduction_str in self.already_produced:
+                attribute = self.attributeEquationEvaluator(p2.graph)
 
-                    attribute = self.attributeEquationEvaluator(p2.graph)
+                #print("Graph is valid: " + str(attribute))
+                if attribute:
 
-                    #print("Graph is valid: " + str(attribute))
-                    if attribute:
+                    #record which solutions have already been produced
+                    # self.already_produced[reduction_str] = ""
 
-                        #record which solutions have already been produced
-                        self.already_produced[reduction_str] = ""
-
-                        # store the current disambiguated solution
-                        disambiguated_solutions.append(p2.graph)
+                    # store the current disambiguated solution
+                    disambiguated_solutions.append(p2.graph)
 
                         #print("Disambig: " + str(disambiguated_solutions))
 
@@ -335,23 +341,25 @@ class Disambiguator():
 
         disambiguated_path_conditions = []
 
-        graph_to_dot(path_condition.name, path_condition)
+        if self.debug:
+            graph_to_dot(path_condition.name, path_condition)
 
         collapse_step_result = self._collapse_step(path_condition)
 
         #print("Collapse Result: " + str(collapse_step_result))
 
         for i in range(len(collapse_step_result)):
-            #graph_to_dot(path_condition.name + "_collapsed" + str(i), collapse_step_result[i])
-            collapse_step_result[i].name += str(i)
+            collapse_step_result[i].name += '_' + str(i)
+            #graph_to_dot(collapse_step_result[i].name, collapse_step_result[i])
+
 
         if collapse_step_result != []:
             disambiguated_path_conditions.extend(collapse_step_result)
         #    print("Collapse Length: " + str(len(collapse_step_result)))
 
-            # for disamb_path_cond in collapse_step_result:
-            #     disamb_path_cond = deepcopy(disamb_path_cond)
-            #
-            #     disambiguated_path_conditions.extend(self.disambiguate(disamb_path_cond, level))
+            for disamb_path_cond in collapse_step_result:
+                disamb_path_cond = deepcopy(disamb_path_cond)
 
-        return disambiguated_path_conditions            
+                disambiguated_path_conditions.extend(self.disambiguate(disamb_path_cond, level))
+
+        return disambiguated_path_conditions

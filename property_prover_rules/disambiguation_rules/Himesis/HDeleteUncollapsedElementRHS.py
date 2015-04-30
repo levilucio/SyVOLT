@@ -15,10 +15,10 @@ class HDeleteUncollapsedElementRHS(HimesisPostConditionPattern):
         super(HDeleteUncollapsedElementRHS, self).__init__(name='HDeleteUncollapsedElementRHS', num_nodes=5, edges=[])
         
         # Add the edges
-        self.add_edges([(3, 1), (1, 0), (4, 2), (2, 0)])
+        self.add_edges([[3, 1], [1, 0], [4, 2], [2, 0]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__GM2AUTOSAR_MM'
+S'MT_post__FamiliesToPersons_MM'
 p2
 aS'MoTifRule'
 p3
@@ -32,7 +32,7 @@ a.""")
 pass
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('a0cddbf7-e016-411e-b950-5bfbbd8ec77b')
+        self["GUID__"] = 4361678906628492287
         
         # Set the node attributes
         self.vs[0]["MT_pivotOut__"] = """element1"""
@@ -80,19 +80,19 @@ return attr_value
 
 return attr_value
 """
-        self.vs[0]["GUID__"] = UUID('77019aff-4dff-44a1-b613-d2849daf7e2a')
+        self.vs[0]["GUID__"] = 1304423769433739448
         self.vs[1]["MT_label__"] = """5"""
         self.vs[1]["mm__"] = """MT_post__match_contains"""
-        self.vs[1]["GUID__"] = UUID('6dafd5bc-96ec-4900-9b7c-ea05e43dd2ab')
+        self.vs[1]["GUID__"] = 5925682644681422515
         self.vs[2]["MT_label__"] = """10"""
         self.vs[2]["mm__"] = """MT_post__match_contains"""
-        self.vs[2]["GUID__"] = UUID('d05ea45e-43b4-473a-9d7d-8b7ee52af0c4')
+        self.vs[2]["GUID__"] = 6843251485065350586
         self.vs[3]["MT_label__"] = """3"""
         self.vs[3]["mm__"] = """MT_post__MatchModel"""
-        self.vs[3]["GUID__"] = UUID('d641a549-25ed-4748-a199-cce018347555')
+        self.vs[3]["GUID__"] = 8836170241171624579
         self.vs[4]["MT_label__"] = """4"""
         self.vs[4]["mm__"] = """MT_post__MatchModel"""
-        self.vs[4]["GUID__"] = UUID('90814eec-f662-4f5a-a822-8aae8a7651ee')
+        self.vs[4]["GUID__"] = 7649300617998864224
 
         from HDeleteUncollapsedElementLHS import HDeleteUncollapsedElementLHS
         self.pre = HDeleteUncollapsedElementLHS()
@@ -141,9 +141,9 @@ return attr_value
         # Create new edges
         #===============================================================================
         # MatchModel4 -> match_contains10
-        graph.add_edges((labels['4'], labels['10']))
+        graph.add_edges([(labels['4'], labels['10'])])
         # match_contains10 -> MetaModelElement_S1
-        graph.add_edges((labels['10'], labels['1']))
+        graph.add_edges([(labels['10'], labels['1'])])
         
         #===============================================================================
         # Set the output pivots

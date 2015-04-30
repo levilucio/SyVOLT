@@ -18,7 +18,7 @@ class HForwardCardinalitiesToApplyModelRHS(HimesisPostConditionPattern):
         self.add_edges([])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__PoliceStationMM'
+S'MT_post__FamiliesToPersons_MM'
 p2
 aS'MoTifRule'
 p3
@@ -26,7 +26,7 @@ a.""")
         self["MT_action__"] = """PostNode('2')['cardinality'] = '+'
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('a0608cf9-1f95-443c-97fd-1391b5430c4b')
+        self["GUID__"] = 1837265745987771719
         
         # Set the node attributes
         self.vs[0]["MT_post__cardinality"] = """
@@ -73,7 +73,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[0]["GUID__"] = UUID('4de1bc17-d681-45ae-af34-7dacea9a15ac')
+        self.vs[0]["GUID__"] = 7402631411483487338
         self.vs[1]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -118,7 +118,7 @@ return attr_value
 
 return attr_value
 """
-        self.vs[1]["GUID__"] = UUID('d560870c-89f1-4486-b693-2bcc5b661ef4')
+        self.vs[1]["GUID__"] = 870681261413970204
 
         from HForwardCardinalitiesToApplyModelLHS import HForwardCardinalitiesToApplyModelLHS
         self.pre = HForwardCardinalitiesToApplyModelLHS()

@@ -82,9 +82,7 @@ return True
 """
         self.vs[0]["GUID__"] = UUID('e1e29a86-4ba5-4f01-8b44-f7d6ba8ba510')
         self.vs[1]["MT_subtypeMatching__"] = False
-        self.vs[1]["MT_pre__associationType"] = pickle.loads("""V\u000a#===============================================================================\u000a# This code is executed when evaluating if a node shall be matched by this rule.\u000a# You can access the value of the current node's attribute value by: attr_value.\u000a# You can access any attribute x of this node by: this['x'].\u000a# If the constraint relies on attribute values from other nodes,\u000a# use the LHS/NAC constraint instead.\u000a# The given constraint must evaluate to a boolean expression.\u000a#===============================================================================\u000a\u000areturn attr_value == "daughter"\u000a
-p1
-.""")
+        self.vs[1]["MT_pre__associationType"] = """return attr_value == "daughter"""""
         self.vs[1]["MT_label__"] = """6"""
         self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
@@ -92,9 +90,7 @@ p1
         self.vs[1]["mm__"] = """MT_pre__directLink_S"""
         self.vs[1]["GUID__"] = UUID('e1c56e5b-33bd-447e-8a6a-a29fa5f06d1b')
         self.vs[2]["MT_subtypeMatching__"] = False
-        self.vs[2]["MT_pre__associationType"] = pickle.loads("""V\u000a#===============================================================================\u000a# This code is executed when evaluating if a node shall be matched by this rule.\u000a# You can access the value of the current node's attribute value by: attr_value.\u000a# You can access any attribute x of this node by: this['x'].\u000a# If the constraint relies on attribute values from other nodes,\u000a# use the LHS/NAC constraint instead.\u000a# The given constraint must evaluate to a boolean expression.\u000a#===============================================================================\u000a\u000areturn attr_value == "mother"\u000a
-p1
-.""")
+        self.vs[2]["MT_pre__associationType"] =  """return attr_value == "mother"""""
         self.vs[2]["MT_label__"] = """7"""
         self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")

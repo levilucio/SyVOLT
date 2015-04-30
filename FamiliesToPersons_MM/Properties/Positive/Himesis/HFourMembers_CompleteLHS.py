@@ -15,7 +15,7 @@ class HFourMembers_CompleteLHS(HimesisPreConditionPatternLHS):
         super(HFourMembers_CompleteLHS, self).__init__(name='HFourMembers_CompleteLHS', num_nodes=23, edges=[])
         
         # Add the edges
-        self.add_edges([(10, 2), (2, 21), (11, 3), (3, 22), (13, 4), (4, 19), (12, 5), (5, 20), (0, 6), (6, 15), (0, 7), (7, 14), (0, 8), (8, 16), (0, 9), (9, 17), (1, 18), (18, 0), (19, 14), (20, 17), (21, 16), (22, 14), (1, 10), (1, 11), (1, 12), (1, 13)])
+        self.add_edges([(10, 2), (2, 21), (11, 3), (3, 22), (13, 4), (4, 19), (12, 5), (5, 20), (0, 6), (6, 15), (0, 7), (7, 14), (0, 8), (8, 16), (0, 9), (9, 17), (1, 18), (18, 0), (19, 14), (20, 17), (21, 16), (22, 15), (1, 10), (1, 11), (1, 12), (1, 13)])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
 S'MT_pre__FamiliesToPersonsMM'

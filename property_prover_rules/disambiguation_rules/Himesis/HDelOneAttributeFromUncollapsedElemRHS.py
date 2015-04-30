@@ -18,7 +18,7 @@ class HDelOneAttributeFromUncollapsedElemRHS(HimesisPostConditionPattern):
         self.add_edges([])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__UMLRT2Kiltera_MM'
+S'MT_post__FamiliesToPersons_MM'
 p2
 aS'MoTifRule'
 p3
@@ -136,6 +136,6 @@ return attr_value
         #===============================================================================
         # Finally, delete nodes (this will automatically delete the adjacent edges)
         #===============================================================================
-        # MT_pre__hasAttr_S3, MT_pre__Attribute2
+        # MT_pre__hasAttribute_S3, MT_pre__Attribute2
         graph.delete_nodes([labels["3"], labels["2"]])
     

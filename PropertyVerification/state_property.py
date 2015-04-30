@@ -25,6 +25,9 @@ class StateProperty(Property):
     hasDefaultVerifResult=None
     verifResult=None
 
+    def __init__(self, params):
+        self.counterexamples = []
+
     def SETverifResult (self, boolres):
         self.hasDefaultVerifResult= True
         self.verifResult=boolres
@@ -119,7 +122,7 @@ class StateProperty(Property):
                         if foundoverlap==False:
                             print('Pivots of the state property are not consistent :(')
                             return False    
-        print('Pivots of the state property are consistent :)')
+        #print('Pivots of the state property are consistent :)')
         return True
     
     
@@ -143,55 +146,58 @@ class StateProperty(Property):
             e- If the compositeStatePattern does not hold for one state then return false. Else, return true
         """        
         AtomicStatePropsInStateProp=StateProperty.getAllAtomicStatePropsInStateProp(stateprop,[])
-        print ("Started running function verifyCompositeStateProperty of class StateProperty")
+        #print ("Started running function verifyCompositeStateProperty of class StateProperty")
         state_index = 0
         found_counterexample=False
         curVerifResult=False
+
+        pcs_failed = []
 
         StateSpace.pathConditionSet = StateSpace.get_all_path_conditions()
         StateSpace.pathConditionSet=StateSpace.pathConditionSet[1:]
         
         for state in StateSpace.pathConditionSet:
-            if state != ():
-                if (state_index)==2:
-                    print ("Start debugging here")
-                #Initially, merged_state has the first rule of the the current state being examined in the SymbolicStateSpace
-                #merged_state = deepcopy(state[0])
-                merged_state = deepcopy(state)
-                #rule_index = 1
-                numberOfIsolatedMatchesForAllAtomicStateProperties=[]
-                
-                # Go through all the rules in the layer and merge them in one graph
-                # Merged state will finally have the merged (disjoint union) state corresponding to the state we are checking in SymbolicStateSpace
-                #while rule_index < len(state):
-                #    merged_state = disjoint_model_union(merged_state, state[rule_index])
-                #    rule_index += 1
-            
-                cacheIsolatedPatternMatches=[]
-                for atomicStatePropIndex in range(len(AtomicStatePropsInStateProp)):
-                    isolated = Matcher(AtomicStatePropsInStateProp[atomicStatePropIndex].Isolated)
-                    s = Packet()
-                    s.graph = deepcopy(merged_state)
-                
-                    if StateSpace.draw_svg:
-                        graph_to_dot('out' + str(state_index), s.graph)                
-                
-                    isolated.packet_in(s)
-                    if isolated.is_success:
-                        if StateSpace.verbosity >= 1:
-                            print 'State ' + str(state_index)
-                            print state.name
-                            print '    Found Property Elements'
-                        
-                        # find first how many matches of the isolated elements of the property (if any) were found
-                        numberOfIsolatedMatches = len(s.match_sets[s.current].matches)
-                        numberOfIsolatedMatchesForAllAtomicStateProperties.append(numberOfIsolatedMatches)            
-                        # check whether there exists in the already verified state cache a state which is smaller (can be fully covered)
-                        # by the current state and has the same amount of isolated matches as the current state. If so there's no need to
-                        # verify the current state as the property holds in it
-                
-                        smallerStateWithSameRulesExists = False
-                        rulecounter=0
+            if state is ():
+                continue
+
+            #if (state_index)==2:
+            #    print ("Start debugging here")
+            #Initially, merged_state has the first rule of the the current state being examined in the SymbolicStateSpace
+            #merged_state = deepcopy(state[0])
+            merged_state = deepcopy(state)
+            #rule_index = 1
+            numberOfIsolatedMatchesForAllAtomicStateProperties=[]
+
+            # Go through all the rules in the layer and merge them in one graph
+            # Merged state will finally have the merged (disjoint union) state corresponding to the state we are checking in SymbolicStateSpace
+            #while rule_index < len(state):
+            #    merged_state = disjoint_model_union(merged_state, state[rule_index])
+            #    rule_index += 1
+
+            cacheIsolatedPatternMatches=[]
+            for atomicStatePropIndex in range(len(AtomicStatePropsInStateProp)):
+                isolated = Matcher(AtomicStatePropsInStateProp[atomicStatePropIndex].Isolated)
+                s = Packet()
+                s.graph = deepcopy(merged_state)
+
+                #if StateSpace.draw_svg:
+                #    graph_to_dot('out' + str(state_index), s.graph)
+
+                isolated.packet_in(s)
+                if isolated.is_success:
+                    if StateSpace.verbosity >= 1:
+                        print('State ' + str(state_index) + ": " + state.name)
+                        print '    Isolated pattern matched'
+
+                    # find first how many matches of the isolated elements of the property (if any) were found
+                    numberOfIsolatedMatches = len(s.match_sets[s.current].matches)
+                    numberOfIsolatedMatchesForAllAtomicStateProperties.append(numberOfIsolatedMatches)
+                    # check whether there exists in the already verified state cache a state which is smaller (can be fully covered)
+                    # by the current state and has the same amount of isolated matches as the current state. If so there's no need to
+                    # verify the current state as the property holds in it
+
+                    smallerStateWithSameRulesExists = False
+                    rulecounter=0
 #                         #NEW OPTIMIZATION HEURISTIC
 #                         # parse name of PC into an ordered set/list - parsedRulesInPC
 #                         # if parsedRulesInPC size<2, collapse flag =false in
@@ -212,135 +218,163 @@ class StateProperty(Property):
 #                                 break
 #                             ####
 #                         #NEW OPTIMIZATION HEURISTIC
-                           
-                           
-                        ###UNdoooo
-                        ##if u comment the comming block between the comments tagged as UNdoo, the whole code will work 
-                        #for alreadyVerifiedState in AtomicStatePropsInStateProp[atomicStatePropIndex].verifiedStateCache:
-                        #    # if all the rules in the path cond
-                        #    if len(set(state) - set(alreadyVerifiedState[0])) == len(set(state)) - len(set(alreadyVerifiedState[0]))\
-                        #    and numberOfIsolatedMatches == alreadyVerifiedState[1]:
-                        #        smallerStateWithSameRulesExists = True
-                        #        break
-                        ###UNDooooo                       
-                            # If 2 states, each has 1 different rule, then the first part of the if condition will evaluate to false,
-                            # if 2 states, each with 1 same rules, then the first part of the above if condition will evaluate to true
-                            # if one state has rules x,y,z and the other state has rule z, then the first part of the above if condition will evaluate to true
-                            # if one state has rules x,y,z and the other state has w, then the first part of the above if condition will evaluate to false
-                            # i.e. the first part of the above if condition will eval to true iff one state is smaller(fewer number of composite rules) and completely covered (i.e. all rules of the 1st state are in the rules of the 2nd state) by the other state
-                            #      or if the two states are the same size(i.e. have the same number of rules), with the same exact composite rules.
-                    
-                        if not smallerStateWithSameRulesExists:
-                 
-                            # add to the list of already verified states the new state and how many matches of the 
-                            # isolated elements of the property were found 
-                            # collapse must be eventually done in this case
-                            
-                            #FOLLOWING: Where we used to add entries to an AtomiStateProperty's verified State Cache
-                            #AtomicStatePropsInStateProp[atomicStatePropIndex].verifiedStateCache.append((state,numberOfIsolatedMatches))
-                            cacheIsolatedPatternMatches.append(True)
-                        else:
-                            if StateSpace.verbosity >= 1: print '        Will not check state, property holds...'
-                            cacheIsolatedPatternMatches.append(False)
-                            AtomicStatePropsInStateProp[atomicStatePropIndex].SETverifResult(True)
-                    else: # did not succeed in matching isolated
-                        if StateSpace.verbosity >= 1: 
-                            print 'State ' + str(state_index) + ' '
-                            print state.name
-                            print '    Property Elements not found'            
-                        numberOfIsolatedMatchesForAllAtomicStateProperties.append(-1)
+
+
+                    # for alreadyVerifiedState in AtomicStatePropsInStateProp[atomicStatePropIndex].verifiedStateCache:
+                    #    # if all the rules in the path cond
+                    #     #if len(set(state) - set(alreadyVerifiedState[0])) == len(set(state)) - len(set(alreadyVerifiedState[0])) and \
+                    #     if numberOfIsolatedMatches == alreadyVerifiedState[1]:
+                    #        #print("smallerStateWithSameRulesExists")
+                    #        smallerStateWithSameRulesExists = True
+                    #        break
+
+                        # If 2 states, each has 1 different rule, then the first part of the if condition will evaluate to false,
+                        # if 2 states, each with 1 same rules, then the first part of the above if condition will evaluate to true
+                        # if one state has rules x,y,z and the other state has rule z, then the first part of the above if condition will evaluate to true
+                        # if one state has rules x,y,z and the other state has w, then the first part of the above if condition will evaluate to false
+                        # i.e. the first part of the above if condition will eval to true iff one state is smaller(fewer number of composite rules) and completely covered (i.e. all rules of the 1st state are in the rules of the 2nd state) by the other state
+                        #      or if the two states are the same size(i.e. have the same number of rules), with the same exact composite rules.
+
+                    if not smallerStateWithSameRulesExists:
+
+                        # add to the list of already verified states the new state and how many matches of the
+                        # isolated elements of the property were found
+                        # collapse must be eventually done in this case
+
+                        #FOLLOWING: Where we used to add entries to an AtomiStateProperty's verified State Cache
+                        #AtomicStatePropsInStateProp[atomicStatePropIndex].verifiedStateCache.append((state,numberOfIsolatedMatches))
+                        cacheIsolatedPatternMatches.append(True)
+                    else:
+                        if StateSpace.verbosity >= 1: print '        Will not check state, property holds...'
                         cacheIsolatedPatternMatches.append(False)
                         AtomicStatePropsInStateProp[atomicStatePropIndex].SETverifResult(True)
-             
-                collapseFlag=False          
-                for foundIsolated in cacheIsolatedPatternMatches:
-                    collapseFlag=collapseFlag or foundIsolated
-                # ****
-                if collapseFlag==True:
-                    # build set of collapsed states to analyse
-                    #G- states_to_analyze will contain merged state, and all recursively, collapsed versions of the (composite rules of the) state
-                    states_to_analyse = [merged_state]               
-                    ###new code -start
-                    if len(StateProperty.parseStateName2RuleNames(state.name))>1:
-                        if StateSpace.verbosity >= 1: t0 = time.time()   
-                        #disamb=Disambiguator(StateSpace.verbosity)
-                        #states_to_analyse.extend(disamb.disambiguate(state))
-                        ###new code -end
-                        if StateSpace.verbosity >= 1: t1 = time.time()
-                        if StateSpace.verbosity >= 1: print 'Time to collapse state: ' + str(t1-t0)
-                    else: 
-                        if StateSpace.verbosity >= 1: print 'State contains only one rule; no collapse needed... '
-                    if StateSpace.verbosity >= 1: print '    Number of states to analyse: ' + str(len(states_to_analyse))
-                       
-                    for collapsed_state in range(len(states_to_analyse)):
-                        if StateSpace.verbosity >= 1:
-                            s = Packet()
-                            s.graph = states_to_analyse[collapsed_state]
+                else: # did not succeed in matching isolated
+                    # if StateSpace.verbosity >= 1:
+                    #     print('State ' + str(state_index) + ': ' + state.name)
+                    #     print('    Isolated pattern not matched')
+                    numberOfIsolatedMatchesForAllAtomicStateProperties.append(-1)
+                    cacheIsolatedPatternMatches.append(False)
+                    AtomicStatePropsInStateProp[atomicStatePropIndex].SETverifResult(True)
 
-                            if StateSpace.draw_svg:
-                                graph_to_dot('out' + str(state_index) + '_' + str(collapsed_state), s.graph)
-                        if StateSpace.verbosity >= 1: print '    Collapsed state ' + str(collapsed_state)
-                        
-                        curVerifResult=stateprop.verify(states_to_analyse[collapsed_state],StateSpace)
-                        if ((curVerifResult==True)) and (StateProperty.twoOrMoreAtomicPropsAreTrue(AtomicStatePropsInStateProp)):
-                            curVerifResult=curVerifResult and (StateProperty.CheckConsistencyFunc(AtomicStatePropsInStateProp))
-                        
-                        if curVerifResult==False: break
-                        #"Remove from an AtomicStateProperty's verifiedStateCache the last tuple of (state,#ofmatches), if the complete pattern had no match"
-                        for curatomicprop in AtomicStatePropsInStateProp:
-                            curatomicprop.reset_matchesOfTotal()
-                            if ((curatomicprop.propFalseForAtleastOneCollapsedState==False) and (curatomicprop.GEThasDefaultVerifResult()==True) and (curatomicprop.GETverifResult()==False)):
-                                curatomicprop.propFalseForAtleastOneCollapsedState= True
-                        
-
-                    
-                    #Add to AtomicStateProperty's verifiedStateCache the tuple (state,#ofmatches), if the complete pattern had a match
-                    #If the curVerifResult== false, don't make this addition to the verifiedStateCaches of the atomicStateProperties - you won't be using them any more.
-                    if curVerifResult==True:
-                        for atomicPropIndex in range(len(AtomicStatePropsInStateProp)):
-                            if ((AtomicStatePropsInStateProp[atomicPropIndex].propFalseForAtleastOneCollapsedState==False) and (AtomicStatePropsInStateProp[atomicPropIndex].NumberOfTimesPropWasChecked==len(states_to_analyse))and (AtomicStatePropsInStateProp[atomicPropIndex].NumberOfTimesPropWasChecked==AtomicStatePropsInStateProp[atomicPropIndex].NumberOfTimesFoundMatch)):
-                                AtomicStatePropsInStateProp[atomicPropIndex].verifiedStateCache.append((state,numberOfIsolatedMatchesForAllAtomicStateProperties[atomicPropIndex]))
-                                          
+            collapseFlag=False
+            for foundIsolated in cacheIsolatedPatternMatches:
+                collapseFlag=collapseFlag or foundIsolated
+            # ****
+            if collapseFlag:
+                # build set of collapsed states to analyse
+                #G- states_to_analyze will contain merged state, and all recursively, collapsed versions of the (composite rules of the) state
+                states_to_analyse = [merged_state]
+                ###new code -start
+                if len(StateProperty.parseStateName2RuleNames(state.name))>1:
+                    if StateSpace.verbosity >= 1: t0 = time.time()
+                    disamb=Disambiguator(0)#(StateSpace.verbosity)
+                    disambiguated_states = disamb.disambiguate(state)
+                    #print("Disambiguated size: " + str(len(disambiguated_states)))
+                    states_to_analyse.extend(disambiguated_states)
+                    ###new code -end
+                    if StateSpace.verbosity >= 1: t1 = time.time()
+                    if StateSpace.verbosity >= 1: print 'Time to collapse state: ' + str(t1-t0)
                 else:
-                    curVerifResult=stateprop.verify(merged_state, StateSpace)
-                    #should I update verified state cache here too ? I think yes
+                    if StateSpace.verbosity >= 1: print 'State contains only one rule; no collapse needed... '
+                if StateSpace.verbosity >= 1: print '    Number of states to analyse: ' + str(len(states_to_analyse))
+
+
+
+
+                for collapsed_state in range(len(states_to_analyse)):
+                    #print("Collapsed State: " + states_to_analyse[collapsed_state].name)
+
+                    #if StateSpace.verbosity >= 1:
+                    s = Packet()
+                    s.graph = states_to_analyse[collapsed_state]
+
+                        #if StateSpace.draw_svg:
+                    #graph_to_dot('out' + str(state_index) + '_' + str(states_to_analyse[collapsed_state].name), s.graph)
+                    #if StateSpace.verbosity >= 1: print '    Collapsed state ' + str(collapsed_state)
+
+                    #s.graph.name += str(collapsed_state)
+
+                    #print("Start verify")
+                    curVerifResult=stateprop.verify(s.graph,StateSpace)
+                    #print("End verify")
+
                     if ((curVerifResult==True)) and (StateProperty.twoOrMoreAtomicPropsAreTrue(AtomicStatePropsInStateProp)):
                         curVerifResult=curVerifResult and (StateProperty.CheckConsistencyFunc(AtomicStatePropsInStateProp))
-                    #for curatomicprop in AtomicStatePropsInStateProp:
-                    #        curatomicprop.reset_matchesOfTotal()
-                #if the composite state property does not hold for atleast one state, break out of the loop
-                found_counterexample=not(curVerifResult) 
-                if found_counterexample == True:
-                    break
-                                
-                #reset 'propFalseForAtleastOneCollapsedState' & 'verifResult' of all 
-                #    atomicStateProperties in the compositeStateProperty to false, so that they can be 
-                #    refilled when checking the compositeStateProperty for the next state
-                
-                for curatomicprop in AtomicStatePropsInStateProp:
-                    curatomicprop.resetpropFalseForAtleastOneCollapsedState()
-                    curatomicprop.resetVerifResultToFalse()
-                    curatomicprop.resetNumberOfTimesPropWasChecked()
-                    curatomicprop.resetNumberOfTimesFoundMatch()
-                    curatomicprop.reset_matchesOfTotal()
-                    #In AtomicStateProperty, we added "NumberOfTimesPropWasChecked" to be used when adding entries to the AtomicStateProperty's verifiedStateCache
-                    #i.e., sometimes if you are verifying an AndStateProperty, if the first atomicStateProperty evaluates to False, then the second AtomicStateProperty is not evaluated at all..
-                    #In that case, you cannot add an entry to the verifiedStateCache of the second AtomicStateProperty since that AtomicStateProperty was not even evaluated for all the collapsed state of that merged state...
-                    #So we added an attribute "NumberOfTimesPropWasChecked" which increments by 1 each time the atomicStateProperty is evaluated. Before adding an entry to its verifiedStateCache we check that propFalseForAtleastOneCollapsedState==False and that the number of collapsed states == NumberOfTimesPropWasChecked (i.e., AtomicStateProperty was checked for all collapsed states of the current merged state)
-              
-            
-            state_index+=1
-        if StateSpace.verbosity >= 1: 
-            print '\n'
-        if found_counterexample == True:
-            if StateSpace.verbosity >= 1: print 'Composite StateProperty does not Hold for all path conditions!!!'
 
-        else:
-            if StateSpace.verbosity >= 1: print 'Composite StateProperty Holds for all path conditions!!!'
-        
+                    if not curVerifResult:
+                        pass
+
+
+
+                        #break
+
+
+                    #"Remove from an AtomicStateProperty's verifiedStateCache the last tuple of (state,#ofmatches), if the complete pattern had no match"
+                    for curatomicprop in AtomicStatePropsInStateProp:
+                        curatomicprop.reset_matchesOfTotal()
+                        if ((curatomicprop.propFalseForAtleastOneCollapsedState==False) and (curatomicprop.GEThasDefaultVerifResult()==True) and (curatomicprop.GETverifResult()==False)):
+                            curatomicprop.propFalseForAtleastOneCollapsedState= True
+
+
+
+                #Add to AtomicStateProperty's verifiedStateCache the tuple (state,#ofmatches), if the complete pattern had a match
+                #If the curVerifResult== false, don't make this addition to the verifiedStateCaches of the atomicStateProperties - you won't be using them any more.
+                if curVerifResult:
+                    for atomicPropIndex in range(len(AtomicStatePropsInStateProp)):
+                        if ((AtomicStatePropsInStateProp[atomicPropIndex].propFalseForAtleastOneCollapsedState==False) and (AtomicStatePropsInStateProp[atomicPropIndex].NumberOfTimesPropWasChecked==len(states_to_analyse))and (AtomicStatePropsInStateProp[atomicPropIndex].NumberOfTimesPropWasChecked==AtomicStatePropsInStateProp[atomicPropIndex].NumberOfTimesFoundMatch)):
+                            AtomicStatePropsInStateProp[atomicPropIndex].verifiedStateCache.append((state,numberOfIsolatedMatchesForAllAtomicStateProperties[atomicPropIndex]))
+
+            else:
+                #print("Other verify")
+                curVerifResult=stateprop.verify(merged_state, StateSpace)
+                #should I update verified state cache here too ? I think yes
+                if curVerifResult and (StateProperty.twoOrMoreAtomicPropsAreTrue(AtomicStatePropsInStateProp)):
+                    curVerifResult=curVerifResult and (StateProperty.CheckConsistencyFunc(AtomicStatePropsInStateProp))
+                #for curatomicprop in AtomicStatePropsInStateProp:
+                #        curatomicprop.reset_matchesOfTotal()
+            #if the composite state property does not hold for atleast one state, break out of the loop
+            found_counterexample = not curVerifResult
+            if found_counterexample:
+                pcs_failed.append(state.name)
+
+                try:
+                    print("Property: " + stateprop.Connected.name + " failed on path condition: " + state.name)
+                    #graph_to_dot(stateprop.Connected.name + "_failure_" + state.name, state)
+                    #graph_to_dot(stateprop.Connected.name + "_failure", stateprop.Connected)
+                    #graph_to_dot(stateprop.CompleteQuantified.name + "_failure", stateprop.CompleteQuantified)
+
+                except AttributeError:
+                    print("Property: " + stateprop.propArg1.CompleteQuantified.name + " failed on path condition: " + state.name)
+            #    break
+
+            #reset 'propFalseForAtleastOneCollapsedState' & 'verifResult' of all
+            #    atomicStateProperties in the compositeStateProperty to false, so that they can be
+            #    refilled when checking the compositeStateProperty for the next state
+
+            for curatomicprop in AtomicStatePropsInStateProp:
+                curatomicprop.resetpropFalseForAtleastOneCollapsedState()
+                curatomicprop.resetVerifResultToFalse()
+                curatomicprop.resetNumberOfTimesPropWasChecked()
+                curatomicprop.resetNumberOfTimesFoundMatch()
+                curatomicprop.reset_matchesOfTotal()
+                #In AtomicStateProperty, we added "NumberOfTimesPropWasChecked" to be used when adding entries to the AtomicStateProperty's verifiedStateCache
+                #i.e., sometimes if you are verifying an AndStateProperty, if the first atomicStateProperty evaluates to False, then the second AtomicStateProperty is not evaluated at all..
+                #In that case, you cannot add an entry to the verifiedStateCache of the second AtomicStateProperty since that AtomicStateProperty was not even evaluated for all the collapsed state of that merged state...
+                #So we added an attribute "NumberOfTimesPropWasChecked" which increments by 1 each time the atomicStateProperty is evaluated. Before adding an entry to its verifiedStateCache we check that propFalseForAtleastOneCollapsedState==False and that the number of collapsed states == NumberOfTimesPropWasChecked (i.e., AtomicStateProperty was checked for all collapsed states of the current merged state)
+
+
+            state_index+=1
+        # if StateSpace.verbosity >= 1:
+        #     print '\n'
+        # if found_counterexample == True:
+        #     if StateSpace.verbosity >= 1: print 'Composite StateProperty does not Hold for all path conditions!!!'
+        #
+        # else:
+        #     if StateSpace.verbosity >= 1: print 'Composite StateProperty Holds for all path conditions!!!'
+        #
         # cleanup the already verified state cache
         #StateSpace.verifiedStateCache = []
         for curatomicprop in AtomicStatePropsInStateProp:
             curatomicprop.verifiedStateCache=[]
              
-        return not(found_counterexample)          
+        return pcs_failed
