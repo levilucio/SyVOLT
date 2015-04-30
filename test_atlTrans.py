@@ -209,12 +209,9 @@ class Test():
         HCommunityPersonIfClause = AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(),
             HCommunityPerson1_CompleteLHS())
 
-        HCommunityPersonThenClause = AndStateProperty(
-            AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(),
-                HCommunityPerson1_CompleteLHS()),
-            NotStateProperty(
+        HCommunityPersonThenClause = NotStateProperty(
                 AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(),
-                    HCommunityPerson2_CompleteLHS())))
+                    HCommunityPerson2_CompleteLHS()))
 
 
 

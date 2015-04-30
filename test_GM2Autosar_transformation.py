@@ -161,7 +161,7 @@ class Test():
         pyramify = PyRamify(draw_svg=args.draw_svg)
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
-            pyramify.ramify_directory("GM2AUTOSAR_MM/transformation/Himesis/")
+            pyramify.ramify_directory("GM2AUTOSAR_MM/transformation/HimesisWOFaulty/")
 
 #         self.rules = {                'HMapECU2FiveElements': HMapECU2FiveElementsFAULTY(),
 #                                       'HMapDistributable': HMapDistributable(),
@@ -325,18 +325,45 @@ class Test():
         P2atomic=AtomicStateProperty(HP2IsolatedLHS(),HP2ConnectedLHS(), HP2CompleteLHS())
         S1IfClause=AtomicStateProperty(HS1IfClauseIsolatedConnectedLHS(), HS1IfClauseIsolatedConnectedLHS(), HS1IfClauseCompleteLHS())
         S1ThenClause=AtomicStateProperty(HS1ThenClauseIsolatedConnectedLHS(), HS1ThenClauseIsolatedConnectedLHS(), HS1ThenClauseCompleteLHS())
+
+
         M1IfClause=AtomicStateProperty(HM1IfClauseIsolatedConnectedLHS(),HM1IfClauseIsolatedConnectedLHS(),HM1IfClauseCompleteLHS())
-        M1ThenClause=AtomicStateProperty(HM1ThenClausePart1IsolatedConnectedLHS(),HM1ThenClausePart1IsolatedConnectedLHS(),HM1ThenClausePart1CompleteLHS())
+        M1ThenClause=NotStateProperty(AtomicStateProperty(HM1ThenClausePart1IsolatedConnectedLHS(),HM1ThenClausePart1IsolatedConnectedLHS(),HM1ThenClausePart1CompleteLHS()))
         M3IfClause=AtomicStateProperty(HM3IfClauseIsolatedConnectedLHS(),HM3IfClauseIsolatedConnectedLHS(), HM3IfClauseCompleteLHS())
-        M3ThenClause=AtomicStateProperty(HM3ThenClausePart1IsolatedConnectedLHS(), HM3ThenClausePart1IsolatedConnectedLHS(),HM3ThenClausePart1CompleteLHS())
-        M2IfClause=AtomicStateProperty(HM2IfClauseIsolatedConnectedLHS(),HM2IfClauseIsolatedConnectedLHS(),HM2IfClauseCompleteLHS())
-        M2ThenClause=AndStateProperty(AtomicStateProperty(HM2ThenClausePart1IsolatedConnectedLHS(),HM2ThenClausePart1IsolatedConnectedLHS(), HM2ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM2ThenClausePart2IsolatedConnectedLHS(),HM2ThenClausePart2IsolatedConnectedLHS(),HM2ThenClausePart2CompleteLHS())))
-        M4IfClause=AtomicStateProperty(HM4IfClauseIsolatedConnectedLHS(),HM4IfClauseIsolatedConnectedLHS(),HM4IfClauseCompleteLHS())
-        M4ThenClause=AndStateProperty(AtomicStateProperty(HM4ThenClausePart1IsolatedConnectedLHS(),HM4ThenClausePart1IsolatedConnectedLHS(), HM4ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM4ThenClausePart2IsolatedConnectedLHS(),HM4ThenClausePart2IsolatedConnectedLHS(),HM4ThenClausePart2CompleteLHS())))
-        M5IfClause=AtomicStateProperty(HM5IfClauseIsolatedConnectedLHS(),HM5IfClauseIsolatedConnectedLHS(),HM5IfClauseCompleteLHS())
-        M5ThenClause=AndStateProperty(AtomicStateProperty(HM5ThenClausePart1IsolatedConnectedLHS(),HM5ThenClausePart1IsolatedConnectedLHS(), HM5ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM5ThenClausePart2IsolatedConnectedLHS(),HM5ThenClausePart2IsolatedConnectedLHS(),HM5ThenClausePart2CompleteLHS())))
-        M6IfClause=AtomicStateProperty(HM6IfClauseIsolatedConnectedLHS(),HM6IfClauseIsolatedConnectedLHS(),HM6IfClauseCompleteLHS())
-        M6ThenClause=AndStateProperty(AtomicStateProperty(HM6ThenClausePart1IsolatedConnectedLHS(),HM6ThenClausePart1IsolatedConnectedLHS(), HM6ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM6ThenClausePart2IsolatedConnectedLHS(),HM6ThenClausePart2IsolatedConnectedLHS(),HM6ThenClausePart2CompleteLHS())))
+        M3ThenClause=NotStateProperty(AtomicStateProperty(HM3ThenClausePart1IsolatedConnectedLHS(), HM3ThenClausePart1IsolatedConnectedLHS(),HM3ThenClausePart1CompleteLHS()))
+
+
+        M2IfClause = AtomicStateProperty(HM2IfClauseIsolatedConnectedLHS(), HM2IfClauseIsolatedConnectedLHS(),
+            HM2IfClauseCompleteLHS())
+        M2ThenClause = NotStateProperty(
+            AtomicStateProperty(HM2ThenClausePart2IsolatedConnectedLHS(), HM2ThenClausePart2IsolatedConnectedLHS(),
+                HM2ThenClausePart2CompleteLHS()))
+        M4IfClause = AtomicStateProperty(HM4IfClauseIsolatedConnectedLHS(), HM4IfClauseIsolatedConnectedLHS(),
+            HM4IfClauseCompleteLHS())
+        M4ThenClause = NotStateProperty(
+            AtomicStateProperty(HM4ThenClausePart2IsolatedConnectedLHS(), HM4ThenClausePart2IsolatedConnectedLHS(),
+                HM4ThenClausePart2CompleteLHS()))
+
+        M5IfClause = AtomicStateProperty(HM5IfClauseIsolatedConnectedLHS(), HM5IfClauseIsolatedConnectedLHS(),
+            HM5IfClauseCompleteLHS())
+        M5ThenClause = NotStateProperty(
+            AtomicStateProperty(HM5ThenClausePart2IsolatedConnectedLHS(), HM5ThenClausePart2IsolatedConnectedLHS(),
+                HM5ThenClausePart2CompleteLHS()))
+        M6IfClause = AtomicStateProperty(HM6IfClauseIsolatedConnectedLHS(), HM6IfClauseIsolatedConnectedLHS(),
+            HM6IfClauseCompleteLHS())
+        M6ThenClause = NotStateProperty(
+            AtomicStateProperty(HM6ThenClausePart2IsolatedConnectedLHS(), HM6ThenClausePart2IsolatedConnectedLHS(),
+                HM6ThenClausePart2CompleteLHS()))
+
+
+# M2IfClause=AtomicStateProperty(HM2IfClauseIsolatedConnectedLHS(),HM2IfClauseIsolatedConnectedLHS(),HM2IfClauseCompleteLHS())
+        # M2ThenClause=AndStateProperty(AtomicStateProperty(HM2ThenClausePart1IsolatedConnectedLHS(),HM2ThenClausePart1IsolatedConnectedLHS(), HM2ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM2ThenClausePart2IsolatedConnectedLHS(),HM2ThenClausePart2IsolatedConnectedLHS(),HM2ThenClausePart2CompleteLHS())))
+        # M4IfClause=AtomicStateProperty(HM4IfClauseIsolatedConnectedLHS(),HM4IfClauseIsolatedConnectedLHS(),HM4IfClauseCompleteLHS())
+        # M4ThenClause=AndStateProperty(AtomicStateProperty(HM4ThenClausePart1IsolatedConnectedLHS(),HM4ThenClausePart1IsolatedConnectedLHS(), HM4ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM4ThenClausePart2IsolatedConnectedLHS(),HM4ThenClausePart2IsolatedConnectedLHS(),HM4ThenClausePart2CompleteLHS())))
+        # M5IfClause=AtomicStateProperty(HM5IfClauseIsolatedConnectedLHS(),HM5IfClauseIsolatedConnectedLHS(),HM5IfClauseCompleteLHS())
+        # M5ThenClause=AndStateProperty(AtomicStateProperty(HM5ThenClausePart1IsolatedConnectedLHS(),HM5ThenClausePart1IsolatedConnectedLHS(), HM5ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM5ThenClausePart2IsolatedConnectedLHS(),HM5ThenClausePart2IsolatedConnectedLHS(),HM5ThenClausePart2CompleteLHS())))
+        # M6IfClause=AtomicStateProperty(HM6IfClauseIsolatedConnectedLHS(),HM6IfClauseIsolatedConnectedLHS(),HM6IfClauseCompleteLHS())
+        # M6ThenClause=AndStateProperty(AtomicStateProperty(HM6ThenClausePart1IsolatedConnectedLHS(),HM6ThenClausePart1IsolatedConnectedLHS(), HM6ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM6ThenClausePart2IsolatedConnectedLHS(),HM6ThenClausePart2IsolatedConnectedLHS(),HM6ThenClausePart2CompleteLHS())))
 
         atomic_properties = [["P1", P1atomic], ["P2", P2atomic]]
 
@@ -365,16 +392,21 @@ class Test():
         #print ('finalresult : ')
         #print (finalresult)
 
+
         for name, atomic_prop in atomic_properties:
             finalresult = StateProperty.verifyCompositeStateProperty(s, atomic_prop)
-            if not finalresult:
-                print("Atomic property: " + name + " does not hold")
+            if len(finalresult) == 0:
+                print("Atomic property: " + name + " does hold\n")
+            else:
+                print("Atomic property: " + name + " does not hold\n")
 
 
         for name, i, t in if_then_properties:
             finalresult = StateProperty.verifyCompositeStateProperty(s, ImplicationStateProperty(i, t))
-            if not finalresult:
-                print("If-then property: " + name + " does not hold")
+            if len(finalresult) == 0:
+                print("If-then property: " + name + " does hold\n")
+            else:
+                print("If-then property: " + name + " does not hold\n")
 
 
         ts1 = time.time()
