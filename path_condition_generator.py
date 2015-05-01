@@ -24,10 +24,6 @@ from PyRamify import PyRamify
 from PropertyProverTester import PropertyProverTester
 
 
-from multiprocessing import Pool, Manager, Process
-
-from path_condition_generator_worker import *
-
 #profile memory
 global global_profile_memory
 global global_hp
@@ -569,8 +565,6 @@ class PathConditionGenerator(object):
         """
 
 
-        pool = Pool()
-        print("Pool: " + str(pool))
 
 
         self.num_path_conditions = 0
@@ -971,14 +965,15 @@ class PathConditionGenerator(object):
 
 
     def print_path_conditions_file(self):
-        if self.draw_svg:
-            i=0
-            for pathCond in self.get_path_conditions():
-                try:
-                    print  ( str(i)+"---"+pathCond.name)
-                    print  ( " ")
-                    opname="pc"+str(i)
-                    graph_to_dot(opname, pathCond, 1)
-                    i=i+1
-                except IOError:
-                    print("Graph name is too long: " + pathCond.name)
+        print("Printing path conditions:")
+        #if self.draw_svg:
+        #i=0
+        for pathCond in self.get_path_conditions():
+            try:
+                # print  ( str(i)+"---"+pathCond.name)
+                # print  ( " ")
+                #opname="pc"+str(i)
+                graph_to_dot(pathCond.name, pathCond)
+                #i=i+1
+            except IOError:
+                print("Graph name is too long: " + pathCond.name)
