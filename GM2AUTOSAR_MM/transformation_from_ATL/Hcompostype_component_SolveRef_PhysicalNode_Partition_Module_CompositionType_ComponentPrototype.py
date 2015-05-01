@@ -114,79 +114,84 @@ a.""")
     	self.vs[15]["associationType"] = """component"""
         self.vs[15]["mm__"] = """directLink_T"""
         #self.vs[15]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc15')
+    	# apply association ComponentPrototype--type-->CompositionType node
+    	self.add_node()
+    	self.vs[16]["associationType"] = """type"""
+        self.vs[16]["mm__"] = """directLink_T"""
+        #self.vs[16]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc16')
         
     	# backward association PhysicalNode---->CompositionType node
-    	self.add_node()
-    	self.vs[16]["type"] = """ruleDef"""
-        self.vs[16]["mm__"] = """backward_link"""
-        #self.vs[16]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink16')
-    	# backward association Module---->ComponentPrototype node
     	self.add_node()
     	self.vs[17]["type"] = """ruleDef"""
         self.vs[17]["mm__"] = """backward_link"""
         #self.vs[17]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink17')
+    	# backward association Module---->ComponentPrototype node
+    	self.add_node()
+    	self.vs[18]["type"] = """ruleDef"""
+        self.vs[18]["mm__"] = """backward_link"""
+        #self.vs[18]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink18')
         
         
         
         
     	# has apply attribute ApplyAttribute() node
     	self.add_node()
-    	self.vs[18]["mm__"] = """hasAttribute_T"""
-        #self.vs[18]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+    	self.vs[19]["mm__"] = """hasAttribute_T"""
+        #self.vs[19]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
     	# apply attribute ApplyAttribute() node
     	self.add_node()
-    	self.vs[19]["name"] = """ApplyAttribute"""
-        self.vs[19]["mm__"] = """Attribute"""
-        self.vs[19]["Type"] = """'String'"""
-        #self.vs[19]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+    	self.vs[20]["name"] = """ApplyAttribute"""
+        self.vs[20]["mm__"] = """Attribute"""
+        self.vs[20]["Type"] = """'String'"""
+        #self.vs[20]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
     	# apply attribute equation ApplyAttribute() node
     	self.add_node()
-    	self.vs[20]["name"] = """eq_"""
-        self.vs[20]["mm__"] = """Equation"""
-        #self.vs[20]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+    	self.vs[21]["name"] = """eq_"""
+        self.vs[21]["mm__"] = """Equation"""
+        #self.vs[21]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
     	# apply attribute equation left expr ApplyAttribute() node
     	self.add_node()
-    	self.vs[21]["mm__"] = """leftExpr"""
-        #self.vs[21]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+    	self.vs[22]["mm__"] = """leftExpr"""
+        #self.vs[22]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
     	# apply attribute equation right expr ApplyAttribute() node
     	self.add_node()
-    	self.vs[22]["mm__"] = """rightExpr"""
-        #self.vs[22]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+    	self.vs[23]["mm__"] = """rightExpr"""
+        #self.vs[23]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
     	# apply attribute atom ApplyAttribute() node
     	self.add_node()
-    	self.vs[23]["name"] = """solveRef"""
-        self.vs[23]["mm__"] = """Constant"""
-        self.vs[23]["Type"] = """'String'"""
-        #self.vs[23]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom23')
+    	self.vs[24]["name"] = """solveRef"""
+        self.vs[24]["mm__"] = """Constant"""
+        self.vs[24]["Type"] = """'String'"""
+        #self.vs[24]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom24')
     	# has apply attribute ApplyAttribute() node
     	self.add_node()
-    	self.vs[24]["mm__"] = """hasAttribute_T"""
-        #self.vs[24]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+    	self.vs[25]["mm__"] = """hasAttribute_T"""
+        #self.vs[25]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
     	# apply attribute ApplyAttribute() node
     	self.add_node()
-    	self.vs[25]["name"] = """ApplyAttribute"""
-        self.vs[25]["mm__"] = """Attribute"""
-        self.vs[25]["Type"] = """'String'"""
-        #self.vs[25]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+    	self.vs[26]["name"] = """ApplyAttribute"""
+        self.vs[26]["mm__"] = """Attribute"""
+        self.vs[26]["Type"] = """'String'"""
+        #self.vs[26]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
     	# apply attribute equation ApplyAttribute() node
     	self.add_node()
-    	self.vs[26]["name"] = """eq_"""
-        self.vs[26]["mm__"] = """Equation"""
-        #self.vs[26]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+    	self.vs[27]["name"] = """eq_"""
+        self.vs[27]["mm__"] = """Equation"""
+        #self.vs[27]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
     	# apply attribute equation left expr ApplyAttribute() node
     	self.add_node()
-    	self.vs[27]["mm__"] = """leftExpr"""
-        #self.vs[27]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+    	self.vs[28]["mm__"] = """leftExpr"""
+        #self.vs[28]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
     	# apply attribute equation right expr ApplyAttribute() node
     	self.add_node()
-    	self.vs[28]["mm__"] = """rightExpr"""
-        #self.vs[28]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+    	self.vs[29]["mm__"] = """rightExpr"""
+        #self.vs[29]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
     	# apply attribute atom ApplyAttribute() node
     	self.add_node()
-    	self.vs[29]["name"] = """solveRef"""
-        self.vs[29]["mm__"] = """Constant"""
-        self.vs[29]["Type"] = """'String'"""
-        #self.vs[29]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom29')
+    	self.vs[30]["name"] = """solveRef"""
+        self.vs[30]["mm__"] = """Constant"""
+        self.vs[30]["Type"] = """'String'"""
+        #self.vs[30]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom30')
         
         
         # Add the edges
@@ -207,22 +212,24 @@ a.""")
     		(14,7), # association module  -> match_class Module()
     		(9,15), # apply_class CompositionType() -> association component
     		(15,11), # association component  -> apply_class ComponentPrototype()
-    		(9,16), # apply_class CompositionType() -> backward_association
-    		(16,3), #  backward_association -> apply_class PhysicalNode()
-    		(11,17), # apply_class ComponentPrototype() -> backward_association
-    		(17,7), #  backward_association -> apply_class Module()
-    		(9,18), # apply_class CompositionType() -> has_apply_attribute ApplyAttribute ()
-    		(18,19), #  has_apply_attribute ApplyAttribute () -> apply_attribute ApplyAttribute ()
-    		(20,21), #  equation of apply attribute ApplyAttribute () -> left_expr
-    		(21,19), #  left_expr -> apply_attribute ApplyAttribute ()
-    		(20,22), #  equation of apply attribute ApplyAttribute () -> right_expr
-    		(22,23), # right_expr --> term
-    		(11,24), # apply_class ComponentPrototype() -> has_apply_attribute ApplyAttribute ()
-    		(24,25), #  has_apply_attribute ApplyAttribute () -> apply_attribute ApplyAttribute ()
-    		(26,27), #  equation of apply attribute ApplyAttribute () -> left_expr
-    		(27,25), #  left_expr -> apply_attribute ApplyAttribute ()
-    		(26,28), #  equation of apply attribute ApplyAttribute () -> right_expr
-    		(28,29), # right_expr --> term
+    		(11,16), # apply_class ComponentPrototype() -> association type
+    		(16,9), # association type  -> apply_class CompositionType()
+    		(9,17), # apply_class CompositionType() -> backward_association
+    		(17,3), #  backward_association -> apply_class PhysicalNode()
+    		(11,18), # apply_class ComponentPrototype() -> backward_association
+    		(18,7), #  backward_association -> apply_class Module()
+    		(9,19), # apply_class CompositionType() -> has_apply_attribute ApplyAttribute ()
+    		(19,20), #  has_apply_attribute ApplyAttribute () -> apply_attribute ApplyAttribute ()
+    		(21,22), #  equation of apply attribute ApplyAttribute () -> left_expr
+    		(22,20), #  left_expr -> apply_attribute ApplyAttribute ()
+    		(21,23), #  equation of apply attribute ApplyAttribute () -> right_expr
+    		(23,24), # right_expr --> term
+    		(11,25), # apply_class ComponentPrototype() -> has_apply_attribute ApplyAttribute ()
+    		(25,26), #  has_apply_attribute ApplyAttribute () -> apply_attribute ApplyAttribute ()
+    		(27,28), #  equation of apply attribute ApplyAttribute () -> left_expr
+    		(28,26), #  left_expr -> apply_attribute ApplyAttribute ()
+    		(27,29), #  equation of apply attribute ApplyAttribute () -> right_expr
+    		(29,30), # right_expr --> term
         	(0,2), # matchmodel -> pairedwith
         	(2,1) # pairedwith -> applyModel
         ])
