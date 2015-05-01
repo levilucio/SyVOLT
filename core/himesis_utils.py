@@ -224,6 +224,41 @@ def graph_to_dot(name, g, verbosity = 0):
     subprocess.call(command, shell=True)
 
 
+def draw_graphs(title, g_dir):
+    for d in os.listdir(g_dir):
+        if not os.path.isdir(g_dir + d):
+            continue
+
+        # ignore svn dirs
+        if d.startswith('.'):
+            continue
+
+        graph_dir = g_dir + d + "/Himesis/"
+
+        try:
+            files = os.listdir(graph_dir)
+        except OSError:
+            print("Warning: " + graph_dir + " does not exist")
+            files = []
+
+        for f in files:
+            if f == "__init__.py" or f.endswith(".pyc") or f.startswith("."):
+                continue
+
+            # print("Examining " + graph_dir + f)
+
+            graph_file = graph_dir + f
+            try:
+                g = load_class(graph_file)
+            except ImportError:
+                print("ERROR " + graph_file)
+                continue
+
+            name = g.keys()[0]
+            graph = g.values()[0]
+
+            graph_to_dot(title +"_" + name, graph)
+
 import gzip
 use_pickle = False
 

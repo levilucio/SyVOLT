@@ -16,6 +16,9 @@ class NotStateProperty(StateProperty):
         '''
         Constructor
         '''
+
+        StateProperty.__init__(self)
+
         #print ("Initializing a NotStateProp Object")
         self.propArg1=arg1
         self.hasDefaultVerifResult=False
@@ -28,6 +31,9 @@ class NotStateProperty(StateProperty):
     def verify(self,state, StateSpace=None):
         #print ("Started running function verify of Class NotStateProp")
         result=not(self.propArg1.verify(state, StateSpace))
+
+        self.status = self.propArg1.status
+
         # if (result):
         #     print ("NotStateProp Holds !")
         # else:

@@ -16,6 +16,7 @@ from t_core.messages import Packet
 from PyRamify import PyRamify
 
 from core.himesis_utils import graph_to_dot
+from core.himesis_utils import draw_graphs
 # all runs are the same transformation, but with different metamodel elements
 # the purpose is to do scalability testing with multiple configurations and multiple sets of rules
 
@@ -160,8 +161,15 @@ class Test():
         
         pyramify = PyRamify(draw_svg=args.draw_svg)
 
+        self.do_old_transformation = True
+
+        transformation_dir = "GM2AUTOSAR_MM/transformation_from_ATL/"
+
+        if self.do_old_transformation:
+            transformation_dir = "GM2AUTOSAR_MM/transformation/HimesisWOFaulty/"
+
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
-            pyramify.ramify_directory("GM2AUTOSAR_MM/transformation/HimesisWOFaulty/")
+            pyramify.ramify_directory(transformation_dir)
 
 #         self.rules = {                'HMapECU2FiveElements': HMapECU2FiveElementsFAULTY(),
 #                                       'HMapDistributable': HMapDistributable(),
@@ -171,9 +179,46 @@ class Test():
 #                                       'HConnECU2VirtualDevice': HConnECU2VirtualDevice(),
 #                                       'HConnVirtualDeviceToDistributable': HConnVirtualDeviceToDistributable()}
 
-        self.transformation = [[self.rules['HMapDistributable'], self.rules['HMapECU2FiveElements'], self.rules['HMapVirtualDevice']],
-                          [self.rules['HConnECU2VirtualDevice'], self.rules['HConnVirtualDeviceToDistributable']],
-                          [self.rules['HConnectPPortPrototype'], self.rules['HConnectRPortPrototype']]]
+
+        #change the properties to match the metamodel
+        mapping = {'MT_pre__Service':'MT_pre__Signal',
+                   'MT_pre__Scheduler':'MT_pre__ExecFrame',
+                   'MT_pre__Module':'MT_pre__Distributable',
+                   'MT_pre__Partition':'MT_pre__VirtualDevice',
+                   'MT_pre__PhysicalNode': 'MT_pre__ECU'}
+
+        #reverse the mapping for the new transformation
+        if not self.do_old_transformation:
+            mapping = {v: k for k, v in mapping.items()}
+
+        property_dir = "GM2AUTOSAR_MM/Properties/"
+        pyramify.changeGraphMetamodel(mapping, property_dir)
+
+        if args.draw_svg:
+            draw_graphs("property", property_dir)
+
+        if self.do_old_transformation:
+            self.transformation = [
+             [self.rules['HMapDistributable'], self.rules['HMapECU2FiveElements'], self.rules['HMapVirtualDevice']],
+             [self.rules['HConnECU2VirtualDevice'],  self.rules['HConnVirtualDeviceToDistributable']],
+             [self.rules['HConnectPPortPrototype'], self.rules['HConnectRPortPrototype']]]
+
+
+
+
+        else:
+            self.transformation = [
+                [self.rules['HcreateComponent']],
+                [self.rules['HinitSysTemp'], self.rules['HinitSingleSwc2EcuMapping']],
+                [self.rules['Hsysmapping_swMapping_SolveRef_PhysicalNode_Partition_SystemMapping_SwcToEcuMapping']],
+                [self.rules['Hcompostype_component_SolveRef_PhysicalNode_Partition_Module_CompositionType_ComponentPrototype']],
+                [self.rules['Hmapping_component_SolveRef_Partition_Module_SwcToEcuMapping_SwCompToEcuMapping_component']],
+                [self.rules['Hmapping_ecuInstance_SolveRef_PhysicalNode_Partition_SwcToEcuMapping_EcuInstance']],
+                [self.rules['Hcompostype_port_SolveRef_PhysicalNode_Partition_Module_Scheduler_Service_CompositionType_PPortPrototype']],
+                [self.rules['Hcompostype_port_SolveRef_PhysicalNode_Partition_Module_Scheduler_Service_CompositionType_RPortPrototype']]]
+
+
+
         # 
 #         ConnectPPortPrototype_Back_CompositionType2ECU = Matcher(HConnectPPortPrototype_Back_CompositionType2ECULHS())
 #         ConnectRPortPrototype_Back_CompositionType2ECU = Matcher(HConnectRPortPrototype_Back_CompositionType2ECULHS())
@@ -252,31 +297,53 @@ class Test():
         #     print(str(matchRulePattern))
 
     def test_correct_GM_transformation(self,args):
+        pass
         
-#         transformation = [[HMapDistributable(), HMapECU2FiveElementsFAULTY(), HMapVirtualDeviceFAULTY()],
-#                           [HConnECU2VirtualDevice(), HConnVirtualDeviceToDistributable()],
-#                           [HConnectPPortPrototype(), HConnectRPortPrototype()]]
+        transformation = [[HMapDistributable(), HMapECU2FiveElementsFAULTY(), HMapVirtualDeviceFAULTY()],
+                          [HConnECU2VirtualDevice(), HConnVirtualDeviceToDistributable()],
+                          [HConnectPPortPrototype(), HConnectRPortPrototype()]]
 
-#         transformation = [[self.rules['HMapDistributable'], self.rules['HMapECU2FiveElements'], self.rules['HMapVirtualDevice']],
-#                           [self.rules['HConnECU2VirtualDevice'], self.rules['HConnVirtualDeviceToDistributable']],
-#                           [self.rules['HConnectPPortPrototype'], self.rules['HConnectRPortPrototype']]]
-#  
-#       
-#         self.rulesIncludingBackLinks = [[],\
-#                                    [transformation[1][0], transformation[1][1]],\
-#                                    [transformation[2][0], transformation[2][1]]]
+        transformation = [[self.rules['HMapDistributable'], self.rules['HMapECU2FiveElements'], self.rules['HMapVirtualDevice']],
+                          [self.rules['HConnECU2VirtualDevice'], self.rules['HConnVirtualDeviceToDistributable']],
+                          [self.rules['HConnectPPortPrototype'], self.rules['HConnectRPortPrototype']]]
+
+
+        self.rulesIncludingBackLinks = [[],\
+                                   [transformation[1][0], transformation[1][1]],\
+                                   [transformation[2][0], transformation[2][1]]]
 
         pyramify = PyRamify(draw_svg=args.draw_svg)
         #self.rulesIncludingBackLinks = pyramify.getRulesIncludingBackLinks(transformation, self.backwardPatterns)
- 
+
         pre_metamodel = ["MT_pre__GM2AUTOSAR_MM", "MoTifRule"]
         post_metamodel = ["MT_post__GM2AUTOSAR_MM", "MoTifRule"]
 
+        #sanitized metamodel
         subclasses_dict = {}
-        subclasses_dict["MT_pre__MetaModelElement_S"] =  ["MT_pre__VirtualDevice", 'MT_pre__Distributable','MT_pre__ExecFrame', 'MT_pre__Signal', 'MT_pre__ECU']
-        subclasses_dict["MT_pre__MetaModelElement_T"] = ['MT_pre__EcuInstance','MT_pre__System','MT_pre__SystemMapping','MT_pre__ComponentPrototype','MT_pre__SwCompToEcuMapping_component','MT_pre__CompositionType','MT_pre__PPortPrototype','MT_pre__SwcToEcuMapping','MT_pre__SoftwareComposition','MT_pre__RPortPrototype','MT_pre__PortPrototype', 'MT_pre__ComponentType']
- 
- 
+        # subclasses_dict["MT_pre__MetaModelElement_S"] = ["MT_pre__PhysicalNode", "MT_pre__Partition", "MT_pre__Module",
+        #                                                  "MT_pre__Scheduler", "MT_pre__Service"]
+        # subclasses_dict["MT_pre__MetaModelElement_T"] = ['MT_pre__EcuInstance','MT_pre__System','MT_pre__SystemMapping','MT_pre__ComponentPrototype','MT_pre__SwCompToEcuMapping_component','MT_pre__CompositionType','MT_pre__PPortPrototype','MT_pre__SwcToEcuMapping','MT_pre__SoftwareComposition','MT_pre__RPortPrototype','MT_pre__PortPrototype', 'MT_pre__ComponentType']
+
+
+        # unsanitized metamodel
+        # subclasses_dict = {}
+
+        if self.do_old_transformation:
+            subclasses_dict["MT_pre__MetaModelElement_S"] =  ["MT_pre__VirtualDevice", 'MT_pre__Distributable','MT_pre__ExecFrame', 'MT_pre__Signal', 'MT_pre__ECU']
+        else:
+            subclasses_dict["MT_pre__MetaModelElement_S"] = ["MT_pre__PhysicalNode", "MT_pre__Partition",
+                                                             "MT_pre__Module",
+                                                             "MT_pre__Scheduler", "MT_pre__Service"]
+
+
+        subclasses_dict["MT_pre__MetaModelElement_T"] = ['MT_pre__EcuInstance', 'MT_pre__System', 'MT_pre__SystemMapping',
+                                                 'MT_pre__ComponentPrototype', 'MT_pre__SwCompToEcuMapping_component',
+                                                 'MT_pre__CompositionType', 'MT_pre__PPortPrototype',
+                                                 'MT_pre__SwcToEcuMapping', 'MT_pre__SoftwareComposition',
+                                                 'MT_pre__RPortPrototype', 'MT_pre__PortPrototype',
+                                                 'MT_pre__ComponentType']
+
+
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
 
 
@@ -320,7 +387,7 @@ class Test():
 
         ts0 = time.time()
 
-        print("create property")
+        print("\nProperty Proving:")
         P1atomic=AtomicStateProperty(HP1IsolatedLHS(),HP1ConnectedLHS(), HP1CompleteLHS())
         P2atomic=AtomicStateProperty(HP2IsolatedLHS(),HP2ConnectedLHS(), HP2CompleteLHS())
         S1IfClause=AtomicStateProperty(HS1IfClauseIsolatedConnectedLHS(), HS1IfClauseIsolatedConnectedLHS(), HS1IfClauseCompleteLHS())

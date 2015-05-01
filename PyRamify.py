@@ -1623,6 +1623,58 @@ class PyRamify:
         return [rules, backwardPatterns, backwardPatterns2Rules, {}, matchRulePatterns, ruleCombinators]
 
 
+
+    #renames elements from one metamodel into another metamodel
+    def changeGraphMetamodel(self, mapping, directory):
+        print("Starting to rename elements in graphs")
+        #print("Mapping: " + str(mapping))
+
+        for d in os.listdir(directory):
+            if not os.path.isdir(directory + d):
+                continue
+
+            # ignore svn dirs
+            if d.startswith('.'):
+                continue
+
+            graph_dir = directory + d + "/Himesis/"
+
+            try:
+                files = os.listdir(graph_dir)
+            except OSError:
+                print("Warning: " + graph_dir + " does not exist")
+                files = []
+
+            for f in files:
+
+
+                if f == "__init__.py" or f.endswith(".pyc") or f.startswith("."):
+                    continue
+
+                #print("Examining " + graph_dir + f)
+
+                graph_file = graph_dir + f
+                try:
+                    g = load_class(graph_file)
+                except ImportError:
+                    print("ERROR " + graph_file)
+                    continue
+
+                name = g.keys()[0]
+                graph = g.values()[0]
+
+                for node in graph.vs:
+                    if not node["mm__"] in mapping.keys():
+                        continue
+
+                    #set the new subtypes
+                    node["mm__"] = mapping[node["mm__"]]
+
+                #need to compile rule back in order to update the file
+                graph.compile(graph_dir)
+
+        print("Finished changing graph metamodels\n")
+
     #change the proper prover matchers and rewriters to
     #refer to the correct metamodel
     def changePropertyProverMetamodel(self, pre_metamodel, post_metamodel, subclasses_dict):

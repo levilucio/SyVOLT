@@ -30,7 +30,7 @@ class AtomicStateProperty(StateProperty):
         '''
         #print ("Initializing an AtomicStateProp Object")
 
-        self.counterexamples = []
+        StateProperty.__init__(self)
 
         self.Isolated=isolated
         self.Connected=connected
@@ -102,6 +102,7 @@ class AtomicStateProperty(StateProperty):
                 if verbosity >= 1: print '        Found Match! (Connected)'
                 total.packet_in(s)
                 if total.is_success:
+                    self.status = self.COMPLETE_FOUND
                     #self.verifiedStateCache.append((inputstate,numberOfIsolatedMatches))
                     self.incrementNumberOfTimesFoundMatch()
                     if verbosity >= 1: print '        Found Apply! (Complete)'
@@ -111,6 +112,8 @@ class AtomicStateProperty(StateProperty):
                     #then iterate on all the keys and convert them to string to use them for cross matching
                     #print (str(len(s.match_sets[s.current].matches)))
                 else:
+                    self.status = self.NO_COMPLETE
+
                     if verbosity >= 1: graph_to_dot(s.graph.name + "_not_complete", s.graph)
                     if verbosity >= 1: print '        Could not find Apply! (Complete)'
 
@@ -120,6 +123,7 @@ class AtomicStateProperty(StateProperty):
                     self.set_matchesOfTotal([])
                     # match part of the property was found, but apply not, thus we found a counterexample
             else:
+                self.status = self.NO_CONNECTED
                 if verbosity >= 1: print("Couldn't find connected: " + s.graph.name)
                 if verbosity >= 1: graph_to_dot("connected_" + s.graph.name, s.graph)
                 if verbosity >= 1:  print '        Could not find Match! (Connected)'

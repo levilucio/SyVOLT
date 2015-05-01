@@ -17,24 +17,39 @@ class AndStateProperty(StateProperty):
         '''
         Constructor
         '''
+        StateProperty.__init__(self)
+
         #print ("Initializing an AndStateProp Object")
         self.propArg1=arg1
         self.propArg2=arg2
         self.hasDefaultVerifResult=False
         self.verifResult=False
+
+        self.debug = False
      
     def getAllOperands(self):
         return [self.propArg1, self.propArg2]   
    
     def verify(self,state, StateSpace=None):
 
+        if self.debug:
+            print("Debugging And Property")
         #print ("Started running function verify of Class AndStateProp")
-        result=(self.propArg1.verify(state,StateSpace)) and (self.propArg2.verify(state,StateSpace))
+
+        result1 = self.propArg1.verify(state, StateSpace)
+        if self.debug:
+            print("result1: " + str(result1))
+
+        result2 = self.propArg2.verify(state, StateSpace)
+        if self.debug:
+            print("result2: " + str(result2))
+
+        result = result1 and result2
         # if (result):
         #     print ("AndStateProp Holds !")
         # else:
         #     print ("AndStateProp Does Not Hold !")
-        self.counterexamples = [self.propArg1.counterexamples, self.propArg2.counterexamples]
+        #self.counterexamples = [self.propArg1.counterexamples, self.propArg2.counterexamples]
         self.SETverifResult(result)
         return self.GETverifResult()
 

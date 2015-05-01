@@ -16,6 +16,7 @@ class ImplicationStateProperty(StateProperty):
         '''
         Constructor
         '''
+        StateProperty.__init__(self)
         #print ("Initializing an ImplicationStateProp Object")
         self.propArg1=arg1
         self.propArg2=arg2
@@ -47,10 +48,11 @@ class ImplicationStateProperty(StateProperty):
 
         if self.debug and not result:
             print("Implication does not hold")
-            self.propArg2.print_counterexamples()
+            #self.propArg2.print_counterexamples()
             # for c in self.propArg2.counterexamples:
             #     print(c.name)
 
+        self.status = "Prop1: " + self.propArg1.status + " Prop2: " + self.propArg2.status
         # if (result):
         #     print ("ImplicationStateProp Holds !")
         # else:

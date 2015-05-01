@@ -5,12 +5,15 @@ Created on 2013-09-21
 '''
 from abc import ABCMeta, abstractmethod
 from property import Property
+import os
 #from atomic_state_property import AtomicStateProperty
 
 from disambiguate import Disambiguator
 from core.himesis_utils import disjoint_model_union
 from copy import deepcopy
 from core.himesis_utils import graph_to_dot
+from core.himesis_utils import load_class
+
 from t_core.messages import Packet
 from t_core.matcher import Matcher
 
@@ -25,8 +28,19 @@ class StateProperty(Property):
     hasDefaultVerifResult=None
     verifResult=None
 
-    def __init__(self, params):
+    def __init__(self):
+        Property.__init__(self)
         self.counterexamples = []
+
+
+        self.NOT_CHECKED = "Not checked"
+        self.NO_ISOLATED = "Isolated did not match"
+        self.NO_CONNECTED = "Connected did not match"
+        self.NO_COMPLETE = "Complete did not match"
+        self.COMPLETE_FOUND = "The complete property was found"
+
+        #detail the status of the property
+        self.status = self.NOT_CHECKED
 
     def SETverifResult (self, boolres):
         self.hasDefaultVerifResult= True
@@ -124,7 +138,9 @@ class StateProperty(Property):
                             return False    
         #print('Pivots of the state property are consistent :)')
         return True
-    
+
+
+
     
     @staticmethod    
     def verifyCompositeStateProperty(StateSpace, stateprop):
@@ -152,6 +168,10 @@ class StateProperty(Property):
         curVerifResult=False
 
         pcs_failed = []
+
+        #ensure that the property's precondition matched at least one path condition
+        #otherwise, there is an issue (different metamodels, ...)
+        property_isolated_matched = False
 
         StateSpace.pathConditionSet = StateSpace.get_all_path_conditions()
         StateSpace.pathConditionSet=StateSpace.pathConditionSet[1:]
@@ -185,6 +205,7 @@ class StateProperty(Property):
 
                 isolated.packet_in(s)
                 if isolated.is_success:
+                    property_isolated_matched = True
                     if StateSpace.verbosity >= 1:
                         print('State ' + str(state_index) + ": " + state.name)
                         print '    Isolated pattern matched'
@@ -296,6 +317,7 @@ class StateProperty(Property):
 
                     #print("Start verify")
                     curVerifResult=stateprop.verify(s.graph,StateSpace)
+                    #print(stateprop.status)
                     #print("End verify")
 
                     if ((curVerifResult==True)) and (StateProperty.twoOrMoreAtomicPropsAreTrue(AtomicStatePropsInStateProp)):
@@ -327,6 +349,8 @@ class StateProperty(Property):
             else:
                 #print("Other verify")
                 curVerifResult=stateprop.verify(merged_state, StateSpace)
+
+                #print(stateprop.status)
                 #should I update verified state cache here too ? I think yes
                 if curVerifResult and (StateProperty.twoOrMoreAtomicPropsAreTrue(AtomicStatePropsInStateProp)):
                     curVerifResult=curVerifResult and (StateProperty.CheckConsistencyFunc(AtomicStatePropsInStateProp))
@@ -338,13 +362,20 @@ class StateProperty(Property):
                 pcs_failed.append(state.name)
 
                 try:
+                    #graph_to_dot(state.name, state)
                     print("Property: " + stateprop.Connected.name + " failed on path condition: " + state.name)
-                    #graph_to_dot(stateprop.Connected.name + "_failure_" + state.name, state)
+                    #
                     #graph_to_dot(stateprop.Connected.name + "_failure", stateprop.Connected)
                     #graph_to_dot(stateprop.CompleteQuantified.name + "_failure", stateprop.CompleteQuantified)
 
                 except AttributeError:
-                    print("Property: " + stateprop.propArg1.CompleteQuantified.name + " failed on path condition: " + state.name)
+
+                    try:#
+                        print("Property: " + stateprop.propArg1.CompleteQuantified.name + " failed on path condition: " + state.name)
+                        #graph_to_dot(stateprop.propArg1.CompleteQuantified.name + "_failure", stateprop.propArg1.CompleteQuantified)
+                        #graph_to_dot(stateprop.propArg2.CompleteQuantified.name + "_failure", stateprop.propArg2.CompleteQuantified)
+                    except:
+                        pass
             #    break
 
             #reset 'propFalseForAtleastOneCollapsedState' & 'verifResult' of all
@@ -376,5 +407,9 @@ class StateProperty(Property):
         #StateSpace.verifiedStateCache = []
         for curatomicprop in AtomicStatePropsInStateProp:
             curatomicprop.verifiedStateCache=[]
+
+        if not property_isolated_matched:
+            print("Error: The property's isolated part did not match on any path condition!")
+            print("Recheck the metamodels or the property!")
              
         return pcs_failed
