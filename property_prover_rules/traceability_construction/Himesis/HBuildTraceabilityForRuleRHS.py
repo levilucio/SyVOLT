@@ -12,13 +12,13 @@ class HBuildTraceabilityForRuleRHS(HimesisPostConditionPattern):
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(HBuildTraceabilityForRuleRHS, self).__init__(name='HBuildTraceabilityForRuleRHS', num_nodes=3, edges=[])
+        super(HBuildTraceabilityForRuleRHS, self).__init__(name='HBuildTraceabilityForRuleRHS', num_nodes=7, edges=[])
         
         # Add the edges
-        self.add_edges([[1, 0], [2, 1]])
+        self.add_edges([[4, 0], [0, 1], [2, 1], [3, 2], [6, 3], [5, 6]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__FamiliesToPersons_MM'
+S'MT_post__T_MM'
 p2
 aS'MoTifRule'
 p3
@@ -32,10 +32,13 @@ a.""")
 pass
 """
         self["name"] = """"""
-        self["GUID__"] = 5835830838391118786
+        self["GUID__"] = 8718651086275325855
         
         # Set the node attributes
-        self.vs[0]["MT_post__cardinality"] = """
+        self.vs[0]["MT_label__"] = """5"""
+        self.vs[0]["mm__"] = """MT_post__match_contains"""
+        self.vs[0]["GUID__"] = 1731981086693324537
+        self.vs[1]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
 # If the current node shall be created you MUST initialize it here!
@@ -49,8 +52,8 @@ pass
 
 return attr_value
 """
-        self.vs[0]["MT_label__"] = """1"""
-        self.vs[0]["MT_post__name"] = """
+        self.vs[1]["MT_label__"] = """1"""
+        self.vs[1]["MT_post__name"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
 # If the current node shall be created you MUST initialize it here!
@@ -64,8 +67,8 @@ return attr_value
 
 return attr_value
 """
-        self.vs[0]["mm__"] = """MT_post__MetaModelElement_S"""
-        self.vs[0]["MT_post__classtype"] = """
+        self.vs[1]["mm__"] = """MT_post__MetaModelElement_S"""
+        self.vs[1]["MT_post__classtype"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
 # If the current node shall be created you MUST initialize it here!
@@ -79,11 +82,11 @@ return attr_value
 
 return attr_value
 """
-        self.vs[0]["GUID__"] = 3117993579924935174
-        self.vs[1]["MT_label__"] = """3"""
-        self.vs[1]["mm__"] = """MT_post__trace_link"""
-        self.vs[1]["GUID__"] = 4804771011576317093
-        self.vs[2]["MT_post__cardinality"] = """
+        self.vs[1]["GUID__"] = 3240545148639152716
+        self.vs[2]["MT_label__"] = """10"""
+        self.vs[2]["mm__"] = """MT_post__trace_link"""
+        self.vs[2]["GUID__"] = 7254710697686560218
+        self.vs[3]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
 # If the current node shall be created you MUST initialize it here!
@@ -97,8 +100,8 @@ return attr_value
 
 return attr_value
 """
-        self.vs[2]["MT_label__"] = """2"""
-        self.vs[2]["MT_post__name"] = """
+        self.vs[3]["MT_label__"] = """2"""
+        self.vs[3]["MT_post__name"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
 # If the current node shall be created you MUST initialize it here!
@@ -112,8 +115,8 @@ return attr_value
 
 return attr_value
 """
-        self.vs[2]["mm__"] = """MT_post__MetaModelElement_T"""
-        self.vs[2]["MT_post__classtype"] = """
+        self.vs[3]["mm__"] = """MT_post__MetaModelElement_T"""
+        self.vs[3]["MT_post__classtype"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
 # If the current node shall be created you MUST initialize it here!
@@ -127,7 +130,16 @@ return attr_value
 
 return attr_value
 """
-        self.vs[2]["GUID__"] = 7055627147167479158
+        self.vs[3]["GUID__"] = 8058697333514938870
+        self.vs[4]["MT_label__"] = """3"""
+        self.vs[4]["mm__"] = """MT_post__MatchModel"""
+        self.vs[4]["GUID__"] = 7069271384809476430
+        self.vs[5]["MT_label__"] = """4"""
+        self.vs[5]["mm__"] = """MT_post__ApplyModel"""
+        self.vs[5]["GUID__"] = 5738829673289541699
+        self.vs[6]["MT_label__"] = """6"""
+        self.vs[6]["mm__"] = """MT_post__apply_contains"""
+        self.vs[6]["GUID__"] = 6915603824186282963
 
         from HBuildTraceabilityForRuleLHS import HBuildTraceabilityForRuleLHS
         self.pre = HBuildTraceabilityForRuleLHS()
@@ -167,18 +179,18 @@ return attr_value
         #===============================================================================
         # Create new nodes
         #===============================================================================
-        # trace_link3
+        # trace_link10
         new_node = graph.add_node()
-        labels['3'] = new_node
+        labels['10'] = new_node
         graph.vs[new_node][Himesis.Constants.META_MODEL] = 'trace_link'
         
         #===============================================================================
         # Create new edges
         #===============================================================================
-        # trace_link3 -> MetaModelElement_S1
-        graph.add_edges([(labels['3'], labels['1'])])
-        # MetaModelElement_T2 -> trace_link3
-        graph.add_edges([(labels['2'], labels['3'])])
+        # trace_link10 -> MetaModelElement_S1
+        graph.add_edges([(labels['10'], labels['1'])])
+        # MetaModelElement_T2 -> trace_link10
+        graph.add_edges([(labels['2'], labels['10'])])
         
         #===============================================================================
         # Set the output pivots

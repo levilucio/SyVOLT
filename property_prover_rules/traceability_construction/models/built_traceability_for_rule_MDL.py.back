@@ -3,22 +3,38 @@ __built_traceability_for_rule_MDL.py____________________________________________
 
 Automatically generated AToM3 Model File (Do not modify directly)
 Author: levi
-Modified: Tue Feb 10 15:31:16 2015
+Modified: Mon May  4 15:07:33 2015
 _________________________________________________________________________________________
 """
 from stickylink import *
 from widthXfillXdecoration import *
+from MT_post__MatchModel import *
+from MT_post__ApplyModel import *
 from MT_post__MetaModelElement_S import *
 from MT_post__MetaModelElement_T import *
+from MT_post__match_contains import *
+from MT_post__apply_contains import *
 from MT_post__trace_link import *
+from MT_pre__ApplyModel import *
+from MT_pre__MatchModel import *
+from MT_pre__match_contains import *
+from MT_pre__apply_contains import *
 from MT_pre__MetaModelElement_T import *
 from MT_pre__MetaModelElement_S import *
 from RHS import *
 from LHS import *
+from graph_MT_pre__MetaModelElement_S import *
 from graph_MT_post__MetaModelElement_S import *
+from graph_MT_post__match_contains import *
+from graph_MT_pre__apply_contains import *
 from graph_MT_post__MetaModelElement_T import *
 from graph_LHS import *
-from graph_MT_pre__MetaModelElement_S import *
+from graph_MT_post__ApplyModel import *
+from graph_MT_pre__match_contains import *
+from graph_MT_pre__MatchModel import *
+from graph_MT_pre__ApplyModel import *
+from graph_MT_post__MatchModel import *
+from graph_MT_post__apply_contains import *
 from graph_MT_pre__MetaModelElement_T import *
 from graph_RHS import *
 from graph_MT_post__trace_link import *
@@ -85,6 +101,62 @@ def built_traceability_for_rule_MDL(self, rootNode, MT_post__GM2AUTOSAR_MMRootNo
     # --- ASG attributes over ---
 
 
+    self.obj92=MT_post__MatchModel(self)
+    self.obj92.isGraphObjectVisual = True
+
+    if(hasattr(self.obj92, '_setHierarchicalLink')):
+      self.obj92._setHierarchicalLink(False)
+
+    # MT_label__
+    self.obj92.MT_label__.setValue('3')
+
+    # MT_pivotOut__
+    self.obj92.MT_pivotOut__.setValue('')
+    self.obj92.MT_pivotOut__.setNone()
+
+    self.obj92.graphClass_= graph_MT_post__MatchModel
+    if self.genGraphics:
+       new_obj = graph_MT_post__MatchModel(680.0,200.0,self.obj92)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("MT_post__MatchModel", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+       new_obj.layConstraints['scale'] = [1.0, 1.0]
+    else: new_obj = None
+    self.obj92.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj92)
+    self.globalAndLocalPostcondition(self.obj92, rootNode)
+    self.obj92.postAction( rootNode.CREATE )
+
+    self.obj93=MT_post__ApplyModel(self)
+    self.obj93.isGraphObjectVisual = True
+
+    if(hasattr(self.obj93, '_setHierarchicalLink')):
+      self.obj93._setHierarchicalLink(False)
+
+    # MT_label__
+    self.obj93.MT_label__.setValue('4')
+
+    # MT_pivotOut__
+    self.obj93.MT_pivotOut__.setValue('')
+    self.obj93.MT_pivotOut__.setNone()
+
+    self.obj93.graphClass_= graph_MT_post__ApplyModel
+    if self.genGraphics:
+       new_obj = graph_MT_post__ApplyModel(680.0,340.0,self.obj93)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("MT_post__ApplyModel", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+       new_obj.layConstraints['scale'] = [1.0, 1.0]
+    else: new_obj = None
+    self.obj93.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj93)
+    self.globalAndLocalPostcondition(self.obj93, rootNode)
+    self.obj93.postAction( rootNode.CREATE )
+
     self.obj71=MT_post__MetaModelElement_S(self)
     self.obj71.isGraphObjectVisual = True
 
@@ -112,7 +184,7 @@ def built_traceability_for_rule_MDL(self, rootNode, MT_post__GM2AUTOSAR_MMRootNo
 
     self.obj71.graphClass_= graph_MT_post__MetaModelElement_S
     if self.genGraphics:
-       new_obj = graph_MT_post__MetaModelElement_S(763.0,226.0,self.obj71)
+       new_obj = graph_MT_post__MetaModelElement_S(856.0,232.0,self.obj71)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("MT_post__MetaModelElement_S", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
@@ -152,7 +224,7 @@ def built_traceability_for_rule_MDL(self, rootNode, MT_post__GM2AUTOSAR_MMRootNo
 
     self.obj72.graphClass_= graph_MT_post__MetaModelElement_T
     if self.genGraphics:
-       new_obj = graph_MT_post__MetaModelElement_T(763.0,406.0,self.obj72)
+       new_obj = graph_MT_post__MetaModelElement_T(856.0,412.0,self.obj72)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("MT_post__MetaModelElement_T", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
@@ -165,6 +237,60 @@ def built_traceability_for_rule_MDL(self, rootNode, MT_post__GM2AUTOSAR_MMRootNo
     self.globalAndLocalPostcondition(self.obj72, rootNode)
     self.obj72.postAction( rootNode.CREATE )
 
+    self.obj94=MT_post__match_contains(self)
+    self.obj94.isGraphObjectVisual = True
+
+    if(hasattr(self.obj94, '_setHierarchicalLink')):
+      self.obj94._setHierarchicalLink(False)
+
+    # MT_label__
+    self.obj94.MT_label__.setValue('5')
+
+    # MT_pivotOut__
+    self.obj94.MT_pivotOut__.setValue('')
+    self.obj94.MT_pivotOut__.setNone()
+
+    self.obj94.graphClass_= graph_MT_post__match_contains
+    if self.genGraphics:
+       new_obj = graph_MT_post__match_contains(934.0,289.5,self.obj94)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("MT_post__match_contains", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj94.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj94)
+    self.globalAndLocalPostcondition(self.obj94, rootNode)
+    self.obj94.postAction( rootNode.CREATE )
+
+    self.obj95=MT_post__apply_contains(self)
+    self.obj95.isGraphObjectVisual = True
+
+    if(hasattr(self.obj95, '_setHierarchicalLink')):
+      self.obj95._setHierarchicalLink(False)
+
+    # MT_label__
+    self.obj95.MT_label__.setValue('6')
+
+    # MT_pivotOut__
+    self.obj95.MT_pivotOut__.setValue('')
+    self.obj95.MT_pivotOut__.setNone()
+
+    self.obj95.graphClass_= graph_MT_post__apply_contains
+    if self.genGraphics:
+       new_obj = graph_MT_post__apply_contains(936.0,449.5,self.obj95)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("MT_post__apply_contains", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj95.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj95)
+    self.globalAndLocalPostcondition(self.obj95, rootNode)
+    self.obj95.postAction( rootNode.CREATE )
+
     self.obj73=MT_post__trace_link(self)
     self.obj73.isGraphObjectVisual = True
 
@@ -172,7 +298,7 @@ def built_traceability_for_rule_MDL(self, rootNode, MT_post__GM2AUTOSAR_MMRootNo
       self.obj73._setHierarchicalLink(False)
 
     # MT_label__
-    self.obj73.MT_label__.setValue('3')
+    self.obj73.MT_label__.setValue('10')
 
     # MT_pivotOut__
     self.obj73.MT_pivotOut__.setValue('')
@@ -180,7 +306,7 @@ def built_traceability_for_rule_MDL(self, rootNode, MT_post__GM2AUTOSAR_MMRootNo
 
     self.obj73.graphClass_= graph_MT_post__trace_link
     if self.genGraphics:
-       new_obj = graph_MT_post__trace_link(932.0,389.5,self.obj73)
+       new_obj = graph_MT_post__trace_link(1025.0,395.5,self.obj73)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("MT_post__trace_link", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
@@ -191,6 +317,148 @@ def built_traceability_for_rule_MDL(self, rootNode, MT_post__GM2AUTOSAR_MMRootNo
     rootNode.addNode(self.obj73)
     self.globalAndLocalPostcondition(self.obj73, rootNode)
     self.obj73.postAction( rootNode.CREATE )
+
+    self.obj89=MT_pre__ApplyModel(self)
+    self.obj89.isGraphObjectVisual = True
+
+    if(hasattr(self.obj89, '_setHierarchicalLink')):
+      self.obj89._setHierarchicalLink(False)
+
+    # MT_label__
+    self.obj89.MT_label__.setValue('4')
+
+    # MT_pivotOut__
+    self.obj89.MT_pivotOut__.setValue('')
+    self.obj89.MT_pivotOut__.setNone()
+
+    # MT_subtypeMatching__
+    self.obj89.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj89.MT_subtypeMatching__.config = 0
+
+    # MT_pivotIn__
+    self.obj89.MT_pivotIn__.setValue('')
+    self.obj89.MT_pivotIn__.setNone()
+
+    self.obj89.graphClass_= graph_MT_pre__ApplyModel
+    if self.genGraphics:
+       new_obj = graph_MT_pre__ApplyModel(160.0,300.0,self.obj89)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("MT_pre__ApplyModel", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+       new_obj.layConstraints['scale'] = [1.0, 1.0]
+    else: new_obj = None
+    self.obj89.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj89)
+    self.globalAndLocalPostcondition(self.obj89, rootNode)
+    self.obj89.postAction( rootNode.CREATE )
+
+    self.obj87=MT_pre__MatchModel(self)
+    self.obj87.isGraphObjectVisual = True
+
+    if(hasattr(self.obj87, '_setHierarchicalLink')):
+      self.obj87._setHierarchicalLink(False)
+
+    # MT_label__
+    self.obj87.MT_label__.setValue('3')
+
+    # MT_pivotOut__
+    self.obj87.MT_pivotOut__.setValue('')
+    self.obj87.MT_pivotOut__.setNone()
+
+    # MT_subtypeMatching__
+    self.obj87.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj87.MT_subtypeMatching__.config = 0
+
+    # MT_pivotIn__
+    self.obj87.MT_pivotIn__.setValue('')
+    self.obj87.MT_pivotIn__.setNone()
+
+    self.obj87.graphClass_= graph_MT_pre__MatchModel
+    if self.genGraphics:
+       new_obj = graph_MT_pre__MatchModel(160.0,180.0,self.obj87)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("MT_pre__MatchModel", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+       new_obj.layConstraints['scale'] = [1.0, 1.0]
+    else: new_obj = None
+    self.obj87.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj87)
+    self.globalAndLocalPostcondition(self.obj87, rootNode)
+    self.obj87.postAction( rootNode.CREATE )
+
+    self.obj90=MT_pre__match_contains(self)
+    self.obj90.isGraphObjectVisual = True
+
+    if(hasattr(self.obj90, '_setHierarchicalLink')):
+      self.obj90._setHierarchicalLink(False)
+
+    # MT_label__
+    self.obj90.MT_label__.setValue('5')
+
+    # MT_pivotOut__
+    self.obj90.MT_pivotOut__.setValue('')
+    self.obj90.MT_pivotOut__.setNone()
+
+    # MT_subtypeMatching__
+    self.obj90.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj90.MT_subtypeMatching__.config = 0
+
+    # MT_pivotIn__
+    self.obj90.MT_pivotIn__.setValue('')
+    self.obj90.MT_pivotIn__.setNone()
+
+    self.obj90.graphClass_= graph_MT_pre__match_contains
+    if self.genGraphics:
+       new_obj = graph_MT_pre__match_contains(414.5,273.5,self.obj90)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("MT_pre__match_contains", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj90.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj90)
+    self.globalAndLocalPostcondition(self.obj90, rootNode)
+    self.obj90.postAction( rootNode.CREATE )
+
+    self.obj91=MT_pre__apply_contains(self)
+    self.obj91.isGraphObjectVisual = True
+
+    if(hasattr(self.obj91, '_setHierarchicalLink')):
+      self.obj91._setHierarchicalLink(False)
+
+    # MT_label__
+    self.obj91.MT_label__.setValue('6')
+
+    # MT_pivotOut__
+    self.obj91.MT_pivotOut__.setValue('')
+    self.obj91.MT_pivotOut__.setNone()
+
+    # MT_subtypeMatching__
+    self.obj91.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj91.MT_subtypeMatching__.config = 0
+
+    # MT_pivotIn__
+    self.obj91.MT_pivotIn__.setValue('')
+    self.obj91.MT_pivotIn__.setNone()
+
+    self.obj91.graphClass_= graph_MT_pre__apply_contains
+    if self.genGraphics:
+       new_obj = graph_MT_pre__apply_contains(418.0,423.5,self.obj91)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("MT_pre__apply_contains", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj91.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj91)
+    self.globalAndLocalPostcondition(self.obj91, rootNode)
+    self.obj91.postAction( rootNode.CREATE )
 
     self.obj74=MT_pre__MetaModelElement_T(self)
     self.obj74.isGraphObjectVisual = True
@@ -227,7 +495,7 @@ def built_traceability_for_rule_MDL(self, rootNode, MT_post__GM2AUTOSAR_MMRootNo
 
     self.obj74.graphClass_= graph_MT_pre__MetaModelElement_T
     if self.genGraphics:
-       new_obj = graph_MT_pre__MetaModelElement_T(263.0,406.0,self.obj74)
+       new_obj = graph_MT_pre__MetaModelElement_T(340.0,400.0,self.obj74)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("MT_pre__MetaModelElement_T", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
@@ -275,7 +543,7 @@ def built_traceability_for_rule_MDL(self, rootNode, MT_post__GM2AUTOSAR_MMRootNo
 
     self.obj75.graphClass_= graph_MT_pre__MetaModelElement_S
     if self.genGraphics:
-       new_obj = graph_MT_pre__MetaModelElement_S(263.0,226.0,self.obj75)
+       new_obj = graph_MT_pre__MetaModelElement_S(340.0,220.0,self.obj75)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("MT_pre__MetaModelElement_S", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
@@ -300,7 +568,7 @@ def built_traceability_for_rule_MDL(self, rootNode, MT_post__GM2AUTOSAR_MMRootNo
 
     self.obj76.graphClass_= graph_RHS
     if self.genGraphics:
-       new_obj = graph_RHS(583.0,166.0,self.obj76)
+       new_obj = graph_RHS(560.0,160.0,self.obj76)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("RHS", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
@@ -325,7 +593,7 @@ def built_traceability_for_rule_MDL(self, rootNode, MT_post__GM2AUTOSAR_MMRootNo
 
     self.obj77.graphClass_= graph_LHS
     if self.genGraphics:
-       new_obj = graph_LHS(143.0,166.0,self.obj77)
+       new_obj = graph_LHS(140.0,160.0,self.obj77)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("LHS", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
@@ -338,15 +606,39 @@ def built_traceability_for_rule_MDL(self, rootNode, MT_post__GM2AUTOSAR_MMRootNo
     self.globalAndLocalPostcondition(self.obj77, rootNode)
     self.obj77.postAction( rootNode.CREATE )
 
+    # Connections for obj92 (graphObject_: Obj17) of type MT_post__MatchModel
+    self.drawConnections(
+(self.obj92,self.obj94,[842.0, 273.0, 934.0, 289.5],"true", 2) )
+    # Connections for obj93 (graphObject_: Obj18) of type MT_post__ApplyModel
+    self.drawConnections(
+(self.obj93,self.obj95,[848.0, 414.0, 936.0, 449.5],"true", 2) )
     # Connections for obj71 (graphObject_: Obj0) of type MT_post__MetaModelElement_S
     self.drawConnections(
  )
     # Connections for obj72 (graphObject_: Obj1) of type MT_post__MetaModelElement_T
     self.drawConnections(
-(self.obj72,self.obj73,[931.0, 479.0, 932.0, 389.5],"true", 2) )
+(self.obj72,self.obj73,[1024.0, 485.0, 1025.0, 395.5],"true", 2) )
+    # Connections for obj94 (graphObject_: Obj19) of type MT_post__match_contains
+    self.drawConnections(
+(self.obj94,self.obj71,[934.0, 289.5, 1026.0, 306.0],"true", 2) )
+    # Connections for obj95 (graphObject_: Obj20) of type MT_post__apply_contains
+    self.drawConnections(
+(self.obj95,self.obj72,[936.0, 449.5, 1024.0, 485.0],"true", 2) )
     # Connections for obj73 (graphObject_: Obj2) of type MT_post__trace_link
     self.drawConnections(
-(self.obj73,self.obj71,[932.0, 389.5, 933.0, 300.0],"true", 2) )
+(self.obj73,self.obj71,[1025.0, 395.5, 1026.0, 306.0],"true", 2) )
+    # Connections for obj89 (graphObject_: Obj14) of type MT_pre__ApplyModel
+    self.drawConnections(
+(self.obj89,self.obj91,[328.0, 374.0, 418.0, 423.5],"true", 2) )
+    # Connections for obj87 (graphObject_: Obj12) of type MT_pre__MatchModel
+    self.drawConnections(
+(self.obj87,self.obj90,[319.0, 253.0, 414.5, 273.5],"true", 2) )
+    # Connections for obj90 (graphObject_: Obj15) of type MT_pre__match_contains
+    self.drawConnections(
+(self.obj90,self.obj75,[414.5, 273.5, 510.0, 294.0],"true", 2) )
+    # Connections for obj91 (graphObject_: Obj16) of type MT_pre__apply_contains
+    self.drawConnections(
+(self.obj91,self.obj74,[418.0, 423.5, 508.0, 473.0],"true", 2) )
     # Connections for obj74 (graphObject_: Obj3) of type MT_pre__MetaModelElement_T
     self.drawConnections(
  )
