@@ -2,15 +2,15 @@ from core.himesis import Himesis
 import cPickle as pickle
 import uuid
 
-class Hepackage_left_eFactoryInstance_SolveRef_EPackage_EFactory_EPackage_EFactory(Himesis):
+class HeparameterlefteTypeSolveRefEParameterEClassifierEParameterEClassifier(Himesis):
     def __init__(self):
         """
-        Creates the himesis graph representing the DSLTrans rule epackage_left_eFactoryInstance_SolveRef_EPackage_EFactory_EPackage_EFactory.
+        Creates the himesis graph representing the DSLTrans rule eparameterlefteTypeSolveRefEParameterEClassifierEParameterEClassifier.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(Hepackage_left_eFactoryInstance_SolveRef_EPackage_EFactory_EPackage_EFactory, self).__init__(name='Hepackage_left_eFactoryInstance_SolveRef_EPackage_EFactory_EPackage_EFactory', num_nodes=0, edges=[])
+        super(HeparameterlefteTypeSolveRefEParameterEClassifierEParameterEClassifier, self).__init__(name='HeparameterlefteTypeSolveRefEParameterEClassifierEParameterEClassifier', num_nodes=0, edges=[])
         
         
         # Set the graph attributes
@@ -21,90 +21,90 @@ S'HimesisMM'
 p2
 a.""")
         
-        self["name"] = """epackage_left_eFactoryInstance_SolveRef_EPackage_EFactory_EPackage_EFactory"""
-        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'epackage_left_eFactoryInstance_SolveRef_EPackage_EFactory_EPackage_EFactory')
+        self["name"] = """eparameterlefteTypeSolveRefEParameterEClassifierEParameterEClassifier"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eparameterlefteTypeSolveRefEParameterEClassifierEParameterEClassifier')
         
         # match model. We only support one match model
         self.add_node()
         self.vs[0]["mm__"] = """MatchModel"""
-        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'epackage_left_eFactoryInstance_SolveRef_EPackage_EFactory_EPackage_EFactorymatchmodel0')
+        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eparameterlefteTypeSolveRefEParameterEClassifierEParameterEClassifiermatchmodel0')
         
         # apply model node
         self.add_node()
         self.vs[1]["mm__"] = """ApplyModel"""
-        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'epackage_left_eFactoryInstance_SolveRef_EPackage_EFactory_EPackage_EFactoryapplymodel1')
+        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eparameterlefteTypeSolveRefEParameterEClassifierEParameterEClassifierapplymodel1')
         
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'epackage_left_eFactoryInstance_SolveRef_EPackage_EFactory_EPackage_EFactorypairedwith2')
+        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eparameterlefteTypeSolveRefEParameterEClassifierEParameterEClassifierpairedwith2')
         
-    	# match class EPackage() node
+    	# match class EParameter() node
     	self.add_node()
     	self.vs[3]["name"] = """"""
-        self.vs[3]["classtype"] = """EPackage"""
-        self.vs[3]["mm__"] = """EPackage"""
+        self.vs[3]["classtype"] = """EParameter"""
+        self.vs[3]["mm__"] = """EParameter"""
         self.vs[3]["cardinality"] = """+"""
         #self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# match_contains node for class EPackage()
+    	# match_contains node for class EParameter()
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         #self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains4')
-    	# match class EFactory() node
+    	# match class EClassifier() node
     	self.add_node()
     	self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """EFactory"""
-        self.vs[5]["mm__"] = """EFactory"""
+        self.vs[5]["classtype"] = """EClassifier"""
+        self.vs[5]["mm__"] = """EClassifier"""
         self.vs[5]["cardinality"] = """+"""
         #self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# match_contains node for class EFactory()
+    	# match_contains node for class EClassifier()
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
         #self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains6')
         
         
-    	# apply class EPackage() node
+    	# apply class EParameter() node
     	self.add_node()
     	self.vs[7]["name"] = """"""
-        self.vs[7]["classtype"] = """EPackage"""
-        self.vs[7]["mm__"] = """EPackage"""
+        self.vs[7]["classtype"] = """EParameter"""
+        self.vs[7]["mm__"] = """EParameter"""
         self.vs[7]["cardinality"] = """1"""
         #self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply_contains node for class EPackage()
+    	# apply_contains node for class EParameter()
         self.add_node()
         self.vs[8]["mm__"] = """apply_contains"""
         #self.vs[8]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains8')
-    	# apply class EFactory() node
+    	# apply class EClassifier() node
     	self.add_node()
     	self.vs[9]["name"] = """"""
-        self.vs[9]["classtype"] = """EFactory"""
-        self.vs[9]["mm__"] = """EFactory"""
+        self.vs[9]["classtype"] = """EClassifier"""
+        self.vs[9]["mm__"] = """EClassifier"""
         self.vs[9]["cardinality"] = """1"""
         #self.vs[9]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply_contains node for class EFactory()
+    	# apply_contains node for class EClassifier()
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
         #self.vs[10]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains10')
         
         
-    	# match association EPackage--eFactoryInstance-->EFactory node
+    	# match association EParameter--eType-->EClassifier node
     	self.add_node()
-    	self.vs[11]["associationType"] = """eFactoryInstance"""
+    	self.vs[11]["associationType"] = """eType"""
         self.vs[11]["mm__"] = """directLink_S"""
         #self.vs[11]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc11')
         
-    	# apply association EPackage--eFactoryInstance-->EFactory node
+    	# apply association EParameter--eType-->EClassifier node
     	self.add_node()
-    	self.vs[12]["associationType"] = """eFactoryInstance"""
+    	self.vs[12]["associationType"] = """eType"""
         self.vs[12]["mm__"] = """directLink_T"""
         #self.vs[12]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc12')
         
-    	# backward association EPackage---->EPackage node
+    	# backward association EParameter---->EParameter node
     	self.add_node()
     	self.vs[13]["type"] = """ruleDef"""
         self.vs[13]["mm__"] = """backward_link"""
         #self.vs[13]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink13')
-    	# backward association EFactory---->EFactory node
+    	# backward association EClassifier---->EClassifier node
     	self.add_node()
     	self.vs[14]["type"] = """ruleDef"""
         self.vs[14]["mm__"] = """backward_link"""
@@ -176,28 +176,28 @@ a.""")
         # Add the edges
         self.add_edges([
     		(0,4), # matchmodel -> match_contains
-    		(4,3), # match_contains -> match_class EPackage()
+    		(4,3), # match_contains -> match_class EParameter()
     		(0,6), # matchmodel -> match_contains
-    		(6,5), # match_contains -> match_class EFactory()
+    		(6,5), # match_contains -> match_class EClassifier()
     		(1,8), # applymodel -> apply_contains
-    		(8,7), # apply_contains -> apply_class EPackage()
+    		(8,7), # apply_contains -> apply_class EParameter()
     		(1,10), # applymodel -> apply_contains
-    		(10,9), # apply_contains -> apply_class EFactory()
-    		(3,11), # match_class EPackage() -> association eFactoryInstance
-    		(11,5), # association eFactoryInstance  -> match_class EFactory()
-    		(7,12), # apply_class EPackage() -> association eFactoryInstance
-    		(12,9), # association eFactoryInstance  -> apply_class EFactory()
-    		(7,13), # apply_class EPackage() -> backward_association
-    		(13,3), #  backward_association -> apply_class EPackage()
-    		(9,14), # apply_class EFactory() -> backward_association
-    		(14,5), #  backward_association -> apply_class EFactory()
-    		(7,15), # apply_class EPackage() -> has_apply_attribute ApplyAttribute ()
+    		(10,9), # apply_contains -> apply_class EClassifier()
+    		(3,11), # match_class EParameter() -> association eType
+    		(11,5), # association eType  -> match_class EClassifier()
+    		(7,12), # apply_class EParameter() -> association eType
+    		(12,9), # association eType  -> apply_class EClassifier()
+    		(7,13), # apply_class EParameter() -> backward_association
+    		(13,3), #  backward_association -> apply_class EParameter()
+    		(9,14), # apply_class EClassifier() -> backward_association
+    		(14,5), #  backward_association -> apply_class EClassifier()
+    		(7,15), # apply_class EParameter() -> has_apply_attribute ApplyAttribute ()
     		(15,16), #  has_apply_attribute ApplyAttribute () -> apply_attribute ApplyAttribute ()
     		(17,18), #  equation of apply attribute ApplyAttribute () -> left_expr
     		(18,16), #  left_expr -> apply_attribute ApplyAttribute ()
     		(17,19), #  equation of apply attribute ApplyAttribute () -> right_expr
     		(19,20), # right_expr --> term
-    		(9,21), # apply_class EFactory() -> has_apply_attribute ApplyAttribute ()
+    		(9,21), # apply_class EClassifier() -> has_apply_attribute ApplyAttribute ()
     		(21,22), #  has_apply_attribute ApplyAttribute () -> apply_attribute ApplyAttribute ()
     		(23,24), #  equation of apply attribute ApplyAttribute () -> left_expr
     		(24,22), #  left_expr -> apply_attribute ApplyAttribute ()

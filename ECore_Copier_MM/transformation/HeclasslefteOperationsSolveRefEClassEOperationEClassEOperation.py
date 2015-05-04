@@ -2,15 +2,15 @@ from core.himesis import Himesis
 import cPickle as pickle
 import uuid
 
-class Heattribute_left_eType_SolveRef_EAttribute_EClassifier_EAttribute_EClassifier(Himesis):
+class HeclasslefteOperationsSolveRefEClassEOperationEClassEOperation(Himesis):
     def __init__(self):
         """
-        Creates the himesis graph representing the DSLTrans rule eattribute_left_eType_SolveRef_EAttribute_EClassifier_EAttribute_EClassifier.
+        Creates the himesis graph representing the DSLTrans rule eclasslefteOperationsSolveRefEClassEOperationEClassEOperation.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(Heattribute_left_eType_SolveRef_EAttribute_EClassifier_EAttribute_EClassifier, self).__init__(name='Heattribute_left_eType_SolveRef_EAttribute_EClassifier_EAttribute_EClassifier', num_nodes=0, edges=[])
+        super(HeclasslefteOperationsSolveRefEClassEOperationEClassEOperation, self).__init__(name='HeclasslefteOperationsSolveRefEClassEOperationEClassEOperation', num_nodes=0, edges=[])
         
         
         # Set the graph attributes
@@ -21,90 +21,90 @@ S'HimesisMM'
 p2
 a.""")
         
-        self["name"] = """eattribute_left_eType_SolveRef_EAttribute_EClassifier_EAttribute_EClassifier"""
-        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eattribute_left_eType_SolveRef_EAttribute_EClassifier_EAttribute_EClassifier')
+        self["name"] = """eclasslefteOperationsSolveRefEClassEOperationEClassEOperation"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eclasslefteOperationsSolveRefEClassEOperationEClassEOperation')
         
         # match model. We only support one match model
         self.add_node()
         self.vs[0]["mm__"] = """MatchModel"""
-        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eattribute_left_eType_SolveRef_EAttribute_EClassifier_EAttribute_EClassifiermatchmodel0')
+        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eclasslefteOperationsSolveRefEClassEOperationEClassEOperationmatchmodel0')
         
         # apply model node
         self.add_node()
         self.vs[1]["mm__"] = """ApplyModel"""
-        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eattribute_left_eType_SolveRef_EAttribute_EClassifier_EAttribute_EClassifierapplymodel1')
+        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eclasslefteOperationsSolveRefEClassEOperationEClassEOperationapplymodel1')
         
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eattribute_left_eType_SolveRef_EAttribute_EClassifier_EAttribute_EClassifierpairedwith2')
+        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eclasslefteOperationsSolveRefEClassEOperationEClassEOperationpairedwith2')
         
-    	# match class EAttribute() node
+    	# match class EClass() node
     	self.add_node()
     	self.vs[3]["name"] = """"""
-        self.vs[3]["classtype"] = """EAttribute"""
-        self.vs[3]["mm__"] = """EAttribute"""
+        self.vs[3]["classtype"] = """EClass"""
+        self.vs[3]["mm__"] = """EClass"""
         self.vs[3]["cardinality"] = """+"""
         #self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# match_contains node for class EAttribute()
+    	# match_contains node for class EClass()
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         #self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains4')
-    	# match class EClassifier() node
+    	# match class EOperation() node
     	self.add_node()
     	self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """EClassifier"""
-        self.vs[5]["mm__"] = """EClassifier"""
+        self.vs[5]["classtype"] = """EOperation"""
+        self.vs[5]["mm__"] = """EOperation"""
         self.vs[5]["cardinality"] = """+"""
         #self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# match_contains node for class EClassifier()
+    	# match_contains node for class EOperation()
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
         #self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains6')
         
         
-    	# apply class EAttribute() node
+    	# apply class EClass() node
     	self.add_node()
     	self.vs[7]["name"] = """"""
-        self.vs[7]["classtype"] = """EAttribute"""
-        self.vs[7]["mm__"] = """EAttribute"""
+        self.vs[7]["classtype"] = """EClass"""
+        self.vs[7]["mm__"] = """EClass"""
         self.vs[7]["cardinality"] = """1"""
         #self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply_contains node for class EAttribute()
+    	# apply_contains node for class EClass()
         self.add_node()
         self.vs[8]["mm__"] = """apply_contains"""
         #self.vs[8]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains8')
-    	# apply class EClassifier() node
+    	# apply class EOperation() node
     	self.add_node()
     	self.vs[9]["name"] = """"""
-        self.vs[9]["classtype"] = """EClassifier"""
-        self.vs[9]["mm__"] = """EClassifier"""
+        self.vs[9]["classtype"] = """EOperation"""
+        self.vs[9]["mm__"] = """EOperation"""
         self.vs[9]["cardinality"] = """1"""
         #self.vs[9]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply_contains node for class EClassifier()
+    	# apply_contains node for class EOperation()
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
         #self.vs[10]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains10')
         
         
-    	# match association EAttribute--eType-->EClassifier node
+    	# match association EClass--eOperations-->EOperation node
     	self.add_node()
-    	self.vs[11]["associationType"] = """eType"""
+    	self.vs[11]["associationType"] = """eOperations"""
         self.vs[11]["mm__"] = """directLink_S"""
         #self.vs[11]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc11')
         
-    	# apply association EAttribute--eType-->EClassifier node
+    	# apply association EClass--eOperations-->EOperation node
     	self.add_node()
-    	self.vs[12]["associationType"] = """eType"""
+    	self.vs[12]["associationType"] = """eOperations"""
         self.vs[12]["mm__"] = """directLink_T"""
         #self.vs[12]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc12')
         
-    	# backward association EAttribute---->EAttribute node
+    	# backward association EClass---->EClass node
     	self.add_node()
     	self.vs[13]["type"] = """ruleDef"""
         self.vs[13]["mm__"] = """backward_link"""
         #self.vs[13]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink13')
-    	# backward association EClassifier---->EClassifier node
+    	# backward association EOperation---->EOperation node
     	self.add_node()
     	self.vs[14]["type"] = """ruleDef"""
         self.vs[14]["mm__"] = """backward_link"""
@@ -176,28 +176,28 @@ a.""")
         # Add the edges
         self.add_edges([
     		(0,4), # matchmodel -> match_contains
-    		(4,3), # match_contains -> match_class EAttribute()
+    		(4,3), # match_contains -> match_class EClass()
     		(0,6), # matchmodel -> match_contains
-    		(6,5), # match_contains -> match_class EClassifier()
+    		(6,5), # match_contains -> match_class EOperation()
     		(1,8), # applymodel -> apply_contains
-    		(8,7), # apply_contains -> apply_class EAttribute()
+    		(8,7), # apply_contains -> apply_class EClass()
     		(1,10), # applymodel -> apply_contains
-    		(10,9), # apply_contains -> apply_class EClassifier()
-    		(3,11), # match_class EAttribute() -> association eType
-    		(11,5), # association eType  -> match_class EClassifier()
-    		(7,12), # apply_class EAttribute() -> association eType
-    		(12,9), # association eType  -> apply_class EClassifier()
-    		(7,13), # apply_class EAttribute() -> backward_association
-    		(13,3), #  backward_association -> apply_class EAttribute()
-    		(9,14), # apply_class EClassifier() -> backward_association
-    		(14,5), #  backward_association -> apply_class EClassifier()
-    		(7,15), # apply_class EAttribute() -> has_apply_attribute ApplyAttribute ()
+    		(10,9), # apply_contains -> apply_class EOperation()
+    		(3,11), # match_class EClass() -> association eOperations
+    		(11,5), # association eOperations  -> match_class EOperation()
+    		(7,12), # apply_class EClass() -> association eOperations
+    		(12,9), # association eOperations  -> apply_class EOperation()
+    		(7,13), # apply_class EClass() -> backward_association
+    		(13,3), #  backward_association -> apply_class EClass()
+    		(9,14), # apply_class EOperation() -> backward_association
+    		(14,5), #  backward_association -> apply_class EOperation()
+    		(7,15), # apply_class EClass() -> has_apply_attribute ApplyAttribute ()
     		(15,16), #  has_apply_attribute ApplyAttribute () -> apply_attribute ApplyAttribute ()
     		(17,18), #  equation of apply attribute ApplyAttribute () -> left_expr
     		(18,16), #  left_expr -> apply_attribute ApplyAttribute ()
     		(17,19), #  equation of apply attribute ApplyAttribute () -> right_expr
     		(19,20), # right_expr --> term
-    		(9,21), # apply_class EClassifier() -> has_apply_attribute ApplyAttribute ()
+    		(9,21), # apply_class EOperation() -> has_apply_attribute ApplyAttribute ()
     		(21,22), #  has_apply_attribute ApplyAttribute () -> apply_attribute ApplyAttribute ()
     		(23,24), #  equation of apply attribute ApplyAttribute () -> left_expr
     		(24,22), #  left_expr -> apply_attribute ApplyAttribute ()

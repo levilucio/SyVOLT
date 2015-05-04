@@ -2,15 +2,15 @@ from core.himesis import Himesis
 import cPickle as pickle
 import uuid
 
-class Heenum_left_eLiterals_SolveRef_EEnum_EEnumLiteral_EEnum_EEnumLiteral(Himesis):
+class HeoperationlefteTypeSolveRefEOperationEClassifierEOperationEClassifier(Himesis):
     def __init__(self):
         """
-        Creates the himesis graph representing the DSLTrans rule eenum_left_eLiterals_SolveRef_EEnum_EEnumLiteral_EEnum_EEnumLiteral.
+        Creates the himesis graph representing the DSLTrans rule eoperationlefteTypeSolveRefEOperationEClassifierEOperationEClassifier.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(Heenum_left_eLiterals_SolveRef_EEnum_EEnumLiteral_EEnum_EEnumLiteral, self).__init__(name='Heenum_left_eLiterals_SolveRef_EEnum_EEnumLiteral_EEnum_EEnumLiteral', num_nodes=0, edges=[])
+        super(HeoperationlefteTypeSolveRefEOperationEClassifierEOperationEClassifier, self).__init__(name='HeoperationlefteTypeSolveRefEOperationEClassifierEOperationEClassifier', num_nodes=0, edges=[])
         
         
         # Set the graph attributes
@@ -21,90 +21,90 @@ S'HimesisMM'
 p2
 a.""")
         
-        self["name"] = """eenum_left_eLiterals_SolveRef_EEnum_EEnumLiteral_EEnum_EEnumLiteral"""
-        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eenum_left_eLiterals_SolveRef_EEnum_EEnumLiteral_EEnum_EEnumLiteral')
+        self["name"] = """eoperationlefteTypeSolveRefEOperationEClassifierEOperationEClassifier"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eoperationlefteTypeSolveRefEOperationEClassifierEOperationEClassifier')
         
         # match model. We only support one match model
         self.add_node()
         self.vs[0]["mm__"] = """MatchModel"""
-        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eenum_left_eLiterals_SolveRef_EEnum_EEnumLiteral_EEnum_EEnumLiteralmatchmodel0')
+        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eoperationlefteTypeSolveRefEOperationEClassifierEOperationEClassifiermatchmodel0')
         
         # apply model node
         self.add_node()
         self.vs[1]["mm__"] = """ApplyModel"""
-        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eenum_left_eLiterals_SolveRef_EEnum_EEnumLiteral_EEnum_EEnumLiteralapplymodel1')
+        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eoperationlefteTypeSolveRefEOperationEClassifierEOperationEClassifierapplymodel1')
         
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eenum_left_eLiterals_SolveRef_EEnum_EEnumLiteral_EEnum_EEnumLiteralpairedwith2')
+        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eoperationlefteTypeSolveRefEOperationEClassifierEOperationEClassifierpairedwith2')
         
-    	# match class EEnum() node
+    	# match class EOperation() node
     	self.add_node()
     	self.vs[3]["name"] = """"""
-        self.vs[3]["classtype"] = """EEnum"""
-        self.vs[3]["mm__"] = """EEnum"""
+        self.vs[3]["classtype"] = """EOperation"""
+        self.vs[3]["mm__"] = """EOperation"""
         self.vs[3]["cardinality"] = """+"""
         #self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# match_contains node for class EEnum()
+    	# match_contains node for class EOperation()
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         #self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains4')
-    	# match class EEnumLiteral() node
+    	# match class EClassifier() node
     	self.add_node()
     	self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """EEnumLiteral"""
-        self.vs[5]["mm__"] = """EEnumLiteral"""
+        self.vs[5]["classtype"] = """EClassifier"""
+        self.vs[5]["mm__"] = """EClassifier"""
         self.vs[5]["cardinality"] = """+"""
         #self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# match_contains node for class EEnumLiteral()
+    	# match_contains node for class EClassifier()
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
         #self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains6')
         
         
-    	# apply class EEnum() node
+    	# apply class EOperation() node
     	self.add_node()
     	self.vs[7]["name"] = """"""
-        self.vs[7]["classtype"] = """EEnum"""
-        self.vs[7]["mm__"] = """EEnum"""
+        self.vs[7]["classtype"] = """EOperation"""
+        self.vs[7]["mm__"] = """EOperation"""
         self.vs[7]["cardinality"] = """1"""
         #self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply_contains node for class EEnum()
+    	# apply_contains node for class EOperation()
         self.add_node()
         self.vs[8]["mm__"] = """apply_contains"""
         #self.vs[8]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains8')
-    	# apply class EEnumLiteral() node
+    	# apply class EClassifier() node
     	self.add_node()
     	self.vs[9]["name"] = """"""
-        self.vs[9]["classtype"] = """EEnumLiteral"""
-        self.vs[9]["mm__"] = """EEnumLiteral"""
+        self.vs[9]["classtype"] = """EClassifier"""
+        self.vs[9]["mm__"] = """EClassifier"""
         self.vs[9]["cardinality"] = """1"""
         #self.vs[9]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply_contains node for class EEnumLiteral()
+    	# apply_contains node for class EClassifier()
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
         #self.vs[10]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains10')
         
         
-    	# match association EEnum--eLiterals-->EEnumLiteral node
+    	# match association EOperation--eType-->EClassifier node
     	self.add_node()
-    	self.vs[11]["associationType"] = """eLiterals"""
+    	self.vs[11]["associationType"] = """eType"""
         self.vs[11]["mm__"] = """directLink_S"""
         #self.vs[11]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc11')
         
-    	# apply association EEnum--eLiterals-->EEnumLiteral node
+    	# apply association EOperation--eType-->EClassifier node
     	self.add_node()
-    	self.vs[12]["associationType"] = """eLiterals"""
+    	self.vs[12]["associationType"] = """eType"""
         self.vs[12]["mm__"] = """directLink_T"""
         #self.vs[12]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc12')
         
-    	# backward association EEnum---->EEnum node
+    	# backward association EOperation---->EOperation node
     	self.add_node()
     	self.vs[13]["type"] = """ruleDef"""
         self.vs[13]["mm__"] = """backward_link"""
         #self.vs[13]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink13')
-    	# backward association EEnumLiteral---->EEnumLiteral node
+    	# backward association EClassifier---->EClassifier node
     	self.add_node()
     	self.vs[14]["type"] = """ruleDef"""
         self.vs[14]["mm__"] = """backward_link"""
@@ -176,28 +176,28 @@ a.""")
         # Add the edges
         self.add_edges([
     		(0,4), # matchmodel -> match_contains
-    		(4,3), # match_contains -> match_class EEnum()
+    		(4,3), # match_contains -> match_class EOperation()
     		(0,6), # matchmodel -> match_contains
-    		(6,5), # match_contains -> match_class EEnumLiteral()
+    		(6,5), # match_contains -> match_class EClassifier()
     		(1,8), # applymodel -> apply_contains
-    		(8,7), # apply_contains -> apply_class EEnum()
+    		(8,7), # apply_contains -> apply_class EOperation()
     		(1,10), # applymodel -> apply_contains
-    		(10,9), # apply_contains -> apply_class EEnumLiteral()
-    		(3,11), # match_class EEnum() -> association eLiterals
-    		(11,5), # association eLiterals  -> match_class EEnumLiteral()
-    		(7,12), # apply_class EEnum() -> association eLiterals
-    		(12,9), # association eLiterals  -> apply_class EEnumLiteral()
-    		(7,13), # apply_class EEnum() -> backward_association
-    		(13,3), #  backward_association -> apply_class EEnum()
-    		(9,14), # apply_class EEnumLiteral() -> backward_association
-    		(14,5), #  backward_association -> apply_class EEnumLiteral()
-    		(7,15), # apply_class EEnum() -> has_apply_attribute ApplyAttribute ()
+    		(10,9), # apply_contains -> apply_class EClassifier()
+    		(3,11), # match_class EOperation() -> association eType
+    		(11,5), # association eType  -> match_class EClassifier()
+    		(7,12), # apply_class EOperation() -> association eType
+    		(12,9), # association eType  -> apply_class EClassifier()
+    		(7,13), # apply_class EOperation() -> backward_association
+    		(13,3), #  backward_association -> apply_class EOperation()
+    		(9,14), # apply_class EClassifier() -> backward_association
+    		(14,5), #  backward_association -> apply_class EClassifier()
+    		(7,15), # apply_class EOperation() -> has_apply_attribute ApplyAttribute ()
     		(15,16), #  has_apply_attribute ApplyAttribute () -> apply_attribute ApplyAttribute ()
     		(17,18), #  equation of apply attribute ApplyAttribute () -> left_expr
     		(18,16), #  left_expr -> apply_attribute ApplyAttribute ()
     		(17,19), #  equation of apply attribute ApplyAttribute () -> right_expr
     		(19,20), # right_expr --> term
-    		(9,21), # apply_class EEnumLiteral() -> has_apply_attribute ApplyAttribute ()
+    		(9,21), # apply_class EClassifier() -> has_apply_attribute ApplyAttribute ()
     		(21,22), #  has_apply_attribute ApplyAttribute () -> apply_attribute ApplyAttribute ()
     		(23,24), #  equation of apply attribute ApplyAttribute () -> left_expr
     		(24,22), #  left_expr -> apply_attribute ApplyAttribute ()
