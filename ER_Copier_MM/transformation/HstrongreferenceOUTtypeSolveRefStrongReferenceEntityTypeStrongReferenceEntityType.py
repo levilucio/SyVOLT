@@ -2,15 +2,15 @@ from core.himesis import Himesis
 import cPickle as pickle
 import uuid
 
-class Hentitytype_OUT_features_SolveRef_EntityType_Feature_EntityType_Feature(Himesis):
+class HstrongreferenceOUTtypeSolveRefStrongReferenceEntityTypeStrongReferenceEntityType(Himesis):
     def __init__(self):
         """
-        Creates the himesis graph representing the DSLTrans rule entitytype_OUT_features_SolveRef_EntityType_Feature_EntityType_Feature.
+        Creates the himesis graph representing the DSLTrans rule strongreferenceOUTtypeSolveRefStrongReferenceEntityTypeStrongReferenceEntityType.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(Hentitytype_OUT_features_SolveRef_EntityType_Feature_EntityType_Feature, self).__init__(name='Hentitytype_OUT_features_SolveRef_EntityType_Feature_EntityType_Feature', num_nodes=0, edges=[])
+        super(HstrongreferenceOUTtypeSolveRefStrongReferenceEntityTypeStrongReferenceEntityType, self).__init__(name='HstrongreferenceOUTtypeSolveRefStrongReferenceEntityTypeStrongReferenceEntityType', num_nodes=0, edges=[])
         
         
         # Set the graph attributes
@@ -21,90 +21,90 @@ S'HimesisMM'
 p2
 a.""")
         
-        self["name"] = """entitytype_OUT_features_SolveRef_EntityType_Feature_EntityType_Feature"""
-        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'entitytype_OUT_features_SolveRef_EntityType_Feature_EntityType_Feature')
+        self["name"] = """strongreferenceOUTtypeSolveRefStrongReferenceEntityTypeStrongReferenceEntityType"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'strongreferenceOUTtypeSolveRefStrongReferenceEntityTypeStrongReferenceEntityType')
         
         # match model. We only support one match model
         self.add_node()
         self.vs[0]["mm__"] = """MatchModel"""
-        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'entitytype_OUT_features_SolveRef_EntityType_Feature_EntityType_Featurematchmodel0')
+        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'strongreferenceOUTtypeSolveRefStrongReferenceEntityTypeStrongReferenceEntityTypematchmodel0')
         
         # apply model node
         self.add_node()
         self.vs[1]["mm__"] = """ApplyModel"""
-        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'entitytype_OUT_features_SolveRef_EntityType_Feature_EntityType_Featureapplymodel1')
+        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'strongreferenceOUTtypeSolveRefStrongReferenceEntityTypeStrongReferenceEntityTypeapplymodel1')
         
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'entitytype_OUT_features_SolveRef_EntityType_Feature_EntityType_Featurepairedwith2')
+        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'strongreferenceOUTtypeSolveRefStrongReferenceEntityTypeStrongReferenceEntityTypepairedwith2')
         
-    	# match class EntityType() node
+    	# match class StrongReference() node
     	self.add_node()
     	self.vs[3]["name"] = """"""
-        self.vs[3]["classtype"] = """EntityType"""
-        self.vs[3]["mm__"] = """EntityType"""
+        self.vs[3]["classtype"] = """StrongReference"""
+        self.vs[3]["mm__"] = """StrongReference"""
         self.vs[3]["cardinality"] = """+"""
         #self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# match_contains node for class EntityType()
+    	# match_contains node for class StrongReference()
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         #self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains4')
-    	# match class Feature() node
+    	# match class EntityType() node
     	self.add_node()
     	self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """Feature"""
-        self.vs[5]["mm__"] = """Feature"""
+        self.vs[5]["classtype"] = """EntityType"""
+        self.vs[5]["mm__"] = """EntityType"""
         self.vs[5]["cardinality"] = """+"""
         #self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# match_contains node for class Feature()
+    	# match_contains node for class EntityType()
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
         #self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains6')
         
         
-    	# apply class EntityType() node
+    	# apply class StrongReference() node
     	self.add_node()
     	self.vs[7]["name"] = """"""
-        self.vs[7]["classtype"] = """EntityType"""
-        self.vs[7]["mm__"] = """EntityType"""
+        self.vs[7]["classtype"] = """StrongReference"""
+        self.vs[7]["mm__"] = """StrongReference"""
         self.vs[7]["cardinality"] = """1"""
         #self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply_contains node for class EntityType()
+    	# apply_contains node for class StrongReference()
         self.add_node()
         self.vs[8]["mm__"] = """apply_contains"""
         #self.vs[8]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains8')
-    	# apply class Feature() node
+    	# apply class EntityType() node
     	self.add_node()
     	self.vs[9]["name"] = """"""
-        self.vs[9]["classtype"] = """Feature"""
-        self.vs[9]["mm__"] = """Feature"""
+        self.vs[9]["classtype"] = """EntityType"""
+        self.vs[9]["mm__"] = """EntityType"""
         self.vs[9]["cardinality"] = """1"""
         #self.vs[9]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply_contains node for class Feature()
+    	# apply_contains node for class EntityType()
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
         #self.vs[10]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains10')
         
         
-    	# match association EntityType--features-->Feature node
+    	# match association StrongReference--type-->EntityType node
     	self.add_node()
-    	self.vs[11]["associationType"] = """features"""
+    	self.vs[11]["associationType"] = """type"""
         self.vs[11]["mm__"] = """directLink_S"""
         #self.vs[11]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc11')
         
-    	# apply association EntityType--features-->Feature node
+    	# apply association StrongReference--type-->EntityType node
     	self.add_node()
-    	self.vs[12]["associationType"] = """features"""
+    	self.vs[12]["associationType"] = """type"""
         self.vs[12]["mm__"] = """directLink_T"""
         #self.vs[12]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc12')
         
-    	# backward association EntityType---->EntityType node
+    	# backward association StrongReference---->StrongReference node
     	self.add_node()
     	self.vs[13]["type"] = """ruleDef"""
         self.vs[13]["mm__"] = """backward_link"""
         #self.vs[13]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink13')
-    	# backward association Feature---->Feature node
+    	# backward association EntityType---->EntityType node
     	self.add_node()
     	self.vs[14]["type"] = """ruleDef"""
         self.vs[14]["mm__"] = """backward_link"""
@@ -176,28 +176,28 @@ a.""")
         # Add the edges
         self.add_edges([
     		(0,4), # matchmodel -> match_contains
-    		(4,3), # match_contains -> match_class EntityType()
+    		(4,3), # match_contains -> match_class StrongReference()
     		(0,6), # matchmodel -> match_contains
-    		(6,5), # match_contains -> match_class Feature()
+    		(6,5), # match_contains -> match_class EntityType()
     		(1,8), # applymodel -> apply_contains
-    		(8,7), # apply_contains -> apply_class EntityType()
+    		(8,7), # apply_contains -> apply_class StrongReference()
     		(1,10), # applymodel -> apply_contains
-    		(10,9), # apply_contains -> apply_class Feature()
-    		(3,11), # match_class EntityType() -> association features
-    		(11,5), # association features  -> match_class Feature()
-    		(7,12), # apply_class EntityType() -> association features
-    		(12,9), # association features  -> apply_class Feature()
-    		(7,13), # apply_class EntityType() -> backward_association
-    		(13,3), #  backward_association -> apply_class EntityType()
-    		(9,14), # apply_class Feature() -> backward_association
-    		(14,5), #  backward_association -> apply_class Feature()
-    		(7,15), # apply_class EntityType() -> has_apply_attribute ApplyAttribute ()
+    		(10,9), # apply_contains -> apply_class EntityType()
+    		(3,11), # match_class StrongReference() -> association type
+    		(11,5), # association type  -> match_class EntityType()
+    		(7,12), # apply_class StrongReference() -> association type
+    		(12,9), # association type  -> apply_class EntityType()
+    		(7,13), # apply_class StrongReference() -> backward_association
+    		(13,3), #  backward_association -> apply_class StrongReference()
+    		(9,14), # apply_class EntityType() -> backward_association
+    		(14,5), #  backward_association -> apply_class EntityType()
+    		(7,15), # apply_class StrongReference() -> has_apply_attribute ApplyAttribute ()
     		(15,16), #  has_apply_attribute ApplyAttribute () -> apply_attribute ApplyAttribute ()
     		(17,18), #  equation of apply attribute ApplyAttribute () -> left_expr
     		(18,16), #  left_expr -> apply_attribute ApplyAttribute ()
     		(17,19), #  equation of apply attribute ApplyAttribute () -> right_expr
     		(19,20), # right_expr --> term
-    		(9,21), # apply_class Feature() -> has_apply_attribute ApplyAttribute ()
+    		(9,21), # apply_class EntityType() -> has_apply_attribute ApplyAttribute ()
     		(21,22), #  has_apply_attribute ApplyAttribute () -> apply_attribute ApplyAttribute ()
     		(23,24), #  equation of apply attribute ApplyAttribute () -> left_expr
     		(24,22), #  left_expr -> apply_attribute ApplyAttribute ()

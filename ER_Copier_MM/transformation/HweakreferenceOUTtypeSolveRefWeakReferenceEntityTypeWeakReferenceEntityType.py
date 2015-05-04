@@ -2,15 +2,15 @@ from core.himesis import Himesis
 import cPickle as pickle
 import uuid
 
-class Hermodel_OUT_entities_SolveRef_ERModel_EntityType_ERModel_EntityType(Himesis):
+class HweakreferenceOUTtypeSolveRefWeakReferenceEntityTypeWeakReferenceEntityType(Himesis):
     def __init__(self):
         """
-        Creates the himesis graph representing the DSLTrans rule ermodel_OUT_entities_SolveRef_ERModel_EntityType_ERModel_EntityType.
+        Creates the himesis graph representing the DSLTrans rule weakreferenceOUTtypeSolveRefWeakReferenceEntityTypeWeakReferenceEntityType.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(Hermodel_OUT_entities_SolveRef_ERModel_EntityType_ERModel_EntityType, self).__init__(name='Hermodel_OUT_entities_SolveRef_ERModel_EntityType_ERModel_EntityType', num_nodes=0, edges=[])
+        super(HweakreferenceOUTtypeSolveRefWeakReferenceEntityTypeWeakReferenceEntityType, self).__init__(name='HweakreferenceOUTtypeSolveRefWeakReferenceEntityTypeWeakReferenceEntityType', num_nodes=0, edges=[])
         
         
         # Set the graph attributes
@@ -21,32 +21,32 @@ S'HimesisMM'
 p2
 a.""")
         
-        self["name"] = """ermodel_OUT_entities_SolveRef_ERModel_EntityType_ERModel_EntityType"""
-        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ermodel_OUT_entities_SolveRef_ERModel_EntityType_ERModel_EntityType')
+        self["name"] = """weakreferenceOUTtypeSolveRefWeakReferenceEntityTypeWeakReferenceEntityType"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'weakreferenceOUTtypeSolveRefWeakReferenceEntityTypeWeakReferenceEntityType')
         
         # match model. We only support one match model
         self.add_node()
         self.vs[0]["mm__"] = """MatchModel"""
-        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ermodel_OUT_entities_SolveRef_ERModel_EntityType_ERModel_EntityTypematchmodel0')
+        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'weakreferenceOUTtypeSolveRefWeakReferenceEntityTypeWeakReferenceEntityTypematchmodel0')
         
         # apply model node
         self.add_node()
         self.vs[1]["mm__"] = """ApplyModel"""
-        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ermodel_OUT_entities_SolveRef_ERModel_EntityType_ERModel_EntityTypeapplymodel1')
+        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'weakreferenceOUTtypeSolveRefWeakReferenceEntityTypeWeakReferenceEntityTypeapplymodel1')
         
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ermodel_OUT_entities_SolveRef_ERModel_EntityType_ERModel_EntityTypepairedwith2')
+        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'weakreferenceOUTtypeSolveRefWeakReferenceEntityTypeWeakReferenceEntityTypepairedwith2')
         
-    	# match class ERModel() node
+    	# match class WeakReference() node
     	self.add_node()
     	self.vs[3]["name"] = """"""
-        self.vs[3]["classtype"] = """ERModel"""
-        self.vs[3]["mm__"] = """ERModel"""
+        self.vs[3]["classtype"] = """WeakReference"""
+        self.vs[3]["mm__"] = """WeakReference"""
         self.vs[3]["cardinality"] = """+"""
         #self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# match_contains node for class ERModel()
+    	# match_contains node for class WeakReference()
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         #self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains4')
@@ -63,14 +63,14 @@ a.""")
         #self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains6')
         
         
-    	# apply class ERModel() node
+    	# apply class WeakReference() node
     	self.add_node()
     	self.vs[7]["name"] = """"""
-        self.vs[7]["classtype"] = """ERModel"""
-        self.vs[7]["mm__"] = """ERModel"""
+        self.vs[7]["classtype"] = """WeakReference"""
+        self.vs[7]["mm__"] = """WeakReference"""
         self.vs[7]["cardinality"] = """1"""
         #self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply_contains node for class ERModel()
+    	# apply_contains node for class WeakReference()
         self.add_node()
         self.vs[8]["mm__"] = """apply_contains"""
         #self.vs[8]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains8')
@@ -87,19 +87,19 @@ a.""")
         #self.vs[10]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains10')
         
         
-    	# match association ERModel--entities-->EntityType node
+    	# match association WeakReference--type-->EntityType node
     	self.add_node()
-    	self.vs[11]["associationType"] = """entities"""
+    	self.vs[11]["associationType"] = """type"""
         self.vs[11]["mm__"] = """directLink_S"""
         #self.vs[11]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc11')
         
-    	# apply association ERModel--entities-->EntityType node
+    	# apply association WeakReference--type-->EntityType node
     	self.add_node()
-    	self.vs[12]["associationType"] = """entities"""
+    	self.vs[12]["associationType"] = """type"""
         self.vs[12]["mm__"] = """directLink_T"""
         #self.vs[12]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc12')
         
-    	# backward association ERModel---->ERModel node
+    	# backward association WeakReference---->WeakReference node
     	self.add_node()
     	self.vs[13]["type"] = """ruleDef"""
         self.vs[13]["mm__"] = """backward_link"""
@@ -176,22 +176,22 @@ a.""")
         # Add the edges
         self.add_edges([
     		(0,4), # matchmodel -> match_contains
-    		(4,3), # match_contains -> match_class ERModel()
+    		(4,3), # match_contains -> match_class WeakReference()
     		(0,6), # matchmodel -> match_contains
     		(6,5), # match_contains -> match_class EntityType()
     		(1,8), # applymodel -> apply_contains
-    		(8,7), # apply_contains -> apply_class ERModel()
+    		(8,7), # apply_contains -> apply_class WeakReference()
     		(1,10), # applymodel -> apply_contains
     		(10,9), # apply_contains -> apply_class EntityType()
-    		(3,11), # match_class ERModel() -> association entities
-    		(11,5), # association entities  -> match_class EntityType()
-    		(7,12), # apply_class ERModel() -> association entities
-    		(12,9), # association entities  -> apply_class EntityType()
-    		(7,13), # apply_class ERModel() -> backward_association
-    		(13,3), #  backward_association -> apply_class ERModel()
+    		(3,11), # match_class WeakReference() -> association type
+    		(11,5), # association type  -> match_class EntityType()
+    		(7,12), # apply_class WeakReference() -> association type
+    		(12,9), # association type  -> apply_class EntityType()
+    		(7,13), # apply_class WeakReference() -> backward_association
+    		(13,3), #  backward_association -> apply_class WeakReference()
     		(9,14), # apply_class EntityType() -> backward_association
     		(14,5), #  backward_association -> apply_class EntityType()
-    		(7,15), # apply_class ERModel() -> has_apply_attribute ApplyAttribute ()
+    		(7,15), # apply_class WeakReference() -> has_apply_attribute ApplyAttribute ()
     		(15,16), #  has_apply_attribute ApplyAttribute () -> apply_attribute ApplyAttribute ()
     		(17,18), #  equation of apply attribute ApplyAttribute () -> left_expr
     		(18,16), #  left_expr -> apply_attribute ApplyAttribute ()

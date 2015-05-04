@@ -39,27 +39,27 @@ a.""")
         self.vs[2]["mm__"] = """paired_with"""
         #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Attributepairedwith2')
         
-    	# match class Attribute() node
+    	# match class ERAttribute() node
     	self.add_node()
     	self.vs[3]["name"] = """"""
-        self.vs[3]["classtype"] = """Attribute"""
-        self.vs[3]["mm__"] = """Attribute"""
+        self.vs[3]["classtype"] = """ERAttribute"""
+        self.vs[3]["mm__"] = """ERAttribute"""
         self.vs[3]["cardinality"] = """+"""
         #self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# match_contains node for class Attribute()
+    	# match_contains node for class ERAttribute()
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         #self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains4')
         
         
-    	# apply class Attribute() node
+    	# apply class ERAttribute() node
     	self.add_node()
     	self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """Attribute"""
-        self.vs[5]["mm__"] = """Attribute"""
+        self.vs[5]["classtype"] = """ERAttribute"""
+        self.vs[5]["mm__"] = """ERAttribute"""
         self.vs[5]["cardinality"] = """1"""
         #self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply_contains node for class Attribute()
+    	# apply_contains node for class ERAttribute()
         self.add_node()
         self.vs[6]["mm__"] = """apply_contains"""
         #self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains6')
@@ -142,20 +142,20 @@ a.""")
         # Add the edges
         self.add_edges([
     		(0,4), # matchmodel -> match_contains
-    		(4,3), # match_contains -> match_class Attribute()
+    		(4,3), # match_contains -> match_class ERAttribute()
     		(1,6), # applymodel -> apply_contains
-    		(6,5), # apply_contains -> apply_class Attribute()
-    		(3,7), # match_class Attribute() -> has_match_attribute name ()
+    		(6,5), # apply_contains -> apply_class ERAttribute()
+    		(3,7), # match_class ERAttribute() -> has_match_attribute name ()
     		(7,8), #  has_match_attribute name () -> match_attribute name ()
-    		(3,9), # match_class Attribute() -> has_match_attribute type ()
+    		(3,9), # match_class ERAttribute() -> has_match_attribute type ()
     		(9,10), #  has_match_attribute type () -> match_attribute type ()
-    		(5,11), # apply_class Attribute() -> has_apply_attribute name ()
+    		(5,11), # apply_class ERAttribute() -> has_apply_attribute name ()
     		(11,12), #  has_apply_attribute name () -> apply_attribute name ()
     		(13,14), #  equation of apply attribute name () -> left_expr
     		(14,12), #  left_expr -> apply_attribute name ()
     		(13,15), #  equation of apply attribute name () -> right_expr
     		(15,8), # right_expr --> term
-    		(5,16), # apply_class Attribute() -> has_apply_attribute type ()
+    		(5,16), # apply_class ERAttribute() -> has_apply_attribute type ()
     		(16,17), #  has_apply_attribute type () -> apply_attribute type ()
     		(18,19), #  equation of apply attribute type () -> left_expr
     		(19,17), #  left_expr -> apply_attribute type ()
