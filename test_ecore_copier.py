@@ -123,24 +123,24 @@ class Test():
         j1 = self.rules['HEReference']
         k1 = self.rules['HEStringToStringMapEntry']
 
-        l1 = self.rules['Heattribute_left_eType_SolveRef_EAttribute_EClassifier_EAttribute_EClassifier']
+        l1 = self.rules['HeattributelefteTypeSolveRefEAttributeEClassifierEAttributeEClassifier']
 
-        m1 = self.rules['Heclass_left_eOperations_SolveRef_EClass_EOperation_EClass_EOperation']
-        n1 = self.rules['Heclass_left_eSuperTypes_SolveRef_EClass_EClass_EClass_EClass']
+        m1 = self.rules['HeclasslefteOperationsSolveRefEClassEOperationEClassEOperation']
+#        n1 = self.rules['HeclasslefteSuperTypesSolveRefEClassEClassEClassEClass']
 
-        o1 = self.rules['Heenum_left_eLiterals_SolveRef_EEnum_EEnumLiteral_EEnum_EEnumLiteral']
-        p1 = self.rules['Hefactory_left_ePackage_SolveRef_EFactory_EPackage_EFactory_EPackage']
+        o1 = self.rules['HeenumlefteLiteralsSolveRefEEnumEEnumLiteralEEnumEEnumLiteral']
+        p1 = self.rules['HefactoryleftePackageSolveRefEFactoryEPackageEFactoryEPackage']
 
-        q1 = self.rules['Heoperation_left_eParameters_SolveRef_EOperation_EParameter_EOperation_EParameter']
-        r1 = self.rules['Heoperation_left_eType_SolveRef_EOperation_EClassifier_EOperation_EClassifier']
+        q1 = self.rules['HeoperationlefteParametersSolveRefEOperationEParameterEOperationEParameter']
+        r1 = self.rules['HeoperationlefteTypeSolveRefEOperationEClassifierEOperationEClassifier']
 
-        s1 = self.rules['Hepackage_left_eFactoryInstance_SolveRef_EPackage_EFactory_EPackage_EFactory']
-        t1 = self.rules['Hepackage_left_eSubpackages_SolveRef_EPackage_EPackage_EPackage_EPackage']
+        s1 = self.rules['HepackagelefteFactoryInstanceSolveRefEPackageEFactoryEPackageEFactory']
+#        t1 = self.rules['HepackagelefteSubpackagesSolveRefEPackageEPackageEPackageEPackage']
 
-        u1 = self.rules['Heparameter_left_eType_SolveRef_EParameter_EClassifier_EParameter_EClassifier']
-        v1 = self.rules['Hereference_left_eOpposite_SolveRef_EReference_EReference_EReference_EReference']
+        u1 = self.rules['HeparameterlefteTypeSolveRefEParameterEClassifierEParameterEClassifier']
+#        v1 = self.rules['HereferencelefteOppositeSolveRefEReferenceEReferenceEReferenceEReference']
 
-        w1 = self.rules['Hereference_left_eType_SolveRef_EReference_EClassifier_EReference_EClassifier']
+        w1 = self.rules['HereferencelefteTypeSolveRefEReferenceEClassifierEReferenceEClassifier']
 
 
 
@@ -150,7 +150,9 @@ class Test():
                 
         #TODO: Change this number if you are modifying the transformation at all
         #if args.num_rules == -1:
-        transformation = [[a1], [b1], [c1], [d1], [e1], [f1], [g1], [h1], [i1], [j1], [k1], [l1], [m1], [n1], [o1], [p1], [q1], [r1], [s1], [t1], [u1], [v1], [w1]]
+#        transformation = [[a1], [b1], [c1], [d1], [e1], [f1], [g1], [h1], [i1], [j1], [k1], [l1], [m1], [n1], [o1], [p1], [q1], [r1], [s1], [t1], [u1], [v1], [w1]]
+        transformation = [[a1], [b1], [c1], [d1], [e1], [f1], [g1], [h1], [i1], [j1], [k1], [l1], [m1], [o1], [p1], [q1], [r1], [s1], [u1], [w1]]
+
         #else:
         #    transformation = self.select_rules([[a1,a2], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
 
@@ -163,13 +165,46 @@ class Test():
         subclasses_dict = {}
         eu1 = EcoreUtils("ECore_Copier_MM/Ecore.ecore")
         subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(eu1.getMetamodelClassNames())
+        subclasses_dict["MT_pre__EStructuralFeature"] = ["MT_pre__EAttribute", "MT_pre__EReference"]
+        subclasses_dict["MT_pre__ModelElement"] = ["MT_pre__EAnnotation", "MT_pre__EFactory", "MT_pre__ENamedElement"]
+        subclasses_dict["MT_pre__EClassifier"] = ["MT_pre__EClass", "MT_pre__EDataType"]
+        subclasses_dict["MT_pre__EDataType"] = ["MT_pre__EEnum"]
+        subclasses_dict["MT_pre__ENamedElement"] = ["MT_pre__EEnumLiteral", "MT_pre__ENamedElement", "MT_pre__EPackage", "MT_pre__ETypedElement"]        
+        subclasses_dict["MT_pre__EObject"] = ["MT_pre__EModelElement"]    
+        subclasses_dict["MT_pre__ETypedElement"] = ["MT_pre__EOperation", "MT_pre__EParameter", "MT_pre__EStructuralFeature"]  
+        subclasses_dict["MT_pre__EStructuralFeature"] = ["MT_pre__EReference"]
+            
+        
         eu2 = EcoreUtils("ECore_Copier_MM/Ecore.ecore")
         subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(eu2.getMetamodelClassNames())
 
 
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
+        
+        def change_subtype_matching(match_rule, subclass_info):
+            for v in match_rule.condition.vs():
+                if v["mm__"] in set(subclass_info.keys()):
+                    v["MT_subtypes__"] = subclass_info[v["mm__"]]
+                    v["MT_subtypeMatching__"] = True
+                    print "Changed one: " + v["mm__"]
+                                                                  
+        
+        # add polymorphism for the matchers
+        for matcher_key in self.matchRulePatterns.keys():
+            change_subtype_matching(self.matchRulePatterns[matcher_key][0],subclasses_dict)
+            
+        # add polymorphism for the combinators
+        for combs_key in self.ruleCombinators.keys():
+            if self.ruleCombinators[combs_key] != None:
+                for combinator in self.ruleCombinators[combs_key]:
+                    change_subtype_matching(combinator[0],subclasses_dict)    
 
-        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, 2, draw_svg=args.draw_svg, run_tests=args.run_tests)#
+        # add polymorphism for the tracers
+        for tracer_key in self.ruleTraceCheckers.keys():
+            if self.ruleTraceCheckers[tracer_key] != None:
+                change_subtype_matching(self.ruleTraceCheckers[tracer_key],subclasses_dict)    
+
+        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, 1, draw_svg=args.draw_svg, run_tests=args.run_tests)#
    
         ts0 = time.time()
         s.build_path_conditions()
@@ -189,8 +224,15 @@ class Test():
             print(num_pcs_s)
             #raise Exception(num_pcs_s)
  
-        print("printing path conditions")
-        s.print_path_conditions_screen()
+#         print("printing path conditions")
+#         s.print_path_conditions_screen()
+        
+        
+        # check for reachability of rules
+        
+        for layer in s.transformation:
+            for rule in layer:
+                StateProperty.checkRuleReachability(s.rule_names[rule.name], s)
 
         #s.print_path_conditions_file()
 
