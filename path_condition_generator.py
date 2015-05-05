@@ -623,7 +623,11 @@ class PathConditionGenerator(object):
                 # start with the local path condition set with just a copy of the path condition being combined.
 
                 pathCondition_name = currentpathConditionSet[pathConditionIndex]
+                
                 pathCondition = pc_dict[pathCondition_name]
+                
+                if self.expand_pc_name(pathCondition_name) == "HEmptyPathCondition_HAttribute_HEntityType":
+                    graph_to_dot("levi_debug", pathCondition)
                 
                 childrenPathConditions = [pathCondition_name]
                 
@@ -638,14 +642,15 @@ class PathConditionGenerator(object):
                 for rule in self.transformation[layer]:
                     
                     if self.verbosity >= 2:
-                        print "--------------------------------------"
+                        print "--------------------------------------"                        
                         print "Treating rule:"
                         print self.rule_names[rule.name]
                         print "Combining with:"
                         print "Path Condition:" + self.expand_pc_name(pathCondition.name)
                     if self.verbosity >= 1:
+                        print "Layer: " + str(layer+1)
                         print "Number of Path Conditions generated so far: " +  str(len(currentpathConditionSet))
-                        print "Number of Path Conditions to go in this layer: " +  str(pathConSetLength-1)
+                        print "Number of Path Conditions to go in this layer: " +  str(pathConSetLength - pathConditionIndex)
                         
                     # first check if the rule requires any other rules to execute with it,
                     # in case of rule overlapping. If all the rules that are required to execute
