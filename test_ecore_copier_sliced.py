@@ -157,7 +157,7 @@ class Test():
         post_metamodel = ["MT_post__T_MM", "MoTifRule"]
 
         subclasses_dict = {}
-        eu1 = EcoreUtils("ECore_Copier_MM/Ecore.ecore")
+        eu1 = EcoreUtils("ECore_Copier_Large_MM/Ecore.ecore")
         subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(eu1.getMetamodelClassNames())
         
         print subclasses_dict
@@ -172,7 +172,7 @@ class Test():
         subclasses_dict["MT_pre__EStructuralFeature"] = ["MT_pre__EReference"]
              
          
-        eu2 = EcoreUtils("ECore_Copier_MM/Ecore.ecore")
+        eu2 = EcoreUtils("ECore_Copier_Large_MM/Ecore.ecore")
         subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(eu2.getMetamodelClassNames())
  
  
