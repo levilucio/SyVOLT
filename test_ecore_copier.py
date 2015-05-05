@@ -141,7 +141,7 @@ class Test():
 #        v1 = self.rules['HereferencelefteOppositeSolveRefEReferenceEReferenceEReferenceEReference']
 
         w1 = self.rules['HereferencelefteTypeSolveRefEReferenceEClassifierEReferenceEClassifier']
-
+        x1 = self.rules['HeclasslefteStructuralFeaturesSolveRefEClassEStructuralFeatureEClassEStructuralFeature']
 
 
         #get the expected num from the args
@@ -151,7 +151,7 @@ class Test():
         #TODO: Change this number if you are modifying the transformation at all
         #if args.num_rules == -1:
 #        transformation = [[a1], [b1], [c1], [d1], [e1], [f1], [g1], [h1], [i1], [j1], [k1], [l1], [m1], [n1], [o1], [p1], [q1], [r1], [s1], [t1], [u1], [v1], [w1]]
-        transformation = [[a1], [b1], [c1], [d1], [e1], [f1], [g1], [h1], [i1], [j1], [k1], [l1], [m1], [o1], [p1], [q1], [r1], [s1], [u1], [w1]]
+        transformation = [[a1], [b1], [c1], [d1], [e1], [f1], [g1], [h1], [i1], [j1], [k1], [l1], [m1], [o1], [p1], [q1], [r1], [s1], [u1], [w1], [x1]]
 
         #else:
         #    transformation = self.select_rules([[a1,a2], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
