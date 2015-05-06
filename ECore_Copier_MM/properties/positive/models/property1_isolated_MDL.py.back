@@ -3,7 +3,7 @@ __property1_isolated_MDL.py_____________________________________________________
 
 Automatically generated AToM3 Model File (Do not modify directly)
 Author: levi
-Modified: Tue May  5 14:23:11 2015
+Modified: Tue May  5 14:24:14 2015
 ________________________________________________________________________________
 """
 from stickylink import *
@@ -400,6 +400,41 @@ def property1_isolated_MDL(self, rootNode, MT_pre__ECoreMMRootNode=None, MoTifRu
     self.globalAndLocalPostcondition(self.obj58, rootNode)
     self.obj58.postAction( rootNode.CREATE )
 
+    self.obj5230=MT_pre__match_contains(self)
+    self.obj5230.isGraphObjectVisual = True
+
+    if(hasattr(self.obj5230, '_setHierarchicalLink')):
+      self.obj5230._setHierarchicalLink(False)
+
+    # MT_label__
+    self.obj5230.MT_label__.setValue('23')
+
+    # MT_pivotOut__
+    self.obj5230.MT_pivotOut__.setValue('')
+    self.obj5230.MT_pivotOut__.setNone()
+
+    # MT_subtypeMatching__
+    self.obj5230.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj5230.MT_subtypeMatching__.config = 0
+
+    # MT_pivotIn__
+    self.obj5230.MT_pivotIn__.setValue('')
+    self.obj5230.MT_pivotIn__.setNone()
+
+    self.obj5230.graphClass_= graph_MT_pre__match_contains
+    if self.genGraphics:
+       new_obj = graph_MT_pre__match_contains(400.5,181.5,self.obj5230)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("MT_pre__match_contains", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj5230.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj5230)
+    self.globalAndLocalPostcondition(self.obj5230, rootNode)
+    self.obj5230.postAction( rootNode.CREATE )
+
     self.obj43=LHS(self)
     self.obj43.isGraphObjectVisual = True
 
@@ -412,7 +447,7 @@ def property1_isolated_MDL(self, rootNode, MT_pre__ECoreMMRootNode=None, MoTifRu
 
     self.obj43.graphClass_= graph_LHS
     if self.genGraphics:
-       new_obj = graph_LHS(160.0,60.0,self.obj43)
+       new_obj = graph_LHS(180.0,60.0,self.obj43)
        new_obj.DrawObject(self.UMLmodel)
        self.UMLmodel.addtag_withtag("LHS", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
@@ -441,7 +476,8 @@ def property1_isolated_MDL(self, rootNode, MT_pre__ECoreMMRootNode=None, MoTifRu
     self.drawConnections(
 (self.obj40,self.obj41,[261.0, 161.0, 330.5, 191.5],"true", 2),
 (self.obj40,self.obj57,[261.0, 161.0, 340.5, 211.5],"true", 2),
-(self.obj40,self.obj58,[261.0, 161.0, 340.5, 161.5],"true", 2) )
+(self.obj40,self.obj58,[261.0, 161.0, 340.5, 161.5],"true", 2),
+(self.obj40,self.obj5230,[261.0, 161.0, 400.5, 181.5],"true", 2) )
     # Connections for obj41 (graphObject_: Obj3) of type MT_pre__match_contains
     self.drawConnections(
 (self.obj41,self.obj38,[330.5, 191.5, 260.0, 262.0],"true", 2) )
@@ -451,6 +487,9 @@ def property1_isolated_MDL(self, rootNode, MT_pre__ECoreMMRootNode=None, MoTifRu
     # Connections for obj58 (graphObject_: Obj14) of type MT_pre__match_contains
     self.drawConnections(
 (self.obj58,self.obj44,[340.5, 161.5, 420.0, 162.0],"true", 2) )
+    # Connections for obj5230 (graphObject_: Obj43) of type MT_pre__match_contains
+    self.drawConnections(
+(self.obj5230,self.obj81,[400.5, 181.5, 540.0, 202.0],"true", 2) )
     # Connections for obj43 (graphObject_: Obj5) of type LHS
     self.drawConnections(
  )

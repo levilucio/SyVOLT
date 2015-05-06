@@ -3,7 +3,7 @@ __property2_complete_MDL.py_____________________________________________________
 
 Automatically generated AToM3 Model File (Do not modify directly)
 Author: levi
-Modified: Tue May  5 14:00:59 2015
+Modified: Wed May  6 15:01:11 2015
 ________________________________________________________________________________
 """
 from stickylink import *
@@ -198,7 +198,7 @@ def property2_complete_MDL(self, rootNode, MT_pre__ECoreMMRootNode=None, MoTifRu
     self.obj40.MT_pivotOut__.setNone()
 
     # MT_subtypeMatching__
-    self.obj40.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj40.MT_subtypeMatching__.setValue(('True', 1))
     self.obj40.MT_subtypeMatching__.config = 0
 
     # MT_pre__classtype
@@ -246,7 +246,7 @@ def property2_complete_MDL(self, rootNode, MT_pre__ECoreMMRootNode=None, MoTifRu
     self.obj41.MT_pivotOut__.setNone()
 
     # MT_subtypeMatching__
-    self.obj41.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj41.MT_subtypeMatching__.setValue(('True', 1))
     self.obj41.MT_subtypeMatching__.config = 0
 
     # MT_pre__classtype
@@ -353,134 +353,22 @@ def property2_complete_MDL(self, rootNode, MT_pre__ECoreMMRootNode=None, MoTifRu
     self.globalAndLocalPostcondition(self.obj43, rootNode)
     self.obj43.postAction( rootNode.CREATE )
 
-    self.obj53=MT_pre__Attribute(self)
-    self.obj53.isGraphObjectVisual = True
-
-    if(hasattr(self.obj53, '_setHierarchicalLink')):
-      self.obj53._setHierarchicalLink(False)
-
-    # MT_label__
-    self.obj53.MT_label__.setValue('15')
-
-    # MT_pivotOut__
-    self.obj53.MT_pivotOut__.setValue('')
-    self.obj53.MT_pivotOut__.setNone()
-
-    # MT_pre__name
-    self.obj53.MT_pre__name.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn attr_value == "name"\n')
-    self.obj53.MT_pre__name.setHeight(15)
-
-    # MT_subtypeMatching__
-    self.obj53.MT_subtypeMatching__.setValue(('True', 0))
-    self.obj53.MT_subtypeMatching__.config = 0
-
-    # MT_pivotIn__
-    self.obj53.MT_pivotIn__.setValue('')
-    self.obj53.MT_pivotIn__.setNone()
-
-    self.obj53.graphClass_= graph_MT_pre__Attribute
-    if self.genGraphics:
-       new_obj = graph_MT_pre__Attribute(420.0,100.0,self.obj53)
-       new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("MT_pre__Attribute", new_obj.tag)
-       new_obj.layConstraints = dict() # Graphical Layout Constraints 
-       new_obj.layConstraints['scale'] = [1.0, 1.0]
-    else: new_obj = None
-    self.obj53.graphObject_ = new_obj
-
-    # Add node to the root: rootNode
-    rootNode.addNode(self.obj53)
-    self.globalAndLocalPostcondition(self.obj53, rootNode)
-    self.obj53.postAction( rootNode.CREATE )
-
-    self.obj54=MT_pre__Attribute(self)
-    self.obj54.isGraphObjectVisual = True
-
-    if(hasattr(self.obj54, '_setHierarchicalLink')):
-      self.obj54._setHierarchicalLink(False)
-
-    # MT_label__
-    self.obj54.MT_label__.setValue('16')
-
-    # MT_pivotOut__
-    self.obj54.MT_pivotOut__.setValue('')
-    self.obj54.MT_pivotOut__.setNone()
-
-    # MT_pre__name
-    self.obj54.MT_pre__name.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn attr_value == "name"\n')
-    self.obj54.MT_pre__name.setHeight(15)
-
-    # MT_subtypeMatching__
-    self.obj54.MT_subtypeMatching__.setValue(('True', 0))
-    self.obj54.MT_subtypeMatching__.config = 0
-
-    # MT_pivotIn__
-    self.obj54.MT_pivotIn__.setValue('')
-    self.obj54.MT_pivotIn__.setNone()
-
-    self.obj54.graphClass_= graph_MT_pre__Attribute
-    if self.genGraphics:
-       new_obj = graph_MT_pre__Attribute(400.0,400.0,self.obj54)
-       new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("MT_pre__Attribute", new_obj.tag)
-       new_obj.layConstraints = dict() # Graphical Layout Constraints 
-       new_obj.layConstraints['scale'] = [1.0, 1.0]
-    else: new_obj = None
-    self.obj54.graphObject_ = new_obj
-
-    # Add node to the root: rootNode
-    rootNode.addNode(self.obj54)
-    self.globalAndLocalPostcondition(self.obj54, rootNode)
-    self.obj54.postAction( rootNode.CREATE )
-
-    self.obj65=MT_pre__Equation(self)
-    self.obj65.isGraphObjectVisual = True
-
-    if(hasattr(self.obj65, '_setHierarchicalLink')):
-      self.obj65._setHierarchicalLink(False)
-
-    # MT_label__
-    self.obj65.MT_label__.setValue('19')
-
-    # MT_pivotOut__
-    self.obj65.MT_pivotOut__.setValue('')
-    self.obj65.MT_pivotOut__.setNone()
-
-    # MT_subtypeMatching__
-    self.obj65.MT_subtypeMatching__.setValue(('True', 0))
-    self.obj65.MT_subtypeMatching__.config = 0
-
-    # MT_pivotIn__
-    self.obj65.MT_pivotIn__.setValue('')
-    self.obj65.MT_pivotIn__.setNone()
-
-    self.obj65.graphClass_= graph_MT_pre__Equation
-    if self.genGraphics:
-       new_obj = graph_MT_pre__Equation(420.0,260.0,self.obj65)
-       new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("MT_pre__Equation", new_obj.tag)
-       new_obj.layConstraints = dict() # Graphical Layout Constraints 
-       new_obj.layConstraints['scale'] = [1.0, 1.0]
-    else: new_obj = None
-    self.obj65.graphObject_ = new_obj
-
-    # Add node to the root: rootNode
-    rootNode.addNode(self.obj65)
-    self.globalAndLocalPostcondition(self.obj65, rootNode)
-    self.obj65.postAction( rootNode.CREATE )
-
-    self.obj44=MT_pre__match_contains(self)
+    self.obj44=MT_pre__Attribute(self)
     self.obj44.isGraphObjectVisual = True
 
     if(hasattr(self.obj44, '_setHierarchicalLink')):
       self.obj44._setHierarchicalLink(False)
 
     # MT_label__
-    self.obj44.MT_label__.setValue('7')
+    self.obj44.MT_label__.setValue('15')
 
     # MT_pivotOut__
     self.obj44.MT_pivotOut__.setValue('')
     self.obj44.MT_pivotOut__.setNone()
+
+    # MT_pre__name
+    self.obj44.MT_pre__name.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn attr_value == "name"\n')
+    self.obj44.MT_pre__name.setHeight(15)
 
     # MT_subtypeMatching__
     self.obj44.MT_subtypeMatching__.setValue(('True', 0))
@@ -490,12 +378,13 @@ def property2_complete_MDL(self, rootNode, MT_pre__ECoreMMRootNode=None, MoTifRu
     self.obj44.MT_pivotIn__.setValue('')
     self.obj44.MT_pivotIn__.setNone()
 
-    self.obj44.graphClass_= graph_MT_pre__match_contains
+    self.obj44.graphClass_= graph_MT_pre__Attribute
     if self.genGraphics:
-       new_obj = graph_MT_pre__match_contains(330.5,191.5,self.obj44)
+       new_obj = graph_MT_pre__Attribute(420.0,100.0,self.obj44)
        new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("MT_pre__match_contains", new_obj.tag)
+       self.UMLmodel.addtag_withtag("MT_pre__Attribute", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
+       new_obj.layConstraints['scale'] = [1.0, 1.0]
     else: new_obj = None
     self.obj44.graphObject_ = new_obj
 
@@ -504,18 +393,22 @@ def property2_complete_MDL(self, rootNode, MT_pre__ECoreMMRootNode=None, MoTifRu
     self.globalAndLocalPostcondition(self.obj44, rootNode)
     self.obj44.postAction( rootNode.CREATE )
 
-    self.obj45=MT_pre__match_contains(self)
+    self.obj45=MT_pre__Attribute(self)
     self.obj45.isGraphObjectVisual = True
 
     if(hasattr(self.obj45, '_setHierarchicalLink')):
       self.obj45._setHierarchicalLink(False)
 
     # MT_label__
-    self.obj45.MT_label__.setValue('8')
+    self.obj45.MT_label__.setValue('16')
 
     # MT_pivotOut__
     self.obj45.MT_pivotOut__.setValue('')
     self.obj45.MT_pivotOut__.setNone()
+
+    # MT_pre__name
+    self.obj45.MT_pre__name.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn attr_value == "name"\n')
+    self.obj45.MT_pre__name.setHeight(15)
 
     # MT_subtypeMatching__
     self.obj45.MT_subtypeMatching__.setValue(('True', 0))
@@ -525,12 +418,13 @@ def property2_complete_MDL(self, rootNode, MT_pre__ECoreMMRootNode=None, MoTifRu
     self.obj45.MT_pivotIn__.setValue('')
     self.obj45.MT_pivotIn__.setNone()
 
-    self.obj45.graphClass_= graph_MT_pre__match_contains
+    self.obj45.graphClass_= graph_MT_pre__Attribute
     if self.genGraphics:
-       new_obj = graph_MT_pre__match_contains(420.5,191.5,self.obj45)
+       new_obj = graph_MT_pre__Attribute(400.0,400.0,self.obj45)
        new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("MT_pre__match_contains", new_obj.tag)
+       self.UMLmodel.addtag_withtag("MT_pre__Attribute", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
+       new_obj.layConstraints['scale'] = [1.0, 1.0]
     else: new_obj = None
     self.obj45.graphObject_ = new_obj
 
@@ -539,14 +433,14 @@ def property2_complete_MDL(self, rootNode, MT_pre__ECoreMMRootNode=None, MoTifRu
     self.globalAndLocalPostcondition(self.obj45, rootNode)
     self.obj45.postAction( rootNode.CREATE )
 
-    self.obj46=MT_pre__apply_contains(self)
+    self.obj46=MT_pre__Equation(self)
     self.obj46.isGraphObjectVisual = True
 
     if(hasattr(self.obj46, '_setHierarchicalLink')):
       self.obj46._setHierarchicalLink(False)
 
     # MT_label__
-    self.obj46.MT_label__.setValue('9')
+    self.obj46.MT_label__.setValue('19')
 
     # MT_pivotOut__
     self.obj46.MT_pivotOut__.setValue('')
@@ -560,12 +454,13 @@ def property2_complete_MDL(self, rootNode, MT_pre__ECoreMMRootNode=None, MoTifRu
     self.obj46.MT_pivotIn__.setValue('')
     self.obj46.MT_pivotIn__.setNone()
 
-    self.obj46.graphClass_= graph_MT_pre__apply_contains
+    self.obj46.graphClass_= graph_MT_pre__Equation
     if self.genGraphics:
-       new_obj = graph_MT_pre__apply_contains(332.5,331.5,self.obj46)
+       new_obj = graph_MT_pre__Equation(420.0,260.0,self.obj46)
        new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("MT_pre__apply_contains", new_obj.tag)
+       self.UMLmodel.addtag_withtag("MT_pre__Equation", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
+       new_obj.layConstraints['scale'] = [1.0, 1.0]
     else: new_obj = None
     self.obj46.graphObject_ = new_obj
 
@@ -574,14 +469,14 @@ def property2_complete_MDL(self, rootNode, MT_pre__ECoreMMRootNode=None, MoTifRu
     self.globalAndLocalPostcondition(self.obj46, rootNode)
     self.obj46.postAction( rootNode.CREATE )
 
-    self.obj47=MT_pre__apply_contains(self)
+    self.obj47=MT_pre__match_contains(self)
     self.obj47.isGraphObjectVisual = True
 
     if(hasattr(self.obj47, '_setHierarchicalLink')):
       self.obj47._setHierarchicalLink(False)
 
     # MT_label__
-    self.obj47.MT_label__.setValue('10')
+    self.obj47.MT_label__.setValue('7')
 
     # MT_pivotOut__
     self.obj47.MT_pivotOut__.setValue('')
@@ -595,11 +490,11 @@ def property2_complete_MDL(self, rootNode, MT_pre__ECoreMMRootNode=None, MoTifRu
     self.obj47.MT_pivotIn__.setValue('')
     self.obj47.MT_pivotIn__.setNone()
 
-    self.obj47.graphClass_= graph_MT_pre__apply_contains
+    self.obj47.graphClass_= graph_MT_pre__match_contains
     if self.genGraphics:
-       new_obj = graph_MT_pre__apply_contains(422.5,331.5,self.obj47)
+       new_obj = graph_MT_pre__match_contains(330.5,191.5,self.obj47)
        new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("MT_pre__apply_contains", new_obj.tag)
+       self.UMLmodel.addtag_withtag("MT_pre__match_contains", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
     else: new_obj = None
     self.obj47.graphObject_ = new_obj
@@ -609,14 +504,14 @@ def property2_complete_MDL(self, rootNode, MT_pre__ECoreMMRootNode=None, MoTifRu
     self.globalAndLocalPostcondition(self.obj47, rootNode)
     self.obj47.postAction( rootNode.CREATE )
 
-    self.obj48=MT_pre__directLink_T(self)
+    self.obj48=MT_pre__match_contains(self)
     self.obj48.isGraphObjectVisual = True
 
     if(hasattr(self.obj48, '_setHierarchicalLink')):
       self.obj48._setHierarchicalLink(False)
 
     # MT_label__
-    self.obj48.MT_label__.setValue('14')
+    self.obj48.MT_label__.setValue('8')
 
     # MT_pivotOut__
     self.obj48.MT_pivotOut__.setValue('')
@@ -630,15 +525,11 @@ def property2_complete_MDL(self, rootNode, MT_pre__ECoreMMRootNode=None, MoTifRu
     self.obj48.MT_pivotIn__.setValue('')
     self.obj48.MT_pivotIn__.setNone()
 
-    # MT_pre__associationType
-    self.obj48.MT_pre__associationType.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn attr_value == "eStructuralFeatures"\n')
-    self.obj48.MT_pre__associationType.setHeight(15)
-
-    self.obj48.graphClass_= graph_MT_pre__directLink_T
+    self.obj48.graphClass_= graph_MT_pre__match_contains
     if self.genGraphics:
-       new_obj = graph_MT_pre__directLink_T(480.0,362.0,self.obj48)
+       new_obj = graph_MT_pre__match_contains(420.5,191.5,self.obj48)
        new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("MT_pre__directLink_T", new_obj.tag)
+       self.UMLmodel.addtag_withtag("MT_pre__match_contains", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
     else: new_obj = None
     self.obj48.graphObject_ = new_obj
@@ -648,14 +539,14 @@ def property2_complete_MDL(self, rootNode, MT_pre__ECoreMMRootNode=None, MoTifRu
     self.globalAndLocalPostcondition(self.obj48, rootNode)
     self.obj48.postAction( rootNode.CREATE )
 
-    self.obj49=MT_pre__directLink_S(self)
+    self.obj49=MT_pre__apply_contains(self)
     self.obj49.isGraphObjectVisual = True
 
     if(hasattr(self.obj49, '_setHierarchicalLink')):
       self.obj49._setHierarchicalLink(False)
 
     # MT_label__
-    self.obj49.MT_label__.setValue('13')
+    self.obj49.MT_label__.setValue('9')
 
     # MT_pivotOut__
     self.obj49.MT_pivotOut__.setValue('')
@@ -669,15 +560,11 @@ def property2_complete_MDL(self, rootNode, MT_pre__ECoreMMRootNode=None, MoTifRu
     self.obj49.MT_pivotIn__.setValue('')
     self.obj49.MT_pivotIn__.setNone()
 
-    # MT_pre__associationType
-    self.obj49.MT_pre__associationType.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn attr_value == "eStructuralFeatures"\n')
-    self.obj49.MT_pre__associationType.setHeight(15)
-
-    self.obj49.graphClass_= graph_MT_pre__directLink_S
+    self.obj49.graphClass_= graph_MT_pre__apply_contains
     if self.genGraphics:
-       new_obj = graph_MT_pre__directLink_S(480.0,222.0,self.obj49)
+       new_obj = graph_MT_pre__apply_contains(332.5,331.5,self.obj49)
        new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("MT_pre__directLink_S", new_obj.tag)
+       self.UMLmodel.addtag_withtag("MT_pre__apply_contains", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
     else: new_obj = None
     self.obj49.graphObject_ = new_obj
@@ -687,14 +574,49 @@ def property2_complete_MDL(self, rootNode, MT_pre__ECoreMMRootNode=None, MoTifRu
     self.globalAndLocalPostcondition(self.obj49, rootNode)
     self.obj49.postAction( rootNode.CREATE )
 
-    self.obj51=MT_pre__trace_link(self)
+    self.obj50=MT_pre__apply_contains(self)
+    self.obj50.isGraphObjectVisual = True
+
+    if(hasattr(self.obj50, '_setHierarchicalLink')):
+      self.obj50._setHierarchicalLink(False)
+
+    # MT_label__
+    self.obj50.MT_label__.setValue('10')
+
+    # MT_pivotOut__
+    self.obj50.MT_pivotOut__.setValue('')
+    self.obj50.MT_pivotOut__.setNone()
+
+    # MT_subtypeMatching__
+    self.obj50.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj50.MT_subtypeMatching__.config = 0
+
+    # MT_pivotIn__
+    self.obj50.MT_pivotIn__.setValue('')
+    self.obj50.MT_pivotIn__.setNone()
+
+    self.obj50.graphClass_= graph_MT_pre__apply_contains
+    if self.genGraphics:
+       new_obj = graph_MT_pre__apply_contains(422.5,331.5,self.obj50)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("MT_pre__apply_contains", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj50.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj50)
+    self.globalAndLocalPostcondition(self.obj50, rootNode)
+    self.obj50.postAction( rootNode.CREATE )
+
+    self.obj51=MT_pre__directLink_T(self)
     self.obj51.isGraphObjectVisual = True
 
     if(hasattr(self.obj51, '_setHierarchicalLink')):
       self.obj51._setHierarchicalLink(False)
 
     # MT_label__
-    self.obj51.MT_label__.setValue('12')
+    self.obj51.MT_label__.setValue('14')
 
     # MT_pivotOut__
     self.obj51.MT_pivotOut__.setValue('')
@@ -708,11 +630,15 @@ def property2_complete_MDL(self, rootNode, MT_pre__ECoreMMRootNode=None, MoTifRu
     self.obj51.MT_pivotIn__.setValue('')
     self.obj51.MT_pivotIn__.setNone()
 
-    self.obj51.graphClass_= graph_MT_pre__trace_link
+    # MT_pre__associationType
+    self.obj51.MT_pre__associationType.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn attr_value == "eStructuralFeatures"\n')
+    self.obj51.MT_pre__associationType.setHeight(15)
+
+    self.obj51.graphClass_= graph_MT_pre__directLink_T
     if self.genGraphics:
-       new_obj = graph_MT_pre__trace_link(560.0,291.0,self.obj51)
+       new_obj = graph_MT_pre__directLink_T(480.0,362.0,self.obj51)
        new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("MT_pre__trace_link", new_obj.tag)
+       self.UMLmodel.addtag_withtag("MT_pre__directLink_T", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
     else: new_obj = None
     self.obj51.graphObject_ = new_obj
@@ -722,163 +648,37 @@ def property2_complete_MDL(self, rootNode, MT_pre__ECoreMMRootNode=None, MoTifRu
     self.globalAndLocalPostcondition(self.obj51, rootNode)
     self.obj51.postAction( rootNode.CREATE )
 
-    self.obj63=MT_pre__hasAttr_S(self)
-    self.obj63.isGraphObjectVisual = True
-
-    if(hasattr(self.obj63, '_setHierarchicalLink')):
-      self.obj63._setHierarchicalLink(False)
-
-    # MT_label__
-    self.obj63.MT_label__.setValue('17')
-
-    # MT_pivotOut__
-    self.obj63.MT_pivotOut__.setValue('')
-    self.obj63.MT_pivotOut__.setNone()
-
-    # MT_subtypeMatching__
-    self.obj63.MT_subtypeMatching__.setValue(('True', 0))
-    self.obj63.MT_subtypeMatching__.config = 0
-
-    # MT_pivotIn__
-    self.obj63.MT_pivotIn__.setValue('')
-    self.obj63.MT_pivotIn__.setNone()
-
-    self.obj63.graphClass_= graph_MT_pre__hasAttr_S
-    if self.genGraphics:
-       new_obj = graph_MT_pre__hasAttr_S(436.5,176.0,self.obj63)
-       new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("MT_pre__hasAttr_S", new_obj.tag)
-       new_obj.layConstraints = dict() # Graphical Layout Constraints 
-    else: new_obj = None
-    self.obj63.graphObject_ = new_obj
-
-    # Add node to the root: rootNode
-    rootNode.addNode(self.obj63)
-    self.globalAndLocalPostcondition(self.obj63, rootNode)
-    self.obj63.postAction( rootNode.CREATE )
-
-    self.obj64=MT_pre__hasAttr_T(self)
-    self.obj64.isGraphObjectVisual = True
-
-    if(hasattr(self.obj64, '_setHierarchicalLink')):
-      self.obj64._setHierarchicalLink(False)
-
-    # MT_label__
-    self.obj64.MT_label__.setValue('18')
-
-    # MT_pivotOut__
-    self.obj64.MT_pivotOut__.setValue('')
-    self.obj64.MT_pivotOut__.setNone()
-
-    # MT_subtypeMatching__
-    self.obj64.MT_subtypeMatching__.setValue(('True', 0))
-    self.obj64.MT_subtypeMatching__.config = 0
-
-    # MT_pivotIn__
-    self.obj64.MT_pivotIn__.setValue('')
-    self.obj64.MT_pivotIn__.setNone()
-
-    self.obj64.graphClass_= graph_MT_pre__hasAttr_T
-    if self.genGraphics:
-       new_obj = graph_MT_pre__hasAttr_T(426.5,406.0,self.obj64)
-       new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("MT_pre__hasAttr_T", new_obj.tag)
-       new_obj.layConstraints = dict() # Graphical Layout Constraints 
-    else: new_obj = None
-    self.obj64.graphObject_ = new_obj
-
-    # Add node to the root: rootNode
-    rootNode.addNode(self.obj64)
-    self.globalAndLocalPostcondition(self.obj64, rootNode)
-    self.obj64.postAction( rootNode.CREATE )
-
-    self.obj66=MT_pre__leftExpr(self)
-    self.obj66.isGraphObjectVisual = True
-
-    if(hasattr(self.obj66, '_setHierarchicalLink')):
-      self.obj66._setHierarchicalLink(False)
-
-    # MT_label__
-    self.obj66.MT_label__.setValue('20')
-
-    # MT_pivotOut__
-    self.obj66.MT_pivotOut__.setValue('')
-    self.obj66.MT_pivotOut__.setNone()
-
-    # MT_subtypeMatching__
-    self.obj66.MT_subtypeMatching__.setValue(('True', 0))
-    self.obj66.MT_subtypeMatching__.config = 0
-
-    # MT_pivotIn__
-    self.obj66.MT_pivotIn__.setValue('')
-    self.obj66.MT_pivotIn__.setNone()
-
-    self.obj66.graphClass_= graph_MT_pre__leftExpr
-    if self.genGraphics:
-       new_obj = graph_MT_pre__leftExpr(480.5,216.0,self.obj66)
-       new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("MT_pre__leftExpr", new_obj.tag)
-       new_obj.layConstraints = dict() # Graphical Layout Constraints 
-    else: new_obj = None
-    self.obj66.graphObject_ = new_obj
-
-    # Add node to the root: rootNode
-    rootNode.addNode(self.obj66)
-    self.globalAndLocalPostcondition(self.obj66, rootNode)
-    self.obj66.postAction( rootNode.CREATE )
-
-    self.obj67=MT_pre__rightExpr(self)
-    self.obj67.isGraphObjectVisual = True
-
-    if(hasattr(self.obj67, '_setHierarchicalLink')):
-      self.obj67._setHierarchicalLink(False)
-
-    # MT_label__
-    self.obj67.MT_label__.setValue('21')
-
-    # MT_pivotOut__
-    self.obj67.MT_pivotOut__.setValue('')
-    self.obj67.MT_pivotOut__.setNone()
-
-    # MT_subtypeMatching__
-    self.obj67.MT_subtypeMatching__.setValue(('True', 0))
-    self.obj67.MT_subtypeMatching__.config = 0
-
-    # MT_pivotIn__
-    self.obj67.MT_pivotIn__.setValue('')
-    self.obj67.MT_pivotIn__.setNone()
-
-    self.obj67.graphClass_= graph_MT_pre__rightExpr
-    if self.genGraphics:
-       new_obj = graph_MT_pre__rightExpr(470.5,376.0,self.obj67)
-       new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("MT_pre__rightExpr", new_obj.tag)
-       new_obj.layConstraints = dict() # Graphical Layout Constraints 
-    else: new_obj = None
-    self.obj67.graphObject_ = new_obj
-
-    # Add node to the root: rootNode
-    rootNode.addNode(self.obj67)
-    self.globalAndLocalPostcondition(self.obj67, rootNode)
-    self.obj67.postAction( rootNode.CREATE )
-
-    self.obj52=LHS(self)
+    self.obj52=MT_pre__directLink_S(self)
     self.obj52.isGraphObjectVisual = True
 
     if(hasattr(self.obj52, '_setHierarchicalLink')):
       self.obj52._setHierarchicalLink(False)
 
-    # constraint
-    self.obj52.constraint.setValue('#===============================================================================\n# This code is executed after the nodes in the LHS have been matched.\n# You can access a matched node labelled n by: PreNode(\'n\').\n# To access attribute x of node n, use: PreNode(\'n\')[\'x\'].\n# The given constraint must evaluate to a boolean expression:\n#    returning True enables the rule to be applied,\n#    returning False forbids the rule from being applied.\n#===============================================================================\n\nreturn True\n')
-    self.obj52.constraint.setHeight(15)
+    # MT_label__
+    self.obj52.MT_label__.setValue('13')
 
-    self.obj52.graphClass_= graph_LHS
+    # MT_pivotOut__
+    self.obj52.MT_pivotOut__.setValue('')
+    self.obj52.MT_pivotOut__.setNone()
+
+    # MT_subtypeMatching__
+    self.obj52.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj52.MT_subtypeMatching__.config = 0
+
+    # MT_pivotIn__
+    self.obj52.MT_pivotIn__.setValue('')
+    self.obj52.MT_pivotIn__.setNone()
+
+    # MT_pre__associationType
+    self.obj52.MT_pre__associationType.setValue('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn attr_value == "eStructuralFeatures"\n')
+    self.obj52.MT_pre__associationType.setHeight(15)
+
+    self.obj52.graphClass_= graph_MT_pre__directLink_S
     if self.genGraphics:
-       new_obj = graph_LHS(180.0,80.0,self.obj52)
+       new_obj = graph_MT_pre__directLink_S(480.0,222.0,self.obj52)
        new_obj.DrawObject(self.UMLmodel)
-       self.UMLmodel.addtag_withtag("LHS", new_obj.tag)
+       self.UMLmodel.addtag_withtag("MT_pre__directLink_S", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
-       new_obj.layConstraints['scale'] = [1.0, 1.0]
     else: new_obj = None
     self.obj52.graphObject_ = new_obj
 
@@ -887,72 +687,272 @@ def property2_complete_MDL(self, rootNode, MT_pre__ECoreMMRootNode=None, MoTifRu
     self.globalAndLocalPostcondition(self.obj52, rootNode)
     self.obj52.postAction( rootNode.CREATE )
 
+    self.obj53=MT_pre__trace_link(self)
+    self.obj53.isGraphObjectVisual = True
+
+    if(hasattr(self.obj53, '_setHierarchicalLink')):
+      self.obj53._setHierarchicalLink(False)
+
+    # MT_label__
+    self.obj53.MT_label__.setValue('12')
+
+    # MT_pivotOut__
+    self.obj53.MT_pivotOut__.setValue('')
+    self.obj53.MT_pivotOut__.setNone()
+
+    # MT_subtypeMatching__
+    self.obj53.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj53.MT_subtypeMatching__.config = 0
+
+    # MT_pivotIn__
+    self.obj53.MT_pivotIn__.setValue('')
+    self.obj53.MT_pivotIn__.setNone()
+
+    self.obj53.graphClass_= graph_MT_pre__trace_link
+    if self.genGraphics:
+       new_obj = graph_MT_pre__trace_link(560.0,291.0,self.obj53)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("MT_pre__trace_link", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj53.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj53)
+    self.globalAndLocalPostcondition(self.obj53, rootNode)
+    self.obj53.postAction( rootNode.CREATE )
+
+    self.obj54=MT_pre__hasAttr_S(self)
+    self.obj54.isGraphObjectVisual = True
+
+    if(hasattr(self.obj54, '_setHierarchicalLink')):
+      self.obj54._setHierarchicalLink(False)
+
+    # MT_label__
+    self.obj54.MT_label__.setValue('17')
+
+    # MT_pivotOut__
+    self.obj54.MT_pivotOut__.setValue('')
+    self.obj54.MT_pivotOut__.setNone()
+
+    # MT_subtypeMatching__
+    self.obj54.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj54.MT_subtypeMatching__.config = 0
+
+    # MT_pivotIn__
+    self.obj54.MT_pivotIn__.setValue('')
+    self.obj54.MT_pivotIn__.setNone()
+
+    self.obj54.graphClass_= graph_MT_pre__hasAttr_S
+    if self.genGraphics:
+       new_obj = graph_MT_pre__hasAttr_S(436.5,176.0,self.obj54)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("MT_pre__hasAttr_S", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj54.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj54)
+    self.globalAndLocalPostcondition(self.obj54, rootNode)
+    self.obj54.postAction( rootNode.CREATE )
+
+    self.obj55=MT_pre__hasAttr_T(self)
+    self.obj55.isGraphObjectVisual = True
+
+    if(hasattr(self.obj55, '_setHierarchicalLink')):
+      self.obj55._setHierarchicalLink(False)
+
+    # MT_label__
+    self.obj55.MT_label__.setValue('18')
+
+    # MT_pivotOut__
+    self.obj55.MT_pivotOut__.setValue('')
+    self.obj55.MT_pivotOut__.setNone()
+
+    # MT_subtypeMatching__
+    self.obj55.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj55.MT_subtypeMatching__.config = 0
+
+    # MT_pivotIn__
+    self.obj55.MT_pivotIn__.setValue('')
+    self.obj55.MT_pivotIn__.setNone()
+
+    self.obj55.graphClass_= graph_MT_pre__hasAttr_T
+    if self.genGraphics:
+       new_obj = graph_MT_pre__hasAttr_T(426.5,406.0,self.obj55)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("MT_pre__hasAttr_T", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj55.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj55)
+    self.globalAndLocalPostcondition(self.obj55, rootNode)
+    self.obj55.postAction( rootNode.CREATE )
+
+    self.obj56=MT_pre__leftExpr(self)
+    self.obj56.isGraphObjectVisual = True
+
+    if(hasattr(self.obj56, '_setHierarchicalLink')):
+      self.obj56._setHierarchicalLink(False)
+
+    # MT_label__
+    self.obj56.MT_label__.setValue('20')
+
+    # MT_pivotOut__
+    self.obj56.MT_pivotOut__.setValue('')
+    self.obj56.MT_pivotOut__.setNone()
+
+    # MT_subtypeMatching__
+    self.obj56.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj56.MT_subtypeMatching__.config = 0
+
+    # MT_pivotIn__
+    self.obj56.MT_pivotIn__.setValue('')
+    self.obj56.MT_pivotIn__.setNone()
+
+    self.obj56.graphClass_= graph_MT_pre__leftExpr
+    if self.genGraphics:
+       new_obj = graph_MT_pre__leftExpr(480.5,216.0,self.obj56)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("MT_pre__leftExpr", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj56.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj56)
+    self.globalAndLocalPostcondition(self.obj56, rootNode)
+    self.obj56.postAction( rootNode.CREATE )
+
+    self.obj57=MT_pre__rightExpr(self)
+    self.obj57.isGraphObjectVisual = True
+
+    if(hasattr(self.obj57, '_setHierarchicalLink')):
+      self.obj57._setHierarchicalLink(False)
+
+    # MT_label__
+    self.obj57.MT_label__.setValue('21')
+
+    # MT_pivotOut__
+    self.obj57.MT_pivotOut__.setValue('')
+    self.obj57.MT_pivotOut__.setNone()
+
+    # MT_subtypeMatching__
+    self.obj57.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj57.MT_subtypeMatching__.config = 0
+
+    # MT_pivotIn__
+    self.obj57.MT_pivotIn__.setValue('')
+    self.obj57.MT_pivotIn__.setNone()
+
+    self.obj57.graphClass_= graph_MT_pre__rightExpr
+    if self.genGraphics:
+       new_obj = graph_MT_pre__rightExpr(470.5,376.0,self.obj57)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("MT_pre__rightExpr", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+    else: new_obj = None
+    self.obj57.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj57)
+    self.globalAndLocalPostcondition(self.obj57, rootNode)
+    self.obj57.postAction( rootNode.CREATE )
+
+    self.obj58=LHS(self)
+    self.obj58.isGraphObjectVisual = True
+
+    if(hasattr(self.obj58, '_setHierarchicalLink')):
+      self.obj58._setHierarchicalLink(False)
+
+    # constraint
+    self.obj58.constraint.setValue('#===============================================================================\n# This code is executed after the nodes in the LHS have been matched.\n# You can access a matched node labelled n by: PreNode(\'n\').\n# To access attribute x of node n, use: PreNode(\'n\')[\'x\'].\n# The given constraint must evaluate to a boolean expression:\n#    returning True enables the rule to be applied,\n#    returning False forbids the rule from being applied.\n#===============================================================================\n\nreturn True\n')
+    self.obj58.constraint.setHeight(15)
+
+    self.obj58.graphClass_= graph_LHS
+    if self.genGraphics:
+       new_obj = graph_LHS(180.0,80.0,self.obj58)
+       new_obj.DrawObject(self.UMLmodel)
+       self.UMLmodel.addtag_withtag("LHS", new_obj.tag)
+       new_obj.layConstraints = dict() # Graphical Layout Constraints 
+       new_obj.layConstraints['scale'] = [1.0, 1.0]
+    else: new_obj = None
+    self.obj58.graphObject_ = new_obj
+
+    # Add node to the root: rootNode
+    rootNode.addNode(self.obj58)
+    self.globalAndLocalPostcondition(self.obj58, rootNode)
+    self.obj58.postAction( rootNode.CREATE )
+
     # Connections for obj38 (graphObject_: Obj0) of type MT_pre__EClass
     self.drawConnections(
-(self.obj38,self.obj49,[400.0, 222.0, 480.0, 222.0],"true", 2),
-(self.obj38,self.obj63,[400.0, 222.0, 436.5, 176.0],"true", 2) )
+(self.obj38,self.obj52,[400.0, 222.0, 480.0, 222.0],"true", 2),
+(self.obj38,self.obj54,[400.0, 222.0, 436.5, 176.0],"true", 2) )
     # Connections for obj39 (graphObject_: Obj1) of type MT_pre__EClass
     self.drawConnections(
-(self.obj39,self.obj48,[400.0, 362.0, 480.0, 362.0],"true", 2),
-(self.obj39,self.obj64,[400.0, 362.0, 426.5, 406.0],"true", 2) )
+(self.obj39,self.obj51,[400.0, 362.0, 480.0, 362.0],"true", 2),
+(self.obj39,self.obj55,[400.0, 362.0, 426.5, 406.0],"true", 2) )
     # Connections for obj40 (graphObject_: Obj2) of type MT_pre__EStructuralFeature
     self.drawConnections(
  )
     # Connections for obj41 (graphObject_: Obj3) of type MT_pre__EStructuralFeature
     self.drawConnections(
-(self.obj41,self.obj51,[560.0, 362.0, 560.0, 291.0],"true", 2) )
+(self.obj41,self.obj53,[560.0, 362.0, 560.0, 291.0],"true", 2) )
     # Connections for obj42 (graphObject_: Obj4) of type MT_pre__MatchModel
     self.drawConnections(
-(self.obj42,self.obj44,[261.0, 161.0, 330.5, 191.5],"true", 2),
-(self.obj42,self.obj45,[261.0, 161.0, 420.5, 191.5],"true", 2) )
+(self.obj42,self.obj47,[261.0, 161.0, 330.5, 191.5],"true", 2),
+(self.obj42,self.obj48,[261.0, 161.0, 420.5, 191.5],"true", 2) )
     # Connections for obj43 (graphObject_: Obj5) of type MT_pre__ApplyModel
     self.drawConnections(
-(self.obj43,self.obj46,[265.0, 301.0, 332.5, 331.5],"true", 2),
-(self.obj43,self.obj47,[265.0, 301.0, 422.5, 331.5],"true", 2) )
-    # Connections for obj53 (graphObject_: Obj15) of type MT_pre__Attribute
+(self.obj43,self.obj49,[265.0, 301.0, 332.5, 331.5],"true", 2),
+(self.obj43,self.obj50,[265.0, 301.0, 422.5, 331.5],"true", 2) )
+    # Connections for obj44 (graphObject_: Obj6) of type MT_pre__Attribute
     self.drawConnections(
  )
-    # Connections for obj54 (graphObject_: Obj16) of type MT_pre__Attribute
+    # Connections for obj45 (graphObject_: Obj7) of type MT_pre__Attribute
     self.drawConnections(
  )
-    # Connections for obj65 (graphObject_: Obj19) of type MT_pre__Equation
+    # Connections for obj46 (graphObject_: Obj8) of type MT_pre__Equation
     self.drawConnections(
-(self.obj65,self.obj66,[488.0, 302.0, 480.5, 216.0],"true", 2),
-(self.obj65,self.obj67,[488.0, 302.0, 470.5, 376.0],"true", 2) )
-    # Connections for obj44 (graphObject_: Obj6) of type MT_pre__match_contains
+(self.obj46,self.obj56,[488.0, 302.0, 480.5, 216.0],"true", 2),
+(self.obj46,self.obj57,[488.0, 302.0, 470.5, 376.0],"true", 2) )
+    # Connections for obj47 (graphObject_: Obj9) of type MT_pre__match_contains
     self.drawConnections(
-(self.obj44,self.obj38,[330.5, 191.5, 400.0, 222.0],"true", 2) )
-    # Connections for obj45 (graphObject_: Obj7) of type MT_pre__match_contains
+(self.obj47,self.obj38,[330.5, 191.5, 400.0, 222.0],"true", 2) )
+    # Connections for obj48 (graphObject_: Obj10) of type MT_pre__match_contains
     self.drawConnections(
-(self.obj45,self.obj40,[420.5, 191.5, 560.0, 222.0],"true", 2) )
-    # Connections for obj46 (graphObject_: Obj8) of type MT_pre__apply_contains
+(self.obj48,self.obj40,[420.5, 191.5, 560.0, 222.0],"true", 2) )
+    # Connections for obj49 (graphObject_: Obj11) of type MT_pre__apply_contains
     self.drawConnections(
-(self.obj46,self.obj39,[332.5, 331.5, 400.0, 362.0],"true", 2) )
-    # Connections for obj47 (graphObject_: Obj9) of type MT_pre__apply_contains
+(self.obj49,self.obj39,[332.5, 331.5, 400.0, 362.0],"true", 2) )
+    # Connections for obj50 (graphObject_: Obj12) of type MT_pre__apply_contains
     self.drawConnections(
-(self.obj47,self.obj41,[422.5, 331.5, 560.0, 362.0],"true", 2) )
-    # Connections for obj48 (graphObject_: Obj10) of type MT_pre__directLink_T
+(self.obj50,self.obj41,[422.5, 331.5, 560.0, 362.0],"true", 2) )
+    # Connections for obj51 (graphObject_: Obj13) of type MT_pre__directLink_T
     self.drawConnections(
-(self.obj48,self.obj41,[480.0, 362.0, 560.0, 362.0],"true", 2) )
-    # Connections for obj49 (graphObject_: Obj11) of type MT_pre__directLink_S
+(self.obj51,self.obj41,[480.0, 362.0, 560.0, 362.0],"true", 2) )
+    # Connections for obj52 (graphObject_: Obj14) of type MT_pre__directLink_S
     self.drawConnections(
-(self.obj49,self.obj40,[480.0, 222.0, 560.0, 222.0],"true", 2) )
-    # Connections for obj51 (graphObject_: Obj13) of type MT_pre__trace_link
+(self.obj52,self.obj40,[480.0, 222.0, 560.0, 222.0],"true", 2) )
+    # Connections for obj53 (graphObject_: Obj15) of type MT_pre__trace_link
     self.drawConnections(
-(self.obj51,self.obj40,[560.0, 291.0, 560.0, 222.0],"true", 2) )
-    # Connections for obj63 (graphObject_: Obj17) of type MT_pre__hasAttr_S
+(self.obj53,self.obj40,[560.0, 291.0, 560.0, 222.0],"true", 2) )
+    # Connections for obj54 (graphObject_: Obj16) of type MT_pre__hasAttr_S
     self.drawConnections(
-(self.obj63,self.obj53,[436.5, 176.0, 473.0, 130.0],"true", 2) )
-    # Connections for obj64 (graphObject_: Obj18) of type MT_pre__hasAttr_T
+(self.obj54,self.obj44,[436.5, 176.0, 473.0, 130.0],"true", 2) )
+    # Connections for obj55 (graphObject_: Obj17) of type MT_pre__hasAttr_T
     self.drawConnections(
-(self.obj64,self.obj54,[426.5, 406.0, 453.0, 430.0],"true", 2) )
-    # Connections for obj66 (graphObject_: Obj20) of type MT_pre__leftExpr
+(self.obj55,self.obj45,[426.5, 406.0, 453.0, 430.0],"true", 2) )
+    # Connections for obj56 (graphObject_: Obj18) of type MT_pre__leftExpr
     self.drawConnections(
-(self.obj66,self.obj53,[480.5, 216.0, 473.0, 130.0],"true", 2) )
-    # Connections for obj67 (graphObject_: Obj21) of type MT_pre__rightExpr
+(self.obj56,self.obj44,[480.5, 216.0, 473.0, 130.0],"true", 2) )
+    # Connections for obj57 (graphObject_: Obj19) of type MT_pre__rightExpr
     self.drawConnections(
-(self.obj67,self.obj54,[470.5, 376.0, 453.0, 430.0],"true", 2) )
-    # Connections for obj52 (graphObject_: Obj14) of type LHS
+(self.obj57,self.obj45,[470.5, 376.0, 453.0, 430.0],"true", 2) )
+    # Connections for obj58 (graphObject_: Obj20) of type LHS
     self.drawConnections(
  )
 

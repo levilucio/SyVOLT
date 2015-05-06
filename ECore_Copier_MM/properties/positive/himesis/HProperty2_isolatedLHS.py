@@ -12,10 +12,10 @@ class HProperty2_isolatedLHS(HimesisPreConditionPatternLHS):
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(HProperty2_isolatedLHS, self).__init__(name='HProperty2_isolatedLHS', num_nodes=5, edges=[])
+        super(HProperty2_isolatedLHS, self).__init__(name='HProperty2_isolatedLHS', num_nodes=2, edges=[])
         
         # Add the edges
-        self.add_edges([(3, 0), (4, 1), (2, 3), (2, 4)])
+        self.add_edges([])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
 S'MT_pre__ECoreMM'
@@ -35,7 +35,7 @@ a.""")
 return True
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('badddef9-4b7a-450f-8dc3-7ec384510fc0')
+        self["GUID__"] = UUID('15d69360-6c1e-4380-8782-424382e642e6')
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
@@ -80,7 +80,7 @@ return True
 
 return True
 """
-        self.vs[0]["GUID__"] = UUID('8ef4c2df-109e-4c7d-b7b4-7aa08d097281')
+        self.vs[0]["GUID__"] = UUID('5652e831-16f4-4e9e-bfb2-f1e0147627b7')
         self.vs[1]["MT_subtypeMatching__"] = True
         self.vs[1]["MT_pre__classtype"] = """
 #===============================================================================
@@ -123,28 +123,7 @@ return True
 
 return True
 """
-        self.vs[1]["GUID__"] = UUID('603b2557-d2f8-4596-a2e9-2863888970df')
-        self.vs[2]["MT_subtypeMatching__"] = False
-        self.vs[2]["MT_label__"] = """5"""
-        self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
-.""")
-        self.vs[2]["MT_dirty__"] = False
-        self.vs[2]["mm__"] = """MT_pre__MatchModel"""
-        self.vs[2]["GUID__"] = UUID('7d2b87ad-4c5c-47b6-8597-2386d1793d78')
-        self.vs[3]["MT_subtypeMatching__"] = False
-        self.vs[3]["MT_label__"] = """7"""
-        self.vs[3]["MT_subtypes__"] = pickle.loads("""(lp1
-.""")
-        self.vs[3]["MT_dirty__"] = False
-        self.vs[3]["mm__"] = """MT_pre__match_contains"""
-        self.vs[3]["GUID__"] = UUID('ae467361-3d19-4d0c-b94b-a8b8f2132e43')
-        self.vs[4]["MT_subtypeMatching__"] = False
-        self.vs[4]["MT_label__"] = """8"""
-        self.vs[4]["MT_subtypes__"] = pickle.loads("""(lp1
-.""")
-        self.vs[4]["MT_dirty__"] = False
-        self.vs[4]["mm__"] = """MT_pre__match_contains"""
-        self.vs[4]["GUID__"] = UUID('b6d93b9a-d6d7-4db0-860c-6dbd3e9f65fe')
+        self.vs[1]["GUID__"] = UUID('694ef818-c851-4db3-b810-e0a5041cd9c9')
 
     def eval_classtype1(self, attr_value, this):
         
