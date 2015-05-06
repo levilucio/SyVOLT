@@ -3,7 +3,7 @@ __property2_connected_MDL.py____________________________________________________
 
 Automatically generated AToM3 Model File (Do not modify directly)
 Author: levi
-Modified: Tue May  5 13:46:25 2015
+Modified: Wed May  6 15:00:18 2015
 _________________________________________________________________________________
 """
 from stickylink import *
@@ -130,7 +130,7 @@ def property2_connected_MDL(self, rootNode, MT_pre__ECoreMMRootNode=None, MoTifR
     self.obj39.MT_pivotOut__.setNone()
 
     # MT_subtypeMatching__
-    self.obj39.MT_subtypeMatching__.setValue(('True', 0))
+    self.obj39.MT_subtypeMatching__.setValue(('True', 1))
     self.obj39.MT_subtypeMatching__.config = 0
 
     # MT_pre__classtype
