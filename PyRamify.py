@@ -155,6 +155,9 @@ class PyRamify:
                 elif "Constant" in node["mm__"] and attrib == "MT_post__name":
                     node[attrib] = "return '" + node[attrib] + "'"
 
+                elif "directLink" in node["mm__"] and attrib == "MT_post__associationType":
+                    node[attrib] = "return '" + node[attrib] + "'"
+
                 # Hack for trace_links
                 elif "trace_link" in node["mm__"] and attrib == "MT_pre__type":
                     node[attrib] = None
@@ -289,6 +292,9 @@ class PyRamify:
                 elif "Constant" in node["mm__"] and attrib == "MT_post__value":
                     node[attrib] = "return '" + node[attrib] + "'"
 
+                elif "directLink" in node["mm__"] and attrib == "MT_post__associationType":
+                    node[attrib] = "return '" + node[attrib] + "'"
+
                 elif "Attribute" in node["mm__"] and attrib == "MT_post__name":
                     node[attrib] = "return '" + node[attrib] + "'"
 
@@ -410,11 +416,11 @@ class PyRamify:
     #very hacky
     #removes this attribute in the graph nodes
     def fix_attrs_for_backward_patterns(self, graph):
-        for node in graph.vs:
-            try:
-                del node["MT_pre__associationType"]
-            except Exception:
-                pass
+        # for node in graph.vs:
+        #     try:
+        #         del node["MT_pre__associationType"]
+        #     except Exception:
+        #         pass
 
         return graph
 
@@ -1510,8 +1516,8 @@ class PyRamify:
             except:
                 pass
 
-            if node["mm__"] != "MT_pre__directLink_S":
-                node["MT_pre__associationType"] = None
+            # if node["mm__"] != "MT_pre__directLink_S":
+            #     node["MT_pre__associationType"] = None
 
         old_name = graph.name
 
