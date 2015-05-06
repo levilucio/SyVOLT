@@ -456,15 +456,16 @@ class PathConditionGenerator(object):
         from property_prover_rules.traceability_construction.Himesis.HBuildTraceabilityForRuleRHS import \
             HBuildTraceabilityForRuleRHS
 
-        build_traceability_for_rule = FRule(clean_graph(HBuildTraceabilityForRuleLHS()), clean_graph(HBuildTraceabilityForRuleRHS()))
+        build_traceability_for_rule = ARule(clean_graph(HBuildTraceabilityForRuleLHS()), clean_graph(HBuildTraceabilityForRuleRHS()))
 
         for layerIndex in range(0, len(self.transformation)):
             for ruleIndex in range(0, len(self.transformation[layerIndex])):
-                p = Packet()
-                p.graph = self.transformation[layerIndex][ruleIndex]
-#                p = build_traceability_no_backward.packet_in(p)
-#                p = build_traceability_with_backward.packet_in(p)
-                p = build_traceability_for_rule.packet_in(p)
+                while True:
+                    p = Packet()
+                    p.graph = self.transformation[layerIndex][ruleIndex]
+                    p = build_traceability_for_rule.packet_in(p)
+                    if not build_traceability_for_rule.is_success:
+                        break
 
 
                 self.transformation[layerIndex][ruleIndex] = clean_graph(p.graph)
@@ -486,11 +487,11 @@ class PathConditionGenerator(object):
         # keep the original names around 
         self.rule_originalnames = {"HEmpty":"HEmptyPathCondition"}
         # change rules names to be shorter
-  
+   
         for layer in range(len(self.transformation)):
             i = 0
             for rule in self.transformation[layer]:
-                
+                 
 #                 subsumedRuleNames = (rule.name.split("_"))
 #                 beforeMergeName = subsumedRuleNames.pop(0) 
 #                 new_name = "L" + str(layer) + "R" + str(i)
@@ -501,21 +502,21 @@ class PathConditionGenerator(object):
 #                     for subNewName in self.rule_names.keys():
 #                         if self.rule_names[subNewName] == subName:
 #                             new_name += "_" + subNewName
-
+ 
                 new_name = "L" + str(layer) + "R" + str(i)
-                                        
+                                         
                 i += 1
                 self.rule_names[new_name] = rule.name
-  
+   
                 self.ruleCombinators[new_name] = self.ruleCombinators[rule.name]
                 del self.ruleCombinators[rule.name]
-  
+   
                 self.ruleTraceCheckers[new_name] = self.ruleTraceCheckers[rule.name]
                 del self.ruleTraceCheckers[rule.name]
-  
+   
                 self.matchRulePatterns[new_name] = self.matchRulePatterns[rule.name]
                 del self.matchRulePatterns[rule.name]
-  
+   
                 rule.name = new_name
 
         if self.verbosity >= 2:                
@@ -625,9 +626,6 @@ class PathConditionGenerator(object):
                 pathCondition_name = currentpathConditionSet[pathConditionIndex]
                 
                 pathCondition = pc_dict[pathCondition_name]
-                
-                if self.expand_pc_name(pathCondition_name) == "HEmptyPathCondition_HAttribute_HEntityType":
-                    graph_to_dot("levi_debug", pathCondition)
                 
                 childrenPathConditions = [pathCondition_name]
                 
@@ -856,8 +854,6 @@ class PathConditionGenerator(object):
                                         #if True:
 
                                             if isTotalCombinator:
-                                                
-                                                print "---------------------------------------> IS TOTAL!!!"
                                                 
                                                 # because the rule combines totally with a path condition in the accumulator we just copy it
                                                 # directly on top of the accumulated path condition
