@@ -503,6 +503,35 @@ a.""")
         self.vs[94]["mm__"] = """Constant"""
         self.vs[94]["Type"] = """'String'"""
         #self.vs[94]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom94')
+    	# has apply attribute ApplyAttribute() node
+    	self.add_node()
+    	self.vs[95]["mm__"] = """hasAttribute_T"""
+        #self.vs[95]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+    	# apply attribute ApplyAttribute() node
+    	self.add_node()
+    	self.vs[96]["name"] = """ApplyAttribute"""
+        self.vs[96]["mm__"] = """Attribute"""
+        self.vs[96]["Type"] = """'String'"""
+        #self.vs[96]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+    	# apply attribute equation ApplyAttribute() node
+    	self.add_node()
+    	self.vs[97]["name"] = """eq_"""
+        self.vs[97]["mm__"] = """Equation"""
+        #self.vs[97]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+    	# apply attribute equation left expr ApplyAttribute() node
+    	self.add_node()
+    	self.vs[98]["mm__"] = """leftExpr"""
+        #self.vs[98]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+    	# apply attribute equation right expr ApplyAttribute() node
+    	self.add_node()
+    	self.vs[99]["mm__"] = """rightExpr"""
+        #self.vs[99]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+    	# apply attribute atom ApplyAttribute() node
+    	self.add_node()
+    	self.vs[100]["name"] = """solveRef"""
+        self.vs[100]["mm__"] = """Constant"""
+        self.vs[100]["Type"] = """'String'"""
+        #self.vs[100]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom100')
         
         
         # Add the edges
@@ -609,6 +638,12 @@ a.""")
     		(91,93), #  apply attribute concat shortName () -> right has_args  
     		(93,25), #  right has_args -> term
     		(90,91), # right_expr --> term
+    		(17,95), # apply_class EcuInstance() -> has_apply_attribute ApplyAttribute ()
+    		(95,96), #  has_apply_attribute ApplyAttribute () -> apply_attribute ApplyAttribute ()
+    		(97,98), #  equation of apply attribute ApplyAttribute () -> left_expr
+    		(98,96), #  left_expr -> apply_attribute ApplyAttribute ()
+    		(97,99), #  equation of apply attribute ApplyAttribute () -> right_expr
+    		(99,100), # right_expr --> term
         	(0,2), # matchmodel -> pairedwith
         	(2,1) # pairedwith -> applyModel
         ])
