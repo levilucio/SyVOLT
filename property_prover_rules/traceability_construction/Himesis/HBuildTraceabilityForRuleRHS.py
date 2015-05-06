@@ -18,7 +18,7 @@ class HBuildTraceabilityForRuleRHS(HimesisPostConditionPattern):
         self.add_edges([[4, 0], [0, 1], [2, 1], [3, 2], [6, 3], [5, 6]])
         # Set the graph attributes
         self["mm__"] = pickle.loads("""(lp1
-S'MT_post__T_MM'
+S'MT_post__FamiliesToPersons_MM'
 p2
 aS'MoTifRule'
 p3
@@ -32,12 +32,12 @@ a.""")
 pass
 """
         self["name"] = """"""
-        self["GUID__"] = 8718651086275325855
+        self["GUID__"] = 7298637889829306927
         
         # Set the node attributes
         self.vs[0]["MT_label__"] = """5"""
         self.vs[0]["mm__"] = """MT_post__match_contains"""
-        self.vs[0]["GUID__"] = 1731981086693324537
+        self.vs[0]["GUID__"] = 2129491675721903084
         self.vs[1]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -82,10 +82,10 @@ return attr_value
 
 return attr_value
 """
-        self.vs[1]["GUID__"] = 3240545148639152716
+        self.vs[1]["GUID__"] = 5689208472773641533
         self.vs[2]["MT_label__"] = """10"""
         self.vs[2]["mm__"] = """MT_post__trace_link"""
-        self.vs[2]["GUID__"] = 7254710697686560218
+        self.vs[2]["GUID__"] = 7158037091990660655
         self.vs[3]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -130,16 +130,16 @@ return attr_value
 
 return attr_value
 """
-        self.vs[3]["GUID__"] = 8058697333514938870
+        self.vs[3]["GUID__"] = 3210421936718083316
         self.vs[4]["MT_label__"] = """3"""
         self.vs[4]["mm__"] = """MT_post__MatchModel"""
-        self.vs[4]["GUID__"] = 7069271384809476430
+        self.vs[4]["GUID__"] = 5423360042570371497
         self.vs[5]["MT_label__"] = """4"""
         self.vs[5]["mm__"] = """MT_post__ApplyModel"""
-        self.vs[5]["GUID__"] = 5738829673289541699
+        self.vs[5]["GUID__"] = 7341201780561851443
         self.vs[6]["MT_label__"] = """6"""
         self.vs[6]["mm__"] = """MT_post__apply_contains"""
-        self.vs[6]["GUID__"] = 6915603824186282963
+        self.vs[6]["GUID__"] = 6622716255487794805
 
         from HBuildTraceabilityForRuleLHS import HBuildTraceabilityForRuleLHS
         self.pre = HBuildTraceabilityForRuleLHS()
