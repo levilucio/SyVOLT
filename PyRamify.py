@@ -1683,10 +1683,10 @@ class PyRamify:
 
     #change the proper prover matchers and rewriters to
     #refer to the correct metamodel
-    def changePropertyProverMetamodel(self, pre_metamodel, post_metamodel, subclasses_dict):
+    def changePropertyProverMetamodel(self, pre_metamodel, post_metamodel, subclasses_dict, dsltransInstallDir = "."):
         print("Starting to change property prover metamodel")
 
-        property_prover_rules_dir = "./property_prover_rules/"
+        property_prover_rules_dir = dsltransInstallDir + "/property_prover_rules/"
         for d in os.listdir(property_prover_rules_dir):
 
             if not os.path.isdir(property_prover_rules_dir + d):
