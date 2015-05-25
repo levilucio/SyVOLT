@@ -101,7 +101,7 @@ class Test():
 
     def test_correct_ecore_copier(self,args):
         
-        slice_for_prop1 = False
+        slice_for_prop1 = True
 
         pyramify = PyRamify(verbosity = 2)
 
@@ -110,7 +110,7 @@ class Test():
         
         b1 = self.rules['HEReference']
         b1_2 = self.rules['HEReference_Copy']
-        
+
         c1 = self.rules['HeclassOUTeAnnotationsSolveRefEClassEAnnotationEClassEAnnotation']
         d1 = self.rules['HeclassOUTeTypeParametersSolveRefEClassETypeParameterEClassETypeParameter']
 
@@ -127,12 +127,12 @@ class Test():
         l1 = self.rules['HereferenceOUTeOppositeSolveRefEReferenceEReferenceEReferenceEReference']
 
         m1 = self.rules['HereferenceOUTeKeysSolveRefEReferenceEAttributeEReferenceEAttribute']
-        
+
         n1 = self.rules['HeattributeOUTeAnnotationsSolveRefEAttributeEAnnotationEAttributeEAnnotation']
         o1 = self.rules['HeattributeOUTeTypeSolveRefEAttributeEClassifierEAttributeEClassifier']
-        
+
         p1 = self.rules['HeattributeOUTeGenericTypeSolveRefEAttributeEGenericTypeEAttributeEGenericType']
-        
+
         q1 = self.rules['HEAttribute']
 
 
@@ -147,6 +147,7 @@ class Test():
         
         if slice_for_prop1:
             transformation = [[a1], [a1_2], [b1], [b1_2], [c1], [d1], [e1], [f1], [g1], [h1], [i1], [j1], [k1], [l1], [m1]]
+            #transformation = [[a1], [a1_2], [b1],  [g1]]
         else:
             transformation = [[a1], [b1], [q1], [c1], [d1], [e1], [f1], [g1], [h1], [i1], [j1], [k1], [l1], [m1], [n1], [o1], [p1]]            
 
@@ -160,7 +161,7 @@ class Test():
         eu1 = EcoreUtils("ECore_Copier_Large_MM/Ecore.ecore")
         subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(eu1.getMetamodelClassNames())
         
-        print subclasses_dict
+
         
         subclasses_dict["MT_pre__EStructuralFeature"] = ["MT_pre__EAttribute", "MT_pre__EReference"]
         subclasses_dict["MT_pre__ModelElement"] = ["MT_pre__EAnnotation", "MT_pre__EFactory", "MT_pre__ENamedElement"]
@@ -174,16 +175,20 @@ class Test():
          
         eu2 = EcoreUtils("ECore_Copier_Large_MM/Ecore.ecore")
         subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(eu2.getMetamodelClassNames())
- 
- 
+
+        print subclasses_dict
+
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
          
-        def change_subtype_matching(match_rule, subclass_info):
+        def change_subtype_matching(match_rule, subclass_info, verbosity = 0):
             for v in match_rule.condition.vs():
                 if v["mm__"] in set(subclass_info.keys()):
                     v["MT_subtypes__"] = subclass_info[v["mm__"]]
                     v["MT_subtypeMatching__"] = True
-                    print "Changed one: " + v["mm__"]
+
+                    if verbosity > 0:
+                        print("Changing subtypes for " + v["mm__"] + " to " + str(v["MT_subtypes__"]))
+                    #print "Changed one: " + v["mm__"]
                                                                    
          
         # add polymorphism for the matchers
@@ -194,14 +199,14 @@ class Test():
         for combs_key in self.ruleCombinators.keys():
             if self.ruleCombinators[combs_key] != None:
                 for combinator in self.ruleCombinators[combs_key]:
-                    change_subtype_matching(combinator[0],subclasses_dict)    
+                    change_subtype_matching(combinator[0],subclasses_dict)
  
         # add polymorphism for the tracers
         for tracer_key in self.ruleTraceCheckers.keys():
             if self.ruleTraceCheckers[tracer_key] != None:
                 change_subtype_matching(self.ruleTraceCheckers[tracer_key],subclasses_dict)    
  
-        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, 1, draw_svg=args.draw_svg, run_tests=args.run_tests)#
+        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, 0, draw_svg=args.draw_svg, run_tests=args.run_tests)#
     
         ts0 = time.time()
         s.build_path_conditions()

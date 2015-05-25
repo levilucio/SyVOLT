@@ -23,7 +23,7 @@ class Rewriter(RulePrimitive):
         s.insert(1, '[%s]' % self.condition.name)
         return reduce(lambda x, y: x + ' ' + y, s)
     
-    def packet_in(self, packet):
+    def packet_in(self, packet, verbosity = 0):
         self.exception = None
         self.is_success = False
         if self.condition.pre[Himesis.Constants.GUID] not in packet.match_sets:
@@ -38,6 +38,8 @@ class Rewriter(RulePrimitive):
                 mapping = match.to_label_mapping(packet.graph)
                 # Apply the transformation on the match
 
+                if verbosity > 0:
+                    print("Rewriter mapping: " + str(mapping))
                 self.condition.execute(packet, mapping)     # Sets dirty nodes as well
             except Exception, e:
 

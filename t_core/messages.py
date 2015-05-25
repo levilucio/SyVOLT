@@ -1,7 +1,7 @@
 
 import copy, traceback
 from core.himesis import Himesis
-from core.himesis_utils import graph_to_dot
+from core.himesis_utils import graph_to_dot, print_GUIDs
 
 # Abstract class
 class Message(object): pass
@@ -79,7 +79,7 @@ class Packet(Message):
         s = '''Packet (%s)
     graph: %s
     match_sets: %s
-    pivots: %s''' % (self.current, self.graph, ms, self.global_pivots)
+    pivots: %s''' % (self.current, self.graph.name, ms, self.global_pivots)
         return s
     
     def clone(self):
@@ -170,7 +170,7 @@ class MatchSet:
 
     #prints the matches for this graph
     def print_matches(self, graph):
-        print("MatchSet:")
+        print("MatchSet (" + str(len(self.matches)) + ": ")
         for match in self.matches:
             match.print_match(graph)
     
@@ -199,10 +199,17 @@ class Match(dict):
 
     def print_match(self, graph):
         s = "Match:\n"
+        #print_GUIDs(graph)
         for k in self.keys():
             guid = self[k]
-            node = graph.get_node(guid)
-            name = graph.vs[node]["mm__"] + str(node)
+            try:
+
+                node = graph.get_node(guid)
+
+                print("GUID: " + str(guid) + " Node: " + str(node))
+                name = graph.vs[node]["mm__"] + str(node)
+            except:
+                name = "Missing"
 
             s += "Label " + str(k) + " : [" + name + "]\n"
         s += "\nPivots: " + str(self.local_pivots) + "\n"
@@ -284,7 +291,8 @@ class Match(dict):
             label = pattern_graph.vs[pattern_node][Himesis.Constants.MT_LABEL]
             guid = source_graph.vs[mapping[pattern_node]][Himesis.Constants.GUID]
             self[label] = guid
-        
+
+        #print("Mapping: " + str(mapping))
         self.local_pivots.from_mapping(mapping, source_graph, pattern_graph)
         #print("Local pivots: " + str(self.local_pivots))
 
