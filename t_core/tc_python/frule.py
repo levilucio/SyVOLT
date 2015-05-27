@@ -20,11 +20,14 @@ class FRule(ARule):
         self.M.max = max_iterations
         self.I.max_iterations = max_iterations
     
-    def packet_in(self, packet):
+    def packet_in(self, packet, verbosity=0):
+        if verbosity > 0:
+            print("FRule packet in")
+
         self.exception = None
         self.is_success = False
         # Match
-        packet = self.M.packet_in(packet)
+        packet = self.M.packet_in(packet, verbosity)
         if not self.M.is_success:
             self.exception = self.M.exception
             return packet
@@ -35,7 +38,7 @@ class FRule(ARule):
             return packet
         while True:
             # Rewrite
-            packet = self.W.packet_in(packet)
+            packet = self.W.packet_in(packet, verbosity)
             if not self.W.is_success:
                 self.exception = self.W.exception
                 return packet

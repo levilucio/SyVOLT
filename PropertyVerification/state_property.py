@@ -65,23 +65,21 @@ class StateProperty(Property):
     
     @staticmethod
     def parseStateName2RuleNames (stateName):
-        result=[]
         result=stateName.split('_')
         return result[1:]
       
     @staticmethod    
     def checkRuleReachability (ruleName2Check, StateSpace):
-        pathCondSet = StateSpace.get_all_path_conditions()
 
         ts0 = time.time()
         reachable=False
-        for pathCond in pathCondSet:
+        for pathCond in StateSpace.get_path_conditions():
             rulesInPathCond=StateProperty.parseStateName2RuleNames(pathCond.name)
-            if (ruleName2Check in rulesInPathCond):
+            if ruleName2Check in rulesInPathCond:
                 reachable= True
                 break
         ts1 = time.time()
-        if (reachable==True):
+        if reachable:
             print("\nRule "+ruleName2Check+ " is reachable through at least one path condition !")
         else:
             print("\nRule "+ruleName2Check+ " is not reachable through any path condition !")
@@ -241,13 +239,13 @@ class StateProperty(Property):
 #                         #NEW OPTIMIZATION HEURISTIC
 
 
-                    # for alreadyVerifiedState in AtomicStatePropsInStateProp[atomicStatePropIndex].verifiedStateCache:
-                    #    # if all the rules in the path cond
-                    #     #if len(set(state) - set(alreadyVerifiedState[0])) == len(set(state)) - len(set(alreadyVerifiedState[0])) and \
-                    #     if numberOfIsolatedMatches == alreadyVerifiedState[1]:
-                    #        #print("smallerStateWithSameRulesExists")
-                    #        smallerStateWithSameRulesExists = True
-                    #        break
+                    for alreadyVerifiedState in AtomicStatePropsInStateProp[atomicStatePropIndex].verifiedStateCache:
+                       # if all the rules in the path cond
+                        #if len(set(state) - set(alreadyVerifiedState[0])) == len(set(state)) - len(set(alreadyVerifiedState[0])) and \
+                        if numberOfIsolatedMatches == alreadyVerifiedState[1]:
+                           print("smallerStateWithSameRulesExists")
+                           smallerStateWithSameRulesExists = True
+                           break
 
                         # If 2 states, each has 1 different rule, then the first part of the if condition will evaluate to false,
                         # if 2 states, each with 1 same rules, then the first part of the above if condition will evaluate to true
@@ -347,8 +345,9 @@ class StateProperty(Property):
                             AtomicStatePropsInStateProp[atomicPropIndex].verifiedStateCache.append((state,numberOfIsolatedMatchesForAllAtomicStateProperties[atomicPropIndex]))
 
             else:
-                #print("Other verify")
+                #print("Other verify start")
                 curVerifResult=stateprop.verify(merged_state, StateSpace)
+                #print("Other verify end")
 
                 #print(stateprop.status)
                 #should I update verified state cache here too ? I think yes

@@ -59,7 +59,11 @@ def graph_to_dot(name, g, verbosity = 0):
     verbosity = 0, represent directLink, indirectLink, backward, etc. edges as just edges in the dot graph
     verbosity = 1, represent these edges as their own node
     """
-    
+
+
+    #print("Name: " + name)
+
+
     if g == None:
         print("graph_to_dot Error: Empty graph")
         return 
@@ -217,10 +221,22 @@ def graph_to_dot(name, g, verbosity = 0):
     for e in g.es:
         graph.add_edge(pydot.Edge(nodes[e.source],nodes[e.target]))
 
+
+    if len(name) > 100:
+        name = name.replace("_", "")
+
+    name = name[-240:]
+
+
     dot_filename = './dot/' + name + '.dot'
 
-    graph.write(dot_filename)
-    
+
+
+    try:
+        graph.write(dot_filename)
+    except Exception:
+        print("Graph name: " + name + " is too long")
+
     command = "dot -Tsvg " + dot_filename + " -o " + dot_filename.replace(".dot", ".svg")
     subprocess.call(command, shell=True)
 
@@ -419,6 +435,13 @@ def print_file(file_name):
     graph = load_class(file_name)
     print_graph(graph.values()[0])
 
+def print_GUIDs(graph):
+    print("GUIDs of graph nodes:")
+    for n in range(len(graph.vs)):
+        node = graph.vs[n]
+        print(str(n) + " : " + node["mm__"] + " : " + str(node["GUID__"]) )
+
+
 def print_graph(graph):
     """
     pretty print a Himesis graph
@@ -439,7 +462,7 @@ def print_graph(graph):
     i = 0
     for v in graph.vs:
         nodes[v["mm__"]] = v
-        print(v["mm__"])
+        #print(v["mm__"])
         node_num_mapping[i] = v["mm__"]
         i += 1
 

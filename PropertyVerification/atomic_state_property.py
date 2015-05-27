@@ -75,6 +75,10 @@ class AtomicStateProperty(StateProperty):
         #Check if the AtomicStateProp verification result was preset to some value. 
         ###### If yes, return that value. 
         ###### If no, match the connected pattern then the complete pattern on the input state and return the resultant verification result of the two matches performed
+
+        if StateSpace.verbosity > verbosity:
+            verbosity = StateSpace.verbosity
+
         if verbosity >= 1: print ("Verifying on: " + inputstate.name)
 
         if True:#self.GEThasDefaultVerifResult()==False:

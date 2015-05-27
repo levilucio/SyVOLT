@@ -5,6 +5,8 @@ from core.match_algo import HimesisMatcher
 from core.himesis import HConstants as HC
 from rule_primitive import RulePrimitive
 from messages import MatchSet, Match, TransformationException
+
+from core.himesis_utils import print_graph, print_GUIDs
 import traceback
 
 class Matcher(RulePrimitive):
@@ -42,7 +44,7 @@ class Matcher(RulePrimitive):
         s.append("\n" + str(self.condition) + "\n")
         return reduce(lambda x, y: '%s %s' % (x,y), s)
     
-    def packet_in(self, packet):
+    def packet_in(self, packet, verbosity = 0):
         self.exception = None
         self.is_success = False
 
@@ -50,16 +52,40 @@ class Matcher(RulePrimitive):
             matchSet = packet.match_sets[self.condition[HC.GUID]]
         else:
             matchSet = MatchSet()
-        
+
+        if verbosity > 1:
+            print_graph(self.condition)
+            print_graph(packet.graph)
+
+        if verbosity > 0:
+            print("\nMatcher packet in: ")
+            #print_GUIDs(packet.graph)
+
         # Find the matches
         try:
             i = 1
             if i <= self.max:
                 for mapping in self._match(packet.graph, packet.global_pivots):
+
                     # Convert the mapping to a Match object
                     match = Match()
                     match.from_mapping(mapping, packet.graph, self.condition)
+
+                    if verbosity > 0:
+                        print("Match: " + str(match))
+                        match.print_match(packet.graph)
+
+                    # if verbosity > 0:
+                    #     print("Before MatchSetAdd: ")
+                    #     matchSet.print_matches(packet.graph)
+
                     matchSet.matches.append(match)
+
+                    # if verbosity > 0:
+                    #     print("After MatchSetAdd: ")
+                    #     matchSet.print_matches(packet.graph)
+
+
                     i += 1
                     if i > self.max:
                         # We don't need any more matches
@@ -89,7 +115,10 @@ class Matcher(RulePrimitive):
         
         # Identify that this is the condition we are currently processing
         packet.current = self.condition[HC.GUID]
-        
+
+        if verbosity > 0:
+            matchSet.print_matches(packet.graph)
+
         # Success only if matches were found
         self.is_success = len(matchSet.matches) > 0
         return packet

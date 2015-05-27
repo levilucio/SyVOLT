@@ -43,31 +43,15 @@ from PropertyVerification.PropertyVerifier import PropertyVerifier
 
 #positive
 
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HEmpty_IsolatedConnectedLHS import HEmpty_IsolatedConnectedLHS
 
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HFourMembers_IsolatedLHS import HFourMembers_IsolatedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HFourMembers_ConnectedLHS import HFourMembers_ConnectedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HFourMembers_CompleteLHS import HFourMembers_CompleteLHS
+from ECore_Copier_MM.properties.positive.himesis.HProperty1_isolatedLHS import HProperty1_isolatedLHS
+from ECore_Copier_MM.properties.positive.himesis.HProperty1_connectedLHS import HProperty1_connectedLHS
+from ECore_Copier_MM.properties.positive.himesis.HProperty1_completeLHS import HProperty1_completeLHS
 
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HMotherFather_IsolatedLHS import HMotherFather_IsolatedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HMotherFather_ConnectedLHS import HMotherFather_ConnectedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HMotherFather_CompleteLHS import HMotherFather_CompleteLHS
+from ECore_Copier_MM.properties.positive.himesis.HProperty2_isolatedLHS import HProperty2_isolatedLHS
+from ECore_Copier_MM.properties.positive.himesis.HProperty2_connectedLHS import HProperty2_connectedLHS
+from ECore_Copier_MM.properties.positive.himesis.HProperty2_completeLHS import HProperty2_completeLHS
 
-
-#negative
-from FamiliesToPersons_MM.Properties.Negative.Himesis.HDaughterMother_IsolatedLHS import HDaughterMother_IsolatedLHS
-from FamiliesToPersons_MM.Properties.Negative.Himesis.HDaughterMother_ConnectedLHS import HDaughterMother_ConnectedLHS
-from FamiliesToPersons_MM.Properties.Negative.Himesis.HDaughterMother_CompleteLHS import HDaughterMother_CompleteLHS
-
-
-#implication
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson1_IsolatedLHS import HCommunityPerson1_IsolatedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson1_ConnectedLHS import HCommunityPerson1_ConnectedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson1_CompleteLHS import HCommunityPerson1_CompleteLHS
-
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson2_IsolatedLHS import HCommunityPerson2_IsolatedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson2_ConnectedLHS import HCommunityPerson2_ConnectedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson2_CompleteLHS import HCommunityPerson2_CompleteLHS
 
 
 
@@ -150,7 +134,7 @@ class Test():
                 
         #TODO: Change this number if you are modifying the transformation at all
         #if args.num_rules == -1:
-#        transformation = [[a1], [b1], [c1], [d1], [e1], [f1], [g1], [h1], [i1], [j1], [k1], [l1], [m1], [n1], [o1], [p1], [q1], [r1], [s1], [t1], [u1], [v1], [w1]]
+        #transformation = [[a1], [b1], [c1], [d1], [e1], [f1], [g1], [h1], [i1], [j1], [k1], [l1], [m1], [n1], [o1], [p1], [q1], [r1], [s1], [t1], [u1], [v1], [w1]]
         transformation = [[a1], [b1], [c1], [d1], [e1], [f1], [g1], [h1], [i1], [j1], [k1], [l1], [m1], [o1], [p1], [q1], [r1], [s1], [u1], [w1], [x1]]
 
         #else:
@@ -180,7 +164,7 @@ class Test():
 
 
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
-        
+
         def change_subtype_matching(match_rule, subclass_info):
             for v in match_rule.condition.vs():
                 if v["mm__"] in set(subclass_info.keys()):
@@ -204,6 +188,7 @@ class Test():
             if self.ruleTraceCheckers[tracer_key] != None:
                 change_subtype_matching(self.ruleTraceCheckers[tracer_key],subclasses_dict)    
 
+
         s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, 1, draw_svg=args.draw_svg, run_tests=args.run_tests)#
    
         ts0 = time.time()
@@ -223,86 +208,31 @@ class Test():
             num_pcs_s = "The number of produced path conditions is incorrect.\n" + str(expected_num_pcs) + " were expected, but " + str(s.num_path_conditions) + " were produced."
             print(num_pcs_s)
             #raise Exception(num_pcs_s)
- 
+
 #         print("printing path conditions")
 #         s.print_path_conditions_screen()
         
         
         # check for reachability of rules
-        
-        for layer in s.transformation:
-            for rule in layer:
-                StateProperty.checkRuleReachability(s.rule_names[rule.name], s)
+        #
+        # for layer in s.transformation:
+        #     for rule in layer:
+        #         StateProperty.checkRuleReachability(s.rule_names[rule.name], s)
+
 
         #s.print_path_conditions_file()
 
-        # print("\nProperty proving:")
-        #
-        # s.verbosity = 0
-        #
-        #
-        # HFourMembers_atomic = AtomicStateProperty(HFourMembers_IsolatedLHS(), HFourMembers_ConnectedLHS(), HFourMembers_CompleteLHS())
-        #
-        #
-        # HMotherFather_atomic = AtomicStateProperty(HMotherFather_IsolatedLHS(), HMotherFather_ConnectedLHS(), HMotherFather_CompleteLHS())
-        #
-        #
-        # HDaughterMother_atomic = AtomicStateProperty(HDaughterMother_IsolatedLHS(), HDaughterMother_ConnectedLHS(), HDaughterMother_CompleteLHS())
-        #
-        #
-        #
-        # # HCommunityPersonIfClause = AtomicStateProperty(HCommunityPerson1_IsolatedLHS(), HCommunityPerson1_ConnectedLHS(), HCommunityPerson1_CompleteLHS())
-        # #
-        # #
-        # # HCommunityPersonThenClause = AndStateProperty(
-        # #     AtomicStateProperty(HCommunityPerson1_IsolatedLHS(), HCommunityPerson1_ConnectedLHS(),
-        # #         HCommunityPerson1_CompleteLHS()),
-        # #     NotStateProperty(
-        # #         AtomicStateProperty(HCommunityPerson2_IsolatedLHS(), HCommunityPerson2_ConnectedLHS(),
-        # #             HCommunityPerson2_CompleteLHS())))
-        #
-        #
-        # HCommunityPersonIfClause = AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(),
-        #     HCommunityPerson1_CompleteLHS())
-        #
-        # HCommunityPersonThenClause = NotStateProperty(
-        #         AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(),
-        #             HCommunityPerson2_CompleteLHS()))
-        #
-        #
-        #
-        # HCommunityPerson1 = AtomicStateProperty(HCommunityPerson1_IsolatedLHS(), HCommunityPerson1_ConnectedLHS(), HCommunityPerson1_CompleteLHS())
-        #
-        # #graph_to_dot("HCommunityPerson1_IsolatedLHS", HCommunityPerson1_IsolatedLHS())
-        #
-        #
-        # #graph_to_dot("HCommunityPerson1_ConnectedLHS", HCommunityPerson1_ConnectedLHS())
-        #
-        # #graph_to_dot("HCommunityPerson1_CompleteLHS", HCommunityPerson1_CompleteLHS())
-        #
-        #
-        # #graph_to_dot("HCommunityPerson1_CompleteLHS", HCommunityPerson1_CompleteLHS())
-        # #graph_to_dot("HCommunityPerson2_CompleteLHS", HCommunityPerson2_CompleteLHS())
-        #
-        # if args.draw_svg:
-        #     graph_to_dot("HDaughterMother_ConnectedLHS", HDaughterMother_ConnectedLHS())
-        #     graph_to_dot("HDaughterMother_CompleteLHS", HDaughterMother_CompleteLHS())
-        #
-        #     graph_to_dot("HMotherFather_IsolatedLHS", HMotherFather_IsolatedLHS())
-        #     graph_to_dot("HMotherFather_ConnectedLHS", HMotherFather_ConnectedLHS())
-        #     graph_to_dot("HMotherFather_CompleteLHS", HMotherFather_CompleteLHS())
-        #
-        #     #graph_to_dot("HMotherFather_CompleteLHS", HMotherFather_CompleteLHS())
-        #     #graph_to_dot("HDaughterMother_CompleteLHS", HDaughterMother_CompleteLHS())
-        #
-        #     #
-        #
-        #     #
-        #     # for state in s.get_path_conditions():
-        #     #     graph_to_dot(state.name, state)
+
+        prop1_atomic = AtomicStateProperty(HProperty1_isolatedLHS(), HProperty1_connectedLHS(), HProperty1_completeLHS())
+        prop2_atomic = AtomicStateProperty(HProperty2_isolatedLHS(), HProperty2_connectedLHS(), HProperty2_completeLHS())
+
+        #graph_to_dot("prop2_iso", HProperty2_isolatedLHS())
+        #graph_to_dot("prop2_con", HProperty2_connectedLHS())
+        #graph_to_dot("prop2_comp", HProperty2_completeLHS())
+
         #
         # #atomic_properties = [["HDaughterMother_atomic", HDaughterMother_atomic]]
-        # atomic_properties = [["HFourMembers_atomic", HFourMembers_atomic], ["HMotherFather_atomic", HMotherFather_atomic], ["HDaughterMother_atomic", HDaughterMother_atomic]]
+        atomic_properties = [["prop1", prop1_atomic], ["prop2", prop2_atomic]]
         #
         # if_then_properties = [["HCommunityPerson", HCommunityPersonIfClause, HCommunityPersonThenClause]]
         #
@@ -317,12 +247,15 @@ class Test():
         # #     print("Atomic property: " + "HCommunityPerson1" + " does not hold")
         #
         #
-        # for name, atomic_prop in atomic_properties:
-        #     finalresult = StateProperty.verifyCompositeStateProperty(s, atomic_prop)
-        #     if len(finalresult) == 0:
-        #         print("Atomic property: " + name + " holds\n")
-        #     else:
-        #         print("Atomic property: " + name + " does not hold\n")
+        for name, atomic_prop in atomic_properties:
+            ts0 = time.time()
+            finalresult = StateProperty.verifyCompositeStateProperty(s, atomic_prop)
+            ts1 = time.time()
+            if len(finalresult) == 0:
+                print("Atomic property: " + name + " holds\n")
+            else:
+                print("Atomic property: " + name + " does not hold\n")
+            print("Took " + str(ts1 - ts0) + " time to verify ")
         #
         # for name, i, t in if_then_properties:
         #     finalresult = StateProperty.verifyCompositeStateProperty(s, ImplicationStateProperty(i, t))
