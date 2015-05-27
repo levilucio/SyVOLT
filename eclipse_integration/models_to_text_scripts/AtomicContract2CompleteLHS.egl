@@ -102,18 +102,7 @@ return True
 .""")
 		self.vs[[%=nodeIndex%]]["MT_dirty__"] = False
 		self.vs[[%=nodeIndex%]]["mm__"] = """MT_pre__[%=class.className%]"""  
-		self.vs[[%=nodeIndex%]]["MT_pre__classtype"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
 
-return True
-"""
 		self.vs[[%=nodeIndex%]]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -171,18 +160,7 @@ return True
 .""")
 		self.vs[[%=nodeIndex%]]["MT_dirty__"] = False
 		self.vs[[%=nodeIndex%]]["mm__"] = """MT_pre__[%=class.className%]"""  
-		self.vs[[%=nodeIndex%]]["MT_pre__classtype"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
 
-return True
-"""
 		self.vs[[%=nodeIndex%]]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -543,7 +521,7 @@ p1
         ])
         
         [%
-        // define evaluation methods for each class.
+        // define evaluation methods for each match class.
 		for(class in contract.match.first.class){
 			var classLabel = matchClassNodeMap.get(class) + 1;
 			%]
@@ -593,9 +571,82 @@ p1
     	}
         %]
         [%
-        // define evaluation methods for each association.
+        // define evaluation methods for each match association.
 		for(association in contract.match.first.association){
 			var associationLabel = matchAssociationNodeMap.get(association) + 1;
+			%]
+	def eval_associationType[%= associationLabel %](self, attr_value, this):
+			
+			#===============================================================================
+			# This code is executed when evaluating if a node shall be matched by this rule.
+			# You can access the value of the current node's attribute value by: attr_value.
+			# You can access any attribute x of this node by: this['x'].
+			# If the constraint relies on attribute values from other nodes,
+			# use the LHS/NAC constraint instead.
+			# The given constraint must evaluate to a boolean expression.
+			#===============================================================================
+			
+		return attr_value == "[%= association.associationName %]"
+			
+
+        	[%
+    	}
+        %]
+        
+        [%
+        // define evaluation methods for each apply class.
+		for(class in contract.apply.class){
+			var classLabel = applyClassNodeMap.get(class) + 1;
+			%]
+	def eval_classtype[%= classLabel %](self, attr_value, this):
+		
+			#===============================================================================
+			# This code is executed when evaluating if a node shall be matched by this rule.
+			# You can access the value of the current node's attribute value by: attr_value.
+			# You can access any attribute x of this node by: this['x'].
+			# If the constraint relies on attribute values from other nodes,
+			# use the LHS/NAC constraint instead.
+			# The given constraint must evaluate to a boolean expression.
+			#===============================================================================
+
+		return True
+        
+        
+	def eval_cardinality[%= classLabel %](self, attr_value, this):
+			
+			#===============================================================================
+			# This code is executed when evaluating if a node shall be matched by this rule.
+			# You can access the value of the current node's attribute value by: attr_value.
+			# You can access any attribute x of this node by: this['x'].
+			# If the constraint relies on attribute values from other nodes,
+			# use the LHS/NAC constraint instead.
+			# The given constraint must evaluate to a boolean expression.
+			#===============================================================================
+			
+		return True
+
+        
+	def eval_name[%= classLabel %](self, attr_value, this):
+			
+			#===============================================================================
+			# This code is executed when evaluating if a node shall be matched by this rule.
+			# You can access the value of the current node's attribute value by: attr_value.
+			# You can access any attribute x of this node by: this['x'].
+			# If the constraint relies on attribute values from other nodes,
+			# use the LHS/NAC constraint instead.
+			# The given constraint must evaluate to a boolean expression.
+			#===============================================================================
+			
+		return True
+
+        
+        	[%
+    	}
+        %]
+        [%
+        // define evaluation methods for each apply association.
+		for(association in contract.apply.association){
+			var associationLabel = applyAssociationNodeMap.get(association) + 1;
 			%]
 	def eval_associationType[%= associationLabel %](self, attr_value, this):
 			

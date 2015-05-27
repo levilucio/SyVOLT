@@ -605,7 +605,7 @@ class PathConditionGenerator(object):
 
         print("CPU Count: " + str(cpu_count))
 
-        do_parallel = True
+        do_parallel = False
 
         pc_dict = {}#manager.dict()
 

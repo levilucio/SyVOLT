@@ -144,7 +144,7 @@ class Prover():
                 change_subtype_matching(self.ruleTraceCheckers[tracer_key],subclasses_dict)      
             
 		# generate path conditions
-        pc_set = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, 2, draw_svg=args.draw_svg, run_tests=args.run_tests)
+        pc_set = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, verbosity=args.verbosity, draw_svg=args.draw_svg, run_tests=args.run_tests)
     
         ts0 = time.time()
         pc_set.build_path_conditions()
@@ -166,16 +166,16 @@ class Prover():
         	graph_to_dot("property_[%=ac.Name%]_complete", H[%=ac.Name%]_CompleteLHS())
         [%}%]       
          
-[*-        [%
+        [%
 	    var atomicContractIndex = 0;
         for (ac in inputProperties!AtomicContract) { %]
         c[%=atomicContractIndex%] = AtomicStateProperty(H[%=ac.Name%]_IsolatedLHS(), H[%=ac.Name%]_ConnectedLHS(), H[%=ac.Name%]_CompleteLHS())
         result_c[%=atomicContractIndex%] = StateProperty.verifyCompositeStateProperty(pc_set, c[%=atomicContractIndex%])
-        if (result_c[%=atomicContractIndex%]):
-        	print "Contract [%=ac.Name%] holds!"
+        if len(result_c[%=atomicContractIndex%]) != 0:
+        	print "!!! Contract [%=ac.Name%] holds!"
         else:
-        	print "Contract [%=ac.Name%] does not hold!"        
-        [%}%] *]
+        	print "!!! Contract [%=ac.Name%] does not hold!"        
+        [%}%]
 
         
 
@@ -186,6 +186,7 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description='Run the ecore_copier test.')
+    
     parser.add_argument('--skip_tests', dest = 'run_tests', action = 'store_false',
                         help = 'Option to skip the running of matching tests')
     parser.set_defaults(run_tests = True)
@@ -199,6 +200,10 @@ if __name__ == "__main__":
 
     parser.add_argument('--num_rules', type = int, default = -1,
                         help = 'Number of rules in the transformation (default: -1)')
+                        
+    parser.add_argument('--verbosity', type = int, default = 0,
+                        help = 'Verbosity level (default: 0 - minimum output)')
+                        
     args = parser.parse_args()
 
 
