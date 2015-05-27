@@ -1,0 +1,548 @@
+[%
+var nodeIndex = 0;
+
+var matchModelIndex = 0;
+var applyModelIndex = 0;
+var pairedWithNodeIndex = 0;
+
+var matchClassNodeMap : new Map;
+var matchContainsClassNodeMap : new Map;
+
+var applyClassNodeMap : new Map;
+var applyContainsClassNodeMap : new Map;
+
+
+var matchAssociationNodeMap : new Map;
+
+var applyAssociationNodeMap : new Map;
+
+var backwardAssociationNodeMap: new Map;
+
+var hasMatchAttributeNodeMap: new Map;
+var matchAttributeNodeMap: new Map;
+
+var hasApplyAttributeNodeMap: new Map;
+var applyAttributeNodeMap: new Map;
+
+var applyAttributeEquationNodeMap: new Map;
+var applyAttributeEquationLeftExpNodeMap : new Map;
+var applyAttributeEquationRightExpNodeMap : new Map;
+
+var applyAttributeAtomNodeMap : new Map;
+
+var applyAttributeConcatNodeMap : new Map;
+var applyAttributeConcatLeftHasArgsNodeMap: new Map;
+var applyAttributeConcatRightHasArgsNodeMap: new Map;
+
+var matchAttributeEquationNodeMap: new Map;
+var matchAttributeEquationLeftExpNodeMap : new Map;
+var matchAttributeEquationRightExpNodeMap : new Map;
+
+var matchAttributeAtomNodeMap : new Map;
+
+var matchAttributeConcatNodeMap : new Map;
+var matchAttributeConcatLeftHasArgsNodeMap: new Map;
+var matchAttributeConcatRightHasArgsNodeMap: new Map;
+
+%]
+from core.himesis import Himesis
+import cPickle as pickle
+import uuid
+
+class H[%=rule.description%](Himesis):
+    def __init__(self):
+        """
+        Creates the himesis graph representing the DSLTrans rule [%=rule.description%].
+        """
+        # Flag this instance as compiled now
+        self.is_compiled = True
+        
+        super(H[%=rule.description%], self).__init__(name='H[%=rule.description%]', num_nodes=0, edges=[])
+        
+        
+        # Set the graph attributes
+        self["mm__"] = pickle.loads("""(lp1
+S'HimesisMM'
+p2
+a.""")
+        
+        self["name"] = """[%=rule.description%]"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'[%=rule.description%]')
+        
+        # match model. We only support one match model
+        [%
+        matchModelIndex = nodeIndex;
+    	%]
+        self.add_node()
+        self.vs[[%=nodeIndex%]]["mm__"] = """MatchModel"""
+        #self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'[%=rule.description%]matchmodel[%=nodeIndex%]')
+    	[%
+		nodeIndex = nodeIndex + 1;
+        %]
+        
+        # apply model node
+        [%
+    	applyModelIndex = nodeIndex;
+    	%]
+        self.add_node()
+        self.vs[[%=nodeIndex%]]["mm__"] = """ApplyModel"""
+        #self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'[%=rule.description%]applymodel[%=nodeIndex%]')
+    	[%
+    	nodeIndex = nodeIndex + 1;
+        %]
+        
+        # paired with relation between match and apply models
+        [%
+    	pairedWithNodeIndex = nodeIndex;
+    	%]
+        self.add_node()
+        self.vs[[%=nodeIndex%]]["mm__"] = """paired_with"""
+        #self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'[%=rule.description%]pairedwith[%=nodeIndex%]')
+        [%
+    	nodeIndex = nodeIndex + 1;
+        %]
+        
+        [%
+		for(class in rule.match.first.class){
+			matchClassNodeMap.put(class, nodeIndex);
+			%]
+    	# match class [%=class.className%]([%=class.id%]) node
+    	self.add_node()
+    	self.vs[[%=nodeIndex%]]["name"] = """[%=class.id%]"""
+        self.vs[[%=nodeIndex%]]["classtype"] = """[%=class.className%]"""
+        self.vs[[%=nodeIndex%]]["mm__"] = """[%=class.className%]"""
+        self.vs[[%=nodeIndex%]]["cardinality"] = """[%= getClassCardinality(class) %]"""
+        #self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'[%=class.id%]')
+    		[%
+    		nodeIndex = nodeIndex + 1;
+    		%]
+    	# match_contains node for class [%=class.className%]([%=class.id%])
+        	[%
+    		matchContainsClassNodeMap.put(class, nodeIndex);
+    		%]
+        self.add_node()
+        self.vs[[%=nodeIndex%]]["mm__"] = """match_contains"""
+        #self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'[%=class.id%]matchcontains[%=nodeIndex%]')
+        	[%
+    		nodeIndex = nodeIndex + 1;
+    	}
+        %]
+        
+        
+        [%
+		for(class in rule.apply.class){
+			applyClassNodeMap.put(class, nodeIndex);
+			%]
+    	# apply class [%=class.className%]([%=class.id%]) node
+    	self.add_node()
+    	self.vs[[%=nodeIndex%]]["name"] = """[%=class.id%]"""
+        self.vs[[%=nodeIndex%]]["classtype"] = """[%=class.className%]"""
+        self.vs[[%=nodeIndex%]]["mm__"] = """[%=class.className%]"""
+        self.vs[[%=nodeIndex%]]["cardinality"] = """1"""
+        #self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'[%=class.id%]')
+    		[%
+    		nodeIndex = nodeIndex + 1;
+    		%]
+    	# apply_contains node for class [%=class.className%]([%=class.id%])
+        	[%
+    		applyContainsClassNodeMap.put(class, nodeIndex);
+    		%]
+        self.add_node()
+        self.vs[[%=nodeIndex%]]["mm__"] = """apply_contains"""
+        #self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'[%=class.id%]applycontains[%=nodeIndex%]')
+        	[%
+    		nodeIndex = nodeIndex + 1;
+    	}
+        %]
+        
+        
+        [%
+		for(association in rule.match.first.association){
+			matchAssociationNodeMap.put(association, nodeIndex);
+			%]
+    	# match association [%=association.source.className%]--[%=association.associationName%]-->[%=association.target.className%] node
+    	self.add_node()
+    	self.vs[[%=nodeIndex%]]["associationType"] = """[%=association.associationName%]"""
+        self.vs[[%=nodeIndex%]]["mm__"] = """directLink_S"""
+        #self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'[%=association.source.id + ("assoc" + nodeIndex) + association.target.id %]')
+    		[%
+    		nodeIndex = nodeIndex + 1;
+    	}
+        %]
+        
+        [%
+		for(association in rule.apply.association){
+			applyAssociationNodeMap.put(association, nodeIndex);
+			%]
+    	# apply association [%=association.source.className%]--[%=association.associationName%]-->[%=association.target.className%] node
+    	self.add_node()
+    	self.vs[[%=nodeIndex%]]["associationType"] = """[%=association.associationName%]"""
+        self.vs[[%=nodeIndex%]]["mm__"] = """directLink_T"""
+        #self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'[%=association.source.id + ("assoc" + nodeIndex) + association.target.id %]')
+    		[%
+    		nodeIndex = nodeIndex + 1;
+    	}
+        %]
+        
+        [%
+		for(backwardAssociation in rule.backwards){
+			backwardAssociationNodeMap.put(backwardAssociation, nodeIndex);
+			%]
+    	# backward association [%=backwardAssociation.sourceClass.className%]---->[%=backwardAssociation.targetClass.className%] node
+    	self.add_node()
+    	self.vs[[%=nodeIndex%]]["type"] = """ruleDef"""
+        self.vs[[%=nodeIndex%]]["mm__"] = """backward_link"""
+        #self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'[%=backwardAssociation.sourceClass.id + ("blink" + nodeIndex) + backwardAssociation.targetClass.id %]')
+    		[%
+    		nodeIndex = nodeIndex + 1;
+    	}
+        %]
+        
+        
+        [%
+		for(class in rule.match.first.class){
+			for(matchAttribute in class.attribute){
+				hasMatchAttributeNodeMap.put(matchAttribute, nodeIndex);
+				%]
+    	# has match attribute [%=matchAttribute.attributeName%]([%=matchAttribute.id%]) node
+    	self.add_node()
+    	self.vs[[%=nodeIndex%]]["mm__"] = """hasAttribute_S"""
+        #self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has[%=matchAttribute.id %]')
+    			[%
+    			nodeIndex = nodeIndex + 1;
+    		
+    			matchAttributeNodeMap.put(matchAttribute, nodeIndex);
+    			%]
+    	# match attribute [%=matchAttribute.attributeName%]([%=matchAttribute.id%]) node
+    	self.add_node()
+    	self.vs[[%=nodeIndex%]]["name"] = """[%=matchAttribute.attributeName %]"""
+        self.vs[[%=nodeIndex%]]["mm__"] = """Attribute"""
+        self.vs[[%=nodeIndex%]]["Type"] = """'String'"""
+        #self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'[%=matchAttribute.id %]')
+    			[%
+    			nodeIndex = nodeIndex + 1;
+    			
+    			if (matchAttribute.attributeValue <> null){
+    				matchAttributeEquationNodeMap.put(matchAttribute, nodeIndex);
+	    			%]
+    	# match attribute equation [%=matchAttribute.attributeName%]([%=matchAttribute.id%]) node
+    	self.add_node()
+    	self.vs[[%=nodeIndex%]]["name"] = """eq_"""
+        self.vs[[%=nodeIndex%]]["mm__"] = """Equation"""
+        #self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation[%=matchAttribute.id %]')
+	    			[%
+	    			nodeIndex = nodeIndex + 1;
+	    		
+	    		
+	    			matchAttributeEquationLeftExpNodeMap.put(matchAttribute, nodeIndex);
+	    			%]
+    	# match attribute equation left expr [%=matchAttribute.attributeName%]([%=matchAttribute.id%]) node
+    	self.add_node()
+    	self.vs[[%=nodeIndex%]]["mm__"] = """leftExpr"""
+        #self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr[%=matchAttribute.id %]')
+	    			[%
+	    			nodeIndex = nodeIndex + 1;
+	    		
+	    			matchAttributeEquationRightExpNodeMap.put(matchAttribute, nodeIndex);
+	    			%]
+    	# match attribute equation right expr [%=matchAttribute.attributeName%]([%=matchAttribute.id%]) node
+    	self.add_node()
+    	self.vs[[%=nodeIndex%]]["mm__"] = """rightExpr"""
+        #self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr[%=matchAttribute.id %]')
+	    			[%
+	    			nodeIndex = nodeIndex + 1;
+	    		
+	    			nodeIndex = generateAttributeTermNodes(matchAttribute, matchAttribute.attributeValue, nodeIndex, matchAttributeAtomNodeMap, 
+	    									matchAttributeConcatNodeMap, matchAttributeConcatLeftHasArgsNodeMap, 
+	    									matchAttributeConcatRightHasArgsNodeMap);	
+    			}
+    		}
+    	}
+        %]
+        
+        
+        [%
+		for(class in rule.apply.class){
+			for(applyAttribute in class.attribute.reject(attr | attr.attributeName == "" or attr.attributeName == null)){
+				hasApplyAttributeNodeMap.put(applyAttribute, nodeIndex);
+				%]
+    	# has apply attribute [%=applyAttribute.attributeName%]([%=applyAttribute.id%]) node
+    	self.add_node()
+    	self.vs[[%=nodeIndex%]]["mm__"] = """hasAttribute_T"""
+        #self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has[%=applyAttribute.id %]')
+	    		[%
+	    		nodeIndex = nodeIndex + 1;
+	    		
+	    		applyAttributeNodeMap.put(applyAttribute, nodeIndex);
+	    		
+	    		var attrName = applyAttribute.attributeName;
+	    		if (applyAttribute.attributeName == null){
+	    			attrName = "ApplyAttribute";
+	    		}
+	    		%]
+    	# apply attribute [%=applyAttribute.attributeName%]([%=applyAttribute.id%]) node
+    	self.add_node()
+    	self.vs[[%=nodeIndex%]]["name"] = """[%= attrName %]"""
+        self.vs[[%=nodeIndex%]]["mm__"] = """Attribute"""
+        self.vs[[%=nodeIndex%]]["Type"] = """'String'"""
+        #self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'[%=applyAttribute.id %]')
+	    		[%
+	    		nodeIndex = nodeIndex + 1;
+	    		
+	    		applyAttributeEquationNodeMap.put(applyAttribute, nodeIndex);
+	    		%]
+    	# apply attribute equation [%=applyAttribute.attributeName%]([%=applyAttribute.id%]) node
+    	self.add_node()
+    	self.vs[[%=nodeIndex%]]["name"] = """eq_"""
+        self.vs[[%=nodeIndex%]]["mm__"] = """Equation"""
+        #self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation[%=applyAttribute.id %]')
+	    		[%
+	    		nodeIndex = nodeIndex + 1;
+	    		
+	    		
+	    		applyAttributeEquationLeftExpNodeMap.put(applyAttribute, nodeIndex);
+	    		%]
+    	# apply attribute equation left expr [%=applyAttribute.attributeName%]([%=applyAttribute.id%]) node
+    	self.add_node()
+    	self.vs[[%=nodeIndex%]]["mm__"] = """leftExpr"""
+        #self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr[%=applyAttribute.id %]')
+	    		[%
+	    		nodeIndex = nodeIndex + 1;
+	    		
+	    		
+	    		applyAttributeEquationRightExpNodeMap.put(applyAttribute, nodeIndex);
+	    		%]
+    	# apply attribute equation right expr [%=applyAttribute.attributeName%]([%=applyAttribute.id%]) node
+    	self.add_node()
+    	self.vs[[%=nodeIndex%]]["mm__"] = """rightExpr"""
+        #self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr[%=applyAttribute.id %]')
+	    		[%
+	    		nodeIndex = nodeIndex + 1;
+	    		
+	    		nodeIndex = generateAttributeTermNodes(applyAttribute, applyAttribute.attributeValue, nodeIndex, applyAttributeAtomNodeMap, applyAttributeConcatNodeMap, applyAttributeConcatLeftHasArgsNodeMap, applyAttributeConcatRightHasArgsNodeMap);
+			}
+		}
+        %]
+        
+        
+        # Add the edges
+        self.add_edges([
+        	[%
+    		for(class in rule.match.first.class){
+    		%]
+    		([%= matchModelIndex%],[%= matchContainsClassNodeMap.get(class)%]), # matchmodel -> match_contains
+    		([%= matchContainsClassNodeMap.get(class)%],[%= matchClassNodeMap.get(class)%]), # match_contains -> match_class [%=class.className%]([%=class.id%])
+    		[%
+    		}
+    		
+    		for(class in rule.apply.class){
+    		%]
+    		([%= applyModelIndex%],[%= applyContainsClassNodeMap.get(class)%]), # applymodel -> apply_contains
+    		([%= applyContainsClassNodeMap.get(class)%],[%= applyClassNodeMap.get(class)%]), # apply_contains -> apply_class [%=class.className%]([%=class.id%])
+    		[%
+    		}
+    		
+    		for(association in rule.match.first.association){
+    		%]
+    		([%= matchClassNodeMap.get(association.source)%],[%= matchAssociationNodeMap.get(association)%]), # match_class [%=association.source.className%]([%=association.source.id%]) -> association [%=association.associationName%]
+    		([%= matchAssociationNodeMap.get(association) %],[%= matchClassNodeMap.get(association.target)%]), # association [%=association.associationName%]  -> match_class [%=association.target.className%]([%=association.target.id%])
+    		[%
+    		}
+    		
+    		for(association in rule.apply.association){
+    		%]
+    		([%= applyClassNodeMap.get(association.source)%],[%= applyAssociationNodeMap.get(association)%]), # apply_class [%=association.source.className%]([%=association.source.id%]) -> association [%=association.associationName%]
+    		([%= applyAssociationNodeMap.get(association) %],[%= applyClassNodeMap.get(association.target)%]), # association [%=association.associationName%]  -> apply_class [%=association.target.className%]([%=association.target.id%])
+    		[%
+    		}
+    		
+    		for(backwardAssociation in rule.backwards){
+    		%]
+    		([%= applyClassNodeMap.get(backwardAssociation.targetClass)%],[%= backwardAssociationNodeMap.get(backwardAssociation)%]), # apply_class [%=backwardAssociation.targetClass.className%]([%=backwardAssociation.targetClass.id%]) -> backward_association
+    		([%= backwardAssociationNodeMap.get(backwardAssociation) %],[%= matchClassNodeMap.get(backwardAssociation.sourceClass)%]), #  backward_association -> apply_class [%=backwardAssociation.sourceClass.className%]([%=backwardAssociation.sourceClass.id%])
+    		[%
+    		}
+    		
+    		for(class in rule.match.first.class){
+    			for(attribute in class.attribute){
+    		%]
+    		([%= matchClassNodeMap.get(class)%],[%= hasMatchAttributeNodeMap.get(attribute)%]), # match_class [%=class.className%]([%=class.id%]) -> has_match_attribute [%=attribute.attributeName%] ([%=attribute.id%])
+    		([%= hasMatchAttributeNodeMap.get(attribute) %],[%= matchAttributeNodeMap.get(attribute) %]), #  has_match_attribute [%=attribute.attributeName%] ([%=attribute.id%]) -> match_attribute [%=attribute.attributeName%] ([%=attribute.id%])
+    		[%
+	    			if (attribute.attributeValue <> null){
+	    	%]
+	    	([%= matchAttributeEquationNodeMap.get(attribute) %],[%= matchAttributeEquationLeftExpNodeMap.get(attribute) %]), #  equation of match attribute [%=attribute.attributeName%] ([%=attribute.id%]) -> left_expr
+    		([%= matchAttributeEquationLeftExpNodeMap.get(attribute) %],[%= matchAttributeNodeMap.get(attribute) %]), #  left_expr -> match_attribute [%=attribute.attributeName%] ([%=attribute.id%])
+    		([%= matchAttributeEquationNodeMap.get(attribute) %],[%= matchAttributeEquationRightExpNodeMap.get(attribute) %]), #  equation of match attribute [%=attribute.attributeName%] ([%=attribute.id%]) -> right_expr
+    		[%
+	    				
+	    				var rightExprTermEdgeTarget = computeAttributeTermEdgeTarget(attribute, attribute.attributeValue, matchAttributeAtomNodeMap, matchAttributeConcatNodeMap, 
+    																				matchAttributeConcatLeftHasArgsNodeMap, matchAttributeConcatRightHasArgsNodeMap, 
+    																					matchAttributeNodeMap);
+    		%]
+    		([%= matchAttributeEquationRightExpNodeMap.get(attribute) %],[%= rightExprTermEdgeTarget %]), # right_expr --> term
+    		[%
+	    			}
+    			}
+    		}
+    		
+    		for(class in rule.apply.class){
+    			for(attribute in class.attribute.reject(attr | attr.attributeName == "" or attr.attributeName == null)){
+    		%]
+    		([%= applyClassNodeMap.get(class)%],[%= hasApplyAttributeNodeMap.get(attribute)%]), # apply_class [%=class.className%]([%=class.id%]) -> has_apply_attribute [%=attribute.attributeName%] ([%=attribute.id%])
+    		([%= hasApplyAttributeNodeMap.get(attribute) %],[%= applyAttributeNodeMap.get(attribute) %]), #  has_apply_attribute [%=attribute.attributeName%] ([%=attribute.id%]) -> apply_attribute [%=attribute.attributeName%] ([%=attribute.id%])
+    		([%= applyAttributeEquationNodeMap.get(attribute) %],[%= applyAttributeEquationLeftExpNodeMap.get(attribute) %]), #  equation of apply attribute [%=attribute.attributeName%] ([%=attribute.id%]) -> left_expr
+    		([%= applyAttributeEquationLeftExpNodeMap.get(attribute) %],[%= applyAttributeNodeMap.get(attribute) %]), #  left_expr -> apply_attribute [%=attribute.attributeName%] ([%=attribute.id%])
+    		([%= applyAttributeEquationNodeMap.get(attribute) %],[%= applyAttributeEquationRightExpNodeMap.get(attribute) %]), #  equation of apply attribute [%=attribute.attributeName%] ([%=attribute.id%]) -> right_expr
+    		[%
+    			var rightExprTermEdgeTarget = computeAttributeTermEdgeTarget(attribute, attribute.attributeValue, applyAttributeAtomNodeMap, applyAttributeConcatNodeMap, 
+    																				applyAttributeConcatLeftHasArgsNodeMap, applyAttributeConcatRightHasArgsNodeMap, 
+    																					matchAttributeNodeMap);
+    		%]
+    		([%= applyAttributeEquationRightExpNodeMap.get(attribute) %],[%= rightExprTermEdgeTarget %]), # right_expr --> term
+    		[%
+    			}
+    		}
+        	%]
+        	([%=matchModelIndex%],[%=pairedWithNodeIndex%]), # matchmodel -> pairedwith
+        	([%=pairedWithNodeIndex%],[%=applyModelIndex%]) # pairedwith -> applyModel
+        ])
+        
+[%
+operation getClassCardinality(class){
+	if (class.isKindOf(AnyMatchClass)){
+		return "+";
+	} else if (class.isKindOf(ExistsMatchClass)){
+		return "1";
+	} else {
+		throw "Only Any Match Class is supported!";
+	}
+}
+
+operation generateAttributeTermNodes(attribute, term, nodeIndex, attributeAtomNodeMap, attributeConcatNodeMap, attributeConcatLeftHasArgsNodeMap, 
+										attributeConcatRightHasArgsNodeMap){
+	var returnNodeIndex = nodeIndex;
+	
+	("generateAttributeTermNodes, nodeIndex=" + nodeIndex);
+	
+	if (term.isKindOf(Atom)){
+		returnNodeIndex = generateAttributeAtomNode(attribute, term, returnNodeIndex, attributeAtomNodeMap);
+	} else if (term.isKindOf(Concat)){
+		returnNodeIndex = generateAttributeConcatNode(attribute, term, returnNodeIndex, attributeAtomNodeMap, 
+														attributeConcatNodeMap, attributeConcatLeftHasArgsNodeMap, 
+															attributeConcatRightHasArgsNodeMap);
+	} else if (term.isKindOf(AttributeRef)){
+		returnNodeIndex = generateAttributeRefNode(attribute, term, nodeIndex);
+	} else {
+		throw "Unsupported kind of term: " + term;
+	}
+	
+	return returnNodeIndex;
+}
+
+operation generateAttributeRefNode(attribute, term, nodeIndex){
+	var returnNodeIndex = nodeIndex;
+	// nothing to do here because the attribute ref node is the attribute node itself, which was already generated.
+	return returnNodeIndex;
+}
+
+operation generateAttributeConcatNode(attribute, concat, nodeIndex, attributeAtomNodeMap, attributeConcatNodeMap, 
+											attributeConcatLeftHasArgsNodeMap, attributeConcatRightHasArgsNodeMap){
+	var returnNodeIndex = nodeIndex;
+	
+	attributeConcatNodeMap.put(concat, returnNodeIndex);
+	%]
+    	# attribute concat [%=attribute.attributeName%]([%=attribute.id%]) node
+    	self.add_node()
+    	self.vs[[%=returnNodeIndex%]]["name"] = """Concat[%=attribute.id + returnNodeIndex %]"""
+        self.vs[[%=returnNodeIndex%]]["mm__"] = """Concat"""
+        self.vs[[%=returnNodeIndex%]]["Type"] = """'String'"""
+        #self.vs[[%=returnNodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Concat[%=attribute.id + returnNodeIndex %]')
+	[%
+	returnNodeIndex = returnNodeIndex + 1;
+	
+	// generate sub expressions' has args nodes
+	attributeConcatLeftHasArgsNodeMap.put(concat, returnNodeIndex);
+	%]
+    	# apply attribute concat has left args [%=attribute.attributeName%]([%=attribute.id%]) node
+        self.add_node()
+    	self.vs[[%=returnNodeIndex%]]["mm__"] = """hasArgs"""
+        #self.vs[[%=returnNodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ConcatHasLeftArgs[%=attribute.id + returnNodeIndex %]')
+	[%
+	returnNodeIndex = returnNodeIndex + 1;
+	
+	attributeConcatRightHasArgsNodeMap.put(concat, returnNodeIndex);
+	%]
+    	# apply attribute concat has right args [%=attribute.attributeName%]([%=attribute.id%]) node
+        self.add_node()
+    	self.vs[[%=returnNodeIndex%]]["mm__"] = """hasArgs"""
+        #self.vs[[%=returnNodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ConcatHasRightArgs[%=attribute.id + returnNodeIndex %]')
+	[%
+	returnNodeIndex = returnNodeIndex + 1;
+	
+	// generate sub expressions' nodes
+	returnNodeIndex = generateAttributeTermNodes(attribute, concat.leftTerm, returnNodeIndex, attributeAtomNodeMap, 
+													attributeConcatNodeMap, attributeConcatLeftHasArgsNodeMap, 
+													attributeConcatRightHasArgsNodeMap);
+	returnNodeIndex = generateAttributeTermNodes(attribute, concat.rightTerm, returnNodeIndex, attributeAtomNodeMap, 
+													attributeConcatNodeMap, attributeConcatLeftHasArgsNodeMap, 
+													attributeConcatRightHasArgsNodeMap);
+	
+	return returnNodeIndex;
+}
+
+operation generateAttributeAtomNode(attribute, atom, nodeIndex, attributeAtomNodeMap) {
+	var returnNodeIndex = nodeIndex;
+	attributeAtomNodeMap.put(atom, returnNodeIndex);
+	%]
+    	# apply attribute atom [%=attribute.attributeName%]([%=attribute.id%]) node
+    	self.add_node()
+    	self.vs[[%=returnNodeIndex%]]["name"] = """[%=atom.value%]"""
+        self.vs[[%=returnNodeIndex%]]["mm__"] = """Constant"""
+        self.vs[[%=returnNodeIndex%]]["Type"] = """'String'"""
+        #self.vs[[%=returnNodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom[%=attribute.id + returnNodeIndex %]')
+	[%
+	returnNodeIndex = returnNodeIndex + 1;
+	
+	return returnNodeIndex;
+}
+
+operation computeAttributeTermEdgeTarget(attribute, term, attributeAtomNodeMap, attributeConcatNodeMap, 
+    																				attributeConcatLeftHasArgsNodeMap, attributeConcatRightHasArgsNodeMap, 
+    																					matchAttributeNodeMap){
+    var edgeTarget = 0;
+	if (term.isKindOf(Atom)){
+		edgeTarget = attributeAtomNodeMap.get(term);
+	} else if (term.isKindOf(Concat)){
+		edgeTarget = generateAttributeConcatEdges(attribute, term, attributeAtomNodeMap, attributeConcatNodeMap, 
+    																				attributeConcatLeftHasArgsNodeMap, attributeConcatRightHasArgsNodeMap, 
+    																					matchAttributeNodeMap);
+	} else if (term.isKindOf(AttributeRef)){
+		edgeTarget = matchAttributeNodeMap.get(term.attributeRef);
+	} else {
+		throw "Unsupported kind of term: " + term;
+	}
+	
+	return edgeTarget;
+}
+
+operation generateAttributeConcatEdges(attribute, concat, attributeAtomNodeMap, attributeConcatNodeMap, 
+    																				attributeConcatLeftHasArgsNodeMap, attributeConcatRightHasArgsNodeMap, 
+    																					matchAttributeNodeMap){
+	var edgeTarget = attributeConcatNodeMap.get(concat);
+	var leftHasArgsTarget = computeAttributeTermEdgeTarget(attribute, concat.leftTerm, attributeAtomNodeMap, attributeConcatNodeMap, 
+    																				attributeConcatLeftHasArgsNodeMap, attributeConcatRightHasArgsNodeMap, 
+    																					matchAttributeNodeMap);
+    var rightHasArgsTarget = computeAttributeTermEdgeTarget(attribute, concat.rightTerm, attributeAtomNodeMap, attributeConcatNodeMap, 
+    																				attributeConcatLeftHasArgsNodeMap, attributeConcatRightHasArgsNodeMap, 
+    																					matchAttributeNodeMap);																			
+	%]
+    		([%= attributeConcatNodeMap.get(concat) %],[%=  attributeConcatLeftHasArgsNodeMap.get(concat) %]), #  apply attribute concat [%=attribute.attributeName%] ([%=attribute.id%]) -> left has_args  
+    		([%= attributeConcatLeftHasArgsNodeMap.get(concat) %],[%=  leftHasArgsTarget %]), #  left has_args -> term
+    		([%= attributeConcatNodeMap.get(concat) %],[%=  attributeConcatRightHasArgsNodeMap.get(concat) %]), #  apply attribute concat [%=attribute.attributeName%] ([%=attribute.id%]) -> right has_args  
+    		([%= attributeConcatRightHasArgsNodeMap.get(concat) %],[%=  rightHasArgsTarget %]), #  right has_args -> term
+    [%
+	
+	return edgeTarget;    																					
+}
+%]

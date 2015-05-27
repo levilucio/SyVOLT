@@ -1,0 +1,208 @@
+[%
+var ruleIndex = 0;
+var ruleShortMap : new Map;
+var transformationArrayStr = "";
+var lastLayerTreated = "";
+var inputMM = "";
+var outputMM = "";
+%]
+import time
+
+from path_condition_generator import PathConditionGenerator
+from PyRamify import PyRamify
+
+from ecore_utils import EcoreUtils
+from core.himesis_plus import buildPreListFromClassNames
+
+from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
+
+from PropertyVerification.state_property import StateProperty
+from PropertyVerification.atomic_state_property import AtomicStateProperty
+from PropertyVerification.and_state_property import AndStateProperty
+from PropertyVerification.or_state_property import OrStateProperty
+from PropertyVerification.not_state_property import NotStateProperty
+from PropertyVerification.implication_state_property import ImplicationStateProperty
+
+from PropertyVerification.Not import Not 					#StateSpace Prop
+from PropertyVerification.Implication import Implication 	#StateSpace Prop
+from PropertyVerification.And import And 					#StateSpace Prop
+from PropertyVerification.Or import Or 						#StateSpace Prop
+
+from core.himesis_utils import graph_to_dot
+
+# imports for properties' atomic contracts
+
+[%
+for (ac in inputProperties!AtomicContract) { %]
+from H[%=ac.Name%]_IsolatedLHS import H[%=ac.Name%]_IsolatedLHS
+from H[%=ac.Name%]_ConnectedLHS import H[%=ac.Name%]_ConnectedLHS   	
+from H[%=ac.Name%]_CompleteLHS import H[%=ac.Name%]_CompleteLHS
+[%}%]
+
+
+class Prover():
+
+    def setUp(self, args):
+        pyramify = PyRamify(draw_svg=args.draw_svg)
+
+        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
+            pyramify.ramify_directory("[%=absoluteBackendPath%]")
+
+            
+    def do_proof(self,args):    
+        pyramify = PyRamify(verbosity = 2)
+        
+        [*- get all the rules from the files generated to disk *]
+        [% for (r in Rule.all) { %]
+        r[%=ruleIndex%] = self.rules['H[%=r.Description%]']
+        [% ruleShortMap.put(r, ruleIndex);
+        	ruleIndex = ruleIndex + 1;
+           }
+        %]       
+        [*- build the transformation array with the right layering *]                     
+        [% 
+        for (l in Sequential) {
+			for (prev in l.previousSource) {
+				if (prev.isKindOf(FilePort)) {
+        			transformationArrayStr = transformationArrayStr + "[";
+        			for (r in l.hasRule) {
+        			    transformationArrayStr = transformationArrayStr + "r" + ruleShortMap.get(r) + (",");
+        			}
+        			transformationArrayStr = transformationArrayStr + "],";
+        	        lastLayerTreated = l.Name;
+        	        inputMM = prev.metaModelId.metaModelURI;
+        	        break;
+        	     }
+        	 }
+        }
+        
+        var isLastLayer = false;  
+        
+        while (not isLastLayer) { 
+			isLastLayer = true;
+			for (l in Sequential) {
+				for (prev in l.previousSource) {
+					if (prev.isKindOf(Sequential) and prev.Name == lastLayerTreated) {
+        				transformationArrayStr = transformationArrayStr + "[";
+        				for (r in l.hasRule) {
+        			    	transformationArrayStr = transformationArrayStr + "r" + ruleShortMap.get(r) + (",");
+        				}
+        				transformationArrayStr = transformationArrayStr + "],";
+						lastLayerTreated = l.Name;
+        	      		outputMM = l.metaModelId.metaModelURI;
+                  		isLastLayer = false;       	   	  
+        	      		break;
+        	      	}
+				}
+        	 }
+		} 
+		%]
+
+        transformation = [[%=transformationArrayStr%]]
+
+        [*- Generate operations to deal with Polymorphism *]        
+        pre_metamodel = ["MT_pre__S_MM", "MoTifRule"]
+        post_metamodel = ["MT_post__T_MM", "MoTifRule"]
+        
+        subclasses_dict = {}     
+             
+        inMM = EcoreUtils("[%=inputMM%]")          
+        subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(inMM.getMetamodelClassNames())
+        
+        print subclasses_dict["MT_pre__MetaModelElement_S"]
+
+        outMM = EcoreUtils("[%=outputMM%]")  
+        subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(outMM.getMetamodelClassNames()) 
+        
+        print subclasses_dict["MT_pre__MetaModelElement_T"]
+
+        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict, "[%=dsltransInstallPath%]")
+        
+        # go through all the matchers, combinators and tracers to add polymorphism on all classes in an inheritance hierarchy
+        
+        def change_subtype_matching(match_rule, subclass_info):
+            for v in match_rule.condition.vs():
+                if v["mm__"] in set(subclass_info.keys()):
+                    v["MT_subtypes__"] = subclass_info[v["mm__"]]
+                    v["MT_subtypeMatching__"] = True
+                    print "Changed one: " + v["mm__"]
+                                                                  
+        
+        # add polymorphism for the matchers
+        for matcher_key in self.matchRulePatterns.keys():
+            change_subtype_matching(self.matchRulePatterns[matcher_key][0],subclasses_dict)
+            
+        # add polymorphism for the combinators
+        for combs_key in self.ruleCombinators.keys():
+            if self.ruleCombinators[combs_key] != None:
+                for combinator in self.ruleCombinators[combs_key]:
+                    change_subtype_matching(combinator[0],subclasses_dict)    
+
+        # add polymorphism for the tracers
+        for tracer_key in self.ruleTraceCheckers.keys():
+            if self.ruleTraceCheckers[tracer_key] != None:
+                change_subtype_matching(self.ruleTraceCheckers[tracer_key],subclasses_dict)      
+            
+		# generate path conditions
+        pc_set = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, 2, draw_svg=args.draw_svg, run_tests=args.run_tests)
+    
+        ts0 = time.time()
+        pc_set.build_path_conditions()
+        ts1 = time.time()
+             
+        print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
+        print("Number of path conditions: " + str(pc_set.num_path_conditions))
+ 
+        # print path conditions to screen
+        pc_set.print_path_conditions_screen()
+        
+        # declare properties to prove
+
+        if (args.draw_svg): 
+        [%
+        for (ac in inputProperties!AtomicContract) { %]
+        	graph_to_dot("property_[%=ac.Name%]_isolated", H[%=ac.Name%]_IsolatedLHS())
+        	graph_to_dot("property_[%=ac.Name%]_connected", H[%=ac.Name%]_ConnectedLHS())
+        	graph_to_dot("property_[%=ac.Name%]_complete", H[%=ac.Name%]_CompleteLHS())
+        [%}%]       
+         
+[*-        [%
+	    var atomicContractIndex = 0;
+        for (ac in inputProperties!AtomicContract) { %]
+        c[%=atomicContractIndex%] = AtomicStateProperty(H[%=ac.Name%]_IsolatedLHS(), H[%=ac.Name%]_ConnectedLHS(), H[%=ac.Name%]_CompleteLHS())
+        result_c[%=atomicContractIndex%] = StateProperty.verifyCompositeStateProperty(pc_set, c[%=atomicContractIndex%])
+        if (result_c[%=atomicContractIndex%]):
+        	print "Contract [%=ac.Name%] holds!"
+        else:
+        	print "Contract [%=ac.Name%] does not hold!"        
+        [%}%] *]
+
+        
+
+
+
+
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(description='Run the ecore_copier test.')
+    parser.add_argument('--skip_tests', dest = 'run_tests', action = 'store_false',
+                        help = 'Option to skip the running of matching tests')
+    parser.set_defaults(run_tests = True)
+
+    parser.add_argument('--no_svg', dest = 'draw_svg', action = 'store_false',
+                        help = 'Flag to force svg files to not be drawn')
+    parser.set_defaults(draw_svg = True)
+
+    parser.add_argument('--num_pcs', type = int, default = -1,
+                        help = 'Number of path conditions which should be produced by this test (default: -1)')
+
+    parser.add_argument('--num_rules', type = int, default = -1,
+                        help = 'Number of rules in the transformation (default: -1)')
+    args = parser.parse_args()
+
+
+    prover = Prover()
+    prover.setUp(args)
+    prover.do_proof(args)
+        

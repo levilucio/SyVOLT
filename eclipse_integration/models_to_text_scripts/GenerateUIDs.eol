@@ -1,0 +1,82 @@
+var contractId = 0;
+
+for (contract in AtomicContract.allInstances) {
+	("Processing contract " + contract.name + "...").println();
+	
+	
+	var classId = 0;
+	
+	for (match in contract.match){
+		for(class in match.class){
+			processClass(class, classId, contract.name);
+			classId = classId + 1;
+		}
+	}
+	
+	for (class in contract.apply.class){
+		processClass(class, classId, contract.name);
+		classId = classId + 1;
+	}
+	
+	
+	
+	("Contract " + contract.name + " processed.").println();
+	
+	contractId = contractId + 1;
+}
+
+
+("Validating contract ids...").println();
+for (x in AtomicContract.allInstances) {
+	for (y in AtomicContract.allInstances) {
+		if (x.name == y.name and x <> y){
+			("!!!!Duplicate name found: " + x.name).println();
+		}
+	}
+}
+("Validating contract ids... DONE").println();
+
+("Validating class ids...").println();
+for (x in AbstractClass.allInstances) {
+	for (y in AbstractClass.allInstances) {
+		if (x.id == y.id and x <> y){
+			("!!!!Duplicate id found: " + x.id).println();
+		}
+	}
+}
+("Validating class ids... DONE").println();
+
+("Validating attribute ids...").println();
+for (x in Attribute.allInstances) {
+	for (y in Attribute.allInstances) {
+		if (x.id == y.id and x <> y){
+			("!!!!Duplicate id found: " + x.id).println();
+		}
+	}
+}
+("Validating attribute ids... DONE").println();
+
+
+
+
+
+
+
+operation processClass(class, classId, rule_description){
+	("Processing class " + class.id + "...").println();
+	
+	class.id = rule_description + "class" + classId;
+	
+	var attributeId = 0;
+	for (attribute in class.attribute){
+		("Processing attribute " + attribute.id + "...").println();
+		
+		attribute.id = class.id + "attribute" + attributeId;
+		
+		("Attribute " + attribute.id + " processed.").println();
+		
+		attributeId = attributeId + 1;
+	}
+	
+	("Class " + class.id + " processed.").println();
+}
