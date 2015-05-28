@@ -136,7 +136,14 @@ class StateProperty(Property):
                             return False    
         #print('Pivots of the state property are consistent :)')
         return True
-
+    
+    @staticmethod      
+    def break_down_pc_name(pcName):
+        nameList = []
+        for token in pcName.split("_"):
+            token = token.split("-")[0]
+            nameList.append(token)
+        return nameList
 
 
     
@@ -177,6 +184,8 @@ class StateProperty(Property):
         for state in StateSpace.pathConditionSet:
             if state is ():
                 continue
+            
+            stateRuleNames = StateProperty.break_down_pc_name(state.name)
 
             #if (state_index)==2:
             #    print ("Start debugging here")
@@ -238,14 +247,25 @@ class StateProperty(Property):
 #                             ####
 #                         #NEW OPTIMIZATION HEURISTIC
 
-
+                        
                     for alreadyVerifiedState in AtomicStatePropsInStateProp[atomicStatePropIndex].verifiedStateCache:
-                       # if all the rules in the path cond
-                        #if len(set(state) - set(alreadyVerifiedState[0])) == len(set(state)) - len(set(alreadyVerifiedState[0])) and \
-                        if numberOfIsolatedMatches == alreadyVerifiedState[1]:
-                           print("smallerStateWithSameRulesExists")
-                           smallerStateWithSameRulesExists = True
-                           break
+                        # break down the already verified path condition's name in the rules used
+                        alreadyVerifiedStateRuleNames =  StateProperty.break_down_pc_name(alreadyVerifiedState[0].name)
+                           
+                        # if all the rules in the path condition being analyzed exist in a path condition that has been previously analyzed and
+                        # the number of isolated matches has not increased, that means that no additional elements that affect the property have
+                        # been added in the new path condition and we are sure the property holds for the path condition being analyzed
+                        
+#                         print "-------------------------------------------------"
+#                         print "Rules now: " + str(stateRuleNames)
+#                         print "Number of isolated: " + str(numberOfIsolatedMatches)
+#                         print "Rules in previous: " + str(alreadyVerifiedStateRuleNames)
+#                         print "Number of isolated: " + str(alreadyVerifiedState[1])
+#                         print "-------------------------------------------------\n"                       
+                        
+                        if (set(alreadyVerifiedStateRuleNames) < set(stateRuleNames) and numberOfIsolatedMatches == alreadyVerifiedState[1]):
+                            smallerStateWithSameRulesExists = True
+                            break
 
                         # If 2 states, each has 1 different rule, then the first part of the if condition will evaluate to false,
                         # if 2 states, each with 1 same rules, then the first part of the above if condition will evaluate to true
@@ -261,7 +281,7 @@ class StateProperty(Property):
                         # collapse must be eventually done in this case
 
                         #FOLLOWING: Where we used to add entries to an AtomiStateProperty's verified State Cache
-                        #AtomicStatePropsInStateProp[atomicStatePropIndex].verifiedStateCache.append((state,numberOfIsolatedMatches))
+                        AtomicStatePropsInStateProp[atomicStatePropIndex].verifiedStateCache.append((state,numberOfIsolatedMatches))
                         cacheIsolatedPatternMatches.append(True)
                     else:
                         if StateSpace.verbosity >= 1: print '        Will not check state, property holds...'
