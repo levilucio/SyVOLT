@@ -171,10 +171,13 @@ class Prover():
         for (ac in inputProperties!AtomicContract) { %]
         c[%=atomicContractIndex%] = AtomicStateProperty(H[%=ac.Name%]_IsolatedLHS(), H[%=ac.Name%]_ConnectedLHS(), H[%=ac.Name%]_CompleteLHS())
         result_c[%=atomicContractIndex%] = StateProperty.verifyCompositeStateProperty(pc_set, c[%=atomicContractIndex%])
-        if len(result_c[%=atomicContractIndex%]) != 0:
-        	print "!!! Contract [%=ac.Name%] holds!"
+        if len(result_c[%=atomicContractIndex%]) == 0:
+        	print "\n"
+        	print "Contract [%=ac.Name%] holds!"
         else:
-        	print "!!! Contract [%=ac.Name%] does not hold!"        
+        	print "\n"
+        	print "Contract [%=ac.Name%] does not hold!"
+        	print  result_c[%=atomicContractIndex%]      
         [%}%]
 
         

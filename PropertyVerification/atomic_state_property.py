@@ -104,6 +104,11 @@ class AtomicStateProperty(StateProperty):
             # if the match was found, try to find the whole property
             if match.is_success:
                 if verbosity >= 1: print '        Found Match! (Connected)'
+                
+                #if verbosity >= 1: graph_to_dot("found_connected_" + s.graph.name, s.graph)
+
+                s = Packet()
+                s.graph = inputstate                   
                 total.packet_in(s)
                 if total.is_success:
                     self.status = self.COMPLETE_FOUND
@@ -118,7 +123,7 @@ class AtomicStateProperty(StateProperty):
                 else:
                     self.status = self.NO_COMPLETE
 
-                    if verbosity >= 1: graph_to_dot(s.graph.name + "_not_complete", s.graph)
+                    #if verbosity >= 1: graph_to_dot(s.graph.name + "_not_complete", s.graph)
                     if verbosity >= 1: print '        Could not find Apply! (Complete)'
 
                     #self.counterexamples.append(s.graph)
@@ -129,7 +134,6 @@ class AtomicStateProperty(StateProperty):
             else:
                 self.status = self.NO_CONNECTED
                 if verbosity >= 1: print("Couldn't find connected: " + s.graph.name)
-                if verbosity >= 1: graph_to_dot("connected_" + s.graph.name, s.graph)
                 if verbosity >= 1:  print '        Could not find Match! (Connected)'
         
                 
