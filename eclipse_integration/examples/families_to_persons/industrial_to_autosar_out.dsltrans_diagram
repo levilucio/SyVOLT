@@ -1,0 +1,1472 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dsltrans="http://dsltrans/2.0" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmi:id="_pDZHcO9qEeSVBvdSRKU37A" type="Dsltrans" measurementUnit="Pixel">
+  <children xmi:type="notation:Shape" xmi:id="_pN5uUO9qEeSVBvdSRKU37A" type="2002" fontName="Ubuntu">
+    <children xmi:type="notation:DecorationNode" xmi:id="_pN5uU-9qEeSVBvdSRKU37A" type="5035"/>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_pN5uVO9qEeSVBvdSRKU37A" type="7019"/>
+    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_pN5uUe9qEeSVBvdSRKU37A"/>
+    <element xmi:type="dsltrans:FilePort" href="industrial_to_autosar_out.dsltrans#//@source.0"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_pN5uUu9qEeSVBvdSRKU37A" x="670"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_pN5uVe9qEeSVBvdSRKU37A" type="2001">
+    <children xmi:type="notation:DecorationNode" xmi:id="_pN5uW-9qEeSVBvdSRKU37A" type="5034"/>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_pN5uXO9qEeSVBvdSRKU37A" type="7001"/>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_pN6VYO9qEeSVBvdSRKU37A" type="7002">
+      <children xmi:type="notation:Shape" xmi:id="_qCHcoPAyEeSV14RAmBOIBw" type="3002" fontName="Ubuntu">
+        <children xmi:type="notation:DecorationNode" xmi:id="_qCHco_AyEeSV14RAmBOIBw" type="5033"/>
+        <children xmi:type="notation:BasicCompartment" xmi:id="_qCHcpPAyEeSV14RAmBOIBw" type="7003">
+          <children xmi:type="notation:Shape" xmi:id="_qCLHAPAyEeSV14RAmBOIBw" type="3003" fontName="Ubuntu">
+            <children xmi:type="notation:BasicCompartment" xmi:id="_qCLHA_AyEeSV14RAmBOIBw" type="7005">
+              <children xmi:type="notation:Node" xmi:id="_qCMVIPAyEeSV14RAmBOIBw" type="3004">
+                <children xmi:type="notation:DecorationNode" xmi:id="_qCMVJvAyEeSV14RAmBOIBw" type="5005"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_qCMVJ_AyEeSV14RAmBOIBw" type="7006">
+                  <children xmi:type="notation:Shape" xmi:id="_qCRNoPAyEeSV14RAmBOIBw" type="3005" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_qCRNo_AyEeSV14RAmBOIBw" type="5004"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_qCRNpPAyEeSV14RAmBOIBw" type="7007"/>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qCRNofAyEeSV14RAmBOIBw"/>
+                    <element xmi:type="dsltrans:MatchAttribute" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qCRNovAyEeSV14RAmBOIBw"/>
+                  </children>
+                </children>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_qCMVIfAyEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_qCMVIvAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_qCMVI_AyEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qCMVJPAyEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:AnyMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@match.0/@class.0"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qCMVJfAyEeSV14RAmBOIBw"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_Snk1EPBDEeSV14RAmBOIBw" type="3008">
+                <children xmi:type="notation:DecorationNode" xmi:id="_Snk1FvBDEeSV14RAmBOIBw" type="5006"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_Snk1F_BDEeSV14RAmBOIBw" type="7008"/>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_Snk1EfBDEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_Snk1EvBDEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_Snk1E_BDEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_Snk1FPBDEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ExistsMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@match.0/@class.1"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Snk1FfBDEeSV14RAmBOIBw" x="148" y="13"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_VyvJgPBDEeSV14RAmBOIBw" type="3008">
+                <children xmi:type="notation:DecorationNode" xmi:id="_VyvJhvBDEeSV14RAmBOIBw" type="5006"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_VyvJh_BDEeSV14RAmBOIBw" type="7008"/>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_VyvJgfBDEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_VyvJgvBDEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_VyvJg_BDEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_VyvJhPBDEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ExistsMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@match.0/@class.2"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_VyvJhfBDEeSV14RAmBOIBw" x="304" y="13"/>
+              </children>
+            </children>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qCLHAfAyEeSV14RAmBOIBw"/>
+            <element xmi:type="dsltrans:MatchModel" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@match.0"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qCLHAvAyEeSV14RAmBOIBw"/>
+          </children>
+        </children>
+        <children xmi:type="notation:BasicCompartment" xmi:id="_qCHcpfAyEeSV14RAmBOIBw" type="7004">
+          <children xmi:type="notation:Node" xmi:id="_qCTC0PAyEeSV14RAmBOIBw" type="3010">
+            <children xmi:type="notation:BasicCompartment" xmi:id="_qCTp4PAyEeSV14RAmBOIBw" type="7010">
+              <children xmi:type="notation:Shape" xmi:id="_qCU4APAyEeSV14RAmBOIBw" type="3011" fontName="Ubuntu">
+                <children xmi:type="notation:DecorationNode" xmi:id="_qCU4A_AyEeSV14RAmBOIBw" type="5031"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_qCU4BPAyEeSV14RAmBOIBw" type="7011">
+                  <children xmi:type="notation:Shape" xmi:id="_GLSeEPBEEeSV14RAmBOIBw" type="3012" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_GLSeE_BEEeSV14RAmBOIBw" type="5030"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_GLSeFPBEEeSV14RAmBOIBw" type="7012">
+                      <children xmi:type="notation:Shape" xmi:id="_GLTsMPBEEeSV14RAmBOIBw" type="3017" fontName="Ubuntu">
+                        <children xmi:type="notation:BasicCompartment" xmi:id="_GLTsM_BEEeSV14RAmBOIBw" type="7013"/>
+                        <children xmi:type="notation:BasicCompartment" xmi:id="_GLTsNPBEEeSV14RAmBOIBw" type="7014">
+                          <children xmi:type="notation:Shape" xmi:id="_GLVhYPBEEeSV14RAmBOIBw" type="3025" fontName="Ubuntu">
+                            <element xmi:type="dsltrans:AttributeRef" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.0/@attribute.0/@attributeValue/@rightTerm"/>
+                            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GLVhYfBEEeSV14RAmBOIBw"/>
+                          </children>
+                        </children>
+                        <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GLTsMfBEEeSV14RAmBOIBw"/>
+                        <element xmi:type="dsltrans:Concat" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.0/@attribute.0/@attributeValue"/>
+                        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GLTsMvBEEeSV14RAmBOIBw"/>
+                      </children>
+                    </children>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GLSeEfBEEeSV14RAmBOIBw"/>
+                    <element xmi:type="dsltrans:ApplyAttribute" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.0/@attribute.0"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GLSeEvBEEeSV14RAmBOIBw"/>
+                  </children>
+                  <children xmi:type="notation:Shape" xmi:id="_GLSeFfBEEeSV14RAmBOIBw" type="3012" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_GLSeGPBEEeSV14RAmBOIBw" type="5030"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_GLSeGfBEEeSV14RAmBOIBw" type="7012"/>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GLSeFvBEEeSV14RAmBOIBw"/>
+                    <element xmi:type="dsltrans:ApplyAttribute" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.0/@attribute.1"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GLSeF_BEEeSV14RAmBOIBw" x="182"/>
+                  </children>
+                </children>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qCU4AfAyEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ApplyClass" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.0"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qCU4AvAyEeSV14RAmBOIBw"/>
+              </children>
+              <children xmi:type="notation:Shape" xmi:id="_qCU4BfAyEeSV14RAmBOIBw" type="3011" fontName="Ubuntu">
+                <children xmi:type="notation:DecorationNode" xmi:id="_qCVfEPAyEeSV14RAmBOIBw" type="5031"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_qCVfEfAyEeSV14RAmBOIBw" type="7011">
+                  <children xmi:type="notation:Shape" xmi:id="_qCa-oPAyEeSV14RAmBOIBw" type="3012" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_qCa-o_AyEeSV14RAmBOIBw" type="5030"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_qCa-pPAyEeSV14RAmBOIBw" type="7012">
+                      <children xmi:type="notation:Shape" xmi:id="_GLcPEPBEEeSV14RAmBOIBw" type="3017" fontName="Ubuntu">
+                        <children xmi:type="notation:BasicCompartment" xmi:id="_GLcPE_BEEeSV14RAmBOIBw" type="7013"/>
+                        <children xmi:type="notation:BasicCompartment" xmi:id="_GLcPFPBEEeSV14RAmBOIBw" type="7014">
+                          <children xmi:type="notation:Shape" xmi:id="_GLeEQPBEEeSV14RAmBOIBw" type="3025" fontName="Ubuntu">
+                            <element xmi:type="dsltrans:AttributeRef" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.1/@attribute.0/@attributeValue/@rightTerm"/>
+                            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GLeEQfBEEeSV14RAmBOIBw"/>
+                          </children>
+                        </children>
+                        <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GLcPEfBEEeSV14RAmBOIBw"/>
+                        <element xmi:type="dsltrans:Concat" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.1/@attribute.0/@attributeValue"/>
+                        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GLcPEvBEEeSV14RAmBOIBw"/>
+                      </children>
+                    </children>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qCa-ofAyEeSV14RAmBOIBw"/>
+                    <element xmi:type="dsltrans:ApplyAttribute" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.1/@attribute.0"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qCa-ovAyEeSV14RAmBOIBw"/>
+                  </children>
+                  <children xmi:type="notation:Shape" xmi:id="_qCblsPAyEeSV14RAmBOIBw" type="3012" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_qCbls_AyEeSV14RAmBOIBw" type="5030"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_qCbltPAyEeSV14RAmBOIBw" type="7012"/>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qCblsfAyEeSV14RAmBOIBw"/>
+                    <element xmi:type="dsltrans:ApplyAttribute" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.1/@attribute.1"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qCblsvAyEeSV14RAmBOIBw" x="150"/>
+                  </children>
+                </children>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qCU4BvAyEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ApplyClass" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.1"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qCU4B_AyEeSV14RAmBOIBw" x="436" y="6"/>
+              </children>
+              <children xmi:type="notation:Shape" xmi:id="_GLi8wPBEEeSV14RAmBOIBw" type="3011" fontName="Ubuntu">
+                <children xmi:type="notation:DecorationNode" xmi:id="_GLi8w_BEEeSV14RAmBOIBw" type="5031"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_GLi8xPBEEeSV14RAmBOIBw" type="7011">
+                  <children xmi:type="notation:Shape" xmi:id="_GLkK4PBEEeSV14RAmBOIBw" type="3012" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_GLkK4_BEEeSV14RAmBOIBw" type="5030"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_GLkK5PBEEeSV14RAmBOIBw" type="7012">
+                      <children xmi:type="notation:Shape" xmi:id="_GLlZAPBEEeSV14RAmBOIBw" type="3017" fontName="Ubuntu">
+                        <children xmi:type="notation:BasicCompartment" xmi:id="_GLlZA_BEEeSV14RAmBOIBw" type="7013"/>
+                        <children xmi:type="notation:BasicCompartment" xmi:id="_GLlZBPBEEeSV14RAmBOIBw" type="7014">
+                          <children xmi:type="notation:Shape" xmi:id="_GLnOMPBEEeSV14RAmBOIBw" type="3025" fontName="Ubuntu">
+                            <element xmi:type="dsltrans:AttributeRef" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.2/@attribute.0/@attributeValue/@rightTerm"/>
+                            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GLnOMfBEEeSV14RAmBOIBw"/>
+                          </children>
+                        </children>
+                        <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GLlZAfBEEeSV14RAmBOIBw"/>
+                        <element xmi:type="dsltrans:Concat" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.2/@attribute.0/@attributeValue"/>
+                        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GLlZAvBEEeSV14RAmBOIBw"/>
+                      </children>
+                    </children>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GLkK4fBEEeSV14RAmBOIBw"/>
+                    <element xmi:type="dsltrans:ApplyAttribute" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.2/@attribute.0"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GLkK4vBEEeSV14RAmBOIBw"/>
+                  </children>
+                  <children xmi:type="notation:Shape" xmi:id="_GLkK5fBEEeSV14RAmBOIBw" type="3012" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_GLkx8PBEEeSV14RAmBOIBw" type="5030"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_GLkx8fBEEeSV14RAmBOIBw" type="7012"/>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GLkK5vBEEeSV14RAmBOIBw"/>
+                    <element xmi:type="dsltrans:ApplyAttribute" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.2/@attribute.1"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GLkK5_BEEeSV14RAmBOIBw" x="236"/>
+                  </children>
+                </children>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GLi8wfBEEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ApplyClass" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.2"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GLi8wvBEEeSV14RAmBOIBw" x="-20" y="234"/>
+              </children>
+              <children xmi:type="notation:Shape" xmi:id="_GLi8xfBEEeSV14RAmBOIBw" type="3011" fontName="Ubuntu">
+                <children xmi:type="notation:DecorationNode" xmi:id="_GLi8yPBEEeSV14RAmBOIBw" type="5031"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_GLi8yfBEEeSV14RAmBOIBw" type="7011">
+                  <children xmi:type="notation:Shape" xmi:id="_GLtU0PBEEeSV14RAmBOIBw" type="3012" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_GLt74PBEEeSV14RAmBOIBw" type="5030"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_GLt74fBEEeSV14RAmBOIBw" type="7012">
+                      <children xmi:type="notation:Shape" xmi:id="_GLui8PBEEeSV14RAmBOIBw" type="3017" fontName="Ubuntu">
+                        <children xmi:type="notation:BasicCompartment" xmi:id="_GLvKAPBEEeSV14RAmBOIBw" type="7013"/>
+                        <children xmi:type="notation:BasicCompartment" xmi:id="_GLvKAfBEEeSV14RAmBOIBw" type="7014">
+                          <children xmi:type="notation:Shape" xmi:id="_GLwYIPBEEeSV14RAmBOIBw" type="3025" fontName="Ubuntu">
+                            <element xmi:type="dsltrans:AttributeRef" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.3/@attribute.0/@attributeValue/@rightTerm"/>
+                            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GLwYIfBEEeSV14RAmBOIBw"/>
+                          </children>
+                        </children>
+                        <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GLui8fBEEeSV14RAmBOIBw"/>
+                        <element xmi:type="dsltrans:Concat" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.3/@attribute.0/@attributeValue"/>
+                        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GLui8vBEEeSV14RAmBOIBw"/>
+                      </children>
+                    </children>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GLtU0fBEEeSV14RAmBOIBw"/>
+                    <element xmi:type="dsltrans:ApplyAttribute" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.3/@attribute.0"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GLtU0vBEEeSV14RAmBOIBw"/>
+                  </children>
+                  <children xmi:type="notation:Shape" xmi:id="_GLt74vBEEeSV14RAmBOIBw" type="3012" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_GLt75fBEEeSV14RAmBOIBw" type="5030"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_GLt75vBEEeSV14RAmBOIBw" type="7012"/>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GLt74_BEEeSV14RAmBOIBw"/>
+                    <element xmi:type="dsltrans:ApplyAttribute" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.3/@attribute.1"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GLt75PBEEeSV14RAmBOIBw" x="213"/>
+                  </children>
+                </children>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GLi8xvBEEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ApplyClass" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.3"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GLi8x_BEEeSV14RAmBOIBw" x="388" y="258"/>
+              </children>
+              <children xmi:type="notation:Shape" xmi:id="_GLjj0PBEEeSV14RAmBOIBw" type="3011" fontName="Ubuntu">
+                <children xmi:type="notation:DecorationNode" xmi:id="_GLjj0_BEEeSV14RAmBOIBw" type="5031"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_GLjj1PBEEeSV14RAmBOIBw" type="7011">
+                  <children xmi:type="notation:Shape" xmi:id="_GL3F0PBEEeSV14RAmBOIBw" type="3012" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_GL3s4PBEEeSV14RAmBOIBw" type="5030"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_GL3s4fBEEeSV14RAmBOIBw" type="7012">
+                      <children xmi:type="notation:Shape" xmi:id="_GL4T8PBEEeSV14RAmBOIBw" type="3017" fontName="Ubuntu">
+                        <children xmi:type="notation:BasicCompartment" xmi:id="_GL4T8_BEEeSV14RAmBOIBw" type="7013"/>
+                        <children xmi:type="notation:BasicCompartment" xmi:id="_GL4T9PBEEeSV14RAmBOIBw" type="7014">
+                          <children xmi:type="notation:Shape" xmi:id="_GL6JIPBEEeSV14RAmBOIBw" type="3025" fontName="Ubuntu">
+                            <element xmi:type="dsltrans:AttributeRef" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.4/@attribute.0/@attributeValue/@rightTerm"/>
+                            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GL6JIfBEEeSV14RAmBOIBw"/>
+                          </children>
+                        </children>
+                        <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GL4T8fBEEeSV14RAmBOIBw"/>
+                        <element xmi:type="dsltrans:Concat" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.4/@attribute.0/@attributeValue"/>
+                        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GL4T8vBEEeSV14RAmBOIBw"/>
+                      </children>
+                    </children>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GL3F0fBEEeSV14RAmBOIBw"/>
+                    <element xmi:type="dsltrans:ApplyAttribute" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.4/@attribute.0"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GL3F0vBEEeSV14RAmBOIBw"/>
+                  </children>
+                  <children xmi:type="notation:Shape" xmi:id="_oI004PQFEeSCZ5ewRQZyLg" type="3012" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_oI1b8PQFEeSCZ5ewRQZyLg" type="5030"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_oI1b8fQFEeSCZ5ewRQZyLg" type="7012">
+                      <children xmi:type="notation:Shape" xmi:id="_qeNX4PQFEeSCZ5ewRQZyLg" type="3014" fontName="Ubuntu">
+                        <children xmi:type="notation:DecorationNode" xmi:id="_qeNX4vQFEeSCZ5ewRQZyLg" type="5010"/>
+                        <element xmi:type="dsltrans:Atom" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.4/@attribute.1/@attributeValue"/>
+                        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qeNX4fQFEeSCZ5ewRQZyLg" x="30" y="-3"/>
+                      </children>
+                    </children>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_oI004fQFEeSCZ5ewRQZyLg"/>
+                    <element xmi:type="dsltrans:ApplyAttribute" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.4/@attribute.1"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_oI004vQFEeSCZ5ewRQZyLg" x="143" y="22"/>
+                  </children>
+                </children>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GLjj0fBEEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ApplyClass" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@class.4"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GLjj0vBEEeSV14RAmBOIBw" x="835"/>
+              </children>
+            </children>
+            <styles xmi:type="notation:DescriptionStyle" xmi:id="_qCTC0fAyEeSV14RAmBOIBw"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_qCTC0vAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+            <styles xmi:type="notation:LineStyle" xmi:id="_qCTC0_AyEeSV14RAmBOIBw"/>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qCTC1PAyEeSV14RAmBOIBw"/>
+            <element xmi:type="dsltrans:ApplyModel" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qCTC1fAyEeSV14RAmBOIBw"/>
+          </children>
+        </children>
+        <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qCHcofAyEeSV14RAmBOIBw"/>
+        <element xmi:type="dsltrans:Rule" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qCHcovAyEeSV14RAmBOIBw" x="482" y="-5"/>
+      </children>
+      <children xmi:type="notation:Shape" xmi:id="_GMIyoPBEEeSV14RAmBOIBw" type="3002" fontName="Ubuntu">
+        <children xmi:type="notation:DecorationNode" xmi:id="_GMIyo_BEEeSV14RAmBOIBw" type="5033"/>
+        <children xmi:type="notation:BasicCompartment" xmi:id="_GMIypPBEEeSV14RAmBOIBw" type="7003">
+          <children xmi:type="notation:Shape" xmi:id="_GMKn0PBEEeSV14RAmBOIBw" type="3003" fontName="Ubuntu">
+            <children xmi:type="notation:BasicCompartment" xmi:id="_GMKn0_BEEeSV14RAmBOIBw" type="7005">
+              <children xmi:type="notation:Node" xmi:id="_GML18PBEEeSV14RAmBOIBw" type="3004">
+                <children xmi:type="notation:DecorationNode" xmi:id="_GML19vBEEeSV14RAmBOIBw" type="5005"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_GML19_BEEeSV14RAmBOIBw" type="7006">
+                  <children xmi:type="notation:Shape" xmi:id="_GMNEEPBEEeSV14RAmBOIBw" type="3005" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_GMNEE_BEEeSV14RAmBOIBw" type="5004"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_GMNEFPBEEeSV14RAmBOIBw" type="7007"/>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GMNEEfBEEeSV14RAmBOIBw"/>
+                    <element xmi:type="dsltrans:MatchAttribute" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.1/@match.0/@class.0/@attribute.0"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GMNEEvBEEeSV14RAmBOIBw"/>
+                  </children>
+                </children>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_GML18fBEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_GML18vBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_GML18_BEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GML19PBEEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:AnyMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.1/@match.0/@class.0"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GML19fBEEeSV14RAmBOIBw"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_GML1-PBEEeSV14RAmBOIBw" type="3008">
+                <children xmi:type="notation:DecorationNode" xmi:id="_GML1_vBEEeSV14RAmBOIBw" type="5006"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_GML1__BEEeSV14RAmBOIBw" type="7008"/>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_GML1-fBEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_GML1-vBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_GML1-_BEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GML1_PBEEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ExistsMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.1/@match.0/@class.1"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GML1_fBEEeSV14RAmBOIBw" x="140"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_GML2APBEEeSV14RAmBOIBw" type="3008">
+                <children xmi:type="notation:DecorationNode" xmi:id="_GMMdAPBEEeSV14RAmBOIBw" type="5006"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_GMMdAfBEEeSV14RAmBOIBw" type="7008"/>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_GML2AfBEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_GML2AvBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_GML2A_BEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GML2BPBEEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ExistsMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.1/@match.0/@class.2"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GML2BfBEEeSV14RAmBOIBw" x="302"/>
+              </children>
+            </children>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GMKn0fBEEeSV14RAmBOIBw"/>
+            <element xmi:type="dsltrans:MatchModel" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.1/@match.0"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GMKn0vBEEeSV14RAmBOIBw"/>
+          </children>
+        </children>
+        <children xmi:type="notation:BasicCompartment" xmi:id="_GMIypfBEEeSV14RAmBOIBw" type="7004">
+          <children xmi:type="notation:Node" xmi:id="_GMTKsPBEEeSV14RAmBOIBw" type="3010">
+            <children xmi:type="notation:BasicCompartment" xmi:id="_GMTKtvBEEeSV14RAmBOIBw" type="7010">
+              <children xmi:type="notation:Shape" xmi:id="_GMTxwPBEEeSV14RAmBOIBw" type="3011" fontName="Ubuntu">
+                <children xmi:type="notation:DecorationNode" xmi:id="_GMTxw_BEEeSV14RAmBOIBw" type="5031"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_GMTxxPBEEeSV14RAmBOIBw" type="7011">
+                  <children xmi:type="notation:Shape" xmi:id="_GMUY0PBEEeSV14RAmBOIBw" type="3012" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_GMUY0_BEEeSV14RAmBOIBw" type="5030"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_GMUY1PBEEeSV14RAmBOIBw" type="7012">
+                      <children xmi:type="notation:Shape" xmi:id="_GMWOAPBEEeSV14RAmBOIBw" type="3017" fontName="Ubuntu">
+                        <children xmi:type="notation:BasicCompartment" xmi:id="_GMWOA_BEEeSV14RAmBOIBw" type="7013"/>
+                        <children xmi:type="notation:BasicCompartment" xmi:id="_GMWOBPBEEeSV14RAmBOIBw" type="7014">
+                          <children xmi:type="notation:Shape" xmi:id="_GMYDMPBEEeSV14RAmBOIBw" type="3025" fontName="Ubuntu">
+                            <element xmi:type="dsltrans:AttributeRef" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.1/@apply/@class.0/@attribute.0/@attributeValue/@rightTerm"/>
+                            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GMYDMfBEEeSV14RAmBOIBw"/>
+                          </children>
+                        </children>
+                        <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GMWOAfBEEeSV14RAmBOIBw"/>
+                        <element xmi:type="dsltrans:Concat" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.1/@apply/@class.0/@attribute.0/@attributeValue"/>
+                        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GMWOAvBEEeSV14RAmBOIBw"/>
+                      </children>
+                    </children>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GMUY0fBEEeSV14RAmBOIBw"/>
+                    <element xmi:type="dsltrans:ApplyAttribute" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.1/@apply/@class.0/@attribute.0"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GMUY0vBEEeSV14RAmBOIBw"/>
+                  </children>
+                  <children xmi:type="notation:Shape" xmi:id="_GMU_4PBEEeSV14RAmBOIBw" type="3012" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_GMU_4_BEEeSV14RAmBOIBw" type="5030"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_GMU_5PBEEeSV14RAmBOIBw" type="7012"/>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GMU_4fBEEeSV14RAmBOIBw"/>
+                    <element xmi:type="dsltrans:ApplyAttribute" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.1/@apply/@class.0/@attribute.1"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GMU_4vBEEeSV14RAmBOIBw" x="213"/>
+                  </children>
+                </children>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GMTxwfBEEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ApplyClass" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.1/@apply/@class.0"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GMTxwvBEEeSV14RAmBOIBw"/>
+              </children>
+            </children>
+            <styles xmi:type="notation:DescriptionStyle" xmi:id="_GMTKsfBEEeSV14RAmBOIBw"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_GMTKsvBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+            <styles xmi:type="notation:LineStyle" xmi:id="_GMTKs_BEEeSV14RAmBOIBw"/>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GMTKtPBEEeSV14RAmBOIBw"/>
+            <element xmi:type="dsltrans:ApplyModel" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.1/@apply"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GMTKtfBEEeSV14RAmBOIBw"/>
+          </children>
+        </children>
+        <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GMIyofBEEeSV14RAmBOIBw"/>
+        <element xmi:type="dsltrans:Rule" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.1"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GMIyovBEEeSV14RAmBOIBw"/>
+      </children>
+      <children xmi:type="notation:Shape" xmi:id="_GMIypvBEEeSV14RAmBOIBw" type="3002" fontName="Ubuntu">
+        <children xmi:type="notation:DecorationNode" xmi:id="_GMIyqfBEEeSV14RAmBOIBw" type="5033"/>
+        <children xmi:type="notation:BasicCompartment" xmi:id="_GMIyqvBEEeSV14RAmBOIBw" type="7003">
+          <children xmi:type="notation:Shape" xmi:id="_GMeJ0PBEEeSV14RAmBOIBw" type="3003" fontName="Ubuntu">
+            <children xmi:type="notation:BasicCompartment" xmi:id="_GMeJ0_BEEeSV14RAmBOIBw" type="7005">
+              <children xmi:type="notation:Node" xmi:id="_GMew4PBEEeSV14RAmBOIBw" type="3004">
+                <children xmi:type="notation:DecorationNode" xmi:id="_GMew5vBEEeSV14RAmBOIBw" type="5005"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_GMew5_BEEeSV14RAmBOIBw" type="7006">
+                  <children xmi:type="notation:Shape" xmi:id="_GMf_APBEEeSV14RAmBOIBw" type="3005" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_GMjCUPBEEeSV14RAmBOIBw" type="5004"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_GMk3gPBEEeSV14RAmBOIBw" type="7007"/>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GMf_AfBEEeSV14RAmBOIBw"/>
+                    <element xmi:type="dsltrans:MatchAttribute" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.2/@match.0/@class.0/@attribute.0"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GMf_AvBEEeSV14RAmBOIBw"/>
+                  </children>
+                </children>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_GMew4fBEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_GMew4vBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_GMew4_BEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GMew5PBEEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:AnyMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.2/@match.0/@class.0"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GMew5fBEEeSV14RAmBOIBw"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_GMew6PBEEeSV14RAmBOIBw" type="3008">
+                <children xmi:type="notation:DecorationNode" xmi:id="_GMew7vBEEeSV14RAmBOIBw" type="5006"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_GMew7_BEEeSV14RAmBOIBw" type="7008"/>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_GMew6fBEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_GMew6vBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_GMew6_BEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GMew7PBEEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ExistsMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.2/@match.0/@class.1"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GMew7fBEEeSV14RAmBOIBw" x="140"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_GMew8PBEEeSV14RAmBOIBw" type="3008">
+                <children xmi:type="notation:DecorationNode" xmi:id="_GMew9vBEEeSV14RAmBOIBw" type="5006"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_GMew9_BEEeSV14RAmBOIBw" type="7008"/>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_GMew8fBEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_GMew8vBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_GMew8_BEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GMew9PBEEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ExistsMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.2/@match.0/@class.2"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GMew9fBEEeSV14RAmBOIBw" x="277"/>
+              </children>
+            </children>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GMeJ0fBEEeSV14RAmBOIBw"/>
+            <element xmi:type="dsltrans:MatchModel" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.2/@match.0"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GMeJ0vBEEeSV14RAmBOIBw"/>
+          </children>
+        </children>
+        <children xmi:type="notation:BasicCompartment" xmi:id="_GMIyq_BEEeSV14RAmBOIBw" type="7004">
+          <children xmi:type="notation:Node" xmi:id="_GMq-IPBEEeSV14RAmBOIBw" type="3010">
+            <children xmi:type="notation:BasicCompartment" xmi:id="_GMq-JvBEEeSV14RAmBOIBw" type="7010">
+              <children xmi:type="notation:Shape" xmi:id="_GMrlMPBEEeSV14RAmBOIBw" type="3011" fontName="Ubuntu">
+                <children xmi:type="notation:DecorationNode" xmi:id="_GMrlM_BEEeSV14RAmBOIBw" type="5031"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_GMrlNPBEEeSV14RAmBOIBw" type="7011"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GMrlMfBEEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ApplyClass" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.2/@apply/@class.0"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GMrlMvBEEeSV14RAmBOIBw"/>
+              </children>
+              <children xmi:type="notation:Shape" xmi:id="_GMrlNfBEEeSV14RAmBOIBw" type="3011" fontName="Ubuntu">
+                <children xmi:type="notation:DecorationNode" xmi:id="_GMsMQPBEEeSV14RAmBOIBw" type="5031"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_GMsMQfBEEeSV14RAmBOIBw" type="7011">
+                  <children xmi:type="notation:Shape" xmi:id="_GMvPkPBEEeSV14RAmBOIBw" type="3012" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_GMvPk_BEEeSV14RAmBOIBw" type="5030"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_GMvPlPBEEeSV14RAmBOIBw" type="7012">
+                      <children xmi:type="notation:Shape" xmi:id="_GMwdsPBEEeSV14RAmBOIBw" type="3015" fontName="Ubuntu">
+                        <element xmi:type="dsltrans:AttributeRef" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.2/@apply/@class.1/@attribute.0/@attributeValue"/>
+                        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GMwdsfBEEeSV14RAmBOIBw"/>
+                      </children>
+                    </children>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GMvPkfBEEeSV14RAmBOIBw"/>
+                    <element xmi:type="dsltrans:ApplyAttribute" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.2/@apply/@class.1/@attribute.0"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GMvPkvBEEeSV14RAmBOIBw"/>
+                  </children>
+                  <children xmi:type="notation:Shape" xmi:id="_GMvPlfBEEeSV14RAmBOIBw" type="3012" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_GMvPmPBEEeSV14RAmBOIBw" type="5030"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_GMvPmfBEEeSV14RAmBOIBw" type="7012"/>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GMvPlvBEEeSV14RAmBOIBw"/>
+                    <element xmi:type="dsltrans:ApplyAttribute" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.2/@apply/@class.1/@attribute.1"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GMvPl_BEEeSV14RAmBOIBw" x="150"/>
+                  </children>
+                </children>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GMrlNvBEEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ApplyClass" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.2/@apply/@class.1"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GMrlN_BEEeSV14RAmBOIBw" x="284"/>
+              </children>
+            </children>
+            <styles xmi:type="notation:DescriptionStyle" xmi:id="_GMq-IfBEEeSV14RAmBOIBw"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_GMq-IvBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+            <styles xmi:type="notation:LineStyle" xmi:id="_GMq-I_BEEeSV14RAmBOIBw"/>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GMq-JPBEEeSV14RAmBOIBw"/>
+            <element xmi:type="dsltrans:ApplyModel" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.2/@apply"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GMq-JfBEEeSV14RAmBOIBw"/>
+          </children>
+        </children>
+        <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GMIyp_BEEeSV14RAmBOIBw"/>
+        <element xmi:type="dsltrans:Rule" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.2"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GMIyqPBEEeSV14RAmBOIBw" x="1694" y="38"/>
+      </children>
+    </children>
+    <styles xmi:type="notation:DescriptionStyle" xmi:id="_pN5uVu9qEeSVBvdSRKU37A"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_pN5uV-9qEeSVBvdSRKU37A" fontName="Ubuntu"/>
+    <styles xmi:type="notation:LineStyle" xmi:id="_pN5uWO9qEeSVBvdSRKU37A"/>
+    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_pN5uWe9qEeSVBvdSRKU37A"/>
+    <element xmi:type="dsltrans:Sequential" href="industrial_to_autosar_out.dsltrans#//@source.1"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_pN5uWu9qEeSVBvdSRKU37A" x="768" y="132"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_pN6VYe9qEeSVBvdSRKU37A" type="2001">
+    <children xmi:type="notation:DecorationNode" xmi:id="_pN6VZ-9qEeSVBvdSRKU37A" type="5034"/>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_pN6VaO9qEeSVBvdSRKU37A" type="7001"/>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_pN6Vae9qEeSVBvdSRKU37A" type="7002">
+      <children xmi:type="notation:Shape" xmi:id="_qCwV0PAyEeSV14RAmBOIBw" type="3002" fontName="Ubuntu">
+        <children xmi:type="notation:DecorationNode" xmi:id="_qCwV0_AyEeSV14RAmBOIBw" type="5033"/>
+        <children xmi:type="notation:BasicCompartment" xmi:id="_qCwV1PAyEeSV14RAmBOIBw" type="7003">
+          <children xmi:type="notation:Shape" xmi:id="_qCzZIPAyEeSV14RAmBOIBw" type="3003" fontName="Ubuntu">
+            <children xmi:type="notation:BasicCompartment" xmi:id="_qCzZI_AyEeSV14RAmBOIBw" type="7005">
+              <children xmi:type="notation:Node" xmi:id="_qC0nQPAyEeSV14RAmBOIBw" type="3004">
+                <children xmi:type="notation:DecorationNode" xmi:id="_qC0nRvAyEeSV14RAmBOIBw" type="5005"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_qC0nR_AyEeSV14RAmBOIBw" type="7006"/>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_qC0nQfAyEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_qC0nQvAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_qC0nQ_AyEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qC0nRPAyEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:AnyMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.2/@hasRule.0/@match.0/@class.0"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qC0nRfAyEeSV14RAmBOIBw" x="171" y="-8"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_GNCKgPBEEeSV14RAmBOIBw" type="3004">
+                <children xmi:type="notation:DecorationNode" xmi:id="_GNCKhvBEEeSV14RAmBOIBw" type="5005"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_GNCKh_BEEeSV14RAmBOIBw" type="7006"/>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_GNCKgfBEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_GNCKgvBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_GNCKg_BEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GNCKhPBEEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:AnyMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.2/@hasRule.0/@match.0/@class.1"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GNCKhfBEEeSV14RAmBOIBw"/>
+              </children>
+            </children>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qCzZIfAyEeSV14RAmBOIBw"/>
+            <element xmi:type="dsltrans:MatchModel" href="industrial_to_autosar_out.dsltrans#//@source.2/@hasRule.0/@match.0"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qCzZIvAyEeSV14RAmBOIBw"/>
+          </children>
+        </children>
+        <children xmi:type="notation:BasicCompartment" xmi:id="_qCwV1fAyEeSV14RAmBOIBw" type="7004">
+          <children xmi:type="notation:Node" xmi:id="_qDD30PAyEeSV14RAmBOIBw" type="3010">
+            <children xmi:type="notation:BasicCompartment" xmi:id="_qDEe4PAyEeSV14RAmBOIBw" type="7010">
+              <children xmi:type="notation:Shape" xmi:id="_qDGUEPAyEeSV14RAmBOIBw" type="3011" fontName="Ubuntu">
+                <children xmi:type="notation:DecorationNode" xmi:id="_qDGUE_AyEeSV14RAmBOIBw" type="5031"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_qDGUFPAyEeSV14RAmBOIBw" type="7011">
+                  <children xmi:type="notation:Shape" xmi:id="_qDMasPAyEeSV14RAmBOIBw" type="3012" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_qDMas_AyEeSV14RAmBOIBw" type="5030"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_qDNBwPAyEeSV14RAmBOIBw" type="7012"/>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qDMasfAyEeSV14RAmBOIBw"/>
+                    <element xmi:type="dsltrans:ApplyAttribute" href="industrial_to_autosar_out.dsltrans#//@source.2/@hasRule.0/@apply/@class.0/@attribute.0"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qDMasvAyEeSV14RAmBOIBw"/>
+                  </children>
+                </children>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qDGUEfAyEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ApplyClass" href="industrial_to_autosar_out.dsltrans#//@source.2/@hasRule.0/@apply/@class.0"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qDGUEvAyEeSV14RAmBOIBw"/>
+              </children>
+              <children xmi:type="notation:Shape" xmi:id="_qDGUFfAyEeSV14RAmBOIBw" type="3011" fontName="Ubuntu">
+                <children xmi:type="notation:DecorationNode" xmi:id="_qDG7IPAyEeSV14RAmBOIBw" type="5031"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_qDG7IfAyEeSV14RAmBOIBw" type="7011">
+                  <children xmi:type="notation:Shape" xmi:id="_qDofkPAyEeSV14RAmBOIBw" type="3012" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_qDofk_AyEeSV14RAmBOIBw" type="5030"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_qDoflPAyEeSV14RAmBOIBw" type="7012"/>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qDofkfAyEeSV14RAmBOIBw"/>
+                    <element xmi:type="dsltrans:ApplyAttribute" href="industrial_to_autosar_out.dsltrans#//@source.2/@hasRule.0/@apply/@class.1/@attribute.0"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qDofkvAyEeSV14RAmBOIBw"/>
+                  </children>
+                </children>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qDGUFvAyEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ApplyClass" href="industrial_to_autosar_out.dsltrans#//@source.2/@hasRule.0/@apply/@class.1"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qDGUF_AyEeSV14RAmBOIBw" x="207" y="226"/>
+              </children>
+            </children>
+            <styles xmi:type="notation:DescriptionStyle" xmi:id="_qDD30fAyEeSV14RAmBOIBw"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_qDD30vAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+            <styles xmi:type="notation:LineStyle" xmi:id="_qDD30_AyEeSV14RAmBOIBw"/>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qDD31PAyEeSV14RAmBOIBw"/>
+            <element xmi:type="dsltrans:ApplyModel" href="industrial_to_autosar_out.dsltrans#//@source.2/@hasRule.0/@apply"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qDD31fAyEeSV14RAmBOIBw"/>
+          </children>
+        </children>
+        <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qCwV0fAyEeSV14RAmBOIBw"/>
+        <element xmi:type="dsltrans:Rule" href="industrial_to_autosar_out.dsltrans#//@source.2/@hasRule.0"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qCwV0vAyEeSV14RAmBOIBw"/>
+      </children>
+    </children>
+    <styles xmi:type="notation:DescriptionStyle" xmi:id="_pN6VYu9qEeSVBvdSRKU37A"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_pN6VY-9qEeSVBvdSRKU37A" fontName="Ubuntu"/>
+    <styles xmi:type="notation:LineStyle" xmi:id="_pN6VZO9qEeSVBvdSRKU37A"/>
+    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_pN6VZe9qEeSVBvdSRKU37A"/>
+    <element xmi:type="dsltrans:Sequential" href="industrial_to_autosar_out.dsltrans#//@source.2"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_pN6VZu9qEeSVBvdSRKU37A" x="159" y="620"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_pN6Vau9qEeSVBvdSRKU37A" type="2001">
+    <children xmi:type="notation:DecorationNode" xmi:id="_pN6VcO9qEeSVBvdSRKU37A" type="5034"/>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_pN6Vce9qEeSVBvdSRKU37A" type="7001"/>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_pN6Vcu9qEeSVBvdSRKU37A" type="7002">
+      <children xmi:type="notation:Shape" xmi:id="_qGPusPAyEeSV14RAmBOIBw" type="3002" fontName="Ubuntu">
+        <children xmi:type="notation:DecorationNode" xmi:id="_qGPus_AyEeSV14RAmBOIBw" type="5033"/>
+        <children xmi:type="notation:BasicCompartment" xmi:id="_qGPutPAyEeSV14RAmBOIBw" type="7003">
+          <children xmi:type="notation:Shape" xmi:id="_qGQ80PAyEeSV14RAmBOIBw" type="3003" fontName="Ubuntu">
+            <children xmi:type="notation:BasicCompartment" xmi:id="_qGRj4PAyEeSV14RAmBOIBw" type="7005">
+              <children xmi:type="notation:Node" xmi:id="_qGSyAPAyEeSV14RAmBOIBw" type="3004">
+                <children xmi:type="notation:DecorationNode" xmi:id="_qGSyBvAyEeSV14RAmBOIBw" type="5005"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_qGSyB_AyEeSV14RAmBOIBw" type="7006"/>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_qGSyAfAyEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_qGSyAvAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_qGSyA_AyEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qGSyBPAyEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:AnyMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.3/@hasRule.0/@match.0/@class.0"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qGSyBfAyEeSV14RAmBOIBw" x="150"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_qGSyCPAyEeSV14RAmBOIBw" type="3004">
+                <children xmi:type="notation:DecorationNode" xmi:id="_qGTZFfAyEeSV14RAmBOIBw" type="5005"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_qGTZFvAyEeSV14RAmBOIBw" type="7006"/>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_qGTZEPAyEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_qGTZEfAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_qGTZEvAyEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qGTZE_AyEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:AnyMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.3/@hasRule.0/@match.0/@class.1"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qGTZFPAyEeSV14RAmBOIBw" x="342" y="48"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_GNI4MPBEEeSV14RAmBOIBw" type="3004">
+                <children xmi:type="notation:DecorationNode" xmi:id="_GNL7gPBEEeSV14RAmBOIBw" type="5005"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_GNL7gfBEEeSV14RAmBOIBw" type="7006"/>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_GNI4MfBEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_GNI4MvBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_GNI4M_BEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GNI4NPBEEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:AnyMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.3/@hasRule.0/@match.0/@class.2"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GNI4NfBEEeSV14RAmBOIBw"/>
+              </children>
+            </children>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qGQ80fAyEeSV14RAmBOIBw"/>
+            <element xmi:type="dsltrans:MatchModel" href="industrial_to_autosar_out.dsltrans#//@source.3/@hasRule.0/@match.0"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qGQ80vAyEeSV14RAmBOIBw"/>
+          </children>
+        </children>
+        <children xmi:type="notation:BasicCompartment" xmi:id="_qGPutfAyEeSV14RAmBOIBw" type="7004">
+          <children xmi:type="notation:Node" xmi:id="_qGZfsPAyEeSV14RAmBOIBw" type="3010">
+            <children xmi:type="notation:BasicCompartment" xmi:id="_qGZftvAyEeSV14RAmBOIBw" type="7010">
+              <children xmi:type="notation:Shape" xmi:id="_qGbU4PAyEeSV14RAmBOIBw" type="3011" fontName="Ubuntu">
+                <children xmi:type="notation:DecorationNode" xmi:id="_qGbU4_AyEeSV14RAmBOIBw" type="5031"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_qGbU5PAyEeSV14RAmBOIBw" type="7011"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qGbU4fAyEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ApplyClass" href="industrial_to_autosar_out.dsltrans#//@source.3/@hasRule.0/@apply/@class.0"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qGbU4vAyEeSV14RAmBOIBw"/>
+              </children>
+              <children xmi:type="notation:Shape" xmi:id="_qGb78PAyEeSV14RAmBOIBw" type="3011" fontName="Ubuntu">
+                <children xmi:type="notation:DecorationNode" xmi:id="_qGb78_AyEeSV14RAmBOIBw" type="5031"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_qGb79PAyEeSV14RAmBOIBw" type="7011"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qGb78fAyEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ApplyClass" href="industrial_to_autosar_out.dsltrans#//@source.3/@hasRule.0/@apply/@class.1"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qGb78vAyEeSV14RAmBOIBw" x="193"/>
+              </children>
+            </children>
+            <styles xmi:type="notation:DescriptionStyle" xmi:id="_qGZfsfAyEeSV14RAmBOIBw"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_qGZfsvAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+            <styles xmi:type="notation:LineStyle" xmi:id="_qGZfs_AyEeSV14RAmBOIBw"/>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qGZftPAyEeSV14RAmBOIBw"/>
+            <element xmi:type="dsltrans:ApplyModel" href="industrial_to_autosar_out.dsltrans#//@source.3/@hasRule.0/@apply"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qGZftfAyEeSV14RAmBOIBw"/>
+          </children>
+        </children>
+        <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qGPusfAyEeSV14RAmBOIBw"/>
+        <element xmi:type="dsltrans:Rule" href="industrial_to_autosar_out.dsltrans#//@source.3/@hasRule.0"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qGPusvAyEeSV14RAmBOIBw"/>
+      </children>
+    </children>
+    <styles xmi:type="notation:DescriptionStyle" xmi:id="_pN6Va-9qEeSVBvdSRKU37A"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_pN6VbO9qEeSVBvdSRKU37A" fontName="Ubuntu"/>
+    <styles xmi:type="notation:LineStyle" xmi:id="_pN6Vbe9qEeSVBvdSRKU37A"/>
+    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_pN6Vbu9qEeSVBvdSRKU37A"/>
+    <element xmi:type="dsltrans:Sequential" href="industrial_to_autosar_out.dsltrans#//@source.3"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_pN6Vb-9qEeSVBvdSRKU37A" x="60" y="1848"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_pN68cO9qEeSVBvdSRKU37A" type="2001">
+    <children xmi:type="notation:DecorationNode" xmi:id="_pN68du9qEeSVBvdSRKU37A" type="5034"/>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_pN68d-9qEeSVBvdSRKU37A" type="7001"/>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_pN68eO9qEeSVBvdSRKU37A" type="7002">
+      <children xmi:type="notation:Shape" xmi:id="_qGx6MPAyEeSV14RAmBOIBw" type="3002" fontName="Ubuntu">
+        <children xmi:type="notation:DecorationNode" xmi:id="_qGx6M_AyEeSV14RAmBOIBw" type="5033"/>
+        <children xmi:type="notation:BasicCompartment" xmi:id="_qGx6NPAyEeSV14RAmBOIBw" type="7003">
+          <children xmi:type="notation:Shape" xmi:id="_qG09gPAyEeSV14RAmBOIBw" type="3003" fontName="Ubuntu">
+            <children xmi:type="notation:BasicCompartment" xmi:id="_qG09g_AyEeSV14RAmBOIBw" type="7005">
+              <children xmi:type="notation:Node" xmi:id="_qG2LoPAyEeSV14RAmBOIBw" type="3004">
+                <children xmi:type="notation:DecorationNode" xmi:id="_qG2LpvAyEeSV14RAmBOIBw" type="5005"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_qG2Lp_AyEeSV14RAmBOIBw" type="7006"/>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_qG2LofAyEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_qG2LovAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_qG2Lo_AyEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qG2LpPAyEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:AnyMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.0/@match.0/@class.0"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qG2LpfAyEeSV14RAmBOIBw"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_qG2ysPAyEeSV14RAmBOIBw" type="3004">
+                <children xmi:type="notation:DecorationNode" xmi:id="_qG2ytvAyEeSV14RAmBOIBw" type="5005"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_qG2yt_AyEeSV14RAmBOIBw" type="7006"/>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_qG2ysfAyEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_qG2ysvAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_qG2ys_AyEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qG2ytPAyEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:AnyMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.0/@match.0/@class.1"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qG2ytfAyEeSV14RAmBOIBw" x="162"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_qG2yuPAyEeSV14RAmBOIBw" type="3004">
+                <children xmi:type="notation:DecorationNode" xmi:id="_qG2yvvAyEeSV14RAmBOIBw" type="5005"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_qG2yv_AyEeSV14RAmBOIBw" type="7006"/>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_qG2yufAyEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_qG2yuvAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_qG2yu_AyEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qG2yvPAyEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:AnyMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.0/@match.0/@class.2"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qG2yvfAyEeSV14RAmBOIBw" x="299"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_GNZW4PBEEeSV14RAmBOIBw" type="3004">
+                <children xmi:type="notation:DecorationNode" xmi:id="_GNZW5vBEEeSV14RAmBOIBw" type="5005"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_GNZW5_BEEeSV14RAmBOIBw" type="7006">
+                  <children xmi:type="notation:Shape" xmi:id="_GNbMEPBEEeSV14RAmBOIBw" type="3005" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_GNbME_BEEeSV14RAmBOIBw" type="5004"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_GNbzIPBEEeSV14RAmBOIBw" type="7007"/>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GNbMEfBEEeSV14RAmBOIBw"/>
+                    <element xmi:type="dsltrans:MatchAttribute" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.0/@match.0/@class.3/@attribute.0"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GNbMEvBEEeSV14RAmBOIBw"/>
+                  </children>
+                </children>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_GNZW4fBEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_GNZW4vBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_GNZW4_BEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GNZW5PBEEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:AnyMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.0/@match.0/@class.3"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GNZW5fBEEeSV14RAmBOIBw"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_GNZW6PBEEeSV14RAmBOIBw" type="3008">
+                <children xmi:type="notation:DecorationNode" xmi:id="_GNZW7vBEEeSV14RAmBOIBw" type="5006"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_GNZW7_BEEeSV14RAmBOIBw" type="7008"/>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_GNZW6fBEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_GNZW6vBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_GNZW6_BEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GNZW7PBEEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ExistsMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.0/@match.0/@class.4"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GNZW7fBEEeSV14RAmBOIBw" x="144"/>
+              </children>
+            </children>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qG09gfAyEeSV14RAmBOIBw"/>
+            <element xmi:type="dsltrans:MatchModel" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.0/@match.0"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qG09gvAyEeSV14RAmBOIBw"/>
+          </children>
+        </children>
+        <children xmi:type="notation:BasicCompartment" xmi:id="_qGx6NfAyEeSV14RAmBOIBw" type="7004">
+          <children xmi:type="notation:Node" xmi:id="_qG-HcPAyEeSV14RAmBOIBw" type="3010">
+            <children xmi:type="notation:BasicCompartment" xmi:id="_qG-HdvAyEeSV14RAmBOIBw" type="7010">
+              <children xmi:type="notation:Shape" xmi:id="_qHBKwPAyEeSV14RAmBOIBw" type="3011" fontName="Ubuntu">
+                <children xmi:type="notation:DecorationNode" xmi:id="_qHBKw_AyEeSV14RAmBOIBw" type="5031"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_qHBKxPAyEeSV14RAmBOIBw" type="7011"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qHBKwfAyEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ApplyClass" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.0/@apply/@class.0"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qHBKwvAyEeSV14RAmBOIBw"/>
+              </children>
+              <children xmi:type="notation:Shape" xmi:id="_qHBKxfAyEeSV14RAmBOIBw" type="3011" fontName="Ubuntu">
+                <children xmi:type="notation:DecorationNode" xmi:id="_qHBKyPAyEeSV14RAmBOIBw" type="5031"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_qHBx0PAyEeSV14RAmBOIBw" type="7011">
+                  <children xmi:type="notation:Shape" xmi:id="_GNmyQPBEEeSV14RAmBOIBw" type="3012" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_GNmyQ_BEEeSV14RAmBOIBw" type="5030"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_GNmyRPBEEeSV14RAmBOIBw" type="7012">
+                      <children xmi:type="notation:Shape" xmi:id="_GNoAYPBEEeSV14RAmBOIBw" type="3017" fontName="Ubuntu">
+                        <children xmi:type="notation:BasicCompartment" xmi:id="_GNoAY_BEEeSV14RAmBOIBw" type="7013">
+                          <children xmi:type="notation:Shape" xmi:id="_GNoncPBEEeSV14RAmBOIBw" type="3021" fontName="Ubuntu">
+                            <element xmi:type="dsltrans:AttributeRef" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.0/@apply/@class.1/@attribute.0/@attributeValue/@leftTerm"/>
+                            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GNoncfBEEeSV14RAmBOIBw"/>
+                          </children>
+                        </children>
+                        <children xmi:type="notation:BasicCompartment" xmi:id="_GNoAZPBEEeSV14RAmBOIBw" type="7014"/>
+                        <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GNoAYfBEEeSV14RAmBOIBw"/>
+                        <element xmi:type="dsltrans:Concat" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.0/@apply/@class.1/@attribute.0/@attributeValue"/>
+                        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GNoAYvBEEeSV14RAmBOIBw"/>
+                      </children>
+                    </children>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GNmyQfBEEeSV14RAmBOIBw"/>
+                    <element xmi:type="dsltrans:ApplyAttribute" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.0/@apply/@class.1/@attribute.0"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GNmyQvBEEeSV14RAmBOIBw"/>
+                  </children>
+                </children>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qHBKxvAyEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ApplyClass" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.0/@apply/@class.1"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qHBKx_AyEeSV14RAmBOIBw" x="193"/>
+              </children>
+            </children>
+            <styles xmi:type="notation:DescriptionStyle" xmi:id="_qG-HcfAyEeSV14RAmBOIBw"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_qG-HcvAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+            <styles xmi:type="notation:LineStyle" xmi:id="_qG-Hc_AyEeSV14RAmBOIBw"/>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qG-HdPAyEeSV14RAmBOIBw"/>
+            <element xmi:type="dsltrans:ApplyModel" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.0/@apply"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qG-HdfAyEeSV14RAmBOIBw"/>
+          </children>
+        </children>
+        <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qGx6MfAyEeSV14RAmBOIBw"/>
+        <element xmi:type="dsltrans:Rule" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.0"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qGx6MvAyEeSV14RAmBOIBw"/>
+      </children>
+      <children xmi:type="notation:Shape" xmi:id="_GNqcoPBEEeSV14RAmBOIBw" type="3002" fontName="Ubuntu">
+        <children xmi:type="notation:DecorationNode" xmi:id="_GNqco_BEEeSV14RAmBOIBw" type="5033"/>
+        <children xmi:type="notation:BasicCompartment" xmi:id="_GNqcpPBEEeSV14RAmBOIBw" type="7003">
+          <children xmi:type="notation:Shape" xmi:id="_GNrDsPBEEeSV14RAmBOIBw" type="3003" fontName="Ubuntu">
+            <children xmi:type="notation:BasicCompartment" xmi:id="_GNrqwPBEEeSV14RAmBOIBw" type="7005">
+              <children xmi:type="notation:Node" xmi:id="_GNs44PBEEeSV14RAmBOIBw" type="3004">
+                <children xmi:type="notation:DecorationNode" xmi:id="_GNs45vBEEeSV14RAmBOIBw" type="5005"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_GNs45_BEEeSV14RAmBOIBw" type="7006"/>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_GNs44fBEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_GNs44vBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_GNs44_BEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GNs45PBEEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:AnyMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.1/@match.0/@class.0"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GNs45fBEEeSV14RAmBOIBw"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_GNtf8PBEEeSV14RAmBOIBw" type="3004">
+                <children xmi:type="notation:DecorationNode" xmi:id="_GNtf9vBEEeSV14RAmBOIBw" type="5005"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_GNtf9_BEEeSV14RAmBOIBw" type="7006"/>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_GNtf8fBEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_GNtf8vBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_GNtf8_BEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GNtf9PBEEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:AnyMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.1/@match.0/@class.1"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GNtf9fBEEeSV14RAmBOIBw" x="162"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_GNtf-PBEEeSV14RAmBOIBw" type="3004">
+                <children xmi:type="notation:DecorationNode" xmi:id="_GNtf_vBEEeSV14RAmBOIBw" type="5005"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_GNtf__BEEeSV14RAmBOIBw" type="7006"/>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_GNtf-fBEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_GNtf-vBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_GNtf-_BEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GNtf_PBEEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:AnyMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.1/@match.0/@class.2"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GNtf_fBEEeSV14RAmBOIBw" x="299"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_GNtgAPBEEeSV14RAmBOIBw" type="3004">
+                <children xmi:type="notation:DecorationNode" xmi:id="_GNtgBvBEEeSV14RAmBOIBw" type="5005"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_GNtgB_BEEeSV14RAmBOIBw" type="7006">
+                  <children xmi:type="notation:Shape" xmi:id="_GNwjQPBEEeSV14RAmBOIBw" type="3005" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_GNwjQ_BEEeSV14RAmBOIBw" type="5004"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_GNwjRPBEEeSV14RAmBOIBw" type="7007"/>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GNwjQfBEEeSV14RAmBOIBw"/>
+                    <element xmi:type="dsltrans:MatchAttribute" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.1/@match.0/@class.3/@attribute.0"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GNwjQvBEEeSV14RAmBOIBw"/>
+                  </children>
+                </children>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_GNtgAfBEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_GNtgAvBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_GNtgA_BEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GNtgBPBEEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:AnyMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.1/@match.0/@class.3"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GNtgBfBEEeSV14RAmBOIBw" x="429"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_GNtgCPBEEeSV14RAmBOIBw" type="3008">
+                <children xmi:type="notation:DecorationNode" xmi:id="_GNuHAPBEEeSV14RAmBOIBw" type="5006"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_GNuHAfBEEeSV14RAmBOIBw" type="7008"/>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_GNtgCfBEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_GNtgCvBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_GNtgC_BEEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GNtgDPBEEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ExistsMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.1/@match.0/@class.4"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GNtgDfBEEeSV14RAmBOIBw" x="573"/>
+              </children>
+            </children>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GNrDsfBEEeSV14RAmBOIBw"/>
+            <element xmi:type="dsltrans:MatchModel" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.1/@match.0"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GNrDsvBEEeSV14RAmBOIBw"/>
+          </children>
+        </children>
+        <children xmi:type="notation:BasicCompartment" xmi:id="_GNqcpfBEEeSV14RAmBOIBw" type="7004">
+          <children xmi:type="notation:Node" xmi:id="_GN4fEPBEEeSV14RAmBOIBw" type="3010">
+            <children xmi:type="notation:BasicCompartment" xmi:id="_GN5GIPBEEeSV14RAmBOIBw" type="7010">
+              <children xmi:type="notation:Shape" xmi:id="_GN5tMPBEEeSV14RAmBOIBw" type="3011" fontName="Ubuntu">
+                <children xmi:type="notation:DecorationNode" xmi:id="_GN5tM_BEEeSV14RAmBOIBw" type="5031"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_GN5tNPBEEeSV14RAmBOIBw" type="7011"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GN5tMfBEEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ApplyClass" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.1/@apply/@class.0"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GN5tMvBEEeSV14RAmBOIBw"/>
+              </children>
+              <children xmi:type="notation:Shape" xmi:id="_GN5tNfBEEeSV14RAmBOIBw" type="3011" fontName="Ubuntu">
+                <children xmi:type="notation:DecorationNode" xmi:id="_GN5tOPBEEeSV14RAmBOIBw" type="5031"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_GN5tOfBEEeSV14RAmBOIBw" type="7011">
+                  <children xmi:type="notation:Shape" xmi:id="_GN8JcPBEEeSV14RAmBOIBw" type="3012" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_GN8wgPBEEeSV14RAmBOIBw" type="5030"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_GN8wgfBEEeSV14RAmBOIBw" type="7012">
+                      <children xmi:type="notation:Shape" xmi:id="_GN9XkPBEEeSV14RAmBOIBw" type="3017" fontName="Ubuntu">
+                        <children xmi:type="notation:BasicCompartment" xmi:id="_GN9Xk_BEEeSV14RAmBOIBw" type="7013">
+                          <children xmi:type="notation:Shape" xmi:id="_GN9-oPBEEeSV14RAmBOIBw" type="3021" fontName="Ubuntu">
+                            <element xmi:type="dsltrans:AttributeRef" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.1/@apply/@class.1/@attribute.0/@attributeValue/@leftTerm"/>
+                            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GN9-ofBEEeSV14RAmBOIBw"/>
+                          </children>
+                        </children>
+                        <children xmi:type="notation:BasicCompartment" xmi:id="_GN9XlPBEEeSV14RAmBOIBw" type="7014"/>
+                        <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GN9XkfBEEeSV14RAmBOIBw"/>
+                        <element xmi:type="dsltrans:Concat" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.1/@apply/@class.1/@attribute.0/@attributeValue"/>
+                        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GN9XkvBEEeSV14RAmBOIBw"/>
+                      </children>
+                    </children>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GN8JcfBEEeSV14RAmBOIBw"/>
+                    <element xmi:type="dsltrans:ApplyAttribute" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.1/@apply/@class.1/@attribute.0"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GN8JcvBEEeSV14RAmBOIBw"/>
+                  </children>
+                </children>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GN5tNvBEEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ApplyClass" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.1/@apply/@class.1"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GN5tN_BEEeSV14RAmBOIBw" x="193"/>
+              </children>
+            </children>
+            <styles xmi:type="notation:DescriptionStyle" xmi:id="_GN4fEfBEEeSV14RAmBOIBw"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_GN4fEvBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+            <styles xmi:type="notation:LineStyle" xmi:id="_GN4fE_BEEeSV14RAmBOIBw"/>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GN4fFPBEEeSV14RAmBOIBw"/>
+            <element xmi:type="dsltrans:ApplyModel" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.1/@apply"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GN4fFfBEEeSV14RAmBOIBw"/>
+          </children>
+        </children>
+        <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GNqcofBEEeSV14RAmBOIBw"/>
+        <element xmi:type="dsltrans:Rule" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.1"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GNqcovBEEeSV14RAmBOIBw" x="422" y="-5"/>
+      </children>
+    </children>
+    <styles xmi:type="notation:DescriptionStyle" xmi:id="_pN68ce9qEeSVBvdSRKU37A"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_pN68cu9qEeSVBvdSRKU37A" fontName="Ubuntu"/>
+    <styles xmi:type="notation:LineStyle" xmi:id="_pN68c-9qEeSVBvdSRKU37A"/>
+    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_pN68dO9qEeSVBvdSRKU37A"/>
+    <element xmi:type="dsltrans:Sequential" href="industrial_to_autosar_out.dsltrans#//@source.4"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_pN68de9qEeSVBvdSRKU37A" x="1392" y="1644" width="1129"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_pN68ee9qEeSVBvdSRKU37A" type="2001">
+    <children xmi:type="notation:DecorationNode" xmi:id="_pN7jgO9qEeSVBvdSRKU37A" type="5034"/>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_pN7jge9qEeSVBvdSRKU37A" type="7001"/>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_pN7jgu9qEeSVBvdSRKU37A" type="7002">
+      <children xmi:type="notation:Shape" xmi:id="_qHgS8PAyEeSV14RAmBOIBw" type="3002" fontName="Ubuntu">
+        <children xmi:type="notation:DecorationNode" xmi:id="_qHg6APAyEeSV14RAmBOIBw" type="5033"/>
+        <children xmi:type="notation:BasicCompartment" xmi:id="_qHg6AfAyEeSV14RAmBOIBw" type="7003">
+          <children xmi:type="notation:Shape" xmi:id="_qHjWQPAyEeSV14RAmBOIBw" type="3003" fontName="Ubuntu">
+            <children xmi:type="notation:BasicCompartment" xmi:id="_qHjWQ_AyEeSV14RAmBOIBw" type="7005">
+              <children xmi:type="notation:Node" xmi:id="_qHkkYPAyEeSV14RAmBOIBw" type="3004">
+                <children xmi:type="notation:DecorationNode" xmi:id="_qHlLcPAyEeSV14RAmBOIBw" type="5005"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_qHlLcfAyEeSV14RAmBOIBw" type="7006"/>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_qHkkYfAyEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_qHkkYvAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_qHkkY_AyEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qHkkZPAyEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:AnyMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.5/@hasRule.0/@match.0/@class.0"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qHkkZfAyEeSV14RAmBOIBw"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_qHlLcvAyEeSV14RAmBOIBw" type="3004">
+                <children xmi:type="notation:DecorationNode" xmi:id="_qHlLePAyEeSV14RAmBOIBw" type="5005"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_qHlLefAyEeSV14RAmBOIBw" type="7006"/>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_qHlLc_AyEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_qHlLdPAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_qHlLdfAyEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qHlLdvAyEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:AnyMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.5/@hasRule.0/@match.0/@class.1"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qHlLd_AyEeSV14RAmBOIBw" x="162"/>
+              </children>
+            </children>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qHjWQfAyEeSV14RAmBOIBw"/>
+            <element xmi:type="dsltrans:MatchModel" href="industrial_to_autosar_out.dsltrans#//@source.5/@hasRule.0/@match.0"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qHjWQvAyEeSV14RAmBOIBw" x="-44" y="51"/>
+          </children>
+        </children>
+        <children xmi:type="notation:BasicCompartment" xmi:id="_qHg6AvAyEeSV14RAmBOIBw" type="7004">
+          <children xmi:type="notation:Node" xmi:id="_qIH-APAyEeSV14RAmBOIBw" type="3010">
+            <children xmi:type="notation:BasicCompartment" xmi:id="_qIH-BvAyEeSV14RAmBOIBw" type="7010">
+              <children xmi:type="notation:Shape" xmi:id="_qIOrsPAyEeSV14RAmBOIBw" type="3011" fontName="Ubuntu">
+                <children xmi:type="notation:DecorationNode" xmi:id="_qIOrs_AyEeSV14RAmBOIBw" type="5031"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_qIOrtPAyEeSV14RAmBOIBw" type="7011"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qIOrsfAyEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ApplyClass" href="industrial_to_autosar_out.dsltrans#//@source.5/@hasRule.0/@apply/@class.0"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qIOrsvAyEeSV14RAmBOIBw"/>
+              </children>
+              <children xmi:type="notation:Shape" xmi:id="_qIPSwPAyEeSV14RAmBOIBw" type="3011" fontName="Ubuntu">
+                <children xmi:type="notation:DecorationNode" xmi:id="_qIPSw_AyEeSV14RAmBOIBw" type="5031"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_qIPSxPAyEeSV14RAmBOIBw" type="7011">
+                  <children xmi:type="notation:Shape" xmi:id="_qIgYgPAyEeSV14RAmBOIBw" type="3012" fontName="Ubuntu">
+                    <children xmi:type="notation:DecorationNode" xmi:id="_qIgYg_AyEeSV14RAmBOIBw" type="5030"/>
+                    <children xmi:type="notation:BasicCompartment" xmi:id="_qIg_kPAyEeSV14RAmBOIBw" type="7012"/>
+                    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qIgYgfAyEeSV14RAmBOIBw"/>
+                    <element xmi:type="dsltrans:ApplyAttribute" href="industrial_to_autosar_out.dsltrans#//@source.5/@hasRule.0/@apply/@class.1/@attribute.0"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qIgYgvAyEeSV14RAmBOIBw"/>
+                  </children>
+                </children>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qIPSwfAyEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ApplyClass" href="industrial_to_autosar_out.dsltrans#//@source.5/@hasRule.0/@apply/@class.1"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qIPSwvAyEeSV14RAmBOIBw" x="193"/>
+              </children>
+            </children>
+            <styles xmi:type="notation:DescriptionStyle" xmi:id="_qIH-AfAyEeSV14RAmBOIBw"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_qIH-AvAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+            <styles xmi:type="notation:LineStyle" xmi:id="_qIH-A_AyEeSV14RAmBOIBw"/>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qIH-BPAyEeSV14RAmBOIBw"/>
+            <element xmi:type="dsltrans:ApplyModel" href="industrial_to_autosar_out.dsltrans#//@source.5/@hasRule.0/@apply"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qIH-BfAyEeSV14RAmBOIBw"/>
+          </children>
+        </children>
+        <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qHgS8fAyEeSV14RAmBOIBw"/>
+        <element xmi:type="dsltrans:Rule" href="industrial_to_autosar_out.dsltrans#//@source.5/@hasRule.0"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qHgS8vAyEeSV14RAmBOIBw"/>
+      </children>
+    </children>
+    <styles xmi:type="notation:DescriptionStyle" xmi:id="_pN68eu9qEeSVBvdSRKU37A"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_pN68e-9qEeSVBvdSRKU37A" fontName="Ubuntu"/>
+    <styles xmi:type="notation:LineStyle" xmi:id="_pN68fO9qEeSVBvdSRKU37A"/>
+    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_pN68fe9qEeSVBvdSRKU37A"/>
+    <element xmi:type="dsltrans:Sequential" href="industrial_to_autosar_out.dsltrans#//@source.5"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_pN68fu9qEeSVBvdSRKU37A" x="-12" y="2904"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_pN7jg-9qEeSVBvdSRKU37A" type="2001">
+    <children xmi:type="notation:DecorationNode" xmi:id="_pN7jie9qEeSVBvdSRKU37A" type="5034"/>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_pN7jiu9qEeSVBvdSRKU37A" type="7001"/>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_pN7ji-9qEeSVBvdSRKU37A" type="7002">
+      <children xmi:type="notation:Shape" xmi:id="_qLNHMPAyEeSV14RAmBOIBw" type="3002" fontName="Ubuntu">
+        <children xmi:type="notation:DecorationNode" xmi:id="_qLNHM_AyEeSV14RAmBOIBw" type="5033"/>
+        <children xmi:type="notation:BasicCompartment" xmi:id="_qLNHNPAyEeSV14RAmBOIBw" type="7003">
+          <children xmi:type="notation:Shape" xmi:id="_qLOVUPAyEeSV14RAmBOIBw" type="3003" fontName="Ubuntu">
+            <children xmi:type="notation:BasicCompartment" xmi:id="_qLO8YvAyEeSV14RAmBOIBw" type="7005">
+              <children xmi:type="notation:Node" xmi:id="_qLPjcPAyEeSV14RAmBOIBw" type="3004">
+                <children xmi:type="notation:DecorationNode" xmi:id="_qLQKg_AyEeSV14RAmBOIBw" type="5005"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_qLQKhPAyEeSV14RAmBOIBw" type="7006"/>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_qLPjcfAyEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_qLPjcvAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_qLQKgPAyEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qLQKgfAyEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:AnyMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.6/@hasRule.0/@match.0/@class.0"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qLQKgvAyEeSV14RAmBOIBw"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_qLQKhfAyEeSV14RAmBOIBw" type="3004">
+                <children xmi:type="notation:DecorationNode" xmi:id="_qLQKi_AyEeSV14RAmBOIBw" type="5005"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_qLQxkPAyEeSV14RAmBOIBw" type="7006"/>
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_qLQKhvAyEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_qLQKh_AyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+                <styles xmi:type="notation:FillStyle" xmi:id="_qLQKiPAyEeSV14RAmBOIBw"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qLQKifAyEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:AnyMatchClass" href="industrial_to_autosar_out.dsltrans#//@source.6/@hasRule.0/@match.0/@class.1"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qLQKivAyEeSV14RAmBOIBw" x="137"/>
+              </children>
+            </children>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qLO8YPAyEeSV14RAmBOIBw"/>
+            <element xmi:type="dsltrans:MatchModel" href="industrial_to_autosar_out.dsltrans#//@source.6/@hasRule.0/@match.0"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qLO8YfAyEeSV14RAmBOIBw"/>
+          </children>
+        </children>
+        <children xmi:type="notation:BasicCompartment" xmi:id="_qLNHNfAyEeSV14RAmBOIBw" type="7004">
+          <children xmi:type="notation:Node" xmi:id="_qLVDAPAyEeSV14RAmBOIBw" type="3010">
+            <children xmi:type="notation:BasicCompartment" xmi:id="_qLVDBvAyEeSV14RAmBOIBw" type="7010">
+              <children xmi:type="notation:Shape" xmi:id="_qLW4MPAyEeSV14RAmBOIBw" type="3011" fontName="Ubuntu">
+                <children xmi:type="notation:DecorationNode" xmi:id="_qLXfQPAyEeSV14RAmBOIBw" type="5031"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_qLXfQfAyEeSV14RAmBOIBw" type="7011"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qLW4MfAyEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ApplyClass" href="industrial_to_autosar_out.dsltrans#//@source.6/@hasRule.0/@apply/@class.0"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qLW4MvAyEeSV14RAmBOIBw"/>
+              </children>
+              <children xmi:type="notation:Shape" xmi:id="_qLXfQvAyEeSV14RAmBOIBw" type="3011" fontName="Ubuntu">
+                <children xmi:type="notation:DecorationNode" xmi:id="_qLXfRfAyEeSV14RAmBOIBw" type="5031"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_qLXfRvAyEeSV14RAmBOIBw" type="7011"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qLXfQ_AyEeSV14RAmBOIBw"/>
+                <element xmi:type="dsltrans:ApplyClass" href="industrial_to_autosar_out.dsltrans#//@source.6/@hasRule.0/@apply/@class.1"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qLXfRPAyEeSV14RAmBOIBw" x="193"/>
+              </children>
+            </children>
+            <styles xmi:type="notation:DescriptionStyle" xmi:id="_qLVDAfAyEeSV14RAmBOIBw"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_qLVDAvAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+            <styles xmi:type="notation:LineStyle" xmi:id="_qLVDA_AyEeSV14RAmBOIBw"/>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qLVDBPAyEeSV14RAmBOIBw"/>
+            <element xmi:type="dsltrans:ApplyModel" href="industrial_to_autosar_out.dsltrans#//@source.6/@hasRule.0/@apply"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qLVDBfAyEeSV14RAmBOIBw"/>
+          </children>
+        </children>
+        <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_qLNHMfAyEeSV14RAmBOIBw"/>
+        <element xmi:type="dsltrans:Rule" href="industrial_to_autosar_out.dsltrans#//@source.6/@hasRule.0"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qLNHMvAyEeSV14RAmBOIBw"/>
+      </children>
+    </children>
+    <styles xmi:type="notation:DescriptionStyle" xmi:id="_pN7jhO9qEeSVBvdSRKU37A"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_pN7jhe9qEeSVBvdSRKU37A" fontName="Ubuntu"/>
+    <styles xmi:type="notation:LineStyle" xmi:id="_pN7jhu9qEeSVBvdSRKU37A"/>
+    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_pN7jh-9qEeSVBvdSRKU37A"/>
+    <element xmi:type="dsltrans:Sequential" href="industrial_to_autosar_out.dsltrans#//@source.6"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_pN7jiO9qEeSVBvdSRKU37A" x="576" y="2352"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_pDZHce9qEeSVBvdSRKU37A"/>
+  <element xmi:type="dsltrans:TransformationModel" href="industrial_to_autosar_out.dsltrans#/"/>
+  <edges xmi:type="notation:Connector" xmi:id="_qNu2wPAyEeSV14RAmBOIBw" type="4011" source="_pN6Vau9qEeSVBvdSRKU37A" target="_pN6VYe9qEeSVBvdSRKU37A">
+    <children xmi:type="notation:DecorationNode" xmi:id="_qNvd0PAyEeSV14RAmBOIBw" type="6006">
+      <styles xmi:type="notation:DescriptionStyle" xmi:id="_qNvd0fAyEeSV14RAmBOIBw"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_qNvd0vAyEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_qNu2wfAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_qNu2wvAyEeSV14RAmBOIBw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_qNwr8PAyEeSV14RAmBOIBw" type="4006" source="_qGSyAPAyEeSV14RAmBOIBw" target="_qGbU4PAyEeSV14RAmBOIBw">
+    <styles xmi:type="notation:FontStyle" xmi:id="_qNwr8fAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveBackwardRestriction" href="industrial_to_autosar_out.dsltrans#//@source.3/@hasRule.0/@backwards.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_qNwr8vAyEeSV14RAmBOIBw" points="[8, 22, -7, -19]$[-9, -22, -24, -63]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_qN4nwPAyEeSV14RAmBOIBw" type="4003" source="_qGSyAPAyEeSV14RAmBOIBw" target="_qGSyCPAyEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_qN4nw_AyEeSV14RAmBOIBw" type="6011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_qN4nxPAyEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_qN4nwfAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveMatchAssociation" href="industrial_to_autosar_out.dsltrans#//@source.3/@hasRule.0/@match.0/@association.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_qN4nwvAyEeSV14RAmBOIBw" points="[-3, 22, 0, 12]$[0, -12, 3, -22]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_qN-uYPAyEeSV14RAmBOIBw" type="4005" source="_qGbU4PAyEeSV14RAmBOIBw" target="_qGb78PAyEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_qN-uY_AyEeSV14RAmBOIBw" type="6005">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_qN-uZPAyEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_qN-uYfAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:ApplyAssociation" href="industrial_to_autosar_out.dsltrans#//@source.3/@hasRule.0/@apply/@association.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_qN-uYvAyEeSV14RAmBOIBw" points="[63, 63, 53, 53]$[-53, -53, -63, -63]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_qOEN8PAyEeSV14RAmBOIBw" type="4006" source="_qG2LoPAyEeSV14RAmBOIBw" target="_qHBKwPAyEeSV14RAmBOIBw">
+    <styles xmi:type="notation:FontStyle" xmi:id="_qOEN8fAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveBackwardRestriction" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.0/@backwards.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_qOEN8vAyEeSV14RAmBOIBw" points="[8, 22, -7, -19]$[-9, -22, -24, -63]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_qOLisPAyEeSV14RAmBOIBw" type="4003" source="_qG2LoPAyEeSV14RAmBOIBw" target="_qG2ysPAyEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_qOLis_AyEeSV14RAmBOIBw" type="6011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_qOLitPAyEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_qOLisfAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveMatchAssociation" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.0/@match.0/@association.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_qOLisvAyEeSV14RAmBOIBw" points="[-3, 22, 0, 12]$[0, -12, 3, -22]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_qOP0IPAyEeSV14RAmBOIBw" type="4003" source="_qG2ysPAyEeSV14RAmBOIBw" target="_qG2yuPAyEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_qOQbMPAyEeSV14RAmBOIBw" type="6011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_qOQbMfAyEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_qOP0IfAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveMatchAssociation" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.0/@match.0/@association.1"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_qOP0IvAyEeSV14RAmBOIBw" points="[7, 22, 0, 12]$[0, -12, -7, -22]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_qORpUPAyEeSV14RAmBOIBw" type="4005" source="_qHBKwPAyEeSV14RAmBOIBw" target="_qHBKxfAyEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_qORpU_AyEeSV14RAmBOIBw" type="6005">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_qORpVPAyEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_qORpUfAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:ApplyAssociation" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.0/@apply/@association.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_qORpUvAyEeSV14RAmBOIBw" points="[67, 36, 49, 26]$[-56, -32, -74, -42]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_qOaMMPAyEeSV14RAmBOIBw" type="4006" source="_qHkkYPAyEeSV14RAmBOIBw" target="_qIOrsPAyEeSV14RAmBOIBw">
+    <styles xmi:type="notation:FontStyle" xmi:id="_qOaMMfAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveBackwardRestriction" href="industrial_to_autosar_out.dsltrans#//@source.5/@hasRule.0/@backwards.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_qOaMMvAyEeSV14RAmBOIBw" points="[2, 22, -13, -145]$[9, 104, -6, -63]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_qObaUPAyEeSV14RAmBOIBw" type="4003" source="_qHkkYPAyEeSV14RAmBOIBw" target="_qHlLcvAyEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_qOedoPAyEeSV14RAmBOIBw" type="6011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_qOedofAyEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_qObaUfAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveMatchAssociation" href="industrial_to_autosar_out.dsltrans#//@source.5/@hasRule.0/@match.0/@association.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_qObaUvAyEeSV14RAmBOIBw" points="[51, 0, -98, 0]$[111, 0, -38, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_qOr5APAyEeSV14RAmBOIBw" type="4005" source="_qIOrsPAyEeSV14RAmBOIBw" target="_qIPSwPAyEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_qOsgEPAyEeSV14RAmBOIBw" type="6005">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_qOsgEfAyEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_qOr5AfAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:ApplyAssociation" href="industrial_to_autosar_out.dsltrans#//@source.5/@hasRule.0/@apply/@association.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_qOr5AvAyEeSV14RAmBOIBw" points="[67, 14, -118, -25]$[127, 27, -58, -12]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_qPmfAPAyEeSV14RAmBOIBw" type="4003" source="_qLPjcPAyEeSV14RAmBOIBw" target="_qLQKhfAyEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_qPmfA_AyEeSV14RAmBOIBw" type="6011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_qPmfBPAyEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_qPmfAfAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveMatchAssociation" href="industrial_to_autosar_out.dsltrans#//@source.6/@hasRule.0/@match.0/@association.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_qPmfAvAyEeSV14RAmBOIBw" points="[7, 22, 0, 12]$[0, -12, -7, -22]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_qPsloPAyEeSV14RAmBOIBw" type="4005" source="_qLW4MPAyEeSV14RAmBOIBw" target="_qLXfQvAyEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_qPtMsfAyEeSV14RAmBOIBw" type="6005">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_qPtMsvAyEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_qPslofAyEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:ApplyAssociation" href="industrial_to_autosar_out.dsltrans#//@source.6/@hasRule.0/@apply/@association.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_qPtMsPAyEeSV14RAmBOIBw" points="[67, 11, 11, 1]$[-56, -11, -112, -21]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOTV0PBEEeSV14RAmBOIBw" type="4011" source="_pN5uVe9qEeSVBvdSRKU37A" target="_pN5uUO9qEeSVBvdSRKU37A">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GOT84PBEEeSV14RAmBOIBw" type="6006">
+      <styles xmi:type="notation:DescriptionStyle" xmi:id="_GOT84fBEEeSV14RAmBOIBw"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GOT84vBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOTV0fBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOTV0vBEEeSV14RAmBOIBw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOUj8PBEEeSV14RAmBOIBw" type="4003" source="_qCMVIPAyEeSV14RAmBOIBw" target="_Snk1EPBDEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GOVLAPBEEeSV14RAmBOIBw" type="6011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GOVLAfBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOUj8fBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveMatchAssociation" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@match.0/@association.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOUj8vBEEeSV14RAmBOIBw" points="[51, -8, -84, 0]$[97, 0, -38, 8]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOWZIPBEEeSV14RAmBOIBw" type="4003" source="_Snk1EPBDEeSV14RAmBOIBw" target="_VyvJgPBDEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GOWZI_BEEeSV14RAmBOIBw" type="6011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GOWZJPBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOWZIfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveMatchAssociation" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@match.0/@association.1"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOWZIvBEEeSV14RAmBOIBw" points="[39, 0, -114, 0]$[118, 0, -35, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOXAMPBEEeSV14RAmBOIBw" type="4005" source="_qCU4BfAyEeSV14RAmBOIBw" target="_qCU4APAyEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GOXAM_BEEeSV14RAmBOIBw" type="6005">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GOXnQPBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOXAMfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:ApplyAssociation" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@association.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOXAMvBEEeSV14RAmBOIBw" points="[-141, 0, 127, 0]$[-110, 0, 158, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOYOUPBEEeSV14RAmBOIBw" type="4005" source="_qCU4BfAyEeSV14RAmBOIBw" target="_GLi8wPBEEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GOYOU_BEEeSV14RAmBOIBw" type="6005">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GOYOVPBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOYOUfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:ApplyAssociation" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@association.1"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOYOUvBEEeSV14RAmBOIBw" points="[-141, 0, 100, 0]$[-56, 0, 185, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOY1YPBEEeSV14RAmBOIBw" type="4005" source="_GLi8wPBEEeSV14RAmBOIBw" target="_GLi8xfBEEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GOZccPBEEeSV14RAmBOIBw" type="6005">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GOZccfBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOY1YfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:ApplyAssociation" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.0/@apply/@association.2"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOY1YvBEEeSV14RAmBOIBw" points="[185, 0, -233, 0]$[245, 0, -173, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOaDgPBEEeSV14RAmBOIBw" type="4013" source="_GLVhYPBEEeSV14RAmBOIBw" target="_qCRNoPAyEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GOaDg_BEEeSV14RAmBOIBw" type="6008">
+      <styles xmi:type="notation:DescriptionStyle" xmi:id="_GOaDhPBEEeSV14RAmBOIBw"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GOaDhfBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOaDgfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOaDgvBEEeSV14RAmBOIBw" points="[-1, -20, 10, 204]$[-10, -202, 1, 22]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOaqkPBEEeSV14RAmBOIBw" type="4013" source="_GLeEQPBEEeSV14RAmBOIBw" target="_qCRNoPAyEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GObRoPBEEeSV14RAmBOIBw" type="6008">
+      <styles xmi:type="notation:DescriptionStyle" xmi:id="_GObRofBEEeSV14RAmBOIBw"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GObRovBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOaqkfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOaqkvBEEeSV14RAmBOIBw" points="[-20, -16, 275, 208]$[-265, -202, 30, 22]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOcfwPBEEeSV14RAmBOIBw" type="4013" source="_GLnOMPBEEeSV14RAmBOIBw" target="_qCRNoPAyEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GOcfw_BEEeSV14RAmBOIBw" type="6008">
+      <styles xmi:type="notation:DescriptionStyle" xmi:id="_GOcfxPBEEeSV14RAmBOIBw"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GOcfxfBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOcfwfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOcfwvBEEeSV14RAmBOIBw" points="[-1, -20, 10, 204]$[-10, -202, 1, 22]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOeU8PBEEeSV14RAmBOIBw" type="4013" source="_GLwYIPBEEeSV14RAmBOIBw" target="_qCRNoPAyEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GOeU8_BEEeSV14RAmBOIBw" type="6008">
+      <styles xmi:type="notation:DescriptionStyle" xmi:id="_GOeU9PBEEeSV14RAmBOIBw"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GOeU9fBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOeU8fBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOeU8vBEEeSV14RAmBOIBw" points="[-20, -11, 420, 213]$[-410, -209, 30, 15]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOfjEPBEEeSV14RAmBOIBw" type="4013" source="_GL6JIPBEEeSV14RAmBOIBw" target="_qCRNoPAyEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GOfjE_BEEeSV14RAmBOIBw" type="6008">
+      <styles xmi:type="notation:DescriptionStyle" xmi:id="_GOfjFPBEEeSV14RAmBOIBw"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GOfjFfBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOfjEfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOfjEvBEEeSV14RAmBOIBw" points="[-20, -6, 826, 218]$[-816, -217, 30, 7]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOgxMPBEEeSV14RAmBOIBw" type="4003" source="_GML1-PBEEeSV14RAmBOIBw" target="_GML18PBEEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GOgxM_BEEeSV14RAmBOIBw" type="6011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GOgxNPBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOgxMfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveMatchAssociation" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.1/@match.0/@association.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOgxMvBEEeSV14RAmBOIBw" points="[-51, 7, 100, -14]$[-111, 15, 40, -6]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOh_UPBEEeSV14RAmBOIBw" type="4003" source="_GML18PBEEeSV14RAmBOIBw" target="_GML2APBEEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GOh_U_BEEeSV14RAmBOIBw" type="6011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GOh_VPBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOh_UfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveMatchAssociation" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.1/@match.0/@association.1"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOh_UvBEEeSV14RAmBOIBw" points="[40, -3, -257, 18]$[262, -19, -35, 2]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOmQwPBEEeSV14RAmBOIBw" type="4013" source="_GMYDMPBEEeSV14RAmBOIBw" target="_GMNEEPBEEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GOmQw_BEEeSV14RAmBOIBw" type="6008">
+      <styles xmi:type="notation:DescriptionStyle" xmi:id="_GOmQxPBEEeSV14RAmBOIBw"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GOmQxfBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOmQwfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOmQwvBEEeSV14RAmBOIBw" points="[-1, -20, 10, 204]$[-10, -202, 1, 22]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOm30PBEEeSV14RAmBOIBw" type="4003" source="_GMew8PBEEeSV14RAmBOIBw" target="_GMew6PBEEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GOm30_BEEeSV14RAmBOIBw" type="6011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GOne4PBEEeSV14RAmBOIBw" x="-9" y="10"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOm30fBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveMatchAssociation" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.2/@match.0/@association.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOm30vBEEeSV14RAmBOIBw" points="[-51, 0, 99, 0]$[-111, 0, 39, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOoF8PBEEeSV14RAmBOIBw" type="4003" source="_GMew6PBEEeSV14RAmBOIBw" target="_GMew4PBEEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GOotAvBEEeSV14RAmBOIBw" type="6011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GOotA_BEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOotAPBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveMatchAssociation" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.2/@match.0/@association.1"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOotAfBEEeSV14RAmBOIBw" points="[-38, 5, 100, -16]$[-98, 15, 40, -6]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOpUEPBEEeSV14RAmBOIBw" type="4005" source="_GMrlMPBEEeSV14RAmBOIBw" target="_GMrlNfBEEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GOp7IvBEEeSV14RAmBOIBw" type="6005">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GOp7I_BEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOp7IPBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:ApplyAssociation" href="industrial_to_autosar_out.dsltrans#//@source.1/@hasRule.2/@apply/@association.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOp7IfBEEeSV14RAmBOIBw" points="[112, 0, -201, 0]$[172, 0, -141, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOqiMPBEEeSV14RAmBOIBw" type="4013" source="_GMwdsPBEEeSV14RAmBOIBw" target="_GMf_APBEEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GOqiM_BEEeSV14RAmBOIBw" type="6008">
+      <styles xmi:type="notation:DescriptionStyle" xmi:id="_GOqiNPBEEeSV14RAmBOIBw"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GOqiNfBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOqiMfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOqiMvBEEeSV14RAmBOIBw" points="[-20, -11, 265, 145]$[-255, -140, 30, 16]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOrwUPBEEeSV14RAmBOIBw" type="4011" source="_pN6VYe9qEeSVBvdSRKU37A" target="_pN5uVe9qEeSVBvdSRKU37A">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GOrwU_BEEeSV14RAmBOIBw" type="6006">
+      <styles xmi:type="notation:DescriptionStyle" xmi:id="_GOrwVPBEEeSV14RAmBOIBw"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GOrwVfBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOrwUfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOrwUvBEEeSV14RAmBOIBw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOsXYPBEEeSV14RAmBOIBw" type="4006" source="_qC0nQPAyEeSV14RAmBOIBw" target="_qDGUEPAyEeSV14RAmBOIBw">
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOsXYfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveBackwardRestriction" href="industrial_to_autosar_out.dsltrans#//@source.2/@hasRule.0/@backwards.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOsXYvBEEeSV14RAmBOIBw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOtlgPBEEeSV14RAmBOIBw" type="4006" source="_GNCKgPBEEeSV14RAmBOIBw" target="_qDGUFfAyEeSV14RAmBOIBw">
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOtlgfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveBackwardRestriction" href="industrial_to_autosar_out.dsltrans#//@source.2/@hasRule.0/@backwards.1"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOtlgvBEEeSV14RAmBOIBw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOuMkPBEEeSV14RAmBOIBw" type="4003" source="_qC0nQPAyEeSV14RAmBOIBw" target="_GNCKgPBEEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GOuMk_BEEeSV14RAmBOIBw" type="6011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GOuzoPBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOuMkfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveMatchAssociation" href="industrial_to_autosar_out.dsltrans#//@source.2/@hasRule.0/@match.0/@association.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOuMkvBEEeSV14RAmBOIBw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOvasPBEEeSV14RAmBOIBw" type="4005" source="_qDGUEPAyEeSV14RAmBOIBw" target="_qDGUFfAyEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GOvas_BEEeSV14RAmBOIBw" type="6005">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GOvatPBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOvasfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:ApplyAssociation" href="industrial_to_autosar_out.dsltrans#//@source.2/@hasRule.0/@apply/@association.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOvasvBEEeSV14RAmBOIBw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOwo0PBEEeSV14RAmBOIBw" type="4006" source="_GNI4MPBEEeSV14RAmBOIBw" target="_qGb78PAyEeSV14RAmBOIBw">
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOwo0fBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveBackwardRestriction" href="industrial_to_autosar_out.dsltrans#//@source.3/@hasRule.0/@backwards.1"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOwo0vBEEeSV14RAmBOIBw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOxP4PBEEeSV14RAmBOIBw" type="4003" source="_qGSyCPAyEeSV14RAmBOIBw" target="_GNI4MPBEEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GOxP4_BEEeSV14RAmBOIBw" type="6011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GOxP5PBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOxP4fBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveMatchAssociation" href="industrial_to_autosar_out.dsltrans#//@source.3/@hasRule.0/@match.0/@association.1"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOxP4vBEEeSV14RAmBOIBw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOyeAPBEEeSV14RAmBOIBw" type="4005" source="_qGb78PAyEeSV14RAmBOIBw" target="_qGbU4PAyEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GOzFEPBEEeSV14RAmBOIBw" type="6005">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GOzFEfBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOyeAfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:ApplyAssociation" href="industrial_to_autosar_out.dsltrans#//@source.3/@hasRule.0/@apply/@association.1"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOyeAvBEEeSV14RAmBOIBw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GOzsIPBEEeSV14RAmBOIBw" type="4011" source="_pN68cO9qEeSVBvdSRKU37A" target="_pN7jg-9qEeSVBvdSRKU37A">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GOzsI_BEEeSV14RAmBOIBw" type="6006">
+      <styles xmi:type="notation:DescriptionStyle" xmi:id="_GO0TMPBEEeSV14RAmBOIBw"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GO0TMfBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GOzsIfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GOzsIvBEEeSV14RAmBOIBw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GO06QPBEEeSV14RAmBOIBw" type="4003" source="_qG2yuPAyEeSV14RAmBOIBw" target="_GNZW4PBEEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GO06Q_BEEeSV14RAmBOIBw" type="6011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GO06RPBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GO06QfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveMatchAssociation" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.0/@match.0/@association.2"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GO06QvBEEeSV14RAmBOIBw" points="[-35, 2, 257, -19]$[-250, 18, 42, -3]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GO2IYPBEEeSV14RAmBOIBw" type="4003" source="_GNZW4PBEEeSV14RAmBOIBw" target="_GNZW6PBEEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GO2IY_BEEeSV14RAmBOIBw" type="6011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GO2IZPBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GO2IYfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveMatchAssociation" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.0/@match.0/@association.3"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GO2IYvBEEeSV14RAmBOIBw" points="[2, -43, 0, -32]$[0, 11, -2, 22]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GO3WgPBEEeSV14RAmBOIBw" type="4013" source="_GNoncPBEEeSV14RAmBOIBw" target="_GNbMEPBEEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GO3Wg_BEEeSV14RAmBOIBw" type="6008">
+      <styles xmi:type="notation:DescriptionStyle" xmi:id="_GO3WhPBEEeSV14RAmBOIBw"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GO3WhfBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GO3WgfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GO3WgvBEEeSV14RAmBOIBw" points="[0, 0, -39, -60]$[25, 38, -14, -22]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GO4koPBEEeSV14RAmBOIBw" type="4006" source="_GNs44PBEEeSV14RAmBOIBw" target="_GN5tMPBEEeSV14RAmBOIBw">
+    <styles xmi:type="notation:FontStyle" xmi:id="_GO4kofBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveBackwardRestriction" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.1/@backwards.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GO4kovBEEeSV14RAmBOIBw" points="[8, 22, -7, -19]$[-9, -22, -24, -63]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GO5LsPBEEeSV14RAmBOIBw" type="4003" source="_GNs44PBEEeSV14RAmBOIBw" target="_GNtf8PBEEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GO5ywPBEEeSV14RAmBOIBw" type="6011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GO5ywfBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GO5LsfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveMatchAssociation" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.1/@match.0/@association.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GO5LsvBEEeSV14RAmBOIBw" points="[-3, 22, 0, 12]$[0, -12, 3, -22]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GO6Z0PBEEeSV14RAmBOIBw" type="4003" source="_GNtf8PBEEeSV14RAmBOIBw" target="_GNtf-PBEEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GO6Z0_BEEeSV14RAmBOIBw" type="6011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GO6Z1PBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GO6Z0fBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveMatchAssociation" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.1/@match.0/@association.1"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GO6Z0vBEEeSV14RAmBOIBw" points="[7, 22, 0, 12]$[0, -12, -7, -22]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GPAgcPBEEeSV14RAmBOIBw" type="4003" source="_GNtf-PBEEeSV14RAmBOIBw" target="_GNtgAPBEEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GPAgc_BEEeSV14RAmBOIBw" type="6011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GPAgdPBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GPAgcfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveMatchAssociation" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.1/@match.0/@association.2"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GPAgcvBEEeSV14RAmBOIBw" points="[11, 22, -6, -9]$[-7, -12, -24, -43]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GPBukPBEEeSV14RAmBOIBw" type="4003" source="_GNtgAPBEEeSV14RAmBOIBw" target="_GNtgCPBEEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GPBuk_BEEeSV14RAmBOIBw" type="6011">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GPBulPBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GPBukfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveMatchAssociation" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.1/@match.0/@association.3"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GPBukvBEEeSV14RAmBOIBw" points="[2, -43, 0, -32]$[0, 11, -2, 22]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GPCVoPBEEeSV14RAmBOIBw" type="4005" source="_GN5tMPBEEeSV14RAmBOIBw" target="_GN5tNfBEEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GPCVo_BEEeSV14RAmBOIBw" type="6005">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GPC8sPBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GPCVofBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:ApplyAssociation" href="industrial_to_autosar_out.dsltrans#//@source.4/@hasRule.1/@apply/@association.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GPCVovBEEeSV14RAmBOIBw" points="[2, 63, 0, 14]$[0, -53, -2, -102]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GPDjwPBEEeSV14RAmBOIBw" type="4013" source="_GN9-oPBEEeSV14RAmBOIBw" target="_GNwjQPBEEeSV14RAmBOIBw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GPDjw_BEEeSV14RAmBOIBw" type="6008">
+      <styles xmi:type="notation:DescriptionStyle" xmi:id="_GPDjxPBEEeSV14RAmBOIBw"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GPDjxfBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GPDjwfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GPDjwvBEEeSV14RAmBOIBw" points="[9, -20, 0, 1]$[0, 1, -9, 22]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GPIcQPBEEeSV14RAmBOIBw" type="4011" source="_pN68ee9qEeSVBvdSRKU37A" target="_pN6Vau9qEeSVBvdSRKU37A">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GPIcQ_BEEeSV14RAmBOIBw" type="6006">
+      <styles xmi:type="notation:DescriptionStyle" xmi:id="_GPIcRPBEEeSV14RAmBOIBw"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GPIcRfBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GPIcQfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GPIcQvBEEeSV14RAmBOIBw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GPJqYPBEEeSV14RAmBOIBw" type="4006" source="_qHlLcvAyEeSV14RAmBOIBw" target="_qIPSwPAyEeSV14RAmBOIBw">
+    <styles xmi:type="notation:FontStyle" xmi:id="_GPJqYfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveBackwardRestriction" href="industrial_to_autosar_out.dsltrans#//@source.5/@hasRule.0/@backwards.1"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GPJqYvBEEeSV14RAmBOIBw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GPKRcPBEEeSV14RAmBOIBw" type="4011" source="_pN7jg-9qEeSVBvdSRKU37A" target="_pN68ee9qEeSVBvdSRKU37A">
+    <children xmi:type="notation:DecorationNode" xmi:id="_GPKRc_BEEeSV14RAmBOIBw" type="6006">
+      <styles xmi:type="notation:DescriptionStyle" xmi:id="_GPKRdPBEEeSV14RAmBOIBw"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_GPKRdfBEEeSV14RAmBOIBw" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_GPKRcfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GPKRcvBEEeSV14RAmBOIBw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GPLfkPBEEeSV14RAmBOIBw" type="4006" source="_qLPjcPAyEeSV14RAmBOIBw" target="_qLXfQvAyEeSV14RAmBOIBw">
+    <styles xmi:type="notation:FontStyle" xmi:id="_GPLfkfBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveBackwardRestriction" href="industrial_to_autosar_out.dsltrans#//@source.6/@hasRule.0/@backwards.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GPLfkvBEEeSV14RAmBOIBw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_GPOi4PBEEeSV14RAmBOIBw" type="4006" source="_qLQKhfAyEeSV14RAmBOIBw" target="_qLW4MPAyEeSV14RAmBOIBw">
+    <styles xmi:type="notation:FontStyle" xmi:id="_GPOi4fBEEeSV14RAmBOIBw" fontName="Ubuntu"/>
+    <element xmi:type="dsltrans:PositiveBackwardRestriction" href="industrial_to_autosar_out.dsltrans#//@source.6/@hasRule.0/@backwards.1"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GPOi4vBEEeSV14RAmBOIBw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+</notation:Diagram>

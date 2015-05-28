@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:syvolt="http://syvolt/2.0" xmi:id="_cTl6MAVGEeWaYr1xsC5qxg" type="Syvolt" measurementUnit="Pixel">
+  <children xmi:type="notation:Shape" xmi:id="_dMml0AVGEeWaYr1xsC5qxg" type="2004" fontName="Ubuntu">
+    <children xmi:type="notation:DecorationNode" xmi:id="_dMnz8AVGEeWaYr1xsC5qxg" type="5019"/>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_dMnz8QVGEeWaYr1xsC5qxg" type="7027">
+      <children xmi:type="notation:Shape" xmi:id="_l5UeUAVGEeWaYr1xsC5qxg" type="3037" fontName="Ubuntu">
+        <children xmi:type="notation:BasicCompartment" xmi:id="_l5UeUwVGEeWaYr1xsC5qxg" type="7029">
+          <children xmi:type="notation:Node" xmi:id="_nhnR0AVGEeWaYr1xsC5qxg" type="3031">
+            <children xmi:type="notation:DecorationNode" xmi:id="_nhn44AVGEeWaYr1xsC5qxg" type="5014"/>
+            <children xmi:type="notation:BasicCompartment" xmi:id="_nhn44QVGEeWaYr1xsC5qxg" type="7019"/>
+            <styles xmi:type="notation:DescriptionStyle" xmi:id="_nhnR0QVGEeWaYr1xsC5qxg"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_nhnR0gVGEeWaYr1xsC5qxg" fontName="Ubuntu"/>
+            <styles xmi:type="notation:FillStyle" xmi:id="_nhnR0wVGEeWaYr1xsC5qxg"/>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_nhnR1AVGEeWaYr1xsC5qxg"/>
+            <element xmi:type="syvolt:AnyMatchClass" href="trivially_holds.syvolt#//@hasProperty.0/@match.0/@class.0"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_nhnR1QVGEeWaYr1xsC5qxg" x="8" y="12"/>
+          </children>
+        </children>
+        <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_l5UeUQVGEeWaYr1xsC5qxg"/>
+        <element xmi:type="syvolt:PreCondition" href="trivially_holds.syvolt#//@hasProperty.0/@match.0"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_l5UeUgVGEeWaYr1xsC5qxg" x="16"/>
+      </children>
+    </children>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_dMnz8gVGEeWaYr1xsC5qxg" type="7028">
+      <children xmi:type="notation:Node" xmi:id="_mcRaYAVGEeWaYr1xsC5qxg" type="3038">
+        <children xmi:type="notation:BasicCompartment" xmi:id="_mcSBcAVGEeWaYr1xsC5qxg" type="7030">
+          <children xmi:type="notation:Shape" xmi:id="_5GVs0AVGEeWaYr1xsC5qxg" type="3034" fontName="Ubuntu">
+            <children xmi:type="notation:DecorationNode" xmi:id="_5GWT4AVGEeWaYr1xsC5qxg" type="5016"/>
+            <children xmi:type="notation:BasicCompartment" xmi:id="_5GWT4QVGEeWaYr1xsC5qxg" type="7022"/>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_5GVs0QVGEeWaYr1xsC5qxg"/>
+            <element xmi:type="syvolt:ApplyClass" href="trivially_holds.syvolt#//@hasProperty.0/@apply/@class.0"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_5GVs0gVGEeWaYr1xsC5qxg" x="8" y="13"/>
+          </children>
+        </children>
+        <styles xmi:type="notation:DescriptionStyle" xmi:id="_mcRaYQVGEeWaYr1xsC5qxg"/>
+        <styles xmi:type="notation:FontStyle" xmi:id="_mcRaYgVGEeWaYr1xsC5qxg" fontName="Ubuntu"/>
+        <styles xmi:type="notation:LineStyle" xmi:id="_mcRaYwVGEeWaYr1xsC5qxg"/>
+        <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_mcRaZAVGEeWaYr1xsC5qxg"/>
+        <element xmi:type="syvolt:PostCondition" href="trivially_holds.syvolt#//@hasProperty.0/@apply"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_mcRaZQVGEeWaYr1xsC5qxg" x="18" y="-1"/>
+      </children>
+    </children>
+    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_dMml0QVGEeWaYr1xsC5qxg"/>
+    <element xmi:type="syvolt:AtomicContract" href="trivially_holds.syvolt#//@hasProperty.0"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dMml0gVGEeWaYr1xsC5qxg" x="323" y="109"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_cTl6MQVGEeWaYr1xsC5qxg"/>
+  <element xmi:type="syvolt:TransformationModel" href="trivially_holds.syvolt#/"/>
+  <edges xmi:type="notation:Connector" xmi:id="_8PhrUAVGEeWaYr1xsC5qxg" type="4013" source="_nhnR0AVGEeWaYr1xsC5qxg" target="_5GVs0AVGEeWaYr1xsC5qxg">
+    <styles xmi:type="notation:FontStyle" xmi:id="_8PhrUQVGEeWaYr1xsC5qxg" fontName="Ubuntu"/>
+    <element xmi:type="syvolt:Trace" href="trivially_holds.syvolt#//@hasProperty.0/@backwards.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_8PhrUgVGEeWaYr1xsC5qxg" points="[10, 40, -17, -61]$[23, 92, -4, -9]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_8PkuoAVGEeWaYr1xsC5qxg" id="(0.2543859649122807,0.09090909090909091)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_8PkuoQVGEeWaYr1xsC5qxg" id="(0.4576271186440678,0.20454545454545456)"/>
+  </edges>
+</notation:Diagram>

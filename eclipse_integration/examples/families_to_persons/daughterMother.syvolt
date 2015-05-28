@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syvolt:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:syvolt="http://syvolt/2.0">
+  <hasProperty name="daughterMother">
+    <match>
+      <class xsi:type="syvolt:AnyMatchClass" className="Family" packageName="household"/>
+      <class xsi:type="syvolt:AnyMatchClass" className="Member" packageName="household"/>
+      <class xsi:type="syvolt:AnyMatchClass" className="Member" packageName="household"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="mother" source="//@hasProperty.0/@match.0/@class.0" target="//@hasProperty.0/@match.0/@class.2"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="daughter" source="//@hasProperty.0/@match.0/@class.0" target="//@hasProperty.0/@match.0/@class.1"/>
+    </match>
+    <apply>
+      <class className="Man" packageName="community"/>
+    </apply>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.0" sourceClass="//@hasProperty.0/@match.0/@class.0"/>
+  </hasProperty>
+  <specification value="daughterMother"/>
+</syvolt:TransformationModel>
