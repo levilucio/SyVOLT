@@ -2,6 +2,7 @@
 import re
 import sys
 import os
+from t_core.messages import Packet
 from t_core.matcher import Matcher
 from t_core.rewriter import Rewriter
 from core.himesis_utils import *
@@ -11,6 +12,8 @@ import uuid
 
 from core.himesis import *
 from itertools import combinations
+
+from itertools import permutations
 
 '''
 
@@ -1273,7 +1276,7 @@ class PyRamify:
 #            print "---------------- " + str(eq_num) + " -----------------------> Number of attribute nodes: " + str(len(equation_attrib_nodes))
             
             # equation is between an attribute of the match model and an attribute of the apply model
-            if len(equation_attrib_nodes) == 2:
+            if len(equation_attrib_nodes) >= 2:
                 nodes_to_remove += flood_find_nodes(eq_num, graph, None, ["hasAttribute_S", "hasAttribute_T"])
 #                print flood_find_nodes(eq_num, graph, None, ["hasAttribute_S", "hasAttribute_T"])
             # check if the equation is part of the elements of the apply model and remove it in that case
@@ -1573,7 +1576,30 @@ class PyRamify:
 
 
     #=========================
-
+    
+    # calculate the partial order induced by rule match subsumption for all rules in the transformation.
+    # 
+    def calculateRulePartialOrder(self, rules, matchRulePatterns):
+        
+        rulepairs = []
+        rulepairs.append(list(permutations(rules,2)))       
+        ruleContainment = []
+        ruleContainment.append({})
+        for pair in rulepairs:
+            p = Packet()
+            p.graph = pair[1]
+            p = matchRulePatterns[pair[0].name][0].packet_in(p)
+            if matchRulePatterns[pair[0].name][0].is_success:
+                # the partial order may branch, so we need lists to store the smaller elements
+                if pair[1] not in ruleContainment.keys():
+                    ruleContainment[pair[1]] = [pair[0]]
+                else:
+                    ruleContainment[pair[1]].append(pair[0])                     
+    
+        if self.verbosity >= 2:
+            print "Subsumption order between rules for all layers:"                   
+            print ruleContainment
+            print "\n"
 
 
     #ramify a whole directory
@@ -1617,6 +1643,8 @@ class PyRamify:
             rule4 = load_class(dir_name + "/" + f)
             matchRulePattern = self.get_match_pattern(rule4)
             matchRulePatterns.update(matchRulePattern)
+            
+            
 
             # fresh rule for the rule combinators
             rule5 = load_class(dir_name + "/" + f)
