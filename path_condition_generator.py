@@ -110,24 +110,6 @@ def do_cprofile(func):
 
 
 
-
-
-
-##Backward Matchers -start
-# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnectPPortPrototype_Back_CompositionType2ECULHS import HConnectPPortPrototype_Back_CompositionType2ECULHS
-# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnectRPortPrototype_Back_CompositionType2ECULHS import HConnectRPortPrototype_Back_CompositionType2ECULHS
-# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnECU2VirtualDevice_Back_EcuInst2ECULHS import HConnECU2VirtualDevice_Back_EcuInst2ECULHS
-# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnECU2VirtualDevice_Back_STEM2VirtualDeviceLHS import HConnECU2VirtualDevice_Back_STEM2VirtualDeviceLHS
-# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnECU2VirtualDevice_Back_SystemMapping2ECULHS import HConnECU2VirtualDevice_Back_SystemMapping2ECULHS
-# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnVirtualDevice2Distributable_Back_ComponentPrototype2DistributableLHS import HConnVirtualDevice2Distributable_Back_ComponentPrototype2DistributableLHS
-# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnVirtualDevice2Distributable_Back_CompositionType2ECULHS import HConnVirtualDevice2Distributable_Back_CompositionType2ECULHS
-# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnVirtualDevice2Distributable_Back_SCTEMc2DistributableLHS import HConnVirtualDevice2Distributable_Back_SCTEMc2DistributableLHS
-# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnVirtualDevice2Distributable_Back_STEM2VirtualDeviceLHS import HConnVirtualDevice2Distributable_Back_STEM2VirtualDeviceLHS
-##Backward Matchers -end
-
-
-
-
 class PathConditionGenerator(object):
     """
     Builds the set of path conditions for a transformation
@@ -342,40 +324,40 @@ class PathConditionGenerator(object):
         # now build the partial order of rules as a dictionary per layer
         # the keys are rules that are larger than the elements in the order
 
-        layerpairs = []
+#         layerpairs = []
+# 
+#         for layerIndex in range(0,len(self.transformation)):
+#             layerpairs.append(list(permutations(self.transformation[layerIndex],2)))
+#                
+#         ruleContainment = []
+#          
+#         for layerIndex in range(0,len(layerpairs)):
+#             ruleContainment.append({})
+#             for pair in layerpairs[layerIndex]:
+#                 p = Packet()
+#                 p.graph = pair[1]
+#                 p = self.matchRulePatterns[pair[0].name][0].packet_in(p)
+#                 if self.matchRulePatterns[pair[0].name][0].is_success:
+#                     # the partial order may branch, so we need lists to store the smaller elements
+#                     if pair[1] not in ruleContainment[layerIndex].keys():
+#                         ruleContainment[layerIndex][pair[1]] = [pair[0]]
+#                     else:
+#                         ruleContainment[layerIndex][pair[1]].append(pair[0])                     
+# 
+#         self.ruleContainment = ruleContainment
+#         
+#         if self.verbosity >= 2:
+#             print "Subsumption order between rules for all layers:"                   
+#             print self.ruleContainment
+#             print "\n"
 
-        for layerIndex in range(0,len(self.transformation)):
-            layerpairs.append(list(permutations(self.transformation[layerIndex],2)))
-               
-        ruleContainment = []
-         
-        for layerIndex in range(0,len(layerpairs)):
-            ruleContainment.append({})
-            for pair in layerpairs[layerIndex]:
-                p = Packet()
-                p.graph = pair[1]
-                p = self.matchRulePatterns[pair[0].name][0].packet_in(p)
-                if self.matchRulePatterns[pair[0].name][0].is_success:
-                    # the partial order may branch, so we need lists to store the smaller elements
-                    if pair[1] not in ruleContainment[layerIndex].keys():
-                        ruleContainment[layerIndex][pair[1]] = [pair[0]]
-                    else:
-                        ruleContainment[layerIndex][pair[1]].append(pair[0])                     
-
-        self.ruleContainment = ruleContainment
-        
-        if self.verbosity >= 2:
-            print "Subsumption order between rules for all layers:"                   
-            print self.ruleContainment
-            print "\n"
-
-        def get_subsumed_rules(rules, layer):
-            requiredRules = []
-            for rule in rules:
-                if rule in set(self.ruleContainment[layer].keys()):
-                    requiredRules = self.ruleContainment[layer][rule]
-                    requiredRules.extend(get_subsumed_rules(self.ruleContainment[layer][rule], layer))
-            return requiredRules
+#         def get_subsumed_rules(rules, layer):
+#             requiredRules = []
+#             for rule in rules:
+#                 if rule in set(self.ruleContainment[layer].keys()):
+#                     requiredRules = self.ruleContainment[layer][rule]
+#                     requiredRules.extend(get_subsumed_rules(self.ruleContainment[layer][rule], layer))
+#             return requiredRules
         
         # now go through all the layers and merge rules with all the rules that they subsume.
         # rules that subsume others become combined with them and their names have to be combined too, separated by underscores.
@@ -476,9 +458,6 @@ class PathConditionGenerator(object):
 
 
                 self.transformation[layerIndex][ruleIndex] = clean_graph(p.graph)
-
-                if self.draw_svg:
-                    graph_to_dot("traced_" + self.transformation[layerIndex][ruleIndex].name , self.transformation[layerIndex][ruleIndex])
 
 #         print "----------------------------"
 #         print "Rule Combinators: "

@@ -149,6 +149,9 @@ class PyRamify:
                 elif "Constant" in node["mm__"] and attrib == "MT_pre__value":
                     node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
                     
+                elif "directLink" in node["mm__"] and attrib == "MT_pre__associationType":
+                    node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
+                    
                 elif "Constant" in node["mm__"] and attrib == "MT_post__value":
                     node[attrib] = "return '" + node[attrib] + "'"
 
@@ -290,6 +293,9 @@ class PyRamify:
                     node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
                     
                 elif "Constant" in node["mm__"] and attrib == "MT_pre__value":
+                    node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
+                    
+                elif "directLink" in node["mm__"] and attrib == "MT_pre__associationType":
                     node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
                     
                 elif "Constant" in node["mm__"] and attrib == "MT_post__value":
@@ -1369,14 +1375,14 @@ class PyRamify:
 
             linked_nodes.append([bl_attached[0], bl_attached[1]])
 
-        if rewriter.name == "HConnectPPortPrototypeHConnectRPortPrototype":        
-            for match_node in match_attached:
-                if rewriter.vs[match_node]["mm__"] in ["MatchModel", "match_contains"]:
-                    continue   
-         
-            for apply_node in apply_attached:
-                if rewriter.vs[apply_node]["mm__"] in ["ApplyModel", "apply_contains"]:
-                    continue   
+#         if rewriter.name == "HConnectPPortPrototypeHConnectRPortPrototype":        
+#             for match_node in match_attached:
+#                 if rewriter.vs[match_node]["mm__"] in ["MatchModel", "match_contains"]:
+#                     continue   
+#          
+#             for apply_node in apply_attached:
+#                 if rewriter.vs[apply_node]["mm__"] in ["ApplyModel", "apply_contains"]:
+#                     continue   
         
         for match_node in match_attached:
 
@@ -1579,12 +1585,16 @@ class PyRamify:
     
     # calculate the partial order induced by rule match subsumption for all rules in the transformation.
     # 
-    def calculateRulePartialOrder(self, rules, matchRulePatterns):
+    def calculate_rule_subsumption(self, rules, matchRulePatterns):     
         
+        ruleObjects = []
+        ruleKeys = rules.keys()
+        for key in ruleKeys:
+            ruleObjects.append(rules[key])
+            
         rulepairs = []
-        rulepairs.append(list(permutations(rules,2)))       
-        ruleContainment = []
-        ruleContainment.append({})
+        rulepairs = list(permutations(ruleObjects,2))
+        ruleContainment = {}
         for pair in rulepairs:
             p = Packet()
             p.graph = pair[1]
@@ -1595,11 +1605,8 @@ class PyRamify:
                     ruleContainment[pair[1]] = [pair[0]]
                 else:
                     ruleContainment[pair[1]].append(pair[0])                     
-    
-        if self.verbosity >= 2:
-            print "Subsumption order between rules for all layers:"                   
-            print ruleContainment
-            print "\n"
+            
+        return ruleContainment
 
 
     #ramify a whole directory
@@ -1643,13 +1650,21 @@ class PyRamify:
             rule4 = load_class(dir_name + "/" + f)
             matchRulePattern = self.get_match_pattern(rule4)
             matchRulePatterns.update(matchRulePattern)
-            
-            
 
             # fresh rule for the rule combinators
             rule5 = load_class(dir_name + "/" + f)
             rule_combinator = self.get_rule_combinators(rule5)
             ruleCombinators.update(rule_combinator)
+            
+        ruleSubsumption = self.calculate_rule_subsumption(rules,matchRulePatterns)
+            
+#         if self.verbosity >= 2:
+#             print "Subsumption order between rules for all layers:"                   
+#             print ruleSubsumption
+#             print "\n"
+
+        print "Subsumption order between rules for all layers:"    
+        print ruleSubsumption
 
         print("Finished PyRamify")
         print("==================================\n")

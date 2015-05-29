@@ -6,6 +6,11 @@ var lastLayerTreated = "";
 var inputMM = "";
 var outputMM = "";
 %]
+
+#-----------------------------------------------------------------------------
+# Auto generated from the DSLTrans transformation and the properties to prove
+#-----------------------------------------------------------------------------
+
 import time
 
 from path_condition_generator import PathConditionGenerator
@@ -167,10 +172,10 @@ class Prover():
         [%}%]       
 
         ts0 = time.time()
-         
         [%
 	    var atomicContractIndex = 0;
         for (ac in inputProperties!AtomicContract) { %]
+        
         c[%=atomicContractIndex%] = AtomicStateProperty(H[%=ac.Name%]_IsolatedLHS(), H[%=ac.Name%]_ConnectedLHS(), H[%=ac.Name%]_CompleteLHS())
         result_c[%=atomicContractIndex%] = StateProperty.verifyCompositeStateProperty(pc_set, c[%=atomicContractIndex%])
         if len(result_c[%=atomicContractIndex%]) == 0:

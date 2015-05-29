@@ -93,6 +93,10 @@ def graph_to_dot(name, g, verbosity = 0):
             fillcolor="lightgray"
             
         elif node_type in ['MatchModel', 'MT_pre__MatchModel', 'MT_post__MatchModel']:
+            try:
+                vattr += "\\n Rule Name = " + str(v['rulename'])
+            except KeyError:
+                pass
             fillcolor="#E15C34"
             
         elif node_type in ['match_contains', 'MT_pre__match_contains', 'MT_post__match_contains']:
