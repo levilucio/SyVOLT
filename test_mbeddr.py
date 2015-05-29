@@ -3,8 +3,6 @@ Created on 2015-02-14
 
 @author: levi
 '''
-import pyximport; pyximport.install()
-import compile
 
 import unittest
 import time
