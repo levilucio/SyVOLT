@@ -584,9 +584,11 @@ class PathConditionGenerator(object):
 
         print("CPU Count: " + str(cpu_count))
 
-        do_parallel = False
+        do_parallel = True
 
         pc_dict = {}#manager.dict()
+
+
 
 
 
@@ -611,23 +613,32 @@ class PathConditionGenerator(object):
 
             if do_parallel:
 
+                pc_queue = manager.Queue()
+
+                for name in currentpathConditionSet:
+                    pc_queue.put(name)
+
+                for i in range(cpu_count):
+                    pc_queue.put("STOP")
+
                 #sort_time = time.time()
-                currentpathConditionSet = sorted(currentpathConditionSet)
+                #currentpathConditionSet = sorted(currentpathConditionSet)
 
                 #print("Time to sort: " + str(time.time() - sort_time))
 
                 #name_dict = manager.dict()
 
-                chunkSize = int(math.ceil(pathConSetLength / cpu_count))
+                #print("After ceil: " + str(math.ceil(pathConSetLength / float(cpu_count))))
+                #chunkSize = int(math.ceil(pathConSetLength / float(cpu_count)))
 
-                if chunkSize < 16:
-                    chunkSize = 16
+                #print("Path Cond Set Size: " + str(pathConSetLength))
+                #print("Chunksize: " + str(chunkSize))
 
                 workers = []
 
                 #chunk_time = time.time()
                 #divide the path conditions up into little pieces
-                pc_chunks = self.chunks(currentpathConditionSet, chunkSize)
+                #pc_chunks = self.chunks(currentpathConditionSet, chunkSize)
 
                 #print("Time to chunk: " + str(time.time() - chunk_time))
 
@@ -635,13 +646,12 @@ class PathConditionGenerator(object):
 
 
                 #initialize the workers
-                print("\nNumber of chunks: " + str(len(pc_chunks)))
-                for i in range(len(pc_chunks)):
+                for i in range(cpu_count):
                     #worker_time = time.time()
 
                     #print("Chunk size: " + str(len(pc_chunks[i])))
                     new_worker = path_condition_generator_worker(self.verbosity, layer*1000+i)
-                    new_worker.currentPathConditionSet = pc_chunks[i]
+                    new_worker.currentPathConditionSet = pc_queue
 
                     new_worker.attributeEquationEvaluator = self.attributeEquationEvaluator
 
@@ -669,7 +679,7 @@ class PathConditionGenerator(object):
                     #print("Time to initialize worker: " + str(time.time() - worker_time))
 
 
-                worker_start_time = time.time()
+                #worker_start_time = time.time()
                 for worker in workers:
                     worker.start()
 
@@ -680,7 +690,7 @@ class PathConditionGenerator(object):
                     worker.join()
 
 
-                result_time = time.time()
+                #result_time = time.time()
 
                 currentpathConditionSet = []
 
@@ -692,9 +702,9 @@ class PathConditionGenerator(object):
 
                     name_dict.update(r[2])
 
-                print("Time to collect results: " + str(time.time() - result_time ))
+                #print("Time to collect results: " + str(time.time() - result_time ))
 
-                change_names_time = time.time()
+                #change_names_time = time.time()
                 if len(name_dict.keys()) > 0:
                     for i in range(len(currentpathConditionSet)):
                         try:
@@ -707,7 +717,7 @@ class PathConditionGenerator(object):
 
 
                 #print("PC Dict Keys: " + str(pc_dict.keys()))
-                print("Time to change names: " + str(time.time() - change_names_time))
+                #print("Time to change names: " + str(time.time() - change_names_time))
                 #print("PC Length: " + str(len(currentpathConditionSet)))
 
 
