@@ -35,24 +35,20 @@ class path_condition_generator_worker(Process):
 
         #print("Running thread")
 
-        #pathConSetLength = len(self.currentPathConditionSet)
+        pathConSetLength = len(self.currentPathConditionSet)
 
         newPathConditionSet = []
         new_pc_dict = {}
 
         name_dict = {}
 
-        #for pathConditionIndex in xrange(pathConSetLength):
-        while True:
+        for pathConditionIndex in xrange(pathConSetLength):
+        #while True:
 
-            #pc_name = self.currentPathConditionSet[pathConditionIndex]
+            pc_name = self.currentPathConditionSet[pathConditionIndex]
 
-            pc_name = self.currentPathConditionSet.get()
 
-            if pc_name == "STOP":
-                break
-
-            newPathConditionSet.append(pc_name)
+            #newPathConditionSet.append(pc_name)
 
             pc = expand_graph(self.pc_dict[pc_name])
             #print_graph(pc)
@@ -319,8 +315,8 @@ class path_condition_generator_worker(Process):
 
         print("Thread finished")
 
-        #self.currentPathConditionSet.extend(newPathConditionSet)
-        self.results_queue.put((newPathConditionSet, new_pc_dict, name_dict))
+        self.currentPathConditionSet.extend(newPathConditionSet)
+        self.results_queue.put((self.currentPathConditionSet, new_pc_dict, name_dict))
 
 
 

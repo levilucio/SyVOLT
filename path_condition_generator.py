@@ -27,9 +27,10 @@ from PyRamify import PyRamify
 from PropertyProverTester import PropertyProverTester
 
 import multiprocessing
-from multiprocessing import Manager
+from multiprocessing import Manager, Queue
 from path_condition_generator_worker import *
 
+from random import shuffle
 
 #profile memory
 global global_profile_memory
@@ -613,32 +614,24 @@ class PathConditionGenerator(object):
 
             if do_parallel:
 
-                pc_queue = manager.Queue()
-
-                for name in currentpathConditionSet:
-                    pc_queue.put(name)
-
-                for i in range(cpu_count):
-                    pc_queue.put("STOP")
-
                 #sort_time = time.time()
-                #currentpathConditionSet = sorted(currentpathConditionSet)
+                shuffle(currentpathConditionSet)
 
                 #print("Time to sort: " + str(time.time() - sort_time))
 
                 #name_dict = manager.dict()
 
                 #print("After ceil: " + str(math.ceil(pathConSetLength / float(cpu_count))))
-                #chunkSize = int(math.ceil(pathConSetLength / float(cpu_count)))
+                chunkSize = int(math.ceil(pathConSetLength / float(cpu_count)))
 
-                #print("Path Cond Set Size: " + str(pathConSetLength))
-                #print("Chunksize: " + str(chunkSize))
+                print("Path Cond Set Size: " + str(pathConSetLength))
+                print("Chunksize: " + str(chunkSize))
 
                 workers = []
 
                 #chunk_time = time.time()
                 #divide the path conditions up into little pieces
-                #pc_chunks = self.chunks(currentpathConditionSet, chunkSize)
+                pc_chunks = self.chunks(currentpathConditionSet, chunkSize)
 
                 #print("Time to chunk: " + str(time.time() - chunk_time))
 
@@ -646,12 +639,12 @@ class PathConditionGenerator(object):
 
 
                 #initialize the workers
-                for i in range(cpu_count):
+                for i in range(len(pc_chunks)):#range(cpu_count):
                     #worker_time = time.time()
 
                     #print("Chunk size: " + str(len(pc_chunks[i])))
                     new_worker = path_condition_generator_worker(self.verbosity, layer*1000+i)
-                    new_worker.currentPathConditionSet = pc_queue
+                    new_worker.currentPathConditionSet = pc_chunks[i]#pc_queue
 
                     new_worker.attributeEquationEvaluator = self.attributeEquationEvaluator
 
