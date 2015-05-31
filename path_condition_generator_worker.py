@@ -91,7 +91,7 @@ class path_condition_generator_worker(Process):
 
 
                     num = 0
-                    for child_pc_index in range(len(childrenPathConditions)):
+                    for child_pc_index in xrange(len(childrenPathConditions)):
 
                         child_pc_name = childrenPathConditions[child_pc_index]
 
@@ -151,7 +151,7 @@ class path_condition_generator_worker(Process):
                         if self.verbosity >= 2 : print "Case 3: Rule has dependencies that may or will execute"
 
                         # go through all LHS (matchers) in rule combinators
-                        for combinator in range(len(self.ruleCombinators[rule_name])):
+                        for combinator in xrange(len(self.ruleCombinators[rule_name])):
 
                             combinatorMatcher = self.ruleCombinators[rule_name][combinator][0]
 
@@ -199,7 +199,7 @@ class path_condition_generator_worker(Process):
 
                                 #go through all the children of this path condition
                                 num = 0
-                                for child_pc_index in range(len(childrenPathConditions)):
+                                for child_pc_index in xrange(len(childrenPathConditions)):
 
                                     #get the name of the child
                                     child_pc_name = childrenPathConditions[child_pc_index]

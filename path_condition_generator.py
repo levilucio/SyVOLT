@@ -13,6 +13,8 @@ from core.himesis_utils import graph_to_dot
 from core.himesis_utils import clean_graph
 from core.himesis_utils import print_graph
 
+#from core.himesis import Himesis
+
 import math
 import time
 
@@ -554,8 +556,6 @@ class PathConditionGenerator(object):
         
         http://msdl.cs.mcgill.ca/people/levi/30_publications/files/A_Technique_for_Symbolically_Verifying_Properties_of_Model_Transf.pdf
         """
-
-
 
 
         self.num_path_conditions = 0

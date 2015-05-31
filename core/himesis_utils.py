@@ -19,7 +19,6 @@ import uuid
 import cPickle as pickle
 import igraph
 
-
 from copy import deepcopy
 
 
@@ -283,7 +282,10 @@ def draw_graphs(title, g_dir):
 
             graph_to_dot(title +"_" + name, graph)
 
+
 import gzip
+import himesis as Himesis
+
 use_pickle = False
 
 # shrink a graph into an array
@@ -302,29 +304,26 @@ def shrink_graph(graph):
 
 #expand the graph from an array
 def expand_graph(small_value):
-    from himesis import Himesis
+
 
     if use_pickle:
         f = gzip.open(small_value, "rb")
-        arr = pickle.load(f)
+        small_value = pickle.load(f)
         f.close()
-    else:
-        arr = small_value
 
-    igraph_dict, name, is_compiled = arr
+    name, igraph_dict = small_value
 
     #constructor = igraph_dict[0]
     vcount, edgelist, is_directed, gattrs, vattrs, eattrs = igraph_dict[1]
-    dict = igraph_dict[2]
 
     graph = igraph.Graph(n=vcount, edges=edgelist, directed=is_directed, graph_attrs=gattrs, vertex_attrs=vattrs, edge_attrs=eattrs)
-    graph.__dict__ = dict
+    graph.__dict__ = igraph_dict[2]
 
 
     graph.name = name
-    graph.is_compiled = is_compiled
+    #graph.is_compiled = is_compiled
 
-    graph.__class__ = Himesis
+    graph.__class__ = Himesis.Himesis
 
     return graph
 
