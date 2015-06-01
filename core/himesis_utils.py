@@ -286,7 +286,7 @@ def draw_graphs(title, g_dir):
 import gzip
 import himesis as Himesis
 
-use_pickle = False
+use_pickle = True
 
 # shrink a graph into an array
 def shrink_graph(graph):
@@ -311,16 +311,17 @@ def expand_graph(small_value):
         small_value = pickle.load(f)
         f.close()
 
-    name, igraph_dict = small_value
+    #igraph_dict = small_value
 
     #constructor = igraph_dict[0]
-    vcount, edgelist, is_directed, gattrs, vattrs, eattrs = igraph_dict[1]
+    vcount, edgelist, is_directed, gattrs, vattrs, eattrs = small_value[1]
 
     graph = igraph.Graph(n=vcount, edges=edgelist, directed=is_directed, graph_attrs=gattrs, vertex_attrs=vattrs, edge_attrs=eattrs)
-    graph.__dict__ = igraph_dict[2]
+    graph.__dict__ = small_value[2]
 
 
-    graph.name = name
+    #graph.name = name
+    #print(graph.name)
     #graph.is_compiled = is_compiled
 
     graph.__class__ = Himesis.Himesis

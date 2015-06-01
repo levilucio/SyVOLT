@@ -66,10 +66,13 @@ class Himesis(ig.Graph):
 
 
     def __reduce__(self):
-        return [self.name, ig.Graph.__reduce__(self)]
+        return ig.Graph.__reduce__(self)
+
+        #remove constructor
+        #return (value[1], value[2])
         #dict = [igraph_reduce, self.name, self.is_compiled]
 
-        #return dict
+        #return value
 
     def __reduce__ex(self, protocol):
         return self.__reduce__()
