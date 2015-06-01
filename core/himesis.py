@@ -47,9 +47,9 @@ class Himesis(ig.Graph):
         # Set universally unique identifiers for the graph and each node
         if not hasattr(self, 'is_compiled'):
             self.is_compiled = False    # this instance is not yet compiled
-            self[Himesis.Constants.GUID] = nprnd.randint(9223372036854775806)
+            self['GUID__'] = nprnd.randint(9223372036854775806)
             for n in self.node_iter():
-                self.vs[n][Himesis.Constants.GUID] = nprnd.randint(9223372036854775806)
+                self.vs[n]['GUID__'] = nprnd.randint(9223372036854775806)
         # A fast lookup of the node's index by its guid
         # - disable this lookup to save memory
         #self.nodes_id = {}
@@ -89,8 +89,8 @@ class Himesis(ig.Graph):
 
         # cpy.init_params = copy.deepcopy(self.init_params)
         #cpy.import_name = copy.deepcopy(self.import_name)
-        cpy.is_compiled = copy.deepcopy(self.is_compiled)
-        cpy.name = copy.deepcopy(self.name)
+        cpy.is_compiled = self.is_compiled
+        cpy.name = self.name
         return cpy
     
     def __copy__(self):
@@ -107,7 +107,7 @@ class Himesis(ig.Graph):
         """
             Returns the unique identifier of the graph
         """
-        return self[Himesis.Constants.GUID]
+        return self['GUID__']
     
     def node_iter(self):
         """
@@ -125,7 +125,7 @@ class Himesis(ig.Graph):
         new_node = self.vcount()
         self.add_vertices(1)
 
-        self.vs[new_node][Himesis.Constants.GUID] = nprnd.randint(9223372036854775806)
+        self.vs[new_node]['GUID__'] = nprnd.randint(9223372036854775806)
         #self.vs[new_node][Himesis.Constants.GUID] = random.randint(0, 9223372036854775806)
         # self.nodes_id[id] = new_node
         return new_node
@@ -408,7 +408,7 @@ class HimesisPattern(Himesis):
         #    return self.nodes_label[label]
 
         for i in xrange(self.vcount()):
-            if label == self.vs[i][Himesis.Constants.MT_LABEL]:
+            if label == self.vs[i]['MT_label__']:
                 return i
     
     def get_pivot_out(self, pivot):
@@ -444,7 +444,7 @@ class HimesisPreConditionPattern(HimesisPattern):
         # if pivot in self.nodes_pivot_in:
         #     return self.nodes_pivot_in[pivot]
 
-        if Himesis.Constants.MT_PIVOT_IN in self.vs.attribute_names():
+        if 'MT_pivotIn__' in self.vs.attribute_names():
             for i in xrange(self.vcount()):
                 if pivot == self.vs[i]['MT_pivotIn__']:
                     return i
