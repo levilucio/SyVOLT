@@ -9,6 +9,9 @@ from core.himesis_plus import *
 
 import uuid
 
+import traceback
+
+
 from core.himesis import *
 from itertools import combinations
 
@@ -1595,7 +1598,7 @@ class PyRamify:
             if f.endswith(".pyc") or f == "__init__.py" or os.path.isdir(dir_name + "/" + f):
                 continue
 
-            print("\nFile: " + f)
+            print("File: " + f)
 
             #add the rule to the rules dict
             rule = load_class(dir_name + "/" + f)
@@ -1711,8 +1714,9 @@ class PyRamify:
                 rule_file = rule_dir + f
                 try:
                     rule = load_class(rule_file)
-                except ImportError:
-                    print("ERROR " + rule_file)
+                except ImportError as e:
+                    print("ERROR loading " + rule_file)
+                    traceback.print_exc()
                     continue
 
                 name = rule.keys()[0]
