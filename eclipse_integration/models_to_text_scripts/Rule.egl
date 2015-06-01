@@ -76,6 +76,7 @@ a.""")
         self.add_node()
         self.vs[[%=nodeIndex%]]["mm__"] = """MatchModel"""
         #self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'[%=rule.description%]matchmodel[%=nodeIndex%]')
+        self.vs[[%=nodeIndex%]]["rulename"] = """[%=rule.description%]"""
     	[%
 		nodeIndex = nodeIndex + 1;
         %]

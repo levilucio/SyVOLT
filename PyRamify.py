@@ -2,6 +2,7 @@
 import re
 import sys
 import os
+from t_core.messages import Packet
 from t_core.matcher import Matcher
 from t_core.rewriter import Rewriter
 from core.himesis_utils import *
@@ -14,6 +15,8 @@ import traceback
 
 from core.himesis import *
 from itertools import combinations
+
+from itertools import permutations
 
 '''
 
@@ -147,6 +150,9 @@ class PyRamify:
                     node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
                     
                 elif "Constant" in node["mm__"] and attrib == "MT_pre__value":
+                    node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
+                    
+                elif "directLink" in node["mm__"] and attrib == "MT_pre__associationType":
                     node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
                     
                 elif "Constant" in node["mm__"] and attrib == "MT_post__value":
@@ -290,6 +296,9 @@ class PyRamify:
                     node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
                     
                 elif "Constant" in node["mm__"] and attrib == "MT_pre__value":
+                    node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
+                    
+                elif "directLink" in node["mm__"] and attrib == "MT_pre__associationType":
                     node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
                     
                 elif "Constant" in node["mm__"] and attrib == "MT_post__value":
@@ -1276,7 +1285,7 @@ class PyRamify:
 #            print "---------------- " + str(eq_num) + " -----------------------> Number of attribute nodes: " + str(len(equation_attrib_nodes))
             
             # equation is between an attribute of the match model and an attribute of the apply model
-            if len(equation_attrib_nodes) == 2:
+            if len(equation_attrib_nodes) >= 2:
                 nodes_to_remove += flood_find_nodes(eq_num, graph, None, ["hasAttribute_S", "hasAttribute_T"])
 #                print flood_find_nodes(eq_num, graph, None, ["hasAttribute_S", "hasAttribute_T"])
             # check if the equation is part of the elements of the apply model and remove it in that case
@@ -1369,14 +1378,14 @@ class PyRamify:
 
             linked_nodes.append([bl_attached[0], bl_attached[1]])
 
-        if rewriter.name == "HConnectPPortPrototypeHConnectRPortPrototype":        
-            for match_node in match_attached:
-                if rewriter.vs[match_node]["mm__"] in ["MatchModel", "match_contains"]:
-                    continue   
-         
-            for apply_node in apply_attached:
-                if rewriter.vs[apply_node]["mm__"] in ["ApplyModel", "apply_contains"]:
-                    continue   
+#         if rewriter.name == "HConnectPPortPrototypeHConnectRPortPrototype":        
+#             for match_node in match_attached:
+#                 if rewriter.vs[match_node]["mm__"] in ["MatchModel", "match_contains"]:
+#                     continue   
+#          
+#             for apply_node in apply_attached:
+#                 if rewriter.vs[apply_node]["mm__"] in ["ApplyModel", "apply_contains"]:
+#                     continue   
         
         for match_node in match_attached:
 
@@ -1576,7 +1585,31 @@ class PyRamify:
 
 
     #=========================
-
+    
+    # calculate the partial order induced by rule match subsumption for all rules in the transformation.
+    # 
+    def calculate_rule_subsumption(self, rules, matchRulePatterns):     
+        
+        ruleObjects = []
+        ruleKeys = rules.keys()
+        for key in ruleKeys:
+            ruleObjects.append(rules[key])
+            
+        rulepairs = []
+        rulepairs = list(permutations(ruleObjects,2))
+        ruleContainment = {}
+        for pair in rulepairs:
+            p = Packet()
+            p.graph = pair[1]
+            p = matchRulePatterns[pair[0].name][0].packet_in(p)
+            if matchRulePatterns[pair[0].name][0].is_success:
+                # the partial order may branch, so we need lists to store the smaller elements
+                if pair[1] not in ruleContainment.keys():
+                    ruleContainment[pair[1]] = [pair[0]]
+                else:
+                    ruleContainment[pair[1]].append(pair[0])                     
+            
+        return ruleContainment
 
 
     #ramify a whole directory
@@ -1625,6 +1658,16 @@ class PyRamify:
             rule5 = load_class(dir_name + "/" + f)
             rule_combinator = self.get_rule_combinators(rule5)
             ruleCombinators.update(rule_combinator)
+            
+        ruleSubsumption = self.calculate_rule_subsumption(rules,matchRulePatterns)
+            
+#         if self.verbosity >= 2:
+#             print "Subsumption order between rules for all layers:"                   
+#             print ruleSubsumption
+#             print "\n"
+
+        print "Subsumption order between rules for all layers:"    
+        print ruleSubsumption
 
         print("Finished PyRamify")
         print("==================================\n")

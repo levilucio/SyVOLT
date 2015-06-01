@@ -13,6 +13,8 @@ from core.himesis_utils import graph_to_dot
 from core.himesis_utils import clean_graph
 from core.himesis_utils import print_graph
 
+#from core.himesis import Himesis
+
 import math
 import time
 
@@ -27,9 +29,10 @@ from PyRamify import PyRamify
 from PropertyProverTester import PropertyProverTester
 
 import multiprocessing
-from multiprocessing import Manager
+from multiprocessing import Manager, Queue
 from path_condition_generator_worker import *
 
+from random import shuffle
 
 #profile memory
 global global_profile_memory
@@ -107,24 +110,6 @@ def do_cprofile(func):
 
             print("")
     return profiled_func
-
-
-
-
-
-
-##Backward Matchers -start
-# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnectPPortPrototype_Back_CompositionType2ECULHS import HConnectPPortPrototype_Back_CompositionType2ECULHS
-# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnectRPortPrototype_Back_CompositionType2ECULHS import HConnectRPortPrototype_Back_CompositionType2ECULHS
-# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnECU2VirtualDevice_Back_EcuInst2ECULHS import HConnECU2VirtualDevice_Back_EcuInst2ECULHS
-# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnECU2VirtualDevice_Back_STEM2VirtualDeviceLHS import HConnECU2VirtualDevice_Back_STEM2VirtualDeviceLHS
-# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnECU2VirtualDevice_Back_SystemMapping2ECULHS import HConnECU2VirtualDevice_Back_SystemMapping2ECULHS
-# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnVirtualDevice2Distributable_Back_ComponentPrototype2DistributableLHS import HConnVirtualDevice2Distributable_Back_ComponentPrototype2DistributableLHS
-# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnVirtualDevice2Distributable_Back_CompositionType2ECULHS import HConnVirtualDevice2Distributable_Back_CompositionType2ECULHS
-# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnVirtualDevice2Distributable_Back_SCTEMc2DistributableLHS import HConnVirtualDevice2Distributable_Back_SCTEMc2DistributableLHS
-# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnVirtualDevice2Distributable_Back_STEM2VirtualDeviceLHS import HConnVirtualDevice2Distributable_Back_STEM2VirtualDeviceLHS
-##Backward Matchers -end
-
 
 
 
@@ -342,40 +327,40 @@ class PathConditionGenerator(object):
         # now build the partial order of rules as a dictionary per layer
         # the keys are rules that are larger than the elements in the order
 
-        layerpairs = []
+#         layerpairs = []
+# 
+#         for layerIndex in range(0,len(self.transformation)):
+#             layerpairs.append(list(permutations(self.transformation[layerIndex],2)))
+#                
+#         ruleContainment = []
+#          
+#         for layerIndex in range(0,len(layerpairs)):
+#             ruleContainment.append({})
+#             for pair in layerpairs[layerIndex]:
+#                 p = Packet()
+#                 p.graph = pair[1]
+#                 p = self.matchRulePatterns[pair[0].name][0].packet_in(p)
+#                 if self.matchRulePatterns[pair[0].name][0].is_success:
+#                     # the partial order may branch, so we need lists to store the smaller elements
+#                     if pair[1] not in ruleContainment[layerIndex].keys():
+#                         ruleContainment[layerIndex][pair[1]] = [pair[0]]
+#                     else:
+#                         ruleContainment[layerIndex][pair[1]].append(pair[0])                     
+# 
+#         self.ruleContainment = ruleContainment
+#         
+#         if self.verbosity >= 2:
+#             print "Subsumption order between rules for all layers:"                   
+#             print self.ruleContainment
+#             print "\n"
 
-        for layerIndex in range(0,len(self.transformation)):
-            layerpairs.append(list(permutations(self.transformation[layerIndex],2)))
-               
-        ruleContainment = []
-         
-        for layerIndex in range(0,len(layerpairs)):
-            ruleContainment.append({})
-            for pair in layerpairs[layerIndex]:
-                p = Packet()
-                p.graph = pair[1]
-                p = self.matchRulePatterns[pair[0].name][0].packet_in(p)
-                if self.matchRulePatterns[pair[0].name][0].is_success:
-                    # the partial order may branch, so we need lists to store the smaller elements
-                    if pair[1] not in ruleContainment[layerIndex].keys():
-                        ruleContainment[layerIndex][pair[1]] = [pair[0]]
-                    else:
-                        ruleContainment[layerIndex][pair[1]].append(pair[0])                     
-
-        self.ruleContainment = ruleContainment
-        
-        if self.verbosity >= 2:
-            print "Subsumption order between rules for all layers:"                   
-            print self.ruleContainment
-            print "\n"
-
-        def get_subsumed_rules(rules, layer):
-            requiredRules = []
-            for rule in rules:
-                if rule in set(self.ruleContainment[layer].keys()):
-                    requiredRules = self.ruleContainment[layer][rule]
-                    requiredRules.extend(get_subsumed_rules(self.ruleContainment[layer][rule], layer))
-            return requiredRules
+#         def get_subsumed_rules(rules, layer):
+#             requiredRules = []
+#             for rule in rules:
+#                 if rule in set(self.ruleContainment[layer].keys()):
+#                     requiredRules = self.ruleContainment[layer][rule]
+#                     requiredRules.extend(get_subsumed_rules(self.ruleContainment[layer][rule], layer))
+#             return requiredRules
         
         # now go through all the layers and merge rules with all the rules that they subsume.
         # rules that subsume others become combined with them and their names have to be combined too, separated by underscores.
@@ -477,9 +462,6 @@ class PathConditionGenerator(object):
 
                 self.transformation[layerIndex][ruleIndex] = clean_graph(p.graph)
 
-                if self.draw_svg:
-                    graph_to_dot("traced_" + self.transformation[layerIndex][ruleIndex].name , self.transformation[layerIndex][ruleIndex])
-
 #         print "----------------------------"
 #         print "Rule Combinators: "
 #         print self.ruleCombinators.keys()
@@ -576,8 +558,6 @@ class PathConditionGenerator(object):
         """
 
 
-
-
         self.num_path_conditions = 0
 
         from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
@@ -605,9 +585,11 @@ class PathConditionGenerator(object):
 
         print("CPU Count: " + str(cpu_count))
 
-        do_parallel = False
+        do_parallel = True
 
         pc_dict = {}#manager.dict()
+
+
 
 
 
@@ -633,16 +615,17 @@ class PathConditionGenerator(object):
             if do_parallel:
 
                 #sort_time = time.time()
-                currentpathConditionSet = sorted(currentpathConditionSet)
+                shuffle(currentpathConditionSet)
 
                 #print("Time to sort: " + str(time.time() - sort_time))
 
                 #name_dict = manager.dict()
 
-                chunkSize = int(math.ceil(pathConSetLength / cpu_count))
+                #print("After ceil: " + str(math.ceil(pathConSetLength / float(cpu_count))))
+                chunkSize = int(math.ceil(pathConSetLength / float(cpu_count)))
 
-                if chunkSize < 16:
-                    chunkSize = 16
+                print("Path Cond Set Size: " + str(pathConSetLength))
+                print("Chunksize: " + str(chunkSize))
 
                 workers = []
 
@@ -656,13 +639,12 @@ class PathConditionGenerator(object):
 
 
                 #initialize the workers
-                print("\nNumber of chunks: " + str(len(pc_chunks)))
-                for i in range(len(pc_chunks)):
+                for i in range(len(pc_chunks)):#range(cpu_count):
                     #worker_time = time.time()
 
                     #print("Chunk size: " + str(len(pc_chunks[i])))
                     new_worker = path_condition_generator_worker(self.verbosity, layer*1000+i)
-                    new_worker.currentPathConditionSet = pc_chunks[i]
+                    new_worker.currentPathConditionSet = pc_chunks[i]#pc_queue
 
                     new_worker.attributeEquationEvaluator = self.attributeEquationEvaluator
 
@@ -690,7 +672,7 @@ class PathConditionGenerator(object):
                     #print("Time to initialize worker: " + str(time.time() - worker_time))
 
 
-                worker_start_time = time.time()
+                #worker_start_time = time.time()
                 for worker in workers:
                     worker.start()
 
@@ -701,7 +683,7 @@ class PathConditionGenerator(object):
                     worker.join()
 
 
-                result_time = time.time()
+                #result_time = time.time()
 
                 currentpathConditionSet = []
 
@@ -713,9 +695,9 @@ class PathConditionGenerator(object):
 
                     name_dict.update(r[2])
 
-                print("Time to collect results: " + str(time.time() - result_time ))
+                #print("Time to collect results: " + str(time.time() - result_time ))
 
-                change_names_time = time.time()
+                #change_names_time = time.time()
                 if len(name_dict.keys()) > 0:
                     for i in range(len(currentpathConditionSet)):
                         try:
@@ -728,7 +710,7 @@ class PathConditionGenerator(object):
 
 
                 #print("PC Dict Keys: " + str(pc_dict.keys()))
-                print("Time to change names: " + str(time.time() - change_names_time))
+                #print("Time to change names: " + str(time.time() - change_names_time))
                 #print("PC Length: " + str(len(currentpathConditionSet)))
 
 

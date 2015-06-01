@@ -43,8 +43,12 @@ class path_condition_generator_worker(Process):
         name_dict = {}
 
         for pathConditionIndex in xrange(pathConSetLength):
+        #while True:
 
             pc_name = self.currentPathConditionSet[pathConditionIndex]
+
+
+            #newPathConditionSet.append(pc_name)
 
             pc = expand_graph(self.pc_dict[pc_name])
             #print_graph(pc)
@@ -68,7 +72,7 @@ class path_condition_generator_worker(Process):
                 #if self.verbosity >= 1:
                     #print "Layer: " + str(self.layer+1)
                     #print "Number of Path Conditions generated so far: " +  str(len(self.currentPathConditionSet))
-                    #print "Number of Path Conditions to go in this layer: " +  str(pathConSetLength - pathConditionIndex)
+                    #print "Number of Path Conditions Percentage: " +  str(int(pathConditionIndex / float(pathConSetLength) * 100))
 
 
 
@@ -87,7 +91,7 @@ class path_condition_generator_worker(Process):
 
 
                     num = 0
-                    for child_pc_index in range(len(childrenPathConditions)):
+                    for child_pc_index in xrange(len(childrenPathConditions)):
 
                         child_pc_name = childrenPathConditions[child_pc_index]
 
@@ -147,7 +151,7 @@ class path_condition_generator_worker(Process):
                         if self.verbosity >= 2 : print "Case 3: Rule has dependencies that may or will execute"
 
                         # go through all LHS (matchers) in rule combinators
-                        for combinator in range(len(self.ruleCombinators[rule_name])):
+                        for combinator in xrange(len(self.ruleCombinators[rule_name])):
 
                             combinatorMatcher = self.ruleCombinators[rule_name][combinator][0]
 
@@ -195,7 +199,7 @@ class path_condition_generator_worker(Process):
 
                                 #go through all the children of this path condition
                                 num = 0
-                                for child_pc_index in range(len(childrenPathConditions)):
+                                for child_pc_index in xrange(len(childrenPathConditions)):
 
                                     #get the name of the child
                                     child_pc_name = childrenPathConditions[child_pc_index]
