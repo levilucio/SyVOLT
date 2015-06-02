@@ -12,6 +12,7 @@ from core.himesis_utils import disjoint_model_union
 from core.himesis_utils import graph_to_dot
 from core.himesis_utils import clean_graph
 from core.himesis_utils import print_graph
+from core.himesis_utils import set_do_pickle
 
 #from core.himesis import Himesis
 
@@ -57,17 +58,22 @@ class PathConditionGenerator(object):
     """
 
     #@do_cprofile
-    def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, verbosity, draw_svg = True, run_tests=True):
+    def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, verbosity, args):
+
         # the empty path condition
+
+        self.draw_svg = args.draw_svg
+        self.run_tests = args.run_tests
+
+        self.do_parallel = args.do_parallel
+
+        set_do_pickle(args.do_pickle)
 
         self.transformation = transformation
         self.ruleCombinators = ruleCombinators
         self.ruleTraceCheckers = ruleTraceCheckers
         self.matchRulePatterns = matchRulePatterns
 
-        self.draw_svg = draw_svg
-
-        self.run_tests = run_tests
 
         self.ruleContainment = []
 
@@ -510,7 +516,6 @@ class PathConditionGenerator(object):
 
         print("CPU Count: " + str(cpu_count))
 
-        do_parallel = True
 
         pc_dict = {}#manager.dict()
 
@@ -537,7 +542,7 @@ class PathConditionGenerator(object):
 
             name_dict = {}
 
-            if do_parallel:
+            if self.do_parallel:
 
                 #sort_time = time.time()
                 shuffle(currentpathConditionSet)

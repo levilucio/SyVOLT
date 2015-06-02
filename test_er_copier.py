@@ -156,7 +156,7 @@ class Test():
                 change_subtype_matching(self.ruleTraceCheckers[tracer_key],subclasses_dict)      
             
 
-        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, 1, draw_svg=args.draw_svg, run_tests=args.run_tests)#
+        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, 1, args)#
     
         ts0 = time.time()
         s.build_path_conditions()
@@ -228,6 +228,14 @@ if __name__ == "__main__":
     parser.add_argument('--skip_tests', dest = 'run_tests', action = 'store_false',
                         help = 'Option to skip the running of matching tests')
     parser.set_defaults(run_tests = True)
+
+    parser.add_argument('--skip_parallel', dest = 'do_parallel', action = 'store_false',
+                        help = 'Option to force computation to run single-thread')
+    parser.set_defaults(do_parallel = True)
+
+    parser.add_argument('--skip_pickle', dest = 'do_pickle', action = 'store_false',
+                        help = 'Option to skip the use of pickling')
+    parser.set_defaults(do_pickle = True)
 
     parser.add_argument('--no_svg', dest = 'draw_svg', action = 'store_false',
                         help = 'Flag to force svg files to not be drawn')

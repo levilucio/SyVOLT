@@ -287,7 +287,10 @@ def draw_graphs(title, g_dir):
 import gzip
 import himesis as Himesis
 
-use_pickle = True
+
+def set_do_pickle(value):
+    global do_pickle
+    do_pickle = value
 
 pickle_dir = "pickle/"
 
@@ -295,7 +298,7 @@ pickle_dir = "pickle/"
 def shrink_graph(graph):
     value = graph.__reduce__()
 
-    if use_pickle:
+    if do_pickle:
         f = gzip.open(pickle_dir + graph.name, "wb")
         pickle.dump(value, f)
         f.close()
@@ -308,7 +311,7 @@ def shrink_graph(graph):
 def expand_graph(small_value):
 
 
-    if use_pickle:
+    if do_pickle:
         f = gzip.open(pickle_dir + small_value, "rb")
         small_value = pickle.load(f)
         f.close()
