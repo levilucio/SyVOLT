@@ -382,7 +382,7 @@ class %s(%s):
         
         for sg in subgraphs:
             sg.compile(file_path)
-        
+
         return file.name
    
     def execute(self, *args):
@@ -550,8 +550,8 @@ class HimesisPreConditionPatternNAC(HimesisPreConditionPattern):
         #self.init_params.append('LHS')
         #self.import_name = 'HimesisPreConditionPatternNAC'
 
-    def compile(self, file_path):
-        super(HimesisPreConditionPatternNAC, self).compile(file_path, ['LHS'])
+    def compile(self, file_path, init_params=[]):
+        return super(HimesisPreConditionPatternNAC, self).compile(file_path, ['LHS'])
 
     def _compile_additional_info(self, file):
         """
