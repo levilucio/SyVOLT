@@ -18,6 +18,7 @@ from itertools import combinations
 
 from itertools import permutations
 
+
 '''
 
     1. Relaxation, which relaxes constraints on the language which are
@@ -37,8 +38,10 @@ class PyRamify:
         #keep track of the next label to give a graph node
         self.next_label = 0
         self.verbosity = verbosity
-
         self.draw_svg =(draw_svg == "True")
+        self.ruleSubsumption = {}
+        self.transformation_layers = []
+        self.rules = {}
 
     '''
      changeAttrType (M): Changes the type of attributes to 'string', which allows conditions and actions to be specified on attribute values in patterns.
@@ -165,6 +168,9 @@ class PyRamify:
                     node[attrib] = "return '" + node[attrib] + "'"
 
                 elif "directLink" in node["mm__"] and attrib == "MT_post__associationType":
+                    node[attrib] = "return '" + node[attrib] + "'"
+                    
+                elif "paired_with" in node["mm__"] and attrib == "MT_post__rulename":
                     node[attrib] = "return '" + node[attrib] + "'"
 
                 # Hack for trace_links
@@ -1584,37 +1590,120 @@ class PyRamify:
         return rulesIncludingBackLinks
 
 
-    #=========================
+    #================================================================================
     
+    
+    # check if a rule has backward links
+    def rule_has_backward_links(self, rule):
+        rule_object = self.rules[rule]
+        backwards_links = find_nodes_with_mm(rule_object, ["backward_link"])
+        if len(backwards_links) == 0:
+            return False
+        return True
+    
+
+    # find all the rules that subsume a given rule    
+    def get_subsuming_rules(self, rule):
+        foundParent = False
+        subsuming_rules = []
+        for ruleKey in self.ruleSubsumption.keys():
+            if rule in set(self.ruleSubsumption[ruleKey]):
+                # check for loops when two rules subsume each other
+                if rule not in set(subsuming_rules):
+                    foundParent = True
+                    subsuming_rules.append(ruleKey)
+                    subsuming_rules.extend(self.get_subsuming_rules(ruleKey))
+        if not foundParent:
+            return []
+        else:
+            return subsuming_rules
+
+
     # calculate the partial order induced by rule match subsumption for all rules in the transformation.
-    # 
-    def calculate_rule_subsumption(self, rules, matchRulePatterns):     
+    def calculate_rule_subsumption(self, matchRulePatterns):     
         
         ruleObjects = []
-        ruleKeys = rules.keys()
+        ruleKeys = self.rules.keys()
         for key in ruleKeys:
-            ruleObjects.append(rules[key])
+            ruleObjects.append(key)
             
-        rulepairs = []
         rulepairs = list(permutations(ruleObjects,2))
-        ruleContainment = {}
+        
+        ruleSubsumption = {}
         for pair in rulepairs:
             p = Packet()
-            p.graph = pair[1]
-            p = matchRulePatterns[pair[0].name][0].packet_in(p)
-            if matchRulePatterns[pair[0].name][0].is_success:
+            p.graph = self.rules[pair[1]]
+            p = matchRulePatterns[pair[0]][0].packet_in(p)
+            if matchRulePatterns[pair[0]][0].is_success:
                 # the partial order may branch, so we need lists to store the smaller elements
-                if pair[1] not in ruleContainment.keys():
-                    ruleContainment[pair[1]] = [pair[0]]
+                if pair[1] not in ruleSubsumption.keys():
+                    ruleSubsumption[pair[1]] = [pair[0]]
                 else:
-                    ruleContainment[pair[1]].append(pair[0])                     
+                    ruleSubsumption[pair[1]].append(pair[0])                   
             
-        return ruleContainment
+        return ruleSubsumption
+
+
+    # return the layer a rule occurs in
+    def layer_rule_occurs_in(self, rule):
+        for layerIndex in range(len(self.transformation_layers)):
+            if self.rules[rule] in self.transformation_layers[layerIndex]:
+                return layerIndex
+        return None
+        
+
+    # Calculate if the rules need special treatment because they overlap.
+    # This happens when:
+    # - Rule A is subsumed by Rule B, rule A has no backward links and Rule B appears in the same layer as rule A, or in a layer before
+    # - Rule A is subsumed by rule B and both rule A and rule B have backward links
+    # returns a list of pairs of rules for which combinators need to be built for
+    def rules_needing_overlap_treatment(self):
+        rules_needing_overlap_treatment = []
+        for rule in self.rules.keys():            
+            subsuming_rules = self.get_subsuming_rules(rule)
+            for s_rule in subsuming_rules:
+                if (not self.rule_has_backward_links(rule) and not self.rule_has_backward_links(s_rule)) or\
+                   (self.rule_has_backward_links(rule) and not self.rule_has_backward_links(s_rule)):
+                    if self.layer_rule_occurs_in(rule) >= self.layer_rule_occurs_in(s_rule):
+                        rules_needing_overlap_treatment.append((self.rules[rule],s_rule))
+                        
+                elif (self.rule_has_backward_links(rule) and self.rule_has_backward_links(s_rule)):
+                    if self.layer_rule_occurs_in(rule) == self.layer_rule_occurs_in(s_rule):
+                        rules_needing_overlap_treatment.append((rule,s_rule))
+        
+        return rules_needing_overlap_treatment              
+                    
+    
+
+    # get all the rules in the transformation 
+    def get_rules(self, dir_name):
+        print("Ramifying directory: " + dir_name)
+        
+        rules = {}
+        
+        #examine all the files in this dir
+        for f in os.listdir(dir_name):
+
+            #skip these files
+            if f.endswith(".pyc") or f == "__init__.py" or os.path.isdir(dir_name + "/" + f):
+                continue
+
+            print("\nFile: " + f)
+
+            #add the rule to the rules dict
+            rule = load_class(dir_name + "/" + f)
+            rules.update(rule)
+            
+        self.rules = rules
+
+        return rules
 
 
     #ramify a whole directory
-    def ramify_directory(self, dir_name):
+    def ramify_directory(self, dir_name, transformation_layers):
         print("Ramifying directory: " + dir_name)
+        
+        self.transformation_layers = transformation_layers
         
         rules = {}
         
@@ -1659,7 +1748,7 @@ class PyRamify:
             rule_combinator = self.get_rule_combinators(rule5)
             ruleCombinators.update(rule_combinator)
             
-        ruleSubsumption = self.calculate_rule_subsumption(rules,matchRulePatterns)
+        self.ruleSubsumption = self.calculate_rule_subsumption(matchRulePatterns)
             
 #         if self.verbosity >= 2:
 #             print "Subsumption order between rules for all layers:"                   
@@ -1667,13 +1756,19 @@ class PyRamify:
 #             print "\n"
 
         print "Subsumption order between rules for all layers:"    
-        print ruleSubsumption
+        print self.ruleSubsumption
+        for ruleName in rules.keys():
+            print ruleName + ": " +str(self.get_subsuming_rules(ruleName))
+        print "Rules that need overlap treatment: " + str(self.rules_needing_overlap_treatment())            
+            
 
         print("Finished PyRamify")
         print("==================================\n")
 
         return [rules, backwardPatterns, backwardPatterns2Rules, {}, matchRulePatterns, ruleCombinators]
 
+
+    #================================================================================
 
 
     #renames elements from one metamodel into another metamodel

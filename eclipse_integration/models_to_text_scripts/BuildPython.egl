@@ -47,15 +47,12 @@ from H[%=ac.Name%]_CompleteLHS import H[%=ac.Name%]_CompleteLHS
 
 class Prover():
 
-    def setUp(self, args):
-        pyramify = PyRamify(draw_svg=args.draw_svg)
 
-        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
-            pyramify.ramify_directory("[%=absoluteBackendPath%]")
-
-            
     def do_proof(self,args):    
-        pyramify = PyRamify(verbosity = 2)
+
+        pyramify = PyRamify(draw_svg=args.draw_svg)
+        
+        self.rules = pyramify.get_rules("[%=absoluteBackendPath%]")
         
         [*- get all the rules from the files generated to disk *]
         [% for (r in Rule.all) { %]
@@ -63,7 +60,8 @@ class Prover():
         [% ruleShortMap.put(r, ruleIndex);
         	ruleIndex = ruleIndex + 1;
            }
-        %]       
+        %]    
+        
         [*- build the transformation array with the right layering *]                     
         [% 
         for (l in Sequential) {
@@ -102,8 +100,10 @@ class Prover():
         	 }
 		} 
 		%]
-
         transformation = [[%=transformationArrayStr%]]
+
+        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
+            pyramify.ramify_directory("[%=absoluteBackendPath%]", transformation)   
 
         [*- Generate operations to deal with Polymorphism *]        
         pre_metamodel = ["MT_pre__S_MM", "MoTifRule"]
@@ -222,6 +222,5 @@ if __name__ == "__main__":
 
 
     prover = Prover()
-    prover.setUp(args)
     prover.do_proof(args)
         
