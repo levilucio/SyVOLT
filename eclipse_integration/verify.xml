@@ -3,7 +3,7 @@
 	<target name="main" depends="clean">
 		
 		<property name="absolute.backend.path" location="backend/generated/transformation"/>
-		<property name="dsltrans.install.path" location="/home/levi/workspace/DSLTrans_prop_prov"/>
+		<property name="dsltrans.install.path" location="/home/levi/git/SyVOLT"/>
 		
 		<echo message= "${absolute.backend.path}"/>
 		<echo message= "${dsltrans.install.path}"/>
@@ -13,7 +13,7 @@
 		      read="true"
 		      store="false"
 		      metamodeluri="http://dsltrans/2.0"
-		      modelfile="families_to_persons_out.dsltrans"
+		      modelfile="UMLRT2Kiltera.dsltrans"
 		    />
 		
 		<epsilon.emf.loadModel
@@ -21,7 +21,7 @@
 		      read="true"
 		      store="false"
 		      metamodeluri="http://syvolt/2.0"
-		      modelfile="fourMembers.syvolt"
+		      modelfile="motherFather2.syvolt"
 		    />
 		
 		<epsilon.egl src="backend/DSLTrans2Himesis.egl">
@@ -40,24 +40,25 @@
 		</epsilon.egl>
 
 		<exec dir="backend/generated" executable="python">
-		    <arg line="toplevel.py --no_svg"/>
-			<env key="PYTHONPATH" value="/home/levi/workspace/DSLTrans_prop_prov:/home/levi/workspace/SyVOLT/backend/generated"/> 
-			<redirector output="proof_result.txt" alwayslog="true"/> 
+		    <arg line="toplevel.py --skip_tests --verbosity=1"/>
+			<env key="PYTHONPATH" value="${dsltrans.install.path}:./backend/generated"/> 
 		</exec>
 		
 	</target>
 	
     <target name="clean">
-		<delete>
-    		<fileset dir="./backend/generated"/>
+		<delete quiet="false" failonerror="false">
+    		<fileset dir="./backend"/>
 		</delete>
     	<mkdir dir="backend/generated"/>    
-    	<mkdir dir="backend/metamodels"/>   
     	<mkdir dir="backend/generated/dot"/>  
     	<mkdir dir="backend/generated/patterns"/>  
        	<mkdir dir="backend/generated/transformation"/>
     	<copy todir="backend/generated">
     	   <fileset dir="metamodels"/>
+    	</copy>
+    	<copy todir="backend">
+    	   <fileset dir="/home/levi/git/SyVOLT/eclipse_integration/models_to_text_scripts"/>
     	</copy>
     </target>	
 	
