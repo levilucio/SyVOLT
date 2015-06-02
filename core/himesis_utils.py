@@ -289,16 +289,17 @@ import himesis as Himesis
 
 use_pickle = True
 
+pickle_dir = "pickle/"
+
 # shrink a graph into an array
 def shrink_graph(graph):
     value = graph.__reduce__()
 
     if use_pickle:
-        fname = "pickle/" + graph.name
-        f = gzip.open(fname, "wb")
+        f = gzip.open(pickle_dir + graph.name, "wb")
         pickle.dump(value, f)
         f.close()
-        return fname
+        return graph.name
     else:
         return value
 
@@ -308,7 +309,7 @@ def expand_graph(small_value):
 
 
     if use_pickle:
-        f = gzip.open(small_value, "rb")
+        f = gzip.open(pickle_dir + small_value, "rb")
         small_value = pickle.load(f)
         f.close()
 
