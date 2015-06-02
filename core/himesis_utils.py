@@ -18,6 +18,7 @@ import os
 import uuid
 import cPickle as pickle
 import igraph
+import time
 
 from copy import deepcopy
 
@@ -329,9 +330,6 @@ def expand_graph(small_value):
     return graph
 
 
-
-
-
 def disjoint_model_union(first, second):
     """
     merge two himesis graphs
@@ -346,11 +344,12 @@ def disjoint_model_union(first, second):
     nb_nodes_first = first.vcount()
      
     # first copy the nodes
+    attrib_names = second.vs[0].attribute_names()
     for index_v in second.node_iter():
         new_node_index = first.add_node()
         new_node = first.vs[new_node_index]
 
-        for attrib in second.vs[index_v].attribute_names():
+        for attrib in attrib_names:
 
             #skip copying the GUID
             if attrib == "GUID__":
@@ -363,9 +362,14 @@ def disjoint_model_union(first, second):
 
  
     # then copy the edges
+    # for index_e in second.edge_iter():
+    #    first.add_edges([(nb_nodes_first + second.es[index_e].tuple[0],nb_nodes_first + second.es[index_e].tuple[1])])
+
+    edges = []
     for index_e in second.edge_iter():
-        first.add_edges([(nb_nodes_first + second.es[index_e].tuple[0],nb_nodes_first + second.es[index_e].tuple[1])])
-  
+        edges.append((nb_nodes_first + second.es[index_e].tuple[0],nb_nodes_first + second.es[index_e].tuple[1]))
+    first.add_edges(edges)
+
     return first
 
 def standardize_name(name):
