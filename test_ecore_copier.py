@@ -61,9 +61,8 @@ class Test():
 
     def setUp(self, args):
         pyramify = PyRamify(draw_svg=args.draw_svg)
-
-        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
-            pyramify.ramify_directory("ECore_Copier_MM/transformation/")
+        
+        self.rules = pyramify.get_rules("ECore_Copier_MM/transformation/")
 
         #print("Rules: " + str(self.rules.keys()))
 
@@ -86,8 +85,6 @@ class Test():
     def test_correct_ecore_copier(self,args):
 
         pyramify = PyRamify(verbosity = 2)
-
-
 
         a1 = self.rules['HEAttribute']
 
@@ -136,6 +133,9 @@ class Test():
         #if args.num_rules == -1:
         #transformation = [[a1], [b1], [c1], [d1], [e1], [f1], [g1], [h1], [i1], [j1], [k1], [l1], [m1], [n1], [o1], [p1], [q1], [r1], [s1], [t1], [u1], [v1], [w1]]
         transformation = [[a1], [b1], [c1], [d1], [e1], [f1], [g1], [h1], [i1], [j1], [k1], [l1], [m1], [o1], [p1], [q1], [r1], [s1], [u1], [w1], [x1]]
+        
+        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
+            pyramify.ramify_directory("ECore_Copier_MM/transformation/", transformation)
 
         #else:
         #    transformation = self.select_rules([[a1,a2], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
@@ -189,7 +189,7 @@ class Test():
                 change_subtype_matching(self.ruleTraceCheckers[tracer_key],subclasses_dict)    
 
 
-        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, 1, args)#
+        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, args)#
    
         ts0 = time.time()
         s.build_path_conditions()
@@ -307,6 +307,10 @@ if __name__ == "__main__":
 
     parser.add_argument('--num_rules', type = int, default = -1,
                         help = 'Number of rules in the transformation (default: -1)')
+    
+    parser.add_argument('--verbosity', type = int, default = 0,
+                        help = 'Verbosity level (default: 0 - minimum output)')
+    
     args = parser.parse_args()
 
 
