@@ -58,7 +58,7 @@ class PathConditionGenerator(object):
     """
 
     #@do_cprofile
-    def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, verbosity, args):
+    def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, args):
 
         # the empty path condition
 
@@ -77,13 +77,13 @@ class PathConditionGenerator(object):
 
         self.ruleContainment = []
 
-        self.verbosity = verbosity
+        self.verbosity = args.verbosity
 #         self.outputStates = outputStates
 
       
         # the path condition set starts with only the empty (None) path condition inside
 
-        self.attributeEquationEvaluator = SimpleAttributeEquationEvaluator(verbosity) 
+        self.attributeEquationEvaluator = SimpleAttributeEquationEvaluator(self.verbosity)
 
         self._pre_process()
 
