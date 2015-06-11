@@ -43,9 +43,7 @@ class Test():
     def setUp(self, args):
         pyramify = PyRamify(draw_svg = args.draw_svg)
 
-        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns,
-         self.ruleCombinators] = \
-            pyramify.ramify_directory("mbeddr2C_MM/real_transformation")
+        self.rules = pyramify.get_rules("mbeddr2C_MM/real_transformation")
 
         # print("Rules: " + str(self.rules.keys()))
 
@@ -66,7 +64,7 @@ class Test():
 
 
     def test_correct_mbeddr(self, args):
-        pyramify = PyRamify(verbosity = 2)
+        pyramify = PyRamify(verbosity = 0)
 
         a0 = self.rules['Hlayer0rule0']
         a1 = self.rules['Hlayer0rule1']
@@ -146,8 +144,12 @@ class Test():
 
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
 
+        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns,
+         self.ruleCombinators] = \
+            pyramify.ramify_directory("mbeddr2C_MM/real_transformation", transformation)
+
         s = PathConditionGenerator(transformation, self.ruleCombinators,
-                                   self.ruleTraceCheckers, self.matchRulePatterns, 1, args)
+                                   self.ruleTraceCheckers, self.matchRulePatterns, args)
         ts0 = time.time()
         s.build_path_conditions()
         ts1 = time.time()
@@ -208,6 +210,9 @@ if __name__ == "__main__":
 
     parser.add_argument('--num_rules', type = int, default = -1,
                         help = 'Number of rules in the transformation (default: -1)')
+
+    parser.add_argument('--verbosity', type = int, default = 0,
+                        help = 'Verbosity level (default: 0 - minimum output)')
 
     args = parser.parse_args()
 

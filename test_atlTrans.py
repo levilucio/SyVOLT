@@ -73,8 +73,7 @@ class Test():
     def setUp(self, args):
         pyramify = PyRamify(draw_svg=args.draw_svg)
 
-        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
-            pyramify.ramify_directory("ATLTrans/")
+        self.rules = pyramify.get_rules("ATLTrans/")
 
         #print("Rules: " + str(self.rules.keys()))
 
@@ -110,7 +109,7 @@ class Test():
 #         b2 = self.rules['HBasicState2ProcDef']
 #         b3 = self.rules['HCompositeState2ProcDef']
 
-        pyramify = PyRamify(verbosity = 2)
+        pyramify = PyRamify(verbosity = 0)
 
 
 
@@ -155,7 +154,12 @@ class Test():
 
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
 
-        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, 1, args)#
+
+        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns,
+         self.ruleCombinators] = \
+            pyramify.ramify_directory("ATLTrans/", transformation)
+
+        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, args)#
    
         ts0 = time.time()
         s.build_path_conditions()
@@ -323,6 +327,10 @@ if __name__ == "__main__":
 
     parser.add_argument('--num_rules', type = int, default = -1,
                         help = 'Number of rules in the transformation (default: -1)')
+
+    parser.add_argument('--verbosity', type = int, default = 0,
+                        help = 'Verbosity level (default: 0 - minimum output)')
+
     args = parser.parse_args()
 
 
