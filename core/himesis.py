@@ -209,7 +209,7 @@ class Himesis(ig.Graph):
         @param access: the access to the attribute
         @param value: the value to set the attribute to
         """
-        if isinstance(value, str):
+        if isinstance(value, str) or isinstance(value, unicode):
             return '''
         %s = """%s"""''' % (access, value)
         elif isinstance(value, int) or isinstance(value, float) or isinstance(value, bool):
@@ -223,9 +223,14 @@ class Himesis(ig.Graph):
             return '''
         from %s import %s
         %s = %s()''' % (graphClass, graphClass, access, graphClass)
-        else:
+        elif isinstance(value, list):
             return '''
-        %s = pickle.loads("""%s""")''' % (access, pickle.dumps(value))
+        %s = %s''' % (access, str(value))
+        else:
+            raise Exception("Value is not a base type")
+            #print("Pickling: " + str(type(value)) + " " + str(value))
+            #return '''
+        #%s = pickle.loads("""%s""")''' % (access, pickle.dumps(value))
     
     def compile(self, file_path, init_params = []):
         """
