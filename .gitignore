@@ -59,3 +59,4 @@ docs/_build/
 patterns/*.py
 ./property_prover_rules/**
 
+*.py.bak
