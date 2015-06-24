@@ -17,12 +17,7 @@ class HMoveOneOutputRepeatedDirectRHS(HimesisPostConditionPattern):
         # Add the edges
         self.add_edges([[1, 0], [0, 3]])
         # Set the graph attributes
-        self["mm__"] = pickle.loads("""(lp1
-S'MT_post__FamiliesToPersons_MM'
-p2
-aS'MoTifRule'
-p3
-a.""")
+        self["mm__"] = ['MT_post__UMLRT2Kiltera_MM', 'MoTifRule']
         self["MT_action__"] = """#===============================================================================
 # This code is executed after the rule has been applied.
 # You can access a node labelled n matched by this rule by: PostNode('n').

@@ -17,12 +17,7 @@ class HForwardCardinalitiesToApplyModelRHS(HimesisPostConditionPattern):
         # Add the edges
         self.add_edges([])
         # Set the graph attributes
-        self["mm__"] = pickle.loads("""(lp1
-S'MT_post__FamiliesToPersons_MM'
-p2
-aS'MoTifRule'
-p3
-a.""")
+        self["mm__"] = ['MT_post__UMLRT2Kiltera_MM', 'MoTifRule']
         self["MT_action__"] = """PostNode('2')['cardinality'] = '+'
 """
         self["name"] = """"""

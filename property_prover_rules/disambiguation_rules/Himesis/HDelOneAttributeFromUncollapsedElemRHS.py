@@ -17,15 +17,15 @@ class HDelOneAttributeFromUncollapsedElemRHS(HimesisPostConditionPattern):
         # Add the edges
         self.add_edges([])
         # Set the graph attributes
-        self["mm__"] = pickle.loads("""(lp1
-S'MT_post__FamiliesToPersons_MM'
-p2
-aS'MoTifRule'
-p3
-a.""")
-        self["MT_action__"] = pickle.loads("""V#===============================================================================\u000a# This code is executed after the rule has been applied.\u000a# You can access a node labelled n matched by this rule by: PostNode('n').\u000a# To access attribute x of node n, use: PostNode('n')['x'].\u000a#===============================================================================\u000a\u000apass\u000a
-p1
-.""")
+        self["mm__"] = ['MT_post__UMLRT2Kiltera_MM', 'MoTifRule']
+        self["MT_action__"] = """#===============================================================================
+# This code is executed after the rule has been applied.
+# You can access a node labelled n matched by this rule by: PostNode('n').
+# To access attribute x of node n, use: PostNode('n')['x'].
+#===============================================================================
+
+pass
+"""
         self["name"] = """"""
         self["GUID__"] = 4027106788938850380
         

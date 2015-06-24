@@ -17,12 +17,7 @@ class HMoveOneInputDirectRHS(HimesisPostConditionPattern):
         # Add the edges
         self.add_edges([[0, 1], [3, 0]])
         # Set the graph attributes
-        self["mm__"] = pickle.loads("""(lp1
-S'MT_post__FamiliesToPersons_MM'
-p2
-aS'MoTifRule'
-p3
-a.""")
+        self["mm__"] = ['MT_post__UMLRT2Kiltera_MM', 'MoTifRule']
         self["MT_action__"] = """PostNode('19')['associationType'] = PostNode('9')['associationType']
 """
         self["name"] = """"""
