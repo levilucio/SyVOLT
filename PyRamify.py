@@ -1685,7 +1685,7 @@ class PyRamify:
         for f in os.listdir(dir_name):
 
             #skip these files
-            if f.endswith(".pyc") or f == "__init__.py" or os.path.isdir(dir_name + "/" + f):
+            if not f.endswith(".py") or f == "__init__.py" or os.path.isdir(dir_name + "/" + f):
                 continue
 
             print("\nFile: " + f)
@@ -1717,7 +1717,7 @@ class PyRamify:
         for f in os.listdir(dir_name):
 
             #skip these files
-            if f.endswith(".pyc") or f == "__init__.py" or os.path.isdir(dir_name + "/" + f):
+            if not f.endswith(".py") or f == "__init__.py" or os.path.isdir(dir_name + "/" + f):
                 continue
 
             print("File: " + f)
@@ -1795,7 +1795,7 @@ class PyRamify:
             for f in files:
 
 
-                if f == "__init__.py" or f.endswith(".pyc") or f.startswith("."):
+                if f == "__init__.py" or not f.endswith(".py") or f.startswith("."):
                     continue
 
                 #print("Examining " + graph_dir + f)
@@ -1846,7 +1846,7 @@ class PyRamify:
                 files = []
 
             for f in files:
-                if f == "__init__.py" or f.endswith(".pyc") or f.startswith("."):
+                if f == "__init__.py" or not f.endswith(".py") or f.startswith("."):
                     continue
 
                 rule_file = rule_dir + f
