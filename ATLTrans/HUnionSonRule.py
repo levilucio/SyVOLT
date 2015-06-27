@@ -1,236 +1,116 @@
+
+
 from core.himesis import Himesis
-import cPickle as pickle
-import uuid
 
 class HUnionSonRule(Himesis):
     def __init__(self):
         """
-        Creates the himesis graph representing the DSLTrans rule UnionSonRule.
+        Creates the himesis graph representing the AToM3 model HUnionSonRule.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(HUnionSonRule, self).__init__(name='HUnionSonRule', num_nodes=0, edges=[])
+        super(HUnionSonRule, self).__init__(name='HUnionSonRule', num_nodes=31, edges=[])
         
-        
+        # Add the edges
+        self.add_edges([[0, 25], [25, 3], [0, 26], [26, 4], [0, 27], [27, 5], [1, 9], [9, 6], [1, 10], [10, 7], [4, 11], [11, 3], [3, 12], [12, 5], [7, 8], [8, 6], [7, 28], [28, 4], [6, 29], [29, 3], [6, 30], [30, 5], [6, 13], [13, 14], [15, 16], [16, 14], [15, 17], [17, 18], [7, 19], [19, 20], [21, 22], [22, 20], [21, 23], [23, 24], [0, 2], [2, 1]])
         # Set the graph attributes
-        # TODO Levi, need some help here because I don't know where does 
-        # this value come from.
-        self["mm__"] = pickle.loads("""(lp1
-S'HimesisMM'
-p2
-a.""")
-        
+        self["mm__"] = ['HimesisMM']
         self["name"] = """UnionSonRule"""
-        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'UnionSonRule')
+        self["GUID__"] = 3541520595692850211
         
-        # match model. We only support one match model
-        self.add_node()
+        # Set the node attributes
         self.vs[0]["mm__"] = """MatchModel"""
-        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'UnionSonRulematchmodel0')
-        
-        # apply model node
-        self.add_node()
+        self.vs[0]["GUID__"] = 3453930305046814046
         self.vs[1]["mm__"] = """ApplyModel"""
-        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'UnionSonRuleapplymodel1')
-        
-        # paired with relation between match and apply models
-        self.add_node()
+        self.vs[1]["GUID__"] = 1318986191048718560
         self.vs[2]["mm__"] = """paired_with"""
-        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'UnionSonRulepairedwith2')
-        
-    	# match class Family() node
-    	self.add_node()
-    	self.vs[3]["name"] = """"""
+        self.vs[2]["GUID__"] = 8170194843506434719
+        self.vs[3]["name"] = """"""
         self.vs[3]["classtype"] = """Family"""
         self.vs[3]["mm__"] = """Family"""
         self.vs[3]["cardinality"] = """+"""
-        #self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# match_contains node for class Family()
-        self.add_node()
-        self.vs[4]["mm__"] = """match_contains"""
-        #self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains4')
-    	# match class HouseholdRoot() node
-    	self.add_node()
-    	self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """HouseholdRoot"""
-        self.vs[5]["mm__"] = """HouseholdRoot"""
+        self.vs[3]["GUID__"] = 1418907978798279182
+        self.vs[4]["name"] = """"""
+        self.vs[4]["classtype"] = """HouseholdRoot"""
+        self.vs[4]["mm__"] = """HouseholdRoot"""
+        self.vs[4]["cardinality"] = """+"""
+        self.vs[4]["GUID__"] = 2239191085772265560
+        self.vs[5]["name"] = """"""
+        self.vs[5]["classtype"] = """Member"""
+        self.vs[5]["mm__"] = """Member"""
         self.vs[5]["cardinality"] = """+"""
-        #self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# match_contains node for class HouseholdRoot()
-        self.add_node()
-        self.vs[6]["mm__"] = """match_contains"""
-        #self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains6')
-    	# match class Member() node
-    	self.add_node()
-    	self.vs[7]["name"] = """"""
-        self.vs[7]["classtype"] = """Member"""
-        self.vs[7]["mm__"] = """Member"""
-        self.vs[7]["cardinality"] = """+"""
-        #self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# match_contains node for class Member()
-        self.add_node()
-        self.vs[8]["mm__"] = """match_contains"""
-        #self.vs[8]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains8')
-        
-        
-    	# apply class Man() node
-    	self.add_node()
-    	self.vs[9]["name"] = """"""
-        self.vs[9]["classtype"] = """Man"""
-        self.vs[9]["mm__"] = """Man"""
-        self.vs[9]["cardinality"] = """1"""
-        #self.vs[9]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply_contains node for class Man()
-        self.add_node()
+        self.vs[5]["GUID__"] = 8690967788592859349
+        self.vs[6]["name"] = """"""
+        self.vs[6]["classtype"] = """Man"""
+        self.vs[6]["mm__"] = """Man"""
+        self.vs[6]["cardinality"] = """1"""
+        self.vs[6]["GUID__"] = 2573339204871057159
+        self.vs[7]["name"] = """"""
+        self.vs[7]["classtype"] = """CommunityRoot"""
+        self.vs[7]["mm__"] = """CommunityRoot"""
+        self.vs[7]["cardinality"] = """1"""
+        self.vs[7]["GUID__"] = 711929094857150743
+        self.vs[8]["associationType"] = """has"""
+        self.vs[8]["mm__"] = """directLink_T"""
+        self.vs[8]["GUID__"] = 5453410470050680048
+        self.vs[9]["mm__"] = """apply_contains"""
+        self.vs[9]["GUID__"] = 3001428909457494314
         self.vs[10]["mm__"] = """apply_contains"""
-        #self.vs[10]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains10')
-    	# apply class CommunityRoot() node
-    	self.add_node()
-    	self.vs[11]["name"] = """"""
-        self.vs[11]["classtype"] = """CommunityRoot"""
-        self.vs[11]["mm__"] = """CommunityRoot"""
-        self.vs[11]["cardinality"] = """1"""
-        #self.vs[11]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply_contains node for class CommunityRoot()
-        self.add_node()
-        self.vs[12]["mm__"] = """apply_contains"""
-        #self.vs[12]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains12')
-        
-        
-    	# match association HouseholdRoot--have-->Family node
-    	self.add_node()
-    	self.vs[13]["associationType"] = """have"""
-        self.vs[13]["mm__"] = """directLink_S"""
-        #self.vs[13]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc13')
-    	# match association Family--son-->Member node
-    	self.add_node()
-    	self.vs[14]["associationType"] = """son"""
-        self.vs[14]["mm__"] = """directLink_S"""
-        #self.vs[14]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc14')
-        
-    	# apply association CommunityRoot--has-->Man node
-    	self.add_node()
-    	self.vs[15]["associationType"] = """has"""
-        self.vs[15]["mm__"] = """directLink_T"""
-        #self.vs[15]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc15')
-        
-    	# backward association HouseholdRoot---->CommunityRoot node
-    	self.add_node()
-    	self.vs[16]["type"] = """ruleDef"""
-        self.vs[16]["mm__"] = """backward_link"""
-        #self.vs[16]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink16')
-    	# backward association Family---->Man node
-    	self.add_node()
-    	self.vs[17]["type"] = """ruleDef"""
-        self.vs[17]["mm__"] = """backward_link"""
-        #self.vs[17]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink17')
-    	# backward association Member---->Man node
-    	self.add_node()
-    	self.vs[18]["type"] = """ruleDef"""
-        self.vs[18]["mm__"] = """backward_link"""
-        #self.vs[18]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink18')
-        
-        
-        
-        
-    	# has apply attribute ApplyAttribute() node
-    	self.add_node()
-    	self.vs[19]["mm__"] = """hasAttribute_T"""
-        #self.vs[19]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
-    	# apply attribute ApplyAttribute() node
-    	self.add_node()
-    	self.vs[20]["name"] = """ApplyAttribute"""
+        self.vs[10]["GUID__"] = 3912040371916924708
+        self.vs[11]["associationType"] = """have"""
+        self.vs[11]["mm__"] = """directLink_S"""
+        self.vs[11]["GUID__"] = 7391253864267243754
+        self.vs[12]["associationType"] = """son"""
+        self.vs[12]["mm__"] = """directLink_S"""
+        self.vs[12]["GUID__"] = 3689514867987605658
+        self.vs[13]["mm__"] = """hasAttribute_T"""
+        self.vs[13]["GUID__"] = 9140695439831940734
+        self.vs[14]["name"] = """ApplyAttribute"""
+        self.vs[14]["mm__"] = """Attribute"""
+        self.vs[14]["Type"] = """'String'"""
+        self.vs[14]["GUID__"] = 7006101416770012680
+        self.vs[15]["name"] = """eq_"""
+        self.vs[15]["mm__"] = """Equation"""
+        self.vs[15]["GUID__"] = 5605736295905641101
+        self.vs[16]["mm__"] = """leftExpr"""
+        self.vs[16]["GUID__"] = 1372055130607556439
+        self.vs[17]["mm__"] = """rightExpr"""
+        self.vs[17]["GUID__"] = 5963265585904441397
+        self.vs[18]["name"] = """famMemberSon"""
+        self.vs[18]["mm__"] = """Constant"""
+        self.vs[18]["Type"] = """'String'"""
+        self.vs[18]["GUID__"] = 8611833123024243249
+        self.vs[19]["mm__"] = """hasAttribute_T"""
+        self.vs[19]["GUID__"] = 4234435244153092841
+        self.vs[20]["name"] = """ApplyAttribute"""
         self.vs[20]["mm__"] = """Attribute"""
         self.vs[20]["Type"] = """'String'"""
-        #self.vs[20]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply attribute equation ApplyAttribute() node
-    	self.add_node()
-    	self.vs[21]["name"] = """eq_"""
+        self.vs[20]["GUID__"] = 2794357604125218536
+        self.vs[21]["name"] = """eq_"""
         self.vs[21]["mm__"] = """Equation"""
-        #self.vs[21]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
-    	# apply attribute equation left expr ApplyAttribute() node
-    	self.add_node()
-    	self.vs[22]["mm__"] = """leftExpr"""
-        #self.vs[22]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
-    	# apply attribute equation right expr ApplyAttribute() node
-    	self.add_node()
-    	self.vs[23]["mm__"] = """rightExpr"""
-        #self.vs[23]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
-    	# apply attribute atom ApplyAttribute() node
-    	self.add_node()
-    	self.vs[24]["name"] = """famMemberSon"""
+        self.vs[21]["GUID__"] = 5289896097703610181
+        self.vs[22]["mm__"] = """leftExpr"""
+        self.vs[22]["GUID__"] = 5628396505680526553
+        self.vs[23]["mm__"] = """rightExpr"""
+        self.vs[23]["GUID__"] = 3348166726734115110
+        self.vs[24]["name"] = """root"""
         self.vs[24]["mm__"] = """Constant"""
         self.vs[24]["Type"] = """'String'"""
-        #self.vs[24]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom24')
-    	# has apply attribute ApplyAttribute() node
-    	self.add_node()
-    	self.vs[25]["mm__"] = """hasAttribute_T"""
-        #self.vs[25]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
-    	# apply attribute ApplyAttribute() node
-    	self.add_node()
-    	self.vs[26]["name"] = """ApplyAttribute"""
-        self.vs[26]["mm__"] = """Attribute"""
-        self.vs[26]["Type"] = """'String'"""
-        #self.vs[26]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply attribute equation ApplyAttribute() node
-    	self.add_node()
-    	self.vs[27]["name"] = """eq_"""
-        self.vs[27]["mm__"] = """Equation"""
-        #self.vs[27]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
-    	# apply attribute equation left expr ApplyAttribute() node
-    	self.add_node()
-    	self.vs[28]["mm__"] = """leftExpr"""
-        #self.vs[28]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
-    	# apply attribute equation right expr ApplyAttribute() node
-    	self.add_node()
-    	self.vs[29]["mm__"] = """rightExpr"""
-        #self.vs[29]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
-    	# apply attribute atom ApplyAttribute() node
-    	self.add_node()
-    	self.vs[30]["name"] = """root"""
-        self.vs[30]["mm__"] = """Constant"""
-        self.vs[30]["Type"] = """'String'"""
-        #self.vs[30]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom30')
-        
-        
-        # Add the edges
-        self.add_edges([
-    		(0,4), # matchmodel -> match_contains
-    		(4,3), # match_contains -> match_class Family()
-    		(0,6), # matchmodel -> match_contains
-    		(6,5), # match_contains -> match_class HouseholdRoot()
-    		(0,8), # matchmodel -> match_contains
-    		(8,7), # match_contains -> match_class Member()
-    		(1,10), # applymodel -> apply_contains
-    		(10,9), # apply_contains -> apply_class Man()
-    		(1,12), # applymodel -> apply_contains
-    		(12,11), # apply_contains -> apply_class CommunityRoot()
-    		(5,13), # match_class HouseholdRoot() -> association have
-    		(13,3), # association have  -> match_class Family()
-    		(3,14), # match_class Family() -> association son
-    		(14,7), # association son  -> match_class Member()
-    		(11,15), # apply_class CommunityRoot() -> association has
-    		(15,9), # association has  -> apply_class Man()
-    		(11,16), # apply_class CommunityRoot() -> backward_association
-    		(16,5), #  backward_association -> apply_class HouseholdRoot()
-    		(9,17), # apply_class Man() -> backward_association
-    		(17,3), #  backward_association -> apply_class Family()
-    		(9,18), # apply_class Man() -> backward_association
-    		(18,7), #  backward_association -> apply_class Member()
-    		(9,19), # apply_class Man() -> has_apply_attribute ApplyAttribute ()
-    		(19,20), #  has_apply_attribute ApplyAttribute () -> apply_attribute ApplyAttribute ()
-    		(21,22), #  equation of apply attribute ApplyAttribute () -> left_expr
-    		(22,20), #  left_expr -> apply_attribute ApplyAttribute ()
-    		(21,23), #  equation of apply attribute ApplyAttribute () -> right_expr
-    		(23,24), # right_expr --> term
-    		(11,25), # apply_class CommunityRoot() -> has_apply_attribute ApplyAttribute ()
-    		(25,26), #  has_apply_attribute ApplyAttribute () -> apply_attribute ApplyAttribute ()
-    		(27,28), #  equation of apply attribute ApplyAttribute () -> left_expr
-    		(28,26), #  left_expr -> apply_attribute ApplyAttribute ()
-    		(27,29), #  equation of apply attribute ApplyAttribute () -> right_expr
-    		(29,30), # right_expr --> term
-        	(0,2), # matchmodel -> pairedwith
-        	(2,1) # pairedwith -> applyModel
-        ])
-        
+        self.vs[24]["GUID__"] = 6488265130118311438
+        self.vs[25]["mm__"] = """match_contains"""
+        self.vs[25]["GUID__"] = 8727647913454085111
+        self.vs[26]["mm__"] = """match_contains"""
+        self.vs[26]["GUID__"] = 3182382818369973340
+        self.vs[27]["mm__"] = """match_contains"""
+        self.vs[27]["GUID__"] = 5100757958105142068
+        self.vs[28]["type"] = """ruleDef"""
+        self.vs[28]["mm__"] = """backward_link"""
+        self.vs[28]["GUID__"] = 6849360824570433929
+        self.vs[29]["type"] = """ruleDef"""
+        self.vs[29]["mm__"] = """backward_link"""
+        self.vs[29]["GUID__"] = 7961407954274807310
+        self.vs[30]["type"] = """ruleDef"""
+        self.vs[30]["mm__"] = """backward_link"""
+        self.vs[30]["GUID__"] = 628328046941243810
+
