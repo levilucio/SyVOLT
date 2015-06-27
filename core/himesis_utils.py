@@ -285,7 +285,7 @@ def draw_graphs(title, g_dir):
 
 
 import gzip
-import himesis as Himesis
+
 
 
 def set_do_pickle(value):
@@ -329,6 +329,7 @@ def expand_graph(small_value):
     #print(graph.name)
     #graph.is_compiled = is_compiled
 
+    import himesis as Himesis
     graph.__class__ = Himesis.Himesis
 
     return graph

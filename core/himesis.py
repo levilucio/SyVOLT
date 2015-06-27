@@ -301,8 +301,6 @@ from core.himesis import Himesis''')
                                             map(lambda p: ', %s=%s' % (p, p),
                                                 init_params))
             file.write('''
-import cPickle as pickle
-from uuid import UUID
 
 class %s(%s):
     def __init__(self%s):
