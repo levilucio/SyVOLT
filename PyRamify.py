@@ -1755,11 +1755,11 @@ class PyRamify:
 #             print ruleSubsumption
 #             print "\n"
 
-        print "Subsumption order between rules for all layers:"    
-        print self.ruleSubsumption
+        print("Subsumption order between rules for all layers:"    )
+        print(self.ruleSubsumption)
         for ruleName in rules.keys():
-            print ruleName + ": " +str(self.get_subsuming_rules(ruleName))
-        print "Rules that need overlap treatment: " + str(self.rules_needing_overlap_treatment())            
+            print(ruleName + ": " +str(self.get_subsuming_rules(ruleName)))
+        print("Rules that need overlap treatment: " + str(self.rules_needing_overlap_treatment())           )
             
 
         print("Finished PyRamify")
