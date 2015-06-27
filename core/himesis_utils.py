@@ -460,15 +460,15 @@ def print_graph(graph):
     pretty print a Himesis graph
     """
     # first print the nodes
-    print 'Name: ' + graph.name
-    #print "MM: " + str(graph["mm__"])
+    print('Name: ' + graph.name)
+    #print("MM: " + str(graph["mm__"]))
 
     #try:
-    #    print "MT_constraint__" + str(graph["MT_constraint__"])
+    #    print("MT_constraint__" + str(graph["MT_constraint__"]))
     #except Exception:
     #    pass
 
-    print 'Nodes: '
+    print('Nodes: ')
     nodes = {}
     node_num_mapping = {}
 
@@ -484,7 +484,7 @@ def print_graph(graph):
         print v
 
     # then print the edges
-    print '\nEdges: '
+    print('\nEdges: ')
     print("Num of edges: " + str(len(graph.get_edgelist())))
     #for e in graph.get_edgelist():
     #    print("Edge: " + str(e))
