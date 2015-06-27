@@ -808,7 +808,7 @@ class HimesisPostConditionPattern(HimesisPattern):
                         #TODO: This should be a TransformationLanguageSpecificException
                         transformationCode.append("""try:
     graph.vs[%s]['%s'] = self.%s(%s, lambda i: graph.vs[match[i]], graph)
-except Exception, e:
+except Exception as e:
     raise Exception('An error has occurred while computing the value of the attribute \\'%s\\'', e)
 """ \
     % (index, to_non_RAM_attribute(attrName),
@@ -914,7 +914,7 @@ packet.global_pivots['%s'] = graph.vs[labels['%s']][Himesis.Constants.GUID]
 #===============================================================================
 try:
     self.action(lambda i: graph.vs[labels[i]], graph)
-except Exception, e:
+except Exception as e:
     raise Exception('An error has occurred while applying the post-action', e)""")
         
         # Delete nodes (and edges)
