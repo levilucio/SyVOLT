@@ -69,10 +69,10 @@ class path_condition_generator_worker(Process):
                 rule_name = rule.name
 
                 if self.verbosity >= 2:
-                    print "--------------------------------------"
-                    print "Treating rule: " + self.rule_names[rule_name]
-                    print "Combining with:"
-                    print "Path Condition:" + pc_name
+                    print("--------------------------------------")
+                    print("Treating rule: " + self.rule_names[rule_name])
+                    print("Combining with:")
+                    print("Path Condition:" + pc_name)
                 #if self.verbosity >= 1:
                     #print "Layer: " + str(self.layer+1)
                     #print "Number of Path Conditions generated so far: " +  str(len(self.currentPathConditionSet))
@@ -89,7 +89,7 @@ class path_condition_generator_worker(Process):
 
                 # the rule is disjointly added to the path condition
                 if self.ruleCombinators[rule_name] is None:
-                    if self.verbosity >= 2 : print "Case 1: Rule has no dependencies"
+                    if self.verbosity >= 2 : print("Case 1: Rule has no dependencies")
 
                     localPathConditionLayerAccumulator = []
 
@@ -115,7 +115,7 @@ class path_condition_generator_worker(Process):
                         self.pc_dict[new_name] = shrunk_newCond
                         new_pc_dict[new_name] = shrunk_newCond
 
-                        if self.verbosity >= 2 : print "Created path condition with name: " + newPathCond.name
+                        if self.verbosity >= 2 : print("Created path condition with name: " + newPathCond.name)
                         localPathConditionLayerAccumulator.append(new_name)
 
                         #print_graph(newPathCond)
@@ -143,7 +143,7 @@ class path_condition_generator_worker(Process):
                     p.graph = pc
                     ruleBackwardLinksMatcher.packet_in(p)
                     if not ruleBackwardLinksMatcher.is_success:
-                        if self.verbosity >= 2 : print "Case 2: Rule has dependencies but cannot execute"
+                        if self.verbosity >= 2 : print("Case 2: Rule has dependencies but cannot execute")
 
 
                     else:
@@ -152,14 +152,14 @@ class path_condition_generator_worker(Process):
                         # Case 3: Rule has dependencies that may or will execute
                         #########################################################################
 
-                        if self.verbosity >= 2 : print "Case 3: Rule has dependencies that may or will execute"
+                        if self.verbosity >= 2 : print("Case 3: Rule has dependencies that may or will execute")
 
                         # go through all LHS (matchers) in rule combinators
                         for combinator in xrange(len(self.ruleCombinators[rule_name])):
 
                             combinatorMatcher = self.ruleCombinators[rule_name][combinator][0]
 
-                            if self.verbosity >= 2 : print "Combinator: " + combinatorMatcher.condition.name
+                            if self.verbosity >= 2 : print("Combinator: " + combinatorMatcher.condition.name)
 
                             # check whether we are dealing with a partial or a total combinator
 
@@ -209,7 +209,7 @@ class path_condition_generator_worker(Process):
                                     child_pc_name = childrenPathConditions[child_pc_index]
 
                                     if self.verbosity >= 2 :
-                                        print "--> Combining with path condition: " + child_pc_name
+                                        print("--> Combining with path condition: " + child_pc_name)
 
     #                                         # only combine if the rule hasn't executed yet on that path condition
     #
@@ -309,7 +309,7 @@ class path_condition_generator_worker(Process):
     #                                                 print "----------------------"
 
                                         if self.verbosity >= 2:
-                                            print "Created path condition with name: " + newPathCondName
+                                            print("Created path condition with name: " + newPathCondName)
 
                                 newPathConditionSet.extend(partialTotalPathCondLayerAccumulator)
 

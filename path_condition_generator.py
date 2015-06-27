@@ -281,9 +281,9 @@ class PathConditionGenerator(object):
 #         self.ruleContainment = ruleContainment
 #         
 #         if self.verbosity >= 2:
-#             print "Subsumption order between rules for all layers:"                   
-#             print self.ruleContainment
-#             print "\n"
+#             print("Subsumption order between rules for all layers:")
+#             print(self.ruleContainment)
+#             print("\n")
 
 #         def get_subsumed_rules(rules, layer):
 #             requiredRules = []
@@ -312,9 +312,9 @@ class PathConditionGenerator(object):
 #                 rule = self.transformation[layerIndex][ruleIndex]
 #                 subsumedRules = get_subsumed_rules([self.transformation[layerIndex][ruleIndex]], layerIndex)
 #                 
-# #                 print "Rule: " + rule.name
-# #                 print "Subsumed rules:"
-# #                 print subsumedRules
+# #                 print("Rule: " + rule.name)
+# #                 print("Subsumed rules:")
+# #                 print(subsumedRules)
 #                 
 #                 if subsumedRules != []:
 #                     # combine the rule with all the rules it subsumes
@@ -393,15 +393,15 @@ class PathConditionGenerator(object):
 
                 self.transformation[layerIndex][ruleIndex] = clean_graph(p.graph)
 
-#         print "----------------------------"
-#         print "Rule Combinators: "
-#         print self.ruleCombinators.keys()
-#         print "----------------------------"
+#         print("----------------------------")
+#         print("Rule Combinators: ")
+#         print(self.ruleCombinators.keys())
+#         print("----------------------------")
 # 
-#         print "----------------------------"
-#         print "Rule Trace Checkers: "
-#         print self.ruleTraceCheckers.keys()
-#         print "----------------------------"  
+#         print("----------------------------")
+#         print("Rule Trace Checkers: ")
+#         print(self.ruleTraceCheckers.keys())
+#         print("----------------------------"  )
                     
         self.rule_names = {"HEmpty":"HEmptyPathCondition"}
         # keep the original names around 
@@ -418,7 +418,7 @@ class PathConditionGenerator(object):
 #                 original_new_name = new_name
 #                 self.rule_originalnames[new_name] = beforeMergeName       
 #                 for subName in subsumedRuleNames:
-#                     print "----------> " + subName
+#                     print("----------> " + subName)
 #                     for subNewName in self.rule_names.keys():
 #                         if self.rule_names[subNewName] == subName:
 #                             new_name += "_" + subNewName
@@ -440,20 +440,20 @@ class PathConditionGenerator(object):
                 rule.name = new_name
 
         if self.verbosity >= 2:                
-            print "------------------------------------"
-            print "Transformation: " 
+            print("------------------------------------")
+            print("Transformation: " )
             for l in range(len(self.transformation)):
-                print "Layer " + str(l)
+                print("Layer " + str(l))
                 for r in self.transformation[l]:
-                    print "  " + self.rule_names[r.name]
-            print "------------------------------------"
-            print "\n"
+                    print("  " + self.rule_names[r.name])
+            print("------------------------------------")
+            print("\n")
 
 
-#         print "------------------------------------"
-#         print "Transformation: " 
-#         print self.rule_names
-#         print "------------------------------------"
+#         print("------------------------------------")
+#         print("Transformation: " )
+#         print(self.rule_names)
+#         print("------------------------------------")
 
             
 #             # auxiliary function to order the nodes recursively, starting from the top nodes
@@ -685,15 +685,15 @@ class PathConditionGenerator(object):
                     for rule in self.transformation[layer]:
 
                         if self.verbosity >= 2:
-                            print "--------------------------------------"
-                            print "Treating rule:"
-                            print self.rule_names[rule.name]
-                            print "Combining with:"
-                            print "Path Condition:" + pathCondition.name
+                            print("--------------------------------------")
+                            print("Treating rule:")
+                            print(self.rule_names[rule.name])
+                            print("Combining with:")
+                            print("Path Condition:" + pathCondition.name)
                         #if self.verbosity >= 1:
-                            #print "Layer: " + str(layer+1)
-                            #print "Number of Path Conditions generated so far: " +  str(len(currentpathConditionSet))
-                            #print "Number of Path Conditions to go in this layer: " +  str(pathConSetLength - pathConditionIndex)
+                            #print("Layer: " + str(layer+1))
+                            #print("Number of Path Conditions generated so far: " +  str(len(currentpathConditionSet)))
+                            #print("Number of Path Conditions to go in this layer: " +  str(pathConSetLength - pathConditionIndex))
 
                         # first check if the rule requires any other rules to execute with it,
                         # in case of rule overlapping. If all the rules that are required to execute
@@ -716,8 +716,8 @@ class PathConditionGenerator(object):
     #
     #                     if not combinationIsPossible:
     #                         if self.verbosity >= 2:
-    #                             print "Cannot combine: missing required rules that should have executed\
-    #                                     because they are subsumed by the executed rule!"
+    #                             print("Cannot combine: missing required rules that should have executed\
+    #                                     because they are subsumed by the executed rule!")
     #                         continue
 
 
@@ -729,7 +729,7 @@ class PathConditionGenerator(object):
 
                         # the rule is disjointly added to the path condition
                         if self.ruleCombinators[rule.name] is None:
-                            if self.verbosity >= 2 : print "Case 1: Rule has no dependencies"
+                            if self.verbosity >= 2 : print("Case 1: Rule has no dependencies")
 
                             localPathConditionLayerAccumulator = []
 
@@ -770,7 +770,7 @@ class PathConditionGenerator(object):
 
                                 pc_dict[newPathCond.name] = shrink_graph(newPathCond)
 
-                                if self.verbosity >= 2 : print "Created path condition with name: " + newPathCond.name
+                                if self.verbosity >= 2 : print("Created path condition with name: " + newPathCond.name)
                                 localPathConditionLayerAccumulator.append(newPathCond.name)
 
 
@@ -800,7 +800,7 @@ class PathConditionGenerator(object):
                             p.graph = pathCondition
                             ruleBackwardLinksMatcher.packet_in(p)
                             if not ruleBackwardLinksMatcher.is_success:
-                                if self.verbosity >= 2 : print "Case 2: Rule has dependencies but cannot execute"
+                                if self.verbosity >= 2 : print("Case 2: Rule has dependencies but cannot execute")
 
                             else:
                                 #graph_to_dot(pathCondition.name + "_non_par", pathCondition)
@@ -809,7 +809,7 @@ class PathConditionGenerator(object):
                                 # Case 3: Rule has dependencies that may or will execute
                                 #########################################################################
 
-                                if self.verbosity >= 2 : print "Case 3: Rule has dependencies that may or will execute"
+                                if self.verbosity >= 2 : print("Case 3: Rule has dependencies that may or will execute")
 
                                 # go through all LHS (matchers) in rule combinators
                                 for combinator in range(len(self.ruleCombinators[rule.name])):
@@ -818,7 +818,7 @@ class PathConditionGenerator(object):
 
                                     #graph_to_dot(combinatorMatcher.condition.name, combinatorMatcher.condition)
 
-                                    if self.verbosity >= 2 : print "Combinator: " + combinatorMatcher.condition.name
+                                    if self.verbosity >= 2 : print("Combinator: " + combinatorMatcher.condition.name)
 
                                     # check whether we are dealing with a partial or a total combinator
 
@@ -870,7 +870,7 @@ class PathConditionGenerator(object):
                                             child_pc_name = childrenPathConditions[child_pc_index]
 
                                             if self.verbosity >= 2 :
-                                                print "--> Combining with path condition: " + child_pc_name
+                                                print("--> Combining with path condition: " + child_pc_name)
 
     #                                         # only combine if the rule hasn't executed yet on that path condition
     #
@@ -956,13 +956,13 @@ class PathConditionGenerator(object):
                                                 # store the new path condition
                                                 pc_dict[newPathCond.name] = shrink_graph(newPathCond)
 
-    #                                                 print "----------------------"
-    #                                                 print "Adding: " + newPathCond.name
-    #                                                 print "Parent is: " + parentPathCondition[layerPathCondAccumulator[currentPathCondition]]
-    #                                                 print "----------------------"
+    #                                                 print("----------------------")
+    #                                                 print("Adding: " + newPathCond.name)
+    #                                                 print("Parent is: " + parentPathCondition[layerPathCondAccumulator[currentPathCondition]])
+    #                                                 print("----------------------")
 
                                                 if self.verbosity >= 2:
-                                                    print "Created path condition with name: " + newPathCond.name
+                                                    print("Created path condition with name: " + newPathCond.name)
 
                                         currentpathConditionSet.extend(partialTotalPathCondLayerAccumulator)
 
@@ -1050,8 +1050,8 @@ class PathConditionGenerator(object):
         #i=0
         for pathCond in self.get_path_conditions():
             try:
-                # print  ( str(i)+"---"+pathCond.name)
-                # print  ( " ")
+                # print( str(i)+"---"+pathCond.name)
+                # print( " ")
                 #opname="pc"+str(i)
                 graph_to_dot(pathCond.name, pathCond)
                 #i=i+1
