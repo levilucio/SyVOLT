@@ -290,16 +290,14 @@ class Test():
         # print("\n\nTime to verify " + str(prop_length) + " properties: " + str(ts1 - ts0))
 
 
-
-
-def _print_states(self,s):
-        for state in s.symbStateSpace:
-            print "----------"
-            if state == ():
-                print 'Empty'
-            else:
-                for s in state:
-                    print s.name
+def _print_states(self, s):
+    for state in s.symbStateSpace:
+        print("----------")
+        if state == ():
+            print('Empty')
+        else:
+            for s in state:
+                print(s.name)
 
 
 if __name__ == "__main__":

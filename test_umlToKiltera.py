@@ -475,12 +475,12 @@ class Test():
 
     def _print_states(self,s):
         for state in s.symbStateSpace:
-            print "----------"
+            print("----------")
             if state == ():
-                print 'Empty'
+                print('Empty')
             else:
                 for s in state:
-                    print s.name
+                    print(s.name)
 
 
 if __name__ == "__main__":
