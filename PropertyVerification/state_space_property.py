@@ -4,7 +4,7 @@ Created on 2013-08-17
 @author: gehan
 '''
 from abc import ABCMeta,abstractmethod
-from property import Property
+from .property import Property
 
 class StateSpaceProperty(Property):
     '''

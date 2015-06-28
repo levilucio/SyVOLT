@@ -1,6 +1,7 @@
 import uuid, os.path, copy\
 
 import igraph as ig
+from functools import reduce
 
 try:
     import util.misc as misc
@@ -126,13 +127,13 @@ class Himesis(ig.Graph):
         """
             Iterates over the nodes in the graph, by index
         """
-        return xrange(self.vcount())
+        return range(self.vcount())
     
     def edge_iter(self):
         """
             Iterates over the edges in the graph, by index
         """
-        return xrange(self.ecount())
+        return range(self.ecount())
     
     def add_node(self):
         new_node = self.vcount()
@@ -222,7 +223,16 @@ class Himesis(ig.Graph):
         @param access: the access to the attribute
         @param value: the value to set the attribute to
         """
-        if isinstance(value, str) or isinstance(value, unicode):
+
+        #only exists in Python2
+        try:
+            if isinstance(value, unicode):
+                return '''
+                    %s = """%s"""''' % (access, value)
+        except Exception:
+            pass
+
+        if isinstance(value, str):
             return '''
         %s = """%s"""''' % (access, value)
         elif isinstance(value, int) or isinstance(value, float) or isinstance(value, bool):
@@ -423,7 +433,7 @@ class HimesisPattern(Himesis):
         #if label in self.nodes_label:
         #    return self.nodes_label[label]
 
-        for i in xrange(self.vcount()):
+        for i in range(self.vcount()):
             if label == self.vs[i]['MT_label__']:
                 return i
     
@@ -461,7 +471,7 @@ class HimesisPreConditionPattern(HimesisPattern):
         #     return self.nodes_pivot_in[pivot]
 
         if 'MT_pivotIn__' in self.vs.attribute_names():
-            for i in xrange(self.vcount()):
+            for i in range(self.vcount()):
                 if pivot == self.vs[i]['MT_pivotIn__']:
                     return i
     
@@ -541,7 +551,7 @@ class HimesisPreConditionPatternLHS(HimesisPreConditionPattern):
                     file.write("""
         try:
             from .%s import %s
-        except ValueError:
+        except Exception:
             from %s import %s
         """ % (NAC_name, NAC_name, NAC_name, NAC_name))
                 file.write('''
@@ -556,7 +566,7 @@ class HimesisPreConditionPatternLHS(HimesisPreConditionPattern):
                     file.write("""
         try:
             from .%s import %s
-        except ValueError:
+        except Exception:
             from %s import %s
         """ % (sname, sname, sname, sname))
                 file.write('''
@@ -594,7 +604,7 @@ class HimesisPreConditionPatternNAC(HimesisPreConditionPattern):
         # Load the bridge between this NAC and its LHS
         try:
             from .%s import %s
-        except ValueError:
+        except Exception:
             from %s import %s""" % (self.bridge.name, self.bridge.name, self.bridge.name, self.bridge.name))
         file.write('''
         self.bridge = %s()
@@ -762,7 +772,7 @@ class HimesisPostConditionPattern(HimesisPattern):
             file.write('''
         try:
             from .%s import %s
-        except ValueError:
+        except Exception:
             from %s import %s
         self.pre = %s()
     ''' % tuple([self.pre.__class__.__name__] * 5))
@@ -771,7 +781,7 @@ class HimesisPostConditionPattern(HimesisPattern):
             file.write('''
         try:
             from .%s import %s
-        except ValueError:
+        except Exception:
             from %s import %s
         self.pre = %s()
     ''' % tuple([standardize_name(self.pre)] * 5))
@@ -959,11 +969,15 @@ except Exception as e:
             if label not in RHS_labels:
                 labels_to_delete.append(label)
         if len(labels_to_delete) > 0:
-            transformationCode.append("""# %s
+
+
+            for lbl in labels_to_delete:
+                transformationCode.append("""# %s%s""" % (LHS_labels[lbl], lbl))
+                transformationCode.append("""
 graph.delete_nodes(%s)
-""" % (reduce(lambda l1,l2: l1 + ', ' + l2, map(lambda lbl: '%s%s' % (LHS_labels[lbl], lbl), labels_to_delete)),
-       str(map(lambda lbl: 'labels["%s"]' % lbl, labels_to_delete)).replace("'", "")))
-        
+""" % str('labels["%s"]' % lbl).replace("'", ""))
+
+
         # Save the code in the body of the execute method
         self.execute_body = ''.join(transformationCode)
 

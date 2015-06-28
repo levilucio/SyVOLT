@@ -335,8 +335,8 @@ def expand_graph(small_value):
     #print(graph.name)
     #graph.is_compiled = is_compiled
 
-    import himesis as Himesis
-    graph.__class__ = Himesis.Himesis
+    from .himesis import Himesis
+    graph.__class__ = Himesis
 
     return graph
 

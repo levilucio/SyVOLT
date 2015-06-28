@@ -446,8 +446,8 @@ class PyRamify:
     def get_backward_patterns(self, rule):
         if self.verbosity >= 2:
             print("\nStarting get backward patterns")
-        name = rule.keys()[0]
-        graph = rule[rule.keys()[0]]
+        name = list(rule.keys())[0]
+        graph = list(rule.values())[0]
 
         label = 0
         for i in range(len(graph.vs)):
@@ -559,7 +559,7 @@ class PyRamify:
             print("Backward patterns compiled to: " + file_name)
 
         rule = load_class(out_dir + "/" + new_name)
-        backward_pattern = rule[rule.keys()[0]]
+        backward_pattern = rule[list(rule.keys())[0]]
 
         if self.draw_svg:
             graph_to_dot(new_name, backward_pattern)
@@ -682,8 +682,8 @@ class PyRamify:
 
         if self.verbosity >= 2:
             print("\nStarting to get rule combinators")
-        name = rule.keys()[0]
-        graph = rule.values()[0]
+        name = list(rule.keys())[0]
+        graph = list(rule.values())[0]
 
         label = 0
         for i in range(len(graph.vs)):
@@ -902,7 +902,7 @@ class PyRamify:
         #print("Length: " + str(len(input_nodes)))
         #print(input_nodes)
         #input nodes stores the node numbers for the nodes you want to knock out of the base graph
-        output = sum([map(list, combinations(input_nodes, i)) for i in range(len(input_nodes) + 1)], [])
+        #output = sum([map(list, combinations(input_nodes, i)) for i in range(len(input_nodes) + 1)], [])
         #output = []
         
         
@@ -920,9 +920,9 @@ class PyRamify:
 
         rewrite_name = rewriter_graph.name + "_rule_combinator_rewriter"
 
-        levis_tiny_hack = True
-        if levis_tiny_hack and len(output) > 1:
-            output = [output[0], output[-1]]
+        #levis_tiny_hack = True
+        #if levis_tiny_hack and len(output) > 1:
+            #output = [output[0], output[-1]]
 
 
         # LEVI: we only need the total and the partial combinator.
@@ -988,7 +988,7 @@ class PyRamify:
             if self.draw_svg:
                 graph_to_dot(combinator_matchers[i].name, combinator_matchers[i])
             
-            backward_pattern = rule.values()[0]
+            backward_pattern = list(rule.values())[0]
             
             if i == 0:
                 # now build the NAC for the first combinator (just the complete base graph) 
@@ -1004,7 +1004,7 @@ class PyRamify:
                     print("Nac graph compiled to: " + file_name)
                 
                 NAC_graph = load_class(out_dir + NAC_graph.name, [backward_pattern])
-                NAC_graph = NAC_graph.values()[0]
+                NAC_graph = list(NAC_graph.values())[0]
                 
                 # debug printout
                 if self.draw_svg:
@@ -1032,7 +1032,7 @@ class PyRamify:
             
  
             rewriter_graph2 = load_class(out_dir + rewriter_graph_copy.name)
-            rewriter_graph2 = rewriter_graph2.values()[0]
+            rewriter_graph2 = list(rewriter_graph2.values())[0]
  
             # print(inspect.getargspec(rewriter_graph2.execute))
             # print(rewriter_graph2.__class__)
@@ -1504,8 +1504,8 @@ class PyRamify:
 
     def get_match_pattern(self, rule):
     
-        name = rule.keys()[0]
-        graph = rule[rule.keys()[0]]
+        name = list(rule.keys())[0]
+        graph = list(rule.values())[0]
 
         label = 0
         for i in range(len(graph.vs)):
@@ -1551,7 +1551,7 @@ class PyRamify:
 
         #have to reload the graph to define all the eval functions
         rule = load_class(out_dir + "/" + old_name + "_match_pattern_matcher")
-        match_graph = rule.values()[0]
+        match_graph = list(rule.values())[0]
 
 
         rewriter.pre = match_graph
@@ -1563,7 +1563,7 @@ class PyRamify:
             print("Match pattern rewriter compiled to: " + file_name)
 
         rewriter_dict = load_class(out_dir + rewriter.name)
-        rewriter = rewriter_dict.values()[0]
+        rewriter = list(rewriter_dict.values())[0]
 
         #graph_to_dot("the_rewriter_graph_after" + rewriter.name, rewriter)
 
@@ -1857,8 +1857,8 @@ class PyRamify:
                     traceback.print_exc()
                     continue
 
-                name = rule.keys()[0]
-                graph = rule[rule.keys()[0]]
+                name = list(rule.keys())[0]
+                graph = list(rule.values())[0]
 
                 #TODO: Make this less fragile
                 if "LHS" in f:

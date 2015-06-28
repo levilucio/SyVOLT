@@ -584,7 +584,7 @@ class HimesisMatcherState(object):
                     matcher.out_1[node] = self.depth
             
             # Updates for T_1^{inout}
-            for node in set(matcher.in_1.keys() + matcher.out_1.keys()):
+            for node in set(list(matcher.in_1.keys()) + list(matcher.out_1.keys())):
                 if node in matcher.out_1 and node in matcher.in_1 and node not in matcher.inout_1: 
                     matcher.inout_1[node] = self.depth
             
@@ -609,7 +609,7 @@ class HimesisMatcherState(object):
                     matcher.out_2[node] = self.depth
             
             # Updates for T_2^{inout}
-            for node in set(matcher.in_2.keys() + matcher.out_2.keys()):
+            for node in set(list(matcher.in_2.keys()) + list(matcher.out_2.keys())):
                 if node in matcher.out_2 and node in matcher.in_2 and node not in matcher.inout_2: 
                     matcher.inout_2[node] = self.depth
     
@@ -627,7 +627,9 @@ class HimesisMatcherState(object):
         # Now we revert the other four vectors.        
         # Thus, we delete all entries which have this depth level.
         for vector in (self.matcher.in_1, self.matcher.in_2, self.matcher.out_1, self.matcher.out_2, self.matcher.inout_1, self.matcher.inout_2):
-            for node in vector.keys():
+
+            vector_keys = list(vector.keys())
+            for node in vector_keys:
                 if vector[node] == self.depth:
                     del vector[node]
 

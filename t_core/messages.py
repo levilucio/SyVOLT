@@ -257,7 +257,7 @@ class Match(dict):
         #print("Pivots: " + str(self.local_pivots))
         #print(self)
         mapping = {}
-        for label in self.iterkeys():
+        for label in list(self.keys()):
             #print("Looking for label: " + str(label))
             #print("Source Graph: " + source_graph.name)
             #graph_to_dot("source_graph", source_graph)
@@ -274,7 +274,7 @@ class Match(dict):
             Converts the match to a mapping dictionary {pattern node index: source node index}.
         '''
         mapping = {}
-        for label in self.iterkeys():
+        for label in list(self.keys()):
             patternNode = pattern_graph.get_node_with_label(label)
             if patternNode is not None:
                 sourceNode = source_graph.get_node(self[label])
@@ -318,7 +318,7 @@ class Pivots(dict):
         return cpy
     
     def to_source_node_indices(self, source_graph):
-        for p in self.iterkeys():
+        for p in list(self.keys()):
             sourceNode = source_graph.get_node(self[p])
             self[p] = sourceNode
         self.has_source_node_indices = True
@@ -329,13 +329,13 @@ class Pivots(dict):
         '''
         mapping = {}
         if not self.has_source_node_indices:
-            for p in self.iterkeys():
+            for p in list(self.keys()):
                 patternNode = pattern_graph.get_pivot_in(p)
                 if patternNode is not None:
                     sourceNode = source_graph.get_node(self[p])
                     mapping[patternNode] = sourceNode
         else:
-            for p in self.iterkeys():
+            for p in list(self.keys()):
                 patternNode = pattern_graph.get_pivot_in(p)
                 if patternNode is not None:
                     mapping[patternNode] = self[p]
