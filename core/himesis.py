@@ -1,11 +1,24 @@
-import uuid, os.path, copy, cPickle as pickle    # Pickle is used to save the attribute values as pickled strings
+import uuid, os.path, copy\
+
 import igraph as ig
-import util.misc as misc
-from epsilon_parser import EpsilonParser
-from util.misc import indent_text
+
+try:
+    import util.misc as misc
+    from util.misc import indent_text
+except ImportError:
+    import util.misc3 as misc
+    from util.misc3 import indent_text
+
+
 import numpy.random as nprnd
 
-from himesis_utils import standardize_name, is_RAM_attribute, to_non_RAM_attribute
+from .himesis_utils import standardize_name, is_RAM_attribute, to_non_RAM_attribute
+
+#cross-compatibility
+try:
+    import cPickle as pickle
+except ImportError:
+    import pickle as pickle
 
 class HConstants:
     GUID = 'GUID__'
@@ -486,12 +499,12 @@ class HimesisPreConditionPattern(HimesisPattern):
     def %s(self, attr_value, this):
 %s
 
-''' % (self.get_attr_constraint_name(v, attr), misc.indent_text(EpsilonParser().to_python(self.vs[v][attr]), 2)))
+''' % (self.get_attr_constraint_name(v, attr), misc.indent_text(self.vs[v][attr], 2)))
         
         # The constraint code
         code = 'return True'
         if Himesis.Constants.MT_CONSTRAINT in self.attributes() and self[Himesis.Constants.MT_CONSTRAINT]:
-            code = EpsilonParser().to_python(self[Himesis.Constants.MT_CONSTRAINT])
+            code = self[Himesis.Constants.MT_CONSTRAINT]
         file.write('''
     def constraint(self, PreNode, graph):
         """
@@ -758,12 +771,12 @@ class HimesisPostConditionPattern(HimesisPattern):
     def %s(self, attr_value, PreNode, graph):
 %s
 
-''' % (self.get_attr_action_name(v, attr), misc.indent_text(EpsilonParser().to_python(code), 2)))
+''' % (self.get_attr_action_name(v, attr), misc.indent_text(code, 2)))
         
         # The action code
         code = 'pass'
         if Himesis.Constants.MT_ACTION in self.attributes() and self[Himesis.Constants.MT_ACTION]:
-            code = EpsilonParser().to_python(self[Himesis.Constants.MT_ACTION])
+            code = self[Himesis.Constants.MT_ACTION]
         file.write('''
     def action(self, PostNode, graph):
         """

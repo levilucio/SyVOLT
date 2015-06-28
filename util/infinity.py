@@ -27,7 +27,7 @@ class Infty(object):
     __instantiated = False
     def __init__(self):
         if self.__instantiated:
-            raise NotImplementedError, "singleton class already instantiated"
+            raise NotImplementedError("singleton class already instantiated")
         self.__instantiatiated = True
 
     def __deepcopy__(self, memo):
@@ -40,7 +40,7 @@ class Infty(object):
     def __sub__(self, other):
         """ INFINITY - x = INFINITY (if x != INF), or NaN (if x == INFINITY) """
         if other == self:
-            raise ValueError, "INFINITY - INFINITY gives NaN (not defined)"
+            raise ValueError("INFINITY - INFINITY gives NaN (not defined)")
         return self
 
     def __mul__(self, other):
@@ -54,8 +54,8 @@ class Infty(object):
     def __rsub__(self, other):
         """ x - INFINITY = -INFINITY (if x != INFINITY), or NaN (if x == INFINITY) """
         if other == self:
-            raise ValueError, "INFINITY - INFINITY gives NaN (not defined)"
-        raise ValueError, "x - INFINITY gives MINUS_INFINITY (not defined)"
+            raise ValueError("INFINITY - INFINITY gives NaN (not defined)")
+        raise ValueError("x - INFINITY gives MINUS_INFINITY (not defined)")
 
     def __rmul__(self, other):
         """ x * INFINITY = INFINITY """

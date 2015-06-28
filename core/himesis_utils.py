@@ -16,7 +16,13 @@ import re
 import sys
 import os
 import uuid
-import cPickle as pickle
+
+#cross-compatibility
+try:
+    import cPickle as pickle
+except ImportError:
+    import pickle as pickle
+
 import igraph
 import time
 
@@ -481,7 +487,7 @@ def print_graph(graph):
 
     print("Num of nodes: " + str(len(nodes.keys())))
     for v in sorted(nodes.keys()):
-        print v
+        print(v)
 
     # then print the edges
     print('\nEdges: ')
