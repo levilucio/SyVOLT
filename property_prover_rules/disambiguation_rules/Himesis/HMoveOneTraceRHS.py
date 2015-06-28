@@ -15,7 +15,6 @@ class HMoveOneTraceRHS(HimesisPostConditionPattern):
         # Add the edges
         self.add_edges([[0, 2], [1, 0]])
         # Set the graph attributes
-        self["mm__"] = ['MT_post__FamiliesToPersons_MM', 'MoTifRule']
         self["MT_action__"] = """#===============================================================================
 # This code is executed after the rule has been applied.
 # You can access a node labelled n matched by this rule by: PostNode('n').
@@ -24,13 +23,43 @@ class HMoveOneTraceRHS(HimesisPostConditionPattern):
 
 pass
 """
-        self["name"] = """"""
         self["GUID__"] = 9043970257047724692
+        self["name"] = """"""
+        self["mm__"] = ['MT_post__FamiliesToPersons_MM', 'MoTifRule']
         
         # Set the node attributes
+        self.vs[0]["GUID__"] = 7601443841073304996
         self.vs[0]["MT_label__"] = """20"""
         self.vs[0]["mm__"] = """MT_post__trace_link"""
-        self.vs[0]["GUID__"] = 7601443841073304996
+        self.vs[1]["MT_post__classtype"] = """
+#===============================================================================
+# You can access the value of the current node's attribute value by: attr_value.
+# If the current node shall be created you MUST initialize it here!
+# You can access a node labelled n by: PreNode('n').
+# To access attribute x of node n, use: PreNode('n')['x'].
+# Note that the attribute values are those before the match is rewritten.
+# The order in which this code is executed depends on the label value
+# of the encapsulating node.
+# The given action must return the new value of the attribute.
+#===============================================================================
+
+return attr_value
+"""
+        self.vs[1]["MT_post__name"] = """
+#===============================================================================
+# You can access the value of the current node's attribute value by: attr_value.
+# If the current node shall be created you MUST initialize it here!
+# You can access a node labelled n by: PreNode('n').
+# To access attribute x of node n, use: PreNode('n')['x'].
+# Note that the attribute values are those before the match is rewritten.
+# The order in which this code is executed depends on the label value
+# of the encapsulating node.
+# The given action must return the new value of the attribute.
+#===============================================================================
+
+return attr_value
+"""
+        self.vs[1]["GUID__"] = 7803727040313128711
         self.vs[1]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -46,22 +75,8 @@ pass
 return attr_value
 """
         self.vs[1]["MT_label__"] = """9"""
-        self.vs[1]["MT_post__name"] = """
-#===============================================================================
-# You can access the value of the current node's attribute value by: attr_value.
-# If the current node shall be created you MUST initialize it here!
-# You can access a node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# Note that the attribute values are those before the match is rewritten.
-# The order in which this code is executed depends on the label value
-# of the encapsulating node.
-# The given action must return the new value of the attribute.
-#===============================================================================
-
-return attr_value
-"""
         self.vs[1]["mm__"] = """MT_post__MetaModelElement_T"""
-        self.vs[1]["MT_post__classtype"] = """
+        self.vs[2]["MT_post__classtype"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
 # If the current node shall be created you MUST initialize it here!
@@ -75,8 +90,21 @@ return attr_value
 
 return attr_value
 """
-        self.vs[1]["GUID__"] = 7803727040313128711
-        self.vs[2]["MT_pivotOut__"] = """element1"""
+        self.vs[2]["MT_post__name"] = """
+#===============================================================================
+# You can access the value of the current node's attribute value by: attr_value.
+# If the current node shall be created you MUST initialize it here!
+# You can access a node labelled n by: PreNode('n').
+# To access attribute x of node n, use: PreNode('n')['x'].
+# Note that the attribute values are those before the match is rewritten.
+# The order in which this code is executed depends on the label value
+# of the encapsulating node.
+# The given action must return the new value of the attribute.
+#===============================================================================
+
+return attr_value
+"""
+        self.vs[2]["GUID__"] = 2143674367009436808
         self.vs[2]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -92,22 +120,9 @@ return attr_value
 return attr_value
 """
         self.vs[2]["MT_label__"] = """7"""
-        self.vs[2]["MT_post__name"] = """
-#===============================================================================
-# You can access the value of the current node's attribute value by: attr_value.
-# If the current node shall be created you MUST initialize it here!
-# You can access a node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# Note that the attribute values are those before the match is rewritten.
-# The order in which this code is executed depends on the label value
-# of the encapsulating node.
-# The given action must return the new value of the attribute.
-#===============================================================================
-
-return attr_value
-"""
+        self.vs[2]["MT_pivotOut__"] = """element1"""
         self.vs[2]["mm__"] = """MT_post__MetaModelElement_S"""
-        self.vs[2]["MT_post__classtype"] = """
+        self.vs[3]["MT_post__classtype"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
 # If the current node shall be created you MUST initialize it here!
@@ -121,8 +136,21 @@ return attr_value
 
 return attr_value
 """
-        self.vs[2]["GUID__"] = 2143674367009436808
-        self.vs[3]["MT_pivotOut__"] = """element2"""
+        self.vs[3]["MT_post__name"] = """
+#===============================================================================
+# You can access the value of the current node's attribute value by: attr_value.
+# If the current node shall be created you MUST initialize it here!
+# You can access a node labelled n by: PreNode('n').
+# To access attribute x of node n, use: PreNode('n')['x'].
+# Note that the attribute values are those before the match is rewritten.
+# The order in which this code is executed depends on the label value
+# of the encapsulating node.
+# The given action must return the new value of the attribute.
+#===============================================================================
+
+return attr_value
+"""
+        self.vs[3]["GUID__"] = 1164749033936639214
         self.vs[3]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -138,40 +166,12 @@ return attr_value
 return attr_value
 """
         self.vs[3]["MT_label__"] = """8"""
-        self.vs[3]["MT_post__name"] = """
-#===============================================================================
-# You can access the value of the current node's attribute value by: attr_value.
-# If the current node shall be created you MUST initialize it here!
-# You can access a node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# Note that the attribute values are those before the match is rewritten.
-# The order in which this code is executed depends on the label value
-# of the encapsulating node.
-# The given action must return the new value of the attribute.
-#===============================================================================
-
-return attr_value
-"""
+        self.vs[3]["MT_pivotOut__"] = """element2"""
         self.vs[3]["mm__"] = """MT_post__MetaModelElement_S"""
-        self.vs[3]["MT_post__classtype"] = """
-#===============================================================================
-# You can access the value of the current node's attribute value by: attr_value.
-# If the current node shall be created you MUST initialize it here!
-# You can access a node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# Note that the attribute values are those before the match is rewritten.
-# The order in which this code is executed depends on the label value
-# of the encapsulating node.
-# The given action must return the new value of the attribute.
-#===============================================================================
-
-return attr_value
-"""
-        self.vs[3]["GUID__"] = 1164749033936639214
 
         try:
             from .HMoveOneTraceLHS import HMoveOneTraceLHS
-        except ValueError:
+        except Exception:
             from HMoveOneTraceLHS import HMoveOneTraceLHS
         self.pre = HMoveOneTraceLHS()
     
@@ -242,5 +242,6 @@ return attr_value
         # Finally, delete nodes (this will automatically delete the adjacent edges)
         #===============================================================================
         # MT_pre__trace_link10
-        graph.delete_nodes([labels["10"]])
+            graph.delete_nodes(<map object at 0x7facdebf98d0>)
+            
     
