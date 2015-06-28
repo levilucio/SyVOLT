@@ -4,7 +4,7 @@ Created on 2015-02-13
 @author: levi
 '''
 
-from attribute_equation_solver import AttributeEquationSolver
+from .attribute_equation_solver import AttributeEquationSolver
 
 
 class SimpleAttributeEquationEvaluator(AttributeEquationSolver):
@@ -132,8 +132,8 @@ class SimpleAttributeEquationEvaluator(AttributeEquationSolver):
                         if self.verbosity >= 2:
                             objectAttrName = [item[0] for item in self.varNameDatabase.items() if item[1] == varInEquation][0]
                             splitObjectAttrName = objectAttrName.split('_')
-                            print "Python solver check failed! Object " + splitObjectAttrName[0] + " has values " + "'" + \
-                            variableValues[varInEquation] + "'" + " and " + "'" + valueInEquation + "'"
+                            print("Python solver check failed! Object " + splitObjectAttrName[0] + " has values " + "'" + \
+                            variableValues[varInEquation] + "'" + " and " + "'" + valueInEquation + "'")
                             
                         return False
                 else:
@@ -142,7 +142,7 @@ class SimpleAttributeEquationEvaluator(AttributeEquationSolver):
 
 
         # no contradictions were found, check succeeded  
-        if self.verbosity >= 2 : print "Python check succeeded!"
+        if self.verbosity >= 2 : print("Python check succeeded!")
         return True
 
 

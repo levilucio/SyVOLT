@@ -17,7 +17,7 @@ from solver.simple_attribute_equation_evaluator import SimpleAttributeEquationEv
 
 import numpy.random as nprnd
 
-from profile import *
+#from profile import *
 
 class path_condition_generator_worker(Process):
 

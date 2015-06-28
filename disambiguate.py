@@ -157,7 +157,7 @@ class Disambiguator():
 
         p = find_elements_collapse_match.packet_in(p)
 
-        if self.verbosity >= 2: print 'Found collapsable elements:' + str(find_elements_collapse_match.is_success)
+        if self.verbosity >= 2: print('Found collapsable elements:' + str(find_elements_collapse_match.is_success))
 
         #print("Size of match sets: " + str(p.match_sets))
 
@@ -214,7 +214,7 @@ class Disambiguator():
             #                 if self.verbosity >= 2: print 'merge_cardinalities_matchmodel:' + str( merge_cardinalities_matchmodel.is_success)
 
             p2 = move_input_repeated_direct.packet_in(p2)
-            if self.verbosity >= 2: print 'move_input_repeated_direct_matchmodel: ' + str(move_input_repeated_direct.is_success)
+            if self.verbosity >= 2: print('move_input_repeated_direct_matchmodel: ' + str(move_input_repeated_direct.is_success))
 
             if not move_input_repeated_direct.is_success: #repeated already have a link of the same type
                 # not repeated - dont have it there so u copy on top
@@ -236,18 +236,18 @@ class Disambiguator():
                 if self.debug:
                     graph_to_dot("move_input_direct_matchmodel", p2.graph)
                 p2 = move_input_direct.packet_in(p2) #direct link going in
-                if self.verbosity >= 2: print 'move_input_direct_matchmodel: ' + str(move_input_direct.is_success)
+                if self.verbosity >= 2: print('move_input_direct_matchmodel: ' + str(move_input_direct.is_success))
 
                 #print("Checking move_output_repeated_direct_matchmodel")
                 p2 = move_output_repeated_direct.packet_in(p2) #direct link going out
-                if self.verbosity >= 2: print 'move_output_repeated_direct_matchmodel: ' + str(move_output_repeated_direct.is_success)
+                if self.verbosity >= 2: print('move_output_repeated_direct_matchmodel: ' + str(move_output_repeated_direct.is_success))
                 #if not move_output_repeated_direct.is_success:
 
                 if self.debug:
                     graph_to_dot("move_output_direct_matchmodel", p2.graph)
 
                 p2 = move_output_direct.packet_in(p2)
-                if self.verbosity >= 2: print 'move_output_direct_matchmodel: ' + str(move_output_direct.is_success)
+                if self.verbosity >= 2: print('move_output_direct_matchmodel: ' + str(move_output_direct.is_success))
 
                 #TODO: Re-enable indirect links
                 # p2 = move_input_repeated_indirect.packet_in(p2)
@@ -267,7 +267,7 @@ class Disambiguator():
 
                 p2 = move_trace.packet_in(p2)
                 if self.verbosity >= 2:
-                    print 'move_trace:' + str(move_trace.is_success)
+                    print('move_trace:' + str(move_trace.is_success))
                     if self.debug:
                         #print(p2)
                         graph_to_dot("before_move_trace_" + str(move_trace.is_success), p2.graph)
@@ -278,7 +278,7 @@ class Disambiguator():
                 p2 = move_one_attribute.packet_in(p2)
                 # #if not delete_attributes_from_uncollapsed_element.is_success:
                 #    raise Exception("Attributes were not deleted from uncollapsed element")
-                if self.verbosity >= 2: print 'move_one_attribute:' + str(move_one_attribute.is_success)
+                if self.verbosity >= 2: print('move_one_attribute:' + str(move_one_attribute.is_success))
 
                 # graph_to_dot("before_delete_attributes_from_uncollapsed_element", p2.graph)
                 # p2 = delete_attributes_from_uncollapsed_element.packet_in(p2)
@@ -293,7 +293,7 @@ class Disambiguator():
                 p2 = delete_uncollapsed_element.packet_in(p2)
                 if not delete_uncollapsed_element.is_success:
                     raise Exception("Uncollapsed element was not deleted")
-                if self.verbosity >= 2: print 'delete_uncollapsed_element_match:' + str(delete_uncollapsed_element.is_success)
+                if self.verbosity >= 2: print('delete_uncollapsed_element_match:' + str(delete_uncollapsed_element.is_success))
 
                 # check if the equations on the attributes of the disambiguated solution can be satisfied
 

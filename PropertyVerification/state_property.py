@@ -4,7 +4,7 @@ Created on 2013-09-21
 @author: gehan
 '''
 from abc import ABCMeta, abstractmethod
-from property import Property
+from .property import Property
 import os
 #from atomic_state_property import AtomicStateProperty
 
@@ -215,7 +215,7 @@ class StateProperty(Property):
                     property_isolated_matched = True
                     if StateSpace.verbosity >= 1:
                         print('State ' + str(state_index) + ": " + state.name)
-                        print '    Isolated pattern matched'
+                        print('    Isolated pattern matched')
 
                     # find first how many matches of the isolated elements of the property (if any) were found
                     numberOfIsolatedMatches = len(s.match_sets[s.current].matches)
@@ -284,7 +284,7 @@ class StateProperty(Property):
                         AtomicStatePropsInStateProp[atomicStatePropIndex].verifiedStateCache.append((state,numberOfIsolatedMatches))
                         cacheIsolatedPatternMatches.append(True)
                     else:
-                        if StateSpace.verbosity >= 1: print '        Will not check state, property holds...'
+                        if StateSpace.verbosity >= 1: print('        Will not check state, property holds...')
                         cacheIsolatedPatternMatches.append(False)
                         AtomicStatePropsInStateProp[atomicStatePropIndex].SETverifResult(True)
                 else: # did not succeed in matching isolated
@@ -312,10 +312,10 @@ class StateProperty(Property):
                     states_to_analyse.extend(disambiguated_states)
                     ###new code -end
                     if StateSpace.verbosity >= 1: t1 = time.time()
-                    if StateSpace.verbosity >= 1: print 'Time to collapse state: ' + str(t1-t0)
+                    if StateSpace.verbosity >= 1: print('Time to collapse state: ' + str(t1-t0))
                 else:
-                    if StateSpace.verbosity >= 1: print 'State contains only one rule; no collapse needed... '
-                if StateSpace.verbosity >= 1: print '    Number of states to analyse: ' + str(len(states_to_analyse))
+                    if StateSpace.verbosity >= 1: print('State contains only one rule; no collapse needed... ')
+                if StateSpace.verbosity >= 1: print('    Number of states to analyse: ' + str(len(states_to_analyse)))
 
 
 

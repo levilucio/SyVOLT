@@ -19,11 +19,11 @@ from core.himesis_utils import set_do_pickle
 import math
 import time
 
-from PCDict import PCDict
+#from PCDict import PCDict
 
 from copy import deepcopy
 
-from solver.prolog_attribute_equation_evaluator import PrologAttributeEquationEvaluator
+#from solver.prolog_attribute_equation_evaluator import PrologAttributeEquationEvaluator
 from solver.simple_attribute_equation_evaluator import SimpleAttributeEquationEvaluator
 
 from PyRamify import PyRamify
@@ -35,7 +35,7 @@ from path_condition_generator_worker import *
 
 from random import shuffle
 
-from profile import *
+#from profile import *
 
 
 
