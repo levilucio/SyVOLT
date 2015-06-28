@@ -1,6 +1,6 @@
 
-from rule_primitive import RulePrimitive
-from messages import TransformationException
+from .rule_primitive import RulePrimitive
+from .messages import TransformationException
 from core.himesis import Himesis
 
 import traceback
@@ -41,7 +41,7 @@ class Rewriter(RulePrimitive):
                 if verbosity > 0:
                     print("Rewriter mapping: " + str(mapping))
                 self.condition.execute(packet, mapping)     # Sets dirty nodes as well
-            except Exception, e:
+            except Exception as e:
 
                 tb = traceback.format_exc()
                 print("Rewriter Error: " + str(e))

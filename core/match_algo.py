@@ -1,7 +1,7 @@
 
 import sys
-from himesis import Himesis
-from himesis_utils import standardize_name, is_RAM_attribute, to_non_RAM_attribute
+from .himesis import Himesis
+from .himesis_utils import standardize_name, is_RAM_attribute, to_non_RAM_attribute
 
 class Priority(object):
     """

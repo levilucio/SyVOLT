@@ -1,5 +1,5 @@
 
-from primitive import Primitive
+from .primitive import Primitive
 
 # Abstract class
 class CompositePrimitive(Primitive):

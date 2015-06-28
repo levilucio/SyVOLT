@@ -3,8 +3,8 @@ from copy import deepcopy
 from util.infinity import INFINITY
 from core.match_algo import HimesisMatcher
 from core.himesis import HConstants as HC
-from rule_primitive import RulePrimitive
-from messages import MatchSet, Match, TransformationException
+from .rule_primitive import RulePrimitive
+from .messages import MatchSet, Match, TransformationException
 
 from core.himesis_utils import print_graph, print_GUIDs
 import traceback

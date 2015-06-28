@@ -1,5 +1,5 @@
 
-from composite_primitive import CompositePrimitive
+from .composite_primitive import CompositePrimitive
 
 
 class Composer(CompositePrimitive):

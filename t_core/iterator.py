@@ -1,7 +1,7 @@
 
 from util.seeded_random import Random
 from util.infinity import INFINITY
-from rule_primitive import RulePrimitive
+from .rule_primitive import RulePrimitive
 #from messages import TransformationException
 
 
