@@ -15,6 +15,7 @@ class HDelOneAttributeFromUncollapsedElemRHS(HimesisPostConditionPattern):
         # Add the edges
         self.add_edges([])
         # Set the graph attributes
+        self["mm__"] = ['MT_post__FamiliesToPersons_MM', 'MoTifRule']
         self["MT_action__"] = """#===============================================================================
 # This code is executed after the rule has been applied.
 # You can access a node labelled n matched by this rule by: PostNode('n').
@@ -23,9 +24,8 @@ class HDelOneAttributeFromUncollapsedElemRHS(HimesisPostConditionPattern):
 
 pass
 """
-        self["GUID__"] = 4027106788938850380
         self["name"] = """"""
-        self["mm__"] = ['MT_post__FamiliesToPersons_MM', 'MoTifRule']
+        self["GUID__"] = 4027106788938850380
         
         # Set the node attributes
         self.vs[0]["MT_pivotOut__"] = """element2"""
@@ -43,22 +43,6 @@ pass
 
 return attr_value
 """
-        self.vs[0]["MT_post__classtype"] = """
-#===============================================================================
-# You can access the value of the current node's attribute value by: attr_value.
-# If the current node shall be created you MUST initialize it here!
-# You can access a node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# Note that the attribute values are those before the match is rewritten.
-# The order in which this code is executed depends on the label value
-# of the encapsulating node.
-# The given action must return the new value of the attribute.
-#===============================================================================
-
-return attr_value
-"""
-        self.vs[0]["GUID__"] = 5086199918583908403
-        self.vs[0]["mm__"] = """MT_post__MetaModelElement_S"""
         self.vs[0]["MT_label__"] = """1"""
         self.vs[0]["MT_post__name"] = """
 #===============================================================================
@@ -74,8 +58,27 @@ return attr_value
 
 return attr_value
 """
+        self.vs[0]["mm__"] = """MT_post__MetaModelElement_S"""
+        self.vs[0]["MT_post__classtype"] = """
+#===============================================================================
+# You can access the value of the current node's attribute value by: attr_value.
+# If the current node shall be created you MUST initialize it here!
+# You can access a node labelled n by: PreNode('n').
+# To access attribute x of node n, use: PreNode('n')['x'].
+# Note that the attribute values are those before the match is rewritten.
+# The order in which this code is executed depends on the label value
+# of the encapsulating node.
+# The given action must return the new value of the attribute.
+#===============================================================================
 
-        from HDelOneAttributeFromUncollapsedElemLHS import HDelOneAttributeFromUncollapsedElemLHS
+return attr_value
+"""
+        self.vs[0]["GUID__"] = 5086199918583908403
+
+        try:
+            from .HDelOneAttributeFromUncollapsedElemLHS import HDelOneAttributeFromUncollapsedElemLHS
+        except ValueError:
+            from HDelOneAttributeFromUncollapsedElemLHS import HDelOneAttributeFromUncollapsedElemLHS
         self.pre = HDelOneAttributeFromUncollapsedElemLHS()
     
     def action(self, PostNode, graph):
@@ -134,6 +137,6 @@ return attr_value
         #===============================================================================
         # Finally, delete nodes (this will automatically delete the adjacent edges)
         #===============================================================================
-        # MT_pre__Attribute2, MT_pre__hasAttribute_S3
-        graph.delete_nodes([labels["2"], labels["3"]])
+        # MT_pre__hasAttribute_S3, MT_pre__Attribute2
+        graph.delete_nodes([labels["3"], labels["2"]])
     

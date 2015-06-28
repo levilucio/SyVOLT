@@ -234,7 +234,7 @@ class Himesis(ig.Graph):
         elif isinstance(value, Himesis):
             graphClass = value.name
             return '''
-        from %s import %s
+        from .%s import %s
         %s = %s()''' % (graphClass, graphClass, access, graphClass)
         elif isinstance(value, list):
             return '''
@@ -539,7 +539,11 @@ class HimesisPreConditionPatternLHS(HimesisPreConditionPattern):
                 for NAC in self.NACs:
                     NAC_name = NAC.__class__.__name__
                     file.write("""
-        from %s import %s""" % (NAC_name, NAC_name))
+        try:
+            from .%s import %s
+        except ValueError:
+            from %s import %s
+        """ % (NAC_name, NAC_name, NAC_name, NAC_name))
                 file.write('''
         self.NACs = %s
 ''' % str(map(lambda NAC: '%s(LHS=self)' % standardize_name(NAC.__class__.__name__),
@@ -548,8 +552,13 @@ class HimesisPreConditionPatternLHS(HimesisPreConditionPattern):
             else:
                 # self.NACs = ['NAC1', 'NAC2', ..., 'NACn']
                 for NAC_name in self.NACs:
+                    sname = standardize_name(NAC_name)
                     file.write("""
-        from %s import %s""" % (standardize_name(NAC_name), standardize_name(NAC_name)))
+        try:
+            from .%s import %s
+        except ValueError:
+            from %s import %s
+        """ % (sname, sname, sname, sname))
                 file.write('''
         self.NACs = %s
 ''' % str(map(lambda NAC: '%s(LHS=self)' % standardize_name(NAC), self.NACs)).replace("'", ""))
@@ -583,7 +592,10 @@ class HimesisPreConditionPatternNAC(HimesisPreConditionPattern):
         file.write("""
         
         # Load the bridge between this NAC and its LHS
-        from %s import %s""" % (self.bridge.name, self.bridge.name))
+        try:
+            from .%s import %s
+        except ValueError:
+            from %s import %s""" % (self.bridge.name, self.bridge.name, self.bridge.name, self.bridge.name))
         file.write('''
         self.bridge = %s()
 ''' % self.bridge.name)
@@ -649,7 +661,7 @@ class HimesisPreConditionPatternNAC(HimesisPreConditionPattern):
                             continue
                         # The attribute constraint code is the conjunction of the LHS constraint
                         # with the NAC constraint for this attribute
-                        s = '''from %s import %s
+                        s = '''from .%s import %s
 from %s import %s''' % (G1.name, G1.name, G2.name, G2.name)
                         if G1 == self:
                             s += ('''
@@ -748,15 +760,21 @@ class HimesisPostConditionPattern(HimesisPattern):
         if self.is_compiled:
             # self.pre is a Himesis graph
             file.write('''
-        from %s import %s
+        try:
+            from .%s import %s
+        except ValueError:
+            from %s import %s
         self.pre = %s()
-    ''' % tuple([self.pre.__class__.__name__] * 3))
+    ''' % tuple([self.pre.__class__.__name__] * 5))
         else:
             # self.pre = "precondition name"
             file.write('''
-        from %s import %s
+        try:
+            from .%s import %s
+        except ValueError:
+            from %s import %s
         self.pre = %s()
-    ''' % tuple([standardize_name(self.pre)] * 3))
+    ''' % tuple([standardize_name(self.pre)] * 5))
         
         # Attributes action code
         for v in self.node_iter():
