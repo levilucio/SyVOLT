@@ -1677,7 +1677,7 @@ class PyRamify:
 
     # get all the rules in the transformation 
     def get_rules(self, dir_name):
-        print("Ramifying directory: " + dir_name)
+        print("Getting rules from directory: " + dir_name)
         
         rules = {}
         
@@ -1688,7 +1688,7 @@ class PyRamify:
             if not f.endswith(".py") or f == "__init__.py" or os.path.isdir(dir_name + "/" + f):
                 continue
 
-            print("\nFile: " + f)
+            print("File: " + f)
 
             #add the rule to the rules dict
             rule = load_class(dir_name + "/" + f)
@@ -1747,7 +1747,8 @@ class PyRamify:
             rule5 = load_class(dir_name + "/" + f)
             rule_combinator = self.get_rule_combinators(rule5)
             ruleCombinators.update(rule_combinator)
-            
+
+
         self.ruleSubsumption = self.calculate_rule_subsumption(matchRulePatterns)
             
 #         if self.verbosity >= 2:
@@ -1755,14 +1756,16 @@ class PyRamify:
 #             print ruleSubsumption
 #             print "\n"
 
-        print("Subsumption order between rules for all layers:"    )
-        print(self.ruleSubsumption)
-        for ruleName in rules.keys():
-            print(ruleName + ": " +str(self.get_subsuming_rules(ruleName)))
-        print("Rules that need overlap treatment: " + str(self.rules_needing_overlap_treatment())           )
+        #if subsumption is empty
+        if len(self.ruleSubsumption):
+            print("Subsumption order between rules for all layers:"    )
+            print(self.ruleSubsumption)
+            for ruleName in rules.keys():
+                print(ruleName + ": " +str(self.get_subsuming_rules(ruleName)))
+            print("Rules that need overlap treatment: " + str(self.rules_needing_overlap_treatment())           )
             
 
-        print("Finished PyRamify")
+        print("Finished Ramification")
         print("==================================\n")
 
         return [rules, backwardPatterns, backwardPatterns2Rules, {}, matchRulePatterns, ruleCombinators]
@@ -1781,7 +1784,7 @@ class PyRamify:
                 continue
 
             # ignore svn dirs
-            if d.startswith('.'):
+            if d.startswith('.') or d.startswith("__"):
                 continue
 
             graph_dir = directory + d + "/Himesis/"
@@ -1834,7 +1837,7 @@ class PyRamify:
                 continue
 
             #ignore svn dirs
-            if d.startswith('.'):
+            if d.startswith('.') or d.startswith("__"):
                 continue
 
             rule_dir = property_prover_rules_dir + d + "/Himesis/"
