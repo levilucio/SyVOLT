@@ -847,14 +847,11 @@ class HimesisPostConditionPattern(HimesisPattern):
                         if has_old_values:
                             old_value = "graph.vs[%s]['%s']" % (index, to_non_RAM_attribute(attrName))
                         #TODO: This should be a TransformationLanguageSpecificException
-                        transformationCode.append("""try:
-    graph.vs[%s]['%s'] = self.%s(%s, lambda i: graph.vs[match[i]], graph)
-except Exception as e:
-    raise Exception('An error has occurred while computing the value of the attribute \\'%s\\'', e)
+                        transformationCode.append("""graph.vs[%s]['%s'] = self.%s(%s, lambda i: graph.vs[match[i]], graph)
 """ \
     % (index, to_non_RAM_attribute(attrName),
        self.get_attr_action_name(node, attrName),
-       old_value, attrName))
+       old_value))
             return ''.join(transformationCode)
         
         
@@ -903,11 +900,11 @@ graph.vs[labels['%s']][Himesis.Constants.MT_DIRTY] = True
             rhsNode = self.get_node_with_label(label)
             if label not in LHS_labels:
                 new_labels += [label]
-                className = to_non_RAM_attribute(self.vs[rhsNode][Himesis.Constants.META_MODEL])
+                className = to_non_RAM_attribute(self.vs[rhsNode]["mm__"])
                 transformationCode.append("""# %s%s
 new_node = graph.add_node()
 labels['%s'] = new_node
-graph.vs[new_node][Himesis.Constants.META_MODEL] = '%s'
+graph.vs[new_node]["mm__"] = '%s'
 """ % (className, label, label, className))
                 transformationCode += set_attributes(rhsNode, 'new_node', has_old_values=False)
         
@@ -917,15 +914,24 @@ graph.vs[new_node][Himesis.Constants.META_MODEL] = '%s'
 # Create new edges
 #===============================================================================
 """)
+        transformationCode.append("""graph.add_edges([
+""")
+
+
         visited_edges = []
         for label in sorted(new_labels):
-            for edge in self.es.select(lambda e: (e.index not in visited_edges and
-                                                  (label == self.vs[e.source][Himesis.Constants.MT_LABEL]
-                                                   or label == self.vs[e.target][Himesis.Constants.MT_LABEL]))):
-                src_label = self.vs[edge.source][Himesis.Constants.MT_LABEL]
-                tar_label = self.vs[edge.target][Himesis.Constants.MT_LABEL]
+            for edge in self.es:
+                if edge.index in visited_edges:
+                    continue
+
+                src_label = self.vs[edge.source]["MT_label__"]
+                tar_label = self.vs[edge.target]["MT_label__"]
+
+                if not (label == src_label or label == tar_label):
+                    continue
+
                 transformationCode.append("""# %s%s -> %s%s
-graph.add_edges([(labels['%s'], labels['%s'])])
+(labels['%s'], labels['%s']),
 """ % (to_non_RAM_attribute(self.vs[edge.source][Himesis.Constants.META_MODEL]),
        src_label,
        to_non_RAM_attribute(self.vs[edge.target][Himesis.Constants.META_MODEL]),
@@ -933,6 +939,8 @@ graph.add_edges([(labels['%s'], labels['%s'])])
        src_label,
        tar_label))
                 visited_edges.append(edge.index)
+
+        transformationCode.append("""])""")
         
         # Set the output pivots
         transformationCode.append("""
