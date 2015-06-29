@@ -102,6 +102,24 @@ class HimesisMatcher(object):
         # This speeds up the algorithm significantly.
         # (disabled)
         # self.cache_info()
+
+        # Memoize the predecessor & successor information:
+        # for each node store the number of neighbours and the list
+        if len(self.pred1) == 0 or len(self.succ1) == 0:
+            self.pred1 = {}
+            self.succ1 = {}
+            for node in self.G1.node_iter():
+                tmp = self.G1.predecessors(node)
+                self.pred1[node] = (len(tmp), tmp)
+                tmp = self.G1.successors(node)
+                self.succ1[node] = (len(tmp), tmp)
+            self.pred2 = {}
+            self.succ2 = {}
+            for node in self.G2.node_iter():
+                tmp = self.G2.predecessors(node)
+                self.pred2[node] = (len(tmp), tmp)
+                tmp = self.G2.successors(node)
+                self.succ2[node] = (len(tmp), tmp)
     
     def cache_info(self):
         """
@@ -113,19 +131,7 @@ class HimesisMatcher(object):
         self.G1_nodes = self.G1.node_iter()
         self.G2_nodes = self.G2.node_iter()
         
-#        # Memoize the predecessor & successor information:
-#        # for each node store the number of neighbours and the list
-#        if len(self.pred1) == 0 or len(self.succ1) == 0:
-#            self.pred1 = {}
-#            self.succ1 = {}
-#            for node in self.G1_nodes:
-#                self.pred1[node] = (len(self.G1.predecessors(node)), self.G1.predecessors(node))
-#                self.succ1[node] = (len(self.G1.successors(node)), self.G1.successors(node))
-#        self.pred2 = {}
-#        self.succ2 = {}
-#        for node in self.G2_nodes:
-#            self.pred2[node] = (len(self.G2.predecessors(node)), self.G2.predecessors(node))
-#            self.succ2[node] = (len(self.G2.successors(node)), self.G2.successors(node))
+
         
         # Cache any further data used for the heuristic prioritization for computing the candidate pair
         # This is done when initializing the priority class
@@ -189,7 +195,10 @@ class HimesisMatcher(object):
         patternNode = self.G2.vs[patt_node]
         
         # First check if they are of the same type
-        if sourceNode["mm__"] == to_non_RAM_attribute(patternNode["mm__"]):
+
+        #if sourceNode["mm__"] == to_non_RAM_attribute(patternNode["mm__"]):
+        #Assumption: patternNode["mm__"] always starts with "MT_pre__"
+        if sourceNode["mm__"] == patternNode["mm__"][8:]:
             # Then check for the degree compatibility
             return (self.pred2[patt_node][0] <= self.pred1[src_node][0]
                     and self.succ2[patt_node][0] <= self.succ1[src_node][0])
@@ -197,11 +206,13 @@ class HimesisMatcher(object):
         elif not (self.pred2[patt_node][0] <= self.pred1[src_node][0]
                 and self.succ2[patt_node][0] <= self.succ1[src_node][0]):
             return False
+
         # Then check sub-types compatibility
-        else:
-            return (patternNode['MT_subtypeMatching__']
-                    and sourceNode["mm__"]
-                    in map(lambda x:to_non_RAM_attribute(x), patternNode['MT_subtypes__']))
+        if patternNode['MT_subtypeMatching__']:
+            for subtype in patternNode['MT_subtypes__']:
+                if sourceNode["mm__"] == subtype[8:]:
+                    return True
+        return False
     
     def candidate_pairs_iter(self):
         """
@@ -406,7 +417,7 @@ class HimesisMatcher(object):
         for attr in patt_node.attribute_names():
             # Attribute constraints are stored as attributes in the pattern node.
             # The attribute must be prefixed by a specific keyword
-            if not attr.startswith(Himesis.Constants.MT_PRECOND_PREFIX):
+            if not attr.startswith("MT_pre__"):
                 continue
             # If the attribute does not "in theory" exist
             # because igraph actually stores all attribute names in all nodes. 
@@ -419,7 +430,7 @@ class HimesisMatcher(object):
             if callable(checkConstraint):
                 try:
                     # This is equivalent to: if not eval_attrLbl(attr_value, currNode)
-                    if not checkConstraint(src_node[to_non_RAM_attribute(attr)], src_node):
+                    if not checkConstraint(src_node[attr[8:]], src_node):
                         return False
                 except Exception as e:
                     #TODO: This should be a TransformationLanguageSpecificException
@@ -459,17 +470,17 @@ class HimesisMatcher(object):
             for src_node, patt_node in self.candidate_pairs_iter():
                 
                 # Cache the predecessors and successors of the candidate pairs on the fly 
-                self.pred1, self.succ1, self.pred2, self.succ2 = {}, {}, {}, {}
-                self.pred1[src_node] = (len(self.G1.predecessors(src_node)), self.G1.predecessors(src_node))
-                self.succ1[src_node] = (len(self.G1.successors(src_node)), self.G1.successors(src_node))
-                self.pred2[patt_node] = (len(self.G2.predecessors(patt_node)), self.G2.predecessors(patt_node))
-                self.succ2[patt_node] = (len(self.G2.successors(patt_node)), self.G2.successors(patt_node))
+                # self.pred1, self.succ1, self.pred2, self.succ2 = {}, {}, {}, {}
+                # self.pred1[src_node] = (len(self.G1.predecessors(src_node)), self.G1.predecessors(src_node))
+                # self.succ1[src_node] = (len(self.G1.successors(src_node)), self.G1.successors(src_node))
+                # self.pred2[patt_node] = (len(self.G2.predecessors(patt_node)), self.G2.predecessors(patt_node))
+                # self.succ2[patt_node] = (len(self.G2.successors(patt_node)), self.G2.successors(patt_node))
                 
                 if self.are_compatibile(src_node, patt_node):
                     if self.are_syntactically_feasible(src_node, patt_node):
                         if self.are_semantically_feasible(src_node, patt_node):
                             # Recursive call, adding the feasible state
-                            newstate = self.state.__class__(self, src_node, patt_node)
+                            newstate = HimesisMatcherState(self, src_node, patt_node)
                             for mapping in self._match():
                                 yield mapping
     
