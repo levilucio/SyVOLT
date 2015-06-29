@@ -1,173 +1,85 @@
+
+
 from core.himesis import Himesis
-import cPickle as pickle
-import uuid
 
 class Hlayer1rule15(Himesis):
     def __init__(self):
         """
-        Creates the himesis graph representing the DSLTrans rule layer1rule15.
+        Creates the himesis graph representing the AToM3 model Hlayer1rule15.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(Hlayer1rule15, self).__init__(name='Hlayer1rule15', num_nodes=0, edges=[])
+        super(Hlayer1rule15, self).__init__(name='Hlayer1rule15', num_nodes=21, edges=[])
         
-        
+        # Add the edges
+        self.add_edges([[0, 15], [15, 3], [0, 16], [16, 4], [1, 17], [17, 5], [1, 18], [18, 6], [3, 7], [7, 4], [5, 8], [8, 6], [5, 9], [9, 3], [4, 10], [10, 19], [6, 11], [11, 20], [12, 13], [13, 20], [12, 14], [14, 19], [0, 2], [2, 1]])
         # Set the graph attributes
-        # TODO Levi, need some help here because I don't know where does 
-        # this value come from.
-        self["mm__"] = pickle.loads("""(lp1
-S'HimesisMM'
-p2
-a.""")
-        
+        self["mm__"] = ['HimesisMM']
         self["name"] = """layer1rule15"""
-        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule15')
+        self["GUID__"] = 5833695245272397084
         
-        # match model. We only support one match model
-        self.add_node()
+        # Set the node attributes
         self.vs[0]["mm__"] = """MatchModel"""
-        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule15matchmodel0')
-        
-        # apply model node
-        self.add_node()
+        self.vs[0]["GUID__"] = 8497881080306540479
         self.vs[1]["mm__"] = """ApplyModel"""
-        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule15applymodel1')
-        
-        # paired with relation between match and apply models
-        self.add_node()
+        self.vs[1]["GUID__"] = 5501565034149421512
         self.vs[2]["mm__"] = """paired_with"""
-        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule15pairedwith2')
-        
-    	# match class Operation(layer1rule15class0) node
-    	self.add_node()
-    	self.vs[3]["name"] = """layer1rule15class0"""
+        self.vs[2]["GUID__"] = 5351890165137368349
+        self.vs[3]["name"] = """layer1rule15class0"""
         self.vs[3]["classtype"] = """Operation"""
         self.vs[3]["mm__"] = """Operation"""
         self.vs[3]["cardinality"] = """+"""
-        #self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule15class0')
-    	# match_contains node for class Operation(layer1rule15class0)
-        self.add_node()
-        self.vs[4]["mm__"] = """match_contains"""
-        #self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule15class0matchcontains4')
-    	# match class OperationParameter(layer1rule15class1) node
-    	self.add_node()
-    	self.vs[5]["name"] = """layer1rule15class1"""
-        self.vs[5]["classtype"] = """OperationParameter"""
-        self.vs[5]["mm__"] = """OperationParameter"""
-        self.vs[5]["cardinality"] = """+"""
-        #self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule15class1')
-    	# match_contains node for class OperationParameter(layer1rule15class1)
-        self.add_node()
-        self.vs[6]["mm__"] = """match_contains"""
-        #self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule15class1matchcontains6')
-        
-        
-    	# apply class FunctionPrototype(layer1rule15class2) node
-    	self.add_node()
-    	self.vs[7]["name"] = """layer1rule15class2"""
-        self.vs[7]["classtype"] = """FunctionPrototype"""
-        self.vs[7]["mm__"] = """FunctionPrototype"""
-        self.vs[7]["cardinality"] = """1"""
-        #self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule15class2')
-    	# apply_contains node for class FunctionPrototype(layer1rule15class2)
-        self.add_node()
-        self.vs[8]["mm__"] = """apply_contains"""
-        #self.vs[8]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule15class2applycontains8')
-    	# apply class Argument(layer1rule15class3) node
-    	self.add_node()
-    	self.vs[9]["name"] = """layer1rule15class3"""
-        self.vs[9]["classtype"] = """Argument"""
-        self.vs[9]["mm__"] = """Argument"""
-        self.vs[9]["cardinality"] = """1"""
-        #self.vs[9]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule15class3')
-    	# apply_contains node for class Argument(layer1rule15class3)
-        self.add_node()
-        self.vs[10]["mm__"] = """apply_contains"""
-        #self.vs[10]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule15class3applycontains10')
-        
-        
-    	# match association Operation--parameters-->OperationParameter node
-    	self.add_node()
-    	self.vs[11]["associationType"] = """parameters"""
-        self.vs[11]["mm__"] = """directLink_S"""
-        #self.vs[11]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule15class0assoc11layer1rule15class1')
-        
-    	# apply association FunctionPrototype--arguments-->Argument node
-    	self.add_node()
-    	self.vs[12]["associationType"] = """arguments"""
-        self.vs[12]["mm__"] = """directLink_T"""
-        #self.vs[12]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule15class2assoc12layer1rule15class3')
-        
-    	# backward association Operation---->FunctionPrototype node
-    	self.add_node()
-    	self.vs[13]["type"] = """ruleDef"""
-        self.vs[13]["mm__"] = """backward_link"""
-        #self.vs[13]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule15class0blink13layer1rule15class2')
-        
-        
-    	# has match attribute name(layer1rule15class1attribute0) node
-    	self.add_node()
-    	self.vs[14]["mm__"] = """hasAttribute_S"""
-        #self.vs[14]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'haslayer1rule15class1attribute0')
-    	# match attribute name(layer1rule15class1attribute0) node
-    	self.add_node()
-    	self.vs[15]["name"] = """name"""
-        self.vs[15]["mm__"] = """Attribute"""
-        self.vs[15]["Type"] = """'String'"""
-        #self.vs[15]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule15class1attribute0')
-        
-        
-    	# has apply attribute name(layer1rule15class3attribute1) node
-    	self.add_node()
-    	self.vs[16]["mm__"] = """hasAttribute_T"""
-        #self.vs[16]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'haslayer1rule15class3attribute1')
-    	# apply attribute name(layer1rule15class3attribute1) node
-    	self.add_node()
-    	self.vs[17]["name"] = """name"""
-        self.vs[17]["mm__"] = """Attribute"""
-        self.vs[17]["Type"] = """'String'"""
-        #self.vs[17]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule15class3attribute1')
-    	# apply attribute equation name(layer1rule15class3attribute1) node
-    	self.add_node()
-    	self.vs[18]["name"] = """eq_"""
-        self.vs[18]["mm__"] = """Equation"""
-        #self.vs[18]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equationlayer1rule15class3attribute1')
-    	# apply attribute equation left expr name(layer1rule15class3attribute1) node
-    	self.add_node()
-    	self.vs[19]["mm__"] = """leftExpr"""
-        #self.vs[19]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExprlayer1rule15class3attribute1')
-    	# apply attribute equation right expr name(layer1rule15class3attribute1) node
-    	self.add_node()
-    	self.vs[20]["mm__"] = """rightExpr"""
-        #self.vs[20]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExprlayer1rule15class3attribute1')
-        
-        
-        # Add the edges
-        self.add_edges([
-    		(0,4), # matchmodel -> match_contains
-    		(4,3), # match_contains -> match_class Operation(layer1rule15class0)
-    		(0,6), # matchmodel -> match_contains
-    		(6,5), # match_contains -> match_class OperationParameter(layer1rule15class1)
-    		(1,8), # applymodel -> apply_contains
-    		(8,7), # apply_contains -> apply_class FunctionPrototype(layer1rule15class2)
-    		(1,10), # applymodel -> apply_contains
-    		(10,9), # apply_contains -> apply_class Argument(layer1rule15class3)
-    		(3,11), # match_class Operation(layer1rule15class0) -> association parameters
-    		(11,5), # association parameters  -> match_class OperationParameter(layer1rule15class1)
-    		(7,12), # apply_class FunctionPrototype(layer1rule15class2) -> association arguments
-    		(12,9), # association arguments  -> apply_class Argument(layer1rule15class3)
-    		(7,13), # apply_class FunctionPrototype(layer1rule15class2) -> backward_association
-    		(13,3), #  backward_association -> apply_class Operation(layer1rule15class0)
-    		(5,14), # match_class OperationParameter(layer1rule15class1) -> has_match_attribute name (layer1rule15class1attribute0)
-    		(14,15), #  has_match_attribute name (layer1rule15class1attribute0) -> match_attribute name (layer1rule15class1attribute0)
-    		(9,16), # apply_class Argument(layer1rule15class3) -> has_apply_attribute name (layer1rule15class3attribute1)
-    		(16,17), #  has_apply_attribute name (layer1rule15class3attribute1) -> apply_attribute name (layer1rule15class3attribute1)
-    		(18,19), #  equation of apply attribute name (layer1rule15class3attribute1) -> left_expr
-    		(19,17), #  left_expr -> apply_attribute name (layer1rule15class3attribute1)
-    		(18,20), #  equation of apply attribute name (layer1rule15class3attribute1) -> right_expr
-    		(20,15), # right_expr --> term
-        	(0,2), # matchmodel -> pairedwith
-        	(2,1) # pairedwith -> applyModel
-        ])
-        
+        self.vs[3]["GUID__"] = 4209533875175092258
+        self.vs[4]["name"] = """layer1rule15class1"""
+        self.vs[4]["classtype"] = """OperationParameter"""
+        self.vs[4]["mm__"] = """OperationParameter"""
+        self.vs[4]["cardinality"] = """+"""
+        self.vs[4]["GUID__"] = 2816671611960763280
+        self.vs[5]["name"] = """layer1rule15class2"""
+        self.vs[5]["classtype"] = """FunctionPrototype"""
+        self.vs[5]["mm__"] = """FunctionPrototype"""
+        self.vs[5]["cardinality"] = """1"""
+        self.vs[5]["GUID__"] = 2734494824449964834
+        self.vs[6]["name"] = """layer1rule15class3"""
+        self.vs[6]["classtype"] = """Argument"""
+        self.vs[6]["mm__"] = """Argument"""
+        self.vs[6]["cardinality"] = """1"""
+        self.vs[6]["GUID__"] = 1190368752397605361
+        self.vs[7]["associationType"] = """parameters"""
+        self.vs[7]["mm__"] = """directLink_S"""
+        self.vs[7]["GUID__"] = 6314728360822866861
+        self.vs[8]["associationType"] = """arguments"""
+        self.vs[8]["mm__"] = """directLink_T"""
+        self.vs[8]["GUID__"] = 8467501585031204007
+        self.vs[9]["mm__"] = """backward_link"""
+        self.vs[9]["type"] = """ruleDef"""
+        self.vs[9]["GUID__"] = 7593115955066445785
+        self.vs[10]["mm__"] = """hasAttribute_S"""
+        self.vs[10]["GUID__"] = 7985704361338085998
+        self.vs[11]["mm__"] = """hasAttribute_T"""
+        self.vs[11]["GUID__"] = 6022600269466944916
+        self.vs[12]["name"] = """eq_"""
+        self.vs[12]["mm__"] = """Equation"""
+        self.vs[12]["GUID__"] = 1802349741206373201
+        self.vs[13]["mm__"] = """leftExpr"""
+        self.vs[13]["GUID__"] = 4975627067141688093
+        self.vs[14]["mm__"] = """rightExpr"""
+        self.vs[14]["GUID__"] = 8585843324653273910
+        self.vs[15]["mm__"] = """match_contains"""
+        self.vs[15]["GUID__"] = 591944198280363351
+        self.vs[16]["mm__"] = """match_contains"""
+        self.vs[16]["GUID__"] = 6560485443459882865
+        self.vs[17]["mm__"] = """apply_contains"""
+        self.vs[17]["GUID__"] = 5956949623461686382
+        self.vs[18]["mm__"] = """apply_contains"""
+        self.vs[18]["GUID__"] = 940271315307648286
+        self.vs[19]["name"] = """name"""
+        self.vs[19]["Type"] = """'String'"""
+        self.vs[19]["mm__"] = """Attribute"""
+        self.vs[19]["GUID__"] = 4977958049569073249
+        self.vs[20]["name"] = """name"""
+        self.vs[20]["Type"] = """'String'"""
+        self.vs[20]["mm__"] = """Attribute"""
+        self.vs[20]["GUID__"] = 4941131681774736615
+

@@ -1,126 +1,62 @@
+
+
 from core.himesis import Himesis
-import cPickle as pickle
-import uuid
 
 class Hlayer0rule0(Himesis):
     def __init__(self):
         """
-        Creates the himesis graph representing the DSLTrans rule layer0rule0.
+        Creates the himesis graph representing the AToM3 model Hlayer0rule0.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(Hlayer0rule0, self).__init__(name='Hlayer0rule0', num_nodes=0, edges=[])
-        
-        
-        # Set the graph attributes
-        # TODO Levi, need some help here because I don't know where does 
-        # this value come from.
-        self["mm__"] = pickle.loads("""(lp1
-S'HimesisMM'
-p2
-a.""")
-        
-        self["name"] = """layer0rule0"""
-        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer0rule0')
-        
-        # match model. We only support one match model
-        self.add_node()
-        self.vs[0]["mm__"] = """MatchModel"""
-        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer0rule0matchmodel0')
-        
-        # apply model node
-        self.add_node()
-        self.vs[1]["mm__"] = """ApplyModel"""
-        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer0rule0applymodel1')
-        
-        # paired with relation between match and apply models
-        self.add_node()
-        self.vs[2]["mm__"] = """paired_with"""
-        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer0rule0pairedwith2')
-        
-    	# match class ImplementationModule(layer0rule0class0) node
-    	self.add_node()
-    	self.vs[3]["name"] = """layer0rule0class0"""
-        self.vs[3]["classtype"] = """ImplementationModule"""
-        self.vs[3]["mm__"] = """ImplementationModule"""
-        self.vs[3]["cardinality"] = """+"""
-        #self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer0rule0class0')
-    	# match_contains node for class ImplementationModule(layer0rule0class0)
-        self.add_node()
-        self.vs[4]["mm__"] = """match_contains"""
-        #self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer0rule0class0matchcontains4')
-        
-        
-    	# apply class ImplementationModule(layer0rule0class1) node
-    	self.add_node()
-    	self.vs[5]["name"] = """layer0rule0class1"""
-        self.vs[5]["classtype"] = """ImplementationModule"""
-        self.vs[5]["mm__"] = """ImplementationModule"""
-        self.vs[5]["cardinality"] = """1"""
-        #self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer0rule0class1')
-    	# apply_contains node for class ImplementationModule(layer0rule0class1)
-        self.add_node()
-        self.vs[6]["mm__"] = """apply_contains"""
-        #self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer0rule0class1applycontains6')
-        
-        
-        
-        
-        
-        
-    	# has match attribute name(layer0rule0class0attribute0) node
-    	self.add_node()
-    	self.vs[7]["mm__"] = """hasAttribute_S"""
-        #self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'haslayer0rule0class0attribute0')
-    	# match attribute name(layer0rule0class0attribute0) node
-    	self.add_node()
-    	self.vs[8]["name"] = """name"""
-        self.vs[8]["mm__"] = """Attribute"""
-        self.vs[8]["Type"] = """'String'"""
-        #self.vs[8]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer0rule0class0attribute0')
-        
-        
-    	# has apply attribute name(layer0rule0class1attribute1) node
-    	self.add_node()
-    	self.vs[9]["mm__"] = """hasAttribute_T"""
-        #self.vs[9]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'haslayer0rule0class1attribute1')
-    	# apply attribute name(layer0rule0class1attribute1) node
-    	self.add_node()
-    	self.vs[10]["name"] = """name"""
-        self.vs[10]["mm__"] = """Attribute"""
-        self.vs[10]["Type"] = """'String'"""
-        #self.vs[10]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer0rule0class1attribute1')
-    	# apply attribute equation name(layer0rule0class1attribute1) node
-    	self.add_node()
-    	self.vs[11]["name"] = """eq_"""
-        self.vs[11]["mm__"] = """Equation"""
-        #self.vs[11]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equationlayer0rule0class1attribute1')
-    	# apply attribute equation left expr name(layer0rule0class1attribute1) node
-    	self.add_node()
-    	self.vs[12]["mm__"] = """leftExpr"""
-        #self.vs[12]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExprlayer0rule0class1attribute1')
-    	# apply attribute equation right expr name(layer0rule0class1attribute1) node
-    	self.add_node()
-    	self.vs[13]["mm__"] = """rightExpr"""
-        #self.vs[13]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExprlayer0rule0class1attribute1')
-        
+        super(Hlayer0rule0, self).__init__(name='Hlayer0rule0', num_nodes=14, edges=[])
         
         # Add the edges
-        self.add_edges([
-    		(0,4), # matchmodel -> match_contains
-    		(4,3), # match_contains -> match_class ImplementationModule(layer0rule0class0)
-    		(1,6), # applymodel -> apply_contains
-    		(6,5), # apply_contains -> apply_class ImplementationModule(layer0rule0class1)
-    		(3,7), # match_class ImplementationModule(layer0rule0class0) -> has_match_attribute name (layer0rule0class0attribute0)
-    		(7,8), #  has_match_attribute name (layer0rule0class0attribute0) -> match_attribute name (layer0rule0class0attribute0)
-    		(5,9), # apply_class ImplementationModule(layer0rule0class1) -> has_apply_attribute name (layer0rule0class1attribute1)
-    		(9,10), #  has_apply_attribute name (layer0rule0class1attribute1) -> apply_attribute name (layer0rule0class1attribute1)
-    		(11,12), #  equation of apply attribute name (layer0rule0class1attribute1) -> left_expr
-    		(12,10), #  left_expr -> apply_attribute name (layer0rule0class1attribute1)
-    		(11,13), #  equation of apply attribute name (layer0rule0class1attribute1) -> right_expr
-    		(13,8), # right_expr --> term
-        	(0,2), # matchmodel -> pairedwith
-        	(2,1) # pairedwith -> applyModel
-        ])
+        self.add_edges([[0, 3], [3, 10], [1, 4], [4, 11], [10, 5], [5, 12], [11, 6], [6, 13], [7, 8], [8, 13], [7, 9], [9, 12], [0, 2], [2, 1]])
+        # Set the graph attributes
+        self["mm__"] = ['HimesisMM']
+        self["name"] = """layer0rule0"""
+        self["GUID__"] = 7717147011900028742
         
+        # Set the node attributes
+        self.vs[0]["mm__"] = """MatchModel"""
+        self.vs[0]["GUID__"] = 8896196422500755785
+        self.vs[1]["mm__"] = """ApplyModel"""
+        self.vs[1]["GUID__"] = 5143723105174968953
+        self.vs[2]["mm__"] = """paired_with"""
+        self.vs[2]["GUID__"] = 3386045327739679524
+        self.vs[3]["mm__"] = """match_contains"""
+        self.vs[3]["GUID__"] = 1981789691901826136
+        self.vs[4]["mm__"] = """apply_contains"""
+        self.vs[4]["GUID__"] = 7179926147627085480
+        self.vs[5]["mm__"] = """hasAttribute_S"""
+        self.vs[5]["GUID__"] = 1254504884507630483
+        self.vs[6]["mm__"] = """hasAttribute_T"""
+        self.vs[6]["GUID__"] = 2770212785335729227
+        self.vs[7]["name"] = """eq_"""
+        self.vs[7]["mm__"] = """Equation"""
+        self.vs[7]["GUID__"] = 439604713193545013
+        self.vs[8]["mm__"] = """leftExpr"""
+        self.vs[8]["GUID__"] = 3498541900400595126
+        self.vs[9]["mm__"] = """rightExpr"""
+        self.vs[9]["GUID__"] = 3101641160832790644
+        self.vs[10]["name"] = """layer0rule0class0"""
+        self.vs[10]["classtype"] = """ImplementationModule"""
+        self.vs[10]["mm__"] = """ImplementationModule"""
+        self.vs[10]["cardinality"] = """+"""
+        self.vs[10]["GUID__"] = 5245548115078725169
+        self.vs[11]["name"] = """layer0rule0class1"""
+        self.vs[11]["classtype"] = """ImplementationModule"""
+        self.vs[11]["mm__"] = """ImplementationModule"""
+        self.vs[11]["cardinality"] = """1"""
+        self.vs[11]["GUID__"] = 714870728637050049
+        self.vs[12]["name"] = """name"""
+        self.vs[12]["mm__"] = """Attribute"""
+        self.vs[12]["Type"] = """'String'"""
+        self.vs[12]["GUID__"] = 1280321023609777133
+        self.vs[13]["name"] = """name"""
+        self.vs[13]["mm__"] = """Attribute"""
+        self.vs[13]["Type"] = """'String'"""
+        self.vs[13]["GUID__"] = 4104042922596455826
+

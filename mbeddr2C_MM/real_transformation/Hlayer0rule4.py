@@ -1,85 +1,43 @@
+
+
 from core.himesis import Himesis
-import cPickle as pickle
-import uuid
 
 class Hlayer0rule4(Himesis):
     def __init__(self):
         """
-        Creates the himesis graph representing the DSLTrans rule layer0rule4.
+        Creates the himesis graph representing the AToM3 model Hlayer0rule4.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(Hlayer0rule4, self).__init__(name='Hlayer0rule4', num_nodes=0, edges=[])
-        
-        
-        # Set the graph attributes
-        # TODO Levi, need some help here because I don't know where does 
-        # this value come from.
-        self["mm__"] = pickle.loads("""(lp1
-S'HimesisMM'
-p2
-a.""")
-        
-        self["name"] = """layer0rule4"""
-        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer0rule4')
-        
-        # match model. We only support one match model
-        self.add_node()
-        self.vs[0]["mm__"] = """MatchModel"""
-        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer0rule4matchmodel0')
-        
-        # apply model node
-        self.add_node()
-        self.vs[1]["mm__"] = """ApplyModel"""
-        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer0rule4applymodel1')
-        
-        # paired with relation between match and apply models
-        self.add_node()
-        self.vs[2]["mm__"] = """paired_with"""
-        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer0rule4pairedwith2')
-        
-    	# match class VoidType(layer0rule4class0) node
-    	self.add_node()
-    	self.vs[3]["name"] = """layer0rule4class0"""
-        self.vs[3]["classtype"] = """VoidType"""
-        self.vs[3]["mm__"] = """VoidType"""
-        self.vs[3]["cardinality"] = """+"""
-        #self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer0rule4class0')
-    	# match_contains node for class VoidType(layer0rule4class0)
-        self.add_node()
-        self.vs[4]["mm__"] = """match_contains"""
-        #self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer0rule4class0matchcontains4')
-        
-        
-    	# apply class VoidType(layer0rule4class1) node
-    	self.add_node()
-    	self.vs[5]["name"] = """layer0rule4class1"""
-        self.vs[5]["classtype"] = """VoidType"""
-        self.vs[5]["mm__"] = """VoidType"""
-        self.vs[5]["cardinality"] = """1"""
-        #self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer0rule4class1')
-    	# apply_contains node for class VoidType(layer0rule4class1)
-        self.add_node()
-        self.vs[6]["mm__"] = """apply_contains"""
-        #self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer0rule4class1applycontains6')
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        super(Hlayer0rule4, self).__init__(name='Hlayer0rule4', num_nodes=7, edges=[])
         
         # Add the edges
-        self.add_edges([
-    		(0,4), # matchmodel -> match_contains
-    		(4,3), # match_contains -> match_class VoidType(layer0rule4class0)
-    		(1,6), # applymodel -> apply_contains
-    		(6,5), # apply_contains -> apply_class VoidType(layer0rule4class1)
-        	(0,2), # matchmodel -> pairedwith
-        	(2,1) # pairedwith -> applyModel
-        ])
+        self.add_edges([[0, 3], [3, 5], [1, 4], [4, 6], [0, 2], [2, 1]])
+        # Set the graph attributes
+        self["mm__"] = ['HimesisMM']
+        self["name"] = """layer0rule4"""
+        self["GUID__"] = 4552447861846335487
         
+        # Set the node attributes
+        self.vs[0]["mm__"] = """MatchModel"""
+        self.vs[0]["GUID__"] = 5575631822966330578
+        self.vs[1]["mm__"] = """ApplyModel"""
+        self.vs[1]["GUID__"] = 5341662884695358872
+        self.vs[2]["mm__"] = """paired_with"""
+        self.vs[2]["GUID__"] = 4944731624743136493
+        self.vs[3]["mm__"] = """match_contains"""
+        self.vs[3]["GUID__"] = 4387203392444773778
+        self.vs[4]["mm__"] = """apply_contains"""
+        self.vs[4]["GUID__"] = 5576915868763105145
+        self.vs[5]["mm__"] = """VoidType"""
+        self.vs[5]["classtype"] = """VoidType"""
+        self.vs[5]["cardinality"] = """+"""
+        self.vs[5]["name"] = """layer0rule4class0"""
+        self.vs[5]["GUID__"] = 6109158671954166163
+        self.vs[6]["mm__"] = """VoidType"""
+        self.vs[6]["classtype"] = """VoidType"""
+        self.vs[6]["cardinality"] = """1"""
+        self.vs[6]["name"] = """layer0rule4class1"""
+        self.vs[6]["GUID__"] = 7890499136855781188
+

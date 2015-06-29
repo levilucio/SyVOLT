@@ -1,132 +1,66 @@
+
+
 from core.himesis import Himesis
-import cPickle as pickle
-import uuid
 
 class Hlayer1rule14(Himesis):
     def __init__(self):
         """
-        Creates the himesis graph representing the DSLTrans rule layer1rule14.
+        Creates the himesis graph representing the AToM3 model Hlayer1rule14.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(Hlayer1rule14, self).__init__(name='Hlayer1rule14', num_nodes=0, edges=[])
+        super(Hlayer1rule14, self).__init__(name='Hlayer1rule14', num_nodes=14, edges=[])
         
-        
+        # Add the edges
+        self.add_edges([[0, 8], [8, 3], [0, 10], [10, 9], [1, 11], [11, 4], [1, 13], [13, 12], [3, 5], [5, 9], [4, 6], [6, 12], [4, 7], [7, 3], [0, 2], [2, 1]])
         # Set the graph attributes
-        # TODO Levi, need some help here because I don't know where does 
-        # this value come from.
-        self["mm__"] = pickle.loads("""(lp1
-S'HimesisMM'
-p2
-a.""")
-        
+        self["mm__"] = ['HimesisMM']
         self["name"] = """layer1rule14"""
-        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule14')
+        self["GUID__"] = 268358001243616061
         
-        # match model. We only support one match model
-        self.add_node()
+        # Set the node attributes
         self.vs[0]["mm__"] = """MatchModel"""
-        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule14matchmodel0')
-        
-        # apply model node
-        self.add_node()
+        self.vs[0]["GUID__"] = 5204684991743153442
         self.vs[1]["mm__"] = """ApplyModel"""
-        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule14applymodel1')
-        
-        # paired with relation between match and apply models
-        self.add_node()
+        self.vs[1]["GUID__"] = 1132800574081772806
         self.vs[2]["mm__"] = """paired_with"""
-        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule14pairedwith2')
-        
-    	# match class Operation(layer1rule14class0) node
-    	self.add_node()
-    	self.vs[3]["name"] = """layer1rule14class0"""
+        self.vs[2]["GUID__"] = 2748718890700411658
+        self.vs[3]["name"] = """layer1rule14class0"""
         self.vs[3]["classtype"] = """Operation"""
         self.vs[3]["mm__"] = """Operation"""
         self.vs[3]["cardinality"] = """+"""
-        #self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule14class0')
-    	# match_contains node for class Operation(layer1rule14class0)
-        self.add_node()
-        self.vs[4]["mm__"] = """match_contains"""
-        #self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule14class0matchcontains4')
-    	# match class StringType(layer1rule14class1) node
-    	self.add_node()
-    	self.vs[5]["name"] = """layer1rule14class1"""
-        self.vs[5]["classtype"] = """StringType"""
-        self.vs[5]["mm__"] = """StringType"""
-        self.vs[5]["cardinality"] = """+"""
-        #self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule14class1')
-    	# match_contains node for class StringType(layer1rule14class1)
-        self.add_node()
-        self.vs[6]["mm__"] = """match_contains"""
-        #self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule14class1matchcontains6')
-        
-        
-    	# apply class FunctionPrototype(layer1rule14class2) node
-    	self.add_node()
-    	self.vs[7]["name"] = """layer1rule14class2"""
-        self.vs[7]["classtype"] = """FunctionPrototype"""
-        self.vs[7]["mm__"] = """FunctionPrototype"""
-        self.vs[7]["cardinality"] = """1"""
-        #self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule14class2')
-    	# apply_contains node for class FunctionPrototype(layer1rule14class2)
-        self.add_node()
-        self.vs[8]["mm__"] = """apply_contains"""
-        #self.vs[8]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule14class2applycontains8')
-    	# apply class StringType(layer1rule14class3) node
-    	self.add_node()
-    	self.vs[9]["name"] = """layer1rule14class3"""
+        self.vs[3]["GUID__"] = 1376153292098478130
+        self.vs[4]["name"] = """layer1rule14class2"""
+        self.vs[4]["classtype"] = """FunctionPrototype"""
+        self.vs[4]["mm__"] = """FunctionPrototype"""
+        self.vs[4]["cardinality"] = """1"""
+        self.vs[4]["GUID__"] = 1641867173618670421
+        self.vs[5]["associationType"] = """type"""
+        self.vs[5]["mm__"] = """directLink_S"""
+        self.vs[5]["GUID__"] = 4629406764841536051
+        self.vs[6]["associationType"] = """type"""
+        self.vs[6]["mm__"] = """directLink_T"""
+        self.vs[6]["GUID__"] = 3903507805425231097
+        self.vs[7]["mm__"] = """backward_link"""
+        self.vs[7]["type"] = """ruleDef"""
+        self.vs[7]["GUID__"] = 2130394293862377267
+        self.vs[8]["mm__"] = """match_contains"""
+        self.vs[8]["GUID__"] = 4129707848539384109
+        self.vs[9]["name"] = """layer1rule14class1"""
         self.vs[9]["classtype"] = """StringType"""
         self.vs[9]["mm__"] = """StringType"""
-        self.vs[9]["cardinality"] = """1"""
-        #self.vs[9]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule14class3')
-    	# apply_contains node for class StringType(layer1rule14class3)
-        self.add_node()
-        self.vs[10]["mm__"] = """apply_contains"""
-        #self.vs[10]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule14class3applycontains10')
-        
-        
-    	# match association Operation--type-->StringType node
-    	self.add_node()
-    	self.vs[11]["associationType"] = """type"""
-        self.vs[11]["mm__"] = """directLink_S"""
-        #self.vs[11]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule14class0assoc11layer1rule14class1')
-        
-    	# apply association FunctionPrototype--type-->StringType node
-    	self.add_node()
-    	self.vs[12]["associationType"] = """type"""
-        self.vs[12]["mm__"] = """directLink_T"""
-        #self.vs[12]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule14class2assoc12layer1rule14class3')
-        
-    	# backward association Operation---->FunctionPrototype node
-    	self.add_node()
-    	self.vs[13]["type"] = """ruleDef"""
-        self.vs[13]["mm__"] = """backward_link"""
-        #self.vs[13]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule14class0blink13layer1rule14class2')
-        
-        
-        
-        
-        
-        
-        # Add the edges
-        self.add_edges([
-    		(0,4), # matchmodel -> match_contains
-    		(4,3), # match_contains -> match_class Operation(layer1rule14class0)
-    		(0,6), # matchmodel -> match_contains
-    		(6,5), # match_contains -> match_class StringType(layer1rule14class1)
-    		(1,8), # applymodel -> apply_contains
-    		(8,7), # apply_contains -> apply_class FunctionPrototype(layer1rule14class2)
-    		(1,10), # applymodel -> apply_contains
-    		(10,9), # apply_contains -> apply_class StringType(layer1rule14class3)
-    		(3,11), # match_class Operation(layer1rule14class0) -> association type
-    		(11,5), # association type  -> match_class StringType(layer1rule14class1)
-    		(7,12), # apply_class FunctionPrototype(layer1rule14class2) -> association type
-    		(12,9), # association type  -> apply_class StringType(layer1rule14class3)
-    		(7,13), # apply_class FunctionPrototype(layer1rule14class2) -> backward_association
-    		(13,3), #  backward_association -> apply_class Operation(layer1rule14class0)
-        	(0,2), # matchmodel -> pairedwith
-        	(2,1) # pairedwith -> applyModel
-        ])
-        
+        self.vs[9]["cardinality"] = """+"""
+        self.vs[9]["GUID__"] = 169029886202469289
+        self.vs[10]["mm__"] = """match_contains"""
+        self.vs[10]["GUID__"] = 1343847994011312661
+        self.vs[11]["mm__"] = """apply_contains"""
+        self.vs[11]["GUID__"] = 8358314392290495247
+        self.vs[12]["name"] = """layer1rule14class3"""
+        self.vs[12]["classtype"] = """StringType"""
+        self.vs[12]["mm__"] = """StringType"""
+        self.vs[12]["cardinality"] = """1"""
+        self.vs[12]["GUID__"] = 1576724591188333218
+        self.vs[13]["mm__"] = """apply_contains"""
+        self.vs[13]["GUID__"] = 8403531937757598535
+
