@@ -71,7 +71,7 @@ from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 class Test():
 
     def setUp(self, args):
-        pyramify = PyRamify(draw_svg=args.draw_svg)
+        pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
 
         self.rules = pyramify.get_rules("ATLTrans/")
 
@@ -109,7 +109,7 @@ class Test():
 #         b2 = self.rules['HBasicState2ProcDef']
 #         b3 = self.rules['HCompositeState2ProcDef']
 
-        pyramify = PyRamify(verbosity = 0)
+        pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
 
 
 
