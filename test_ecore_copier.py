@@ -25,32 +25,32 @@ from core.himesis_plus import buildPreListFromClassNames
 # the purpose is to do scalability testing with multiple configurations and multiple sets of rules
 
 
-from PropertyVerification.state_property import StateProperty
-from PropertyVerification.atomic_state_property import AtomicStateProperty
-from PropertyVerification.and_state_property import AndStateProperty
-from PropertyVerification.or_state_property import OrStateProperty
-from PropertyVerification.not_state_property import NotStateProperty
-from PropertyVerification.implication_state_property import ImplicationStateProperty
-from PropertyVerification.Not import Not #StateSpace Prop
-from PropertyVerification.Implication import Implication #StateSpace Prop
-from PropertyVerification.And import And #StateSpace Prop
-from PropertyVerification.Or import Or #StateSpace Prop
-from PropertyVerification.BACKUP_atomic_state_property import BKUPAtomicStateProperty
-#from lib2to3.fixer_util import p1
-
-from PropertyVerification.PropertyVerifier import PropertyVerifier
-
-
-#positive
-
-
-from ECore_Copier_MM.properties.positive.himesis.HProperty1_isolatedLHS import HProperty1_isolatedLHS
-from ECore_Copier_MM.properties.positive.himesis.HProperty1_connectedLHS import HProperty1_connectedLHS
-from ECore_Copier_MM.properties.positive.himesis.HProperty1_completeLHS import HProperty1_completeLHS
-
-from ECore_Copier_MM.properties.positive.himesis.HProperty2_isolatedLHS import HProperty2_isolatedLHS
-from ECore_Copier_MM.properties.positive.himesis.HProperty2_connectedLHS import HProperty2_connectedLHS
-from ECore_Copier_MM.properties.positive.himesis.HProperty2_completeLHS import HProperty2_completeLHS
+# from PropertyVerification.state_property import StateProperty
+# from PropertyVerification.atomic_state_property import AtomicStateProperty
+# from PropertyVerification.and_state_property import AndStateProperty
+# from PropertyVerification.or_state_property import OrStateProperty
+# from PropertyVerification.not_state_property import NotStateProperty
+# from PropertyVerification.implication_state_property import ImplicationStateProperty
+# from PropertyVerification.Not import Not #StateSpace Prop
+# from PropertyVerification.Implication import Implication #StateSpace Prop
+# from PropertyVerification.And import And #StateSpace Prop
+# from PropertyVerification.Or import Or #StateSpace Prop
+# from PropertyVerification.BACKUP_atomic_state_property import BKUPAtomicStateProperty
+# #from lib2to3.fixer_util import p1
+#
+# from PropertyVerification.PropertyVerifier import PropertyVerifier
+#
+#
+# #positive
+#
+#
+# from ECore_Copier_MM.properties.positive.himesis.HProperty1_isolatedLHS import HProperty1_isolatedLHS
+# from ECore_Copier_MM.properties.positive.himesis.HProperty1_connectedLHS import HProperty1_connectedLHS
+# from ECore_Copier_MM.properties.positive.himesis.HProperty1_completeLHS import HProperty1_completeLHS
+#
+# from ECore_Copier_MM.properties.positive.himesis.HProperty2_isolatedLHS import HProperty2_isolatedLHS
+# from ECore_Copier_MM.properties.positive.himesis.HProperty2_connectedLHS import HProperty2_connectedLHS
+# from ECore_Copier_MM.properties.positive.himesis.HProperty2_completeLHS import HProperty2_completeLHS
 
 
 
@@ -60,7 +60,7 @@ from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 class Test():
 
     def setUp(self, args):
-        pyramify = PyRamify(draw_svg=args.draw_svg)
+        pyramify = PyRamify(verbosity = args.verbosity, draw_svg=args.draw_svg)
         
         self.rules = pyramify.get_rules("ECore_Copier_MM/transformation/")
 
@@ -84,7 +84,7 @@ class Test():
 
     def test_correct_ecore_copier(self,args):
 
-        pyramify = PyRamify(verbosity = 2)
+        pyramify = PyRamify(verbosity = args.verbosity, draw_svg=args.draw_svg)
 
         a1 = self.rules['HEAttribute']
 
@@ -170,7 +170,7 @@ class Test():
                 if v["mm__"] in set(subclass_info.keys()):
                     v["MT_subtypes__"] = subclass_info[v["mm__"]]
                     v["MT_subtypeMatching__"] = True
-                    print "Changed one: " + v["mm__"]
+                    print("Changed one: " + v["mm__"])
                                                                   
         
         # add polymorphism for the matchers
@@ -274,12 +274,12 @@ class Test():
 
 def _print_states(self,s):
         for state in s.symbStateSpace:
-            print "----------"
+            print("----------")
             if state == ():
-                print 'Empty'
+                print('Empty')
             else:
                 for s in state:
-                    print s.name
+                    print(s.name)
 
 
 if __name__ == "__main__":
