@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from property import Property
+from .property import Property
 # from atomic_state_property import AtomicStateProperty
 
 from disambiguate import Disambiguator
