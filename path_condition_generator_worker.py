@@ -17,9 +17,10 @@ from solver.simple_attribute_equation_evaluator import SimpleAttributeEquationEv
 
 import numpy.random as nprnd
 
-#from profile import *
+from profiler import *
 
 class path_condition_generator_worker(Process):
+
 
 
     def __init__(self, verbosity, num):
@@ -35,6 +36,7 @@ class path_condition_generator_worker(Process):
         nprnd.seed(num)
 
     #@do_cprofile
+    #@profile
     def run(self):
 
         #print("Running thread")

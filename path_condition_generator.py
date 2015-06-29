@@ -35,7 +35,7 @@ from path_condition_generator_worker import *
 
 from random import shuffle
 
-#from profile import *
+from profiler import *
 
 
 
@@ -480,6 +480,7 @@ class PathConditionGenerator(object):
         return [l[i:i+n] for i in range(0, len(l), n)]
 
     #@do_cprofile
+    #@profile
     def build_path_conditions(self):     
         """
         Build the set of path conditions by combining rules of a given layer with the
