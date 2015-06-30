@@ -77,6 +77,9 @@ class HimesisMatcher(object):
         self.pred1 = pred1
         self.succ1 = succ1
 
+        self.pred2 = {}
+        self.succ2 = {}
+
         self.G1_vcount = self.G1.vcount()
         self.G2_vcount = self.G2.vcount()
 
@@ -109,20 +112,26 @@ class HimesisMatcher(object):
         # Memoize the predecessor & successor information:
         # for each node store the number of neighbours and the list
         if len(self.pred1) == 0 or len(self.succ1) == 0:
-            self.pred1 = {}
-            self.succ1 = {}
-            for node in range(self.G1_vcount):
-                tmp = self.G1.predecessors(node)
-                self.pred1[node] = (len(tmp), tmp)
-                tmp = self.G1.successors(node)
-                self.succ1[node] = (len(tmp), tmp)
-            self.pred2 = {}
-            self.succ2 = {}
-            for node in range(self.G2_vcount):
-                tmp = self.G2.predecessors(node)
-                self.pred2[node] = (len(tmp), tmp)
-                tmp = self.G2.successors(node)
-                self.succ2[node] = (len(tmp), tmp)
+
+            #igraph.IN = 2, igraph.OUT = 1
+            self.pred1 = [(len(tmp), tmp) for tmp in self.G1.get_adjlist(mode=2)]
+            self.succ1 = [(len(tmp), tmp) for tmp in self.G1.get_adjlist(mode=1)]
+
+        if len(self.pred2) == 0 or len(self.succ2) == 0:
+            self.pred2 = [(len(tmp), tmp) for tmp in self.G2.get_adjlist(mode=2)]
+            self.succ2 = [(len(tmp), tmp) for tmp in self.G2.get_adjlist(mode=1)]
+
+
+
+        if self.G1_vcount > 0 and self.G2_vcount > 0:
+            #keep track of the metamodels
+            self.mm1 = self.G1.vs["mm__"]
+            self.mm2 = [mm[8:] for mm in self.G2.vs["mm__"]]
+
+            self.patt_has_subtype = self.G2.vs['MT_subtypeMatching__']
+
+
+
     
     def cache_info(self):
         """
@@ -194,14 +203,16 @@ class HimesisMatcher(object):
             @param src_node: The candidate from the source graph.
             @param patt_node: The candidate from the pattern graph.
         """
-        sourceNode = self.G1.vs[src_node]
-        patternNode = self.G2.vs[patt_node]
+
         
         # First check if they are of the same type
 
         #if sourceNode["mm__"] == to_non_RAM_attribute(patternNode["mm__"]):
         #Assumption: patternNode["mm__"] always starts with "MT_pre__"
-        if sourceNode["mm__"] == patternNode["mm__"][8:]:
+        #MT_pre taken off when creating self.mm2
+        #if sourceNode["mm__"] == patternNode["mm__"][8:]:
+
+        if self.mm1[src_node] == self.mm2[patt_node]:
             # Then check for the degree compatibility
             return (self.pred2[patt_node][0] <= self.pred1[src_node][0]
                     and self.succ2[patt_node][0] <= self.succ1[src_node][0])
@@ -211,9 +222,10 @@ class HimesisMatcher(object):
             return False
 
         # Then check sub-types compatibility
-        if patternNode['MT_subtypeMatching__']:
-            for subtype in patternNode['MT_subtypes__']:
-                if sourceNode["mm__"] == subtype[8:]:
+        if self.patt_has_subtype[patt_node]:
+            sourceMM = self.G1.vs[src_node]["mm__"]
+            for subtype in self.G2.vs[patt_node]['MT_subtypes__']:
+                if sourceMM == subtype[8:]:
                     return True
         return False
     
@@ -261,10 +273,10 @@ class HimesisMatcher(object):
         # If all terminal sets are empty:
         # P(s) = (N_1 - M_1) x {min (N_2 - M_2)}
         else:
-            for patt_node in self.G2.node_iter():
+            for patt_node in range(self.G2_vcount):
                 if patt_node not in self.core_2:
                     break
-            for src_node in self.G1.node_iter():
+            for src_node in range(self.G1_vcount):
                 if src_node not in self.core_1:
                     yield src_node, patt_node
     
@@ -303,16 +315,17 @@ class HimesisMatcher(object):
         
         # Checks if successors are compatible
         for successor2 in self.succ2[patt_node][1]:
-            tmp = self.G2.predecessors(successor2)
-            self.pred2[successor2] = (len(tmp), tmp)
-            tmp = self.G2.successors(successor2)
-            self.succ2[successor2] = (len(tmp), tmp)
+            #tmp = self.G2.predecessors(successor2)
+            # tmp = self.pred2[successor2][1]
+            # self.pred2[successor2] = (len(tmp), tmp)
+            # tmp = self.G2.successors(successor2)
+            # self.succ2[successor2] = (len(tmp), tmp)
             if successor2 not in self.core_2:
                 for successor1 in self.succ1[src_node][1]:
-                    tmp = self.G1.predecessors(successor1)
-                    self.pred1[successor1] = (len(tmp), tmp)
-                    tmp = self.G1.successors(successor1)
-                    self.succ1[successor1] = (len(tmp), tmp)
+                    # tmp = self.G1.predecessors(successor1)
+                    # self.pred1[successor1] = (len(tmp), tmp)
+                    # tmp = self.G1.successors(successor1)
+                    # self.succ1[successor1] = (len(tmp), tmp)
                     if (self.succ2[successor2][0] <= self.succ1[successor1][0]
                         and self.pred2[successor2][0] <= self.pred1[successor1][0]
                         and successor1 not in self.core_1):
@@ -332,16 +345,16 @@ class HimesisMatcher(object):
         
         # Checks if predecessors are compatible
         for predecessor2 in self.pred2[patt_node][1]:
-            tmp = self.G2.predecessors(predecessor2)
-            self.pred2[predecessor2] = (len(tmp), tmp)
-            tmp = self.G2.successors(predecessor2)
-            self.succ2[predecessor2] = (len(tmp), tmp)
+            # tmp = self.G2.predecessors(predecessor2)
+            # self.pred2[predecessor2] = (len(tmp), tmp)
+            # tmp = self.G2.successors(predecessor2)
+            # self.succ2[predecessor2] = (len(tmp), tmp)
             if predecessor2 not in self.core_2:
                 for predecessor1 in self.pred1[src_node][1]:
-                    tmp = self.G1.predecessors(predecessor1)
-                    self.pred1[predecessor1] = (len(tmp), tmp)
-                    tmp = self.G1.successors(predecessor1)
-                    self.succ1[predecessor1] = (len(tmp), tmp)
+                    # tmp = self.G1.predecessors(predecessor1)
+                    # self.pred1[predecessor1] = (len(tmp), tmp)
+                    # tmp = self.G1.successors(predecessor1)
+                    # self.succ1[predecessor1] = (len(tmp), tmp)
                     if (self.pred2[predecessor2][0] <= self.pred1[predecessor1][0]
                         and self.pred2[predecessor2][0] <= self.pred1[predecessor1][0]
                         and predecessor1 not in self.core_1):
@@ -362,10 +375,10 @@ class HimesisMatcher(object):
         # Now compute the counters of the source node
         for successor1 in self.succ1[src_node][1]:
             if successor1 not in self.core_1:
-                tmp = self.G1.predecessors(successor1)
-                self.pred1[successor1] = (len(tmp), tmp)
-                tmp = self.G1.successors(successor1)
-                self.succ1[successor1] = (len(tmp), tmp)
+                # tmp = self.G1.predecessors(successor1)
+                # self.pred1[successor1] = (len(tmp), tmp)
+                # tmp = self.G1.successors(successor1)
+                # self.succ1[successor1] = (len(tmp), tmp)
                 if self.pred1[successor1][1]:
                     in1 += 1
                 if self.succ1[successor1][1]:
@@ -380,10 +393,10 @@ class HimesisMatcher(object):
         # Now compute the counters of the source node
         for predecessor1 in self.pred1[src_node][1]:
             if predecessor1 not in self.core_1:
-                tmp = self.G1.predecessors(predecessor1)
-                self.pred1[predecessor1] = (len(tmp), tmp)
-                tmp = self.G1.successors(predecessor1)
-                self.succ1[predecessor1] = (len(tmp), tmp)
+                # tmp = self.G1.predecessors(predecessor1)
+                # self.pred1[predecessor1] = (len(tmp), tmp)
+                # tmp = self.G1.successors(predecessor1)
+                # self.succ1[predecessor1] = (len(tmp), tmp)
                 if self.pred1[predecessor1][1]:
                     in1 += 1
                 if self.pred1[predecessor1][1]:
@@ -580,20 +593,20 @@ class HimesisMatcherState(object):
             # Updates for T_1^{in}
             new_nodes_in = []
             for node in matcher.core_1:
-                n = [predecessor for predecessor in matcher.G1.predecessors(node)
-                     if predecessor not in matcher.core_1 and predecessor not in new_nodes_in]
+                n = [predecessor for predecessor in matcher.pred1[node][1]
+                     if predecessor not in matcher.core_1]
                 new_nodes_in += n
-            for node in new_nodes_in:
+            for node in set(new_nodes_in):
                 if node not in matcher.in_1:
                     matcher.in_1[node] = self.depth
                 
             # Updates for T_1^{out}
             new_nodes_out = []        
             for node in matcher.core_1:
-                n = [successor for successor in matcher.G1.successors(node)
-                     if successor not in matcher.core_1 and successor not in new_nodes_out]
+                n = [successor for successor in matcher.succ1[node][1]
+                     if successor not in matcher.core_1]
                 new_nodes_out += n
-            for node in new_nodes_out:
+            for node in set(new_nodes_out):
                 if node not in matcher.out_1:                
                     matcher.out_1[node] = self.depth
             
@@ -605,20 +618,20 @@ class HimesisMatcherState(object):
             # Updates for T_2^{in}
             new_nodes_in = []
             for node in matcher.core_2:
-                n = [predecessor for predecessor in matcher.G2.predecessors(node)
-                     if predecessor not in matcher.core_2 and predecessor not in new_nodes_in]
+                n = [predecessor for predecessor in matcher.pred2[node][1]
+                     if predecessor not in matcher.core_2]
                 new_nodes_in += n
-            for node in new_nodes_in:
+            for node in set(new_nodes_in):
                 if node not in matcher.in_2:
                     matcher.in_2[node] = self.depth
     
             # Updates for T_2^{out}
             new_nodes_out = []        
             for node in matcher.core_2:
-                n = [successor for successor in matcher.G2.successors(node)
-                     if successor not in matcher.core_2 and successor not in new_nodes_out]
+                n = [successor for successor in matcher.succ2[node][1]
+                     if successor not in matcher.core_2]
                 new_nodes_out += n
-            for node in new_nodes_out:
+            for node in set(new_nodes_out):
                 if node not in matcher.out_2:
                     matcher.out_2[node] = self.depth
             
