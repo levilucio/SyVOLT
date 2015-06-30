@@ -34,22 +34,22 @@ from GM2AUTOSAR_MM.transformation.Himesis.HMapVirtualDeviceFAULTY import HMapVir
 
 ## transformation -end
 ##Backward Matchers -start
-from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnectPPortPrototype_Back_CompositionType2ECULHS import HConnectPPortPrototype_Back_CompositionType2ECULHS
-from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnectRPortPrototype_Back_CompositionType2ECULHS import HConnectRPortPrototype_Back_CompositionType2ECULHS
-from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnECU2VirtualDevice_Back_EcuInst2ECULHS import HConnECU2VirtualDevice_Back_EcuInst2ECULHS
-from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnECU2VirtualDevice_Back_STEM2VirtualDeviceLHS import HConnECU2VirtualDevice_Back_STEM2VirtualDeviceLHS
-from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnECU2VirtualDevice_Back_SystemMapping2ECULHS import HConnECU2VirtualDevice_Back_SystemMapping2ECULHS
-from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnVirtualDevice2Distributable_Back_ComponentPrototype2DistributableLHS import HConnVirtualDevice2Distributable_Back_ComponentPrototype2DistributableLHS
-from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnVirtualDevice2Distributable_Back_CompositionType2ECULHS import HConnVirtualDevice2Distributable_Back_CompositionType2ECULHS
-from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnVirtualDevice2Distributable_Back_SCTEMc2DistributableLHS import HConnVirtualDevice2Distributable_Back_SCTEMc2DistributableLHS
-from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnVirtualDevice2Distributable_Back_STEM2VirtualDeviceLHS import HConnVirtualDevice2Distributable_Back_STEM2VirtualDeviceLHS
-##Backward Matchers -end
-
-##Backward Matchers Complete -start
-from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnectPPortPrototype_Back_CompleteLHS import HConnectPPortPrototype_Back_CompleteLHS
-from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnectRPortPrototype_Back_CompleteLHS import HConnectRPortPrototype_Back_CompleteLHS
-from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnECU2VirtualDevice_Back_CompleteLHS import HConnECU2VirtualDevice_Back_CompleteLHS
-from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnVirtualDevice2Distributable_Back_CompleteLHS import HConnVirtualDevice2Distributable_Back_CompleteLHS
+# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnectPPortPrototype_Back_CompositionType2ECULHS import HConnectPPortPrototype_Back_CompositionType2ECULHS
+# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnectRPortPrototype_Back_CompositionType2ECULHS import HConnectRPortPrototype_Back_CompositionType2ECULHS
+# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnECU2VirtualDevice_Back_EcuInst2ECULHS import HConnECU2VirtualDevice_Back_EcuInst2ECULHS
+# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnECU2VirtualDevice_Back_STEM2VirtualDeviceLHS import HConnECU2VirtualDevice_Back_STEM2VirtualDeviceLHS
+# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnECU2VirtualDevice_Back_SystemMapping2ECULHS import HConnECU2VirtualDevice_Back_SystemMapping2ECULHS
+# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnVirtualDevice2Distributable_Back_ComponentPrototype2DistributableLHS import HConnVirtualDevice2Distributable_Back_ComponentPrototype2DistributableLHS
+# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnVirtualDevice2Distributable_Back_CompositionType2ECULHS import HConnVirtualDevice2Distributable_Back_CompositionType2ECULHS
+# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnVirtualDevice2Distributable_Back_SCTEMc2DistributableLHS import HConnVirtualDevice2Distributable_Back_SCTEMc2DistributableLHS
+# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnVirtualDevice2Distributable_Back_STEM2VirtualDeviceLHS import HConnVirtualDevice2Distributable_Back_STEM2VirtualDeviceLHS
+# ##Backward Matchers -end
+#
+# ##Backward Matchers Complete -start
+# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnectPPortPrototype_Back_CompleteLHS import HConnectPPortPrototype_Back_CompleteLHS
+# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnectRPortPrototype_Back_CompleteLHS import HConnectRPortPrototype_Back_CompleteLHS
+# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnECU2VirtualDevice_Back_CompleteLHS import HConnECU2VirtualDevice_Back_CompleteLHS
+# from GM2AUTOSAR_MM.backward_matchers.Himesis.HConnVirtualDevice2Distributable_Back_CompleteLHS import HConnVirtualDevice2Distributable_Back_CompleteLHS
 ##Backward Matchers Complete-end
 
 ##Properties -start
@@ -66,80 +66,80 @@ from PropertyVerification.And import And #StateSpace Prop
 from PropertyVerification.Or import Or #StateSpace Prop
 from PropertyVerification.BACKUP_atomic_state_property import BKUPAtomicStateProperty
 
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HECUVDDistCompleteLHS import HECUVDDistCompleteLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HECUVDDistConnectedLHS import HECUVDDistConnectedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HECUVDDistIsolatedLHS import HECUVDDistIsolatedLHS 
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HECUSysTrivialTrueIsolatedLHS import HECUSysTrivialTrueIsolatedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HECUSysTrivialTrueConnectedLHS import HECUSysTrivialTrueConnectedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HECUSysTrivialTrueCompleteLHS import HECUSysTrivialTrueCompleteLHS
-
-#Properties from he MODELS paper
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HP1IsolatedLHS import HP1IsolatedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HP1ConnectedLHS import HP1ConnectedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HP1CompleteLHS import HP1CompleteLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HP2IsolatedLHS import HP2IsolatedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HP2ConnectedLHS import HP2ConnectedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HP2CompleteLHS import HP2CompleteLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HS1IfClauseIsolatedConnectedLHS import HS1IfClauseIsolatedConnectedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HS1IfClauseCompleteLHS import HS1IfClauseCompleteLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HS1ThenClauseIsolatedConnectedLHS import HS1ThenClauseIsolatedConnectedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HS1ThenClauseCompleteLHS import HS1ThenClauseCompleteLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM1IfClauseIsolatedConnectedLHS import HM1IfClauseIsolatedConnectedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM1IfClauseCompleteLHS import HM1IfClauseCompleteLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM1ThenClausePart1IsolatedConnectedLHS import HM1ThenClausePart1IsolatedConnectedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM1ThenClausePart1CompleteLHS import HM1ThenClausePart1CompleteLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM3IfClauseIsolatedConnectedLHS import HM3IfClauseIsolatedConnectedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM3IfClauseCompleteLHS import HM3IfClauseCompleteLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM3ThenClausePart1IsolatedConnectedLHS import HM3ThenClausePart1IsolatedConnectedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM3ThenClausePart1CompleteLHS import HM3ThenClausePart1CompleteLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2IfClauseIsolatedConnectedLHS import HM2IfClauseIsolatedConnectedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2IfClauseCompleteLHS import HM2IfClauseCompleteLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2ThenClausePart1IsolatedConnectedLHS import HM2ThenClausePart1IsolatedConnectedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2ThenClausePart1CompleteLHS import HM2ThenClausePart1CompleteLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2ThenClausePart2IsolatedConnectedLHS import HM2ThenClausePart2IsolatedConnectedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2ThenClausePart2CompleteLHS import HM2ThenClausePart2CompleteLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4IfClauseIsolatedConnectedLHS import HM4IfClauseIsolatedConnectedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4IfClauseCompleteLHS import HM4IfClauseCompleteLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4ThenClausePart1IsolatedConnectedLHS import HM4ThenClausePart1IsolatedConnectedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4ThenClausePart1CompleteLHS import HM4ThenClausePart1CompleteLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4ThenClausePart2IsolatedConnectedLHS import HM4ThenClausePart2IsolatedConnectedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4ThenClausePart2CompleteLHS import HM4ThenClausePart2CompleteLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5IfClauseIsolatedConnectedLHS import HM5IfClauseIsolatedConnectedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5IfClauseCompleteLHS import HM5IfClauseCompleteLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5ThenClausePart1IsolatedConnectedLHS import HM5ThenClausePart1IsolatedConnectedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5ThenClausePart1CompleteLHS import HM5ThenClausePart1CompleteLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5ThenClausePart2IsolatedConnectedLHS import HM5ThenClausePart2IsolatedConnectedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5ThenClausePart2CompleteLHS import HM5ThenClausePart2CompleteLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6IfClauseIsolatedConnectedLHS import HM6IfClauseIsolatedConnectedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6IfClauseCompleteLHS import HM6IfClauseCompleteLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6ThenClausePart1IsolatedConnectedLHS import HM6ThenClausePart1IsolatedConnectedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6ThenClausePart1CompleteLHS import HM6ThenClausePart1CompleteLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6ThenClausePart2IsolatedConnectedLHS import HM6ThenClausePart2IsolatedConnectedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6ThenClausePart2CompleteLHS import HM6ThenClausePart2CompleteLHS
-
-#A property that should trivially NOT hold
-from GM2AUTOSAR_MM.Properties.negative.Himesis.HTrivialFalseECUplusSystem1IsolatedLHS import HTrivialFalseECUplusSystem1IsolatedLHS
-from GM2AUTOSAR_MM.Properties.negative.Himesis.HTrivialFalseECUplusSystem1ConnectedLHS import HTrivialFalseECUplusSystem1ConnectedLHS
-from GM2AUTOSAR_MM.Properties.negative.Himesis.HTrivialFalseECUplusSystem1CompleteLHS import HTrivialFalseECUplusSystem1CompleteLHS
-
-#A property with an Isolated pattern that has no matches - added for experimentation, has no significant meaning
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HIsolHasNoMatchIsolatedLHS import HIsolHasNoMatchIsolatedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HIsolHasNoMatchConnectedLHS import HIsolHasNoMatchConnectedLHS
-from GM2AUTOSAR_MM.Properties.positive.Himesis.HIsolHasNoMatchCompleteLHS import HIsolHasNoMatchCompleteLHS
-
-##Properties -end
-####GEHANs IMPORTS for GM2AUTOSAR transformation -END
-
-# rule overlap imports
-from GM2AUTOSAR_MM.overlap_rules.Himesis.HConnectPPortPrototype_overlapLHS import HConnectPPortPrototype_overlapLHS
-from GM2AUTOSAR_MM.overlap_rules.Himesis.HConnectRPortPrototype_overlapLHS import HConnectRPortPrototype_overlapLHS
-from GM2AUTOSAR_MM.overlap_rules.Himesis.HConnECU2VirtualDevice_overlapLHS import HConnECU2VirtualDevice_overlapLHS
-from GM2AUTOSAR_MM.overlap_rules.Himesis.HConnVirtualDeviceToDistributable_overlapLHS import HConnVirtualDeviceToDistributable_overlapLHS
-from GM2AUTOSAR_MM.overlap_rules.Himesis.HMapDistributable_overlapLHS import HMapDistributable_overlapLHS
-from GM2AUTOSAR_MM.overlap_rules.Himesis.HMapECU2FiveElements_overlapLHS import HMapECU2FiveElements_overlapLHS
-from GM2AUTOSAR_MM.overlap_rules.Himesis.HMapVirtualDevice_overlapLHS import HMapVirtualDevice_overlapLHS
-from GM2AUTOSAR_MM.overlap_rules.Himesis.HMapECU2FiveElementsFAULTY_overlapLHS import HMapECU2FiveElementsFAULTY_overlapLHS
-from GM2AUTOSAR_MM.overlap_rules.Himesis.HMapVirtualDeviceFAULTY_overlapLHS import HMapVirtualDeviceFAULTY_overlapLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HECUVDDistCompleteLHS import HECUVDDistCompleteLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HECUVDDistConnectedLHS import HECUVDDistConnectedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HECUVDDistIsolatedLHS import HECUVDDistIsolatedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HECUSysTrivialTrueIsolatedLHS import HECUSysTrivialTrueIsolatedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HECUSysTrivialTrueConnectedLHS import HECUSysTrivialTrueConnectedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HECUSysTrivialTrueCompleteLHS import HECUSysTrivialTrueCompleteLHS
+#
+# #Properties from he MODELS paper
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HP1IsolatedLHS import HP1IsolatedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HP1ConnectedLHS import HP1ConnectedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HP1CompleteLHS import HP1CompleteLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HP2IsolatedLHS import HP2IsolatedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HP2ConnectedLHS import HP2ConnectedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HP2CompleteLHS import HP2CompleteLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HS1IfClauseIsolatedConnectedLHS import HS1IfClauseIsolatedConnectedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HS1IfClauseCompleteLHS import HS1IfClauseCompleteLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HS1ThenClauseIsolatedConnectedLHS import HS1ThenClauseIsolatedConnectedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HS1ThenClauseCompleteLHS import HS1ThenClauseCompleteLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM1IfClauseIsolatedConnectedLHS import HM1IfClauseIsolatedConnectedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM1IfClauseCompleteLHS import HM1IfClauseCompleteLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM1ThenClausePart1IsolatedConnectedLHS import HM1ThenClausePart1IsolatedConnectedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM1ThenClausePart1CompleteLHS import HM1ThenClausePart1CompleteLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM3IfClauseIsolatedConnectedLHS import HM3IfClauseIsolatedConnectedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM3IfClauseCompleteLHS import HM3IfClauseCompleteLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM3ThenClausePart1IsolatedConnectedLHS import HM3ThenClausePart1IsolatedConnectedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM3ThenClausePart1CompleteLHS import HM3ThenClausePart1CompleteLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2IfClauseIsolatedConnectedLHS import HM2IfClauseIsolatedConnectedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2IfClauseCompleteLHS import HM2IfClauseCompleteLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2ThenClausePart1IsolatedConnectedLHS import HM2ThenClausePart1IsolatedConnectedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2ThenClausePart1CompleteLHS import HM2ThenClausePart1CompleteLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2ThenClausePart2IsolatedConnectedLHS import HM2ThenClausePart2IsolatedConnectedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2ThenClausePart2CompleteLHS import HM2ThenClausePart2CompleteLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4IfClauseIsolatedConnectedLHS import HM4IfClauseIsolatedConnectedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4IfClauseCompleteLHS import HM4IfClauseCompleteLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4ThenClausePart1IsolatedConnectedLHS import HM4ThenClausePart1IsolatedConnectedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4ThenClausePart1CompleteLHS import HM4ThenClausePart1CompleteLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4ThenClausePart2IsolatedConnectedLHS import HM4ThenClausePart2IsolatedConnectedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4ThenClausePart2CompleteLHS import HM4ThenClausePart2CompleteLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5IfClauseIsolatedConnectedLHS import HM5IfClauseIsolatedConnectedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5IfClauseCompleteLHS import HM5IfClauseCompleteLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5ThenClausePart1IsolatedConnectedLHS import HM5ThenClausePart1IsolatedConnectedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5ThenClausePart1CompleteLHS import HM5ThenClausePart1CompleteLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5ThenClausePart2IsolatedConnectedLHS import HM5ThenClausePart2IsolatedConnectedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5ThenClausePart2CompleteLHS import HM5ThenClausePart2CompleteLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6IfClauseIsolatedConnectedLHS import HM6IfClauseIsolatedConnectedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6IfClauseCompleteLHS import HM6IfClauseCompleteLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6ThenClausePart1IsolatedConnectedLHS import HM6ThenClausePart1IsolatedConnectedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6ThenClausePart1CompleteLHS import HM6ThenClausePart1CompleteLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6ThenClausePart2IsolatedConnectedLHS import HM6ThenClausePart2IsolatedConnectedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6ThenClausePart2CompleteLHS import HM6ThenClausePart2CompleteLHS
+#
+# #A property that should trivially NOT hold
+# from GM2AUTOSAR_MM.Properties.negative.Himesis.HTrivialFalseECUplusSystem1IsolatedLHS import HTrivialFalseECUplusSystem1IsolatedLHS
+# from GM2AUTOSAR_MM.Properties.negative.Himesis.HTrivialFalseECUplusSystem1ConnectedLHS import HTrivialFalseECUplusSystem1ConnectedLHS
+# from GM2AUTOSAR_MM.Properties.negative.Himesis.HTrivialFalseECUplusSystem1CompleteLHS import HTrivialFalseECUplusSystem1CompleteLHS
+#
+# #A property with an Isolated pattern that has no matches - added for experimentation, has no significant meaning
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HIsolHasNoMatchIsolatedLHS import HIsolHasNoMatchIsolatedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HIsolHasNoMatchConnectedLHS import HIsolHasNoMatchConnectedLHS
+# from GM2AUTOSAR_MM.Properties.positive.Himesis.HIsolHasNoMatchCompleteLHS import HIsolHasNoMatchCompleteLHS
+#
+# ##Properties -end
+# ####GEHANs IMPORTS for GM2AUTOSAR transformation -END
+#
+# # rule overlap imports
+# from GM2AUTOSAR_MM.overlap_rules.Himesis.HConnectPPortPrototype_overlapLHS import HConnectPPortPrototype_overlapLHS
+# from GM2AUTOSAR_MM.overlap_rules.Himesis.HConnectRPortPrototype_overlapLHS import HConnectRPortPrototype_overlapLHS
+# from GM2AUTOSAR_MM.overlap_rules.Himesis.HConnECU2VirtualDevice_overlapLHS import HConnECU2VirtualDevice_overlapLHS
+# from GM2AUTOSAR_MM.overlap_rules.Himesis.HConnVirtualDeviceToDistributable_overlapLHS import HConnVirtualDeviceToDistributable_overlapLHS
+# from GM2AUTOSAR_MM.overlap_rules.Himesis.HMapDistributable_overlapLHS import HMapDistributable_overlapLHS
+# from GM2AUTOSAR_MM.overlap_rules.Himesis.HMapECU2FiveElements_overlapLHS import HMapECU2FiveElements_overlapLHS
+# from GM2AUTOSAR_MM.overlap_rules.Himesis.HMapVirtualDevice_overlapLHS import HMapVirtualDevice_overlapLHS
+# from GM2AUTOSAR_MM.overlap_rules.Himesis.HMapECU2FiveElementsFAULTY_overlapLHS import HMapECU2FiveElementsFAULTY_overlapLHS
+# from GM2AUTOSAR_MM.overlap_rules.Himesis.HMapVirtualDeviceFAULTY_overlapLHS import HMapVirtualDeviceFAULTY_overlapLHS
 
 from PropertyVerification.state_property import StateProperty
 from PropertyVerification.atomic_state_property import AtomicStateProperty
@@ -152,24 +152,24 @@ from PropertyVerification.Implication import Implication #StateSpace Prop
 from PropertyVerification.And import And #StateSpace Prop
 from PropertyVerification.Or import Or #StateSpace Prop
 from PropertyVerification.BACKUP_atomic_state_property import BKUPAtomicStateProperty
-from guppy.gsl.Main import Args
+
 #from lib2to3.fixer_util import p1
 
 class Test():
 
     def setUp(self,args):
-        
-        pyramify = PyRamify(draw_svg=args.draw_svg)
+        pyramify = PyRamify(verbosity = args.verbosity, draw_svg = args.draw_svg)
 
-        self.do_old_transformation = False
+        self.do_old_transformation = True
 
-        transformation_dir = "GM2AUTOSAR_MM/transformation_from_ATL/"
+        self.transformation_dir = "GM2AUTOSAR_MM/transformation_from_ATL/"
 
         if self.do_old_transformation:
-            transformation_dir = "GM2AUTOSAR_MM/transformation/HimesisWOFaulty/"
+            self.transformation_dir = "GM2AUTOSAR_MM/transformation/HimesisWOFaulty/"
 
-        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
-            pyramify.ramify_directory(transformation_dir)
+        self.rules = pyramify.get_rules(self.transformation_dir)
+
+
 
 #         self.rules = {                'HMapECU2FiveElements': HMapECU2FiveElementsFAULTY(),
 #                                       'HMapDistributable': HMapDistributable(),
@@ -311,7 +311,7 @@ class Test():
 #                                    [transformation[1][0], transformation[1][1]],\
 #                                    [transformation[2][0], transformation[2][1]]]
 
-        pyramify = PyRamify(draw_svg=args.draw_svg)
+        pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
         #self.rulesIncludingBackLinks = pyramify.getRulesIncludingBackLinks(transformation, self.backwardPatterns)
 
         pre_metamodel = ["MT_pre__GM2AUTOSAR_MM", "MoTifRule"]
@@ -346,9 +346,14 @@ class Test():
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
 
 
+        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns,
+         self.ruleCombinators] = \
+            pyramify.ramify_directory(self.transformation_dir, self.transformation)
+
+
         print("create path conditions")
         s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, \
-                                   self.matchRulePatterns, 0, args)
+                                   self.matchRulePatterns, args)
 
 
         ts0 = time.time()
@@ -383,7 +388,7 @@ class Test():
         #turn off verification debugging
 
 
-        s.print_path_conditions_file()
+        #s.print_path_conditions_file()
 #
 #         for layer in s.transformation:
 #             for rule in layer:
@@ -551,16 +556,19 @@ class Test():
 
 
     def _print_states(self,s):
-        for pc in s.get_path_conditions():
-            print "----------"
-            print pc.name
+        for state in s.symbStateSpace:
+            print("----------")
+            if state == ():
+                print('Empty')
+            else:
+                for s in state:
+                    print(s.name)
 
 
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description='Run the police station with attributes test # 2.')
-
+    parser = argparse.ArgumentParser(description = 'Run the uml to kiltera test.')
     parser.add_argument('--skip_tests', dest = 'run_tests', action = 'store_false',
                         help = 'Option to skip the running of matching tests')
     parser.set_defaults(run_tests = True)
@@ -580,11 +588,11 @@ if __name__ == "__main__":
     parser.add_argument('--num_pcs', type = int, default = -1,
                         help = 'Number of path conditions which should be produced by this test (default: -1)')
 
+    parser.add_argument('--num_rules', type = int, default = -1,
+                        help = 'Number of rules in the transformation (default: -1)')
 
-    #TODO: remove these
-    parser.add_argument('--draw_svg')
-    parser.add_argument('--r'
-                        'un_tests')
+    parser.add_argument('--verbosity', type = int, default = 0,
+                        help = 'Verbosity level (default: 0 - minimum output)')
 
     args = parser.parse_args()
 
