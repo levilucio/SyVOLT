@@ -195,7 +195,7 @@ class HimesisMatcher(object):
 
         # Provide a convenient way to access the isomorphism mapping.
         self.mapping = self.core_2.copy()
-    
+
     def are_compatibile(self, src_node, patt_node):
         """
             Verifies if a candidate pair is compatible.
@@ -223,7 +223,7 @@ class HimesisMatcher(object):
 
         # Then check sub-types compatibility
         if self.patt_has_subtype[patt_node]:
-            sourceMM = self.G1.vs[src_node]["mm__"]
+            sourceMM = self.mm1[src_node]
             for subtype in self.G2.vs[patt_node]['MT_subtypes__']:
                 if sourceMM == subtype[8:]:
                     return True
@@ -589,55 +589,53 @@ class HimesisMatcherState(object):
                     vector[patt_node] = self.depth
                     
             # Now we add every other node...
-            
+
             # Updates for T_1^{in}
             new_nodes_in = []
-            for node in matcher.core_1:
-                n = [predecessor for predecessor in matcher.pred1[node][1]
-                     if predecessor not in matcher.core_1]
-                new_nodes_in += n
-            for node in set(new_nodes_in):
-                if node not in matcher.in_1:
-                    matcher.in_1[node] = self.depth
-                
             # Updates for T_1^{out}
-            new_nodes_out = []        
+            new_nodes_out = []
             for node in matcher.core_1:
-                n = [successor for successor in matcher.succ1[node][1]
-                     if successor not in matcher.core_1]
-                new_nodes_out += n
+                new_nodes_in += matcher.pred1[node][1]
+                new_nodes_out += matcher.succ1[node][1]
+
+            for node in set(new_nodes_in):
+                if node not in matcher.in_1 and node not in matcher.core_1:
+                    matcher.in_1[node] = self.depth
+
             for node in set(new_nodes_out):
-                if node not in matcher.out_1:                
+                if node not in matcher.out_1 and node not in matcher.core_1:
                     matcher.out_1[node] = self.depth
             
             # Updates for T_1^{inout}
-            for node in set(list(matcher.in_1.keys()) + list(matcher.out_1.keys())):
-                if node in matcher.out_1 and node in matcher.in_1 and node not in matcher.inout_1: 
+            # & returns the intersection
+            for node in matcher.in_1.keys() & matcher.out_1.keys():
+                if node not in matcher.inout_1:
                     matcher.inout_1[node] = self.depth
+
+
+
             
             # Updates for T_2^{in}
             new_nodes_in = []
-            for node in matcher.core_2:
-                n = [predecessor for predecessor in matcher.pred2[node][1]
-                     if predecessor not in matcher.core_2]
-                new_nodes_in += n
-            for node in set(new_nodes_in):
-                if node not in matcher.in_2:
-                    matcher.in_2[node] = self.depth
-    
             # Updates for T_2^{out}
-            new_nodes_out = []        
+            new_nodes_out = []
+
             for node in matcher.core_2:
-                n = [successor for successor in matcher.succ2[node][1]
-                     if successor not in matcher.core_2]
-                new_nodes_out += n
+                new_nodes_in += matcher.pred2[node][1]
+                new_nodes_out += matcher.succ2[node][1]
+
+            for node in set(new_nodes_in):
+                if node not in matcher.in_2 and node not in matcher.core_2:
+                    matcher.in_2[node] = self.depth
+
             for node in set(new_nodes_out):
-                if node not in matcher.out_2:
+                if node not in matcher.out_2 and node not in matcher.core_2:
                     matcher.out_2[node] = self.depth
             
             # Updates for T_2^{inout}
-            for node in set(list(matcher.in_2.keys()) + list(matcher.out_2.keys())):
-                if node in matcher.out_2 and node in matcher.in_2 and node not in matcher.inout_2: 
+            # & returns the intersection
+            for node in matcher.in_2.keys() & matcher.out_2.keys():
+                if node not in matcher.inout_2:
                     matcher.inout_2[node] = self.depth
     
     def restore(self):
