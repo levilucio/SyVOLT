@@ -1,284 +1,136 @@
+
+
 from core.himesis import Himesis
-import cPickle as pickle
-import uuid
 
 class HEDataType(Himesis):
     def __init__(self):
         """
-        Creates the himesis graph representing the DSLTrans rule EDataType.
+        Creates the himesis graph representing the AToM3 model HEDataType.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(HEDataType, self).__init__(name='HEDataType', num_nodes=0, edges=[])
-        
-        
-        # Set the graph attributes
-        # TODO Levi, need some help here because I don't know where does 
-        # this value come from.
-        self["mm__"] = pickle.loads("""(lp1
-S'HimesisMM'
-p2
-a.""")
-        
-        self["name"] = """EDataType"""
-        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EDataType')
-        
-        # match model. We only support one match model
-        self.add_node()
-        self.vs[0]["mm__"] = """MatchModel"""
-        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EDataTypematchmodel0')
-        
-        # apply model node
-        self.add_node()
-        self.vs[1]["mm__"] = """ApplyModel"""
-        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EDataTypeapplymodel1')
-        
-        # paired with relation between match and apply models
-        self.add_node()
-        self.vs[2]["mm__"] = """paired_with"""
-        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EDataTypepairedwith2')
-        
-    	# match class EDataType() node
-    	self.add_node()
-    	self.vs[3]["name"] = """"""
-        self.vs[3]["classtype"] = """EDataType"""
-        self.vs[3]["mm__"] = """EDataType"""
-        self.vs[3]["cardinality"] = """+"""
-        #self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# match_contains node for class EDataType()
-        self.add_node()
-        self.vs[4]["mm__"] = """match_contains"""
-        #self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains4')
-        
-        
-    	# apply class EDataType() node
-    	self.add_node()
-    	self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """EDataType"""
-        self.vs[5]["mm__"] = """EDataType"""
-        self.vs[5]["cardinality"] = """1"""
-        #self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply_contains node for class EDataType()
-        self.add_node()
-        self.vs[6]["mm__"] = """apply_contains"""
-        #self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains6')
-        
-        
-        
-        
-        
-        
-    	# has match attribute name() node
-    	self.add_node()
-    	self.vs[7]["mm__"] = """hasAttribute_S"""
-        #self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
-    	# match attribute name() node
-    	self.add_node()
-    	self.vs[8]["name"] = """name"""
-        self.vs[8]["mm__"] = """Attribute"""
-        self.vs[8]["Type"] = """'String'"""
-        #self.vs[8]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# has match attribute instanceClassName() node
-    	self.add_node()
-    	self.vs[9]["mm__"] = """hasAttribute_S"""
-        #self.vs[9]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
-    	# match attribute instanceClassName() node
-    	self.add_node()
-    	self.vs[10]["name"] = """instanceClassName"""
-        self.vs[10]["mm__"] = """Attribute"""
-        self.vs[10]["Type"] = """'String'"""
-        #self.vs[10]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# has match attribute instanceTypeName() node
-    	self.add_node()
-    	self.vs[11]["mm__"] = """hasAttribute_S"""
-        #self.vs[11]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
-    	# match attribute instanceTypeName() node
-    	self.add_node()
-    	self.vs[12]["name"] = """instanceTypeName"""
-        self.vs[12]["mm__"] = """Attribute"""
-        self.vs[12]["Type"] = """'String'"""
-        #self.vs[12]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# has match attribute serializable() node
-    	self.add_node()
-    	self.vs[13]["mm__"] = """hasAttribute_S"""
-        #self.vs[13]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
-    	# match attribute serializable() node
-    	self.add_node()
-    	self.vs[14]["name"] = """serializable"""
-        self.vs[14]["mm__"] = """Attribute"""
-        self.vs[14]["Type"] = """'String'"""
-        #self.vs[14]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-        
-        
-    	# has apply attribute name() node
-    	self.add_node()
-    	self.vs[15]["mm__"] = """hasAttribute_T"""
-        #self.vs[15]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
-    	# apply attribute name() node
-    	self.add_node()
-    	self.vs[16]["name"] = """name"""
-        self.vs[16]["mm__"] = """Attribute"""
-        self.vs[16]["Type"] = """'String'"""
-        #self.vs[16]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply attribute equation name() node
-    	self.add_node()
-    	self.vs[17]["name"] = """eq_"""
-        self.vs[17]["mm__"] = """Equation"""
-        #self.vs[17]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
-    	# apply attribute equation left expr name() node
-    	self.add_node()
-    	self.vs[18]["mm__"] = """leftExpr"""
-        #self.vs[18]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
-    	# apply attribute equation right expr name() node
-    	self.add_node()
-    	self.vs[19]["mm__"] = """rightExpr"""
-        #self.vs[19]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
-    	# has apply attribute instanceClassName() node
-    	self.add_node()
-    	self.vs[20]["mm__"] = """hasAttribute_T"""
-        #self.vs[20]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
-    	# apply attribute instanceClassName() node
-    	self.add_node()
-    	self.vs[21]["name"] = """instanceClassName"""
-        self.vs[21]["mm__"] = """Attribute"""
-        self.vs[21]["Type"] = """'String'"""
-        #self.vs[21]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply attribute equation instanceClassName() node
-    	self.add_node()
-    	self.vs[22]["name"] = """eq_"""
-        self.vs[22]["mm__"] = """Equation"""
-        #self.vs[22]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
-    	# apply attribute equation left expr instanceClassName() node
-    	self.add_node()
-    	self.vs[23]["mm__"] = """leftExpr"""
-        #self.vs[23]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
-    	# apply attribute equation right expr instanceClassName() node
-    	self.add_node()
-    	self.vs[24]["mm__"] = """rightExpr"""
-        #self.vs[24]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
-    	# has apply attribute instanceTypeName() node
-    	self.add_node()
-    	self.vs[25]["mm__"] = """hasAttribute_T"""
-        #self.vs[25]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
-    	# apply attribute instanceTypeName() node
-    	self.add_node()
-    	self.vs[26]["name"] = """instanceTypeName"""
-        self.vs[26]["mm__"] = """Attribute"""
-        self.vs[26]["Type"] = """'String'"""
-        #self.vs[26]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply attribute equation instanceTypeName() node
-    	self.add_node()
-    	self.vs[27]["name"] = """eq_"""
-        self.vs[27]["mm__"] = """Equation"""
-        #self.vs[27]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
-    	# apply attribute equation left expr instanceTypeName() node
-    	self.add_node()
-    	self.vs[28]["mm__"] = """leftExpr"""
-        #self.vs[28]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
-    	# apply attribute equation right expr instanceTypeName() node
-    	self.add_node()
-    	self.vs[29]["mm__"] = """rightExpr"""
-        #self.vs[29]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
-    	# has apply attribute serializable() node
-    	self.add_node()
-    	self.vs[30]["mm__"] = """hasAttribute_T"""
-        #self.vs[30]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
-    	# apply attribute serializable() node
-    	self.add_node()
-    	self.vs[31]["name"] = """serializable"""
-        self.vs[31]["mm__"] = """Attribute"""
-        self.vs[31]["Type"] = """'String'"""
-        #self.vs[31]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply attribute equation serializable() node
-    	self.add_node()
-    	self.vs[32]["name"] = """eq_"""
-        self.vs[32]["mm__"] = """Equation"""
-        #self.vs[32]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
-    	# apply attribute equation left expr serializable() node
-    	self.add_node()
-    	self.vs[33]["mm__"] = """leftExpr"""
-        #self.vs[33]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
-    	# apply attribute equation right expr serializable() node
-    	self.add_node()
-    	self.vs[34]["mm__"] = """rightExpr"""
-        #self.vs[34]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
-    	# has apply attribute ApplyAttribute() node
-    	self.add_node()
-    	self.vs[35]["mm__"] = """hasAttribute_T"""
-        #self.vs[35]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
-    	# apply attribute ApplyAttribute() node
-    	self.add_node()
-    	self.vs[36]["name"] = """ApplyAttribute"""
-        self.vs[36]["mm__"] = """Attribute"""
-        self.vs[36]["Type"] = """'String'"""
-        #self.vs[36]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply attribute equation ApplyAttribute() node
-    	self.add_node()
-    	self.vs[37]["name"] = """eq_"""
-        self.vs[37]["mm__"] = """Equation"""
-        #self.vs[37]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
-    	# apply attribute equation left expr ApplyAttribute() node
-    	self.add_node()
-    	self.vs[38]["mm__"] = """leftExpr"""
-        #self.vs[38]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
-    	# apply attribute equation right expr ApplyAttribute() node
-    	self.add_node()
-    	self.vs[39]["mm__"] = """rightExpr"""
-        #self.vs[39]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
-    	# apply attribute atom ApplyAttribute() node
-    	self.add_node()
-    	self.vs[40]["name"] = """solveRef"""
-        self.vs[40]["mm__"] = """Constant"""
-        self.vs[40]["Type"] = """'String'"""
-        #self.vs[40]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom40')
-        
+        super(HEDataType, self).__init__(name='HEDataType', num_nodes=41, edges=[])
         
         # Add the edges
-        self.add_edges([
-    		(0,4), # matchmodel -> match_contains
-    		(4,3), # match_contains -> match_class EDataType()
-    		(1,6), # applymodel -> apply_contains
-    		(6,5), # apply_contains -> apply_class EDataType()
-    		(3,7), # match_class EDataType() -> has_match_attribute name ()
-    		(7,8), #  has_match_attribute name () -> match_attribute name ()
-    		(3,9), # match_class EDataType() -> has_match_attribute instanceClassName ()
-    		(9,10), #  has_match_attribute instanceClassName () -> match_attribute instanceClassName ()
-    		(3,11), # match_class EDataType() -> has_match_attribute instanceTypeName ()
-    		(11,12), #  has_match_attribute instanceTypeName () -> match_attribute instanceTypeName ()
-    		(3,13), # match_class EDataType() -> has_match_attribute serializable ()
-    		(13,14), #  has_match_attribute serializable () -> match_attribute serializable ()
-    		(5,15), # apply_class EDataType() -> has_apply_attribute name ()
-    		(15,16), #  has_apply_attribute name () -> apply_attribute name ()
-    		(17,18), #  equation of apply attribute name () -> left_expr
-    		(18,16), #  left_expr -> apply_attribute name ()
-    		(17,19), #  equation of apply attribute name () -> right_expr
-    		(19,8), # right_expr --> term
-    		(5,20), # apply_class EDataType() -> has_apply_attribute instanceClassName ()
-    		(20,21), #  has_apply_attribute instanceClassName () -> apply_attribute instanceClassName ()
-    		(22,23), #  equation of apply attribute instanceClassName () -> left_expr
-    		(23,21), #  left_expr -> apply_attribute instanceClassName ()
-    		(22,24), #  equation of apply attribute instanceClassName () -> right_expr
-    		(24,10), # right_expr --> term
-    		(5,25), # apply_class EDataType() -> has_apply_attribute instanceTypeName ()
-    		(25,26), #  has_apply_attribute instanceTypeName () -> apply_attribute instanceTypeName ()
-    		(27,28), #  equation of apply attribute instanceTypeName () -> left_expr
-    		(28,26), #  left_expr -> apply_attribute instanceTypeName ()
-    		(27,29), #  equation of apply attribute instanceTypeName () -> right_expr
-    		(29,12), # right_expr --> term
-    		(5,30), # apply_class EDataType() -> has_apply_attribute serializable ()
-    		(30,31), #  has_apply_attribute serializable () -> apply_attribute serializable ()
-    		(32,33), #  equation of apply attribute serializable () -> left_expr
-    		(33,31), #  left_expr -> apply_attribute serializable ()
-    		(32,34), #  equation of apply attribute serializable () -> right_expr
-    		(34,14), # right_expr --> term
-    		(5,35), # apply_class EDataType() -> has_apply_attribute ApplyAttribute ()
-    		(35,36), #  has_apply_attribute ApplyAttribute () -> apply_attribute ApplyAttribute ()
-    		(37,38), #  equation of apply attribute ApplyAttribute () -> left_expr
-    		(38,36), #  left_expr -> apply_attribute ApplyAttribute ()
-    		(37,39), #  equation of apply attribute ApplyAttribute () -> right_expr
-    		(39,40), # right_expr --> term
-        	(0,2), # matchmodel -> pairedwith
-        	(2,1) # pairedwith -> applyModel
-        ])
+        self.add_edges([[0, 3], [3, 6], [1, 4], [4, 7], [6, 8], [8, 32], [6, 9], [9, 33], [6, 10], [10, 34], [6, 11], [11, 35], [7, 12], [12, 36], [13, 14], [14, 36], [13, 15], [15, 32], [7, 16], [16, 37], [17, 18], [18, 37], [17, 19], [19, 33], [7, 20], [20, 38], [21, 22], [22, 38], [21, 23], [23, 34], [7, 24], [24, 39], [25, 26], [26, 39], [25, 27], [27, 35], [7, 28], [28, 40], [29, 30], [30, 40], [29, 31], [31, 5], [0, 2], [2, 1]])
+        # Set the graph attributes
+        self["mm__"] = ['HimesisMM']
+        self["name"] = """EDataType"""
+        self["GUID__"] = 5396183599598318015
         
+        # Set the node attributes
+        self.vs[0]["mm__"] = """MatchModel"""
+        self.vs[0]["GUID__"] = 1067585622720708903
+        self.vs[1]["mm__"] = """ApplyModel"""
+        self.vs[1]["GUID__"] = 9023050572148924678
+        self.vs[2]["mm__"] = """paired_with"""
+        self.vs[2]["GUID__"] = 4604967754652708090
+        self.vs[3]["mm__"] = """match_contains"""
+        self.vs[3]["GUID__"] = 7038913861194902512
+        self.vs[4]["mm__"] = """apply_contains"""
+        self.vs[4]["GUID__"] = 7876228595461755021
+        self.vs[5]["name"] = """solveRef"""
+        self.vs[5]["mm__"] = """Constant"""
+        self.vs[5]["Type"] = """'String'"""
+        self.vs[5]["GUID__"] = 6165192239543984316
+        self.vs[6]["name"] = """"""
+        self.vs[6]["classtype"] = """EDataType"""
+        self.vs[6]["mm__"] = """EDataType"""
+        self.vs[6]["cardinality"] = """+"""
+        self.vs[6]["GUID__"] = 93360005422950726
+        self.vs[7]["name"] = """"""
+        self.vs[7]["classtype"] = """EDataType"""
+        self.vs[7]["mm__"] = """EDataType"""
+        self.vs[7]["cardinality"] = """1"""
+        self.vs[7]["GUID__"] = 2646493541280217838
+        self.vs[8]["mm__"] = """hasAttribute_S"""
+        self.vs[8]["GUID__"] = 2367506216802068112
+        self.vs[9]["mm__"] = """hasAttribute_S"""
+        self.vs[9]["GUID__"] = 7548598791140641633
+        self.vs[10]["mm__"] = """hasAttribute_S"""
+        self.vs[10]["GUID__"] = 1220176681443763407
+        self.vs[11]["mm__"] = """hasAttribute_S"""
+        self.vs[11]["GUID__"] = 770265390985573196
+        self.vs[12]["mm__"] = """hasAttribute_T"""
+        self.vs[12]["GUID__"] = 4183016704028585419
+        self.vs[13]["name"] = """eq_"""
+        self.vs[13]["mm__"] = """Equation"""
+        self.vs[13]["GUID__"] = 832109370145865021
+        self.vs[14]["mm__"] = """leftExpr"""
+        self.vs[14]["GUID__"] = 7752136684000675580
+        self.vs[15]["mm__"] = """rightExpr"""
+        self.vs[15]["GUID__"] = 7261262060874607130
+        self.vs[16]["mm__"] = """hasAttribute_T"""
+        self.vs[16]["GUID__"] = 5256536622949517609
+        self.vs[17]["name"] = """eq_"""
+        self.vs[17]["mm__"] = """Equation"""
+        self.vs[17]["GUID__"] = 4071714872447792980
+        self.vs[18]["mm__"] = """leftExpr"""
+        self.vs[18]["GUID__"] = 5253471974203207987
+        self.vs[19]["mm__"] = """rightExpr"""
+        self.vs[19]["GUID__"] = 6577996693665599902
+        self.vs[20]["mm__"] = """hasAttribute_T"""
+        self.vs[20]["GUID__"] = 4160781966827575447
+        self.vs[21]["name"] = """eq_"""
+        self.vs[21]["mm__"] = """Equation"""
+        self.vs[21]["GUID__"] = 1353707105445781324
+        self.vs[22]["mm__"] = """leftExpr"""
+        self.vs[22]["GUID__"] = 4801677920479105387
+        self.vs[23]["mm__"] = """rightExpr"""
+        self.vs[23]["GUID__"] = 8279147981595169124
+        self.vs[24]["mm__"] = """hasAttribute_T"""
+        self.vs[24]["GUID__"] = 1770422418320390231
+        self.vs[25]["name"] = """eq_"""
+        self.vs[25]["mm__"] = """Equation"""
+        self.vs[25]["GUID__"] = 2729685347842678274
+        self.vs[26]["mm__"] = """leftExpr"""
+        self.vs[26]["GUID__"] = 7926083014713402192
+        self.vs[27]["mm__"] = """rightExpr"""
+        self.vs[27]["GUID__"] = 5351899490486127218
+        self.vs[28]["mm__"] = """hasAttribute_T"""
+        self.vs[28]["GUID__"] = 8086524972958147433
+        self.vs[29]["name"] = """eq_"""
+        self.vs[29]["mm__"] = """Equation"""
+        self.vs[29]["GUID__"] = 6736704815175247026
+        self.vs[30]["mm__"] = """leftExpr"""
+        self.vs[30]["GUID__"] = 6218966783774053042
+        self.vs[31]["mm__"] = """rightExpr"""
+        self.vs[31]["GUID__"] = 4537557062352163433
+        self.vs[32]["name"] = """name"""
+        self.vs[32]["mm__"] = """Attribute"""
+        self.vs[32]["Type"] = """'String'"""
+        self.vs[32]["GUID__"] = 2686443993613039057
+        self.vs[33]["name"] = """instanceClassName"""
+        self.vs[33]["mm__"] = """Attribute"""
+        self.vs[33]["Type"] = """'String'"""
+        self.vs[33]["GUID__"] = 4977528580014127822
+        self.vs[34]["name"] = """instanceTypeName"""
+        self.vs[34]["mm__"] = """Attribute"""
+        self.vs[34]["Type"] = """'String'"""
+        self.vs[34]["GUID__"] = 4519036695203987516
+        self.vs[35]["name"] = """serializable"""
+        self.vs[35]["mm__"] = """Attribute"""
+        self.vs[35]["Type"] = """'String'"""
+        self.vs[35]["GUID__"] = 1747073793922142579
+        self.vs[36]["name"] = """name"""
+        self.vs[36]["mm__"] = """Attribute"""
+        self.vs[36]["Type"] = """'String'"""
+        self.vs[36]["GUID__"] = 4247500863154858540
+        self.vs[37]["name"] = """instanceClassName"""
+        self.vs[37]["mm__"] = """Attribute"""
+        self.vs[37]["Type"] = """'String'"""
+        self.vs[37]["GUID__"] = 5248824937468875365
+        self.vs[38]["name"] = """instanceTypeName"""
+        self.vs[38]["mm__"] = """Attribute"""
+        self.vs[38]["Type"] = """'String'"""
+        self.vs[38]["GUID__"] = 3186222386860575589
+        self.vs[39]["name"] = """serializable"""
+        self.vs[39]["mm__"] = """Attribute"""
+        self.vs[39]["Type"] = """'String'"""
+        self.vs[39]["GUID__"] = 7601811651069397060
+        self.vs[40]["name"] = """ApplyAttribute"""
+        self.vs[40]["mm__"] = """Attribute"""
+        self.vs[40]["Type"] = """'String'"""
+        self.vs[40]["GUID__"] = 2739881814265057067
+

@@ -1,209 +1,103 @@
+
+
 from core.himesis import Himesis
-import cPickle as pickle
-import uuid
 
 class HeclassOUTeStructuralFeaturesSolveRefEClassEStructuralFeatureEClassEStructuralFeature(Himesis):
     def __init__(self):
         """
-        Creates the himesis graph representing the DSLTrans rule eclassOUTeStructuralFeaturesSolveRefEClassEStructuralFeatureEClassEStructuralFeature.
+        Creates the himesis graph representing the AToM3 model HeclassOUTeStructuralFeaturesSolveRefEClassEStructuralFeatureEClassEStructuralFeature.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(HeclassOUTeStructuralFeaturesSolveRefEClassEStructuralFeatureEClassEStructuralFeature, self).__init__(name='HeclassOUTeStructuralFeaturesSolveRefEClassEStructuralFeatureEClassEStructuralFeature', num_nodes=0, edges=[])
-        
-        
-        # Set the graph attributes
-        # TODO Levi, need some help here because I don't know where does 
-        # this value come from.
-        self["mm__"] = pickle.loads("""(lp1
-S'HimesisMM'
-p2
-a.""")
-        
-        self["name"] = """eclassOUTeStructuralFeaturesSolveRefEClassEStructuralFeatureEClassEStructuralFeature"""
-        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eclassOUTeStructuralFeaturesSolveRefEClassEStructuralFeatureEClassEStructuralFeature')
-        
-        # match model. We only support one match model
-        self.add_node()
-        self.vs[0]["mm__"] = """MatchModel"""
-        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eclassOUTeStructuralFeaturesSolveRefEClassEStructuralFeatureEClassEStructuralFeaturematchmodel0')
-        
-        # apply model node
-        self.add_node()
-        self.vs[1]["mm__"] = """ApplyModel"""
-        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eclassOUTeStructuralFeaturesSolveRefEClassEStructuralFeatureEClassEStructuralFeatureapplymodel1')
-        
-        # paired with relation between match and apply models
-        self.add_node()
-        self.vs[2]["mm__"] = """paired_with"""
-        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'eclassOUTeStructuralFeaturesSolveRefEClassEStructuralFeatureEClassEStructuralFeaturepairedwith2')
-        
-    	# match class EClass() node
-    	self.add_node()
-    	self.vs[3]["name"] = """"""
-        self.vs[3]["classtype"] = """EClass"""
-        self.vs[3]["mm__"] = """EClass"""
-        self.vs[3]["cardinality"] = """+"""
-        #self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# match_contains node for class EClass()
-        self.add_node()
-        self.vs[4]["mm__"] = """match_contains"""
-        #self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains4')
-    	# match class EStructuralFeature() node
-    	self.add_node()
-    	self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """EStructuralFeature"""
-        self.vs[5]["mm__"] = """EStructuralFeature"""
-        self.vs[5]["cardinality"] = """+"""
-        #self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# match_contains node for class EStructuralFeature()
-        self.add_node()
-        self.vs[6]["mm__"] = """match_contains"""
-        #self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains6')
-        
-        
-    	# apply class EClass() node
-    	self.add_node()
-    	self.vs[7]["name"] = """"""
-        self.vs[7]["classtype"] = """EClass"""
-        self.vs[7]["mm__"] = """EClass"""
-        self.vs[7]["cardinality"] = """1"""
-        #self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply_contains node for class EClass()
-        self.add_node()
-        self.vs[8]["mm__"] = """apply_contains"""
-        #self.vs[8]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains8')
-    	# apply class EStructuralFeature() node
-    	self.add_node()
-    	self.vs[9]["name"] = """"""
-        self.vs[9]["classtype"] = """EStructuralFeature"""
-        self.vs[9]["mm__"] = """EStructuralFeature"""
-        self.vs[9]["cardinality"] = """1"""
-        #self.vs[9]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply_contains node for class EStructuralFeature()
-        self.add_node()
-        self.vs[10]["mm__"] = """apply_contains"""
-        #self.vs[10]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains10')
-        
-        
-    	# match association EClass--eStructuralFeatures-->EStructuralFeature node
-    	self.add_node()
-    	self.vs[11]["associationType"] = """eStructuralFeatures"""
-        self.vs[11]["mm__"] = """directLink_S"""
-        #self.vs[11]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc11')
-        
-    	# apply association EClass--eStructuralFeatures-->EStructuralFeature node
-    	self.add_node()
-    	self.vs[12]["associationType"] = """eStructuralFeatures"""
-        self.vs[12]["mm__"] = """directLink_T"""
-        #self.vs[12]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc12')
-        
-    	# backward association EClass---->EClass node
-    	self.add_node()
-    	self.vs[13]["type"] = """ruleDef"""
-        self.vs[13]["mm__"] = """backward_link"""
-        #self.vs[13]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink13')
-    	# backward association EStructuralFeature---->EStructuralFeature node
-    	self.add_node()
-    	self.vs[14]["type"] = """ruleDef"""
-        self.vs[14]["mm__"] = """backward_link"""
-        #self.vs[14]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink14')
-        
-        
-        
-        
-    	# has apply attribute ApplyAttribute() node
-    	self.add_node()
-    	self.vs[15]["mm__"] = """hasAttribute_T"""
-        #self.vs[15]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
-    	# apply attribute ApplyAttribute() node
-    	self.add_node()
-    	self.vs[16]["name"] = """ApplyAttribute"""
-        self.vs[16]["mm__"] = """Attribute"""
-        self.vs[16]["Type"] = """'String'"""
-        #self.vs[16]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply attribute equation ApplyAttribute() node
-    	self.add_node()
-    	self.vs[17]["name"] = """eq_"""
-        self.vs[17]["mm__"] = """Equation"""
-        #self.vs[17]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
-    	# apply attribute equation left expr ApplyAttribute() node
-    	self.add_node()
-    	self.vs[18]["mm__"] = """leftExpr"""
-        #self.vs[18]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
-    	# apply attribute equation right expr ApplyAttribute() node
-    	self.add_node()
-    	self.vs[19]["mm__"] = """rightExpr"""
-        #self.vs[19]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
-    	# apply attribute atom ApplyAttribute() node
-    	self.add_node()
-    	self.vs[20]["name"] = """solveRef"""
-        self.vs[20]["mm__"] = """Constant"""
-        self.vs[20]["Type"] = """'String'"""
-        #self.vs[20]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom20')
-    	# has apply attribute ApplyAttribute() node
-    	self.add_node()
-    	self.vs[21]["mm__"] = """hasAttribute_T"""
-        #self.vs[21]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
-    	# apply attribute ApplyAttribute() node
-    	self.add_node()
-    	self.vs[22]["name"] = """ApplyAttribute"""
-        self.vs[22]["mm__"] = """Attribute"""
-        self.vs[22]["Type"] = """'String'"""
-        #self.vs[22]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply attribute equation ApplyAttribute() node
-    	self.add_node()
-    	self.vs[23]["name"] = """eq_"""
-        self.vs[23]["mm__"] = """Equation"""
-        #self.vs[23]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
-    	# apply attribute equation left expr ApplyAttribute() node
-    	self.add_node()
-    	self.vs[24]["mm__"] = """leftExpr"""
-        #self.vs[24]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
-    	# apply attribute equation right expr ApplyAttribute() node
-    	self.add_node()
-    	self.vs[25]["mm__"] = """rightExpr"""
-        #self.vs[25]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
-    	# apply attribute atom ApplyAttribute() node
-    	self.add_node()
-    	self.vs[26]["name"] = """solveRef"""
-        self.vs[26]["mm__"] = """Constant"""
-        self.vs[26]["Type"] = """'String'"""
-        #self.vs[26]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom26')
-        
+        super(HeclassOUTeStructuralFeaturesSolveRefEClassEStructuralFeatureEClassEStructuralFeature, self).__init__(name='HeclassOUTeStructuralFeaturesSolveRefEClassEStructuralFeatureEClassEStructuralFeature', num_nodes=27, edges=[])
         
         # Add the edges
-        self.add_edges([
-    		(0,4), # matchmodel -> match_contains
-    		(4,3), # match_contains -> match_class EClass()
-    		(0,6), # matchmodel -> match_contains
-    		(6,5), # match_contains -> match_class EStructuralFeature()
-    		(1,8), # applymodel -> apply_contains
-    		(8,7), # apply_contains -> apply_class EClass()
-    		(1,10), # applymodel -> apply_contains
-    		(10,9), # apply_contains -> apply_class EStructuralFeature()
-    		(3,11), # match_class EClass() -> association eStructuralFeatures
-    		(11,5), # association eStructuralFeatures  -> match_class EStructuralFeature()
-    		(7,12), # apply_class EClass() -> association eStructuralFeatures
-    		(12,9), # association eStructuralFeatures  -> apply_class EStructuralFeature()
-    		(7,13), # apply_class EClass() -> backward_association
-    		(13,3), #  backward_association -> apply_class EClass()
-    		(9,14), # apply_class EStructuralFeature() -> backward_association
-    		(14,5), #  backward_association -> apply_class EStructuralFeature()
-    		(7,15), # apply_class EClass() -> has_apply_attribute ApplyAttribute ()
-    		(15,16), #  has_apply_attribute ApplyAttribute () -> apply_attribute ApplyAttribute ()
-    		(17,18), #  equation of apply attribute ApplyAttribute () -> left_expr
-    		(18,16), #  left_expr -> apply_attribute ApplyAttribute ()
-    		(17,19), #  equation of apply attribute ApplyAttribute () -> right_expr
-    		(19,20), # right_expr --> term
-    		(9,21), # apply_class EStructuralFeature() -> has_apply_attribute ApplyAttribute ()
-    		(21,22), #  has_apply_attribute ApplyAttribute () -> apply_attribute ApplyAttribute ()
-    		(23,24), #  equation of apply attribute ApplyAttribute () -> left_expr
-    		(24,22), #  left_expr -> apply_attribute ApplyAttribute ()
-    		(23,25), #  equation of apply attribute ApplyAttribute () -> right_expr
-    		(25,26), # right_expr --> term
-        	(0,2), # matchmodel -> pairedwith
-        	(2,1) # pairedwith -> applyModel
-        ])
+        self.add_edges([[0, 6], [6, 5], [0, 8], [8, 7], [1, 10], [10, 9], [1, 12], [12, 11], [5, 3], [3, 7], [9, 4], [4, 11], [9, 13], [13, 5], [11, 14], [14, 7], [9, 15], [15, 16], [17, 18], [18, 16], [17, 19], [19, 20], [11, 21], [21, 22], [23, 24], [24, 22], [23, 25], [25, 26], [0, 2], [2, 1]])
+        # Set the graph attributes
+        self["mm__"] = ['HimesisMM']
+        self["name"] = """eclassOUTeStructuralFeaturesSolveRefEClassEStructuralFeatureEClassEStructuralFeature"""
+        self["GUID__"] = 2496964863449983084
         
+        # Set the node attributes
+        self.vs[0]["mm__"] = """MatchModel"""
+        self.vs[0]["GUID__"] = 7878357618895443413
+        self.vs[1]["mm__"] = """ApplyModel"""
+        self.vs[1]["GUID__"] = 7103443176050273994
+        self.vs[2]["mm__"] = """paired_with"""
+        self.vs[2]["GUID__"] = 4075457791616116234
+        self.vs[3]["associationType"] = """eStructuralFeatures"""
+        self.vs[3]["mm__"] = """directLink_S"""
+        self.vs[3]["GUID__"] = 82093709888820896
+        self.vs[4]["associationType"] = """eStructuralFeatures"""
+        self.vs[4]["mm__"] = """directLink_T"""
+        self.vs[4]["GUID__"] = 7701273925430543805
+        self.vs[5]["name"] = """"""
+        self.vs[5]["classtype"] = """EClass"""
+        self.vs[5]["mm__"] = """EClass"""
+        self.vs[5]["cardinality"] = """+"""
+        self.vs[5]["GUID__"] = 7983479623067543816
+        self.vs[6]["mm__"] = """match_contains"""
+        self.vs[6]["GUID__"] = 2490505581444583091
+        self.vs[7]["name"] = """"""
+        self.vs[7]["classtype"] = """EStructuralFeature"""
+        self.vs[7]["mm__"] = """EStructuralFeature"""
+        self.vs[7]["cardinality"] = """+"""
+        self.vs[7]["GUID__"] = 3944901957551387274
+        self.vs[8]["mm__"] = """match_contains"""
+        self.vs[8]["GUID__"] = 6559812938848820978
+        self.vs[9]["name"] = """"""
+        self.vs[9]["classtype"] = """EClass"""
+        self.vs[9]["mm__"] = """EClass"""
+        self.vs[9]["cardinality"] = """1"""
+        self.vs[9]["GUID__"] = 1448143835880876879
+        self.vs[10]["mm__"] = """apply_contains"""
+        self.vs[10]["GUID__"] = 122443353551202861
+        self.vs[11]["name"] = """"""
+        self.vs[11]["classtype"] = """EStructuralFeature"""
+        self.vs[11]["mm__"] = """EStructuralFeature"""
+        self.vs[11]["cardinality"] = """1"""
+        self.vs[11]["GUID__"] = 4455295229616770163
+        self.vs[12]["mm__"] = """apply_contains"""
+        self.vs[12]["GUID__"] = 866889581155583712
+        self.vs[13]["mm__"] = """backward_link"""
+        self.vs[13]["type"] = """ruleDef"""
+        self.vs[13]["GUID__"] = 1191675117595068943
+        self.vs[14]["mm__"] = """backward_link"""
+        self.vs[14]["type"] = """ruleDef"""
+        self.vs[14]["GUID__"] = 2798140781034193118
+        self.vs[15]["mm__"] = """hasAttribute_T"""
+        self.vs[15]["GUID__"] = 7657253808431851836
+        self.vs[16]["name"] = """ApplyAttribute"""
+        self.vs[16]["Type"] = """'String'"""
+        self.vs[16]["mm__"] = """Attribute"""
+        self.vs[16]["GUID__"] = 8743892830884456720
+        self.vs[17]["name"] = """eq_"""
+        self.vs[17]["mm__"] = """Equation"""
+        self.vs[17]["GUID__"] = 3267268965152823955
+        self.vs[18]["mm__"] = """leftExpr"""
+        self.vs[18]["GUID__"] = 445142670763407592
+        self.vs[19]["mm__"] = """rightExpr"""
+        self.vs[19]["GUID__"] = 3054582158653006612
+        self.vs[20]["name"] = """solveRef"""
+        self.vs[20]["Type"] = """'String'"""
+        self.vs[20]["mm__"] = """Constant"""
+        self.vs[20]["GUID__"] = 4367346554362163209
+        self.vs[21]["mm__"] = """hasAttribute_T"""
+        self.vs[21]["GUID__"] = 5673578323192681610
+        self.vs[22]["name"] = """ApplyAttribute"""
+        self.vs[22]["Type"] = """'String'"""
+        self.vs[22]["mm__"] = """Attribute"""
+        self.vs[22]["GUID__"] = 4531990103416906788
+        self.vs[23]["name"] = """eq_"""
+        self.vs[23]["mm__"] = """Equation"""
+        self.vs[23]["GUID__"] = 870047253623542103
+        self.vs[24]["mm__"] = """leftExpr"""
+        self.vs[24]["GUID__"] = 3086761965923965550
+        self.vs[25]["mm__"] = """rightExpr"""
+        self.vs[25]["GUID__"] = 2044225800229322622
+        self.vs[26]["name"] = """solveRef"""
+        self.vs[26]["Type"] = """'String'"""
+        self.vs[26]["mm__"] = """Constant"""
+        self.vs[26]["GUID__"] = 7763793050620366314
+
