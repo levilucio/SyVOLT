@@ -132,7 +132,7 @@ class PathConditionGenerator(object):
 
         if self.run_tests:
             ppt = PropertyProverTester()
-            ppt.set_artifacts(self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators)
+            ppt.set_artifacts(self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators, self.rule_names)
  
             ppt.test_matchRulePatterns()
             ppt.test_ruleTraceCheckers()
