@@ -77,6 +77,9 @@ class HimesisMatcher(object):
         self.pred1 = pred1
         self.succ1 = succ1
 
+        self.G1_vcount = self.G1.vcount()
+        self.G2_vcount = self.G2.vcount()
+
         # removed priority for speed
         #assert(isinstance(priority, Priority))
         #self.priority = priority
@@ -85,7 +88,7 @@ class HimesisMatcher(object):
 
         # Set recursion limit
         self.old_recursion_limit = sys.getrecursionlimit()
-        expected_max_recursion_level = self.G2.vcount()
+        expected_max_recursion_level = self.G2_vcount
         if self.old_recursion_limit < 1.5 * expected_max_recursion_level:
             # Give some breathing room
             sys.setrecursionlimit(int(1.5 * expected_max_recursion_level))
@@ -108,14 +111,14 @@ class HimesisMatcher(object):
         if len(self.pred1) == 0 or len(self.succ1) == 0:
             self.pred1 = {}
             self.succ1 = {}
-            for node in self.G1.node_iter():
+            for node in range(self.G1_vcount):
                 tmp = self.G1.predecessors(node)
                 self.pred1[node] = (len(tmp), tmp)
                 tmp = self.G1.successors(node)
                 self.succ1[node] = (len(tmp), tmp)
             self.pred2 = {}
             self.succ2 = {}
-            for node in self.G2.node_iter():
+            for node in range(self.G2_vcount):
                 tmp = self.G2.predecessors(node)
                 self.pred2[node] = (len(tmp), tmp)
                 tmp = self.G2.successors(node)
@@ -462,7 +465,7 @@ class HimesisMatcher(object):
         #=======================================================================
 
         # Base condition when a complete match is found
-        if len(self.core_2) == self.G2.vcount():
+        if len(self.core_2) == self.G2_vcount:
             # Save the final mapping, otherwise garbage collection deletes it
             self.mapping = self.core_2.copy()
             yield self.mapping
