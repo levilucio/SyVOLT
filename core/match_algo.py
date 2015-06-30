@@ -639,7 +639,7 @@ class HimesisMatcherState(object):
             
             # Updates for T_1^{inout}
             # & returns the intersection
-            for node in matcher.in_1.keys() & matcher.out_1.keys():
+            for node in set(matcher.in_1.keys()).intersection(set(matcher.out_1.keys())):
                 if node not in matcher.inout_1:
                     matcher.inout_1[node] = self.depth
 
@@ -665,7 +665,7 @@ class HimesisMatcherState(object):
             
             # Updates for T_2^{inout}
             # & returns the intersection
-            for node in matcher.in_2.keys() & matcher.out_2.keys():
+            for node in set(matcher.in_2.keys()).intersection(set(matcher.out_2.keys())):
                 if node not in matcher.inout_2:
                     matcher.inout_2[node] = self.depth
     
