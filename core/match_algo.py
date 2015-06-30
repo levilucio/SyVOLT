@@ -439,30 +439,35 @@ class HimesisMatcher(object):
             # because igraph actually stores all attribute names in all nodes. 
             elif patt_node[attr] == None:
                 continue
-            methName = self.G2.get_attr_constraint_name(patt_node.index, attr)
+
+            attr_name = attr[8:]
+            #methName = self.G2.get_attr_constraint_name(patt_node.index, attr)
+            methName = 'eval_%s%s' % (attr_name, patt_node['MT_label__'])
+
             checkConstraint = getattr(self.G2, methName, None)
             # The following assumes that every attribute constraint is defined on the pattern graph
             # (and not on the pattern node itself) 
-            if callable(checkConstraint):
-                try:
-                    # This is equivalent to: if not eval_attrLbl(attr_value, currNode)
-                    if not checkConstraint(src_node[attr[8:]], src_node):
-                        return False
-                except Exception as e:
-                    #TODO: This should be a TransformationLanguageSpecificException
-                    print("Source graph: " + self.G1.name)
-                    print("Pattern graph: " + self.G2.name)
-                    for n in self.G1.vs:
-                        try:
+            #if callable(checkConstraint):
+            try:
+                # This is equivalent to: if not eval_attrLbl(attr_value, currNode)
+                if not checkConstraint(src_node[attr_name], src_node):
+                    return False
+            except Exception as e:
+                #TODO: This should be a TransformationLanguageSpecificException
+                print("Source graph: " + self.G1.name)
+                print("Pattern graph: " + self.G2.name)
+                for n in self.G1.vs:
+                    try:
 
-                            print("Type: " + n["type"])
-                            print("MM: " + n["mm__"])
-                        except KeyError:
-                            pass
-                    raise Exception("An error has occurred while checking the constraint of the attribute '" + to_non_RAM_attribute(attr) + "'"
-                                   + " in node '" + src_node["mm__"] + "' in graph: '" + self.G1.name + "'", e)
-            else:
-                raise Exception('The method %s was not found in the pattern graph' % methName)
+                        print("Type: " + n["type"])
+                        print("MM: " + n["mm__"])
+                    except KeyError:
+                        pass
+                raise Exception("An error has occurred while checking the constraint of the attribute '" + attr_name + "'"
+                               + " in node '" + src_node["mm__"] + "' in graph: '" + self.G1.name + "'", e)
+            #assume the method is callable
+            #else:
+            #    raise Exception('The method %s was not found in the pattern graph' % methName)
         return True
     
     def _match(self):
