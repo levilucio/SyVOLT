@@ -53,17 +53,18 @@ class Himesis(ig.Graph):
             @param num_nodes: the total number of nodes. If not known, you can add more vertices later
             @param edges: the list of edges where each edge is a tuple representing the ids of the source and target nodes
         """
+
         ig.Graph.__init__(self, directed=True, n=num_nodes, edges=edges)
         if not name:
             name = self.__class__.__name__
         self.name = standardize_name(name)
         
-        # Set universally unique identifiers for the graph and each node
-        if not hasattr(self, 'is_compiled'):
-            self.is_compiled = False    # this instance is not yet compiled
-            self['GUID__'] = nprnd.randint(9223372036854775806)
-            for n in self.node_iter():
-                self.vs[n]['GUID__'] = nprnd.randint(9223372036854775806)
+        # # Set universally unique identifiers for the graph and each node
+        # if not hasattr(self, 'is_compiled'):
+        #     self.is_compiled = False    # this instance is not yet compiled
+        #     self['GUID__'] = nprnd.randint(9223372036854775806)
+        #     for n in self.node_iter():
+        #         self.vs[n]['GUID__'] = nprnd.randint(9223372036854775806)
         # A fast lookup of the node's index by its guid
         # - disable this lookup to save memory
         #self.nodes_id = {}
