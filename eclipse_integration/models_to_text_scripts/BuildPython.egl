@@ -50,7 +50,7 @@ class Prover():
 
     def do_proof(self,args):    
 
-        pyramify = PyRamify(draw_svg=args.draw_svg)
+        pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
         
         self.rules = pyramify.get_rules("[%=absoluteBackendPath%]")
         
