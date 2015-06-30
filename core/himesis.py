@@ -141,30 +141,29 @@ class Himesis(ig.Graph):
 
         self.vs[new_node]['GUID__'] = nprnd.randint(9223372036854775806)
         #self.vs[new_node][Himesis.Constants.GUID] = random.randint(0, 9223372036854775806)
-        # self.nodes_id[id] = new_node
+
+        #self.nodes_id[id] = new_node
         return new_node
     
     def delete_nodes(self, nodes):
         self.delete_vertices(nodes)
         # Regenerate the lookup because node indices have changed
-        # self.nodes_id = dict([(self.vs[node][Himesis.Constants.GUID], node) for node in self.node_iter()])
+        #self.nodes_id = dict([(self.vs[node]["GUID__"], node) for node in range(self.vcount())])
     
     def get_node(self, id):
         """
             Retrieves the node instance with the specified label.
             @param label: The label of the node.
         """
-        for node in self.node_iter():
-            if id == self.vs[node]['GUID__']:
-                return node
+        # for node in range(self.vcount()):
+        #     if id == self.vs[node]['GUID__']:
+        #         return node
 
-        #if len(self.nodes_id) < self.vcount():
-        # nodes_id = dict([(self.vs[node][Himesis.Constants.GUID], node) for node in self.node_iter()])
-        # if id in nodes_id:
-        #     return nodes_id[id]
-        # else:
-        #TODO: This should be a TransformationLanguageSpecificException
-        raise Exception('No node was found with the given id: ' + str(id))
+        try:
+            return self.vs["GUID__"].index(id)
+        except ValueError:
+            #TODO: This should be a TransformationLanguageSpecificException
+            raise Exception('No node was found with the given id: ' + str(id))
     
     # def draw(self, visual_style={}, label=None, show_guid=False, show_id=False, debug=False, width=600, height=900):
     #     """
