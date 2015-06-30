@@ -1,8 +1,6 @@
 
 
 from core.himesis import Himesis, HimesisPreConditionPatternLHS
-import cPickle as pickle
-from uuid import UUID
 
 class HDaughterMother_ConnectedLHS(HimesisPreConditionPatternLHS):
     def __init__(self):
@@ -15,14 +13,9 @@ class HDaughterMother_ConnectedLHS(HimesisPreConditionPatternLHS):
         super(HDaughterMother_ConnectedLHS, self).__init__(name='HDaughterMother_ConnectedLHS', num_nodes=5, edges=[])
         
         # Add the edges
-        self.add_edges([(0, 1), (0, 2), (1, 4), (2, 3)])
+        self.add_edges([[0, 1], [0, 2], [1, 4], [2, 3]])
         # Set the graph attributes
-        self["mm__"] = pickle.loads("""(lp1
-S'MT_pre__FamiliesToPersonsMM'
-p2
-aS'MoTifRule'
-p3
-a.""")
+        self["mm__"] = ['MT_pre__FamiliesToPersonsMM', 'MoTifRule']
         self["MT_constraint__"] = """#===============================================================================
 # This code is executed after the nodes in the LHS have been matched.
 # You can access a matched node labelled n by: PreNode('n').
@@ -35,7 +28,7 @@ a.""")
 return True
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('8d34434f-cc3e-47c1-988a-2595a337460c')
+        self["GUID__"] = 5574104853475517722
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
@@ -52,10 +45,9 @@ return True
 return True
 """
         self.vs[0]["MT_label__"] = """1"""
-        self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
-.""")
-        self.vs[0]["MT_dirty__"] = False
         self.vs[0]["mm__"] = """MT_pre__Family"""
+        self.vs[0]["MT_dirty__"] = False
+        self.vs[0]["MT_subtypes__"] = []
         self.vs[0]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -80,23 +72,21 @@ return True
 
 return True
 """
-        self.vs[0]["GUID__"] = UUID('e1e29a86-4ba5-4f01-8b44-f7d6ba8ba510')
+        self.vs[0]["GUID__"] = 1355409695898132772
         self.vs[1]["MT_subtypeMatching__"] = False
-        self.vs[1]["MT_pre__associationType"] = """return attr_value == "daughter"""""
+        self.vs[1]["MT_pre__associationType"] = """return attr_value == 'daughter'"""
         self.vs[1]["MT_label__"] = """6"""
-        self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
-.""")
-        self.vs[1]["MT_dirty__"] = False
         self.vs[1]["mm__"] = """MT_pre__directLink_S"""
-        self.vs[1]["GUID__"] = UUID('e1c56e5b-33bd-447e-8a6a-a29fa5f06d1b')
+        self.vs[1]["MT_dirty__"] = False
+        self.vs[1]["MT_subtypes__"] = []
+        self.vs[1]["GUID__"] = 1261109104234299171
         self.vs[2]["MT_subtypeMatching__"] = False
-        self.vs[2]["MT_pre__associationType"] =  """return attr_value == "mother"""""
+        self.vs[2]["MT_pre__associationType"] = """return attr_value == 'mother'"""
         self.vs[2]["MT_label__"] = """7"""
-        self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
-.""")
-        self.vs[2]["MT_dirty__"] = False
         self.vs[2]["mm__"] = """MT_pre__directLink_S"""
-        self.vs[2]["GUID__"] = UUID('a1ce6885-77c2-4303-98e6-3fc20712a495')
+        self.vs[2]["MT_dirty__"] = False
+        self.vs[2]["MT_subtypes__"] = []
+        self.vs[2]["GUID__"] = 2314817050886516909
         self.vs[3]["MT_subtypeMatching__"] = False
         self.vs[3]["MT_pre__classtype"] = """
 #===============================================================================
@@ -111,10 +101,9 @@ return True
 return True
 """
         self.vs[3]["MT_label__"] = """2"""
-        self.vs[3]["MT_subtypes__"] = pickle.loads("""(lp1
-.""")
-        self.vs[3]["MT_dirty__"] = False
         self.vs[3]["mm__"] = """MT_pre__Member"""
+        self.vs[3]["MT_dirty__"] = False
+        self.vs[3]["MT_subtypes__"] = []
         self.vs[3]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -139,7 +128,7 @@ return True
 
 return True
 """
-        self.vs[3]["GUID__"] = UUID('b37f253c-cd43-429c-9189-c3f7eb86dee7')
+        self.vs[3]["GUID__"] = 6883286847369505123
         self.vs[4]["MT_subtypeMatching__"] = False
         self.vs[4]["MT_pre__classtype"] = """
 #===============================================================================
@@ -154,10 +143,9 @@ return True
 return True
 """
         self.vs[4]["MT_label__"] = """3"""
-        self.vs[4]["MT_subtypes__"] = pickle.loads("""(lp1
-.""")
-        self.vs[4]["MT_dirty__"] = False
         self.vs[4]["mm__"] = """MT_pre__Member"""
+        self.vs[4]["MT_dirty__"] = False
+        self.vs[4]["MT_subtypes__"] = []
         self.vs[4]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -182,7 +170,7 @@ return True
 
 return True
 """
-        self.vs[4]["GUID__"] = UUID('df9ffc07-cb8f-4e6d-9316-e81332ab1fee')
+        self.vs[4]["GUID__"] = 1267438056037177778
 
     def eval_classtype1(self, attr_value, this):
         
@@ -227,31 +215,11 @@ return True
 
 
     def eval_associationType6(self, attr_value, this):
-        
-        #===============================================================================
-        # This code is executed when evaluating if a node shall be matched by this rule.
-        # You can access the value of the current node's attribute value by: attr_value.
-        # You can access any attribute x of this node by: this['x'].
-        # If the constraint relies on attribute values from other nodes,
-        # use the LHS/NAC constraint instead.
-        # The given constraint must evaluate to a boolean expression.
-        #===============================================================================
-        
-        return attr_value == "daughter"
+        return attr_value == 'daughter'
 
 
     def eval_associationType7(self, attr_value, this):
-        
-        #===============================================================================
-        # This code is executed when evaluating if a node shall be matched by this rule.
-        # You can access the value of the current node's attribute value by: attr_value.
-        # You can access any attribute x of this node by: this['x'].
-        # If the constraint relies on attribute values from other nodes,
-        # use the LHS/NAC constraint instead.
-        # The given constraint must evaluate to a boolean expression.
-        #===============================================================================
-        
-        return attr_value == "mother"
+        return attr_value == 'mother'
 
 
     def eval_classtype2(self, attr_value, this):

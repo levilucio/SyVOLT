@@ -1,8 +1,6 @@
 
 
 from core.himesis import Himesis, HimesisPreConditionPatternLHS
-import cPickle as pickle
-from uuid import UUID
 
 class HDaughterMother_IsolatedLHS(HimesisPreConditionPatternLHS):
     def __init__(self):
@@ -17,12 +15,7 @@ class HDaughterMother_IsolatedLHS(HimesisPreConditionPatternLHS):
         # Add the edges
         self.add_edges([])
         # Set the graph attributes
-        self["mm__"] = pickle.loads("""(lp1
-S'MT_pre__FamiliesToPersonsMM'
-p2
-aS'MoTifRule'
-p3
-a.""")
+        self["mm__"] = ['MT_pre__FamiliesToPersonsMM', 'MoTifRule']
         self["MT_constraint__"] = """#===============================================================================
 # This code is executed after the nodes in the LHS have been matched.
 # You can access a matched node labelled n by: PreNode('n').
@@ -35,7 +28,7 @@ a.""")
 return True
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('fbe83da4-7005-4204-a105-3ec4c78ea661')
+        self["GUID__"] = 1199704996499926659
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
@@ -52,10 +45,9 @@ return True
 return True
 """
         self.vs[0]["MT_label__"] = """1"""
-        self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
-.""")
-        self.vs[0]["MT_dirty__"] = False
         self.vs[0]["mm__"] = """MT_pre__Family"""
+        self.vs[0]["MT_dirty__"] = False
+        self.vs[0]["MT_subtypes__"] = []
         self.vs[0]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -80,7 +72,7 @@ return True
 
 return True
 """
-        self.vs[0]["GUID__"] = UUID('33a94580-f576-4f8b-8c92-f42c29d30c5e')
+        self.vs[0]["GUID__"] = 6573014857416460942
         self.vs[1]["MT_subtypeMatching__"] = True
         self.vs[1]["MT_pre__classtype"] = """
 #===============================================================================
@@ -95,10 +87,9 @@ return True
 return True
 """
         self.vs[1]["MT_label__"] = """2"""
-        self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
-.""")
-        self.vs[1]["MT_dirty__"] = False
         self.vs[1]["mm__"] = """MT_pre__Member"""
+        self.vs[1]["MT_dirty__"] = False
+        self.vs[1]["MT_subtypes__"] = []
         self.vs[1]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -123,7 +114,7 @@ return True
 
 return True
 """
-        self.vs[1]["GUID__"] = UUID('a8528c17-359e-47ad-a37b-ac42366e9048')
+        self.vs[1]["GUID__"] = 4955609540665519880
         self.vs[2]["MT_subtypeMatching__"] = False
         self.vs[2]["MT_pre__classtype"] = """
 #===============================================================================
@@ -138,10 +129,9 @@ return True
 return True
 """
         self.vs[2]["MT_label__"] = """3"""
-        self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
-.""")
-        self.vs[2]["MT_dirty__"] = False
         self.vs[2]["mm__"] = """MT_pre__Member"""
+        self.vs[2]["MT_dirty__"] = False
+        self.vs[2]["MT_subtypes__"] = []
         self.vs[2]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -166,7 +156,7 @@ return True
 
 return True
 """
-        self.vs[2]["GUID__"] = UUID('ccadca0a-9a89-4cb5-bf1b-eeee9b974646')
+        self.vs[2]["GUID__"] = 8201924742609664296
 
     def eval_classtype1(self, attr_value, this):
         

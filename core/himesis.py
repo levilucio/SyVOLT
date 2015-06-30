@@ -228,7 +228,7 @@ class Himesis(ig.Graph):
         try:
             if isinstance(value, unicode):
                 return '''
-                    %s = """%s"""''' % (access, value)
+        %s = """%s"""''' % (access, value)
         except Exception:
             pass
 
