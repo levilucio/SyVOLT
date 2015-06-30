@@ -713,7 +713,6 @@ operation generateAttributeConcatNode(attribute, concat, nodeIndex, attributeAto
                 self.vs[[%=returnNodeIndex%]]["MT_subtypeMatching__"] = False
                 self.vs[[%=returnNodeIndex%]]["MT_label__"] = """[%=hasArgsLabel%]"""
                 self.vs[[%=returnNodeIndex%]]["MT_subtypes__"] = []
-.""")
                 self.vs[[%=returnNodeIndex%]]["mm__"] = """MT_pre__hasArgs"""
                 self.vs[[%=returnNodeIndex%]]["MT_dirty__"] = False
                 self.vs[[%=returnNodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ConcatHasLeftArgs[%=attribute.id + returnNodeIndex %]')
