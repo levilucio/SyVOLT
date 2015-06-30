@@ -130,6 +130,13 @@ class HimesisMatcher(object):
 
             self.patt_has_subtype = self.G2.vs['MT_subtypeMatching__']
 
+            try:
+                self.superclasses_dict = self.G2["superclasses_dict"]
+            except KeyError:
+                print("Graph " + self.G2.name + " needs to be updated")
+                self.superclasses_dict = []
+
+
 
 
     
@@ -212,21 +219,40 @@ class HimesisMatcher(object):
         #MT_pre taken off when creating self.mm2
         #if sourceNode["mm__"] == patternNode["mm__"][8:]:
 
-        if self.mm1[src_node] == self.mm2[patt_node]:
+        sourceMM = self.mm1[src_node]
+        targetMM = self.mm2[patt_node]
+        if sourceMM == targetMM:
             # Then check for the degree compatibility
             return (self.pred2[patt_node][0] <= self.pred1[src_node][0]
                     and self.succ2[patt_node][0] <= self.succ1[src_node][0])
+
         # Otherwise, first check for the degree compatibility
         elif not (self.pred2[patt_node][0] <= self.pred1[src_node][0]
                 and self.succ2[patt_node][0] <= self.succ1[src_node][0]):
             return False
 
-        # Then check sub-types compatibility
-        if self.patt_has_subtype[patt_node]:
-            sourceMM = self.mm1[src_node]
-            for subtype in self.G2.vs[patt_node]['MT_subtypes__']:
-                if sourceMM == subtype[8:]:
-                    return True
+        # try:
+        #
+        # except Exception:
+        #     pass
+
+        #print("Subs: " + str(self.superclasses_dict.keys()))
+
+
+        try:
+            return targetMM in self.superclasses_dict[sourceMM]
+
+        except KeyError:
+            pass
+            #return False
+
+        # # Then check sub-types compatibility
+        # if self.patt_has_subtype[patt_node]:
+        #
+        #     for subtype in self.G2.vs[patt_node]['MT_subtypes__']:
+        #         if sourceMM == subtype[8:]:
+        #             return True
+
         return False
     
     def candidate_pairs_iter(self):

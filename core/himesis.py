@@ -246,7 +246,7 @@ class Himesis(ig.Graph):
             return '''
         from .%s import %s
         %s = %s()''' % (graphClass, graphClass, access, graphClass)
-        elif isinstance(value, list):
+        elif isinstance(value, list) or isinstance(value, dict):
             return '''
         %s = %s''' % (access, str(value))
         else:
@@ -459,6 +459,9 @@ class HimesisPreConditionPattern(HimesisPattern):
         super(HimesisPreConditionPattern, self).__init__(name, num_nodes, edges)
         #self.import_name = 'HimesisPreConditionPattern'
         #self.nodes_pivot_in = {}
+
+        self.superclasses_dict = {}
+
     
     def get_pivot_in(self, pivot):
         """

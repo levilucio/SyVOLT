@@ -190,6 +190,9 @@ class PyRamify:
                 node["MT_subtypes__"] = "[]"
                 node["MT_dirty__"] = False
 
+        if make_pre:
+            graph["superclasses_dict"] = {}
+
         return graph
     
     
@@ -335,6 +338,9 @@ class PyRamify:
                 node["MT_subtypeMatching__"] = False
                 node["MT_subtypes__"] = "[]"
                 node["MT_dirty__"] = False
+
+        if make_pre:
+            graph["superclasses_dict"] = {}
 
         return graph
 
@@ -1870,6 +1876,21 @@ class PyRamify:
                     graph["mm__"] = post_metamodel
                 else:
                     raise Exception("Error: Not LHS or RHS rule")
+
+
+                #keep a dictionary from each child to its parent
+                supertypes = {}
+
+                for supertype in subclasses_dict:
+
+                    for subtype in subclasses_dict[supertype]:
+                        subtype = subtype[8:]
+                        try:
+                            supertypes[subtype].append(supertype[8:])
+                        except KeyError:
+                            supertypes[subtype] = [supertype[8:]]
+
+                graph["superclasses_dict"] = supertypes
 
                 for node in graph.vs:
 
