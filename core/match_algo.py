@@ -133,8 +133,8 @@ class HimesisMatcher(object):
             try:
                 self.superclasses_dict = self.G2["superclasses_dict"]
             except KeyError:
-                print("Graph " + self.G2.name + " needs to be updated")
-                self.superclasses_dict = []
+                #print("Graph " + self.G2.name + " needs to be updated")
+                self.superclasses_dict = {}
 
 
 
@@ -232,36 +232,25 @@ class HimesisMatcher(object):
             return False
 
         # try:
-        #
-        # except Exception:
+        #     return targetMM in self.superclasses_dict[sourceMM]
+        # except KeyError:
         #     pass
 
-        #print("Subs: " + str(self.superclasses_dict.keys()))
 
-
-        try:
-            return targetMM in self.superclasses_dict[sourceMM]
-
-        except KeyError:
-            pass
-            #return False
-
-        # # Then check sub-types compatibility
-        # if self.patt_has_subtype[patt_node]:
-        #
-        #     for subtype in self.G2.vs[patt_node]['MT_subtypes__']:
-        #         if sourceMM == subtype[8:]:
-        #             return True
-
+        # Then check sub-types compatibility
+        if self.patt_has_subtype[patt_node]:
+            for subtype in self.G2.vs[patt_node]['MT_subtypes__']:
+                if sourceMM == subtype[8:]:
+                    return True
         return False
-    
+
     def candidate_pairs_iter(self):
         """
             Iterator over candidate pairs of nodes in G1 and G2, according to the VF2 algorithm.
             The candidate pairs have all passed the compatibility check before output.
             @return: The candidate pair (source node, pattern node)
         """
-        
+
         #=======================================================================
         # Here we compute P(s) = (p1,p2) the candidate pair
         # for the current partial mapping M(s).

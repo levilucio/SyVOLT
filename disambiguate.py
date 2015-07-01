@@ -104,6 +104,12 @@ class Disambiguator():
             if node["mm__"] == "MT_pre__MetaModelElement_S":
                 node["MT_subtypes__"] = ["MT_pre__HouseholdRoot", "MT_pre__Family"]
 
+        try:
+            del match.condition["superclasses_dict"]["Member"]
+            #match.condition["superclasses_dict"]["Member"].remove("MetaModelElement_S")
+        except KeyError:
+            pass
+
 
         if self.debug:
             graph_to_dot("HFindTwoMatchElementsSameTypeDiffRulesLHS", HFindTwoMatchElementsSameTypeDiffRulesLHS())

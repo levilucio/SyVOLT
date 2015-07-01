@@ -29,6 +29,8 @@ return True
 """
         self["name"] = """communityPerson2_Complete"""
         self["GUID__"] = 469007200485205499
+
+        self["superclasses_dict"] = {"Man": ["Person"], "Woman": ["Person"]}
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False

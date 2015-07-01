@@ -29,6 +29,8 @@ return True
 """
         self["name"] = """"""
         self["GUID__"] = 628182643283409229
+
+        self["superclasses_dict"] = {"Man": ["Person"], "Woman": ["Person"]}
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = True

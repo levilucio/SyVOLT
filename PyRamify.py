@@ -1836,6 +1836,20 @@ class PyRamify:
     def changePropertyProverMetamodel(self, pre_metamodel, post_metamodel, subclasses_dict, dsltransInstallDir = "."):
         print("Starting to change property prover metamodel")
 
+        # keep a dictionary from each child to its parent
+        supertypes = {}
+
+        for supertype in subclasses_dict:
+            for subtype in subclasses_dict[supertype]:
+                subtype = subtype[8:]
+                try:
+                    supertypes[subtype].append(supertype[8:])
+                except KeyError:
+                    supertypes[subtype] = [supertype[8:]]
+
+
+
+
         property_prover_rules_dir = dsltransInstallDir + "/property_prover_rules/"
         for d in os.listdir(property_prover_rules_dir):
 
@@ -1859,6 +1873,7 @@ class PyRamify:
                     continue
 
                 rule_file = rule_dir + f
+                #print("Changing file: " + rule_file)
                 try:
                     rule = load_class(rule_file)
                 except ImportError as e:
@@ -1878,19 +1893,6 @@ class PyRamify:
                     raise Exception("Error: Not LHS or RHS rule")
 
 
-                #keep a dictionary from each child to its parent
-                supertypes = {}
-
-                for supertype in subclasses_dict:
-
-                    for subtype in subclasses_dict[supertype]:
-                        subtype = subtype[8:]
-                        try:
-                            supertypes[subtype].append(supertype[8:])
-                        except KeyError:
-                            supertypes[subtype] = [supertype[8:]]
-
-                graph["superclasses_dict"] = supertypes
 
                 for node in graph.vs:
 
@@ -1907,6 +1909,8 @@ class PyRamify:
 
                         #set the new subtypes
                         node["MT_subtypes__"] = subclasses_dict[node["mm__"]]
+
+                graph["superclasses_dict"] = supertypes
 
                 #need to compile rule back in order to update the file
                 graph.compile(rule_dir)
