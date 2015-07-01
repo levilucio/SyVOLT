@@ -111,33 +111,34 @@ class HimesisMatcher(object):
 
         # Memoize the predecessor & successor information:
         # for each node store the number of neighbours and the list
-        if len(self.pred1) == 0 or len(self.succ1) == 0:
+        # igraph.IN = 2, igraph.OUT = 1
+        if len(self.pred1) == 0:
 
-            #igraph.IN = 2, igraph.OUT = 1
             self.pred1 = [(len(tmp), tmp) for tmp in self.G1.get_adjlist(mode=2)]
+
+        if len(self.succ1) == 0:
             self.succ1 = [(len(tmp), tmp) for tmp in self.G1.get_adjlist(mode=1)]
 
-        if len(self.pred2) == 0 or len(self.succ2) == 0:
+        if len(self.pred2) == 0:
             self.pred2 = [(len(tmp), tmp) for tmp in self.G2.get_adjlist(mode=2)]
+            
+        if len(self.succ2) == 0:
             self.succ2 = [(len(tmp), tmp) for tmp in self.G2.get_adjlist(mode=1)]
 
 
-
+        self.has_super = None
         if self.G1_vcount > 0 and self.G2_vcount > 0:
             #keep track of the metamodels
             self.mm1 = self.G1.vs["mm__"]
             self.mm2 = [mm[8:] for mm in self.G2.vs["mm__"]]
 
-            self.patt_has_subtype = self.G2.vs['MT_subtypeMatching__']
+            #self.patt_has_subtype = self.G2.vs['MT_subtypeMatching__']
 
-            try:
-                self.superclasses_dict = self.G2["superclasses_dict"]
-            except KeyError:
-                #print("Graph " + self.G2.name + " needs to be updated")
-                self.superclasses_dict = {}
+            self.superclasses_dict = self.G2["superclasses_dict"]
 
-
-
+            #ignore an empty directory
+            if self.superclasses_dict:
+                self.has_super = [mm in self.superclasses_dict.keys() for mm in self.mm1]
 
     
     def cache_info(self):
@@ -231,17 +232,16 @@ class HimesisMatcher(object):
                 and self.succ2[patt_node][0] <= self.succ1[src_node][0]):
             return False
 
-        # try:
-        #     return targetMM in self.superclasses_dict[sourceMM]
-        # except KeyError:
-        #     pass
+        if self.has_super and self.has_super[src_node]:
+            return targetMM in self.superclasses_dict[sourceMM]
 
 
-        # Then check sub-types compatibility
-        if self.patt_has_subtype[patt_node]:
-            for subtype in self.G2.vs[patt_node]['MT_subtypes__']:
-                if sourceMM == subtype[8:]:
-                    return True
+        #
+        # # Then check sub-types compatibility
+        # if self.patt_has_subtype[patt_node]:
+        #     for subtype in self.G2.vs[patt_node]['MT_subtypes__']:
+        #         if sourceMM == subtype[8:]:
+        #             return True
         return False
 
     def candidate_pairs_iter(self):
