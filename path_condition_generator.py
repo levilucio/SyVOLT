@@ -992,7 +992,7 @@ class PathConditionGenerator(object):
 
     def get_path_conditions(self):
 
-        for pc_name in self.currentpathConditionSet:
+        for pc_name in sorted(self.currentpathConditionSet):
             pc = expand_graph(self.pc_dict[pc_name])
 
             pc.name = self.expand_pc_name(pc_name)

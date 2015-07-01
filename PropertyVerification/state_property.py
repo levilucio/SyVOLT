@@ -177,11 +177,8 @@ class StateProperty(Property):
         #ensure that the property's precondition matched at least one path condition
         #otherwise, there is an issue (different metamodels, ...)
         property_isolated_matched = False
-
-        StateSpace.pathConditionSet = StateSpace.get_all_path_conditions()
-        StateSpace.pathConditionSet=StateSpace.pathConditionSet[1:]
         
-        for state in StateSpace.pathConditionSet:
+        for state in StateSpace.get_path_conditions():
             if state is ():
                 continue
             
