@@ -111,15 +111,15 @@ class HimesisMatcher(object):
 
         # Memoize the predecessor & successor information:
         # for each node store the number of neighbours and the list
-        if len(self.pred1) == 0 or len(self.succ1) == 0:
-
-            #igraph.IN = 2, igraph.OUT = 1
+        #igraph.IN = 2, igraph.OUT = 1
+        if len(self.pred1) == 0:
             self.pred1 = [(len(tmp), tmp) for tmp in self.G1.get_adjlist(mode=2)]
+
+        if len(self.succ1) == 0:
             self.succ1 = [(len(tmp), tmp) for tmp in self.G1.get_adjlist(mode=1)]
 
-        if len(self.pred2) == 0 or len(self.succ2) == 0:
-            self.pred2 = [(len(tmp), tmp) for tmp in self.G2.get_adjlist(mode=2)]
-            self.succ2 = [(len(tmp), tmp) for tmp in self.G2.get_adjlist(mode=1)]
+        self.pred2 = [(len(tmp), tmp) for tmp in self.G2.get_adjlist(mode=2)]
+        self.succ2 = [(len(tmp), tmp) for tmp in self.G2.get_adjlist(mode=1)]
 
 
 
