@@ -109,10 +109,10 @@ class HimesisMatcher(object):
         # Memoize the predecessor & successor information:
         # for each node store the number of neighbours and the list
         #igraph.IN = 2, igraph.OUT = 1
-        if len(self.pred1) == 0:
+        if  not self.pred1:
             self.pred1 = [(len(tmp), tmp) for tmp in self.G1.get_adjlist(mode=2)]
 
-        if len(self.succ1) == 0:
+        if not self.succ1:
             self.succ1 = [(len(tmp), tmp) for tmp in self.G1.get_adjlist(mode=1)]
 
         self.pred2 = pred2
@@ -218,6 +218,8 @@ class HimesisMatcher(object):
             @param patt_node: The candidate from the pattern graph.
         """
 
+        # WARNING:
+        # MOVED TO _MATCH FUNCTION!
         
         # First check if they are of the same type
 
