@@ -62,7 +62,7 @@ class HimesisMatcher(object):
         Represents a pattern matching algorithm for typed attributed multi-graphs.
         The pattern matching algorithm is based on VF2.
     """
-    def __init__(self, source_graph, pattern_graph, pred1={}, succ1={}):
+    def __init__(self, source_graph, pattern_graph, pred1={}, succ1={}, pred2 = {}, succ2 = {}):
         """
             Represents a pattern matching algorithm for typed attributed multi-graphs.
             @param source_graph: The source graph.
@@ -76,9 +76,6 @@ class HimesisMatcher(object):
         self.G2 = pattern_graph
         self.pred1 = pred1
         self.succ1 = succ1
-
-        self.pred2 = {}
-        self.succ2 = {}
 
         self.G1_vcount = self.G1.vcount()
         self.G2_vcount = self.G2.vcount()
@@ -118,8 +115,15 @@ class HimesisMatcher(object):
         if len(self.succ1) == 0:
             self.succ1 = [(len(tmp), tmp) for tmp in self.G1.get_adjlist(mode=1)]
 
-        self.pred2 = [(len(tmp), tmp) for tmp in self.G2.get_adjlist(mode=2)]
-        self.succ2 = [(len(tmp), tmp) for tmp in self.G2.get_adjlist(mode=1)]
+        self.pred2 = pred2
+        self.succ2 = succ2
+
+        if not pred2:
+            #print("No pred2 for graph: " + self.G2.name)
+            self.pred2 = [(len(tmp), tmp) for tmp in self.G2.get_adjlist(mode=2)]
+
+        if not succ2:
+            self.succ2 = [(len(tmp), tmp) for tmp in self.G2.get_adjlist(mode=1)]
 
 
 
