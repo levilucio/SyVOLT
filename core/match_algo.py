@@ -128,13 +128,16 @@ class HimesisMatcher(object):
             self.mm1 = self.G1.vs["mm__"]
             self.mm2 = [mm[8:] for mm in self.G2.vs["mm__"]]
 
-            self.patt_has_subtype = self.G2.vs['MT_subtypeMatching__']
 
-            try:
-                self.superclasses_dict = self.G2["superclasses_dict"]
-            except KeyError:
-                #print("Graph " + self.G2.name + " needs to be updated")
-                self.superclasses_dict = {}
+            #self.patt_has_subtype = self.G2.vs['MT_subtypeMatching__']
+
+            self.superclasses_dict = self.G2["superclasses_dict"]
+
+            if self.superclasses_dict:
+                self.src_has_supertype = [child_mm in self.superclasses_dict for child_mm in self.mm1]
+            else:
+                self.src_has_supertype = [False] * self.G1_vcount
+
 
 
 
@@ -231,17 +234,15 @@ class HimesisMatcher(object):
                 and self.succ2[patt_node][0] <= self.succ1[src_node][0]):
             return False
 
-        # try:
-        #     return targetMM in self.superclasses_dict[sourceMM]
-        # except KeyError:
-        #     pass
+        if self.src_has_supertype[src_node]:
+            return targetMM in self.superclasses_dict[sourceMM]
 
-
-        # Then check sub-types compatibility
-        if self.patt_has_subtype[patt_node]:
-            for subtype in self.G2.vs[patt_node]['MT_subtypes__']:
-                if sourceMM == subtype[8:]:
-                    return True
+        #
+        # # Then check sub-types compatibility
+        # if self.patt_has_subtype[patt_node]:
+        #     for subtype in self.G2.vs[patt_node]['MT_subtypes__']:
+        #         if sourceMM == subtype[8:]:
+        #             return True
         return False
 
     def candidate_pairs_iter(self):
