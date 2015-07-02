@@ -27,6 +27,14 @@ class Matcher(RulePrimitive):
         self.condition_pred = [(len(tmp), tmp) for tmp in condition.get_adjlist(mode=2)]
         self.condition_succ = [(len(tmp), tmp) for tmp in condition.get_adjlist(mode=1)]
 
+
+        self.NAC_preds = {}
+        self.NAC_succs = {}
+        for NAC in self.condition.NACs:
+            self.NAC_preds[NAC.name] = [(len(tmp), tmp) for tmp in NAC.get_adjlist(mode=2)]
+            self.NAC_succs[NAC.name] = [(len(tmp), tmp) for tmp in NAC.get_adjlist(mode=1)]
+
+
         #0 = ignore errors, 1 = give warnings, 2 = give errors
         self.warning_level = 1
 
@@ -176,7 +184,10 @@ class Matcher(RulePrimitive):
             #===================================================================
             else:
                 # Look for a NAC match
-                nacMatcher = HimesisMatcher(source_graph=graph, pattern_graph=NAC, pred1 = self.graph_pred, succ1 = self.graph_succ)
+
+                nacMatcher = HimesisMatcher(source_graph=graph, pattern_graph=NAC,
+                                            pred1 = self.graph_pred, succ1 = self.graph_succ,
+                                            pred2 = self.NAC_preds[NAC.name], succ2 = self.NAC_succs[NAC.name])
                 # Convert the pivots
                 nac_pivots = pivots.to_mapping(graph, NAC)
                 try:
@@ -195,7 +206,8 @@ class Matcher(RulePrimitive):
             bound_NACs.sort(key=lambda nac: nac.bridge.vcount(), reverse=True)
         else:
             lhsMatcher = HimesisMatcher(source_graph=graph, pattern_graph=self.condition,
-                                        pred1 = self.graph_pred, succ1 = self.graph_succ, pred2 = self.condition_pred, succ2 = self.condition_succ)
+                                        pred1 = self.graph_pred, succ1 = self.graph_succ,
+                                        pred2 = self.condition_pred, succ2 = self.condition_succ)
             # Convert the pivots
             lhs_pivots = pivots.to_mapping(graph, self.condition)
             try:
@@ -218,7 +230,9 @@ class Matcher(RulePrimitive):
         
         # Continue the matching looking for the LHS now
         lhsMatcher = HimesisMatcher(source_graph=graph, pattern_graph=self.condition,
-                                    pred1 = self.graph_pred, succ1 = self.graph_succ, pred2 = self.condition_pred, succ2 = self.condition_succ)
+                                    pred1 = self.graph_pred, succ1 = self.graph_succ,
+                                    pred2 = self.condition_pred, succ2 = self.condition_succ)
+
         # Augment the bridge mapping with the pivot mappings
         lhs_pivots = pivots.to_mapping(graph, self.condition)
         
@@ -234,7 +248,10 @@ class Matcher(RulePrimitive):
                         bridgeMapping = match.to_mapping(graph, NAC)
 
                         # Now continue the matching looking for a match of the corresponding NAC
-                        nacMatcher = HimesisMatcher(source_graph=graph, pattern_graph=NAC, pred1 = self.graph_pred, succ1 = self.graph_succ)
+                        nacMatcher = HimesisMatcher(source_graph=graph, pattern_graph=NAC,
+                                                    pred1 = self.graph_pred, succ1 = self.graph_succ,)
+                                                    #pred2 = self.NAC_preds[NAC.name], succ2 = self.NAC_succs[NAC.name])
+
                         for nac_mapping in nacMatcher.match_iter(context=bridgeMapping):
                             if NAC.constraint(lambda i: getSourceNodeFromLabel(i, nac_mapping, NAC), graph):
                                 # An occurrence of the NAC is found: current mapping is not valid
