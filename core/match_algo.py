@@ -485,7 +485,8 @@ class HimesisMatcher(object):
             #else:
             #    raise Exception('The method %s was not found in the pattern graph' % methName)
         return True
-    
+
+    #@profile
     def _match(self):
         """
             Extends the pattern matching mapping.
@@ -512,17 +513,31 @@ class HimesisMatcher(object):
                 # self.succ1[src_node] = (len(self.G1.successors(src_node)), self.G1.successors(src_node))
                 # self.pred2[patt_node] = (len(self.G2.predecessors(patt_node)), self.G2.predecessors(patt_node))
                 # self.succ2[patt_node] = (len(self.G2.successors(patt_node)), self.G2.successors(patt_node))
-                
-                if self.are_compatibile(src_node, patt_node):
-                    if self.are_syntactically_feasible(src_node, patt_node):
-                        if self.are_semantically_feasible(src_node, patt_node):
-                            # Recursive call, adding the feasible state
-                            newstate = HimesisMatcherState(self, src_node, patt_node)
-                            for mapping in self._match():
-                                yield mapping
-    
-                            # restore data structures
-                            newstate.restore()
+
+                # Check for the degree compatibility
+                if not (self.pred2[patt_node][0] <= self.pred1[src_node][0]
+                        and self.succ2[patt_node][0] <= self.succ1[src_node][0]):
+                    continue
+
+                sourceMM = self.mm1[src_node]
+                targetMM = self.mm2[patt_node]
+                if sourceMM != targetMM:
+
+                    if not self.src_has_supertype[src_node] or targetMM not in self.superclasses_dict[sourceMM]:
+                        continue
+
+
+
+                #if self.are_compatibile(src_node, patt_node):
+                if self.are_syntactically_feasible(src_node, patt_node):
+                    if self.are_semantically_feasible(src_node, patt_node):
+                        # Recursive call, adding the feasible state
+                        newstate = HimesisMatcherState(self, src_node, patt_node)
+                        for mapping in self._match():
+                            yield mapping
+
+                        # restore data structures
+                        newstate.restore()
     
     def has_match(self, context={}):
         """
