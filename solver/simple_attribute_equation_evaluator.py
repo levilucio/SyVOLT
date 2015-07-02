@@ -5,6 +5,7 @@ Created on 2015-02-13
 '''
 
 from .attribute_equation_solver import AttributeEquationSolver
+from core.himesis_plus import find_nodes_with_mm
 
 
 class SimpleAttributeEquationEvaluator(AttributeEquationSolver):
@@ -37,37 +38,45 @@ class SimpleAttributeEquationEvaluator(AttributeEquationSolver):
         return "V" + str(old_varID) 
 
 
+    #@profile
     def build_equation_expression(self, node, pathCondition):
         """
         helper for building the attribute equations by recursively going through the operations associated
         to the left hand side and to the right hand side of an equation
-        """       
+        """
+
+        graph_node = pathCondition.vs[node]
+
         # in case it's an attribute, return the object's ID
-        if pathCondition.vs[node]['mm__'] == 'Attribute':
+        if graph_node['mm__'] == 'Attribute':
             # get the parent object of the attribute
-            
-            attrEdgeMatch = [i for i in pathCondition.neighbors(node,2) if pathCondition.vs[i]['mm__'] == 'hasAttribute_S']
-            attrEdgeApply = [i for i in pathCondition.neighbors(node,2) if pathCondition.vs[i]['mm__'] == 'hasAttribute_T'] 
-            if attrEdgeMatch != []:
-                parentObject = pathCondition.neighbors(attrEdgeMatch[0],2)[0]
+
+
+            attrEdgeMatch = [i for i in self.pred[node] if self.mms[i] == 'hasAttribute_S']
+            attrEdgeApply = [i for i in self.pred[node] if self.mms[i] == 'hasAttribute_T']
+
+
+            if attrEdgeMatch:
+                parentObject = self.pred[attrEdgeMatch[0]][0]
             else:
-                parentObject = pathCondition.neighbors(attrEdgeApply[0],2)[0]
+                parentObject = self.pred[attrEdgeApply[0]][0]
 
             # check if a variable for an attribute having the same name and belonging to the same object has already been created  
             # and in case it has just return it, otherwise create a new variable
             
-            attrName = pathCondition.vs[node]['name']         
+            attrName = graph_node['name']
             varDatabaseKey = str(parentObject) + "_" + attrName
-            if not varDatabaseKey in set(self.varNameDatabase.keys()): 
+
+            try:
+                return (self.varNameDatabase[varDatabaseKey], self.isVariable)
+            except KeyError:
                 self.varNameDatabase[varDatabaseKey] = "X" + str(node)
-                return (self.varNameDatabase[varDatabaseKey], self.isVariable)
-            else:
-                return (self.varNameDatabase[varDatabaseKey], self.isVariable)
+                return ("X" + str(node), self.isVariable)
                 
 
         # in case it's a constant, return its value
-        elif pathCondition.vs[node]['mm__'] == 'Constant':
-            return (pathCondition.vs[node]['name'], self.isConstant)
+        elif graph_node['mm__'] == 'Constant':
+            return (graph_node['name'], self.isConstant)
 
         # it's a concat operation
         else:
@@ -95,18 +104,60 @@ class SimpleAttributeEquationEvaluator(AttributeEquationSolver):
         """
 
         variableValues = {}
-        
-        # grab all the equation nodes in the path condition
-        equationNodes = self._find_nodes_with_mm(pathCondition, "Equation")
+
+        #get all mms for the path condition at once
+        self.mms = pathCondition.vs["mm__"]
+
+        #store the first successor for Equation, leftExpr, and rightExpr
+        #store the first predecessor for Attributes and hasAttribute_[S,T]
+        #igraph.IN = 2, igraph.OUT = 1
+        self.succ = {}
+        self.pred = {}
+
+        for edge in pathCondition.get_edgelist():
+            if self.mms[edge[0]] in ["Equation", "leftExpr", "rightExpr"]:
+                try:
+                    self.succ[edge[0]].append(edge[1])
+                except KeyError:
+                    self.succ[edge[0]] = [edge[1]]
+
+            if self.mms[edge[1]] in ["Attribute", "hasAttribute_S", "hasAttribute_T"]:
+                try:
+                    self.pred[edge[1]].append(edge[0])
+                except KeyError:
+                    self.pred[edge[1]] = [edge[0]]
+
+
+
+
+
+        # grab all the equation node numbers in the path condition
+        equationNodes = []
+        i = 0
+        for mm in self.mms:
+            if mm == "Equation":
+                equationNodes.append(i)
+            i += 1
+
         # now build all the equations
         if equationNodes != []:
-            for equationNode in range(0,len(equationNodes)):
+            for equationNode in equationNodes:
                 # get the left and the right expressions of the equation
-                leftExprEdge = [i for i in pathCondition.neighbors(equationNodes[equationNode],1) if pathCondition.vs[i]['mm__'] == 'leftExpr'][0]    
-                rightExprEdge = [i for i in pathCondition.neighbors(equationNodes[equationNode],1) if pathCondition.vs[i]['mm__'] == 'rightExpr'][0]
+                #[i for i in pathCondition.neighbors(equationNode,1) if self.mms[i] == 'leftExpr'][0]
 
-                leftExprNode = pathCondition.neighbors(leftExprEdge,1)[0]
-                rightExprNode = pathCondition.neighbors(rightExprEdge,1)[0]              
+                mm = self.mms[self.succ[equationNode][0]]
+                if mm == 'leftExpr':
+                    leftExprEdge = self.succ[equationNode][0]
+                    rightExprEdge = self.succ[equationNode][1]
+                else:
+                    leftExprEdge = self.succ[equationNode][1]
+                    rightExprEdge = self.succ[equationNode][0]
+
+
+                #rightExprEdge = [i for i in pathCondition.neighbors(equationNode,1) if self.mms[i] == 'rightExpr'][0]
+
+                leftExprNode = self.succ[leftExprEdge][0] #pathCondition.neighbors(leftExprEdge,1)[0]
+                rightExprNode = self.succ[rightExprEdge][0] #pathCondition.neighbors(rightExprEdge,1)[0]
 
                 leftExpr = self.build_equation_expression(leftExprNode, pathCondition)
                 rightExpr = self.build_equation_expression(rightExprNode, pathCondition)
@@ -126,7 +177,7 @@ class SimpleAttributeEquationEvaluator(AttributeEquationSolver):
                     varInEquation = rightExpr[0]
                     valueInEquation = leftExpr[0]
                     
-                if varInEquation in variableValues.keys():
+                if varInEquation in variableValues:
                     if variableValues[varInEquation] != valueInEquation:
                         # evaluation has failed, two different values were found for the same attribute
                         if self.verbosity >= 2:
@@ -144,18 +195,3 @@ class SimpleAttributeEquationEvaluator(AttributeEquationSolver):
         # no contradictions were found, check succeeded  
         if self.verbosity >= 2 : print("Python check succeeded!")
         return True
-
-
-
-        
-    def _find_nodes_with_mm(self, graph, mm_names):
-        """
-        Find all objects of a given type in a rules having theur type name in the mm_names set.
-        TODO: move this method to the himesis_utils file, together with the one from PyRamify 
-        """
-        nodes = []
-        for node in graph.vs:
-            if node["mm__"] in mm_names:
-                nodes.append(node)
-        return nodes
-             
