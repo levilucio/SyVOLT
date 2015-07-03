@@ -260,8 +260,8 @@ class Matcher(RulePrimitive):
 
                         # Now continue the matching looking for a match of the corresponding NAC
                         nacMatcher = HimesisMatcher(source_graph=graph, pattern_graph=NAC,
-                                                    pred1 = self.graph_pred, succ1 = self.graph_succ,)
-                                                    #pred2 = self.NAC_preds[NAC.name], succ2 = self.NAC_succs[NAC.name])
+                                                    pred1 = self.graph_pred, succ1 = self.graph_succ,
+                                                    pred2 = self.NAC_preds[NAC.name], succ2 = self.NAC_succs[NAC.name])
 
                         for nac_mapping in nacMatcher.match_iter(context=bridgeMapping):
                             if NAC.constraint(lambda i: getSourceNodeFromLabel(i, nac_mapping, NAC), graph):
