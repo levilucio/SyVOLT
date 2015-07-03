@@ -59,6 +59,10 @@ class path_condition_generator_worker(Process):
             pc = expand_graph(self.pc_dict[pc_name])
             #print_graph(pc)
 
+            #store the preds and succs of the pc graph if needed
+            pc_preds = []
+            pc_succs = []
+
             childrenPathConditions = [pc_name]
 
             # produce a fresh copy of the path condition in pc_dict, associated with the name of the path condition.
@@ -141,9 +145,14 @@ class path_condition_generator_worker(Process):
 
                     # check if the backward links cannot be found by matching them on the path condition
 
+                    if not pc_preds or not pc_succs:
+                        pc_preds = [(len(tmp), tmp) for tmp in pc.get_adjlist(mode=2)]
+                        pc_succs = [(len(tmp), tmp) for tmp in pc.get_adjlist(mode=1)]
+
+
                     p = Packet()
                     p.graph = pc
-                    ruleBackwardLinksMatcher.packet_in(p)
+                    ruleBackwardLinksMatcher.packet_in(p, preds=pc_preds, succs=pc_succs)
                     if not ruleBackwardLinksMatcher.is_success:
                         if self.verbosity >= 2 : print("Case 2: Rule has dependencies but cannot execute")
 
@@ -177,7 +186,7 @@ class path_condition_generator_worker(Process):
 
                             #print_graph(p.graph)
 
-                            combinatorMatcher.packet_in(p)
+                            combinatorMatcher.packet_in(p, preds=pc_preds, succs=pc_succs)
 
                             # if self.rule_names[rule.name] == "HereferenceOUTeTypeSolveRefEReferenceEClassifierEReferenceEClassifier":
                             #     graph_to_dot("pathCondition_par_" + pc.name, pc)

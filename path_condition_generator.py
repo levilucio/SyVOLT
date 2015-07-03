@@ -38,7 +38,6 @@ from random import shuffle
 from profiler import *
 
 
-
 class PathConditionGenerator(object):
     """
     Builds the set of path conditions for a transformation
@@ -85,6 +84,7 @@ class PathConditionGenerator(object):
 
         self.attributeEquationEvaluator = SimpleAttributeEquationEvaluator(self.verbosity)
 
+        #with PyCallGraph(output=GraphvizOutput()):
         self._pre_process()
 
         self.debug()
@@ -156,7 +156,8 @@ class PathConditionGenerator(object):
         # self.forward_cardinalities_to_apply = SRule(HForwardCardinalitiesToApplyModelLHS(),
         # HForwardCardinalitiesToApplyModelRHS())
 
-#         print("----------------Start pre-process")
+        if self.verbosity >= 1:
+            print("----------------Start pre-process")
 #         # forward the cardinalities to the apply part of the rules
 #         for layer in self.transformation:
 #             for rule in layer:
@@ -171,6 +172,8 @@ class PathConditionGenerator(object):
 
 #        self.debug()
 
+        if self.verbosity >= 1:
+            print("Start merging rules with common match patterns")
         #merge rules of the same layer that share common match patterns over those match patterns   
         for layerIndex in range(0,len(self.transformation)):
             # loop until all the rules in the layer have been treated
@@ -216,6 +219,9 @@ class PathConditionGenerator(object):
                         
                             mergedResult = mergedResultBeforeEquationEval
                             mergedResult.name = mergedResult.name + self.transformation[layerIndex][candidateToMerge].name                                                  
+                            
+                            if self.verbosity >=1 :
+                                print("Merging " + mergedResult.name + " with " + self.transformation[layerIndex][candidateToMerge].name)
                             # mark the rule for removal
                             markedForRemoval.append(self.transformation[layerIndex][candidateToMerge])
    
@@ -373,6 +379,8 @@ class PathConditionGenerator(object):
         # TODO: now traceability is being built for all rules. We only need traceability for the rules that have no dependencies, 
         # as the others are built by the combinators associated to the rule
 
+        if self.verbosity >= 1:
+            print("Start building traceability for rules")
         # transformation to built traceability for rules
         from property_prover_rules.traceability_construction.Himesis.HBuildTraceabilityForRuleLHS import \
             HBuildTraceabilityForRuleLHS
@@ -403,6 +411,9 @@ class PathConditionGenerator(object):
 #         print(self.ruleTraceCheckers.keys())
 #         print("----------------------------"  )
                     
+        if self.verbosity >= 1:
+            print("Start changing rule names")
+            
         self.rule_names = {"HEmpty":"HEmptyPathCondition"}
         # keep the original names around 
         self.rule_originalnames = {"HEmpty":"HEmptyPathCondition"}

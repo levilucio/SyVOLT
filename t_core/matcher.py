@@ -9,10 +9,13 @@ from .messages import MatchSet, Match, TransformationException
 from core.himesis_utils import print_graph, print_GUIDs
 import traceback
 
+from profiler import *
+
 class Matcher(RulePrimitive):
     '''
         Binds the source graph according to the pre-condition pattern.
     '''
+
     def __init__(self, condition, max=INFINITY):
         '''
             Binds the source graph according to the pre-condition pattern.
@@ -55,15 +58,23 @@ class Matcher(RulePrimitive):
         s.insert(1, '[%s]' % self.condition.name)
         s.append("\n" + str(self.condition) + "\n")
         return reduce(lambda x, y: '%s %s' % (x,y), s)
-    
-    def packet_in(self, packet, verbosity = 0):
+
+    #@do_cprofile
+    def packet_in(self, packet, verbosity = 0, preds=[], succs=[]):
         self.exception = None
         self.is_success = False
 
         #cache the packet graph's neighbours
         #igraph.IN = 2, igraph.OUT = 1
-        self.graph_pred = [(len(tmp), tmp) for tmp in packet.graph.get_adjlist(mode=2)]
-        self.graph_succ = [(len(tmp), tmp) for tmp in packet.graph.get_adjlist(mode=1)]
+        if preds:
+            self.graph_pred = preds
+        else:
+            self.graph_pred = [(len(tmp), tmp) for tmp in packet.graph.get_adjlist(mode=2)]
+
+        if succs:
+            self.graph_succ = succs
+        else:
+            self.graph_succ = [(len(tmp), tmp) for tmp in packet.graph.get_adjlist(mode=1)]
 
         if self.condition[HC.GUID] in packet.match_sets:
             matchSet = packet.match_sets[self.condition[HC.GUID]]
