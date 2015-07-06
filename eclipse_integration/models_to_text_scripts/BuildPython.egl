@@ -189,7 +189,9 @@ class Prover():
         complete["superclasses_dict"] = supertypes
         
         c[%=atomicContractIndex%] = AtomicStateProperty(isolated, connected, complete)
-        result_c[%=atomicContractIndex%] = StateProperty.verifyCompositeStateProperty(pc_set, c[%=atomicContractIndex%])
+        
+        verifier = StateProperty()
+        result_c[%=atomicContractIndex%] = verifier.verifyCompositeStateProperty(pc_set, c[%=atomicContractIndex%])
         if len(result_c[%=atomicContractIndex%]) == 0:
         	print("\n")
         	print("Contract [%=ac.Name%] holds!")

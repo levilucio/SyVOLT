@@ -20,6 +20,8 @@ from t_core.matcher import Matcher
 import time
 import PropertyVerification
 
+from profiler import *
+
 class StateProperty(Property):
     '''
     classdocs
@@ -41,6 +43,8 @@ class StateProperty(Property):
 
         #detail the status of the property
         self.status = self.NOT_CHECKED
+
+        self.disambig = Disambiguator(0)
 
     def SETverifResult (self, boolres):
         self.hasDefaultVerifResult= True
@@ -146,9 +150,8 @@ class StateProperty(Property):
         return nameList
 
 
-    
-    @staticmethod    
-    def verifyCompositeStateProperty(StateSpace, stateprop):
+    @do_cprofile
+    def verifyCompositeStateProperty(self, StateSpace, stateprop):
         """
         Inputs: 
         1- StateSpace: the complete state space to be iterated
@@ -303,8 +306,8 @@ class StateProperty(Property):
                 ###new code -start
                 if len(StateProperty.parseStateName2RuleNames(state.name))>1:
                     if StateSpace.verbosity >= 1: t0 = time.time()
-                    disamb=Disambiguator(0)#(StateSpace.verbosity)
-                    disambiguated_states = disamb.disambiguate(state)
+                    #disamb=Disambiguator(0)#(StateSpace.verbosity)
+                    disambiguated_states = self.disambig.disambiguate(state)
                     #print("Disambiguated size: " + str(len(disambiguated_states)))
                     states_to_analyse.extend(disambiguated_states)
                     ###new code -end
