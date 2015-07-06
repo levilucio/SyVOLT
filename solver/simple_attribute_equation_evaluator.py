@@ -108,6 +108,25 @@ class SimpleAttributeEquationEvaluator(AttributeEquationSolver):
         #get all mms for the path condition at once
         self.mms = pathCondition.vs["mm__"]
 
+
+
+
+
+
+
+        # grab all the equation node numbers in the path condition
+        equationNodes = []
+        i = 0
+        for mm in self.mms:
+            if mm == "Equation":
+                equationNodes.append(i)
+            i += 1
+
+        # now build all the equations
+        if not equationNodes:
+            return True
+
+
         #store the first successor for Equation, leftExpr, and rightExpr
         #store the first predecessor for Attributes and hasAttribute_[S,T]
         #igraph.IN = 2, igraph.OUT = 1
@@ -129,67 +148,53 @@ class SimpleAttributeEquationEvaluator(AttributeEquationSolver):
 
 
 
+        for equationNode in equationNodes:
+            # get the left and the right expressions of the equation
+            #[i for i in pathCondition.neighbors(equationNode,1) if self.mms[i] == 'leftExpr'][0]
+
+            mm = self.mms[self.succ[equationNode][0]]
+            if mm == 'leftExpr':
+                leftExprEdge = self.succ[equationNode][0]
+                rightExprEdge = self.succ[equationNode][1]
+            else:
+                leftExprEdge = self.succ[equationNode][1]
+                rightExprEdge = self.succ[equationNode][0]
 
 
-        # grab all the equation node numbers in the path condition
-        equationNodes = []
-        i = 0
-        for mm in self.mms:
-            if mm == "Equation":
-                equationNodes.append(i)
-            i += 1
+            #rightExprEdge = [i for i in pathCondition.neighbors(equationNode,1) if self.mms[i] == 'rightExpr'][0]
 
-        # now build all the equations
-        if equationNodes != []:
-            for equationNode in equationNodes:
-                # get the left and the right expressions of the equation
-                #[i for i in pathCondition.neighbors(equationNode,1) if self.mms[i] == 'leftExpr'][0]
+            leftExprNode = self.succ[leftExprEdge][0] #pathCondition.neighbors(leftExprEdge,1)[0]
+            rightExprNode = self.succ[rightExprEdge][0] #pathCondition.neighbors(rightExprEdge,1)[0]
 
-                mm = self.mms[self.succ[equationNode][0]]
-                if mm == 'leftExpr':
-                    leftExprEdge = self.succ[equationNode][0]
-                    rightExprEdge = self.succ[equationNode][1]
-                else:
-                    leftExprEdge = self.succ[equationNode][1]
-                    rightExprEdge = self.succ[equationNode][0]
+            leftExpr = self.build_equation_expression(leftExprNode, pathCondition)
+            rightExpr = self.build_equation_expression(rightExprNode, pathCondition)
 
+            if leftExpr == None or rightExpr == None or (leftExpr[1] == self.isVariable and rightExpr[1] == self.isVariable):
+                # got a concat operation, or both are variables, skipping the evaluation here
+                continue
 
-                #rightExprEdge = [i for i in pathCondition.neighbors(equationNode,1) if self.mms[i] == 'rightExpr'][0]
+            # otherwise we evaluate
+            # look for the variable
+            if leftExpr[1] == self.isVariable:
+                varInEquation = leftExpr[0]
+                valueInEquation = rightExpr[0]
+            else:
+                varInEquation = rightExpr[0]
+                valueInEquation = leftExpr[0]
 
-                leftExprNode = self.succ[leftExprEdge][0] #pathCondition.neighbors(leftExprEdge,1)[0]
-                rightExprNode = self.succ[rightExprEdge][0] #pathCondition.neighbors(rightExprEdge,1)[0]
+            if varInEquation in variableValues:
+                if variableValues[varInEquation] != valueInEquation:
+                    # evaluation has failed, two different values were found for the same attribute
+                    if self.verbosity >= 2:
+                        objectAttrName = [item[0] for item in self.varNameDatabase.items() if item[1] == varInEquation][0]
+                        splitObjectAttrName = objectAttrName.split('_')
+                        print("Python solver check failed! Object " + splitObjectAttrName[0] + " has values " + "'" + \
+                        variableValues[varInEquation] + "'" + " and " + "'" + valueInEquation + "'")
 
-                leftExpr = self.build_equation_expression(leftExprNode, pathCondition)
-                rightExpr = self.build_equation_expression(rightExprNode, pathCondition)
-
-                if leftExpr == None or rightExpr == None or (leftExpr[1] == self.isVariable and rightExpr[1] == self.isVariable):
-                    # got a concat operation, or both are variables, skipping the evaluation here
-                    continue
-                
-                # otherwise we evaluate
-                # look for the variable
-                varInEquation = None
-                valueInEquation = None
-                if leftExpr[1] == self.isVariable:
-                    varInEquation = leftExpr[0]
-                    valueInEquation = rightExpr[0]
-                else:
-                    varInEquation = rightExpr[0]
-                    valueInEquation = leftExpr[0]
-                    
-                if varInEquation in variableValues:
-                    if variableValues[varInEquation] != valueInEquation:
-                        # evaluation has failed, two different values were found for the same attribute
-                        if self.verbosity >= 2:
-                            objectAttrName = [item[0] for item in self.varNameDatabase.items() if item[1] == varInEquation][0]
-                            splitObjectAttrName = objectAttrName.split('_')
-                            print("Python solver check failed! Object " + splitObjectAttrName[0] + " has values " + "'" + \
-                            variableValues[varInEquation] + "'" + " and " + "'" + valueInEquation + "'")
-                            
-                        return False
-                else:
-                    # otherwise add the value to variableValues dictionary for future comparisons
-                    variableValues[varInEquation] = valueInEquation
+                    return False
+            else:
+                # otherwise add the value to variableValues dictionary for future comparisons
+                variableValues[varInEquation] = valueInEquation
 
 
         # no contradictions were found, check succeeded  
