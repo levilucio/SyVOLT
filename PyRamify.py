@@ -1874,6 +1874,7 @@ class PyRamify:
 
                 rule_file = rule_dir + f
                 #print("Changing file: " + rule_file)
+
                 try:
                     rule = load_class(rule_file)
                 except ImportError as e:
@@ -1894,21 +1895,21 @@ class PyRamify:
 
 
 
-                for node in graph.vs:
-
-                    #the node doesn't match subtypes
-                    if "MT_subtypeMatching__" in node.attributes().keys() and node["MT_subtypeMatching__"] == False:
-                        continue
-
-                    #the node does look at subtypes
-                    if "MT_subtypes__" in node.attributes().keys() and len(node["MT_subtypes__"]) >= 1:
-
-                        # we are not changing this mm's subtypes
-                        if not node["mm__"] in subclasses_dict.keys():
-                            continue
-
-                        #set the new subtypes
-                        node["MT_subtypes__"] = subclasses_dict[node["mm__"]]
+                # for node in graph.vs:
+                #
+                #     #the node doesn't match subtypes
+                #     if "MT_subtypeMatching__" in node.attributes().keys() and node["MT_subtypeMatching__"] == False:
+                #         continue
+                #
+                #     #the node does look at subtypes
+                #     if "MT_subtypes__" in node.attributes().keys() and len(node["MT_subtypes__"]) >= 1:
+                #
+                #         # we are not changing this mm's subtypes
+                #         if not node["mm__"] in subclasses_dict.keys():
+                #             continue
+                #
+                #         #set the new subtypes
+                #         node["MT_subtypes__"] = subclasses_dict[node["mm__"]]
 
                 graph["superclasses_dict"] = supertypes
 
