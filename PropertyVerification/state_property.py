@@ -150,7 +150,7 @@ class StateProperty(Property):
         return nameList
 
 
-    @do_cprofile
+    #@do_cprofile
     def verifyCompositeStateProperty(self, StateSpace, stateprop):
         """
         Inputs: 
