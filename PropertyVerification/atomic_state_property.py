@@ -36,8 +36,9 @@ class AtomicStateProperty(StateProperty):
         self.Connected=connected
         self.CompleteQuantified=completeQuantified
 
-        self.match = Matcher(self.Connected)
-        self.total = Matcher(self.CompleteQuantified)
+        self.isolated_matcher = Matcher(isolated)
+        self.match = Matcher(connected)
+        self.total = Matcher(completeQuantified)
 
 
         self.resetVerifResultToFalse()

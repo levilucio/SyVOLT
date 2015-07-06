@@ -203,7 +203,7 @@ class StateProperty(Property):
 
             cacheIsolatedPatternMatches=[]
             for atomicStatePropIndex in range(len(AtomicStatePropsInStateProp)):
-                isolated = Matcher(AtomicStatePropsInStateProp[atomicStatePropIndex].Isolated)
+                isolated = AtomicStatePropsInStateProp[atomicStatePropIndex].isolated_matcher
                 s = Packet()
                 s.graph = deepcopy(merged_state)
 
