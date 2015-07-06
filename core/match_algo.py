@@ -139,7 +139,7 @@ class HimesisMatcher(object):
                 self.superclasses_dict = self.G2["superclasses_dict"]
             except KeyError:
                 self.superclasses_dict = {}
-                print("Graph " + self.G2.name + " needs to be updated")
+                print("Graph " + self.G2.name + " needs to be updated. Can't find 'superclasses_dict'")
 
             if self.superclasses_dict:
                 self.src_has_supertype = [child_mm in self.superclasses_dict for child_mm in self.mm1]
@@ -572,8 +572,7 @@ class HimesisMatcher(object):
         self.initialize()
         for p in context:
             if self.are_semantically_feasible(context[p], p):
-                pass
-                #self.state.__class__(self, context[p], p)
+                self.save(context[p], p)
             else:
                 # Additional constraints on the pivot nodes are not satisfied: no match is possible
                 return
