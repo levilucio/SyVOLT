@@ -125,28 +125,32 @@ class Prover():
         
         # go through all the matchers, combinators and tracers to add polymorphism on all classes in an inheritance hierarchy
         
-        def change_subtype_matching(match_rule, subclass_info):
-            for v in match_rule.condition.vs():
-                if v["mm__"] in set(subclass_info.keys()):
-                    v["MT_subtypes__"] = subclass_info[v["mm__"]]
-                    v["MT_subtypeMatching__"] = True
-                    print("Changed one: " + v["mm__"])
+        # keep a dictionary from each child to its parent
+        supertypes = {}
+
+        for supertype in subclasses_dict:
+            for subtype in subclasses_dict[supertype]:
+                subtype = subtype[8:]
+                try:
+                    supertypes[subtype].append(supertype[8:])
+                except KeyError:
+                    supertypes[subtype] = [supertype[8:]]
                                                                   
         
         # add polymorphism for the matchers
         for matcher_key in self.matchRulePatterns.keys():
-            change_subtype_matching(self.matchRulePatterns[matcher_key][0],subclasses_dict)
+            self.matchRulePatterns[matcher_key][0].condition["superclasses_dict"] = supertypes
             
         # add polymorphism for the combinators
         for combs_key in self.ruleCombinators.keys():
             if self.ruleCombinators[combs_key] != None:
                 for combinator in self.ruleCombinators[combs_key]:
-                    change_subtype_matching(combinator[0],subclasses_dict)    
+                    combinator[0].condition["superclasses_dict"] = supertypes
 
         # add polymorphism for the tracers
         for tracer_key in self.ruleTraceCheckers.keys():
             if self.ruleTraceCheckers[tracer_key] != None:
-                change_subtype_matching(self.ruleTraceCheckers[tracer_key],subclasses_dict)      
+                self.ruleTraceCheckers[tracer_key].condition["superclasses_dict"] = supertypes    
             
 		# generate path conditions
         pc_set = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, args)
@@ -176,7 +180,15 @@ class Prover():
 	    var atomicContractIndex = 0;
         for (ac in inputProperties!AtomicContract) { %]
         
-        c[%=atomicContractIndex%] = AtomicStateProperty(H[%=ac.Name%]_IsolatedLHS(), H[%=ac.Name%]_ConnectedLHS(), H[%=ac.Name%]_CompleteLHS())
+        isolated = H[%=ac.Name%]_IsolatedLHS()
+        connected = H[%=ac.Name%]_ConnectedLHS()
+        complete = H[%=ac.Name%]_CompleteLHS()
+        
+        isolated["superclasses_dict"] = supertypes
+        connected["superclasses_dict"] = supertypes
+        complete["superclasses_dict"] = supertypes
+        
+        c[%=atomicContractIndex%] = AtomicStateProperty(isolated, connected, complete)
         result_c[%=atomicContractIndex%] = StateProperty.verifyCompositeStateProperty(pc_set, c[%=atomicContractIndex%])
         if len(result_c[%=atomicContractIndex%]) == 0:
         	print("\n")

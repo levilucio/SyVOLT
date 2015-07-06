@@ -49,7 +49,6 @@ return True
                         %]
         # match class [%=class.className%]([%=class.id%]) node
                 self.add_node()
-                self.vs[[%=nodeIndex%]]["MT_subtypeMatching__"] = False
                 self.vs[[%=nodeIndex%]]["MT_pre__classtype"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -63,7 +62,6 @@ return True
 return True
 """
                 self.vs[[%=nodeIndex%]]["MT_label__"] = """[%=classLabel%]"""
-                self.vs[[%=nodeIndex%]]["MT_subtypes__"] = []
                 self.vs[[%=nodeIndex%]]["MT_dirty__"] = False
                 self.vs[[%=nodeIndex%]]["mm__"] = """MT_pre__[%=class.className%]"""
                 self.vs[[%=nodeIndex%]]["MT_pre__cardinality"] = """
