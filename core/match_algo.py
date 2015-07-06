@@ -591,7 +591,7 @@ class HimesisMatcher(object):
         # Initialize the last stored node pair.
         saved_src_node = None
         saved_patt_node = None
-        depth = len(self.core_1)
+        depth = 0
 
         if src_node is None or patt_node is None:
             # Then we reset the class variables
