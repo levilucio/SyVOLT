@@ -452,8 +452,8 @@ class PyRamify:
     def get_backward_patterns(self, rule):
         if self.verbosity >= 2:
             print("\nStarting get backward patterns")
-        name = list(rule.keys())[0]
-        graph = list(rule.values())[0]
+        name = rule.keys()[0]
+        graph = rule[rule.keys()[0]]
 
         label = 0
         for i in range(len(graph.vs)):
@@ -565,7 +565,7 @@ class PyRamify:
             print("Backward patterns compiled to: " + file_name)
 
         rule = load_class(out_dir + "/" + new_name)
-        backward_pattern = rule[list(rule.keys())[0]]
+        backward_pattern = rule[rule.keys()[0]]
 
         if self.draw_svg:
             graph_to_dot(new_name, backward_pattern)
@@ -683,13 +683,60 @@ class PyRamify:
             all_nodes_w_eqs[n] = connected_nodes
         return all_nodes_w_eqs
 
-    # create the backward patterns for this file
+
+    # Build the LHS condition for the combinators for rules that are subsumed by others.
+    # If the combinator is to match outside the subsumed rule, writeOnTop is False
+    # If the combinator is to match on the subsumed rule, writeOnTop is True     
+    def get_LHS_combinator_match_code(self, graph, writeOnTop):
+    
+        match_apply_nodes = self.get_all_nodes(graph)
+        
+        LHS_condition_string = "from core.himesis_plus import flood_find_nodes\n"
+        LHS_condition_string += "nodesToCheck = ["
+
+        for node in match_apply_nodes:
+            node_label = node["MT_label__"]
+            LHS_condition_string += "'" + str(node_label) + "'" + ","
+        LHS_condition_string += "]\n"
+        LHS_condition_string += "setsOfpairedWithNodes = []\n"
+
+        # check what rule the match found is connected to 
+        LHS_condition_string += "for node in nodesToCheck:\n"                            
+        LHS_condition_string += "    pairedWithNodes = flood_find_nodes(PreNode(node).index, graph,['directLink_S', 'directLink_T', \
+'indirectLink_S', 'indirectLink_T','hasAttribute_S', 'hasAttribute_T', 'Attribute', 'Equation', \
+'Constant', 'Concat', 'leftExpr', 'rightExpr', 'trace_link'],['paired_with'])\n"
+        LHS_condition_string += "    pairedWithNodes = [node for node in pairedWithNodes if graph.vs[node]['mm__'] == 'paired_with']\n"
+        LHS_condition_string += "    setsOfpairedWithNodes.append(set(pairedWithNodes))\n"
+        
+        LHS_condition_string += "result = set.intersection(*setsOfpairedWithNodes)\n"
+        # it is fully connected to the subsuming rule            
+        if writeOnTop:
+            LHS_condition_string += "if result == set():\n"
+            LHS_condition_string += "    return False\n"
+            LHS_condition_string += "else:\n"
+            LHS_condition_string += "    return True"  
+        # it is not fully connected to the subsuming rule              
+        else:
+            LHS_condition_string += "if result != set():\n"
+            LHS_condition_string += "    return False\n"
+            LHS_condition_string += "else:\n"
+            LHS_condition_string += "    return True\n"
+                         
+#         print "--------------------------------------------------------------"
+#         print LHS_condition_string              
+#         print "--------------------------------------------------------------"
+        
+        return LHS_condition_string
+
+
+
+    # create the rule combinators for this file
     def get_rule_combinators(self, rule):
 
         if self.verbosity >= 2:
             print("\nStarting to get rule combinators")
-        name = list(rule.keys())[0]
-        graph = list(rule.values())[0]
+        name = rule.keys()[0]
+        graph = rule.values()[0]
 
         label = 0
         for i in range(len(graph.vs)):
@@ -701,9 +748,12 @@ class PyRamify:
         # check to see which nodes have backward links
         backwards_links = find_nodes_with_mm(graph, ["backward_link"])
 
+        rule_has_backward_links = False
+
         #no backward links in file, do nothing
-        if len(backwards_links) == 0:
-            return {name: None}
+        if len(backwards_links) != 0:
+            rule_has_backward_links = True
+            #return [{graph.name: None}, []]
         
         #there are backward links, so start RAMifying
         out_dir = "./patterns/"
@@ -863,79 +913,19 @@ class PyRamify:
                     temp_array.append(base_graph.vs[actual_node])
                     
                 input_nodes.append(nodes_w_eqs[n])
-        # #TODO: Handled by attr changing?
-        #
 
-        #get the list of nodes to remove
-        #(which is all nodes that should not be kept)
-#         nodes_to_remove = range(len(base_graph.vs))
-# #        nodes_to_remove = [new_graph.vs[item] for item in nodes_to_remove if item not in nodes_to_keep]
-# 
-#         nodes_to_keep = []
-#         match_contains = self.find_nodes_with_mm(base_graph, ["MT_pre__match_contains"])
-#         for mc in match_contains:
-#             mc_num = self.get_node_num(base_graph, mc)
-#             nodes_to_keep += self.flood_find_nodes(mc_num, base_graph, ["MT_pre__MatchModel", "MT_pre__apply_contains", "MT_pre__directLink_T", "MT_pre__indirectLink_T"])
-#         
-#         nodes_to_keep = list(set(nodes_to_keep))
-#         
-#         #attribute_nodes = self.find_nodes_with_mm(base_graph, ["MT_pre__hasAttr_S", "MT_pre__hasAttribute_S","MT_pre__hasAttr_T", "MT_pre__hasAttribute_T", "MT_pre__Attribute"])
-#         #nodes_to_keep += [self.get_node_num(base_graph, item) for item in attribute_nodes]
-# 
-#         # don't consider removing the backward links and attached nodes
-#         for n in nodes_to_keep:
-#             nodes_to_remove.remove(n)
-#             
-#         #delete all match contains
-#         #nodes_to_remove += self.find_nodes_with_mm(graph, ["MT_pre__match_contains"])
-#         nodes_to_remove = list(set(nodes_to_remove))
-# 
-#         #base_graph.delete_nodes(nodes_to_remove)
-#         print("Removed nodes")
-#         
-#         
-# 
-#         print("Made base graph")
-
-        #print("Nodes to remove: " + str(nodes_to_remove))
-        #print("Types:")
-        #for n in nodes_to_remove:
-        #    print(base_graph.vs[n]["mm__"])
-
-        #knock nodes out of the base graph to create the matchers
-        #nodes_to_remove
-
-        #print("Length: " + str(len(input_nodes)))
-        #print(input_nodes)
-        #input nodes stores the node numbers for the nodes you want to knock out of the base graph
-        #output = sum([map(list, combinations(input_nodes, i)) for i in range(len(input_nodes) + 1)], [])
-        #output = []
-        
-        
-        
-        
-        #print(input_nodes)
-        #print(output)
-
-
-        # change the attribs in this graph
-        #rewriter_graph = self.changeAttrType(rewriter_graph, False)
-
-#        print("Rule combinators: Generating " + str(len(output)) + " different possibilities")
-
+        output = sum([map(list, combinations(input_nodes, i)) for i in range(len(input_nodes) + 1)], [])
 
         rewrite_name = rewriter_graph.name + "_rule_combinator_rewriter"
 
-        #levis_tiny_hack = True
-        #if levis_tiny_hack and len(output) > 1:
-            #output = [output[0], output[-1]]
+        levis_tiny_hack = True
+        if levis_tiny_hack and len(output) > 1:
+            output = [output[0], output[-1]]
 
 
         # LEVI: we only need the total and the partial combinator.
         # the total combinator includes all the base graph as match and no NAC.
         # the partial combinator includes only the backward links, and has as NAC the remaining base graph.
-        # FOR BENTLEY: I have changed the loop going through all the combinations of match nodes
-        # such that we only have these two combinators.
         
         # first build the total combinator (just the base graph)        
         total_combinator_matcher = copy_graph(base_graph)
@@ -965,17 +955,48 @@ class PyRamify:
 
         #remove everything except for the attached nodes and the backward link
         partial_combinator_matcher.delete_nodes(nodes_to_remove)
+       
+        subsuming_rules = []
         
-        combinator_matchers = [partial_combinator_matcher, total_combinator_matcher]
+        if name in self.rules_needing_overlap_treatment():
+            subsuming_rules = self.get_subsuming_rules(name)
         
-        #graph_to_dot("combinator_after" + base_graph.name, partial_combinator_matcher) 
-        
-        #write out the combinator
-        
+#             print "-----------------------------"
+#             print "Name: " + name
+#             print subsuming_rules
+#             print "-----------------------------"
+            
+        if subsuming_rules != []  and rule_has_backward_links:
+            total_combinator_matcher_copy = copy_graph(total_combinator_matcher)
+            # if there are subsuming rules add an additional combinator to deal with overlapping rules 
+            combinator_matchers = [partial_combinator_matcher, total_combinator_matcher, total_combinator_matcher_copy]
+        elif subsuming_rules == []  and rule_has_backward_links:
+            # there are no subsuming rules, thus we don't have to consider any overlapping treatment
+            combinator_matchers = [partial_combinator_matcher, total_combinator_matcher]
+            # there are subsuming rules but the rule has no backward links
+        elif subsuming_rules != []  and not rule_has_backward_links:
+            combinator_matchers = [total_combinator_matcher]
+            # there are no subsuming rules and the rule has no backward links - in this case we only build the rewriter
+        elif subsuming_rules == []  and not rule_has_backward_links:
+            # remove all nodes in the graph
+            nodes = []
+            for node in total_combinator_matcher.vs:
+                nodes.append(node)
+            total_combinator_matcher.delete_vertices(nodes)                         
+            combinator_matchers = [total_combinator_matcher]                
+
         for i in range(len(combinator_matchers)):
             
+            if len(combinator_matchers) == 3 and i < 2:
+                combinator_matchers[i]["MT_constraint__"] = self.get_LHS_combinator_match_code(combinator_matchers[i], False)
+            elif len(combinator_matchers) == 3 and i == 2:
+                combinator_matchers[i]["MT_constraint__"] = self.get_LHS_combinator_match_code(combinator_matchers[i], True)
+            elif len(combinator_matchers) == 1 and subsuming_rules != []:
+                combinator_matchers[i]["MT_constraint__"] = self.get_LHS_combinator_match_code(combinator_matchers[i], True)
+                
             #create a new name for this backward matcher
             #replace the pattern name with the partial pattern name
+        
             new_name = combinator_matchers[i].name + "_rule_combinator_matcher_" + str(i)
             
             combinator_matchers[i].name = new_name
@@ -994,9 +1015,9 @@ class PyRamify:
             if self.draw_svg:
                 graph_to_dot(combinator_matchers[i].name, combinator_matchers[i])
             
-            backward_pattern = list(rule.values())[0]
+            backward_pattern = rule.values()[0]
             
-            if i == 0:
+            if i == 0 and len(combinator_matchers) != 1:
                 # now build the NAC for the first combinator (just the complete base graph) 
                 
                 NAC_graph = copy_graph(base_graph)
@@ -1010,7 +1031,7 @@ class PyRamify:
                     print("Nac graph compiled to: " + file_name)
                 
                 NAC_graph = load_class(out_dir + NAC_graph.name, [backward_pattern])
-                NAC_graph = list(NAC_graph.values())[0]
+                NAC_graph = NAC_graph.values()[0]
                 
                 # debug printout
                 if self.draw_svg:
@@ -1025,26 +1046,24 @@ class PyRamify:
             #TODO: Make rewriter code simpler, and same as match pattern rewriter
  
             rewriter_graph_copy = copy_graph(rewriter_graph)
- 
+
+#             if combinator_matchers[i] == None: 
+#                 rule = load_class("property_prover_rules/HEmptyPathCondition.py")
+#                 matcherCond = rule.values()[0]
+#                 matcher = Matcher(matcherCond)
+#                 backward_pattern = rule.values()[0]
+
             rewriter_graph_copy.pre = copy_graph(backward_pattern)
-            #graph_to_dot(rewriter_graph_copy.pre.name + "_pre", rewriter_graph_copy.pre)
- 
- 
             rewriter_graph_copy.name = rewrite_name + "_" + str(i)
+            
             file_name = rewriter_graph_copy.compile(out_dir)
             if self.verbosity >= 2:
                 print("Rewriter graph compiled to: " + file_name)
             
-            
- 
+             
             rewriter_graph2 = load_class(out_dir + rewriter_graph_copy.name)
-            rewriter_graph2 = list(rewriter_graph2.values())[0]
- 
-            # print(inspect.getargspec(rewriter_graph2.execute))
-            # print(rewriter_graph2.__class__)
-            # print(rewriter_graph2.name)
-            # print("Hierarchy:")
-            # print(inspect.getmro(rewriter_graph2.__class__))
+            rewriter_graph2 = rewriter_graph2.values()[0]
+
  
             # debug printout
             if self.draw_svg:
@@ -1052,13 +1071,7 @@ class PyRamify:
  
             rewriter_graph2.pre = copy_graph(backward_pattern)
  
- 
-            #rewrite_name = rewriter_graph2.name
-            #rewriter_graph2.name += "_loaded_rewriter"
-            #rewriter_graph2.compile("./patterns")
-            #rewriter_graph2.name = rewrite_name
- 
-            rewriter_graph2.pre = copy_graph(backward_pattern)
+#            rewriter_graph2.pre = copy_graph(backward_pattern)
  
             for n in range(len(rewriter_graph2.pre.vs)):
                 node = rewriter_graph2.pre.vs[n]
@@ -1069,221 +1082,10 @@ class PyRamify:
  
             #append the new backward pattern and name mapping
             bwPatterns.append([matcher, rewriter])
-            #bwPatterns2Rule[matcher] = name
-
+            #bwPatterns2Rule[matcher] = name 
+            
         return {name: bwPatterns}        
         
-#         
-#         
-#         
-#         remove_set = output[1]
-#         
-#         to_remove = []
-#         #flatten the list of nodes to remove
-#         for r in remove_set:
-#         #remove everything except for the attached nodes and the backward link
-#             to_remove += r
-#                     
-#         print "<--------------------------->"
-#         print to_remove
-#         for l in remove_set:
-#             print partial_combinator_matcher.vs[l[0]]["mm__"]
-#         print "<--------------------------->"        
-#         
-#         partial_combinator_matcher.delete_nodes(to_remove)
-#         
-#         graph_to_dot("combinator_before" + base_graph.name, partial_combinator_matcher)        
-#         
-#         # remove also all the indirect and direct links attached to the nodes to remove
-# 
-#         remove_links = []
-# 
-#         for n in partial_combinator_matcher.vs:
-#              
-#             if not ("directLink" in n["mm__"] or "indirectLink" in n["mm__"]):
-#                 continue
-#              
-#             print "going in..."     
-#             connected = self.look_for_attached(n, partial_combinator_matcher)
-#             # remove only dangling links, that are not connected to two nodes
-#             print str(len(connected))
-#             if len(connected) < 3:
-#                 remove_links.append(n)
-#         
-#         print remove_links
-#               
-#         partial_combinator_matcher.delete_nodes(remove_links)        
-#         
-#         # finally remove all the equation-related nodes
-#         
-#         partial_combinator_matcher = self.remove_pre_equation_nodes(partial_combinator_matcher)
-# 
-#         graph_to_dot("combinator_after" + base_graph.name, partial_combinator_matcher)        
-        
-        
-#         #BIG HACK
-#         new_graph = self.fix_attrs_for_backward_patterns(new_graph)
-# 
-#         file_name = new_graph.compile(out_dir)
-#         print("Rule combinator matcher compiled to: " + file_name)
-# 
-#         rule = load_class(out_dir + "/" + new_name)
-#         backward_pattern = rule.values()[0]
-# 
-#         j = 0
-#         for remove_set in reversed(output):
-# 
-#             new_graph = self.copy_graph(base_graph)
-# 
-# 
-#             print("Remove set")
-#             print(remove_set)
-#             
-#             to_remove = []
-#             for r in remove_set:
-#             #remove everything except for the attached nodes and the backward link
-#                 to_remove += r
-#                 
-#                 
-#             graph_to_dot(new_graph.name + "_before", new_graph)    
-#                                
-#             new_graph.delete_nodes(to_remove)
-# 
-# 
-#             #delete links that are not connected to two nodes
-#             remove_links = []
-#             for n in new_graph.vs:
-#                 
-#                 if not ("directLink" in n["mm__"] or "indirectLink" in n["mm__"]):
-#                     continue
-#                      
-#                 connected = self.look_for_attached(n, base_graph)
-#                 if len(connected) < 3:
-#                     remove_links.append(n)
-#                     
-#             new_graph.delete_nodes(remove_links)
-#             
-#             graph_to_dot(new_graph.name + "_after", new_graph)            
-#             
-#             
-# 
-#             remove_set = to_remove + remove_links
-#             
-#             
-# 
-#             #create the matcher
-# 
-#             j += 1
-# 
-#             #create a new name for this backward matcher
-#             #replace the pattern name with the partial pattern name
-#             new_name = name + "_rule_combinator_matcher_" + str(i)
-#             i += 1
-# 
-#             #write out the file
-#             new_graph.name = new_name
-#             new_graph["name"] = new_name + "_rc_matcher"
-# 
-# 
-#             #BIG HACK
-#             new_graph = self.fix_attrs_for_backward_patterns(new_graph)
-# 
-#             file_name = new_graph.compile(out_dir)
-#             print("Rule combinator matcher compiled to: " + file_name)
-# 
-#             rule = load_class(out_dir + "/" + new_name)
-#             backward_pattern = rule.values()[0]
-# 
-# 
-#             #graph_to_dot(new_name, backward_pattern)
-#             #graph_to_dot("remove_graph" + str(j), new_graph)
-# 
-# 
-# 
-#             if remove_set == []:
-#                 backward_pattern.NACs = []
-#             else:
-# 
-#                 NAC_nodes_to_remove = []
-# 
-#                 for node_to_remove in to_remove:
-#                     node = base_graph.vs[node_to_remove]
-#                     if node["mm__"] in ["MT_pre__indirectLink_S", "MT_pre__indirectLink_T", "MT_pre__directLink_S", "MT_pre__directLink_T"] \
-#                         and not node in to_remove:
-#                         NAC_nodes_to_remove.append(node_to_remove)
-# 
-#                 #create the NAC if needed
-#                 NAC_graph = self.copy_graph(base_graph)
-# 
-#                 NAC_graph.delete_nodes(NAC_nodes_to_remove)
-# 
-# 
-#                 NAC_graph = self.makePreConditionPatternNAC(NAC_graph)
-# 
-#                 NAC_graph.name += "_rule_combinator_NAC"
-# 
-#                 NAC_graph.LHS = backward_pattern
-# 
-#                 file_name = NAC_graph.compile(out_dir)
-#                 print("Nac graph compiled to: " + file_name)
-# 
-#                 NAC_graph = load_class(out_dir + NAC_graph.name, [backward_pattern])
-#                 NAC_graph = NAC_graph.values()[0]
-# 
-# 
-#                 backward_pattern.NACs = [NAC_graph]
-# 
-#             #create the Matcher
-#             matcher = Matcher(backward_pattern)
-# 
-# 
-#             #TODO: Make rewriter code simpler, and same as match pattern rewriter
-# 
-#             rewriter_graph_copy = self.copy_graph(rewriter_graph)
-# 
-#             rewriter_graph_copy.pre = self.copy_graph(backward_pattern)
-#             #graph_to_dot(rewriter_graph_copy.pre.name + "_pre", rewriter_graph_copy.pre)
-# 
-# 
-#             rewriter_graph_copy.name = rewrite_name + "_" + str(j)
-#             file_name = rewriter_graph_copy.compile(out_dir)
-#             print("Rewriter graph compiled to: " + file_name)
-# 
-#             rewriter_graph2 = load_class(out_dir + rewriter_graph_copy.name)
-#             rewriter_graph2 = rewriter_graph2.values()[0]
-# 
-#             # print(inspect.getargspec(rewriter_graph2.execute))
-#             # print(rewriter_graph2.__class__)
-#             # print(rewriter_graph2.name)
-#             # print("Hierarchy:")
-#             # print(inspect.getmro(rewriter_graph2.__class__))
-# 
-#             #graph_to_dot(rewriter_graph2.name + "_loaded_rewriter", rewriter_graph2)
-# 
-#             rewriter_graph2.pre = self.copy_graph(backward_pattern)
-# 
-# 
-#             #rewrite_name = rewriter_graph2.name
-#             #rewriter_graph2.name += "_loaded_rewriter"
-#             #rewriter_graph2.compile("./patterns")
-#             #rewriter_graph2.name = rewrite_name
-# 
-#             rewriter_graph2.pre = self.copy_graph(backward_pattern)
-# 
-#             for n in range(len(rewriter_graph2.pre.vs)):
-#                 node = rewriter_graph2.pre.vs[n]
-#                 #print("mm2__: " + node["mm__"])
-# 
-#             rewriter = Rewriter(rewriter_graph2)
-# 
-# 
-#             #append the new backward pattern and name mapping
-#             bwPatterns.append([matcher, rewriter])
-#             #bwPatterns2Rule[matcher] = name
-# 
-#             #print("bwPatterns: " + str(bwPatterns))
-#             print("Returning from rule combinators")
-#        return {name: bwPatterns}
 
 
     def remove_equation_nodes(self, graph):        
@@ -1510,8 +1312,8 @@ class PyRamify:
 
     def get_match_pattern(self, rule):
     
-        name = list(rule.keys())[0]
-        graph = list(rule.values())[0]
+        name = rule.keys()[0]
+        graph = rule[rule.keys()[0]]
 
         label = 0
         for i in range(len(graph.vs)):
@@ -1557,7 +1359,7 @@ class PyRamify:
 
         #have to reload the graph to define all the eval functions
         rule = load_class(out_dir + "/" + old_name + "_match_pattern_matcher")
-        match_graph = list(rule.values())[0]
+        match_graph = rule.values()[0]
 
 
         rewriter.pre = match_graph
@@ -1569,7 +1371,7 @@ class PyRamify:
             print("Match pattern rewriter compiled to: " + file_name)
 
         rewriter_dict = load_class(out_dir + rewriter.name)
-        rewriter = list(rewriter_dict.values())[0]
+        rewriter = rewriter_dict.values()[0]
 
         #graph_to_dot("the_rewriter_graph_after" + rewriter.name, rewriter)
 
@@ -1626,7 +1428,7 @@ class PyRamify:
 
 
     # calculate the partial order induced by rule match subsumption for all rules in the transformation.
-    def calculate_rule_subsumption(self, matchRulePatterns):     
+    def calculate_rule_subsumption(self, matchRulePatterns):    
         
         ruleObjects = []
         ruleKeys = self.rules.keys()
@@ -1634,9 +1436,10 @@ class PyRamify:
             ruleObjects.append(key)
             
         rulepairs = list(permutations(ruleObjects,2))
-        
+                
         ruleSubsumption = {}
         for pair in rulepairs:
+            
             p = Packet()
             p.graph = self.rules[pair[1]]
             p = matchRulePatterns[pair[0]][0].packet_in(p)
@@ -1652,38 +1455,51 @@ class PyRamify:
 
     # return the layer a rule occurs in
     def layer_rule_occurs_in(self, rule):
+        rulesInLayer = []
         for layerIndex in range(len(self.transformation_layers)):
-            if self.rules[rule] in self.transformation_layers[layerIndex]:
-                return layerIndex
+            for ruleIndex in range(len(self.transformation_layers[layerIndex])):
+                if rule == self.transformation_layers[layerIndex][ruleIndex].name:
+                    return layerIndex
         return None
         
 
     # Calculate if the rules need special treatment because they overlap.
     # This happens when:
     # - Rule A is subsumed by Rule B, rule A has no backward links and Rule B appears in the same layer as rule A, or in a layer before
-    # - Rule A is subsumed by rule B and both rule A and rule B have backward links
+    # - Rule A is subsumed by rule B and both rule A and rule B have backward links and Rule A appears in the same layer as rule B
     # returns a list of pairs of rules for which combinators need to be built for
     def rules_needing_overlap_treatment(self):
         rules_needing_overlap_treatment = []
         for rule in self.rules.keys():            
-            subsuming_rules = self.get_subsuming_rules(rule)
+            subsuming_rules = self.get_subsuming_rules(rule)           
+            
             for s_rule in subsuming_rules:
+                
+#                 print "---------------------------------"
+#                 print "Rule: " + str(rule)
+#                 print "Has backward links: " + str(self.rule_has_backward_links(rule))
+#                 print "Position: " + str(self.layer_rule_occurs_in(rule))
+#                 print "Subsuming Rule: " + str(s_rule)
+#                 print "Has backward links: " + str(self.rule_has_backward_links(s_rule))
+#                 print "Position: " + str(self.layer_rule_occurs_in(s_rule))
+#                 print "---------------------------------"
+                
                 if (not self.rule_has_backward_links(rule) and not self.rule_has_backward_links(s_rule)) or\
-                   (self.rule_has_backward_links(rule) and not self.rule_has_backward_links(s_rule)):
+                   (not self.rule_has_backward_links(rule) and self.rule_has_backward_links(s_rule)):
                     if self.layer_rule_occurs_in(rule) >= self.layer_rule_occurs_in(s_rule):
-                        rules_needing_overlap_treatment.append((self.rules[rule],s_rule))
+                        rules_needing_overlap_treatment.append(rule)
                         
                 elif (self.rule_has_backward_links(rule) and self.rule_has_backward_links(s_rule)):
                     if self.layer_rule_occurs_in(rule) == self.layer_rule_occurs_in(s_rule):
-                        rules_needing_overlap_treatment.append((rule,s_rule))
+                        rules_needing_overlap_treatment.append(rule)
         
-        return rules_needing_overlap_treatment              
+        return list(set(rules_needing_overlap_treatment))   
                     
     
 
     # get all the rules in the transformation 
     def get_rules(self, dir_name):
-        print("Getting rules from directory: " + dir_name)
+        print("Ramifying directory: " + dir_name)
         
         rules = {}
         
@@ -1691,16 +1507,14 @@ class PyRamify:
         for f in os.listdir(dir_name):
 
             #skip these files
-            if not f.endswith(".py") or f == "__init__.py" or os.path.isdir(dir_name + "/" + f):
+            if f.endswith(".pyc") or f == "__init__.py" or os.path.isdir(dir_name + "/" + f):
                 continue
 
-            print("File: " + f)
+            print("\nFile: " + f)
 
             #add the rule to the rules dict
             rule = load_class(dir_name + "/" + f)
             rules.update(rule)
-            
-        self.rules = rules
 
         return rules
 
@@ -1723,11 +1537,9 @@ class PyRamify:
         for f in os.listdir(dir_name):
 
             #skip these files
-            if not f.endswith(".py") or f == "__init__.py" or os.path.isdir(dir_name + "/" + f):
+            if f.endswith(".pyc") or f == "__init__.py" or os.path.isdir(dir_name + "/" + f):
                 continue
-
-            print("File: " + f)
-
+            
             #add the rule to the rules dict
             rule = load_class(dir_name + "/" + f)
             rules.update(rule)
@@ -1749,29 +1561,29 @@ class PyRamify:
             matchRulePattern = self.get_match_pattern(rule4)
             matchRulePatterns.update(matchRulePattern)
 
+        self.rules = rules
+            
+        self.ruleSubsumption = self.calculate_rule_subsumption(matchRulePatterns)
+
+        print "Subsumption order between rules for all layers:"    
+        print self.ruleSubsumption
+        print "Rules that need overlap treatment: " + str(self.rules_needing_overlap_treatment())
+
+        #build the combinators only after calculating the dependencies between rules
+        for f in os.listdir(dir_name):
+
+            #skip these files
+            if f.endswith(".pyc") or f == "__init__.py" or os.path.isdir(dir_name + "/" + f):
+                continue
+
             # fresh rule for the rule combinators
             rule5 = load_class(dir_name + "/" + f)
             rule_combinator = self.get_rule_combinators(rule5)
             ruleCombinators.update(rule_combinator)
-
-
-        self.ruleSubsumption = self.calculate_rule_subsumption(matchRulePatterns)
-            
-#         if self.verbosity >= 2:
-#             print "Subsumption order between rules for all layers:"                   
-#             print ruleSubsumption
-#             print "\n"
-
-        #if subsumption is empty
-        if len(self.ruleSubsumption):
-            print("Subsumption order between rules for all layers:"    )
-            print(self.ruleSubsumption)
-            for ruleName in rules.keys():
-                print(ruleName + ": " +str(self.get_subsuming_rules(ruleName)))
-            print("Rules that need overlap treatment: " + str(self.rules_needing_overlap_treatment())           )
+       
             
 
-        print("Finished Ramification")
+        print("Finished PyRamify")
         print("==================================\n")
 
         return [rules, backwardPatterns, backwardPatterns2Rules, {}, matchRulePatterns, ruleCombinators]
@@ -1790,7 +1602,7 @@ class PyRamify:
                 continue
 
             # ignore svn dirs
-            if d.startswith('.') or d.startswith("__"):
+            if d.startswith('.'):
                 continue
 
             graph_dir = directory + d + "/Himesis/"
@@ -1804,7 +1616,7 @@ class PyRamify:
             for f in files:
 
 
-                if f == "__init__.py" or not f.endswith(".py") or f.startswith("."):
+                if f == "__init__.py" or f.endswith(".pyc") or f.startswith("."):
                     continue
 
                 #print("Examining " + graph_dir + f)
@@ -1836,20 +1648,6 @@ class PyRamify:
     def changePropertyProverMetamodel(self, pre_metamodel, post_metamodel, subclasses_dict, dsltransInstallDir = "."):
         print("Starting to change property prover metamodel")
 
-        # keep a dictionary from each child to its parent
-        supertypes = {}
-
-        for supertype in subclasses_dict:
-            for subtype in subclasses_dict[supertype]:
-                subtype = subtype[8:]
-                try:
-                    supertypes[subtype].append(supertype[8:])
-                except KeyError:
-                    supertypes[subtype] = [supertype[8:]]
-
-
-
-
         property_prover_rules_dir = dsltransInstallDir + "/property_prover_rules/"
         for d in os.listdir(property_prover_rules_dir):
 
@@ -1857,7 +1655,7 @@ class PyRamify:
                 continue
 
             #ignore svn dirs
-            if d.startswith('.') or d.startswith("__"):
+            if d.startswith('.'):
                 continue
 
             rule_dir = property_prover_rules_dir + d + "/Himesis/"
@@ -1869,12 +1667,10 @@ class PyRamify:
                 files = []
 
             for f in files:
-                if f == "__init__.py" or not f.endswith(".py") or f.startswith("."):
+                if f == "__init__.py" or f.endswith(".pyc") or f.startswith("."):
                     continue
 
                 rule_file = rule_dir + f
-                #print("Changing file: " + rule_file)
-
                 try:
                     rule = load_class(rule_file)
                 except ImportError as e:
@@ -1882,8 +1678,8 @@ class PyRamify:
                     traceback.print_exc()
                     continue
 
-                name = list(rule.keys())[0]
-                graph = list(rule.values())[0]
+                name = rule.keys()[0]
+                graph = rule[rule.keys()[0]]
 
                 #TODO: Make this less fragile
                 if "LHS" in f:
@@ -1893,25 +1689,21 @@ class PyRamify:
                 else:
                     raise Exception("Error: Not LHS or RHS rule")
 
+                for node in graph.vs:
 
+                    #the node doesn't match subtypes
+                    if "MT_subtypeMatching__" in node.attributes().keys() and node["MT_subtypeMatching__"] == False:
+                        continue
 
-                # for node in graph.vs:
-                #
-                #     #the node doesn't match subtypes
-                #     if "MT_subtypeMatching__" in node.attributes().keys() and node["MT_subtypeMatching__"] == False:
-                #         continue
-                #
-                #     #the node does look at subtypes
-                #     if "MT_subtypes__" in node.attributes().keys() and len(node["MT_subtypes__"]) >= 1:
-                #
-                #         # we are not changing this mm's subtypes
-                #         if not node["mm__"] in subclasses_dict.keys():
-                #             continue
-                #
-                #         #set the new subtypes
-                #         node["MT_subtypes__"] = subclasses_dict[node["mm__"]]
+                    #the node does look at subtypes
+                    if "MT_subtypes__" in node.attributes().keys() and len(node["MT_subtypes__"]) >= 1:
 
-                graph["superclasses_dict"] = supertypes
+                        # we are not changing this mm's subtypes
+                        if not node["mm__"] in subclasses_dict.keys():
+                            continue
+
+                        #set the new subtypes
+                        node["MT_subtypes__"] = subclasses_dict[node["mm__"]]
 
                 #need to compile rule back in order to update the file
                 graph.compile(rule_dir)

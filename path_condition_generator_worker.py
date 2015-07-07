@@ -94,7 +94,7 @@ class path_condition_generator_worker(Process):
                 ######################################
 
                 # the rule is disjointly added to the path condition
-                if self.ruleCombinators[rule_name] is None:
+                if len(self.ruleCombinators[rule_name]) == 1:
                     if self.verbosity >= 2 : print("Case 1: Rule has no dependencies")
 
                     localPathConditionLayerAccumulator = []
