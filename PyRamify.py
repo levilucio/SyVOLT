@@ -1559,7 +1559,7 @@ class PyRamify:
     # - Rule A is subsumed by rule B and both rule A and rule B have backward links and Rule A appears in the same layer as rule B
     # returns a list of pairs of rules for which combinators need to be built for
     def rules_needing_overlap_treatment(self):
-        rules_needing_overlap_treatment = []
+        rules_needing_overlap_treatment = {}
         for rule in self.rules.keys():            
             subsuming_rules = self.get_subsuming_rules(rule)           
             
@@ -1577,13 +1577,19 @@ class PyRamify:
                 if (not self.rule_has_backward_links(rule) and not self.rule_has_backward_links(s_rule)) or\
                    (not self.rule_has_backward_links(rule) and self.rule_has_backward_links(s_rule)):
                     if self.layer_rule_occurs_in(rule) >= self.layer_rule_occurs_in(s_rule):
-                        rules_needing_overlap_treatment.append(rule)
+                        if rule in rules_needing_overlap_treatment.keys():
+                            rules_needing_overlap_treatment[rule].append(s_rule)
+                        else:
+                            rules_needing_overlap_treatment[rule] = [s_rule]
                         
                 elif (self.rule_has_backward_links(rule) and self.rule_has_backward_links(s_rule)):
                     if self.layer_rule_occurs_in(rule) == self.layer_rule_occurs_in(s_rule):
-                        rules_needing_overlap_treatment.append(rule)
+                        if rule in rules_needing_overlap_treatment.keys():
+                            rules_needing_overlap_treatment[rule].append(s_rule)
+                        else:
+                            rules_needing_overlap_treatment[rule] = [s_rule]
         
-        return list(set(rules_needing_overlap_treatment))
+        return rules_needing_overlap_treatment
     
     
 #     # remove loops in the subsumption relation by defining only one subsumption direction between rules that subsume each other.
@@ -1682,7 +1688,7 @@ class PyRamify:
         print("Finished PyRamify")
         print("==================================\n")
 
-        return [rules, backwardPatterns, backwardPatterns2Rules, {}, matchRulePatterns, ruleCombinators]
+        return [rules, backwardPatterns, backwardPatterns2Rules, {}, matchRulePatterns, ruleCombinators, self.rules_needing_overlap_treatment()]
 
 
     #================================================================================
