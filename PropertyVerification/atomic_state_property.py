@@ -35,6 +35,12 @@ class AtomicStateProperty(StateProperty):
         self.Isolated=isolated
         self.Connected=connected
         self.CompleteQuantified=completeQuantified
+
+        self.isolated_matcher = Matcher(isolated)
+        self.match = Matcher(connected)
+        self.total = Matcher(completeQuantified)
+
+
         self.resetVerifResultToFalse()
         self.verifiedStateCache = []
         self.propFalseForAtleastOneCollapsedState=False
@@ -92,25 +98,24 @@ class AtomicStateProperty(StateProperty):
                 StateSpace which contains inputstate: we will only be using StateSpace.verifiedStateCache and StateSpace.verbosity 
             """
 
-            match = Matcher(self.Connected)
-            total = Matcher(self.CompleteQuantified)
+
 
             found_counterexample = False
                              
             s = Packet()
             s.graph = inputstate         
-            match.packet_in(s)
+            self.match.packet_in(s)
                               
             # if the match was found, try to find the whole property
-            if match.is_success:
+            if self.match.is_success:
                 if verbosity >= 1: print('        Found Match! (Connected)')
                 
                 #if verbosity >= 1: graph_to_dot("found_connected_" + s.graph.name, s.graph)
 
                 s = Packet()
                 s.graph = inputstate                   
-                total.packet_in(s)
-                if total.is_success:
+                self.total.packet_in(s)
+                if self.total.is_success:
                     self.status = self.COMPLETE_FOUND
                     #self.verifiedStateCache.append((inputstate,numberOfIsolatedMatches))
                     self.incrementNumberOfTimesFoundMatch()

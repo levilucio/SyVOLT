@@ -119,9 +119,9 @@ from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 class Test():
 
     def setUp(self, args):
-        pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
+        self.pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
 
-        self.rules = pyramify.get_rules("UMLRT2Kiltera_MM/transformation/Himesis/")
+        self.rules = self.pyramify.get_rules("UMLRT2Kiltera_MM/transformation/Himesis/")
 
         #print("Rules: " + str(self.rules.keys()))
 
@@ -157,12 +157,12 @@ class Test():
 #         b2 = self.rules['HBasicState2ProcDef']
 #         b3 = self.rules['HCompositeState2ProcDef']
 
-        pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
+        #pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
 
 
 
         a1 = self.rules['HState2ProcDef']
-        a2 = self.rules['HState2ProcDefCopy']
+#        a2 = self.rules['HState2ProcDefCopy']
         b1 = self.rules['HBasicStateNoOutgoing2ProcDef']
         b2 = self.rules['HBasicState2ProcDef']
         b3 = self.rules['HCompositeState2ProcDef']
@@ -185,9 +185,9 @@ class Test():
         #TODO: Change this number if you are modifying the transformation at all
         if args.num_rules == -1:
                 #transformation = [[a1], [b3], [c1, c2]]
-                transformation = [[a1, a2], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4]]#, [f1]]
+                transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
         else:
-                transformation = self.select_rules([[a1,a2], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
+                transformation = self.select_rules([[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
 
 
         #transformation =[[a1], [ b3]]
@@ -213,11 +213,11 @@ class Test():
 
         subclasses_dict["MT_pre__StateMachine"] = ["MT_pre__State"]
    
-        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
+        self.pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
 
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
-            pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation/Himesis/", transformation)
+            self.pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation/Himesis/", transformation)
 
         s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, args)#
    

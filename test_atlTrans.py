@@ -190,13 +190,36 @@ class Test():
         s.verbosity = 0
 
 
-        HFourMembers_atomic = AtomicStateProperty(HFourMembers_IsolatedLHS(), HFourMembers_ConnectedLHS(), HFourMembers_CompleteLHS())
+        # keep a dictionary from each child to its parent
+        supertypes = {}
+
+        for supertype in subclasses_dict:
+            for subtype in subclasses_dict[supertype]:
+                subtype = subtype[8:]
+                try:
+                    supertypes[subtype].append(supertype[8:])
+                except KeyError:
+                    supertypes[subtype] = [supertype[8:]]
+
+        FourMembers = [HFourMembers_IsolatedLHS(), HFourMembers_ConnectedLHS(), HFourMembers_CompleteLHS()]
+        for fm in FourMembers:
+            fm["superclasses_dict"] = supertypes
+
+        HFourMembers_atomic = AtomicStateProperty(FourMembers[0], FourMembers[1], FourMembers[2])
 
 
-        HMotherFather_atomic = AtomicStateProperty(HMotherFather_IsolatedLHS(), HMotherFather_ConnectedLHS(), HMotherFather_CompleteLHS())
+        HMotherFather = [HMotherFather_IsolatedLHS(), HMotherFather_ConnectedLHS(), HMotherFather_CompleteLHS()]
+        for c in HMotherFather:
+            c["superclasses_dict"] = supertypes
+
+        HMotherFather_atomic = AtomicStateProperty(HMotherFather[0], HMotherFather[1], HMotherFather[2])
 
 
-        HDaughterMother_atomic = AtomicStateProperty(HDaughterMother_IsolatedLHS(), HDaughterMother_ConnectedLHS(), HDaughterMother_CompleteLHS())
+        DaughterMother = [HDaughterMother_IsolatedLHS(), HDaughterMother_ConnectedLHS(), HDaughterMother_CompleteLHS()]
+        for c in DaughterMother:
+            c["superclasses_dict"] = supertypes
+
+        HDaughterMother_atomic = AtomicStateProperty(DaughterMother[0], DaughterMother[1], DaughterMother[2])
 
 
 
@@ -210,17 +233,22 @@ class Test():
         #         AtomicStateProperty(HCommunityPerson2_IsolatedLHS(), HCommunityPerson2_ConnectedLHS(),
         #             HCommunityPerson2_CompleteLHS())))
 
+        CommunityPerson1 = HCommunityPerson1_CompleteLHS()
+        CommunityPerson1["superclasses_dict"] = supertypes
+
+        CommunityPerson2 = HCommunityPerson2_CompleteLHS()
+        CommunityPerson2["superclasses_dict"] = supertypes
 
         HCommunityPersonIfClause = AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(),
-            HCommunityPerson1_CompleteLHS())
+            CommunityPerson1)
 
         HCommunityPersonThenClause = NotStateProperty(
                 AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(),
-                    HCommunityPerson2_CompleteLHS()))
+                    CommunityPerson2))
 
 
 
-        HCommunityPerson1 = AtomicStateProperty(HCommunityPerson1_IsolatedLHS(), HCommunityPerson1_ConnectedLHS(), HCommunityPerson1_CompleteLHS())
+        #HCommunityPerson1 = AtomicStateProperty(HCommunityPerson1_IsolatedLHS(), HCommunityPerson1_ConnectedLHS(), HCommunityPerson1_CompleteLHS())
 
         #graph_to_dot("HCommunityPerson1_IsolatedLHS", HCommunityPerson1_IsolatedLHS())
 
@@ -267,18 +295,18 @@ class Test():
 
 
         for name, atomic_prop in atomic_properties:
-            finalresult = StateProperty.verifyCompositeStateProperty(s, atomic_prop)
-            if len(finalresult) == 0:
-                print("Atomic property: " + name + " holds\n")
-            else:
-                print("Atomic property: " + name + " does not hold\n")
+           finalresult = StateProperty.verifyCompositeStateProperty(s, atomic_prop)
+           if len(finalresult) == 0:
+               print("Atomic property: " + name + " holds\n")
+           else:
+               print("Atomic property: " + name + " does not hold\n")
 
         for name, i, t in if_then_properties:
-            finalresult = StateProperty.verifyCompositeStateProperty(s, ImplicationStateProperty(i, t))
-            if len(finalresult) == 0:
-                print("If-then property: " + name + " holds\n")
-            else:
-                print("If-then property: " + name + " does not hold\n")
+           finalresult = StateProperty.verifyCompositeStateProperty(s, ImplicationStateProperty(i, t))
+           if len(finalresult) == 0:
+               print("If-then property: " + name + " holds\n")
+           else:
+               print("If-then property: " + name + " does not hold\n")
 
         ts1 = time.time()
 

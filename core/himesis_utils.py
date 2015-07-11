@@ -291,7 +291,7 @@ def draw_graphs(title, g_dir):
 
 
 import gzip
-
+import hashlib
 
 
 def set_do_pickle(value):
@@ -305,10 +305,11 @@ def shrink_graph(graph):
     value = graph.__reduce__()
 
     if do_pickle:
-        f = gzip.open(pickle_dir + graph.name, "wb")
+        file_name = hashlib.sha256(graph.name.encode("UTF-8")).hexdigest()
+        f = gzip.open(pickle_dir + file_name, "wb", compresslevel=6)
         pickle.dump(value, f)
         f.close()
-        return graph.name
+        return file_name
     else:
         return value
 

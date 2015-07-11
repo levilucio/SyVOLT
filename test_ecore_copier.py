@@ -165,28 +165,43 @@ class Test():
 
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
 
-        def change_subtype_matching(match_rule, subclass_info):
-            for v in match_rule.condition.vs():
-                if v["mm__"] in set(subclass_info.keys()):
-                    v["MT_subtypes__"] = subclass_info[v["mm__"]]
-                    v["MT_subtypeMatching__"] = True
-                    print("Changed one: " + v["mm__"])
+        # keep a dictionary from each child to its parent
+        supertypes = {}
+
+        for supertype in subclasses_dict:
+            for subtype in subclasses_dict[supertype]:
+                subtype = subtype[8:]
+                try:
+                    supertypes[subtype].append(supertype[8:])
+                except KeyError:
+                    supertypes[subtype] = [supertype[8:]]
+
+
+        # def change_subtype_matching(match_rule, subclass_info):
+        #     for v in match_rule.condition.vs():
+        #         if v["mm__"] in set(subclass_info.keys()):
+        #             v["MT_subtypes__"] = subclass_info[v["mm__"]]
+        #             v["MT_subtypeMatching__"] = True
+        #             print("Changed one: " + v["mm__"])
                                                                   
         
         # add polymorphism for the matchers
         for matcher_key in self.matchRulePatterns.keys():
-            change_subtype_matching(self.matchRulePatterns[matcher_key][0],subclasses_dict)
+            self.matchRulePatterns[matcher_key][0].condition["superclasses_dict"] = supertypes
+            #change_subtype_matching(self.matchRulePatterns[matcher_key][0],subclasses_dict)
             
         # add polymorphism for the combinators
         for combs_key in self.ruleCombinators.keys():
             if self.ruleCombinators[combs_key] != None:
                 for combinator in self.ruleCombinators[combs_key]:
-                    change_subtype_matching(combinator[0],subclasses_dict)    
+                    combinator[0].condition["superclasses_dict"] = supertypes
+                    #change_subtype_matching(combinator[0],subclasses_dict)
 
         # add polymorphism for the tracers
         for tracer_key in self.ruleTraceCheckers.keys():
             if self.ruleTraceCheckers[tracer_key] != None:
-                change_subtype_matching(self.ruleTraceCheckers[tracer_key],subclasses_dict)    
+                self.ruleTraceCheckers[tracer_key].condition["superclasses_dict"] = supertypes
+                #change_subtype_matching(self.ruleTraceCheckers[tracer_key],subclasses_dict)
 
 
         s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, args)#

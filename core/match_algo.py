@@ -62,7 +62,7 @@ class HimesisMatcher(object):
         Represents a pattern matching algorithm for typed attributed multi-graphs.
         The pattern matching algorithm is based on VF2.
     """
-    def __init__(self, source_graph, pattern_graph, pred1={}, succ1={}):
+    def __init__(self, source_graph, pattern_graph, pred1={}, succ1={}, pred2 = {}, succ2 = {}):
         """
             Represents a pattern matching algorithm for typed attributed multi-graphs.
             @param source_graph: The source graph.
@@ -76,9 +76,6 @@ class HimesisMatcher(object):
         self.G2 = pattern_graph
         self.pred1 = pred1
         self.succ1 = succ1
-
-        self.pred2 = {}
-        self.succ2 = {}
 
         self.G1_vcount = self.G1.vcount()
         self.G2_vcount = self.G2.vcount()
@@ -111,18 +108,22 @@ class HimesisMatcher(object):
 
         # Memoize the predecessor & successor information:
         # for each node store the number of neighbours and the list
-        # igraph.IN = 2, igraph.OUT = 1
-        if len(self.pred1) == 0:
 
+        #igraph.IN = 2, igraph.OUT = 1
+        if  not self.pred1:
             self.pred1 = [(len(tmp), tmp) for tmp in self.G1.get_adjlist(mode=2)]
 
-        if len(self.succ1) == 0:
+        if not self.succ1:
             self.succ1 = [(len(tmp), tmp) for tmp in self.G1.get_adjlist(mode=1)]
 
-        if len(self.pred2) == 0:
+        self.pred2 = pred2
+        self.succ2 = succ2
+
+        if not pred2:
+            #print("No pred2 for graph: " + self.G2.name)
             self.pred2 = [(len(tmp), tmp) for tmp in self.G2.get_adjlist(mode=2)]
-            
-        if len(self.succ2) == 0:
+
+        if not succ2:
             self.succ2 = [(len(tmp), tmp) for tmp in self.G2.get_adjlist(mode=1)]
 
 
@@ -132,7 +133,22 @@ class HimesisMatcher(object):
             self.mm1 = self.G1.vs["mm__"]
             self.mm2 = [mm[8:] for mm in self.G2.vs["mm__"]]
 
+
+
             #self.patt_has_subtype = self.G2.vs['MT_subtypeMatching__']
+
+            try:
+                self.superclasses_dict = self.G2["superclasses_dict"]
+            except KeyError:
+                self.superclasses_dict = {}
+                print("Graph " + self.G2.name + " needs to be updated. Can't find 'superclasses_dict'")
+
+            if self.superclasses_dict:
+                self.src_has_supertype = [child_mm in self.superclasses_dict for child_mm in self.mm1]
+            else:
+                self.src_has_supertype = [False] * self.G1_vcount
+
+
 
             self.superclasses_dict = self.G2["superclasses_dict"]
 
@@ -199,7 +215,7 @@ class HimesisMatcher(object):
         self.inout_2 = {}
         
         # Prepare the necessary data structures required for backtracking
-        self.state = HimesisMatcherState(self)
+        self.state = self.save()#HimesisMatcherState(self)
 
         # Provide a convenient way to access the isomorphism mapping.
         self.mapping = self.core_2.copy()
@@ -212,6 +228,8 @@ class HimesisMatcher(object):
             @param patt_node: The candidate from the pattern graph.
         """
 
+        # WARNING:
+        # MOVED TO _MATCH FUNCTION!
         
         # First check if they are of the same type
 
@@ -232,9 +250,9 @@ class HimesisMatcher(object):
                 and self.succ2[patt_node][0] <= self.succ1[src_node][0]):
             return False
 
-        if self.has_super and self.has_super[src_node]:
-            return targetMM in self.superclasses_dict[sourceMM]
 
+        if self.src_has_supertype[src_node]:
+            return targetMM in self.superclasses_dict[sourceMM]
 
         #
         # # Then check sub-types compatibility
@@ -484,7 +502,8 @@ class HimesisMatcher(object):
             #else:
             #    raise Exception('The method %s was not found in the pattern graph' % methName)
         return True
-    
+
+    #@profile
     def _match(self):
         """
             Extends the pattern matching mapping.
@@ -511,17 +530,33 @@ class HimesisMatcher(object):
                 # self.succ1[src_node] = (len(self.G1.successors(src_node)), self.G1.successors(src_node))
                 # self.pred2[patt_node] = (len(self.G2.predecessors(patt_node)), self.G2.predecessors(patt_node))
                 # self.succ2[patt_node] = (len(self.G2.successors(patt_node)), self.G2.successors(patt_node))
-                
-                if self.are_compatibile(src_node, patt_node):
-                    if self.are_syntactically_feasible(src_node, patt_node):
-                        if self.are_semantically_feasible(src_node, patt_node):
-                            # Recursive call, adding the feasible state
-                            newstate = HimesisMatcherState(self, src_node, patt_node)
-                            for mapping in self._match():
-                                yield mapping
-    
-                            # restore data structures
-                            newstate.restore()
+
+                # Check for the degree compatibility
+                if not (self.pred2[patt_node][0] <= self.pred1[src_node][0]
+                        and self.succ2[patt_node][0] <= self.succ1[src_node][0]):
+                    continue
+
+                sourceMM = self.mm1[src_node]
+                targetMM = self.mm2[patt_node]
+                if sourceMM != targetMM:
+
+                    if not self.src_has_supertype[src_node] or targetMM not in self.superclasses_dict[sourceMM]:
+                        continue
+
+
+
+                #if self.are_compatibile(src_node, patt_node):
+                if self.are_syntactically_feasible(src_node, patt_node):
+                    if self.are_semantically_feasible(src_node, patt_node):
+                        # Recursive call, adding the feasible state
+                        newstate = self.save(src_node, patt_node)
+                        #newstate = HimesisMatcherState(self, src_node, patt_node)
+                        for mapping in self._match():
+                            yield mapping
+
+                        # restore data structures
+                        self.restore(newstate)
+                        #newstate.restore()
     
     def has_match(self, context={}):
         """
@@ -544,12 +579,134 @@ class HimesisMatcher(object):
         self.initialize()
         for p in context:
             if self.are_semantically_feasible(context[p], p):
-                self.state.__class__(self, context[p], p)
+                self.save(context[p], p)
             else:
                 # Additional constraints on the pivot nodes are not satisfied: no match is possible
                 return
         for mapping in self._match():
             yield mapping
+
+
+    def save(self, src_node=None, patt_node=None):
+        """
+            Internal representation of state for the HimesisMatcher class.
+            @param matcher: The HimesisMatcher object.
+            @param src_node: The source node of the candidate pair.
+            @param src_node: The pattern node of the candidate pair.
+        """
+
+        # Initialize the last stored node pair.
+        saved_src_node = None
+        saved_patt_node = None
+        depth = 0
+
+        if src_node is None or patt_node is None:
+            # Then we reset the class variables
+            self.core_1 = {}
+            self.core_2 = {}
+            self.in_1 = {}
+            self.in_2 = {}
+            self.out_1 = {}
+            self.out_2 = {}
+            self.inout_1 = {}
+            self.inout_2 = {}
+
+        # Watch out! src_node == 0 should evaluate to True.
+        if src_node is not None and patt_node is not None:
+            # Add the node pair to the isomorphism mapping.
+            self.core_1[src_node] = patt_node
+            self.core_2[patt_node] = src_node
+
+            # Store the node that was added last.
+            saved_src_node = src_node
+            saved_patt_node = patt_node
+
+            # Now we must update the other four vectors.
+            # We will add only if it is not in there already!
+            depth = len(self.core_1)
+
+            # First we add the new nodes...
+            for vector in (self.in_1, self.out_1, self.inout_1):
+                if src_node not in vector:
+                    vector[src_node] = depth
+            for vector in (self.in_2, self.out_2, self.inout_2):
+                if patt_node not in vector:
+                    vector[patt_node] = depth
+
+            # Now we add every other node...
+
+            # Updates for T_1^{in}
+            new_nodes_in = []
+            # Updates for T_1^{out}
+            new_nodes_out = []
+            for node in self.core_1:
+                new_nodes_in += self.pred1[node][1]
+                new_nodes_out += self.succ1[node][1]
+
+            for node in set(new_nodes_in):
+                if node not in self.in_1 and node not in self.core_1:
+                    self.in_1[node] = depth
+
+            for node in set(new_nodes_out):
+                if node not in self.out_1 and node not in self.core_1:
+                    self.out_1[node] = depth
+
+            # Updates for T_1^{inout}
+            # & returns the intersection
+            for node in set(self.in_1.keys()).intersection(set(self.out_1.keys())):
+                if node not in self.inout_1:
+                    self.inout_1[node] = depth
+
+
+
+
+            # Updates for T_2^{in}
+            new_nodes_in = []
+            # Updates for T_2^{out}
+            new_nodes_out = []
+
+            for node in self.core_2:
+                new_nodes_in += self.pred2[node][1]
+                new_nodes_out += self.succ2[node][1]
+
+            for node in set(new_nodes_in):
+                if node not in self.in_2 and node not in self.core_2:
+                    self.in_2[node] = depth
+
+            for node in set(new_nodes_out):
+                if node not in self.out_2 and node not in self.core_2:
+                    self.out_2[node] = depth
+
+            # Updates for T_2^{inout}
+            # & returns the intersection
+            for node in set(self.in_2.keys()).intersection(set(self.out_2.keys())):
+                if node not in self.inout_2:
+                    self.inout_2[node] = depth
+
+        return (saved_src_node, saved_patt_node, depth)
+
+    def restore(self, state):
+        """
+            Deletes the HimesisMatcherState object and restores the class variables.
+        """
+
+        saved_src_node, saved_patt_node, depth = state
+
+        # First we remove the node that was added from the core vectors.
+        # Watch out! src_node == 0 should evaluate to True.
+        if saved_src_node is not None and saved_patt_node is not None:
+            del self.core_1[saved_src_node]
+            del self.core_2[saved_patt_node]
+
+        # Now we revert the other four vectors.
+        # Thus, we delete all entries which have this depth level.
+        for vector in (self.in_1, self.in_2, self.out_1, self.out_2, self.inout_1, self.inout_2):
+
+            vector_keys = list(vector.keys())
+            for node in vector_keys:
+                if vector[node] == depth:
+                    del vector[node]
+
 
 
 class HimesisMatcherState(object):
