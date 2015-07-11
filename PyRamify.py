@@ -186,8 +186,8 @@ class PyRamify:
 
             #set some other attribs for the node
             if make_pre:
-                node["MT_subtypeMatching__"] = False
-                node["MT_subtypes__"] = "[]"
+                #node["MT_subtypeMatching__"] = False
+                #node["MT_subtypes__"] = "[]"
                 node["MT_dirty__"] = False
 
         if make_pre:
@@ -335,8 +335,8 @@ class PyRamify:
 
             #set some other attribs for the node
             if make_pre:
-                node["MT_subtypeMatching__"] = False
-                node["MT_subtypes__"] = "[]"
+                #node["MT_subtypeMatching__"] = False
+                #node["MT_subtypes__"] = "[]"
                 node["MT_dirty__"] = False
 
         if make_pre:
@@ -452,8 +452,8 @@ class PyRamify:
     def get_backward_patterns(self, rule):
         if self.verbosity >= 2:
             print("\nStarting get backward patterns")
-        name = rule.keys()[0]
-        graph = rule[rule.keys()[0]]
+        name = list(rule.keys())[0]
+        graph = list(rule.values())[0]
 
         label = 0
         for i in range(len(graph.vs)):
@@ -565,7 +565,8 @@ class PyRamify:
             print("Backward patterns compiled to: " + file_name)
 
         rule = load_class(out_dir + "/" + new_name)
-        backward_pattern = rule[rule.keys()[0]]
+        name = list(rule.keys())[0]
+        backward_pattern = list(rule.values())[0]
 
         if self.draw_svg:
             graph_to_dot(new_name, backward_pattern)
@@ -1311,9 +1312,8 @@ class PyRamify:
         return rewriter
 
     def get_match_pattern(self, rule):
-    
-        name = rule.keys()[0]
-        graph = rule[rule.keys()[0]]
+        name = list(rule.keys())[0]
+        graph = list(rule.values())[0]
 
         label = 0
         for i in range(len(graph.vs)):
@@ -1359,7 +1359,7 @@ class PyRamify:
 
         #have to reload the graph to define all the eval functions
         rule = load_class(out_dir + "/" + old_name + "_match_pattern_matcher")
-        match_graph = rule.values()[0]
+        match_graph = list(rule.values())[0]
 
 
         rewriter.pre = match_graph
@@ -1371,7 +1371,7 @@ class PyRamify:
             print("Match pattern rewriter compiled to: " + file_name)
 
         rewriter_dict = load_class(out_dir + rewriter.name)
-        rewriter = rewriter_dict.values()[0]
+        rewriter = list(rewriter_dict.values())[0]
 
         #graph_to_dot("the_rewriter_graph_after" + rewriter.name, rewriter)
 
@@ -1609,7 +1609,7 @@ class PyRamify:
         for f in os.listdir(dir_name):
 
             #skip these files
-            if f.endswith(".pyc") or f == "__init__.py" or os.path.isdir(dir_name + "/" + f):
+            if not f.endswith(".py") or f.startswith("__") or os.path.isdir(dir_name + "/" + f):
                 continue
 
             print("\nFile: " + f)
@@ -1639,7 +1639,7 @@ class PyRamify:
         for f in os.listdir(dir_name):
 
             #skip these files
-            if f.endswith(".pyc") or f == "__init__.py" or os.path.isdir(dir_name + "/" + f):
+            if not f.endswith(".py") or f.startswith("__") or os.path.isdir(dir_name + "/" + f):
                 continue
             
             #add the rule to the rules dict
@@ -1667,15 +1667,15 @@ class PyRamify:
             
         self.ruleSubsumption = self.calculate_rule_subsumption(matchRulePatterns)
 
-        print "Subsumption order between rules for all layers:"    
-        print self.ruleSubsumption
-        print "Rules that need overlap treatment: " + str(self.rules_needing_overlap_treatment())
+        print("Subsumption order between rules for all layers:")
+        print(self.ruleSubsumption)
+        print("Rules that need overlap treatment: " + str(self.rules_needing_overlap_treatment()))
 
         #build the combinators only after calculating the dependencies between rules
         for f in os.listdir(dir_name):
 
             #skip these files
-            if f.endswith(".pyc") or f == "__init__.py" or os.path.isdir(dir_name + "/" + f):
+            if not f.endswith(".py") or f.startswith("__") or os.path.isdir(dir_name + "/" + f):
                 continue
 
             # fresh rule for the rule combinators
@@ -1704,7 +1704,7 @@ class PyRamify:
                 continue
 
             # ignore svn dirs
-            if d.startswith('.'):
+            if d.startswith('.') or d.startswith("__"):
                 continue
 
             graph_dir = directory + d + "/Himesis/"
@@ -1718,7 +1718,7 @@ class PyRamify:
             for f in files:
 
 
-                if f == "__init__.py" or f.endswith(".pyc") or f.startswith("."):
+                if f.startswith("__") or not f.endswith(".py") or f.startswith("."):
                     continue
 
                 #print("Examining " + graph_dir + f)
@@ -1750,6 +1750,20 @@ class PyRamify:
     def changePropertyProverMetamodel(self, pre_metamodel, post_metamodel, subclasses_dict, dsltransInstallDir = "."):
         print("Starting to change property prover metamodel")
 
+        # keep a dictionary from each child to its parent
+        supertypes = {}
+
+
+        for supertype in subclasses_dict:
+            for subtype in subclasses_dict[supertype]:
+                subtype = subtype[8:]
+
+                try:
+                    supertypes[subtype].append(supertype[8:])
+                except KeyError:
+                    supertypes[subtype] = [supertype[8:]]
+
+
         property_prover_rules_dir = dsltransInstallDir + "/property_prover_rules/"
         for d in os.listdir(property_prover_rules_dir):
 
@@ -1757,7 +1771,7 @@ class PyRamify:
                 continue
 
             #ignore svn dirs
-            if d.startswith('.'):
+            if d.startswith('.') or d.startswith("__"):
                 continue
 
             rule_dir = property_prover_rules_dir + d + "/Himesis/"
@@ -1769,7 +1783,7 @@ class PyRamify:
                 files = []
 
             for f in files:
-                if f == "__init__.py" or f.endswith(".pyc") or f.startswith("."):
+                if not f.endswith(".py") or f.startswith("__") or f.startswith("."):
                     continue
 
                 rule_file = rule_dir + f
@@ -1780,8 +1794,8 @@ class PyRamify:
                     traceback.print_exc()
                     continue
 
-                name = rule.keys()[0]
-                graph = rule[rule.keys()[0]]
+                name = list(rule.keys())[0]
+                graph = list(rule.values())[0]
 
                 #TODO: Make this less fragile
                 if "LHS" in f:
@@ -1791,21 +1805,23 @@ class PyRamify:
                 else:
                     raise Exception("Error: Not LHS or RHS rule")
 
-                for node in graph.vs:
+                # for node in graph.vs:
+                #
+                #     #the node doesn't match subtypes
+                #     if "MT_subtypeMatching__" in node.attributes().keys() and node["MT_subtypeMatching__"] == False:
+                #         continue
+                #
+                #     #the node does look at subtypes
+                #     if "MT_subtypes__" in node.attributes().keys() and len(node["MT_subtypes__"]) >= 1:
+                #
+                #         # we are not changing this mm's subtypes
+                #         if not node["mm__"] in subclasses_dict.keys():
+                #             continue
+                #
+                #         #set the new subtypes
+                #         node["MT_subtypes__"] = subclasses_dict[node["mm__"]]
 
-                    #the node doesn't match subtypes
-                    if "MT_subtypeMatching__" in node.attributes().keys() and node["MT_subtypeMatching__"] == False:
-                        continue
-
-                    #the node does look at subtypes
-                    if "MT_subtypes__" in node.attributes().keys() and len(node["MT_subtypes__"]) >= 1:
-
-                        # we are not changing this mm's subtypes
-                        if not node["mm__"] in subclasses_dict.keys():
-                            continue
-
-                        #set the new subtypes
-                        node["MT_subtypes__"] = subclasses_dict[node["mm__"]]
+                graph["superclasses_dict"] = supertypes
 
                 #need to compile rule back in order to update the file
                 graph.compile(rule_dir)
