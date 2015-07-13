@@ -57,7 +57,7 @@ class PathConditionGenerator(object):
     """
 
     #@do_cprofile
-    def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, args):
+    def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, overlappingRules, args):
 
         # the empty path condition
 
@@ -72,7 +72,7 @@ class PathConditionGenerator(object):
         self.ruleCombinators = ruleCombinators
         self.ruleTraceCheckers = ruleTraceCheckers
         self.matchRulePatterns = matchRulePatterns
-
+        self.overlappingRules = overlappingRules
 
         self.ruleContainment = []
 
@@ -172,94 +172,94 @@ class PathConditionGenerator(object):
 
 #        self.debug()
 
-        if self.verbosity >= 1:
-            print("Start merging rules with common match patterns")
-        #merge rules of the same layer that share common match patterns over those match patterns   
-        for layerIndex in range(0,len(self.transformation)):
-            # loop until all the rules in the layer have been treated
-            merged_layer = []
-            while self.transformation[layerIndex] != []:
-                # compare the first rule to the remaining ones
-                mergedResult = deepcopy(self.transformation[layerIndex][0])
-
-                markedForRemoval = [self.transformation[layerIndex][0]]
-                    
-                matchPatternCurrentRule = self.matchRulePatterns[self.transformation[layerIndex][0].name][0]
-   
-#                 print("MPCR: ")
-#                 print_graph(matchPatternCurrentRule.condition)
-#                 for r in self.transformation[layer]:
-#                     print(r)
-                for candidateToMerge in range(1,len(self.transformation[layerIndex])):
-                    matchPatternCandidateRule = self.matchRulePatterns[self.transformation[layerIndex][candidateToMerge].name][0]
-#                     print("MPCRNAme: " + self.transformation[layer][candidateToMerge].name)
-                    # check whether the rules can be merged, if both have the same match pattern
-                    # check if the current rule's (first rule) match is a subset of the candidate's rule match
-                    p = Packet()
-                    p.graph = self.transformation[layerIndex][candidateToMerge]
-#                     print("First name: " + p.graph.name)
-                    p = matchPatternCurrentRule.packet_in(p)
-                    # now check if the candidate rule's match is a subset of the current rule's match
-                    p = Packet()
-                    p.graph = mergedResult
-                    p = matchPatternCandidateRule.packet_in(p)
-                    
-                    # check if the rules share the same match pattern such that we can merge them
-                    if matchPatternCurrentRule.is_success and matchPatternCandidateRule.is_success:
-                                                
-                        # merge the rules by copying the candidate to merge on top of the results of merging
-                        # all rules so far with the same matcher
-                        i = Iterator()
-                        p = i.packet_in(p)
-                        p = self.matchRulePatterns[self.transformation[layerIndex][candidateToMerge].name][1].packet_in(p)
-                        mergedResultBeforeEquationEval = p.graph
-                        
-                        # check the result of merging the rules for consistency of equations over the attribute
-                        if self.attributeEquationEvaluator(mergedResultBeforeEquationEval):
-                        
-                            mergedResult = mergedResultBeforeEquationEval
-                            mergedResult.name = mergedResult.name + self.transformation[layerIndex][candidateToMerge].name                                                  
-                            
-                            if self.verbosity >=1 :
-                                print("Merging " + mergedResult.name + " with " + self.transformation[layerIndex][candidateToMerge].name)
-                            # mark the rule for removal
-                            markedForRemoval.append(self.transformation[layerIndex][candidateToMerge])
-   
-                # copy the result of the merged or the unmerged rule to the merged layer              
-                
-                merged_layer.append(mergedResult)
-
-                # merge backwardPatterns matchers for the merged rules
-                # gather all the backwardPattern matchers from the rules that got merged
-                # and are to be removed, only if any rule got merged during this pass
-                   
-                if len(markedForRemoval) > 1:                  
-                    # rebuild the auxiliary structures
-                    # matchRulePatterns
-                    #self.matchRulePatterns[mergedResult.name] = self.matchRulePatterns[markedForRemoval[0].name]
-                     
-                    # rebuild the rule combinators and the matchers for the merged rule
-                    pyramify = PyRamify(draw_svg=False)
-                    
-                    ruleToCreateMatcher = deepcopy(mergedResult)
-                    self.matchRulePatterns.update(pyramify.get_match_pattern({ruleToCreateMatcher.name : ruleToCreateMatcher}))
-                     
-                    ruleToCreateCombinator = deepcopy(mergedResult)
-                    self.ruleCombinators.update(pyramify.get_rule_combinators({ruleToCreateCombinator.name : ruleToCreateCombinator}))
-
-                    ruleToCreateTraceChecker = deepcopy(mergedResult)
-                    self.ruleTraceCheckers.update(pyramify.get_backward_patterns({ruleToCreateTraceChecker.name : ruleToCreateTraceChecker})[0])
-                                      
-                    # remove from the backwardPatterns dictionary the references to rules that got merged
-                    for rule in markedForRemoval:
-                        del self.matchRulePatterns[rule.name]
-                        del self.ruleCombinators[rule.name]
-                        del self.ruleTraceCheckers[rule.name]
- 
-                # remove the rules that got merged during the previous pass
-                self.transformation[layerIndex] = [rule for rule in self.transformation[layerIndex] if rule not in markedForRemoval]                          
-            # the layer has been treated and can be put back into the transformation               
-            self.transformation[layerIndex] = merged_layer
+#         if self.verbosity >= 1:
+#             print("Start merging rules with common match patterns")
+#         #merge rules of the same layer that share common match patterns over those match patterns   
+#         for layerIndex in range(0,len(self.transformation)):
+#             # loop until all the rules in the layer have been treated
+#             merged_layer = []
+#             while self.transformation[layerIndex] != []:
+#                 # compare the first rule to the remaining ones
+#                 mergedResult = deepcopy(self.transformation[layerIndex][0])
+# 
+#                 markedForRemoval = [self.transformation[layerIndex][0]]
+#                     
+#                 matchPatternCurrentRule = self.matchRulePatterns[self.transformation[layerIndex][0].name][0]
+#    
+# #                 print("MPCR: ")
+# #                 print_graph(matchPatternCurrentRule.condition)
+# #                 for r in self.transformation[layer]:
+# #                     print(r)
+#                 for candidateToMerge in range(1,len(self.transformation[layerIndex])):
+#                     matchPatternCandidateRule = self.matchRulePatterns[self.transformation[layerIndex][candidateToMerge].name][0]
+# #                     print("MPCRNAme: " + self.transformation[layer][candidateToMerge].name)
+#                     # check whether the rules can be merged, if both have the same match pattern
+#                     # check if the current rule's (first rule) match is a subset of the candidate's rule match
+#                     p = Packet()
+#                     p.graph = self.transformation[layerIndex][candidateToMerge]
+# #                     print("First name: " + p.graph.name)
+#                     p = matchPatternCurrentRule.packet_in(p)
+#                     # now check if the candidate rule's match is a subset of the current rule's match
+#                     p = Packet()
+#                     p.graph = mergedResult
+#                     p = matchPatternCandidateRule.packet_in(p)
+#                     
+#                     # check if the rules share the same match pattern such that we can merge them
+#                     if matchPatternCurrentRule.is_success and matchPatternCandidateRule.is_success:
+#                                                 
+#                         # merge the rules by copying the candidate to merge on top of the results of merging
+#                         # all rules so far with the same matcher
+#                         i = Iterator()
+#                         p = i.packet_in(p)
+#                         p = self.matchRulePatterns[self.transformation[layerIndex][candidateToMerge].name][1].packet_in(p)
+#                         mergedResultBeforeEquationEval = p.graph
+#                         
+#                         # check the result of merging the rules for consistency of equations over the attribute
+#                         if self.attributeEquationEvaluator(mergedResultBeforeEquationEval):
+#                         
+#                             mergedResult = mergedResultBeforeEquationEval
+#                             mergedResult.name = mergedResult.name + self.transformation[layerIndex][candidateToMerge].name                                                  
+#                             
+#                             if self.verbosity >=1 :
+#                                 print("Merging " + mergedResult.name + " with " + self.transformation[layerIndex][candidateToMerge].name)
+#                             # mark the rule for removal
+#                             markedForRemoval.append(self.transformation[layerIndex][candidateToMerge])
+#    
+#                 # copy the result of the merged or the unmerged rule to the merged layer              
+#                 
+#                 merged_layer.append(mergedResult)
+# 
+#                 # merge backwardPatterns matchers for the merged rules
+#                 # gather all the backwardPattern matchers from the rules that got merged
+#                 # and are to be removed, only if any rule got merged during this pass
+#                    
+#                 if len(markedForRemoval) > 1:                  
+#                     # rebuild the auxiliary structures
+#                     # matchRulePatterns
+#                     #self.matchRulePatterns[mergedResult.name] = self.matchRulePatterns[markedForRemoval[0].name]
+#                      
+#                     # rebuild the rule combinators and the matchers for the merged rule
+#                     pyramify = PyRamify(draw_svg=False)
+#                     
+#                     ruleToCreateMatcher = deepcopy(mergedResult)
+#                     self.matchRulePatterns.update(pyramify.get_match_pattern({ruleToCreateMatcher.name : ruleToCreateMatcher}))
+#                      
+#                     ruleToCreateCombinator = deepcopy(mergedResult)
+#                     self.ruleCombinators.update(pyramify.get_rule_combinators({ruleToCreateCombinator.name : ruleToCreateCombinator}))
+# 
+#                     ruleToCreateTraceChecker = deepcopy(mergedResult)
+#                     self.ruleTraceCheckers.update(pyramify.get_backward_patterns({ruleToCreateTraceChecker.name : ruleToCreateTraceChecker})[0])
+#                                       
+#                     # remove from the backwardPatterns dictionary the references to rules that got merged
+#                     for rule in markedForRemoval:
+#                         del self.matchRulePatterns[rule.name]
+#                         del self.ruleCombinators[rule.name]
+#                         del self.ruleTraceCheckers[rule.name]
+#  
+#                 # remove the rules that got merged during the previous pass
+#                 self.transformation[layerIndex] = [rule for rule in self.transformation[layerIndex] if rule not in markedForRemoval]                          
+#             # the layer has been treated and can be put back into the transformation               
+#             self.transformation[layerIndex] = merged_layer
         
         # now build the partial order of rules as a dictionary per layer
         # the keys are rules that are larger than the elements in the order
@@ -417,10 +417,10 @@ class PathConditionGenerator(object):
         self.rule_names = {"HEmpty":"HEmptyPathCondition"}
         # keep the original names around 
         self.rule_originalnames = {"HEmpty":"HEmptyPathCondition"}
-        # change rules names to be shorter
-   
+        # change rules names to be shorter   
         for layer in range(len(self.transformation)):
             i = 0
+            subsumedRulesInLayer = []
             for rule in self.transformation[layer]:
                  
 #                 subsumedRuleNames = (rule.name.split("_"))
@@ -447,8 +447,28 @@ class PathConditionGenerator(object):
    
                 self.matchRulePatterns[new_name] = self.matchRulePatterns[rule.name]
                 del self.matchRulePatterns[rule.name]
-   
+                
+                if rule.name in self.overlappingRules.keys():
+                    self.overlappingRules[new_name] = self.overlappingRules[rule.name]
+                    del self.overlappingRules[rule.name]
+                    subsumedRulesInLayer.append(new_name)
+                   
                 rule.name = new_name
+                
+            # now that the layer renaming is complete, change the names of the subsuming rules for rules that need overlap treatment
+
+            for subsumedRule in subsumedRulesInLayer:
+                print "-------> " + subsumedRule
+                for subsumingRuleIndex in range(len(self.overlappingRules[subsumedRule])):
+                    ruleName = self.overlappingRules[subsumedRule][subsumingRuleIndex]
+                    newRuleName = None
+                    for newRuleNameIter in self.rule_names.keys():
+                        if ruleName == self.rule_names[newRuleNameIter]:
+                            newRuleName = newRuleNameIter
+                            break
+                    self.overlappingRules[subsumedRule][subsumingRuleIndex] = newRuleName
+                
+        
 
         if self.verbosity >= 2:                
             print("------------------------------------")
@@ -587,7 +607,6 @@ class PathConditionGenerator(object):
                     #print("Chunk size: " + str(len(pc_chunks[i])))
                     new_worker = path_condition_generator_worker(self.verbosity, layer*1000+i)
                     new_worker.currentPathConditionSet = pc_chunks[i]#pc_queue
-
                     new_worker.attributeEquationEvaluator = self.attributeEquationEvaluator
 
                     #print("Size of chunk: " + str(len(pc_chunks[i])))
@@ -608,6 +627,7 @@ class PathConditionGenerator(object):
 
                     new_worker.ruleCombinators = self.ruleCombinators
                     new_worker.ruleTraceCheckers =  self.ruleTraceCheckers
+                    new_worker.overlappingRules = self.overlappingRules
 
                     workers.append(new_worker)
 
@@ -1004,9 +1024,11 @@ class PathConditionGenerator(object):
     def get_path_conditions(self):
 
         for pc_name in sorted(self.currentpathConditionSet):
+            
+            print "-> " + pc_name
+            
             pc = expand_graph(self.pc_dict[pc_name])
-
-            pc.name = self.expand_pc_name(pc_name)
+#            pc.name = self.expand_pc_name(pc_name)
             yield pc
 
     #@do_cprofile
@@ -1058,14 +1080,10 @@ class PathConditionGenerator(object):
 
     def print_path_conditions_file(self):
         print("Printing path conditions:")
-        #if self.draw_svg:
-        #i=0
-        for pathCond in self.get_path_conditions():
+        for pathCondName in self.currentpathConditionSet:
+            name = pathCondName.translate(None, '-')
             try:
-                # print( str(i)+"---"+pathCond.name)
-                # print( " ")
-                #opname="pc"+str(i)
-                graph_to_dot(pathCond.name, pathCond)
+                graph_to_dot(name, expand_graph(self.pc_dict[pathCondName]))
                 #i=i+1
             except IOError:
-                print("Graph name is too long: " + pathCond.name)
+                print("Graph name is too long: " + pathCondName)

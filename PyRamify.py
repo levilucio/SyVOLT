@@ -702,14 +702,17 @@ class PyRamify:
         LHS_condition_string += "setsOfpairedWithNodes = []\n"
 
         # check what rule the match found is connected to 
-        LHS_condition_string += "for node in nodesToCheck:\n"                            
+        LHS_condition_string += "for node in nodesToCheck:\n"
+        LHS_condition_string += "    print 'Node: ' + str(node)\n"                               
         LHS_condition_string += "    pairedWithNodes = flood_find_nodes(PreNode(node).index, graph,['directLink_S', 'directLink_T', \
 'indirectLink_S', 'indirectLink_T','hasAttribute_S', 'hasAttribute_T', 'Attribute', 'Equation', \
 'Constant', 'Concat', 'leftExpr', 'rightExpr', 'trace_link'],['paired_with'])\n"
         LHS_condition_string += "    pairedWithNodes = [node for node in pairedWithNodes if graph.vs[node]['mm__'] == 'paired_with']\n"
-        LHS_condition_string += "    setsOfpairedWithNodes.append(set(pairedWithNodes))\n"
-        
+        LHS_condition_string += "    setsOfpairedWithNodes.append(set(pairedWithNodes))\n"   
+        LHS_condition_string += "    print 'Rule nodes: ' + str(pairedWithNodes)\n"        
+                
         LHS_condition_string += "result = set.intersection(*setsOfpairedWithNodes)\n"
+        LHS_condition_string += "print '>>>>>> Result: ' + str(result)\n"
         # it is fully connected to the subsuming rule            
         if writeOnTop:
             LHS_condition_string += "if result == set():\n"

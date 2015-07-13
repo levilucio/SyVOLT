@@ -169,14 +169,14 @@ class Test():
         c1 = self.rules['HExitPoint2BProcDefxWhetherOrNotExitPtHasOutgoingTrans']
         c2 = self.rules['HState2HProcDef']
         c3 = self.rules['HState2CProcDef']
-        d1 = self.rules['HTransition2QInstSIBLING']
-        d2 = self.rules['HTransition2QInstOUT']
-        d3 = self.rules['HTransition2Inst']
-        e1 = self.rules['HTransition2ListenBranch']
-        e2 = self.rules['HConnectOutputsOfxExitPoint2BProcDefxTransition2QInst']
-        e3 = self.rules['HTransition2HListenBranch']
-        e4 = self.rules['HConnectOPxState2CProcDefxTransition2InstxOtherInTransitions']
-        f1 = self.rules['HMapHeirarchyOfStates2HeirarchyOfProcs']
+#         d1 = self.rules['HTransition2QInstSIBLING']
+#         d2 = self.rules['HTransition2QInstOUT']
+#         d3 = self.rules['HTransition2Inst']
+#         e1 = self.rules['HTransition2ListenBranch']
+#         e2 = self.rules['HConnectOutputsOfxExitPoint2BProcDefxTransition2QInst']
+#         e3 = self.rules['HTransition2HListenBranch']
+#         e4 = self.rules['HConnectOPxState2CProcDefxTransition2InstxOtherInTransitions']
+#         f1 = self.rules['HMapHeirarchyOfStates2HeirarchyOfProcs']
 
         #get the expected num from the args
         #expected_num_pcs = args.num_pcs
@@ -185,9 +185,9 @@ class Test():
         #TODO: Change this number if you are modifying the transformation at all
         if args.num_rules == -1:
                 #transformation = [[a1], [b3], [c1, c2]]
-                transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
+                transformation = [[a1], [b1,b2,b3], [c1]]#,c2,c3]]#, [d1,d2,d3], [e1,e2,e3,e4], [f1]]
         else:
-                transformation = self.select_rules([[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
+                transformation = self.select_rules([[a1], [b1,b2,b3], [c1]])#,c2,c3]])#, [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
 
 
         #transformation =[[a1], [ b3]]
@@ -216,31 +216,31 @@ class Test():
         self.pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
 
 
-        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
+        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlappingRules] = \
             self.pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation/Himesis/", transformation)
 
-        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, args)#
-   
+        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlappingRules, args)#
+    
         ts0 = time.time()
         s.build_path_conditions()
         ts1 = time.time()
-            
+             
         print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
 #        print("Size of the set of path conditions: " + str(float(sys.getsizeof(s.pathConditionSet) / 1024)))
         print("Number of path conditions: " + str(s.num_path_conditions))
-
+ 
         #check if the correct number of path conditions were produced
         if not int(expected_num_pcs) == -1 and not int(expected_num_pcs) == s.num_path_conditions:
-
+ 
             #TODO: Make this an exception
             num_pcs_s = "The number of produced path conditions is incorrect.\n" + str(expected_num_pcs) + " were expected, but " + str(s.num_path_conditions) + " were produced."
             print(num_pcs_s)
             #raise Exception(num_pcs_s)
  
         #print("printing path conditions")
-        #s.print_path_conditions_screen()
+        s.print_path_conditions_screen()
 #
-# #        s.print_path_conditions_file()
+        s.print_path_conditions_file()
 #
 #         atprop=AtomicStateProperty(HState2procdef_IsolatedLHS(),HState2procdef_IsolatedLHS(), HState2procdef_CompleteLHS())
 #         exitpt2procdefparprop_withattr=AtomicStateProperty(HExitpoint2procdefparTrue_IsolatedLHS(),HExitpoint2procdefparTrue_ConnectedLHS(),HExitpoint2procdefparTrue_CompleteLHS())

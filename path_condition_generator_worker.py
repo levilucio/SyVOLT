@@ -22,7 +22,6 @@ from profiler import *
 class path_condition_generator_worker(Process):
 
 
-
     def __init__(self, verbosity, num):
         super(path_condition_generator_worker, self).__init__()
         self.num = num
@@ -70,6 +69,10 @@ class path_condition_generator_worker(Process):
             # the rules in the layer, while its copy will. This will avoid matching over a rewritten parent path condition.
             #self.pc_dict[pc_name] = shrink_graph(deepcopy(pc))
 
+            ###########################################################################
+            # Run first phase: run all rules without any overlaps with subsuming rules
+            ###########################################################################
+            
             for rule in self.transformation[self.layer]:
 
                 rule_name = rule.name
@@ -96,40 +99,43 @@ class path_condition_generator_worker(Process):
                 # the rule is disjointly added to the path condition
                 if len(self.ruleCombinators[rule_name]) == 1:
                     if self.verbosity >= 2 : print("Case 1: Rule has no dependencies")
-
-                    localPathConditionLayerAccumulator = []
-
-
-                    num = 0
-                    for child_pc_index in range(len(childrenPathConditions)):
-
-                        child_pc_name = childrenPathConditions[child_pc_index]
-
-                        cpc = expand_graph(self.pc_dict[child_pc_name])
-                        new_name = cpc.name + '_' + rule_name + "-" + str(num)
-
-                        # create a new path condition which is the result of combining the rule with the current path condition being examined
-                        #newPathCond = deepcopy(cpc)
-                        newPathCond = disjoint_model_union(cpc,rule)
-                        # name the new path condition as the combination of the previous path condition and the rule
-
-
-                        newPathCond.name = new_name
-                        num += 1
-
-                        shrunk_newCond = shrink_graph(newPathCond)
-                        self.pc_dict[new_name] = shrunk_newCond
-                        new_pc_dict[new_name] = shrunk_newCond
-
-                        if self.verbosity >= 2 : print("Created path condition with name: " + newPathCond.name)
-                        localPathConditionLayerAccumulator.append(new_name)
-
-                        #print_graph(newPathCond)
-
-                        # store the newly created path condition as a child
-                        childrenPathConditions.append(new_name)
-
-                    newPathConditionSet.extend(localPathConditionLayerAccumulator)
+                    
+                    # The rule only gets ran in the first phase if it does not overlap with any other rule.
+                    
+                    if rule not in self.overlappingRules:
+                    
+                        localPathConditionLayerAccumulator = []
+                               
+                        num = 0
+                        for child_pc_index in range(len(childrenPathConditions)):
+    
+                            child_pc_name = childrenPathConditions[child_pc_index]
+    
+                            cpc = expand_graph(self.pc_dict[child_pc_name])
+                            new_name = cpc.name + '_' + rule_name + "-" + str(num)
+    
+                            # create a new path condition which is the result of combining the rule with the current path condition being examined
+                            #newPathCond = deepcopy(cpc)
+                            newPathCond = disjoint_model_union(cpc,rule)
+                            # name the new path condition as the combination of the previous path condition and the rule
+    
+    
+                            newPathCond.name = new_name
+                            num += 1
+    
+                            shrunk_newCond = shrink_graph(newPathCond)
+                            self.pc_dict[new_name] = shrunk_newCond
+                            new_pc_dict[new_name] = shrunk_newCond
+    
+                            if self.verbosity >= 2 : print("Created path condition with name: " + newPathCond.name)
+                            localPathConditionLayerAccumulator.append(new_name)
+    
+                            #print_graph(newPathCond)
+    
+                            # store the newly created path condition as a child
+                            childrenPathConditions.append(new_name)
+    
+                        newPathConditionSet.extend(localPathConditionLayerAccumulator)
 
                 else:
 
@@ -165,8 +171,8 @@ class path_condition_generator_worker(Process):
 
                         if self.verbosity >= 2 : print("Case 3: Rule has dependencies that may or will execute")
 
-                        # go through all LHS (matchers) in rule combinators
-                        for combinator in range(len(self.ruleCombinators[rule_name])):
+                        # go through the partial and the total rule combinators
+                        for combinator in range(2):
 
                             combinatorMatcher = self.ruleCombinators[rule_name][combinator][0]
 
@@ -187,6 +193,9 @@ class path_condition_generator_worker(Process):
                             #print_graph(p.graph)
 
                             combinatorMatcher.packet_in(p, preds=pc_preds, succs=pc_succs)
+                            
+                            # hackish: save match sites to remove potential duplications of equations
+                            match_sites = p.match_sets
 
                             # if self.rule_names[rule.name] == "HereferenceOUTeTypeSolveRefEReferenceEClassifierEReferenceEClassifier":
                             #     graph_to_dot("pathCondition_par_" + pc.name, pc)
@@ -261,13 +270,15 @@ class path_condition_generator_worker(Process):
 
                                     p_copy = i.packet_in(p_copy)
 
-
-
                                     while i.is_success:
                                         #print("Rewriting")
                                         #print_graph(self.ruleCombinators[rule.name][combinator][1].condition)
                                         p_copy = self.ruleCombinators[rule_name][combinator][1].packet_in(p_copy)
                                         p_copy = i.next_in(p_copy)
+                                        
+                                    # search for duplication of equations attached to elements that were rewritten
+                                    for matchSite in p.match_sets.keys():
+                                        print str(p.match_sets[matchSite])
 
                                     newPathCond = p_copy.graph
                                     #print_graph(p_copy.graph)
@@ -323,6 +334,82 @@ class path_condition_generator_worker(Process):
                                             print("Created path condition with name: " + newPathCondName)
 
                                 newPathConditionSet.extend(partialTotalPathCondLayerAccumulator)
+                                
+            ###########################################################################
+            # Run second phase: run all rules with any overlaps with subsuming rules on 
+            # path conditions generated during the first phase
+            ###########################################################################
+            
+            ruleNamesInLayer = [rule.name for rule in self.transformation[self.layer]]
+            rulesForSecondPhase = set(self.overlappingRules.keys()).intersection(ruleNamesInLayer)
+            
+#             print "--------------------------------"
+#             print "overlapping rules: " + str(self.overlappingRules.keys())
+#             print "rules in layer: " + str(ruleNamesInLayer)
+#             print "Rules for second phase: " + str(rulesForSecondPhase)      
+                
+            for pathConditionIndex in range(len(newPathConditionSet)):
+                
+                for rule_name in rulesForSecondPhase:
+                    
+                    ruleNamesInPC = []
+                    for token in newPathConditionSet[pathConditionIndex].split("_"):
+                        ruleNamesInPC.append(token.split("-")[0])
+                        
+#                     print "Rule names in PC: " + str(ruleNamesInPC)
+#                     print "Overlaps looked for: " + str(self.overlappingRules[rule_name])                 
+#                     print "Intersection: " + str(set(self.overlappingRules[rule_name]).intersection(set(ruleNamesInPC)))
+                    
+                    # check if any of the subsuming rules exists in the path condition's name,
+                    # otherwise don't even try to apply the rule
+                    if set(self.overlappingRules[rule_name]).intersection(set(ruleNamesInPC)) != set():
+                        
+                        if self.verbosity >= 2 : print("Executing rule " + self.rule_names[rule_name] + " in second phase for overlaps.")
+                        
+                        combinatorMatcher = None
+                        combinatorRewriter = None
+                        
+                        if len(self.ruleCombinators[rule_name]) == 1:
+                            # Case 1: Rule has no dependencies
+                            
+                            combinatorMatcher = self.ruleCombinators[rule_name][0][0]     
+                            combinatorRewriter = self.ruleCombinators[rule_name][0][1]
+                        else:
+                            # Case 3: Rule has dependencies that may or will execute
+                            combinatorMatcher = self.ruleCombinators[rule_name][2][0]     
+                            combinatorRewriter = self.ruleCombinators[rule_name][2][1]
+                            
+                        # execute the rule
+
+                        p = Packet()
+                        cpc = expand_graph(self.pc_dict[newPathConditionSet[pathConditionIndex]])
+                        p.graph = cpc
+                        p = combinatorMatcher.packet_in(p)
+#                         print "----> PC Name: " + newPathConditionSet[pathConditionIndex]                         
+#                         print "----> Match: " + str(combinatorMatcher.is_success)                                                 
+                        
+                        i = Iterator()
+                        p = i.packet_in(p)
+                        
+#                        print "Match site:"
+                        for matchSite in p.match_sets.keys():
+                            print str(p.match_sets[matchSite])
+
+
+                        while i.is_success:
+                            #print "------------------ found 1 match"
+                            p = combinatorRewriter.packet_in(p) 
+                            #print "----> Rewrite: " + str(combinatorRewriter.is_success)
+                            p = i.next_in(p)
+                        
+                        newPathCondName = cpc.name + "_" + rule_name
+                            
+                        # replace the original path condition by the result of overlapping the subsumed rule on it
+                        del[self.pc_dict[newPathConditionSet[pathConditionIndex]]]
+                        shrunk_pc = shrink_graph(p.graph)   
+                        newPathConditionSet[pathConditionIndex] = newPathCondName
+                        self.pc_dict[newPathCondName] = shrunk_pc
+                        new_pc_dict[newPathCondName] = shrunk_pc
 
 
         #print("newPathConditionSet: " + str(newPathConditionSet))
