@@ -736,8 +736,8 @@ class PyRamify:
 
         if self.verbosity >= 2:
             print("\nStarting to get rule combinators")
-        name = rule.keys()[0]
-        graph = rule.values()[0]
+        name = list(rule.keys())[0]
+        graph = list(rule.values())[0]
 
         label = 0
         for i in range(len(graph.vs)):
@@ -915,7 +915,8 @@ class PyRamify:
                     
                 input_nodes.append(nodes_w_eqs[n])
 
-        output = sum([map(list, combinations(input_nodes, i)) for i in range(len(input_nodes) + 1)], [])
+
+        output = sum([list(map(list, combinations(input_nodes, i))) for i in range(len(input_nodes) + 1)], [])
 
         rewrite_name = rewriter_graph.name + "_rule_combinator_rewriter"
 
@@ -1016,7 +1017,7 @@ class PyRamify:
             if self.draw_svg:
                 graph_to_dot(combinator_matchers[i].name, combinator_matchers[i])
             
-            backward_pattern = rule.values()[0]
+            backward_pattern = list(rule.values())[0]
             
             if i == 0 and len(combinator_matchers) != 1:
                 # now build the NAC for the first combinator (just the complete base graph) 
@@ -1032,7 +1033,7 @@ class PyRamify:
                     print("Nac graph compiled to: " + file_name)
                 
                 NAC_graph = load_class(out_dir + NAC_graph.name, [backward_pattern])
-                NAC_graph = NAC_graph.values()[0]
+                NAC_graph = list(NAC_graph.values())[0]
                 
                 # debug printout
                 if self.draw_svg:
@@ -1063,7 +1064,7 @@ class PyRamify:
             
              
             rewriter_graph2 = load_class(out_dir + rewriter_graph_copy.name)
-            rewriter_graph2 = rewriter_graph2.values()[0]
+            rewriter_graph2 = list(rewriter_graph2.values())[0]
 
  
             # debug printout
@@ -1573,21 +1574,26 @@ class PyRamify:
 #                 print "Has backward links: " + str(self.rule_has_backward_links(s_rule))
 #                 print "Position: " + str(self.layer_rule_occurs_in(s_rule))
 #                 print "---------------------------------"
-                
-                if (not self.rule_has_backward_links(rule) and not self.rule_has_backward_links(s_rule)) or\
-                   (not self.rule_has_backward_links(rule) and self.rule_has_backward_links(s_rule)):
-                    if self.layer_rule_occurs_in(rule) >= self.layer_rule_occurs_in(s_rule):
-                        if rule in rules_needing_overlap_treatment.keys():
-                            rules_needing_overlap_treatment[rule].append(s_rule)
-                        else:
-                            rules_needing_overlap_treatment[rule] = [s_rule]
-                        
-                elif (self.rule_has_backward_links(rule) and self.rule_has_backward_links(s_rule)):
-                    if self.layer_rule_occurs_in(rule) == self.layer_rule_occurs_in(s_rule):
-                        if rule in rules_needing_overlap_treatment.keys():
-                            rules_needing_overlap_treatment[rule].append(s_rule)
-                        else:
-                            rules_needing_overlap_treatment[rule] = [s_rule]
+
+                try:
+                    if (not self.rule_has_backward_links(rule) and not self.rule_has_backward_links(s_rule)) or\
+                       (not self.rule_has_backward_links(rule) and self.rule_has_backward_links(s_rule)):
+                        if self.layer_rule_occurs_in(rule) >= self.layer_rule_occurs_in(s_rule):
+                            if rule in rules_needing_overlap_treatment.keys():
+                                rules_needing_overlap_treatment[rule].append(s_rule)
+                            else:
+                                rules_needing_overlap_treatment[rule] = [s_rule]
+
+                    elif (self.rule_has_backward_links(rule) and self.rule_has_backward_links(s_rule)):
+                        if self.layer_rule_occurs_in(rule) == self.layer_rule_occurs_in(s_rule):
+                            if rule in rules_needing_overlap_treatment.keys():
+                                rules_needing_overlap_treatment[rule].append(s_rule)
+                            else:
+                                rules_needing_overlap_treatment[rule] = [s_rule]
+                except Exception:
+                    print("ERROR in rules_needing_overlap_treatment()")
+                    tb = traceback.format_exc()
+                    print(tb)
         
         return rules_needing_overlap_treatment
     
