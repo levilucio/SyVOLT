@@ -19,6 +19,12 @@ from t_core.iterator import Iterator
 #from solver.z3_attribute_equation_evaluator import AttributeEquationEvaluator
 from solver.simple_attribute_equation_evaluator import SimpleAttributeEquationEvaluator
 
+from profiler import *
+
+from copy import deepcopy
+
+from itertools import combinations
+
 class Disambiguator():
     """
     The disambiguator allows building all possibilities of transformation executions where injective matches exist between those
@@ -140,7 +146,29 @@ class Disambiguator():
             graph_to_dot("HMoveOneAttributeLHS", HMoveOneAttributeLHS())
             graph_to_dot("HMoveOneAttributeRHS", HMoveOneAttributeRHS())
 
-    def _collapse_step(self, path_condition):
+
+    def set_property(self, property):
+        """
+        For disambiguation, only disambiguate those elements which are found in the property
+        """
+
+        self.prop_mms = []
+        mms = property.CompleteQuantified.vs["mm__"]
+        superclasses = property.CompleteQuantified.superclasses_dict
+
+        for mm in set(mms):
+            self.prop_mms.append(mm[8:])
+
+            if mm in superclasses:
+                self.prop_mms += superclasses[mm]
+
+        self.prop_mms = sorted(self.prop_mms)
+
+        print("Prop MMs: " + str(self.prop_mms))
+
+
+    #@profile
+    def _collapse_step(self, mm, path_condition):
         """
         Perform a step of merging two objects the same type, but belonging to different rules, in the match part of the path condition.
         The merge step make all objects originally pointing to the second object point to the first object.
@@ -150,24 +178,24 @@ class Disambiguator():
         
         disambiguated_solutions = []
 
-        p = Packet()        
+        p = Packet()
         i = Iterator()
         
         p.graph = path_condition
 
         #print("Path condition name: " + str(path_condition.name))
 
-        # if "HEmptyPathCondition_HMotherRule_HFatherRule_HSonRule_HDaughterRule" in path_condition.name:
-        #      self.debug = True
-        #      self.verbosity = 2
+        if "HEmptyPathCondition_HMotherRule_HFatherRule_HSonRule_HDaughterRule" in path_condition.name:
+              self.debug = True
+              self.verbosity = 2
 
-        #graph_to_dot("packet", p.graph)
 
-        #print("Packet: " + str(p))
 
-        p = self.find_elements_collapse_match.packet_in(p)
 
-        if self.verbosity >= 2: print('Found collapsable elements:' + str(find_elements_collapse_match.is_success))
+
+
+
+        if self.verbosity >= 2: print('Found collapsable elements:' + str(self.find_elements_collapse_match.is_success))
 
         #print("Size of match sets: " + str(p.match_sets))
 
@@ -181,31 +209,31 @@ class Disambiguator():
                 match_set = p.match_sets[k]
                 match_set.print_matches(path_condition)
 
-        if self.debug:
-            graph_to_dot("HFindTwoMatchElementsSameTypeDiffRulesLHS",
-                         HFindTwoMatchElementsSameTypeDiffRulesLHS())
-
-            graph_to_dot("HMoveOneInputDirectLHS", HMoveOneInputDirectLHS())
-            graph_to_dot("HMoveOneInputRepeatedDirectLHS", HMoveOneInputRepeatedDirectLHS())
-            graph_to_dot("HMoveOneOutputDirectLHS", HMoveOneOutputDirectLHS())
-            graph_to_dot("HMoveOneOutputRepeatedDirectLHS", HMoveOneOutputRepeatedDirectLHS())
-
-            graph_to_dot("HMoveOneInputDirectRHS", HMoveOneInputDirectRHS())
-            graph_to_dot("HMoveOneInputRepeatedDirectRHS", HMoveOneInputRepeatedDirectRHS())
-            graph_to_dot("HMoveOneOutputDirectRHS", HMoveOneOutputDirectRHS())
-            graph_to_dot("HMoveOneOutputRepeatedDirectRHS", HMoveOneOutputRepeatedDirectRHS())
-
-            graph_to_dot("HMoveOneTraceLHS", HMoveOneTraceLHS())
-            graph_to_dot("HMoveOneTraceRHS", HMoveOneTraceRHS())
-
-            graph_to_dot("HDeleteUncollapsedElementLHS", HDeleteUncollapsedElementLHS())
-            graph_to_dot("HDeleteUncollapsedElementRHS", HDeleteUncollapsedElementRHS())
-
-            graph_to_dot("HDelOneAttributeFromUncollapsedElemLHS", HDelOneAttributeFromUncollapsedElemLHS())
-            graph_to_dot("HDelOneAttributeFromUncollapsedElemRHS", HDelOneAttributeFromUncollapsedElemRHS())
-
-            graph_to_dot("HMoveOneAttributeLHS", HMoveOneAttributeLHS())
-            graph_to_dot("HMoveOneAttributeRHS", HMoveOneAttributeRHS())
+        # if self.debug:
+        #     graph_to_dot("HFindTwoMatchElementsSameTypeDiffRulesLHS",
+        #                  HFindTwoMatchElementsSameTypeDiffRulesLHS())
+        #
+        #     graph_to_dot("HMoveOneInputDirectLHS", HMoveOneInputDirectLHS())
+        #     graph_to_dot("HMoveOneInputRepeatedDirectLHS", HMoveOneInputRepeatedDirectLHS())
+        #     graph_to_dot("HMoveOneOutputDirectLHS", HMoveOneOutputDirectLHS())
+        #     graph_to_dot("HMoveOneOutputRepeatedDirectLHS", HMoveOneOutputRepeatedDirectLHS())
+        #
+        #     graph_to_dot("HMoveOneInputDirectRHS", HMoveOneInputDirectRHS())
+        #     graph_to_dot("HMoveOneInputRepeatedDirectRHS", HMoveOneInputRepeatedDirectRHS())
+        #     graph_to_dot("HMoveOneOutputDirectRHS", HMoveOneOutputDirectRHS())
+        #     graph_to_dot("HMoveOneOutputRepeatedDirectRHS", HMoveOneOutputRepeatedDirectRHS())
+        #
+        #     graph_to_dot("HMoveOneTraceLHS", HMoveOneTraceLHS())
+        #     graph_to_dot("HMoveOneTraceRHS", HMoveOneTraceRHS())
+        #
+        #     graph_to_dot("HDeleteUncollapsedElementLHS", HDeleteUncollapsedElementLHS())
+        #     graph_to_dot("HDeleteUncollapsedElementRHS", HDeleteUncollapsedElementRHS())
+        #
+        #     graph_to_dot("HDelOneAttributeFromUncollapsedElemLHS", HDelOneAttributeFromUncollapsedElemLHS())
+        #     graph_to_dot("HDelOneAttributeFromUncollapsedElemRHS", HDelOneAttributeFromUncollapsedElemRHS())
+        #
+        #     graph_to_dot("HMoveOneAttributeLHS", HMoveOneAttributeLHS())
+        #     graph_to_dot("HMoveOneAttributeRHS", HMoveOneAttributeRHS())
 
 
         p = i.packet_in(p) #iterates on all matches
@@ -323,6 +351,8 @@ class Disambiguator():
                     # self.already_produced[reduction_str] = ""
 
                     # store the current disambiguated solution
+                    p2.graph.name += "-" + str(j)
+                    #graph_to_dot(p2.graph.name, p2.graph)
                     disambiguated_solutions.append(p2.graph)
 
                         #print("Disambig: " + str(disambiguated_solutions))
@@ -331,9 +361,7 @@ class Disambiguator():
             p = i.next_in(p)
 
         return disambiguated_solutions
-    
 
-    
     def disambiguate(self, path_condition, level = 0):
         """
         Build all the disambiguated path conditions for a generated path condition.
@@ -349,27 +377,103 @@ class Disambiguator():
         #if level == 3:
         #    return []
 
-        disambiguated_path_conditions = []
+        #holds GUIDs of
+        already_disambigged = []
 
-        if self.debug:
-            graph_to_dot(path_condition.name, path_condition)
+        disambiguated_path_conditions = [path_condition]
 
-        collapse_step_result = self._collapse_step(path_condition)
+        for mm in self.prop_mms:
+            new_pcs = []
 
-        #print("Collapse Result: " + str(collapse_step_result))
-
-        for i in range(len(collapse_step_result)):
-            collapse_step_result[i].name += '_' + str(i)
-            #graph_to_dot(collapse_step_result[i].name, collapse_step_result[i])
+            #graph_to_dot("packet", p.graph)
 
 
-        if collapse_step_result != []:
-            disambiguated_path_conditions.extend(collapse_step_result)
-        #    print("Collapse Length: " + str(len(collapse_step_result)))
 
-            for disamb_path_cond in collapse_step_result:
-                disamb_path_cond = deepcopy(disamb_path_cond)
 
-                disambiguated_path_conditions.extend(self.disambiguate(disamb_path_cond, level))
 
+            #print("Disambig for " + mm + " on " + str([graph.name for graph in disambiguated_path_conditions]))
+            for dis_pc in disambiguated_path_conditions:
+
+                new_dis_pc = deepcopy(dis_pc)
+                new_dis_pc.name += "_" + mm
+
+                print("Disambig for " + mm)
+
+                saved_superclasses = self.find_elements_collapse_match.condition["superclasses_dict"].copy()
+
+                #print("Old superclasses dict: " + str(self.find_elements_collapse_match.condition["superclasses_dict"].keys()))
+                keys = list(self.find_elements_collapse_match.condition["superclasses_dict"].keys())
+                for submm in keys:
+                    if submm != mm:
+                        del self.find_elements_collapse_match.condition["superclasses_dict"][submm]
+
+                #find the matches
+                p = Packet()
+                p.graph = new_dis_pc
+
+                p = self.find_elements_collapse_match.packet_in(p)
+
+                self.find_elements_collapse_match.condition["superclasses_dict"] = saved_superclasses
+
+
+
+                if not p.match_sets:
+                    print("No matches")
+                    continue
+
+
+
+                matches = list(p.match_sets.values())[0].matches
+                print(matches)
+                #list(p.match_sets.values())[0].print_matches(new_dis_pc)
+
+
+                #collect the GUIDs of the metamodel elements to put together
+                pairs = []
+                for m in matches:
+                    pairs.append((m["1"], m["2"]))
+
+                output = sum([list(map(list, combinations(pairs, i))) for i in range(len(pairs) + 1)], [])
+                print("Output: " + str(output))
+                print("Output length: " + str(len(output)))
+
+                #disambigged_pcs = self._collapse_step(mm, new_dis_pc)
+            #
+            #     if not disambigged_pcs:
+            #         continue
+            #
+            #     print("\nDisambigged pcs: " + str([graph.name for graph in disambigged_pcs]))
+            #     for pc in disambigged_pcs:
+            #         more_pcs = self._collapse_step(mm, deepcopy(pc))
+            #         print("more_pcs: " + str([graph.name for graph in more_pcs]))
+            #         disambigged_pcs += more_pcs
+            #
+            #     new_pcs += disambigged_pcs
+
+            disambiguated_path_conditions += new_pcs
+
+
+
+        # if self.debug:
+        #     graph_to_dot(path_condition.name, path_condition)
+        #
+        # collapse_step_result = self._collapse_step(path_condition)
+        #
+        # #print("Collapse Result: " + str(collapse_step_result))
+        #
+        # for i in range(len(collapse_step_result)):
+        #     collapse_step_result[i].name += '_' + str(i)
+        #     #graph_to_dot(collapse_step_result[i].name, collapse_step_result[i])
+        #
+        #
+        # if collapse_step_result != []:
+        #     disambiguated_path_conditions.extend(collapse_step_result)
+        # #    print("Collapse Length: " + str(len(collapse_step_result)))
+        #
+        #     for disamb_path_cond in collapse_step_result:
+        #         disamb_path_cond = deepcopy(disamb_path_cond)
+        #
+        #         disambiguated_path_conditions.extend(self.disambiguate(disamb_path_cond, level))
+
+        print("Disambiguation produced: " + str(len(disambiguated_path_conditions)) + " path conditions")
         return disambiguated_path_conditions
