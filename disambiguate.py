@@ -121,6 +121,9 @@ class Disambiguator():
             pass
 
 
+        self.saved_disambigs = {}
+
+
         if self.debug:
             graph_to_dot("HFindTwoMatchElementsSameTypeDiffRulesLHS", HFindTwoMatchElementsSameTypeDiffRulesLHS())
 
@@ -396,6 +399,13 @@ class Disambiguator():
 
 
 
+            if path_condition.name in self.saved_disambigs:
+
+                pc_disambigs = self.saved_disambigs[path_condition.name]
+                if mm in pc_disambigs:
+                    disambiguated_path_conditions += pc_disambigs[mm]
+                    #print("Loading saved disambig")
+                    continue
 
 
 
@@ -406,6 +416,7 @@ class Disambiguator():
                 continue
 
             #print("Disambig for " + mm)
+            #
 
             # print("Old superclasses dict: " + str(self.find_elements_collapse_match.condition["superclasses_dict"].keys()))
             keys = list(self.find_elements_collapse_match.condition["superclasses_dict"].keys())
@@ -473,7 +484,10 @@ class Disambiguator():
                         new_pcs.append(new_pc)
 
 
+            if path_condition.name not in self.saved_disambigs:
+                self.saved_disambigs[path_condition.name] = {}
 
+            self.saved_disambigs[path_condition.name][mm] = new_pcs
 
             disambiguated_path_conditions += new_pcs
             #print("Disambig length: " + str(len(disambiguated_path_conditions)))
