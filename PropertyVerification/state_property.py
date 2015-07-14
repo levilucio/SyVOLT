@@ -59,8 +59,7 @@ class StateProperty(Property):
     def resetVerifResultToFalse (self):
         self.verifResult=False
         self.hasDefaultVerifResult=False
-        
-    @abstractmethod 
+
     def verify (self, state, StateSpace=None):
         #I added a second parameter with a default value of none because 
         #   the only subclass of StateProperty that will need this second parameter is AtomicStateProperty
@@ -176,6 +175,8 @@ class StateProperty(Property):
         curVerifResult=False
 
         pcs_failed = []
+
+        self.disambig.set_property(stateprop)
 
         #ensure that the property's precondition matched at least one path condition
         #otherwise, there is an issue (different metamodels, ...)

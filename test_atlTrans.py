@@ -156,10 +156,10 @@ class Test():
 
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns,
-         self.ruleCombinators] = \
+         self.ruleCombinators, self.overlapping_rules] = \
             pyramify.ramify_directory("ATLTrans/", transformation)
 
-        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, args)#
+        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, args)#
    
         ts0 = time.time()
         s.build_path_conditions()
@@ -293,16 +293,16 @@ class Test():
         # else:
         #     print("Atomic property: " + "HCommunityPerson1" + " does not hold")
 
-
+        verifier = StateProperty()
         for name, atomic_prop in atomic_properties:
-           finalresult = StateProperty.verifyCompositeStateProperty(s, atomic_prop)
+           finalresult = verifier.verifyCompositeStateProperty(s, atomic_prop)
            if len(finalresult) == 0:
                print("Atomic property: " + name + " holds\n")
            else:
                print("Atomic property: " + name + " does not hold\n")
 
         for name, i, t in if_then_properties:
-           finalresult = StateProperty.verifyCompositeStateProperty(s, ImplicationStateProperty(i, t))
+           finalresult = verifier.verifyCompositeStateProperty(s, ImplicationStateProperty(i, t))
            if len(finalresult) == 0:
                print("If-then property: " + name + " holds\n")
            else:
