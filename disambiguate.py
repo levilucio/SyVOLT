@@ -179,7 +179,7 @@ class Disambiguator():
         disambiguated_solutions = []
 
         #p = Packet()
-        i = Iterator()
+
 
         p = Packet()
         #p.graph = new_dis_pc
@@ -219,10 +219,16 @@ class Disambiguator():
         while run:#i.is_success: #operation of iterator worked
 
             run = False
-            p = self.find_elements_collapse_match.packet_in(p)
+
+            p2 = Packet()
+            p2.graph = p.graph
+            p = self.find_elements_collapse_match.packet_in(p2)
 
             if not self.find_elements_collapse_match.is_success:
                 break
+
+            i = Iterator()
+            i.packet_in(p)
 
             while i.is_success:
                 matches = list(p.match_sets.values())[0].match2rewrite
@@ -238,15 +244,15 @@ class Disambiguator():
 
                 run = True
 
-                p2 = p#deepcopy(p)
-                p2.graph = p.graph#deepcopy(p.graph)
+                #p2 = p#deepcopy(p)
+                #p2.graph = p.graph#deepcopy(p.graph)
 
                 #print("I is success")
 
                 #                 p = merge_cardinalities_matchmodel.packet_in(p)
                 #                 if self.verbosity >= 2: print 'merge_cardinalities_matchmodel:' + str( merge_cardinalities_matchmodel.is_success)
 
-                p2 = self.move_input_repeated_direct.packet_in(p2)
+                p = self.move_input_repeated_direct.packet_in(p)
                 if self.verbosity >= 2: print('move_input_repeated_direct_matchmodel: ' + str(self.move_input_repeated_direct.is_success))
 
                 if not self.move_input_repeated_direct.is_success: #repeated already have a link of the same type
@@ -267,19 +273,19 @@ class Disambiguator():
                     #print("Global pivots: " + str(p2.global_pivots))
 
                     if self.debug:
-                        graph_to_dot("move_input_direct_matchmodel", p2.graph)
-                    p2 = self.move_input_direct.packet_in(p2) #direct link going in
+                        graph_to_dot("move_input_direct_matchmodel", p.graph)
+                    p = self.move_input_direct.packet_in(p) #direct link going in
                     if self.verbosity >= 2: print('move_input_direct_matchmodel: ' + str(self.move_input_direct.is_success))
 
                     #print("Checking move_output_repeated_direct_matchmodel")
-                    p2 = self.move_output_repeated_direct.packet_in(p2) #direct link going out
+                    p = self.move_output_repeated_direct.packet_in(p) #direct link going out
                     if self.verbosity >= 2: print('move_output_repeated_direct_matchmodel: ' + str(self.move_output_repeated_direct.is_success))
                     #if not move_output_repeated_direct.is_success:
 
                     if self.debug:
-                        graph_to_dot("move_output_direct_matchmodel", p2.graph)
+                        graph_to_dot("move_output_direct_matchmodel", p.graph)
 
-                    p2 = self.move_output_direct.packet_in(p2)
+                    p = self.move_output_direct.packet_in(p)
                     if self.verbosity >= 2: print('move_output_direct_matchmodel: ' + str(self.move_output_direct.is_success))
 
                     #TODO: Re-enable indirect links
@@ -296,19 +302,19 @@ class Disambiguator():
                     #     if self.verbosity >= 2: print 'move_output_indirect_matchmodel:' + str(move_output_indirect.is_success)
 
                     if self.debug:
-                        graph_to_dot("before_move_trace", p2.graph)
+                        graph_to_dot("before_move_trace", p.graph)
 
-                    p2 = self.move_trace.packet_in(p2)
+                    p = self.move_trace.packet_in(p)
                     if self.verbosity >= 2:
                         print('move_trace:' + str(move_trace.is_success))
                         if self.debug:
                             #print(p2)
-                            graph_to_dot("before_move_trace_" + str(self.move_trace.is_success), p2.graph)
+                            graph_to_dot("before_move_trace_" + str(self.move_trace.is_success), p.graph)
 
                     if self.debug:
-                        graph_to_dot("before_move_one_attribute", p2.graph)
+                        graph_to_dot("before_move_one_attribute", p.graph)
 
-                    p2 = self.move_one_attribute.packet_in(p2)
+                    p = self.move_one_attribute.packet_in(p)
                     # #if not delete_attributes_from_uncollapsed_element.is_success:
                     #    raise Exception("Attributes were not deleted from uncollapsed element")
                     if self.verbosity >= 2: print('move_one_attribute:' + str(self.move_one_attribute.is_success))
@@ -321,9 +327,9 @@ class Disambiguator():
 
 
                     if self.debug:
-                        graph_to_dot("before_delete_uncollapsed_element", p2.graph)
+                        graph_to_dot("before_delete_uncollapsed_element", p.graph)
 
-                    p2 = self.delete_uncollapsed_element.packet_in(p2)
+                    p = self.delete_uncollapsed_element.packet_in(p)
                     if not self.delete_uncollapsed_element.is_success:
                         raise Exception("Uncollapsed element was not deleted")
                     if self.verbosity >= 2: print('delete_uncollapsed_element_match:' + str(self.delete_uncollapsed_element.is_success))
@@ -337,7 +343,7 @@ class Disambiguator():
                     #
                     # if not reduction_str in self.already_produced:
 
-                    attribute = self.attributeEquationEvaluator(p2.graph)
+                    attribute = self.attributeEquationEvaluator(p.graph)
 
                     #print("Graph is valid: " + str(attribute))
                     if attribute:
@@ -346,15 +352,17 @@ class Disambiguator():
                         # self.already_produced[reduction_str] = ""
 
                         # store the current disambiguated solution
-                        p2.graph.name += "-" + str(j)
-                        #graph_to_dot(p2.graph.name, p2.graph)
-                        disambiguated_solutions.append(p2.graph)
+                        p.graph.name += "-" + str(j)
+
+                        disambiguated_solutions.append(p.graph)
 
                             #print("Disambig: " + str(disambiguated_solutions))
 
                 # advance to the next pair of elements to be collapsed
-                p = i.next_in(p)
+                break
+                #p = i.next_in(p)
 
+        #graph_to_dot(p.graph.name, p.graph)
         return p.graph
 
     def disambiguate(self, path_condition, level = 0):
@@ -382,7 +390,7 @@ class Disambiguator():
             #graph_to_dot("packet", p.graph)
 
 
-            print("Disambig for " + mm)
+            #print("Disambig for " + mm)
 
             saved_superclasses = self.find_elements_collapse_match.condition["superclasses_dict"].copy()
 
@@ -428,19 +436,27 @@ class Disambiguator():
 
                 output = sum([list(map(list, combinations(pairs, i))) for i in range(len(pairs) + 1)], [])
                 #print("Output: " + str(output))
-                print("Output length: " + str(len(output)))
+                #print("Output length: " + str(len(output)))
 
-
+                i = 0
                 for to_merge in output:
+                    if not to_merge:
+                        continue
+
+                    new_copy = deepcopy(new_dis_pc)
+                    new_copy.name += "-" + str(i)
+                    i += 1
+
+
                     #m = deepcopy(new_dis_pc)
                     #print("To merge: " + str(to_merge))
-                    new_pcs.append(self._collapse_step(to_merge, deepcopy(new_dis_pc)))
+                    new_pcs.append(self._collapse_step(to_merge, new_copy))
 
 
 
 
             disambiguated_path_conditions += new_pcs
-            print("Disambig length: " + str(len(disambiguated_path_conditions)))
+            #print("Disambig length: " + str(len(disambiguated_path_conditions)))
 
             self.find_elements_collapse_match.condition["superclasses_dict"] = saved_superclasses
 
