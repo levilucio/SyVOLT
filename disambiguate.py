@@ -334,6 +334,8 @@ class Disambiguator():
                         raise Exception("Uncollapsed element was not deleted")
                     if self.verbosity >= 2: print('delete_uncollapsed_element_match:' + str(self.delete_uncollapsed_element.is_success))
 
+                    p.graph.name += "-" + str(j)
+
                     # check if the equations on the attributes of the disambiguated solution can be satisfied
 
                     # reduction = ig.Graph.__reduce__(p2.graph)
@@ -346,15 +348,18 @@ class Disambiguator():
                     attribute = self.attributeEquationEvaluator(p.graph)
 
                     #print("Graph is valid: " + str(attribute))
-                    if attribute:
 
-                        #record which solutions have already been produced
-                        # self.already_produced[reduction_str] = ""
+                    #this sequence of merges is not valid
+                    if not attribute:
+                        return None
 
-                        # store the current disambiguated solution
-                        p.graph.name += "-" + str(j)
+                    #record which solutions have already been produced
+                    # self.already_produced[reduction_str] = ""
 
-                        disambiguated_solutions.append(p.graph)
+                    # store the current disambiguated solution
+
+
+                    #disambiguated_solutions.append(p.graph)
 
                             #print("Disambig: " + str(disambiguated_solutions))
 
@@ -390,15 +395,26 @@ class Disambiguator():
             #graph_to_dot("packet", p.graph)
 
 
-            #print("Disambig for " + mm)
+
+
+
 
             saved_superclasses = self.find_elements_collapse_match.condition["superclasses_dict"].copy()
+
+
+            if mm not in saved_superclasses.keys() or 'MetaModelElement_S' not in saved_superclasses[mm]:
+                continue
+
+            #print("Disambig for " + mm)
 
             # print("Old superclasses dict: " + str(self.find_elements_collapse_match.condition["superclasses_dict"].keys()))
             keys = list(self.find_elements_collapse_match.condition["superclasses_dict"].keys())
             for submm in keys:
                 if submm != mm:
                     del self.find_elements_collapse_match.condition["superclasses_dict"][submm]
+
+
+
 
 
             #print("Disambig for " + mm + " on " + str([graph.name for graph in disambiguated_path_conditions]))
@@ -450,7 +466,11 @@ class Disambiguator():
 
                     #m = deepcopy(new_dis_pc)
                     #print("To merge: " + str(to_merge))
-                    new_pcs.append(self._collapse_step(to_merge, new_copy))
+
+                    new_pc = self._collapse_step(to_merge, new_copy)
+
+                    if new_pc:
+                        new_pcs.append(new_pc)
 
 
 
@@ -484,5 +504,5 @@ class Disambiguator():
         #
         #         disambiguated_path_conditions.extend(self.disambiguate(disamb_path_cond, level))
 
-        print("Disambiguation produced: " + str(len(disambiguated_path_conditions)) + " path conditions")
+        #print("Disambiguation produced: " + str(len(disambiguated_path_conditions)) + " path conditions")
         return disambiguated_path_conditions
