@@ -168,7 +168,7 @@ class Disambiguator():
 
 
     #@profile
-    def _collapse_step(self, mm, path_condition):
+    def _collapse_step(self, pairs, path_condition):
         """
         Perform a step of merging two objects the same type, but belonging to different rules, in the match part of the path condition.
         The merge step make all objects originally pointing to the second object point to the first object.
@@ -178,189 +178,184 @@ class Disambiguator():
         
         disambiguated_solutions = []
 
-        p = Packet()
+        #p = Packet()
         i = Iterator()
+
+        p = Packet()
+        #p.graph = new_dis_pc
+
+
         
         p.graph = path_condition
 
         #print("Path condition name: " + str(path_condition.name))
 
-        if "HEmptyPathCondition_HMotherRule_HFatherRule_HSonRule_HDaughterRule" in path_condition.name:
-              self.debug = True
-              self.verbosity = 2
+        # if "HEmptyPathCondition_HMotherRule_HFatherRule_HSonRule_HDaughterRule" in path_condition.name:
+        #       self.debug = True
+        #       self.verbosity = 2
 
-
-
-
-
-
+        #p = self.find_elements_collapse_match.packet_in(p)
 
         if self.verbosity >= 2: print('Found collapsable elements:' + str(self.find_elements_collapse_match.is_success))
 
         #print("Size of match sets: " + str(p.match_sets))
 
         
-        if not self.find_elements_collapse_match.is_success:   #identifies 2 things in different rules
-            if self.verbosity >= 2: print("Could not find two elements to collapse")
-            return []
-
-        if self.debug:
-            for k in p.match_sets.keys():
-                match_set = p.match_sets[k]
-                match_set.print_matches(path_condition)
+        #if not self.find_elements_collapse_match.is_success:   #identifies 2 things in different rules
+        #   if self.verbosity >= 2: print("Could not find two elements to collapse")
+        #    return []
 
         # if self.debug:
-        #     graph_to_dot("HFindTwoMatchElementsSameTypeDiffRulesLHS",
-        #                  HFindTwoMatchElementsSameTypeDiffRulesLHS())
-        #
-        #     graph_to_dot("HMoveOneInputDirectLHS", HMoveOneInputDirectLHS())
-        #     graph_to_dot("HMoveOneInputRepeatedDirectLHS", HMoveOneInputRepeatedDirectLHS())
-        #     graph_to_dot("HMoveOneOutputDirectLHS", HMoveOneOutputDirectLHS())
-        #     graph_to_dot("HMoveOneOutputRepeatedDirectLHS", HMoveOneOutputRepeatedDirectLHS())
-        #
-        #     graph_to_dot("HMoveOneInputDirectRHS", HMoveOneInputDirectRHS())
-        #     graph_to_dot("HMoveOneInputRepeatedDirectRHS", HMoveOneInputRepeatedDirectRHS())
-        #     graph_to_dot("HMoveOneOutputDirectRHS", HMoveOneOutputDirectRHS())
-        #     graph_to_dot("HMoveOneOutputRepeatedDirectRHS", HMoveOneOutputRepeatedDirectRHS())
-        #
-        #     graph_to_dot("HMoveOneTraceLHS", HMoveOneTraceLHS())
-        #     graph_to_dot("HMoveOneTraceRHS", HMoveOneTraceRHS())
-        #
-        #     graph_to_dot("HDeleteUncollapsedElementLHS", HDeleteUncollapsedElementLHS())
-        #     graph_to_dot("HDeleteUncollapsedElementRHS", HDeleteUncollapsedElementRHS())
-        #
-        #     graph_to_dot("HDelOneAttributeFromUncollapsedElemLHS", HDelOneAttributeFromUncollapsedElemLHS())
-        #     graph_to_dot("HDelOneAttributeFromUncollapsedElemRHS", HDelOneAttributeFromUncollapsedElemRHS())
-        #
-        #     graph_to_dot("HMoveOneAttributeLHS", HMoveOneAttributeLHS())
-        #     graph_to_dot("HMoveOneAttributeRHS", HMoveOneAttributeRHS())
+        #     for k in p.match_sets.keys():
+        #         match_set = p.match_sets[k]
+        #         match_set.print_matches(path_condition)
 
-
-        p = i.packet_in(p) #iterates on all matches
+        #p = i.packet_in(p) #iterates on all matches
 
         j=0
 
+        run = True
         # continue while more pairs of elements can be collapsed
-        while i.is_success: #operation of iterator worked
+        while run:#i.is_success: #operation of iterator worked
 
-            p2 = deepcopy(p)
-            p2.graph = deepcopy(p.graph)
+            run = False
+            p = self.find_elements_collapse_match.packet_in(p)
 
-            #print("I is success")
+            if not self.find_elements_collapse_match.is_success:
+                break
 
-            #                 p = merge_cardinalities_matchmodel.packet_in(p)
-            #                 if self.verbosity >= 2: print 'merge_cardinalities_matchmodel:' + str( merge_cardinalities_matchmodel.is_success)
+            while i.is_success:
+                matches = list(p.match_sets.values())[0].match2rewrite
 
-            p2 = self.move_input_repeated_direct.packet_in(p2)
-            if self.verbosity >= 2: print('move_input_repeated_direct_matchmodel: ' + str(self.move_input_repeated_direct.is_success))
+                #print("Matches: " + str(matches))
 
-            if not self.move_input_repeated_direct.is_success: #repeated already have a link of the same type
-                # not repeated - dont have it there so u copy on top
-                # direct/indirect and whether theyr going in/out of second element
+                GUID1 = matches["1"]
+                GUID2 = matches["2"]
+
+                if (GUID1, GUID2) not in pairs:
+                    p = i.next_in(p)
+                    continue
+
+                run = True
+
+                p2 = p#deepcopy(p)
+                p2.graph = p.graph#deepcopy(p.graph)
+
+                #print("I is success")
+
+                #                 p = merge_cardinalities_matchmodel.packet_in(p)
+                #                 if self.verbosity >= 2: print 'merge_cardinalities_matchmodel:' + str( merge_cardinalities_matchmodel.is_success)
+
+                p2 = self.move_input_repeated_direct.packet_in(p2)
+                if self.verbosity >= 2: print('move_input_repeated_direct_matchmodel: ' + str(self.move_input_repeated_direct.is_success))
+
+                if not self.move_input_repeated_direct.is_success: #repeated already have a link of the same type
+                    # not repeated - dont have it there so u copy on top
+                    # direct/indirect and whether theyr going in/out of second element
 
 
-                #graph_to_dot("move_input_direct_LHS", HMoveOneInputDirectLHS())
-                #graph_to_dot("move_input_direct_RHS", HMoveOneInputDirectRHS())
-                #graph_to_dot("move_input_repeated_direct_LHS", HMoveOneInputRepeatedDirectLHS())
-                #graph_to_dot("move_input_repeated_direct_RHS", HMoveOneInputRepeatedDirectRHS())
+                    #graph_to_dot("move_input_direct_LHS", HMoveOneInputDirectLHS())
+                    #graph_to_dot("move_input_direct_RHS", HMoveOneInputDirectRHS())
+                    #graph_to_dot("move_input_repeated_direct_LHS", HMoveOneInputRepeatedDirectLHS())
+                    #graph_to_dot("move_input_repeated_direct_RHS", HMoveOneInputRepeatedDirectRHS())
 
 
-                #i2 = Iterator()
-                #p3 = i2.packet_in(p2)
-                #print("Checking move_input_direct_matchmodel: " + str(j))
-                j +=1
-                #print("Global pivots: " + str(p2.global_pivots))
+                    #i2 = Iterator()
+                    #p3 = i2.packet_in(p2)
+                    #print("Checking move_input_direct_matchmodel: " + str(j))
+                    j +=1
+                    #print("Global pivots: " + str(p2.global_pivots))
 
-                if self.debug:
-                    graph_to_dot("move_input_direct_matchmodel", p2.graph)
-                p2 = self.move_input_direct.packet_in(p2) #direct link going in
-                if self.verbosity >= 2: print('move_input_direct_matchmodel: ' + str(self.move_input_direct.is_success))
-
-                #print("Checking move_output_repeated_direct_matchmodel")
-                p2 = self.move_output_repeated_direct.packet_in(p2) #direct link going out
-                if self.verbosity >= 2: print('move_output_repeated_direct_matchmodel: ' + str(self.move_output_repeated_direct.is_success))
-                #if not move_output_repeated_direct.is_success:
-
-                if self.debug:
-                    graph_to_dot("move_output_direct_matchmodel", p2.graph)
-
-                p2 = self.move_output_direct.packet_in(p2)
-                if self.verbosity >= 2: print('move_output_direct_matchmodel: ' + str(self.move_output_direct.is_success))
-
-                #TODO: Re-enable indirect links
-                # p2 = move_input_repeated_indirect.packet_in(p2)
-                # if self.verbosity >= 2: print 'move_input_repeated_indirect_matchmodel: ' + str(move_input_repeated_indirect.is_success)
-                # if not move_input_repeated_indirect.is_success:
-                #     p2 = move_input_indirect.packet_in(p2)
-                #     if self.verbosity >= 2: print 'move_input_indirect_matchmodel: ' + str(move_input_indirect.is_success)
-                #
-                # p2 = move_output_repeated_indirect.packet_in(p2)
-                # if self.verbosity >= 2: print 'move_output_repeated_indirect_matchmodel:' + str(move_output_repeated_indirect.is_success)
-                # if not move_output_repeated_indirect.is_success:
-                #     p2 = move_output_indirect.packet_in(p2)
-                #     if self.verbosity >= 2: print 'move_output_indirect_matchmodel:' + str(move_output_indirect.is_success)
-
-                if self.debug:
-                    graph_to_dot("before_move_trace", p2.graph)
-
-                p2 = self.move_trace.packet_in(p2)
-                if self.verbosity >= 2:
-                    print('move_trace:' + str(move_trace.is_success))
                     if self.debug:
-                        #print(p2)
-                        graph_to_dot("before_move_trace_" + str(self.move_trace.is_success), p2.graph)
+                        graph_to_dot("move_input_direct_matchmodel", p2.graph)
+                    p2 = self.move_input_direct.packet_in(p2) #direct link going in
+                    if self.verbosity >= 2: print('move_input_direct_matchmodel: ' + str(self.move_input_direct.is_success))
 
-                if self.debug:
-                    graph_to_dot("before_move_one_attribute", p2.graph)
+                    #print("Checking move_output_repeated_direct_matchmodel")
+                    p2 = self.move_output_repeated_direct.packet_in(p2) #direct link going out
+                    if self.verbosity >= 2: print('move_output_repeated_direct_matchmodel: ' + str(self.move_output_repeated_direct.is_success))
+                    #if not move_output_repeated_direct.is_success:
 
-                p2 = self.move_one_attribute.packet_in(p2)
-                # #if not delete_attributes_from_uncollapsed_element.is_success:
-                #    raise Exception("Attributes were not deleted from uncollapsed element")
-                if self.verbosity >= 2: print('move_one_attribute:' + str(self.move_one_attribute.is_success))
+                    if self.debug:
+                        graph_to_dot("move_output_direct_matchmodel", p2.graph)
 
-                # graph_to_dot("before_delete_attributes_from_uncollapsed_element", p2.graph)
-                # p2 = delete_attributes_from_uncollapsed_element.packet_in(p2)
-                # #if not delete_attributes_from_uncollapsed_element.is_success:
-                # #    raise Exception("Attributes were not deleted from uncollapsed element")
-                # if self.verbosity >= 2: print 'delete_attributes_from_uncollapsed_element:' + str(delete_attributes_from_uncollapsed_element.is_success)
+                    p2 = self.move_output_direct.packet_in(p2)
+                    if self.verbosity >= 2: print('move_output_direct_matchmodel: ' + str(self.move_output_direct.is_success))
+
+                    #TODO: Re-enable indirect links
+                    # p2 = move_input_repeated_indirect.packet_in(p2)
+                    # if self.verbosity >= 2: print 'move_input_repeated_indirect_matchmodel: ' + str(move_input_repeated_indirect.is_success)
+                    # if not move_input_repeated_indirect.is_success:
+                    #     p2 = move_input_indirect.packet_in(p2)
+                    #     if self.verbosity >= 2: print 'move_input_indirect_matchmodel: ' + str(move_input_indirect.is_success)
+                    #
+                    # p2 = move_output_repeated_indirect.packet_in(p2)
+                    # if self.verbosity >= 2: print 'move_output_repeated_indirect_matchmodel:' + str(move_output_repeated_indirect.is_success)
+                    # if not move_output_repeated_indirect.is_success:
+                    #     p2 = move_output_indirect.packet_in(p2)
+                    #     if self.verbosity >= 2: print 'move_output_indirect_matchmodel:' + str(move_output_indirect.is_success)
+
+                    if self.debug:
+                        graph_to_dot("before_move_trace", p2.graph)
+
+                    p2 = self.move_trace.packet_in(p2)
+                    if self.verbosity >= 2:
+                        print('move_trace:' + str(move_trace.is_success))
+                        if self.debug:
+                            #print(p2)
+                            graph_to_dot("before_move_trace_" + str(self.move_trace.is_success), p2.graph)
+
+                    if self.debug:
+                        graph_to_dot("before_move_one_attribute", p2.graph)
+
+                    p2 = self.move_one_attribute.packet_in(p2)
+                    # #if not delete_attributes_from_uncollapsed_element.is_success:
+                    #    raise Exception("Attributes were not deleted from uncollapsed element")
+                    if self.verbosity >= 2: print('move_one_attribute:' + str(self.move_one_attribute.is_success))
+
+                    # graph_to_dot("before_delete_attributes_from_uncollapsed_element", p2.graph)
+                    # p2 = delete_attributes_from_uncollapsed_element.packet_in(p2)
+                    # #if not delete_attributes_from_uncollapsed_element.is_success:
+                    # #    raise Exception("Attributes were not deleted from uncollapsed element")
+                    # if self.verbosity >= 2: print 'delete_attributes_from_uncollapsed_element:' + str(delete_attributes_from_uncollapsed_element.is_success)
 
 
-                if self.debug:
-                    graph_to_dot("before_delete_uncollapsed_element", p2.graph)
+                    if self.debug:
+                        graph_to_dot("before_delete_uncollapsed_element", p2.graph)
 
-                p2 = self.delete_uncollapsed_element.packet_in(p2)
-                if not self.delete_uncollapsed_element.is_success:
-                    raise Exception("Uncollapsed element was not deleted")
-                if self.verbosity >= 2: print('delete_uncollapsed_element_match:' + str(self.delete_uncollapsed_element.is_success))
+                    p2 = self.delete_uncollapsed_element.packet_in(p2)
+                    if not self.delete_uncollapsed_element.is_success:
+                        raise Exception("Uncollapsed element was not deleted")
+                    if self.verbosity >= 2: print('delete_uncollapsed_element_match:' + str(self.delete_uncollapsed_element.is_success))
 
-                # check if the equations on the attributes of the disambiguated solution can be satisfied
+                    # check if the equations on the attributes of the disambiguated solution can be satisfied
 
-                # reduction = ig.Graph.__reduce__(p2.graph)
-                # reduction_str = ""
-                # for e in reduction:
-                #     reduction_str += str(e).replace("'", "")
-                #
-                # if not reduction_str in self.already_produced:
+                    # reduction = ig.Graph.__reduce__(p2.graph)
+                    # reduction_str = ""
+                    # for e in reduction:
+                    #     reduction_str += str(e).replace("'", "")
+                    #
+                    # if not reduction_str in self.already_produced:
 
-                attribute = self.attributeEquationEvaluator(p2.graph)
+                    attribute = self.attributeEquationEvaluator(p2.graph)
 
-                #print("Graph is valid: " + str(attribute))
-                if attribute:
+                    #print("Graph is valid: " + str(attribute))
+                    if attribute:
 
-                    #record which solutions have already been produced
-                    # self.already_produced[reduction_str] = ""
+                        #record which solutions have already been produced
+                        # self.already_produced[reduction_str] = ""
 
-                    # store the current disambiguated solution
-                    p2.graph.name += "-" + str(j)
-                    #graph_to_dot(p2.graph.name, p2.graph)
-                    disambiguated_solutions.append(p2.graph)
+                        # store the current disambiguated solution
+                        p2.graph.name += "-" + str(j)
+                        #graph_to_dot(p2.graph.name, p2.graph)
+                        disambiguated_solutions.append(p2.graph)
 
-                        #print("Disambig: " + str(disambiguated_solutions))
+                            #print("Disambig: " + str(disambiguated_solutions))
 
-            # advance to the next pair of elements to be collapsed
-            p = i.next_in(p)
+                # advance to the next pair of elements to be collapsed
+                p = i.next_in(p)
 
-        return disambiguated_solutions
+        return p.graph
 
     def disambiguate(self, path_condition, level = 0):
         """
@@ -377,18 +372,25 @@ class Disambiguator():
         #if level == 3:
         #    return []
 
-        #holds GUIDs of
-        already_disambigged = []
 
         disambiguated_path_conditions = [path_condition]
 
         for mm in self.prop_mms:
+
             new_pcs = []
 
             #graph_to_dot("packet", p.graph)
 
 
+            print("Disambig for " + mm)
 
+            saved_superclasses = self.find_elements_collapse_match.condition["superclasses_dict"].copy()
+
+            # print("Old superclasses dict: " + str(self.find_elements_collapse_match.condition["superclasses_dict"].keys()))
+            keys = list(self.find_elements_collapse_match.condition["superclasses_dict"].keys())
+            for submm in keys:
+                if submm != mm:
+                    del self.find_elements_collapse_match.condition["superclasses_dict"][submm]
 
 
             #print("Disambig for " + mm + " on " + str([graph.name for graph in disambiguated_path_conditions]))
@@ -397,15 +399,8 @@ class Disambiguator():
                 new_dis_pc = deepcopy(dis_pc)
                 new_dis_pc.name += "_" + mm
 
-                print("Disambig for " + mm)
 
-                saved_superclasses = self.find_elements_collapse_match.condition["superclasses_dict"].copy()
 
-                #print("Old superclasses dict: " + str(self.find_elements_collapse_match.condition["superclasses_dict"].keys()))
-                keys = list(self.find_elements_collapse_match.condition["superclasses_dict"].keys())
-                for submm in keys:
-                    if submm != mm:
-                        del self.find_elements_collapse_match.condition["superclasses_dict"][submm]
 
                 #find the matches
                 p = Packet()
@@ -413,18 +408,16 @@ class Disambiguator():
 
                 p = self.find_elements_collapse_match.packet_in(p)
 
-                self.find_elements_collapse_match.condition["superclasses_dict"] = saved_superclasses
-
 
 
                 if not p.match_sets:
-                    print("No matches")
+                    #print("No matches")
                     continue
 
 
 
                 matches = list(p.match_sets.values())[0].matches
-                print(matches)
+                #print(matches)
                 #list(p.match_sets.values())[0].print_matches(new_dis_pc)
 
 
@@ -434,23 +427,23 @@ class Disambiguator():
                     pairs.append((m["1"], m["2"]))
 
                 output = sum([list(map(list, combinations(pairs, i))) for i in range(len(pairs) + 1)], [])
-                print("Output: " + str(output))
+                #print("Output: " + str(output))
                 print("Output length: " + str(len(output)))
 
-                #disambigged_pcs = self._collapse_step(mm, new_dis_pc)
-            #
-            #     if not disambigged_pcs:
-            #         continue
-            #
-            #     print("\nDisambigged pcs: " + str([graph.name for graph in disambigged_pcs]))
-            #     for pc in disambigged_pcs:
-            #         more_pcs = self._collapse_step(mm, deepcopy(pc))
-            #         print("more_pcs: " + str([graph.name for graph in more_pcs]))
-            #         disambigged_pcs += more_pcs
-            #
-            #     new_pcs += disambigged_pcs
+
+                for to_merge in output:
+                    #m = deepcopy(new_dis_pc)
+                    #print("To merge: " + str(to_merge))
+                    new_pcs.append(self._collapse_step(to_merge, deepcopy(new_dis_pc)))
+
+
+
 
             disambiguated_path_conditions += new_pcs
+            print("Disambig length: " + str(len(disambiguated_path_conditions)))
+
+            self.find_elements_collapse_match.condition["superclasses_dict"] = saved_superclasses
+
 
 
 
