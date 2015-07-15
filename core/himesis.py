@@ -217,7 +217,7 @@ class Himesis(ig.Graph):
 
     #for rule graphs, keep the equations the same
     #matchers and rewriters need to change them
-    def __validate_equations(self, eqs):
+    def _validate_equations(self, eqs):
         return str(eqs)
 
     def __compile_attribute(self, access, value):
@@ -388,9 +388,9 @@ class %s(%s):
             for attr in self.attributes():
                 if attr == "equations":
                     file.write('''
-        self["equations"] = ''' + self.__validate_equations(self[attr]))
+        self["equations"] = ''' + self._validate_equations(self[attr]))
                     continue
-                    
+
                 value = self[attr]
                 access = 'self["%s"]' % attr
                 file.write(self.__compile_attribute(access, value))
@@ -472,6 +472,23 @@ class HimesisPreConditionPattern(HimesisPattern):
         #self.nodes_pivot_in = {}
 
         self.superclasses_dict = {}
+
+    def _valid_token(self, token):
+
+        if token[0] == "constant":
+            return True
+        elif token[0] == "concat":
+            return self._valid_token(token[1][0]) and self._valid_token(token[1][1])
+        return self.get_node_with_label(token[0]) is not None
+
+    # for matchers, make sure that the equations refer to valid nodes
+    def _validate_equations(self, eqs):
+        new_eqs = []
+        for eq in eqs:
+            if self._valid_token(eq[0]) and self._valid_token(eq[1]):
+                new_eqs.append(eq)
+
+        return str(new_eqs)
 
 
     def get_pivot_in(self, pivot):

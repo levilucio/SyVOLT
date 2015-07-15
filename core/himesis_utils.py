@@ -227,7 +227,7 @@ def graph_to_dot(name, g, verbosity = 0):
         
     try:
         eqs = g["equations"]
-        eq_str = ""
+        eq_str = "Equations\\n"
         for eq in eqs:
             eq_str += str(eq) + "\\n"
         graph.add_node(pydot.Node(eq_str, style="filled", fillcolor='lightblue'))
