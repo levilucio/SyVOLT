@@ -70,6 +70,8 @@ class HMapRootElementRule(Himesis):
                 (4,3), # match_contains -> match_class RootElement()
                 (1,6), # applymodel -> apply_contains
                 (6,5), # apply_contains -> apply_class RootElement()
+                (0,2), # matchmodel -> pairedwith
+                (2,1) # pairedwith -> applyModel
 		])
 		
         # Add the equations

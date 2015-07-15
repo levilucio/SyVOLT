@@ -189,6 +189,8 @@ class HTransition2QInstSIBLING(Himesis):
                 (26,15), # association channelNames  -> apply_class Name()
                 (11,27), # apply_class Inst() -> association channelNames
                 (27,19), # association channelNames  -> apply_class Name()
+                (0,2), # matchmodel -> pairedwith
+                (2,1) # pairedwith -> applyModel
 		])
 		
         # Add the equations

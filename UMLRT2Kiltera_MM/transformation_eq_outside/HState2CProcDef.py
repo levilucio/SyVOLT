@@ -314,6 +314,8 @@ class HState2CProcDef(Himesis):
                 (48,33), # association channelNames  -> apply_class Name()
                 (11,49), # apply_class LocalDef() -> backward_association
                 (49,3), #  backward_association -> apply_class State()
+                (0,2), # matchmodel -> pairedwith
+                (2,1) # pairedwith -> applyModel
 		])
 		
         # Add the equations

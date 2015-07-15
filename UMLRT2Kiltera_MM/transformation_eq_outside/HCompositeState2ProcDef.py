@@ -348,6 +348,8 @@ class HCompositeState2ProcDef(Himesis):
                 (54,37), # association channelNames  -> apply_class Name()
                 (5,55), # apply_class ProcDef() -> backward_association
                 (55,3), #  backward_association -> apply_class State()
+                (0,2), # matchmodel -> pairedwith
+                (2,1) # pairedwith -> applyModel
 		])
 		
         # Add the equations

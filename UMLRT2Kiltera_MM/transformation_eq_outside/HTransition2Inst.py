@@ -206,6 +206,8 @@ class HTransition2Inst(Himesis):
                 (29,19), # association channelNames  -> apply_class Name()
                 (13,30), # apply_class Inst() -> association channelNames
                 (30,21), # association channelNames  -> apply_class Name()
+                (0,2), # matchmodel -> pairedwith
+                (2,1) # pairedwith -> applyModel
 		])
 		
         # Add the equations

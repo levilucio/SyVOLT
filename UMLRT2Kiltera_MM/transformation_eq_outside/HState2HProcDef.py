@@ -297,6 +297,8 @@ class HState2HProcDef(Himesis):
                 (45,31), # association p  -> apply_class Trigger()
                 (5,46), # apply_class LocalDef() -> backward_association
                 (46,3), #  backward_association -> apply_class State()
+                (0,2), # matchmodel -> pairedwith
+                (2,1) # pairedwith -> applyModel
 		])
 		
         # Add the equations

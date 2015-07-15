@@ -184,6 +184,8 @@ class HConnectOPState2CProcDefTransition2InstotherInTransitions(Himesis):
                 (25,7), #  backward_association -> apply_class State()
                 (17,26), # apply_class Inst() -> backward_association
                 (26,3), #  backward_association -> apply_class Transition()
+                (0,2), # matchmodel -> pairedwith
+                (2,1) # pairedwith -> applyModel
 		])
 		
         # Add the equations

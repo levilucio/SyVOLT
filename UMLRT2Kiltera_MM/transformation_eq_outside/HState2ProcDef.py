@@ -121,6 +121,8 @@ class HState2ProcDef(Himesis):
                 (14,9), # association channelNames  -> apply_class Name()
                 (5,15), # apply_class ProcDef() -> association channelNames
                 (15,11), # association channelNames  -> apply_class Name()
+                (0,2), # matchmodel -> pairedwith
+                (2,1) # pairedwith -> applyModel
 		])
 		
         # Add the equations

@@ -167,6 +167,8 @@ class HTransition2ListenBranch(Himesis):
                 (22,3), #  backward_association -> apply_class State()
                 (15,23), # apply_class Inst() -> backward_association
                 (23,5), #  backward_association -> apply_class Transition()
+                (0,2), # matchmodel -> pairedwith
+                (2,1) # pairedwith -> applyModel
 		])
 		
         # Add the equations

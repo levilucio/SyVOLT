@@ -116,6 +116,8 @@ class HConnectOutputsOfExitPoint2BProcDefTransition2QInst(Himesis):
                 (13,3), #  backward_association -> apply_class ExitPoint()
                 (9,14), # apply_class Inst() -> backward_association
                 (14,5), #  backward_association -> apply_class Transition()
+                (0,2), # matchmodel -> pairedwith
+                (2,1) # pairedwith -> applyModel
 		])
 		
         # Add the equations

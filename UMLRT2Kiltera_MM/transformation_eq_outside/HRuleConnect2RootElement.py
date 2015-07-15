@@ -116,6 +116,8 @@ class HRuleConnect2RootElement(Himesis):
                 (13,3), #  backward_association -> apply_class RootElement()
                 (9,14), # apply_class ProcDef() -> backward_association
                 (14,5), #  backward_association -> apply_class State()
+                (0,2), # matchmodel -> pairedwith
+                (2,1) # pairedwith -> applyModel
 		])
 		
         # Add the equations

@@ -144,6 +144,8 @@ class HTransition2QInstOUT(Himesis):
                 (18,9), # association dest  -> match_class Vertex()
                 (11,19), # apply_class Inst() -> association channelNames
                 (19,13), # association channelNames  -> apply_class Name()
+                (0,2), # matchmodel -> pairedwith
+                (2,1) # pairedwith -> applyModel
 		])
 		
         # Add the equations
