@@ -94,7 +94,7 @@ class PathConditionGenerator(object):
         for layer in self.transformation:
             for rule in layer:
                 graph_to_dot("rule_" + str(self.rule_names[rule.name]), rule)
-        self.rules.append(rule.name)
+                self.rules.append(rule.name)
 
     def print_ruleCombinators(self):
         for key in self.rules:
