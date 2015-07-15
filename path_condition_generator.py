@@ -94,29 +94,37 @@ class PathConditionGenerator(object):
         for layer in self.transformation:
             for rule in layer:
                 graph_to_dot("rule_" + str(self.rule_names[rule.name]), rule)
+        self.rules.append(rule.name)
 
     def print_ruleCombinators(self):
-        for key in self.ruleCombinators.keys():
+        for key in self.rules:
+
+            if not self.ruleCombinators[key]:
+                continue
+
             value = self.ruleCombinators[key]
+            for (m, r) in value:
+                graph_to_dot("ruleCombinator_match_" + str(m.condition.name), m.condition)
+                graph_to_dot("ruleCombinator_rewrite_" + str(r.condition.name), r.condition)
 
-            if value is not None:
-                for (m, r) in value:
-                    graph_to_dot("ruleCombinator_match_" + str(m.condition.name), m.condition)
-                    graph_to_dot("ruleCombinator_rewrite_" + str(r.condition.name), r.condition)
-
-                    if len(m.condition.NACs) > 0:
-                        graph_to_dot("ruleCombinator_NAC_" + str(m.condition.name), m.condition.NACs[0])
+                if len(m.condition.NACs) > 0:
+                    graph_to_dot("ruleCombinator_NAC_" + str(m.condition.name), m.condition.NACs[0])
 
 
     def print_ruleTraceCheckers(self):
-        for key in self.ruleTraceCheckers.keys():
+        for key in self.rules:
+            if self.ruleTraceCheckers[key] is None:
+                continue
+
             tc = self.ruleTraceCheckers[key]
-            if tc is not None:
-                graph_to_dot("traceChecker_" + str(tc.condition.name), tc.condition)
+            graph_to_dot("traceChecker_" + str(tc.condition.name), tc.condition)
 
     def print_matchRulePatterns(self):
-        for matchRulePattern in sorted(self.matchRulePatterns.keys()):
-            matcher, rewriter = self.matchRulePatterns[matchRulePattern]
+        for key in self.rules:
+            if self.matchRulePatterns[key] is None:
+                continue
+
+            matcher, rewriter = self.matchRulePatterns[key]
             graph_to_dot("matchPattern_matcher_" + str(matcher.condition.name), matcher.condition)
             graph_to_dot("matchPattern_rewriter_" + str(rewriter.condition.name), rewriter.condition)
 
@@ -125,6 +133,7 @@ class PathConditionGenerator(object):
 
         if self.draw_svg:
             print("Drawing svgs...")
+            self.rules = []
             self.print_transformation()
             self.print_ruleCombinators()
             self.print_ruleTraceCheckers()
