@@ -11,40 +11,11 @@ var matchContainsClassNodeMap : new Map;
 var applyClassNodeMap : new Map;
 var applyContainsClassNodeMap : new Map;
 
-
 var matchAssociationNodeMap : new Map;
 
 var applyAssociationNodeMap : new Map;
 
 var backwardAssociationNodeMap: new Map;
-
-var hasMatchAttributeNodeMap: new Map;
-var matchAttributeNodeMap: new Map;
-
-var hasApplyAttributeNodeMap: new Map;
-var applyAttributeNodeMap: new Map;
-
-var applyAttributeEquationNodeMap: new Map;
-var applyAttributeEquationLeftExpNodeMap : new Map;
-var applyAttributeEquationRightExpNodeMap : new Map;
-
-var applyAttributeAtomNodeMap : new Map;
-
-var applyAttributeConcatNodeMap : new Map;
-var applyAttributeConcatLeftHasArgsNodeMap: new Map;
-var applyAttributeConcatRightHasArgsNodeMap: new Map;
-
-var matchAttributeEquationNodeMap: new Map;
-var matchAttributeEquationLeftExpNodeMap : new Map;
-var matchAttributeEquationRightExpNodeMap : new Map;
-
-var matchAttributeAtomNodeMap : new Map;
-
-var matchAttributeConcatNodeMap : new Map;
-var matchAttributeConcatLeftHasArgsNodeMap: new Map;
-var matchAttributeConcatRightHasArgsNodeMap: new Map;
-
-var allClassNodeMap : new Map;
 
 var equationsStr = "";
 
@@ -197,10 +168,8 @@ class H[%=rule.description%](Himesis):
         
         [%
                 for(class in rule.match.first.class){
-                	System.out.println(">>>>>>> equationsStr: " + equationsStr);
                 	for(matchAttribute in class.attribute){
                     	if (matchAttribute.attributeValue <> null){
-                    		System.out.println("Going to treat match attribute.....");
                         	equationsStr = equationsStr + "((" + matchClassNodeMap.get(class) + ",'" + matchAttribute.attributeName + "'),";                                
                             equationsStr = equationsStr + generateAttributeTermNodes(matchAttribute, matchAttribute.attributeValue, matchClassNodeMap, matchClassNodeMap, rule);    
 							equationsStr = equationsStr + "), ";   
@@ -222,7 +191,6 @@ class H[%=rule.description%](Himesis):
                         			attributeName = "__ApplyAttribute";
                         		}
                         		
-                    			System.out.println("Going to treat apply attribute.....");
                            		equationsStr = equationsStr + "((" +  applyClassNodeMap.get(class) + ",'" + attributeName + "'),";                                
                                 equationsStr = equationsStr + generateAttributeTermNodes(applyAttribute, applyAttribute.attributeValue, applyClassNodeMap, matchClassNodeMap, rule);    
 								equationsStr = equationsStr + "), ";   
@@ -269,10 +237,13 @@ class H[%=rule.description%](Himesis):
                 [%
                 }
 				%]
+                ([%=matchModelIndex%],[%=pairedWithNodeIndex%]), # matchmodel -> pairedwith
+                ([%=pairedWithNodeIndex%],[%=applyModelIndex%]) # pairedwith -> applyModel				
 		])
 		
         # Add the equations
         self.equations = [[%=equationsStr%]]
+
         
 [%
 operation getClassCardinality(class){
@@ -286,11 +257,6 @@ operation getClassCardinality(class){
 }
 
 operation generateAttributeTermNodes(attribute, term, classNodeMap, matchClassNodeMap, rule) {
-
-//		System.out.print("................Attribute: " );
-//		System.out.print(attribute);
-//		System.out.print("................Term: " );
-//		System.out.print(term);
 		
         var termStr = "";
 
@@ -308,13 +274,7 @@ operation generateAttributeTermNodes(attribute, term, classNodeMap, matchClassNo
         } else if (term.isKindOf(AttributeRef)){
         	for(class in rule.match.first.class){
         		for(attribute in class.attribute){
-//					System.out.println(".............................. Attribute: " );
-//					System.out.println(attribute);
-//					System.out.println(".............................. Term: " );
-//					System.out.println(term);					
         			if (attribute == term.attributeRef){    
-//						System.out.println("Node map:");
-//						System.out.println(classNodeMap);									  													  				
                 		termStr = "(" + matchClassNodeMap.get(class) + ",'" + attribute.attributeName + "')";
                 	}
                 }
@@ -325,76 +285,5 @@ operation generateAttributeTermNodes(attribute, term, classNodeMap, matchClassNo
         }
 
         return termStr;
-}
-
-operation generateAttributeRefNode(attribute, term){
-        var returnNodeIndex = nodeIndex;
-        // nothing to do here because the attribute ref node is the attribute node itself, which was already generated.
-        return returnNodeIndex;
-}
-
-operation generateAttributeConcatNode(attribute, concat){
-		concatStr = "concat(";
-
-        // generate sub expressions' nodes
-        returnLeftConcat = generateAttributeTermNodes(attribute, concat.leftTerm);
-        returnRightConcat = generateAttributeTermNodes(attribute, concat.rightTerm);
-
-        return concatStr;
-}
-
-operation generateAttributeAtomNode(attribute, atom) {
-        var returnNodeIndex = nodeIndex;
-        attributeAtomNodeMap.put(atom, returnNodeIndex);
-        %]
-        # apply attribute atom [%=attribute.attributeName%]([%=attribute.id%]) node
-        self.add_node()
-        self.vs[[%=returnNodeIndex%]]["name"] = """[%=atom.value%]"""
-        self.vs[[%=returnNodeIndex%]]["mm__"] = """Constant"""
-        self.vs[[%=returnNodeIndex%]]["Type"] = """'String'"""
-        #self.vs[[%=returnNodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom[%=attribute.id + returnNodeIndex %]')
-        [%
-        returnNodeIndex = returnNodeIndex + 1;
-
-        return returnNodeIndex;
-}
-
-operation computeAttributeTermEdgeTarget(attribute, term, attributeAtomNodeMap, attributeConcatNodeMap, 
-                                                                                                                                                                attributeConcatLeftHasArgsNodeMap, attributeConcatRightHasArgsNodeMap,
-                                                                                                                                                                        matchAttributeNodeMap){
-    var edgeTarget = 0;
-        if (term.isKindOf(Atom)){
-                edgeTarget = attributeAtomNodeMap.get(term);
-        } else if (term.isKindOf(Concat)){
-                edgeTarget = generateAttributeConcatEdges(attribute, term, attributeAtomNodeMap, attributeConcatNodeMap,
-                                                                                                                                                                attributeConcatLeftHasArgsNodeMap, attributeConcatRightHasArgsNodeMap,
-                                                                                                                                                                        matchAttributeNodeMap);
-        } else if (term.isKindOf(AttributeRef)){
-                edgeTarget = matchAttributeNodeMap.get(term.attributeRef);
-        } else {
-                throw "Unsupported kind of term: " + term;
-        }
-
-        return edgeTarget;
-}
-
-operation generateAttributeConcatEdges(attribute, concat, attributeAtomNodeMap, attributeConcatNodeMap, 
-                                                                                                                                                                attributeConcatLeftHasArgsNodeMap, attributeConcatRightHasArgsNodeMap,
-                                                                                                                                                                        matchAttributeNodeMap){
-        var edgeTarget = attributeConcatNodeMap.get(concat);
-        var leftHasArgsTarget = computeAttributeTermEdgeTarget(attribute, concat.leftTerm, attributeAtomNodeMap, attributeConcatNodeMap,
-                                                                                                                                                                attributeConcatLeftHasArgsNodeMap, attributeConcatRightHasArgsNodeMap,
-                                                                                                                                                                        matchAttributeNodeMap);
-    var rightHasArgsTarget = computeAttributeTermEdgeTarget(attribute, concat.rightTerm, attributeAtomNodeMap, attributeConcatNodeMap, 
-                                                                                                                                                                attributeConcatLeftHasArgsNodeMap, attributeConcatRightHasArgsNodeMap,
-                                                                                                                                                                        matchAttributeNodeMap);
-        %]
-                ([%= attributeConcatNodeMap.get(concat) %],[%=  attributeConcatLeftHasArgsNodeMap.get(concat) %]), #  apply attribute concat [%=attribute.attributeName%] ([%=attribute.id%]) -> left has_args
-                ([%= attributeConcatLeftHasArgsNodeMap.get(concat) %],[%=  leftHasArgsTarget %]), #  left has_args -> term
-                ([%= attributeConcatNodeMap.get(concat) %],[%=  attributeConcatRightHasArgsNodeMap.get(concat) %]), #  apply attribute concat [%=attribute.attributeName%] ([%=attribute.id%]) -> right has_args
-                ([%= attributeConcatRightHasArgsNodeMap.get(concat) %],[%=  rightHasArgsTarget %]), #  right has_args -> term
-    [%
-
-        return edgeTarget;
 }
 %]
