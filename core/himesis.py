@@ -479,14 +479,18 @@ class HimesisPreConditionPattern(HimesisPattern):
             return True
         elif token[0] == "concat":
             return self._valid_token(token[1][0]) and self._valid_token(token[1][1])
-        return self.get_node_with_label(token[0]) is not None
+        node_label = str(token[0])
+        return self.get_node_with_label(node_label) is not None
 
     # for matchers, make sure that the equations refer to valid nodes
     def _validate_equations(self, eqs):
         new_eqs = []
+        #print("\nOld eqs: " + str(eqs))
         for eq in eqs:
             if self._valid_token(eq[0]) and self._valid_token(eq[1]):
                 new_eqs.append(eq)
+
+        #print("\nNew eqs: " + str(new_eqs))
 
         return str(new_eqs)
 
