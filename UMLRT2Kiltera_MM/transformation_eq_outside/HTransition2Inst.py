@@ -209,5 +209,5 @@ class HTransition2Inst(Himesis):
 		])
 		
         # Add the equations
-        self.equations = [((3,'isComposite'),('constant','true')), ((13,'name'),('concat',(('constant','S'),(11,'name')))), ((13,'__ApplyAttribute'),('constant','instForInTrans')), ((15,'literal'),('constant','exit_in')), ((17,'literal'),('constant','exack_in')), ((19,'literal'),('concat',(('constant','A'),('concat',((9,'name'),('constant','A')))))), ((21,'literal'),('constant','sh_in')), ]
+        self["equations"] = [((3,'isComposite'),('constant','true')), ((13,'name'),('concat',(('constant','S'),(11,'name')))), ((13,'__ApplyAttribute'),('constant','instForInTrans')), ((15,'literal'),('constant','exit_in')), ((17,'literal'),('constant','exack_in')), ((19,'literal'),('concat',(('constant','A'),('concat',((9,'name'),('constant','A')))))), ((21,'literal'),('constant','sh_in')), ]
         

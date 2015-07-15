@@ -1,25 +1,25 @@
 from core.himesis import Himesis
 import uuid
 
-class HConnectOP_State2CProcDef_Transition2Inst_otherInTransitions(Himesis):
+class HConnectOPState2CProcDefTransition2InstotherInTransitions(Himesis):
     def __init__(self):
 
     
     
         """
-        Creates the himesis graph representing the DSLTrans rule ConnectOP_State2CProcDef_Transition2Inst_otherInTransitions.
+        Creates the himesis graph representing the DSLTrans rule ConnectOPState2CProcDefTransition2InstotherInTransitions.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(HConnectOP_State2CProcDef_Transition2Inst_otherInTransitions, self).__init__(name='HConnectOP_State2CProcDef_Transition2Inst_otherInTransitions', num_nodes=0, edges=[])
+        super(HConnectOPState2CProcDefTransition2InstotherInTransitions, self).__init__(name='HConnectOPState2CProcDefTransition2InstotherInTransitions', num_nodes=0, edges=[])
         
         
         # Set the graph attributes
         self["mm__"] = ['HimesisMM']
         
-        self["name"] = """ConnectOP_State2CProcDef_Transition2Inst_otherInTransitions"""
-        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ConnectOP_State2CProcDef_Transition2Inst_otherInTransitions')
+        self["name"] = """ConnectOPState2CProcDefTransition2InstotherInTransitions"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ConnectOPState2CProcDefTransition2InstotherInTransitions')
         
         # match model. We only support one match model
         self.add_node()
@@ -32,7 +32,7 @@ class HConnectOP_State2CProcDef_Transition2Inst_otherInTransitions(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """ConnectOP_State2CProcDef_Transition2Inst_otherInTransitions"""
+        self.vs[2]["rulename"] = """ConnectOPState2CProcDefTransition2InstotherInTransitions"""
         
         # match class Transition() node
         self.add_node()
@@ -187,5 +187,5 @@ class HConnectOP_State2CProcDef_Transition2Inst_otherInTransitions(Himesis):
 		])
 		
         # Add the equations
-        self.equations = [((7,'isComposite'),('constant','true')), ((11,'__ApplyAttribute'),('constant','condsetcompstate')), ((15,'literal'),('concat',(('constant','enp=A'),('concat',((9,'name'),('constant','A')))))), ((17,'__ApplyAttribute'),('constant','instForInTrans')), ]
+        self["equations"] = [((7,'isComposite'),('constant','true')), ((11,'__ApplyAttribute'),('constant','condsetcompstate')), ((15,'literal'),('concat',(('constant','enp=A'),('concat',((9,'name'),('constant','A')))))), ((17,'__ApplyAttribute'),('constant','instForInTrans')), ]
         

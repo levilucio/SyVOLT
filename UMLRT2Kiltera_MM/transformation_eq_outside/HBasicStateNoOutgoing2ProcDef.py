@@ -96,5 +96,5 @@ class HBasicStateNoOutgoing2ProcDef(Himesis):
 		])
 		
         # Add the equations
-        self.equations = [((3,'isComposite'),('constant','false')), ((3,'hasOutgoingTransitions'),('constant','false')), ((5,'__ApplyAttribute'),('constant','procdef')), ]
+        self["equations"] = [((3,'isComposite'),('constant','false')), ((3,'hasOutgoingTransitions'),('constant','false')), ((5,'__ApplyAttribute'),('constant','procdef')), ]
         

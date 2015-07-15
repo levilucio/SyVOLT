@@ -170,5 +170,5 @@ class HTransition2ListenBranch(Himesis):
 		])
 		
         # Add the equations
-        self.equations = [((3,'isComposite'),('constant','false')), ((3,'hasOutgoingTransitions'),('constant','true')), ((11,'__ApplyAttribute'),('constant','listensimplestate')), ((13,'channel'),(9,'name')), ((15,'__ApplyAttribute'),('constant','instfortrans')), ]
+        self["equations"] = [((3,'isComposite'),('constant','false')), ((3,'hasOutgoingTransitions'),('constant','true')), ((11,'__ApplyAttribute'),('constant','listensimplestate')), ((13,'channel'),(9,'name')), ((15,'__ApplyAttribute'),('constant','instfortrans')), ]
         

@@ -300,5 +300,5 @@ class HState2HProcDef(Himesis):
 		])
 		
         # Add the equations
-        self.equations = [((3,'isComposite'),('constant','true')), ((5,'__ApplyAttribute'),('constant','localdefcompstate')), ((7,'name'),('constant','H')), ((9,'literal'),('constant','exit_in')), ((11,'literal'),('constant','exack_in')), ((13,'literal'),('constant','sh_in')), ((15,'__ApplyAttribute'),('constant','listenhproc')), ((17,'channel'),('constant','sh_in')), ((21,'channel'),('constant','exit')), ((25,'channel'),('constant','exit_in')), ((29,'channel'),('constant','exack_in')), ((31,'channel'),('constant','exack')), ]
+        self["equations"] = [((3,'isComposite'),('constant','true')), ((5,'__ApplyAttribute'),('constant','localdefcompstate')), ((7,'name'),('constant','H')), ((9,'literal'),('constant','exit_in')), ((11,'literal'),('constant','exack_in')), ((13,'literal'),('constant','sh_in')), ((15,'__ApplyAttribute'),('constant','listenhproc')), ((17,'channel'),('constant','sh_in')), ((21,'channel'),('constant','exit')), ((25,'channel'),('constant','exit_in')), ((29,'channel'),('constant','exack_in')), ((31,'channel'),('constant','exack')), ]
         

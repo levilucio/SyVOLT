@@ -317,5 +317,5 @@ class HState2CProcDef(Himesis):
 		])
 		
         # Add the equations
-        self.equations = [((3,'isComposite'),('constant','true')), ((11,'__ApplyAttribute'),('constant','localdefcompstate')), ((13,'name'),('constant','C')), ((15,'literal'),('constant','exit')), ((17,'literal'),('constant','exack')), ((19,'literal'),('constant','enp')), ((21,'literal'),('constant','sh')), ((23,'__ApplyAttribute'),('constant','condsetcompstate')), ((25,'name'),('concat',(('constant','S'),(9,'name')))), ((27,'literal'),('constant','exit_in')), ((29,'literal'),('constant','exack_in')), ((31,'literal'),('concat',(('constant','A'),('concat',((7,'name'),('constant','A')))))), ((33,'literal'),('constant','sh_in')), ]
+        self["equations"] = [((3,'isComposite'),('constant','true')), ((11,'__ApplyAttribute'),('constant','localdefcompstate')), ((13,'name'),('constant','C')), ((15,'literal'),('constant','exit')), ((17,'literal'),('constant','exack')), ((19,'literal'),('constant','enp')), ((21,'literal'),('constant','sh')), ((23,'__ApplyAttribute'),('constant','condsetcompstate')), ((25,'name'),('concat',(('constant','S'),(9,'name')))), ((27,'literal'),('constant','exit_in')), ((29,'literal'),('constant','exack_in')), ((31,'literal'),('concat',(('constant','A'),('concat',((7,'name'),('constant','A')))))), ((33,'literal'),('constant','sh_in')), ]
         

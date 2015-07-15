@@ -130,5 +130,5 @@ class HBasicState2ProcDef(Himesis):
 		])
 		
         # Add the equations
-        self.equations = [((3,'isComposite'),('constant','false')), ((3,'hasOutgoingTransitions'),('constant','true')), ((5,'__ApplyAttribute'),('constant','procdef')), ((7,'__ApplyAttribute'),('constant','listensimplestate')), ((9,'channel'),('constant','exit')), ((11,'channel'),('constant','exack')), ]
+        self["equations"] = [((3,'isComposite'),('constant','false')), ((3,'hasOutgoingTransitions'),('constant','true')), ((5,'__ApplyAttribute'),('constant','procdef')), ((7,'__ApplyAttribute'),('constant','listensimplestate')), ((9,'channel'),('constant','exit')), ((11,'channel'),('constant','exack')), ]
         

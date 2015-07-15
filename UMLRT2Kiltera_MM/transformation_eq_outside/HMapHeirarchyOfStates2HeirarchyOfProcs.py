@@ -119,5 +119,5 @@ class HMapHeirarchyOfStates2HeirarchyOfProcs(Himesis):
 		])
 		
         # Add the equations
-        self.equations = [((3,'isComposite'),('constant','true')), ((7,'__ApplyAttribute'),('constant','localdefcompstate')), ((9,'__ApplyAttribute'),('constant','procdef')), ]
+        self["equations"] = [((3,'isComposite'),('constant','true')), ((7,'__ApplyAttribute'),('constant','localdefcompstate')), ((9,'__ApplyAttribute'),('constant','procdef')), ]
         

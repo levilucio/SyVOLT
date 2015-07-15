@@ -147,5 +147,5 @@ class HTransition2QInstOUT(Himesis):
 		])
 		
         # Add the equations
-        self.equations = [((11,'name'),('concat',(('constant','B'),(9,'name')))), ((11,'__ApplyAttribute'),('constant','instfortrans')), ((13,'literal'),('constant','sh')), ]
+        self["equations"] = [((11,'name'),('concat',(('constant','B'),(9,'name')))), ((11,'__ApplyAttribute'),('constant','instfortrans')), ((13,'literal'),('constant','sh')), ]
         

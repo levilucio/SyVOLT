@@ -192,5 +192,5 @@ class HTransition2QInstSIBLING(Himesis):
 		])
 		
         # Add the equations
-        self.equations = [((11,'name'),('concat',(('constant','S'),(9,'name')))), ((11,'__ApplyAttribute'),('constant','instfortrans')), ((13,'literal'),('constant','exack')), ((15,'literal'),('concat',(('constant','A'),('concat',((5,'name'),('constant','A')))))), ((17,'literal'),('constant','exit')), ((19,'literal'),('constant','sh')), ]
+        self["equations"] = [((11,'name'),('concat',(('constant','S'),(9,'name')))), ((11,'__ApplyAttribute'),('constant','instfortrans')), ((13,'literal'),('constant','exack')), ((15,'literal'),('concat',(('constant','A'),('concat',((5,'name'),('constant','A')))))), ((17,'literal'),('constant','exit')), ((19,'literal'),('constant','sh')), ]
         

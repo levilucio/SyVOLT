@@ -124,5 +124,5 @@ class HState2ProcDef(Himesis):
 		])
 		
         # Add the equations
-        self.equations = [((5,'name'),('concat',(('constant','S'),(3,'name')))), ((5,'__ApplyAttribute'),('constant','procdef')), ((7,'literal'),('constant','exit')), ((9,'literal'),('constant','exack')), ((11,'literal'),('constant','enp')), ]
+        self["equations"] = [((5,'name'),('concat',(('constant','S'),(3,'name')))), ((5,'__ApplyAttribute'),('constant','procdef')), ((7,'literal'),('constant','exit')), ((9,'literal'),('constant','exack')), ((11,'literal'),('constant','enp')), ]
         

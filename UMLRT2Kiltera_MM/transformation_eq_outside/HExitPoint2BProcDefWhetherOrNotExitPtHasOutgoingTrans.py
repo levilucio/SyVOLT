@@ -1,25 +1,25 @@
 from core.himesis import Himesis
 import uuid
 
-class HExitPoint2BProcDef_WhetherOrNotExitPtHasOutgoingTrans(Himesis):
+class HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans(Himesis):
     def __init__(self):
 
     
     
         """
-        Creates the himesis graph representing the DSLTrans rule ExitPoint2BProcDef_WhetherOrNotExitPtHasOutgoingTrans.
+        Creates the himesis graph representing the DSLTrans rule ExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(HExitPoint2BProcDef_WhetherOrNotExitPtHasOutgoingTrans, self).__init__(name='HExitPoint2BProcDef_WhetherOrNotExitPtHasOutgoingTrans', num_nodes=0, edges=[])
+        super(HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans, self).__init__(name='HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans', num_nodes=0, edges=[])
         
         
         # Set the graph attributes
         self["mm__"] = ['HimesisMM']
         
-        self["name"] = """ExitPoint2BProcDef_WhetherOrNotExitPtHasOutgoingTrans"""
-        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ExitPoint2BProcDef_WhetherOrNotExitPtHasOutgoingTrans')
+        self["name"] = """ExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans')
         
         # match model. We only support one match model
         self.add_node()
@@ -32,7 +32,7 @@ class HExitPoint2BProcDef_WhetherOrNotExitPtHasOutgoingTrans(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """ExitPoint2BProcDef_WhetherOrNotExitPtHasOutgoingTrans"""
+        self.vs[2]["rulename"] = """ExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans"""
         
         # match class State() node
         self.add_node()
@@ -164,5 +164,5 @@ class HExitPoint2BProcDef_WhetherOrNotExitPtHasOutgoingTrans(Himesis):
 		])
 		
         # Add the equations
-        self.equations = [((3,'isComposite'),('constant','true')), ((7,'__ApplyAttribute'),('constant','localdefcompstate')), ((9,'name'),('concat',(('constant','B'),(5,'name')))), ((11,'literal'),('constant','sh_in')), ((13,'__ApplyAttribute'),('constant','parexitpoint')), ((15,'channel'),('constant','sh_in')), ]
+        self["equations"] = [((3,'isComposite'),('constant','true')), ((7,'__ApplyAttribute'),('constant','localdefcompstate')), ((9,'name'),('concat',(('constant','B'),(5,'name')))), ((11,'literal'),('constant','sh_in')), ((13,'__ApplyAttribute'),('constant','parexitpoint')), ((15,'channel'),('constant','sh_in')), ]
         

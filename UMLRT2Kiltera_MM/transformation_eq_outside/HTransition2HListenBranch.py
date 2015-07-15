@@ -289,5 +289,5 @@ class HTransition2HListenBranch(Himesis):
 		])
 		
         # Add the equations
-        self.equations = [((17,'channel'),(13,'name')), ((21,'channel'),('constant','exit_in')), ((25,'channel'),('constant','exack_in')), ((27,'__ApplyAttribute'),('constant','instfortrans')), ((29,'__ApplyAttribute'),('constant','listenhproc')), ]
+        self["equations"] = [((17,'channel'),(13,'name')), ((21,'channel'),('constant','exit_in')), ((25,'channel'),('constant','exack_in')), ((27,'__ApplyAttribute'),('constant','instfortrans')), ((29,'__ApplyAttribute'),('constant','listenhproc')), ]
         

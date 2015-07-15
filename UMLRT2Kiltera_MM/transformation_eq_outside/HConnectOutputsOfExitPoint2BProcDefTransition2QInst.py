@@ -1,25 +1,25 @@
 from core.himesis import Himesis
 import uuid
 
-class HConnectOutputsOf_ExitPoint2BProcDef_Transition2QInst(Himesis):
+class HConnectOutputsOfExitPoint2BProcDefTransition2QInst(Himesis):
     def __init__(self):
 
     
     
         """
-        Creates the himesis graph representing the DSLTrans rule ConnectOutputsOf_ExitPoint2BProcDef_Transition2QInst.
+        Creates the himesis graph representing the DSLTrans rule ConnectOutputsOfExitPoint2BProcDefTransition2QInst.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(HConnectOutputsOf_ExitPoint2BProcDef_Transition2QInst, self).__init__(name='HConnectOutputsOf_ExitPoint2BProcDef_Transition2QInst', num_nodes=0, edges=[])
+        super(HConnectOutputsOfExitPoint2BProcDefTransition2QInst, self).__init__(name='HConnectOutputsOfExitPoint2BProcDefTransition2QInst', num_nodes=0, edges=[])
         
         
         # Set the graph attributes
         self["mm__"] = ['HimesisMM']
         
-        self["name"] = """ConnectOutputsOf_ExitPoint2BProcDef_Transition2QInst"""
-        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ConnectOutputsOf_ExitPoint2BProcDef_Transition2QInst')
+        self["name"] = """ConnectOutputsOfExitPoint2BProcDefTransition2QInst"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ConnectOutputsOfExitPoint2BProcDefTransition2QInst')
         
         # match model. We only support one match model
         self.add_node()
@@ -32,7 +32,7 @@ class HConnectOutputsOf_ExitPoint2BProcDef_Transition2QInst(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """ConnectOutputsOf_ExitPoint2BProcDef_Transition2QInst"""
+        self.vs[2]["rulename"] = """ConnectOutputsOfExitPoint2BProcDefTransition2QInst"""
         
         # match class ExitPoint() node
         self.add_node()
@@ -119,5 +119,5 @@ class HConnectOutputsOf_ExitPoint2BProcDef_Transition2QInst(Himesis):
 		])
 		
         # Add the equations
-        self.equations = [((7,'__ApplyAttribute'),('constant','parexitpoint')), ((9,'__ApplyAttribute'),('constant','instfortrans')), ]
+        self["equations"] = [((7,'__ApplyAttribute'),('constant','parexitpoint')), ((9,'__ApplyAttribute'),('constant','instfortrans')), ]
         

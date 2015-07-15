@@ -73,5 +73,5 @@ class HMapRootElementRule(Himesis):
 		])
 		
         # Add the equations
-        self.equations = [((5,'__ApplyAttribute'),('constant','root')), ]
+        self["equations"] = [((5,'__ApplyAttribute'),('constant','root')), ]
         

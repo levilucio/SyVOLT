@@ -119,5 +119,5 @@ class HRuleConnect2RootElement(Himesis):
 		])
 		
         # Add the equations
-        self.equations = [((7,'__ApplyAttribute'),('constant','root')), ((9,'__ApplyAttribute'),('constant','procdef')), ]
+        self["equations"] = [((7,'__ApplyAttribute'),('constant','root')), ((9,'__ApplyAttribute'),('constant','procdef')), ]
         
