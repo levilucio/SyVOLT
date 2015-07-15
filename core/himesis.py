@@ -213,7 +213,13 @@ class Himesis(ig.Graph):
 %s
     '''
             file.write(s % indent_text(self.execute_doc + self.execute_body, 2))
-        
+
+
+    #for rule graphs, keep the equations the same
+    #matchers and rewriters need to change them
+    def __validate_equations(self, eqs):
+        return str(eqs)
+
     def __compile_attribute(self, access, value):
         """
         Dump the initialization of the attribute:
@@ -380,6 +386,11 @@ class %s(%s):
             file.write('''
         # Set the graph attributes''')
             for attr in self.attributes():
+                if attr == "equations":
+                    file.write('''
+        self["equations"] = ''' + self.__validate_equations(self[attr]))
+                    continue
+                    
                 value = self[attr]
                 access = 'self["%s"]' % attr
                 file.write(self.__compile_attribute(access, value))
@@ -462,7 +473,7 @@ class HimesisPreConditionPattern(HimesisPattern):
 
         self.superclasses_dict = {}
 
-    
+
     def get_pivot_in(self, pivot):
         """
             Retrieves the index of the pivot node
