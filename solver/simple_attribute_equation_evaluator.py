@@ -38,6 +38,23 @@ class SimpleAttributeEquationEvaluator(AttributeEquationSolver):
         return "V" + str(old_varID) 
 
 
+    def can_match(self, graph, condition):
+        #see if the condition's equations match over this graph (and its equations)
+        return True
+
+    def combine_equations(self, graph, condition):
+
+        #combine the equations from the graph with the equations
+        #from the rewriter's LHS and RHS
+        pass
+
+    def is_consistent(self, graph):
+        #see if the equations for this graph are internally consistent
+        pass
+
+
+
+
     #@profile
     def build_equation_expression(self, node, pathCondition):
         """

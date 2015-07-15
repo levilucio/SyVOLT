@@ -1,6 +1,6 @@
 
 from t_core.messages import Packet
-from t_core.matcher import Matcher
+from t_core.matcher import Matcher, Matcher_Equation
 from t_core.iterator import Iterator
 
 from t_core.tc_python.arule import ARule
@@ -541,6 +541,7 @@ class PathConditionGenerator(object):
 
         # start with a set (list) of path conditions containing only the empty path condition (declared in the constructor)
         # a path condition is a list of where the elements are rules (or combinations of rules) with traceability information
+
 
         if self.verbosity >= 1 : print("Start building path conditions")
 
