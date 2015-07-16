@@ -358,7 +358,11 @@ def update_equation(part, node_mapping):
         right = update_equation(part[1][1], node_mapping)
         return ('concat', (left, right))
     else:
-        return (node_mapping[part[0]], part[1])
+        if part[0] in node_mapping:
+            return (node_mapping[part[0]], part[1])
+        else:
+            #some nodes were not changed in the rewriter
+            return part
 
 def update_equations(equations, node_mapping):
     new_eqs = []

@@ -2,6 +2,7 @@
 from .rule_primitive import RulePrimitive
 from .messages import TransformationException
 from core.himesis import Himesis
+from core.himesis_utils import update_equations
 
 import traceback
 
@@ -40,6 +41,21 @@ class Rewriter(RulePrimitive):
 
                 if verbosity > 0:
                     print("Rewriter mapping: " + str(mapping))
+
+                graph_eqs = packet.graph["equations"]
+                cond_eqs = self.condition["equations"]
+
+                if cond_eqs and graph_eqs != cond_eqs:
+                    # print("\n")
+                    # print("Graph eqs: " + str(graph_eqs))
+                    # print("Cond eqs: " + str(cond_eqs))
+                    # print("Mapping: " + str(mapping))
+                    new_mapping = {}
+                    for m in mapping.keys():
+                        new_mapping[int(m)] = mapping[m]
+
+                    new_cond_eqs = update_equations(cond_eqs, new_mapping)
+                    packet.graph["equations"] += new_cond_eqs
                 self.condition.execute(packet, mapping)     # Sets dirty nodes as well
             except Exception as e:
 
