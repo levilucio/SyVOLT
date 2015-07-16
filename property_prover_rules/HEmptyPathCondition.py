@@ -19,6 +19,7 @@ class HEmptyPathCondition(Himesis):
         self["mm__"] = []
         self["name"] = """EmptyPathCondition"""
         self["GUID__"] = UUID('680ca2cf-04c0-48ec-904a-be75541a077f')
+        self["equations"] = []
         
         # Set the node attributes
 
