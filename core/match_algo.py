@@ -543,21 +543,29 @@ class HimesisMatcher(object):
                 if patt_attr == '__ApplyAttribute':
                     continue
 
-                if (patt_attr, patt_value) in src_equations:
-                    #print("Found a match")
-                    continue
+                found = False
+                for (src_attr, src_value) in src_equations:
+                    if patt_attr == src_attr:
+                        if patt_value == src_value:
+                            found = True
+                            break
+                        else:
+                            #print("Equations do not match")
+                            return False
+
+                if found:
+                    break
 
                 try:
                     if src_node[patt_attr] != patt_value:
-                        #print("Couldn't find value")
+                        #print("Couldn't find value, found " + str(src_node[patt_attr]))
+                        #print("Patt eq: " + str(patt_eq))
                         return False
                 except KeyError:
-                    #print("Attr not in src")
-                    return False
+                    #this is okay, and means that the matcher will define
+                    # a more restrictice graph
+                    continue
 
-                # print(patt_attr + " = " + patt_value + "?")
-                # print("Source Eq: " + str(src_equations))
-                # print("Attribute: " + str(src_node[patt_attr]))
         
         # Check for attributes value/constraint
         for attr in patt_node.attribute_names():
