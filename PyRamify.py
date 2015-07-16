@@ -3,7 +3,7 @@ import re
 import sys
 import os
 from t_core.messages import Packet
-from t_core.matcher import Matcher
+from t_core.matcher import Matcher, Matcher_Equation
 from t_core.rewriter import Rewriter
 from core.himesis_utils import *
 from core.himesis_plus import *
@@ -572,7 +572,10 @@ class PyRamify:
             graph_to_dot(new_name, backward_pattern)
 
         #create the Matcher
-        matcher = Matcher(backward_pattern)
+        if backward_pattern["equations"]:
+            matcher = Matcher_Equation(backward_pattern)
+        else:
+            matcher = Matcher(backward_pattern)
 
         #append the new backward pattern and name mapping
         bwPatterns.append(matcher)
@@ -1045,7 +1048,10 @@ class PyRamify:
                 backward_pattern.NACs = [NAC_graph]
 
             #create the Matcher
-            matcher = Matcher(backward_pattern)
+            if backward_pattern["equations"]:
+                matcher = Matcher_Equation(backward_pattern)
+            else:
+                matcher = Matcher(backward_pattern)
  
  
             #TODO: Make rewriter code simpler, and same as match pattern rewriter
@@ -1379,7 +1385,12 @@ class PyRamify:
 
         #graph_to_dot("the_rewriter_graph_after" + rewriter.name, rewriter)
 
-        return {name : [Matcher(match_graph), Rewriter(rewriter)]}
+        if match_graph["equations"]:
+            matcher = Matcher_Equation(match_graph)
+        else:
+            matcher = Matcher(match_graph)
+
+        return {name : [matcher, Rewriter(rewriter)]}
 
     # helper function for the user, to list all of the
     # rules in the transformation that have backward links
@@ -1739,8 +1750,8 @@ class PyRamify:
                     print("ERROR " + graph_file)
                     continue
 
-                name = g.keys()[0]
-                graph = g.values()[0]
+                name = list(g.keys())[0]
+                graph = list(g.values())[0]
 
                 for node in graph.vs:
                     if not node["mm__"] in mapping.keys():

@@ -72,6 +72,63 @@ class HimesisMatcher(object):
             @param pred1: Pre-built dictionary of predecessors in the source graph.
             @param succ1: Pre-built dictionary of successors in the source graph.
         """
+
+        try:
+            src_eqs = source_graph["equations"]
+        except KeyError:
+            print("Graph has no equations array: " + source_graph.name)
+            src_eqs = []
+
+        try:
+            patt_eqs = pattern_graph["equations"]
+        except KeyError:
+            print("Graph has no equations array: " + pattern_graph.name)
+            patt_eqs = []
+
+        try:
+            patt_labels = pattern_graph.vs["MT_label__"]
+        except KeyError:
+            patt_labels = []
+
+        self.src_eqs_constant = {}
+        self.src_eqs_variable = []
+
+
+        for eq in src_eqs:
+            if eq[1][0] == "constant":
+                node_num = eq[0][0]
+                attr = eq[0][1]
+                try:
+                    self.src_eqs_constant[node_num].append((attr, eq[1][1]))
+                except KeyError:
+                    self.src_eqs_constant[node_num] = [(attr, eq[1][1])]
+            else:
+                self.src_eqs_variable.append(eq)
+
+        self.patt_eqs_constant = {}
+        self.patt_eqs_variable = []
+
+        for eq in patt_eqs:
+            if eq[1][0] == "constant":
+                node_label = str(eq[0][0])
+                attr = eq[0][1]
+                #print("Node label: " + str(node_label))
+                #print("Labels: " + str(patt_labels))
+
+                node_num = patt_labels.index(node_label)
+                try:
+                    self.patt_eqs_constant[node_num].append((attr, eq[1][1]))
+                except KeyError:
+                    self.patt_eqs_constant[node_num] = [(attr, eq[1][1])]
+            else:
+                self.patt_eqs_variable.append(eq)
+
+        # print("\n")
+        # print("Src constant eqs: " + str(self.src_eqs_constant))
+        # print("Src variable eqs: " + str(self.src_eqs_variable))
+        # print("Patt constant eqs: " + str(self.patt_eqs_constant))
+        # print("Patt variable eqs: " + str(self.patt_eqs_variable))
+
         self.G1 = source_graph
         self.G2 = pattern_graph
         self.pred1 = pred1
@@ -446,7 +503,7 @@ class HimesisMatcher(object):
         #return in2 <= in1 and out2 <= out1 and inout2 <= inout1
         return in2 <= in1 and out2 <= out1 and (in2 + out2 + inout2) <= (in1 + out1 + inout1)
     
-    def are_semantically_feasible(self, src_node, patt_node):
+    def are_semantically_feasible(self, src_node_num, patt_node_num):
         """
             Determines whether the two nodes are syntactically feasible,
             i.e., it ensures that adding this candidate pair does not make it impossible to find a total mapping.
@@ -459,8 +516,56 @@ class HimesisMatcher(object):
         # It verifies that all attribute constraints are satisfied.
         #=======================================================================
         
-        src_node = self.G1.vs[src_node]
-        patt_node = self.G2.vs[patt_node]
+        src_node = self.G1.vs[src_node_num]
+        patt_node = self.G2.vs[patt_node_num]
+
+        # print("\n")
+        # print("Src node: " + str(src_node_num))
+        # print("Src constant: " + str(self.src_eqs_constant))
+        # print("Patt node: " + str(patt_node_num))
+        # print("Patt constant: " + str(self.patt_eqs_constant))
+
+        src_equations = []
+        if src_node_num in self.src_eqs_constant:
+            src_equations = self.src_eqs_constant[src_node_num]
+
+        if patt_node_num in self.patt_eqs_constant:
+            patt_equations = self.patt_eqs_constant[patt_node_num]
+
+            #print("Source Eq: " + str(src_equation))
+            #print("Pattern Eq: " + str(patt_equations))
+
+            for patt_eq in patt_equations:
+                patt_attr = patt_eq[0]
+                patt_value = patt_eq[1]
+
+                #skip this for now?
+                if patt_attr == '__ApplyAttribute':
+                    continue
+
+                found = False
+                for (src_attr, src_value) in src_equations:
+                    if patt_attr == src_attr:
+                        if patt_value == src_value:
+                            found = True
+                            break
+                        else:
+                            #print("Equations do not match")
+                            return False
+
+                if found:
+                    break
+
+                try:
+                    if src_node[patt_attr] != patt_value:
+                        #print("Couldn't find value, found " + str(src_node[patt_attr]))
+                        #print("Patt eq: " + str(patt_eq))
+                        return False
+                except KeyError:
+                    #this is okay, and means that the matcher will define
+                    # a more restrictice graph
+                    continue
+
         
         # Check for attributes value/constraint
         for attr in patt_node.attribute_names():

@@ -349,6 +349,31 @@ def expand_graph(small_value):
 
     return graph
 
+def update_equation(part, node_mapping):
+    if part[0] == 'constant':
+        return part
+    elif part[0] == 'concat':
+
+        left = update_equation(part[1][0], node_mapping)
+        right = update_equation(part[1][1], node_mapping)
+        return ('concat', (left, right))
+    else:
+        if part[0] in node_mapping:
+            return (node_mapping[part[0]], part[1])
+        else:
+            #some nodes were not changed in the rewriter
+            return part
+
+def update_equations(equations, node_mapping):
+    new_eqs = []
+    #print("Initial equations: " + str(equations))
+    for eq in equations:
+        LHS = update_equation(eq[0], node_mapping)
+        RHS = update_equation(eq[1], node_mapping)
+        new_eqs.append((LHS, RHS))
+
+    #print("After equations: " + str(new_eqs))
+    return new_eqs
 
 def disjoint_model_union(first, second):
     """
@@ -362,12 +387,16 @@ def disjoint_model_union(first, second):
         return deepcopy(first)
 
     nb_nodes_first = first.vcount()
-     
+
+    node_num_mapping = {}
+
     # first copy the nodes
     attrib_names = second.vs[0].attribute_names()
     for index_v in second.node_iter():
         new_node_index = first.add_node()
         new_node = first.vs[new_node_index]
+
+        node_num_mapping[index_v] = new_node_index
 
         for attrib in attrib_names:
 
@@ -389,6 +418,8 @@ def disjoint_model_union(first, second):
     for index_e in second.edge_iter():
         edges.append((nb_nodes_first + second.es[index_e].tuple[0],nb_nodes_first + second.es[index_e].tuple[1]))
     first.add_edges(edges)
+
+    first["equations"] += update_equations(deepcopy(second["equations"]), node_num_mapping)
 
     return first
 
