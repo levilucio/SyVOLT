@@ -23,6 +23,7 @@ class HBuildTraceabilityForRuleLHS(HimesisPreConditionPatternLHS):
 return False
 """
         self["mm__"] = ['MT_pre__FamiliesToPersons_MM', 'MoTifRule']
+        self["equations"] = []
         
         # Set the node attributes
         self.vs[0]["GUID__"] = 6601769124712063922

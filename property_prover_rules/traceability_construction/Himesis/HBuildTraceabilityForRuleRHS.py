@@ -26,6 +26,7 @@ pass
 """
         self["GUID__"] = 7298637889829306927
         self["mm__"] = ['MT_post__FamiliesToPersons_MM', 'MoTifRule']
+        self["equations"] = []
         
         # Set the node attributes
         self.vs[0]["GUID__"] = 2129491675721903084
