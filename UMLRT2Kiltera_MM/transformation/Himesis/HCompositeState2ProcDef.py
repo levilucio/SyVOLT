@@ -1,478 +1,897 @@
-
-
 from core.himesis import Himesis
+import uuid
 
 class HCompositeState2ProcDef(Himesis):
     def __init__(self):
         """
-        Creates the himesis graph representing the AToM3 model HCompositeState2ProcDef.
+        Creates the himesis graph representing the DSLTrans rule CompositeState2ProcDef.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(HCompositeState2ProcDef, self).__init__(name='HCompositeState2ProcDef', num_nodes=152, edges=[])
+        super(HCompositeState2ProcDef, self).__init__(name='HCompositeState2ProcDef', num_nodes=0, edges=[])
         
-        # Add the edges
-        self.add_edges([[8, 39], [39, 1], [1, 40], [40, 6], [6, 41], [41, 9], [9, 42], [42, 11], [8, 43], [43, 13], [6, 44], [44, 14], [6, 45], [45, 15], [6, 46], [46, 16], [11, 47], [47, 17], [11, 48], [48, 18], [11, 49], [49, 19], [11, 50], [50, 20], [9, 51], [51, 12], [12, 52], [52, 21], [12, 53], [53, 22], [12, 54], [54, 23], [71, 55], [55, 119], [72, 56], [56, 120], [73, 57], [57, 121], [74, 58], [58, 122], [75, 59], [59, 123], [76, 60], [60, 124], [77, 61], [61, 125], [78, 62], [62, 126], [79, 63], [63, 127], [80, 64], [64, 128], [81, 65], [65, 129], [82, 66], [66, 130], [83, 67], [67, 131], [84, 68], [68, 132], [85, 69], [69, 133], [86, 70], [70, 134], [13, 24], [24, 88], [14, 25], [25, 89], [15, 26], [26, 90], [16, 27], [27, 91], [11, 28], [28, 92], [17, 29], [29, 93], [18, 30], [30, 94], [19, 31], [31, 95], [20, 32], [32, 96], [12, 33], [33, 97], [21, 34], [34, 98], [22, 35], [35, 99], [23, 36], [36, 100], [8, 37], [37, 101], [1, 38], [38, 102], [5, 0], [0, 135], [0, 136], [0, 137], [0, 138], [0, 139], [0, 140], [0, 141], [0, 142], [0, 143], [0, 144], [0, 145], [0, 146], [0, 147], [0, 148], [0, 149], [0, 150], [0, 151], [136, 1], [7, 2], [2, 4], [4, 3], [3, 87], [10, 4], [7, 5], [137, 6], [71, 103], [72, 104], [73, 105], [74, 106], [75, 107], [76, 108], [77, 109], [78, 110], [79, 111], [80, 112], [81, 113], [82, 114], [83, 115], [84, 116], [85, 117], [86, 118], [135, 8], [138, 9], [139, 13], [140, 14], [141, 15], [142, 16], [143, 11], [144, 12], [145, 17], [146, 18], [147, 19], [148, 20], [149, 21], [150, 22], [151, 23], [8, 10], [103, 87], [104, 88], [105, 89], [106, 90], [107, 91], [108, 92], [109, 93], [110, 94], [111, 95], [112, 96], [113, 97], [114, 98], [115, 99], [116, 100], [117, 101], [118, 102]])
+        
         # Set the graph attributes
-        self["mm__"] = ['UMLRT2Kiltera_MM']
-        self["name"] = """CompositeState2ProcDef"""
-        self["GUID__"] = 3638308718566706961
+        self["mm__"] = ['HimesisMM']
         
-        # Set the node attributes
-        self.vs[0]["mm__"] = """ApplyModel"""
-        self.vs[0]["GUID__"] = 391008305509305275
-        self.vs[1]["name"] = """localdef1"""
-        self.vs[1]["classtype"] = """LocalDef"""
-        self.vs[1]["mm__"] = """LocalDef"""
-        self.vs[1]["cardinality"] = """1"""
-        self.vs[1]["GUID__"] = 4335842513201145836
-        self.vs[2]["mm__"] = """match_contains"""
-        self.vs[2]["GUID__"] = 7590935569278266688
-        self.vs[3]["mm__"] = """hasAttribute_S"""
-        self.vs[3]["GUID__"] = 3585829468670874087
-        self.vs[4]["name"] = """state1"""
-        self.vs[4]["classtype"] = """State"""
-        self.vs[4]["mm__"] = """State"""
-        self.vs[4]["cardinality"] = """+"""
-        self.vs[4]["GUID__"] = 1214210543928035651
-        self.vs[5]["mm__"] = """paired_with"""
-        self.vs[5]["GUID__"] = 5219770630319796562
-        self.vs[6]["name"] = """new1"""
-        self.vs[6]["classtype"] = """New"""
-        self.vs[6]["mm__"] = """New"""
-        self.vs[6]["cardinality"] = """1"""
-        self.vs[6]["GUID__"] = 1298312954739969122
-        self.vs[7]["mm__"] = """MatchModel"""
-        self.vs[7]["GUID__"] = 2878997882807017394
-        self.vs[8]["name"] = """procdef1"""
-        self.vs[8]["classtype"] = """ProcDef"""
-        self.vs[8]["mm__"] = """ProcDef"""
-        self.vs[8]["cardinality"] = """1"""
-        self.vs[8]["GUID__"] = 6494755823666202632
-        self.vs[9]["name"] = """par1"""
-        self.vs[9]["classtype"] = """Par"""
-        self.vs[9]["mm__"] = """Par"""
+        self["name"] = """CompositeState2ProcDef"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'CompositeState2ProcDef')
+        
+        # match model. We only support one match model
+        self.add_node()
+        self.vs[0]["mm__"] = """MatchModel"""
+        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'CompositeState2ProcDefmatchmodel0')
+        
+        # apply model node
+        self.add_node()
+        self.vs[1]["mm__"] = """ApplyModel"""
+        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'CompositeState2ProcDefapplymodel1')
+        
+        # paired with relation between match and apply models
+        self.add_node()
+        self.vs[2]["mm__"] = """paired_with"""
+        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'CompositeState2ProcDefpairedwith2')
+        self.vs[2]["rulename"] = """CompositeState2ProcDef"""
+        
+        # match class State() node
+        self.add_node()
+        self.vs[3]["name"] = """"""
+        self.vs[3]["classtype"] = """State"""
+        self.vs[3]["mm__"] = """State"""
+        self.vs[3]["cardinality"] = """+"""
+        #self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match_contains node for class State()
+        self.add_node()
+        self.vs[4]["mm__"] = """match_contains"""
+        #self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains4')
+        
+        
+        # apply class ProcDef() node
+        self.add_node()
+        self.vs[5]["name"] = """"""
+        self.vs[5]["classtype"] = """ProcDef"""
+        self.vs[5]["mm__"] = """ProcDef"""
+        self.vs[5]["cardinality"] = """1"""
+        #self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class ProcDef()
+        self.add_node()
+        self.vs[6]["mm__"] = """apply_contains"""
+        #self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains6')
+        # apply class LocalDef() node
+        self.add_node()
+        self.vs[7]["name"] = """"""
+        self.vs[7]["classtype"] = """LocalDef"""
+        self.vs[7]["mm__"] = """LocalDef"""
+        self.vs[7]["cardinality"] = """1"""
+        #self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class LocalDef()
+        self.add_node()
+        self.vs[8]["mm__"] = """apply_contains"""
+        #self.vs[8]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains8')
+        # apply class Name() node
+        self.add_node()
+        self.vs[9]["name"] = """"""
+        self.vs[9]["classtype"] = """Name"""
+        self.vs[9]["mm__"] = """Name"""
         self.vs[9]["cardinality"] = """1"""
-        self.vs[9]["GUID__"] = 5726578452045648718
-        self.vs[10]["mm__"] = """backward_link"""
-        self.vs[10]["type"] = """ruleDef"""
-        self.vs[10]["GUID__"] = 2413414615298807141
-        self.vs[11]["name"] = """inst1"""
-        self.vs[11]["classtype"] = """Inst"""
-        self.vs[11]["mm__"] = """Inst"""
+        #self.vs[9]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Name()
+        self.add_node()
+        self.vs[10]["mm__"] = """apply_contains"""
+        #self.vs[10]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains10')
+        # apply class New() node
+        self.add_node()
+        self.vs[11]["name"] = """"""
+        self.vs[11]["classtype"] = """New"""
+        self.vs[11]["mm__"] = """New"""
         self.vs[11]["cardinality"] = """1"""
-        self.vs[11]["GUID__"] = 2966047715082170024
-        self.vs[12]["name"] = """inst2"""
-        self.vs[12]["classtype"] = """Inst"""
-        self.vs[12]["mm__"] = """Inst"""
-        self.vs[12]["cardinality"] = """1"""
-        self.vs[12]["GUID__"] = 2017111792037061717
-        self.vs[13]["name"] = """name1"""
+        #self.vs[11]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class New()
+        self.add_node()
+        self.vs[12]["mm__"] = """apply_contains"""
+        #self.vs[12]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains12')
+        # apply class Name() node
+        self.add_node()
+        self.vs[13]["name"] = """"""
         self.vs[13]["classtype"] = """Name"""
         self.vs[13]["mm__"] = """Name"""
         self.vs[13]["cardinality"] = """1"""
-        self.vs[13]["GUID__"] = 8387001457952809021
-        self.vs[14]["name"] = """name2"""
-        self.vs[14]["classtype"] = """Name"""
-        self.vs[14]["mm__"] = """Name"""
-        self.vs[14]["cardinality"] = """1"""
-        self.vs[14]["GUID__"] = 9132557067007683761
-        self.vs[15]["name"] = """name3"""
+        #self.vs[13]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Name()
+        self.add_node()
+        self.vs[14]["mm__"] = """apply_contains"""
+        #self.vs[14]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains14')
+        # apply class Name() node
+        self.add_node()
+        self.vs[15]["name"] = """"""
         self.vs[15]["classtype"] = """Name"""
         self.vs[15]["mm__"] = """Name"""
         self.vs[15]["cardinality"] = """1"""
-        self.vs[15]["GUID__"] = 3036778637505592085
-        self.vs[16]["name"] = """name4"""
-        self.vs[16]["classtype"] = """Name"""
-        self.vs[16]["mm__"] = """Name"""
-        self.vs[16]["cardinality"] = """1"""
-        self.vs[16]["GUID__"] = 2457378897332637244
-        self.vs[17]["name"] = """name5"""
+        #self.vs[15]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Name()
+        self.add_node()
+        self.vs[16]["mm__"] = """apply_contains"""
+        #self.vs[16]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains16')
+        # apply class Name() node
+        self.add_node()
+        self.vs[17]["name"] = """"""
         self.vs[17]["classtype"] = """Name"""
         self.vs[17]["mm__"] = """Name"""
         self.vs[17]["cardinality"] = """1"""
-        self.vs[17]["GUID__"] = 3159297296160711360
-        self.vs[18]["name"] = """name6"""
-        self.vs[18]["classtype"] = """Name"""
-        self.vs[18]["mm__"] = """Name"""
-        self.vs[18]["cardinality"] = """1"""
-        self.vs[18]["GUID__"] = 364706556895607018
-        self.vs[19]["name"] = """name7"""
-        self.vs[19]["classtype"] = """Name"""
-        self.vs[19]["mm__"] = """Name"""
+        #self.vs[17]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Name()
+        self.add_node()
+        self.vs[18]["mm__"] = """apply_contains"""
+        #self.vs[18]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains18')
+        # apply class Par() node
+        self.add_node()
+        self.vs[19]["name"] = """"""
+        self.vs[19]["classtype"] = """Par"""
+        self.vs[19]["mm__"] = """Par"""
         self.vs[19]["cardinality"] = """1"""
-        self.vs[19]["GUID__"] = 8617540680699539321
-        self.vs[20]["name"] = """name8"""
-        self.vs[20]["classtype"] = """Name"""
-        self.vs[20]["mm__"] = """Name"""
-        self.vs[20]["cardinality"] = """1"""
-        self.vs[20]["GUID__"] = 3854262682213695695
-        self.vs[21]["name"] = """name9"""
-        self.vs[21]["classtype"] = """Name"""
-        self.vs[21]["mm__"] = """Name"""
+        #self.vs[19]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Par()
+        self.add_node()
+        self.vs[20]["mm__"] = """apply_contains"""
+        #self.vs[20]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains20')
+        # apply class Inst() node
+        self.add_node()
+        self.vs[21]["name"] = """"""
+        self.vs[21]["classtype"] = """Inst"""
+        self.vs[21]["mm__"] = """Inst"""
         self.vs[21]["cardinality"] = """1"""
-        self.vs[21]["GUID__"] = 6799648994841255317
-        self.vs[22]["name"] = """name10"""
-        self.vs[22]["classtype"] = """Name"""
-        self.vs[22]["mm__"] = """Name"""
-        self.vs[22]["cardinality"] = """1"""
-        self.vs[22]["GUID__"] = 322550714815493018
-        self.vs[23]["name"] = """name11"""
-        self.vs[23]["classtype"] = """Name"""
-        self.vs[23]["mm__"] = """Name"""
+        #self.vs[21]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Inst()
+        self.add_node()
+        self.vs[22]["mm__"] = """apply_contains"""
+        #self.vs[22]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains22')
+        # apply class Inst() node
+        self.add_node()
+        self.vs[23]["name"] = """"""
+        self.vs[23]["classtype"] = """Inst"""
+        self.vs[23]["mm__"] = """Inst"""
         self.vs[23]["cardinality"] = """1"""
-        self.vs[23]["GUID__"] = 8370353766831124611
-        self.vs[24]["mm__"] = """hasAttribute_T"""
-        self.vs[24]["GUID__"] = 3429724634936928676
-        self.vs[25]["mm__"] = """hasAttribute_T"""
-        self.vs[25]["GUID__"] = 6043754223592088658
-        self.vs[26]["mm__"] = """hasAttribute_T"""
-        self.vs[26]["GUID__"] = 1406829681932706302
-        self.vs[27]["mm__"] = """hasAttribute_T"""
-        self.vs[27]["GUID__"] = 8483097944263850372
-        self.vs[28]["mm__"] = """hasAttribute_T"""
-        self.vs[28]["GUID__"] = 632958218263262961
-        self.vs[29]["mm__"] = """hasAttribute_T"""
-        self.vs[29]["GUID__"] = 122000806519029538
-        self.vs[30]["mm__"] = """hasAttribute_T"""
-        self.vs[30]["GUID__"] = 3450693699269766371
-        self.vs[31]["mm__"] = """hasAttribute_T"""
-        self.vs[31]["GUID__"] = 1390944398789738213
-        self.vs[32]["mm__"] = """hasAttribute_T"""
-        self.vs[32]["GUID__"] = 5751298916510321848
-        self.vs[33]["mm__"] = """hasAttribute_T"""
-        self.vs[33]["GUID__"] = 1388676427617276617
-        self.vs[34]["mm__"] = """hasAttribute_T"""
-        self.vs[34]["GUID__"] = 2899993764216047031
-        self.vs[35]["mm__"] = """hasAttribute_T"""
-        self.vs[35]["GUID__"] = 6700979389075903254
-        self.vs[36]["mm__"] = """hasAttribute_T"""
-        self.vs[36]["GUID__"] = 2357005832668254048
-        self.vs[37]["mm__"] = """hasAttribute_T"""
-        self.vs[37]["GUID__"] = 6360567074648268762
-        self.vs[38]["mm__"] = """hasAttribute_T"""
-        self.vs[38]["GUID__"] = 625287499210335981
+        #self.vs[23]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Inst()
+        self.add_node()
+        self.vs[24]["mm__"] = """apply_contains"""
+        #self.vs[24]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains24')
+        # apply class Name() node
+        self.add_node()
+        self.vs[25]["name"] = """"""
+        self.vs[25]["classtype"] = """Name"""
+        self.vs[25]["mm__"] = """Name"""
+        self.vs[25]["cardinality"] = """1"""
+        #self.vs[25]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Name()
+        self.add_node()
+        self.vs[26]["mm__"] = """apply_contains"""
+        #self.vs[26]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains26')
+        # apply class Name() node
+        self.add_node()
+        self.vs[27]["name"] = """"""
+        self.vs[27]["classtype"] = """Name"""
+        self.vs[27]["mm__"] = """Name"""
+        self.vs[27]["cardinality"] = """1"""
+        #self.vs[27]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Name()
+        self.add_node()
+        self.vs[28]["mm__"] = """apply_contains"""
+        #self.vs[28]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains28')
+        # apply class Name() node
+        self.add_node()
+        self.vs[29]["name"] = """"""
+        self.vs[29]["classtype"] = """Name"""
+        self.vs[29]["mm__"] = """Name"""
+        self.vs[29]["cardinality"] = """1"""
+        #self.vs[29]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Name()
+        self.add_node()
+        self.vs[30]["mm__"] = """apply_contains"""
+        #self.vs[30]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains30')
+        # apply class Name() node
+        self.add_node()
+        self.vs[31]["name"] = """"""
+        self.vs[31]["classtype"] = """Name"""
+        self.vs[31]["mm__"] = """Name"""
+        self.vs[31]["cardinality"] = """1"""
+        #self.vs[31]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Name()
+        self.add_node()
+        self.vs[32]["mm__"] = """apply_contains"""
+        #self.vs[32]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains32')
+        # apply class Name() node
+        self.add_node()
+        self.vs[33]["name"] = """"""
+        self.vs[33]["classtype"] = """Name"""
+        self.vs[33]["mm__"] = """Name"""
+        self.vs[33]["cardinality"] = """1"""
+        #self.vs[33]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Name()
+        self.add_node()
+        self.vs[34]["mm__"] = """apply_contains"""
+        #self.vs[34]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains34')
+        # apply class Name() node
+        self.add_node()
+        self.vs[35]["name"] = """"""
+        self.vs[35]["classtype"] = """Name"""
+        self.vs[35]["mm__"] = """Name"""
+        self.vs[35]["cardinality"] = """1"""
+        #self.vs[35]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Name()
+        self.add_node()
+        self.vs[36]["mm__"] = """apply_contains"""
+        #self.vs[36]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains36')
+        # apply class Name() node
+        self.add_node()
+        self.vs[37]["name"] = """"""
+        self.vs[37]["classtype"] = """Name"""
+        self.vs[37]["mm__"] = """Name"""
+        self.vs[37]["cardinality"] = """1"""
+        #self.vs[37]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Name()
+        self.add_node()
+        self.vs[38]["mm__"] = """apply_contains"""
+        #self.vs[38]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains38')
+        
+        
+        
+        # apply association ProcDef--p-->LocalDef node
+        self.add_node()
         self.vs[39]["associationType"] = """p"""
         self.vs[39]["mm__"] = """directLink_T"""
-        self.vs[39]["GUID__"] = 8160464275204083896
-        self.vs[40]["associationType"] = """p"""
+        #self.vs[39]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc39')
+        # apply association ProcDef--channelNames-->Name node
+        self.add_node()
+        self.vs[40]["associationType"] = """channelNames"""
         self.vs[40]["mm__"] = """directLink_T"""
-        self.vs[40]["GUID__"] = 8071832376561510234
+        #self.vs[40]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc40')
+        # apply association LocalDef--p-->New node
+        self.add_node()
         self.vs[41]["associationType"] = """p"""
         self.vs[41]["mm__"] = """directLink_T"""
-        self.vs[41]["GUID__"] = 1487384743313557512
-        self.vs[42]["associationType"] = """p"""
+        #self.vs[41]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc41')
+        # apply association New--channelNames-->Name node
+        self.add_node()
+        self.vs[42]["associationType"] = """channelNames"""
         self.vs[42]["mm__"] = """directLink_T"""
-        self.vs[42]["GUID__"] = 7966659486296609094
+        #self.vs[42]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc42')
+        # apply association New--channelNames-->Name node
+        self.add_node()
         self.vs[43]["associationType"] = """channelNames"""
         self.vs[43]["mm__"] = """directLink_T"""
-        self.vs[43]["GUID__"] = 1549154214531940888
+        #self.vs[43]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc43')
+        # apply association New--channelNames-->Name node
+        self.add_node()
         self.vs[44]["associationType"] = """channelNames"""
         self.vs[44]["mm__"] = """directLink_T"""
-        self.vs[44]["GUID__"] = 2017765969651474497
-        self.vs[45]["associationType"] = """channelNames"""
+        #self.vs[44]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc44')
+        # apply association New--p-->Par node
+        self.add_node()
+        self.vs[45]["associationType"] = """p"""
         self.vs[45]["mm__"] = """directLink_T"""
-        self.vs[45]["GUID__"] = 690778279028444930
-        self.vs[46]["associationType"] = """channelNames"""
+        #self.vs[45]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc45')
+        # apply association Par--p-->Inst node
+        self.add_node()
+        self.vs[46]["associationType"] = """p"""
         self.vs[46]["mm__"] = """directLink_T"""
-        self.vs[46]["GUID__"] = 736455769390591372
-        self.vs[47]["associationType"] = """channelNames"""
+        #self.vs[46]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc46')
+        # apply association Par--p-->Inst node
+        self.add_node()
+        self.vs[47]["associationType"] = """p"""
         self.vs[47]["mm__"] = """directLink_T"""
-        self.vs[47]["GUID__"] = 8505702725189672014
+        #self.vs[47]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc47')
+        # apply association Inst--channelNames-->Name node
+        self.add_node()
         self.vs[48]["associationType"] = """channelNames"""
         self.vs[48]["mm__"] = """directLink_T"""
-        self.vs[48]["GUID__"] = 5506344882798776034
+        #self.vs[48]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc48')
+        # apply association Inst--channelNames-->Name node
+        self.add_node()
         self.vs[49]["associationType"] = """channelNames"""
         self.vs[49]["mm__"] = """directLink_T"""
-        self.vs[49]["GUID__"] = 5341532703932666950
+        #self.vs[49]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc49')
+        # apply association Inst--channelNames-->Name node
+        self.add_node()
         self.vs[50]["associationType"] = """channelNames"""
         self.vs[50]["mm__"] = """directLink_T"""
-        self.vs[50]["GUID__"] = 856298223123151227
-        self.vs[51]["associationType"] = """p"""
+        #self.vs[50]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc50')
+        # apply association Inst--channelNames-->Name node
+        self.add_node()
+        self.vs[51]["associationType"] = """channelNames"""
         self.vs[51]["mm__"] = """directLink_T"""
-        self.vs[51]["GUID__"] = 2238071127929157797
+        #self.vs[51]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc51')
+        # apply association Inst--channelNames-->Name node
+        self.add_node()
         self.vs[52]["associationType"] = """channelNames"""
         self.vs[52]["mm__"] = """directLink_T"""
-        self.vs[52]["GUID__"] = 515997886690589559
+        #self.vs[52]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc52')
+        # apply association Inst--channelNames-->Name node
+        self.add_node()
         self.vs[53]["associationType"] = """channelNames"""
         self.vs[53]["mm__"] = """directLink_T"""
-        self.vs[53]["GUID__"] = 186244672076736065
+        #self.vs[53]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc53')
+        # apply association Inst--channelNames-->Name node
+        self.add_node()
         self.vs[54]["associationType"] = """channelNames"""
         self.vs[54]["mm__"] = """directLink_T"""
-        self.vs[54]["GUID__"] = 945125010177746869
-        self.vs[55]["mm__"] = """rightExpr"""
-        self.vs[55]["GUID__"] = 2581102591523083909
-        self.vs[56]["mm__"] = """rightExpr"""
-        self.vs[56]["GUID__"] = 286421647964236892
-        self.vs[57]["mm__"] = """rightExpr"""
-        self.vs[57]["GUID__"] = 8284145367332856991
-        self.vs[58]["mm__"] = """rightExpr"""
-        self.vs[58]["GUID__"] = 9201253430285708198
-        self.vs[59]["mm__"] = """rightExpr"""
-        self.vs[59]["GUID__"] = 7345294087110739671
+        #self.vs[54]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc54')
+        
+        # backward association State---->ProcDef node
+        self.add_node()
+        self.vs[55]["type"] = """ruleDef"""
+        self.vs[55]["mm__"] = """backward_link"""
+        #self.vs[55]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink55')
+        
+        
+        # has match attribute isComposite() node
+        self.add_node()
+        self.vs[56]["mm__"] = """hasAttribute_S"""
+        #self.vs[56]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # match attribute isComposite() node
+        self.add_node()
+        self.vs[57]["name"] = """isComposite"""
+        self.vs[57]["mm__"] = """Attribute"""
+        self.vs[57]["Type"] = """'String'"""
+        #self.vs[57]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match attribute equation isComposite() node
+        self.add_node()
+        self.vs[58]["name"] = """eq_"""
+        self.vs[58]["mm__"] = """Equation"""
+        #self.vs[58]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # match attribute equation left expr isComposite() node
+        self.add_node()
+        self.vs[59]["mm__"] = """leftExpr"""
+        #self.vs[59]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # match attribute equation right expr isComposite() node
+        self.add_node()
         self.vs[60]["mm__"] = """rightExpr"""
-        self.vs[60]["GUID__"] = 2497727488487241565
-        self.vs[61]["mm__"] = """rightExpr"""
-        self.vs[61]["GUID__"] = 8511534612897219605
-        self.vs[62]["mm__"] = """rightExpr"""
-        self.vs[62]["GUID__"] = 3311086872913401670
-        self.vs[63]["mm__"] = """rightExpr"""
-        self.vs[63]["GUID__"] = 5944845699605034782
-        self.vs[64]["mm__"] = """rightExpr"""
-        self.vs[64]["GUID__"] = 3496545094933015108
-        self.vs[65]["mm__"] = """rightExpr"""
-        self.vs[65]["GUID__"] = 2409966579046606105
+        #self.vs[60]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # apply attribute atom isComposite() node
+        self.add_node()
+        self.vs[61]["name"] = """true"""
+        self.vs[61]["mm__"] = """Constant"""
+        self.vs[61]["Type"] = """'String'"""
+        #self.vs[61]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom61')
+        
+        
+        # has apply attribute literal() node
+        self.add_node()
+        self.vs[62]["mm__"] = """hasAttribute_T"""
+        #self.vs[62]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute literal() node
+        self.add_node()
+        self.vs[63]["name"] = """literal"""
+        self.vs[63]["mm__"] = """Attribute"""
+        self.vs[63]["Type"] = """'String'"""
+        #self.vs[63]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation literal() node
+        self.add_node()
+        self.vs[64]["name"] = """eq_"""
+        self.vs[64]["mm__"] = """Equation"""
+        #self.vs[64]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr literal() node
+        self.add_node()
+        self.vs[65]["mm__"] = """leftExpr"""
+        #self.vs[65]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr literal() node
+        self.add_node()
         self.vs[66]["mm__"] = """rightExpr"""
-        self.vs[66]["GUID__"] = 185305382767802570
-        self.vs[67]["mm__"] = """rightExpr"""
-        self.vs[67]["GUID__"] = 6235423549357587897
-        self.vs[68]["mm__"] = """rightExpr"""
-        self.vs[68]["GUID__"] = 5232502573444505585
-        self.vs[69]["mm__"] = """rightExpr"""
-        self.vs[69]["GUID__"] = 4538580947626690336
-        self.vs[70]["mm__"] = """rightExpr"""
-        self.vs[70]["GUID__"] = 1981058325821829145
-        self.vs[71]["name"] = """eq1"""
-        self.vs[71]["mm__"] = """Equation"""
-        self.vs[71]["GUID__"] = 8462390475166120155
-        self.vs[72]["name"] = """eq2"""
-        self.vs[72]["mm__"] = """Equation"""
-        self.vs[72]["GUID__"] = 2027611514983392999
-        self.vs[73]["name"] = """eq3"""
-        self.vs[73]["mm__"] = """Equation"""
-        self.vs[73]["GUID__"] = 8946465244822307822
-        self.vs[74]["name"] = """eq4"""
-        self.vs[74]["mm__"] = """Equation"""
-        self.vs[74]["GUID__"] = 4770162797181234340
-        self.vs[75]["name"] = """eq5"""
-        self.vs[75]["mm__"] = """Equation"""
-        self.vs[75]["GUID__"] = 4417663511052189556
-        self.vs[76]["name"] = """eq6"""
+        #self.vs[66]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # apply attribute atom literal() node
+        self.add_node()
+        self.vs[67]["name"] = """sh"""
+        self.vs[67]["mm__"] = """Constant"""
+        self.vs[67]["Type"] = """'String'"""
+        #self.vs[67]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom67')
+        # has apply attribute literal() node
+        self.add_node()
+        self.vs[68]["mm__"] = """hasAttribute_T"""
+        #self.vs[68]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute literal() node
+        self.add_node()
+        self.vs[69]["name"] = """literal"""
+        self.vs[69]["mm__"] = """Attribute"""
+        self.vs[69]["Type"] = """'String'"""
+        #self.vs[69]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation literal() node
+        self.add_node()
+        self.vs[70]["name"] = """eq_"""
+        self.vs[70]["mm__"] = """Equation"""
+        #self.vs[70]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr literal() node
+        self.add_node()
+        self.vs[71]["mm__"] = """leftExpr"""
+        #self.vs[71]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr literal() node
+        self.add_node()
+        self.vs[72]["mm__"] = """rightExpr"""
+        #self.vs[72]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # apply attribute atom literal() node
+        self.add_node()
+        self.vs[73]["name"] = """exit_in"""
+        self.vs[73]["mm__"] = """Constant"""
+        self.vs[73]["Type"] = """'String'"""
+        #self.vs[73]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom73')
+        # has apply attribute literal() node
+        self.add_node()
+        self.vs[74]["mm__"] = """hasAttribute_T"""
+        #self.vs[74]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute literal() node
+        self.add_node()
+        self.vs[75]["name"] = """literal"""
+        self.vs[75]["mm__"] = """Attribute"""
+        self.vs[75]["Type"] = """'String'"""
+        #self.vs[75]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation literal() node
+        self.add_node()
+        self.vs[76]["name"] = """eq_"""
         self.vs[76]["mm__"] = """Equation"""
-        self.vs[76]["GUID__"] = 1271974860966830576
-        self.vs[77]["name"] = """eq7"""
-        self.vs[77]["mm__"] = """Equation"""
-        self.vs[77]["GUID__"] = 8118085927427708847
-        self.vs[78]["name"] = """eq8"""
-        self.vs[78]["mm__"] = """Equation"""
-        self.vs[78]["GUID__"] = 4251978658419790409
-        self.vs[79]["name"] = """eq9"""
-        self.vs[79]["mm__"] = """Equation"""
-        self.vs[79]["GUID__"] = 9165680336520418332
-        self.vs[80]["name"] = """eq10"""
-        self.vs[80]["mm__"] = """Equation"""
-        self.vs[80]["GUID__"] = 5480650724243589841
-        self.vs[81]["name"] = """eq11"""
-        self.vs[81]["mm__"] = """Equation"""
-        self.vs[81]["GUID__"] = 6025450925981124418
-        self.vs[82]["name"] = """eq12"""
+        #self.vs[76]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr literal() node
+        self.add_node()
+        self.vs[77]["mm__"] = """leftExpr"""
+        #self.vs[77]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr literal() node
+        self.add_node()
+        self.vs[78]["mm__"] = """rightExpr"""
+        #self.vs[78]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # apply attribute atom literal() node
+        self.add_node()
+        self.vs[79]["name"] = """exack_in"""
+        self.vs[79]["mm__"] = """Constant"""
+        self.vs[79]["Type"] = """'String'"""
+        #self.vs[79]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom79')
+        # has apply attribute literal() node
+        self.add_node()
+        self.vs[80]["mm__"] = """hasAttribute_T"""
+        #self.vs[80]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute literal() node
+        self.add_node()
+        self.vs[81]["name"] = """literal"""
+        self.vs[81]["mm__"] = """Attribute"""
+        self.vs[81]["Type"] = """'String'"""
+        #self.vs[81]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation literal() node
+        self.add_node()
+        self.vs[82]["name"] = """eq_"""
         self.vs[82]["mm__"] = """Equation"""
-        self.vs[82]["GUID__"] = 1079460609608368062
-        self.vs[83]["name"] = """eq13"""
-        self.vs[83]["mm__"] = """Equation"""
-        self.vs[83]["GUID__"] = 909055766299253448
-        self.vs[84]["name"] = """eq14"""
-        self.vs[84]["mm__"] = """Equation"""
-        self.vs[84]["GUID__"] = 3546608787738571977
-        self.vs[85]["name"] = """eq15"""
-        self.vs[85]["mm__"] = """Equation"""
-        self.vs[85]["GUID__"] = 3456921764607863527
-        self.vs[86]["name"] = """eq16"""
-        self.vs[86]["mm__"] = """Equation"""
-        self.vs[86]["GUID__"] = 503128824837567608
-        self.vs[87]["name"] = """isComposite"""
-        self.vs[87]["Type"] = """'Bool'"""
+        #self.vs[82]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr literal() node
+        self.add_node()
+        self.vs[83]["mm__"] = """leftExpr"""
+        #self.vs[83]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr literal() node
+        self.add_node()
+        self.vs[84]["mm__"] = """rightExpr"""
+        #self.vs[84]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # apply attribute atom literal() node
+        self.add_node()
+        self.vs[85]["name"] = """sh_in"""
+        self.vs[85]["mm__"] = """Constant"""
+        self.vs[85]["Type"] = """'String'"""
+        #self.vs[85]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom85')
+        # has apply attribute name() node
+        self.add_node()
+        self.vs[86]["mm__"] = """hasAttribute_T"""
+        #self.vs[86]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute name() node
+        self.add_node()
+        self.vs[87]["name"] = """name"""
         self.vs[87]["mm__"] = """Attribute"""
-        self.vs[87]["GUID__"] = 4919193769589354872
-        self.vs[88]["name"] = """literal"""
-        self.vs[88]["Type"] = """'String'"""
-        self.vs[88]["mm__"] = """Attribute"""
-        self.vs[88]["GUID__"] = 5964014284167543292
-        self.vs[89]["name"] = """literal"""
-        self.vs[89]["Type"] = """'String'"""
-        self.vs[89]["mm__"] = """Attribute"""
-        self.vs[89]["GUID__"] = 436402750876250475
-        self.vs[90]["name"] = """literal"""
-        self.vs[90]["Type"] = """'String'"""
-        self.vs[90]["mm__"] = """Attribute"""
-        self.vs[90]["GUID__"] = 2202304260545200761
-        self.vs[91]["name"] = """literal"""
+        self.vs[87]["Type"] = """'String'"""
+        #self.vs[87]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation name() node
+        self.add_node()
+        self.vs[88]["name"] = """eq_"""
+        self.vs[88]["mm__"] = """Equation"""
+        #self.vs[88]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr name() node
+        self.add_node()
+        self.vs[89]["mm__"] = """leftExpr"""
+        #self.vs[89]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr name() node
+        self.add_node()
+        self.vs[90]["mm__"] = """rightExpr"""
+        #self.vs[90]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # apply attribute atom name() node
+        self.add_node()
+        self.vs[91]["name"] = """C"""
+        self.vs[91]["mm__"] = """Constant"""
         self.vs[91]["Type"] = """'String'"""
-        self.vs[91]["mm__"] = """Attribute"""
-        self.vs[91]["GUID__"] = 7470495304577263437
-        self.vs[92]["name"] = """name"""
-        self.vs[92]["Type"] = """'String'"""
-        self.vs[92]["mm__"] = """Attribute"""
-        self.vs[92]["GUID__"] = 1295903005374804248
-        self.vs[93]["name"] = """literal"""
-        self.vs[93]["Type"] = """'String'"""
+        #self.vs[91]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom91')
+        # has apply attribute name() node
+        self.add_node()
+        self.vs[92]["mm__"] = """hasAttribute_T"""
+        #self.vs[92]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute name() node
+        self.add_node()
+        self.vs[93]["name"] = """name"""
         self.vs[93]["mm__"] = """Attribute"""
-        self.vs[93]["GUID__"] = 6663381653532868932
-        self.vs[94]["name"] = """literal"""
-        self.vs[94]["Type"] = """'String'"""
-        self.vs[94]["mm__"] = """Attribute"""
-        self.vs[94]["GUID__"] = 6899854919680192215
-        self.vs[95]["name"] = """literal"""
-        self.vs[95]["Type"] = """'String'"""
-        self.vs[95]["mm__"] = """Attribute"""
-        self.vs[95]["GUID__"] = 959839069425855464
-        self.vs[96]["name"] = """literal"""
-        self.vs[96]["Type"] = """'String'"""
-        self.vs[96]["mm__"] = """Attribute"""
-        self.vs[96]["GUID__"] = 7278381653874490659
-        self.vs[97]["name"] = """name"""
+        self.vs[93]["Type"] = """'String'"""
+        #self.vs[93]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation name() node
+        self.add_node()
+        self.vs[94]["name"] = """eq_"""
+        self.vs[94]["mm__"] = """Equation"""
+        #self.vs[94]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr name() node
+        self.add_node()
+        self.vs[95]["mm__"] = """leftExpr"""
+        #self.vs[95]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr name() node
+        self.add_node()
+        self.vs[96]["mm__"] = """rightExpr"""
+        #self.vs[96]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # apply attribute atom name() node
+        self.add_node()
+        self.vs[97]["name"] = """H"""
+        self.vs[97]["mm__"] = """Constant"""
         self.vs[97]["Type"] = """'String'"""
-        self.vs[97]["mm__"] = """Attribute"""
-        self.vs[97]["GUID__"] = 4374708701866895145
-        self.vs[98]["name"] = """literal"""
-        self.vs[98]["Type"] = """'String'"""
-        self.vs[98]["mm__"] = """Attribute"""
-        self.vs[98]["GUID__"] = 3972645927473566389
+        #self.vs[97]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom97')
+        # has apply attribute literal() node
+        self.add_node()
+        self.vs[98]["mm__"] = """hasAttribute_T"""
+        #self.vs[98]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute literal() node
+        self.add_node()
         self.vs[99]["name"] = """literal"""
-        self.vs[99]["Type"] = """'String'"""
         self.vs[99]["mm__"] = """Attribute"""
-        self.vs[99]["GUID__"] = 1066284253928078559
-        self.vs[100]["name"] = """literal"""
-        self.vs[100]["Type"] = """'String'"""
-        self.vs[100]["mm__"] = """Attribute"""
-        self.vs[100]["GUID__"] = 5581711679501019532
-        self.vs[101]["name"] = """pivot"""
-        self.vs[101]["Type"] = """'String'"""
-        self.vs[101]["mm__"] = """Attribute"""
-        self.vs[101]["GUID__"] = 3580663660445310793
-        self.vs[102]["name"] = """pivot"""
-        self.vs[102]["Type"] = """'String'"""
-        self.vs[102]["mm__"] = """Attribute"""
-        self.vs[102]["GUID__"] = 4704798991712748948
-        self.vs[103]["mm__"] = """leftExpr"""
-        self.vs[103]["GUID__"] = 2359463030518273562
-        self.vs[104]["mm__"] = """leftExpr"""
-        self.vs[104]["GUID__"] = 6803372338785450589
-        self.vs[105]["mm__"] = """leftExpr"""
-        self.vs[105]["GUID__"] = 1996643320371044027
-        self.vs[106]["mm__"] = """leftExpr"""
-        self.vs[106]["GUID__"] = 1352442338066300061
+        self.vs[99]["Type"] = """'String'"""
+        #self.vs[99]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation literal() node
+        self.add_node()
+        self.vs[100]["name"] = """eq_"""
+        self.vs[100]["mm__"] = """Equation"""
+        #self.vs[100]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr literal() node
+        self.add_node()
+        self.vs[101]["mm__"] = """leftExpr"""
+        #self.vs[101]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr literal() node
+        self.add_node()
+        self.vs[102]["mm__"] = """rightExpr"""
+        #self.vs[102]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # apply attribute atom literal() node
+        self.add_node()
+        self.vs[103]["name"] = """enp"""
+        self.vs[103]["mm__"] = """Constant"""
+        self.vs[103]["Type"] = """'String'"""
+        #self.vs[103]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom103')
+        # has apply attribute literal() node
+        self.add_node()
+        self.vs[104]["mm__"] = """hasAttribute_T"""
+        #self.vs[104]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute literal() node
+        self.add_node()
+        self.vs[105]["name"] = """literal"""
+        self.vs[105]["mm__"] = """Attribute"""
+        self.vs[105]["Type"] = """'String'"""
+        #self.vs[105]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation literal() node
+        self.add_node()
+        self.vs[106]["name"] = """eq_"""
+        self.vs[106]["mm__"] = """Equation"""
+        #self.vs[106]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr literal() node
+        self.add_node()
         self.vs[107]["mm__"] = """leftExpr"""
-        self.vs[107]["GUID__"] = 3364556023059577243
-        self.vs[108]["mm__"] = """leftExpr"""
-        self.vs[108]["GUID__"] = 8312322133462039622
-        self.vs[109]["mm__"] = """leftExpr"""
-        self.vs[109]["GUID__"] = 8914968390215097365
-        self.vs[110]["mm__"] = """leftExpr"""
-        self.vs[110]["GUID__"] = 5864446572619483308
-        self.vs[111]["mm__"] = """leftExpr"""
-        self.vs[111]["GUID__"] = 8324042015196582600
-        self.vs[112]["mm__"] = """leftExpr"""
-        self.vs[112]["GUID__"] = 6297456106931270579
+        #self.vs[107]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr literal() node
+        self.add_node()
+        self.vs[108]["mm__"] = """rightExpr"""
+        #self.vs[108]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # apply attribute atom literal() node
+        self.add_node()
+        self.vs[109]["name"] = """exit_in"""
+        self.vs[109]["mm__"] = """Constant"""
+        self.vs[109]["Type"] = """'String'"""
+        #self.vs[109]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom109')
+        # has apply attribute literal() node
+        self.add_node()
+        self.vs[110]["mm__"] = """hasAttribute_T"""
+        #self.vs[110]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute literal() node
+        self.add_node()
+        self.vs[111]["name"] = """literal"""
+        self.vs[111]["mm__"] = """Attribute"""
+        self.vs[111]["Type"] = """'String'"""
+        #self.vs[111]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation literal() node
+        self.add_node()
+        self.vs[112]["name"] = """eq_"""
+        self.vs[112]["mm__"] = """Equation"""
+        #self.vs[112]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr literal() node
+        self.add_node()
         self.vs[113]["mm__"] = """leftExpr"""
-        self.vs[113]["GUID__"] = 5652508258800841675
-        self.vs[114]["mm__"] = """leftExpr"""
-        self.vs[114]["GUID__"] = 3428695464600626327
-        self.vs[115]["mm__"] = """leftExpr"""
-        self.vs[115]["GUID__"] = 1561526107893613490
-        self.vs[116]["mm__"] = """leftExpr"""
-        self.vs[116]["GUID__"] = 8316192140801013877
-        self.vs[117]["mm__"] = """leftExpr"""
-        self.vs[117]["GUID__"] = 6197943357208420676
-        self.vs[118]["mm__"] = """leftExpr"""
-        self.vs[118]["GUID__"] = 4699837428887120510
-        self.vs[119]["name"] = """true"""
-        self.vs[119]["Type"] = """'Bool'"""
-        self.vs[119]["mm__"] = """Constant"""
-        self.vs[119]["GUID__"] = 7892620792904976130
-        self.vs[120]["name"] = """sh"""
-        self.vs[120]["Type"] = """'String'"""
-        self.vs[120]["mm__"] = """Constant"""
-        self.vs[120]["GUID__"] = 3959411690439674427
-        self.vs[121]["name"] = """exit_in"""
-        self.vs[121]["Type"] = """'String'"""
+        #self.vs[113]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr literal() node
+        self.add_node()
+        self.vs[114]["mm__"] = """rightExpr"""
+        #self.vs[114]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # apply attribute atom literal() node
+        self.add_node()
+        self.vs[115]["name"] = """exack_in"""
+        self.vs[115]["mm__"] = """Constant"""
+        self.vs[115]["Type"] = """'String'"""
+        #self.vs[115]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom115')
+        # has apply attribute literal() node
+        self.add_node()
+        self.vs[116]["mm__"] = """hasAttribute_T"""
+        #self.vs[116]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute literal() node
+        self.add_node()
+        self.vs[117]["name"] = """literal"""
+        self.vs[117]["mm__"] = """Attribute"""
+        self.vs[117]["Type"] = """'String'"""
+        #self.vs[117]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation literal() node
+        self.add_node()
+        self.vs[118]["name"] = """eq_"""
+        self.vs[118]["mm__"] = """Equation"""
+        #self.vs[118]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr literal() node
+        self.add_node()
+        self.vs[119]["mm__"] = """leftExpr"""
+        #self.vs[119]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr literal() node
+        self.add_node()
+        self.vs[120]["mm__"] = """rightExpr"""
+        #self.vs[120]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # apply attribute atom literal() node
+        self.add_node()
+        self.vs[121]["name"] = """sh_in"""
         self.vs[121]["mm__"] = """Constant"""
-        self.vs[121]["GUID__"] = 6450668710097936474
-        self.vs[122]["name"] = """exack_in"""
-        self.vs[122]["Type"] = """'String'"""
-        self.vs[122]["mm__"] = """Constant"""
-        self.vs[122]["GUID__"] = 8090746100588558452
-        self.vs[123]["name"] = """sh_in"""
+        self.vs[121]["Type"] = """'String'"""
+        #self.vs[121]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom121')
+        # has apply attribute literal() node
+        self.add_node()
+        self.vs[122]["mm__"] = """hasAttribute_T"""
+        #self.vs[122]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute literal() node
+        self.add_node()
+        self.vs[123]["name"] = """literal"""
+        self.vs[123]["mm__"] = """Attribute"""
         self.vs[123]["Type"] = """'String'"""
-        self.vs[123]["mm__"] = """Constant"""
-        self.vs[123]["GUID__"] = 8928164821247451576
-        self.vs[124]["name"] = """C"""
-        self.vs[124]["Type"] = """'String'"""
-        self.vs[124]["mm__"] = """Constant"""
-        self.vs[124]["GUID__"] = 1795950818082894016
-        self.vs[125]["name"] = """enp"""
-        self.vs[125]["Type"] = """'String'"""
-        self.vs[125]["mm__"] = """Constant"""
-        self.vs[125]["GUID__"] = 4117906721438218257
-        self.vs[126]["name"] = """exit_in"""
-        self.vs[126]["Type"] = """'String'"""
-        self.vs[126]["mm__"] = """Constant"""
-        self.vs[126]["GUID__"] = 924582629758112724
-        self.vs[127]["name"] = """exack_in"""
-        self.vs[127]["Type"] = """'String'"""
+        #self.vs[123]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation literal() node
+        self.add_node()
+        self.vs[124]["name"] = """eq_"""
+        self.vs[124]["mm__"] = """Equation"""
+        #self.vs[124]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr literal() node
+        self.add_node()
+        self.vs[125]["mm__"] = """leftExpr"""
+        #self.vs[125]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr literal() node
+        self.add_node()
+        self.vs[126]["mm__"] = """rightExpr"""
+        #self.vs[126]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # apply attribute atom literal() node
+        self.add_node()
+        self.vs[127]["name"] = """exit_in"""
         self.vs[127]["mm__"] = """Constant"""
-        self.vs[127]["GUID__"] = 8967277598079511492
-        self.vs[128]["name"] = """sh_in"""
-        self.vs[128]["Type"] = """'String'"""
-        self.vs[128]["mm__"] = """Constant"""
-        self.vs[128]["GUID__"] = 3456472754239043800
-        self.vs[129]["name"] = """H"""
+        self.vs[127]["Type"] = """'String'"""
+        #self.vs[127]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom127')
+        # has apply attribute literal() node
+        self.add_node()
+        self.vs[128]["mm__"] = """hasAttribute_T"""
+        #self.vs[128]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute literal() node
+        self.add_node()
+        self.vs[129]["name"] = """literal"""
+        self.vs[129]["mm__"] = """Attribute"""
         self.vs[129]["Type"] = """'String'"""
-        self.vs[129]["mm__"] = """Constant"""
-        self.vs[129]["GUID__"] = 7114984911556367577
-        self.vs[130]["name"] = """exit_in"""
-        self.vs[130]["Type"] = """'String'"""
-        self.vs[130]["mm__"] = """Constant"""
-        self.vs[130]["GUID__"] = 2757885375107555760
-        self.vs[131]["name"] = """exack_in"""
-        self.vs[131]["Type"] = """'String'"""
-        self.vs[131]["mm__"] = """Constant"""
-        self.vs[131]["GUID__"] = 6045986532310491309
-        self.vs[132]["name"] = """sh_in"""
-        self.vs[132]["Type"] = """'String'"""
-        self.vs[132]["mm__"] = """Constant"""
-        self.vs[132]["GUID__"] = 5853765423971192259
-        self.vs[133]["name"] = """procdef"""
-        self.vs[133]["Type"] = """'String'"""
+        #self.vs[129]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation literal() node
+        self.add_node()
+        self.vs[130]["name"] = """eq_"""
+        self.vs[130]["mm__"] = """Equation"""
+        #self.vs[130]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr literal() node
+        self.add_node()
+        self.vs[131]["mm__"] = """leftExpr"""
+        #self.vs[131]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr literal() node
+        self.add_node()
+        self.vs[132]["mm__"] = """rightExpr"""
+        #self.vs[132]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # apply attribute atom literal() node
+        self.add_node()
+        self.vs[133]["name"] = """exack_in"""
         self.vs[133]["mm__"] = """Constant"""
-        self.vs[133]["GUID__"] = 2439892242524098663
-        self.vs[134]["name"] = """localdefcompstate"""
-        self.vs[134]["Type"] = """'String'"""
-        self.vs[134]["mm__"] = """Constant"""
-        self.vs[134]["GUID__"] = 6155534808680090490
-        self.vs[135]["mm__"] = """apply_contains"""
-        self.vs[135]["GUID__"] = 4971233736657043363
-        self.vs[136]["mm__"] = """apply_contains"""
-        self.vs[136]["GUID__"] = 778363897901564026
-        self.vs[137]["mm__"] = """apply_contains"""
-        self.vs[137]["GUID__"] = 6275220856396137437
-        self.vs[138]["mm__"] = """apply_contains"""
-        self.vs[138]["GUID__"] = 9108903345940715356
-        self.vs[139]["mm__"] = """apply_contains"""
-        self.vs[139]["GUID__"] = 144037357051491148
-        self.vs[140]["mm__"] = """apply_contains"""
-        self.vs[140]["GUID__"] = 2476438669642766386
-        self.vs[141]["mm__"] = """apply_contains"""
-        self.vs[141]["GUID__"] = 9093668960644697412
-        self.vs[142]["mm__"] = """apply_contains"""
-        self.vs[142]["GUID__"] = 3631424723558354651
-        self.vs[143]["mm__"] = """apply_contains"""
-        self.vs[143]["GUID__"] = 6222705754778379487
-        self.vs[144]["mm__"] = """apply_contains"""
-        self.vs[144]["GUID__"] = 8603525627939507249
-        self.vs[145]["mm__"] = """apply_contains"""
-        self.vs[145]["GUID__"] = 8310227403573232345
-        self.vs[146]["mm__"] = """apply_contains"""
-        self.vs[146]["GUID__"] = 8770596619228439489
-        self.vs[147]["mm__"] = """apply_contains"""
-        self.vs[147]["GUID__"] = 4899677135833219735
-        self.vs[148]["mm__"] = """apply_contains"""
-        self.vs[148]["GUID__"] = 3061517762566761475
-        self.vs[149]["mm__"] = """apply_contains"""
-        self.vs[149]["GUID__"] = 7841344930011362748
-        self.vs[150]["mm__"] = """apply_contains"""
-        self.vs[150]["GUID__"] = 1977936715237360502
-        self.vs[151]["mm__"] = """apply_contains"""
-        self.vs[151]["GUID__"] = 1594802644066740095
-
+        self.vs[133]["Type"] = """'String'"""
+        #self.vs[133]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom133')
+        # has apply attribute literal() node
+        self.add_node()
+        self.vs[134]["mm__"] = """hasAttribute_T"""
+        #self.vs[134]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute literal() node
+        self.add_node()
+        self.vs[135]["name"] = """literal"""
+        self.vs[135]["mm__"] = """Attribute"""
+        self.vs[135]["Type"] = """'String'"""
+        #self.vs[135]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation literal() node
+        self.add_node()
+        self.vs[136]["name"] = """eq_"""
+        self.vs[136]["mm__"] = """Equation"""
+        #self.vs[136]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr literal() node
+        self.add_node()
+        self.vs[137]["mm__"] = """leftExpr"""
+        #self.vs[137]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr literal() node
+        self.add_node()
+        self.vs[138]["mm__"] = """rightExpr"""
+        #self.vs[138]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # apply attribute atom literal() node
+        self.add_node()
+        self.vs[139]["name"] = """sh_in"""
+        self.vs[139]["mm__"] = """Constant"""
+        self.vs[139]["Type"] = """'String'"""
+        #self.vs[139]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom139')
+        
+        
+        # Add the edges
+        self.add_edges([
+                (0,4), # matchmodel -> match_contains
+                (4,3), # match_contains -> match_class State()
+                (1,6), # applymodel -> apply_contains
+                (6,5), # apply_contains -> apply_class ProcDef()
+                (1,8), # applymodel -> apply_contains
+                (8,7), # apply_contains -> apply_class LocalDef()
+                (1,10), # applymodel -> apply_contains
+                (10,9), # apply_contains -> apply_class Name()
+                (1,12), # applymodel -> apply_contains
+                (12,11), # apply_contains -> apply_class New()
+                (1,14), # applymodel -> apply_contains
+                (14,13), # apply_contains -> apply_class Name()
+                (1,16), # applymodel -> apply_contains
+                (16,15), # apply_contains -> apply_class Name()
+                (1,18), # applymodel -> apply_contains
+                (18,17), # apply_contains -> apply_class Name()
+                (1,20), # applymodel -> apply_contains
+                (20,19), # apply_contains -> apply_class Par()
+                (1,22), # applymodel -> apply_contains
+                (22,21), # apply_contains -> apply_class Inst()
+                (1,24), # applymodel -> apply_contains
+                (24,23), # apply_contains -> apply_class Inst()
+                (1,26), # applymodel -> apply_contains
+                (26,25), # apply_contains -> apply_class Name()
+                (1,28), # applymodel -> apply_contains
+                (28,27), # apply_contains -> apply_class Name()
+                (1,30), # applymodel -> apply_contains
+                (30,29), # apply_contains -> apply_class Name()
+                (1,32), # applymodel -> apply_contains
+                (32,31), # apply_contains -> apply_class Name()
+                (1,34), # applymodel -> apply_contains
+                (34,33), # apply_contains -> apply_class Name()
+                (1,36), # applymodel -> apply_contains
+                (36,35), # apply_contains -> apply_class Name()
+                (1,38), # applymodel -> apply_contains
+                (38,37), # apply_contains -> apply_class Name()
+                (5,39), # apply_class ProcDef() -> association p
+                (39,7), # association p  -> apply_class LocalDef()
+                (5,40), # apply_class ProcDef() -> association channelNames
+                (40,9), # association channelNames  -> apply_class Name()
+                (7,41), # apply_class LocalDef() -> association p
+                (41,11), # association p  -> apply_class New()
+                (11,42), # apply_class New() -> association channelNames
+                (42,13), # association channelNames  -> apply_class Name()
+                (11,43), # apply_class New() -> association channelNames
+                (43,15), # association channelNames  -> apply_class Name()
+                (11,44), # apply_class New() -> association channelNames
+                (44,17), # association channelNames  -> apply_class Name()
+                (11,45), # apply_class New() -> association p
+                (45,19), # association p  -> apply_class Par()
+                (19,46), # apply_class Par() -> association p
+                (46,23), # association p  -> apply_class Inst()
+                (19,47), # apply_class Par() -> association p
+                (47,21), # association p  -> apply_class Inst()
+                (21,48), # apply_class Inst() -> association channelNames
+                (48,25), # association channelNames  -> apply_class Name()
+                (21,49), # apply_class Inst() -> association channelNames
+                (49,27), # association channelNames  -> apply_class Name()
+                (21,50), # apply_class Inst() -> association channelNames
+                (50,29), # association channelNames  -> apply_class Name()
+                (21,51), # apply_class Inst() -> association channelNames
+                (51,31), # association channelNames  -> apply_class Name()
+                (23,52), # apply_class Inst() -> association channelNames
+                (52,33), # association channelNames  -> apply_class Name()
+                (23,53), # apply_class Inst() -> association channelNames
+                (53,35), # association channelNames  -> apply_class Name()
+                (23,54), # apply_class Inst() -> association channelNames
+                (54,37), # association channelNames  -> apply_class Name()
+                (5,55), # apply_class ProcDef() -> backward_association
+                (55,3), #  backward_association -> apply_class State()
+                (3,56), # match_class State() -> has_match_attribute isComposite ()
+                (56,57), #  has_match_attribute isComposite () -> match_attribute isComposite ()
+                (58,59), #  equation of match attribute isComposite () -> left_expr
+                (59,57), #  left_expr -> match_attribute isComposite ()
+                (58,60), #  equation of match attribute isComposite () -> right_expr
+                (60,61), # right_expr --> term
+                (9,62), # apply_class Name() -> has_apply_attribute literal ()
+                (62,63), #  has_apply_attribute literal () -> apply_attribute literal ()
+                (64,65), #  equation of apply attribute literal () -> left_expr
+                (65,63), #  left_expr -> apply_attribute literal ()
+                (64,66), #  equation of apply attribute literal () -> right_expr
+                (66,67), # right_expr --> term
+                (13,68), # apply_class Name() -> has_apply_attribute literal ()
+                (68,69), #  has_apply_attribute literal () -> apply_attribute literal ()
+                (70,71), #  equation of apply attribute literal () -> left_expr
+                (71,69), #  left_expr -> apply_attribute literal ()
+                (70,72), #  equation of apply attribute literal () -> right_expr
+                (72,73), # right_expr --> term
+                (15,74), # apply_class Name() -> has_apply_attribute literal ()
+                (74,75), #  has_apply_attribute literal () -> apply_attribute literal ()
+                (76,77), #  equation of apply attribute literal () -> left_expr
+                (77,75), #  left_expr -> apply_attribute literal ()
+                (76,78), #  equation of apply attribute literal () -> right_expr
+                (78,79), # right_expr --> term
+                (17,80), # apply_class Name() -> has_apply_attribute literal ()
+                (80,81), #  has_apply_attribute literal () -> apply_attribute literal ()
+                (82,83), #  equation of apply attribute literal () -> left_expr
+                (83,81), #  left_expr -> apply_attribute literal ()
+                (82,84), #  equation of apply attribute literal () -> right_expr
+                (84,85), # right_expr --> term
+                (21,86), # apply_class Inst() -> has_apply_attribute name ()
+                (86,87), #  has_apply_attribute name () -> apply_attribute name ()
+                (88,89), #  equation of apply attribute name () -> left_expr
+                (89,87), #  left_expr -> apply_attribute name ()
+                (88,90), #  equation of apply attribute name () -> right_expr
+                (90,91), # right_expr --> term
+                (23,92), # apply_class Inst() -> has_apply_attribute name ()
+                (92,93), #  has_apply_attribute name () -> apply_attribute name ()
+                (94,95), #  equation of apply attribute name () -> left_expr
+                (95,93), #  left_expr -> apply_attribute name ()
+                (94,96), #  equation of apply attribute name () -> right_expr
+                (96,97), # right_expr --> term
+                (25,98), # apply_class Name() -> has_apply_attribute literal ()
+                (98,99), #  has_apply_attribute literal () -> apply_attribute literal ()
+                (100,101), #  equation of apply attribute literal () -> left_expr
+                (101,99), #  left_expr -> apply_attribute literal ()
+                (100,102), #  equation of apply attribute literal () -> right_expr
+                (102,103), # right_expr --> term
+                (27,104), # apply_class Name() -> has_apply_attribute literal ()
+                (104,105), #  has_apply_attribute literal () -> apply_attribute literal ()
+                (106,107), #  equation of apply attribute literal () -> left_expr
+                (107,105), #  left_expr -> apply_attribute literal ()
+                (106,108), #  equation of apply attribute literal () -> right_expr
+                (108,109), # right_expr --> term
+                (29,110), # apply_class Name() -> has_apply_attribute literal ()
+                (110,111), #  has_apply_attribute literal () -> apply_attribute literal ()
+                (112,113), #  equation of apply attribute literal () -> left_expr
+                (113,111), #  left_expr -> apply_attribute literal ()
+                (112,114), #  equation of apply attribute literal () -> right_expr
+                (114,115), # right_expr --> term
+                (31,116), # apply_class Name() -> has_apply_attribute literal ()
+                (116,117), #  has_apply_attribute literal () -> apply_attribute literal ()
+                (118,119), #  equation of apply attribute literal () -> left_expr
+                (119,117), #  left_expr -> apply_attribute literal ()
+                (118,120), #  equation of apply attribute literal () -> right_expr
+                (120,121), # right_expr --> term
+                (33,122), # apply_class Name() -> has_apply_attribute literal ()
+                (122,123), #  has_apply_attribute literal () -> apply_attribute literal ()
+                (124,125), #  equation of apply attribute literal () -> left_expr
+                (125,123), #  left_expr -> apply_attribute literal ()
+                (124,126), #  equation of apply attribute literal () -> right_expr
+                (126,127), # right_expr --> term
+                (35,128), # apply_class Name() -> has_apply_attribute literal ()
+                (128,129), #  has_apply_attribute literal () -> apply_attribute literal ()
+                (130,131), #  equation of apply attribute literal () -> left_expr
+                (131,129), #  left_expr -> apply_attribute literal ()
+                (130,132), #  equation of apply attribute literal () -> right_expr
+                (132,133), # right_expr --> term
+                (37,134), # apply_class Name() -> has_apply_attribute literal ()
+                (134,135), #  has_apply_attribute literal () -> apply_attribute literal ()
+                (136,137), #  equation of apply attribute literal () -> left_expr
+                (137,135), #  left_expr -> apply_attribute literal ()
+                (136,138), #  equation of apply attribute literal () -> right_expr
+                (138,139), # right_expr --> term
+                (0,2), # matchmodel -> pairedwith
+                (2,1) # pairedwith -> applyModel
+        ])
+        

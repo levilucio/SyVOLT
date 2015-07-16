@@ -1,273 +1,445 @@
-
-
 from core.himesis import Himesis
+import uuid
 
 class HTransition2HListenBranch(Himesis):
     def __init__(self):
         """
-        Creates the himesis graph representing the AToM3 model HTransition2HListenBranch.
+        Creates the himesis graph representing the DSLTrans rule Transition2HListenBranch.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(HTransition2HListenBranch, self).__init__(name='HTransition2HListenBranch', num_nodes=82, edges=[])
+        super(HTransition2HListenBranch, self).__init__(name='HTransition2HListenBranch', num_nodes=0, edges=[])
         
-        # Add the edges
-        self.add_edges([[8, 31], [31, 0], [0, 32], [32, 6], [6, 33], [33, 13], [8, 34], [34, 3], [3, 35], [35, 10], [14, 36], [36, 8], [15, 37], [37, 17], [17, 38], [38, 9], [9, 39], [39, 4], [9, 40], [40, 16], [16, 41], [41, 18], [18, 42], [42, 7], [49, 43], [43, 26], [50, 44], [44, 75], [51, 45], [45, 27], [52, 46], [46, 28], [53, 47], [47, 29], [54, 48], [48, 30], [17, 21], [21, 77], [4, 22], [22, 78], [15, 23], [23, 79], [18, 24], [24, 80], [7, 25], [25, 81], [62, 0], [2, 1], [1, 68], [1, 69], [1, 70], [1, 71], [1, 72], [1, 73], [1, 74], [5, 61], [61, 8], [5, 62], [5, 63], [63, 6], [5, 64], [64, 13], [5, 65], [65, 14], [5, 66], [66, 3], [5, 67], [67, 10], [10, 11], [11, 75], [14, 12], [12, 76], [19, 14], [5, 2], [68, 15], [15, 19], [72, 16], [71, 4], [49, 55], [50, 56], [51, 57], [52, 58], [53, 59], [54, 60], [69, 17], [70, 9], [73, 18], [74, 7], [7, 20], [20, 8], [55, 76], [56, 77], [57, 78], [58, 79], [59, 80], [60, 81]])
+        
         # Set the graph attributes
-        self["mm__"] = ['UMLRT2Kiltera_MM']
-        self["name"] = """Transition2HListenBranch"""
-        self["GUID__"] = 58498767078247533
+        self["mm__"] = ['HimesisMM']
         
-        # Set the node attributes
-        self.vs[0]["name"] = """vertex1"""
-        self.vs[0]["classtype"] = """Vertex"""
-        self.vs[0]["mm__"] = """Vertex"""
-        self.vs[0]["cardinality"] = """+"""
-        self.vs[0]["GUID__"] = 8209313994148666920
+        self["name"] = """Transition2HListenBranch"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Transition2HListenBranch')
+        
+        # match model. We only support one match model
+        self.add_node()
+        self.vs[0]["mm__"] = """MatchModel"""
+        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Transition2HListenBranchmatchmodel0')
+        
+        # apply model node
+        self.add_node()
         self.vs[1]["mm__"] = """ApplyModel"""
-        self.vs[1]["GUID__"] = 6145783011650694897
+        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Transition2HListenBranchapplymodel1')
+        
+        # paired with relation between match and apply models
+        self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["GUID__"] = 3562388206896443140
-        self.vs[3]["name"] = """triggerS1"""
-        self.vs[3]["classtype"] = """Trigger_S"""
-        self.vs[3]["mm__"] = """Trigger_S"""
-        self.vs[3]["cardinality"] = """1"""
-        self.vs[3]["GUID__"] = 2034619075035566717
-        self.vs[4]["name"] = """triggerT1"""
-        self.vs[4]["classtype"] = """Trigger_T"""
-        self.vs[4]["mm__"] = """Trigger_T"""
-        self.vs[4]["cardinality"] = """1"""
-        self.vs[4]["GUID__"] = 8532133091979449791
-        self.vs[5]["mm__"] = """MatchModel"""
-        self.vs[5]["GUID__"] = 8654825839928059823
-        self.vs[6]["name"] = """statemachine1"""
-        self.vs[6]["classtype"] = """StateMachine"""
-        self.vs[6]["mm__"] = """StateMachine"""
-        self.vs[6]["cardinality"] = """+"""
-        self.vs[6]["GUID__"] = 3590367666884979304
-        self.vs[7]["name"] = """inst1"""
-        self.vs[7]["classtype"] = """Inst"""
-        self.vs[7]["mm__"] = """Inst"""
-        self.vs[7]["cardinality"] = """1"""
-        self.vs[7]["GUID__"] = 1257213505805179196
-        self.vs[8]["name"] = """transition1"""
-        self.vs[8]["classtype"] = """Transition"""
-        self.vs[8]["mm__"] = """Transition"""
-        self.vs[8]["cardinality"] = """+"""
-        self.vs[8]["GUID__"] = 7875048690264192054
-        self.vs[9]["name"] = """seq1"""
-        self.vs[9]["classtype"] = """Seq"""
-        self.vs[9]["mm__"] = """Seq"""
+        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Transition2HListenBranchpairedwith2')
+        self.vs[2]["rulename"] = """Transition2HListenBranch"""
+        
+        # match class Transition() node
+        self.add_node()
+        self.vs[3]["name"] = """"""
+        self.vs[3]["classtype"] = """Transition"""
+        self.vs[3]["mm__"] = """Transition"""
+        self.vs[3]["cardinality"] = """+"""
+        #self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match_contains node for class Transition()
+        self.add_node()
+        self.vs[4]["mm__"] = """match_contains"""
+        #self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains4')
+        # match class Vertex() node
+        self.add_node()
+        self.vs[5]["name"] = """"""
+        self.vs[5]["classtype"] = """Vertex"""
+        self.vs[5]["mm__"] = """Vertex"""
+        self.vs[5]["cardinality"] = """+"""
+        #self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match_contains node for class Vertex()
+        self.add_node()
+        self.vs[6]["mm__"] = """match_contains"""
+        #self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains6')
+        # match class StateMachine() node
+        self.add_node()
+        self.vs[7]["name"] = """"""
+        self.vs[7]["classtype"] = """StateMachine"""
+        self.vs[7]["mm__"] = """StateMachine"""
+        self.vs[7]["cardinality"] = """+"""
+        #self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match_contains node for class StateMachine()
+        self.add_node()
+        self.vs[8]["mm__"] = """match_contains"""
+        #self.vs[8]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains8')
+        # match class State() node
+        self.add_node()
+        self.vs[9]["name"] = """"""
+        self.vs[9]["classtype"] = """State"""
+        self.vs[9]["mm__"] = """State"""
         self.vs[9]["cardinality"] = """1"""
-        self.vs[9]["GUID__"] = 7152622807125849889
-        self.vs[10]["name"] = """signal1"""
-        self.vs[10]["classtype"] = """Signal"""
-        self.vs[10]["mm__"] = """Signal"""
-        self.vs[10]["cardinality"] = """1"""
-        self.vs[10]["GUID__"] = 2688197233702550525
-        self.vs[11]["mm__"] = """hasAttribute_S"""
-        self.vs[11]["GUID__"] = 8122606823935828715
-        self.vs[12]["mm__"] = """hasAttribute_S"""
-        self.vs[12]["GUID__"] = 6711926390103848198
-        self.vs[13]["name"] = """state1"""
-        self.vs[13]["classtype"] = """State"""
-        self.vs[13]["mm__"] = """State"""
+        #self.vs[9]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match_contains node for class State()
+        self.add_node()
+        self.vs[10]["mm__"] = """match_contains"""
+        #self.vs[10]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains10')
+        # match class Trigger() node
+        self.add_node()
+        self.vs[11]["name"] = """"""
+        self.vs[11]["classtype"] = """Trigger"""
+        self.vs[11]["mm__"] = """Trigger"""
+        self.vs[11]["cardinality"] = """1"""
+        #self.vs[11]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match_contains node for class Trigger()
+        self.add_node()
+        self.vs[12]["mm__"] = """match_contains"""
+        #self.vs[12]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains12')
+        # match class Signal() node
+        self.add_node()
+        self.vs[13]["name"] = """"""
+        self.vs[13]["classtype"] = """Signal"""
+        self.vs[13]["mm__"] = """Signal"""
         self.vs[13]["cardinality"] = """1"""
-        self.vs[13]["GUID__"] = 8162237121235758817
-        self.vs[14]["name"] = """state2"""
-        self.vs[14]["classtype"] = """State"""
-        self.vs[14]["mm__"] = """State"""
-        self.vs[14]["cardinality"] = """+"""
-        self.vs[14]["GUID__"] = 3739089887148284216
-        self.vs[15]["name"] = """listen1"""
-        self.vs[15]["classtype"] = """Listen"""
-        self.vs[15]["mm__"] = """Listen"""
-        self.vs[15]["cardinality"] = """1"""
-        self.vs[15]["GUID__"] = 6097978278923028632
-        self.vs[16]["name"] = """listen2"""
-        self.vs[16]["classtype"] = """Listen"""
-        self.vs[16]["mm__"] = """Listen"""
-        self.vs[16]["cardinality"] = """1"""
-        self.vs[16]["GUID__"] = 8118880635226486326
-        self.vs[17]["name"] = """listenbranch1"""
+        #self.vs[13]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match_contains node for class Signal()
+        self.add_node()
+        self.vs[14]["mm__"] = """match_contains"""
+        #self.vs[14]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains14')
+        # match class State() node
+        self.add_node()
+        self.vs[15]["name"] = """"""
+        self.vs[15]["classtype"] = """State"""
+        self.vs[15]["mm__"] = """State"""
+        self.vs[15]["cardinality"] = """+"""
+        #self.vs[15]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match_contains node for class State()
+        self.add_node()
+        self.vs[16]["mm__"] = """match_contains"""
+        #self.vs[16]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains16')
+        
+        
+        # apply class ListenBranch() node
+        self.add_node()
+        self.vs[17]["name"] = """"""
         self.vs[17]["classtype"] = """ListenBranch"""
         self.vs[17]["mm__"] = """ListenBranch"""
         self.vs[17]["cardinality"] = """1"""
-        self.vs[17]["GUID__"] = 1346034759893841828
-        self.vs[18]["name"] = """listenbranch2"""
-        self.vs[18]["classtype"] = """ListenBranch"""
-        self.vs[18]["mm__"] = """ListenBranch"""
-        self.vs[18]["cardinality"] = """1"""
-        self.vs[18]["GUID__"] = 6054027151535862563
-        self.vs[19]["mm__"] = """backward_link"""
-        self.vs[19]["type"] = """ruleDef"""
-        self.vs[19]["GUID__"] = 2182049250565556176
-        self.vs[20]["mm__"] = """backward_link"""
-        self.vs[20]["type"] = """ruleDef"""
-        self.vs[20]["GUID__"] = 3547603472152413734
-        self.vs[21]["mm__"] = """hasAttribute_T"""
-        self.vs[21]["GUID__"] = 3408213214607418125
-        self.vs[22]["mm__"] = """hasAttribute_T"""
-        self.vs[22]["GUID__"] = 1125168737972808647
-        self.vs[23]["mm__"] = """hasAttribute_T"""
-        self.vs[23]["GUID__"] = 6829980910217846115
-        self.vs[24]["mm__"] = """hasAttribute_T"""
-        self.vs[24]["GUID__"] = 4092119620075640456
-        self.vs[25]["mm__"] = """hasAttribute_T"""
-        self.vs[25]["GUID__"] = 4084908382945349645
-        self.vs[26]["Type"] = """'Bool'"""
-        self.vs[26]["name"] = """true"""
-        self.vs[26]["mm__"] = """Constant"""
-        self.vs[26]["GUID__"] = 8120514718970497989
-        self.vs[27]["Type"] = """'String'"""
-        self.vs[27]["name"] = """exit_in"""
-        self.vs[27]["mm__"] = """Constant"""
-        self.vs[27]["GUID__"] = 2599080097145488723
-        self.vs[28]["Type"] = """'String'"""
-        self.vs[28]["name"] = """listenhproc"""
-        self.vs[28]["mm__"] = """Constant"""
-        self.vs[28]["GUID__"] = 3843735257559130570
-        self.vs[29]["Type"] = """'String'"""
-        self.vs[29]["name"] = """exack_in"""
-        self.vs[29]["mm__"] = """Constant"""
-        self.vs[29]["GUID__"] = 388816787288359278
-        self.vs[30]["Type"] = """'String'"""
-        self.vs[30]["name"] = """instfortrans"""
-        self.vs[30]["mm__"] = """Constant"""
-        self.vs[30]["GUID__"] = 2165346039209006887
+        #self.vs[17]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class ListenBranch()
+        self.add_node()
+        self.vs[18]["mm__"] = """apply_contains"""
+        #self.vs[18]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains18')
+        # apply class Seq() node
+        self.add_node()
+        self.vs[19]["name"] = """"""
+        self.vs[19]["classtype"] = """Seq"""
+        self.vs[19]["mm__"] = """Seq"""
+        self.vs[19]["cardinality"] = """1"""
+        #self.vs[19]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Seq()
+        self.add_node()
+        self.vs[20]["mm__"] = """apply_contains"""
+        #self.vs[20]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains20')
+        # apply class Trigger() node
+        self.add_node()
+        self.vs[21]["name"] = """"""
+        self.vs[21]["classtype"] = """Trigger"""
+        self.vs[21]["mm__"] = """Trigger"""
+        self.vs[21]["cardinality"] = """1"""
+        #self.vs[21]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Trigger()
+        self.add_node()
+        self.vs[22]["mm__"] = """apply_contains"""
+        #self.vs[22]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains22')
+        # apply class Listen() node
+        self.add_node()
+        self.vs[23]["name"] = """"""
+        self.vs[23]["classtype"] = """Listen"""
+        self.vs[23]["mm__"] = """Listen"""
+        self.vs[23]["cardinality"] = """1"""
+        #self.vs[23]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Listen()
+        self.add_node()
+        self.vs[24]["mm__"] = """apply_contains"""
+        #self.vs[24]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains24')
+        # apply class ListenBranch() node
+        self.add_node()
+        self.vs[25]["name"] = """"""
+        self.vs[25]["classtype"] = """ListenBranch"""
+        self.vs[25]["mm__"] = """ListenBranch"""
+        self.vs[25]["cardinality"] = """1"""
+        #self.vs[25]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class ListenBranch()
+        self.add_node()
+        self.vs[26]["mm__"] = """apply_contains"""
+        #self.vs[26]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains26')
+        # apply class Inst() node
+        self.add_node()
+        self.vs[27]["name"] = """"""
+        self.vs[27]["classtype"] = """Inst"""
+        self.vs[27]["mm__"] = """Inst"""
+        self.vs[27]["cardinality"] = """1"""
+        #self.vs[27]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Inst()
+        self.add_node()
+        self.vs[28]["mm__"] = """apply_contains"""
+        #self.vs[28]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains28')
+        # apply class Listen() node
+        self.add_node()
+        self.vs[29]["name"] = """"""
+        self.vs[29]["classtype"] = """Listen"""
+        self.vs[29]["mm__"] = """Listen"""
+        self.vs[29]["cardinality"] = """1"""
+        #self.vs[29]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Listen()
+        self.add_node()
+        self.vs[30]["mm__"] = """apply_contains"""
+        #self.vs[30]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains30')
+        
+        
+        # match association Transition--src-->Vertex node
+        self.add_node()
         self.vs[31]["associationType"] = """src"""
         self.vs[31]["mm__"] = """directLink_S"""
-        self.vs[31]["GUID__"] = 6133910697435230162
+        #self.vs[31]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc31')
+        # match association Vertex--owningStateMachine-->StateMachine node
+        self.add_node()
         self.vs[32]["associationType"] = """owningStateMachine"""
         self.vs[32]["mm__"] = """directLink_S"""
-        self.vs[32]["GUID__"] = 7683075070009916480
+        #self.vs[32]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc32')
+        # match association StateMachine--states-->State node
+        self.add_node()
         self.vs[33]["associationType"] = """states"""
         self.vs[33]["mm__"] = """directLink_S"""
-        self.vs[33]["GUID__"] = 3056677043011783210
+        #self.vs[33]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc33')
+        # match association Transition--triggers-->Trigger node
+        self.add_node()
         self.vs[34]["associationType"] = """triggers"""
         self.vs[34]["mm__"] = """directLink_S"""
-        self.vs[34]["GUID__"] = 4847501622177985642
+        #self.vs[34]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc34')
+        # match association Trigger--signal-->Signal node
+        self.add_node()
         self.vs[35]["associationType"] = """signal"""
         self.vs[35]["mm__"] = """directLink_S"""
-        self.vs[35]["GUID__"] = 5865234255280794129
+        #self.vs[35]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc35')
+        # match association State--outgoingTransitions-->Transition node
+        self.add_node()
         self.vs[36]["associationType"] = """outgoingTransitions"""
         self.vs[36]["mm__"] = """directLink_S"""
-        self.vs[36]["GUID__"] = 5307251367681879380
-        self.vs[37]["associationType"] = """branches"""
+        #self.vs[36]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc36')
+        
+        # apply association ListenBranch--p-->Seq node
+        self.add_node()
+        self.vs[37]["associationType"] = """p"""
         self.vs[37]["mm__"] = """directLink_T"""
-        self.vs[37]["GUID__"] = 324859895190874442
+        #self.vs[37]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc37')
+        # apply association Seq--p-->Trigger node
+        self.add_node()
         self.vs[38]["associationType"] = """p"""
         self.vs[38]["mm__"] = """directLink_T"""
-        self.vs[38]["GUID__"] = 4451020065312502086
+        #self.vs[38]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc38')
+        # apply association Seq--p-->Listen node
+        self.add_node()
         self.vs[39]["associationType"] = """p"""
         self.vs[39]["mm__"] = """directLink_T"""
-        self.vs[39]["GUID__"] = 4916175615222869816
-        self.vs[40]["associationType"] = """p"""
+        #self.vs[39]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc39')
+        # apply association Listen--branches-->ListenBranch node
+        self.add_node()
+        self.vs[40]["associationType"] = """branches"""
         self.vs[40]["mm__"] = """directLink_T"""
-        self.vs[40]["GUID__"] = 3752187341883409563
-        self.vs[41]["associationType"] = """branches"""
+        #self.vs[40]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc40')
+        # apply association ListenBranch--p-->Inst node
+        self.add_node()
+        self.vs[41]["associationType"] = """p"""
         self.vs[41]["mm__"] = """directLink_T"""
-        self.vs[41]["GUID__"] = 801261553709748553
-        self.vs[42]["associationType"] = """p"""
+        #self.vs[41]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc41')
+        # apply association Listen--branches-->ListenBranch node
+        self.add_node()
+        self.vs[42]["associationType"] = """branches"""
         self.vs[42]["mm__"] = """directLink_T"""
-        self.vs[42]["GUID__"] = 6517570425142021048
-        self.vs[43]["mm__"] = """rightExpr"""
-        self.vs[43]["GUID__"] = 4845892837759317254
-        self.vs[44]["mm__"] = """rightExpr"""
-        self.vs[44]["GUID__"] = 8260196245845296630
-        self.vs[45]["mm__"] = """rightExpr"""
-        self.vs[45]["GUID__"] = 143614977219614821
-        self.vs[46]["mm__"] = """rightExpr"""
-        self.vs[46]["GUID__"] = 8810069899378313543
-        self.vs[47]["mm__"] = """rightExpr"""
-        self.vs[47]["GUID__"] = 3214512002544637244
-        self.vs[48]["mm__"] = """rightExpr"""
-        self.vs[48]["GUID__"] = 7974045227901133846
-        self.vs[49]["name"] = """eq1"""
+        #self.vs[42]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc42')
+        
+        # backward association Transition---->Inst node
+        self.add_node()
+        self.vs[43]["type"] = """ruleDef"""
+        self.vs[43]["mm__"] = """backward_link"""
+        #self.vs[43]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink43')
+        # backward association State---->Listen node
+        self.add_node()
+        self.vs[44]["type"] = """ruleDef"""
+        self.vs[44]["mm__"] = """backward_link"""
+        #self.vs[44]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink44')
+        
+        
+        # has match attribute name() node
+        self.add_node()
+        self.vs[45]["mm__"] = """hasAttribute_S"""
+        #self.vs[45]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # match attribute name() node
+        self.add_node()
+        self.vs[46]["name"] = """name"""
+        self.vs[46]["mm__"] = """Attribute"""
+        self.vs[46]["Type"] = """'String'"""
+        #self.vs[46]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        
+        
+        # has apply attribute channel() node
+        self.add_node()
+        self.vs[47]["mm__"] = """hasAttribute_T"""
+        #self.vs[47]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute channel() node
+        self.add_node()
+        self.vs[48]["name"] = """channel"""
+        self.vs[48]["mm__"] = """Attribute"""
+        self.vs[48]["Type"] = """'String'"""
+        #self.vs[48]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation channel() node
+        self.add_node()
+        self.vs[49]["name"] = """eq_"""
         self.vs[49]["mm__"] = """Equation"""
-        self.vs[49]["GUID__"] = 5148337954794073286
-        self.vs[50]["name"] = """eq2"""
-        self.vs[50]["mm__"] = """Equation"""
-        self.vs[50]["GUID__"] = 3953837844586350172
-        self.vs[51]["name"] = """eq3"""
-        self.vs[51]["mm__"] = """Equation"""
-        self.vs[51]["GUID__"] = 3098689066340887052
-        self.vs[52]["name"] = """eq4"""
-        self.vs[52]["mm__"] = """Equation"""
-        self.vs[52]["GUID__"] = 9136841095560207388
-        self.vs[53]["name"] = """eq5"""
-        self.vs[53]["mm__"] = """Equation"""
-        self.vs[53]["GUID__"] = 4489455904286639573
-        self.vs[54]["name"] = """eq6"""
+        #self.vs[49]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr channel() node
+        self.add_node()
+        self.vs[50]["mm__"] = """leftExpr"""
+        #self.vs[50]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr channel() node
+        self.add_node()
+        self.vs[51]["mm__"] = """rightExpr"""
+        #self.vs[51]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # has apply attribute channel() node
+        self.add_node()
+        self.vs[52]["mm__"] = """hasAttribute_T"""
+        #self.vs[52]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute channel() node
+        self.add_node()
+        self.vs[53]["name"] = """channel"""
+        self.vs[53]["mm__"] = """Attribute"""
+        self.vs[53]["Type"] = """'String'"""
+        #self.vs[53]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation channel() node
+        self.add_node()
+        self.vs[54]["name"] = """eq_"""
         self.vs[54]["mm__"] = """Equation"""
-        self.vs[54]["GUID__"] = 559597537979667571
+        #self.vs[54]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr channel() node
+        self.add_node()
         self.vs[55]["mm__"] = """leftExpr"""
-        self.vs[55]["GUID__"] = 6468974962421152649
-        self.vs[56]["mm__"] = """leftExpr"""
-        self.vs[56]["GUID__"] = 5863452257887347398
-        self.vs[57]["mm__"] = """leftExpr"""
-        self.vs[57]["GUID__"] = 3611849871142353232
-        self.vs[58]["mm__"] = """leftExpr"""
-        self.vs[58]["GUID__"] = 5320847455345996616
-        self.vs[59]["mm__"] = """leftExpr"""
-        self.vs[59]["GUID__"] = 4820480302409817428
-        self.vs[60]["mm__"] = """leftExpr"""
-        self.vs[60]["GUID__"] = 4383040113717156229
-        self.vs[61]["mm__"] = """match_contains"""
-        self.vs[61]["GUID__"] = 3844069729159285917
-        self.vs[62]["mm__"] = """match_contains"""
-        self.vs[62]["GUID__"] = 4933333508747961172
-        self.vs[63]["mm__"] = """match_contains"""
-        self.vs[63]["GUID__"] = 1719861353423684300
-        self.vs[64]["mm__"] = """match_contains"""
-        self.vs[64]["GUID__"] = 267039219773506244
-        self.vs[65]["mm__"] = """match_contains"""
-        self.vs[65]["GUID__"] = 4873904394815315928
-        self.vs[66]["mm__"] = """match_contains"""
-        self.vs[66]["GUID__"] = 7455482414271280809
-        self.vs[67]["mm__"] = """match_contains"""
-        self.vs[67]["GUID__"] = 2158722472693960765
-        self.vs[68]["mm__"] = """apply_contains"""
-        self.vs[68]["GUID__"] = 1445462933936650083
-        self.vs[69]["mm__"] = """apply_contains"""
-        self.vs[69]["GUID__"] = 8528325788454418796
-        self.vs[70]["mm__"] = """apply_contains"""
-        self.vs[70]["GUID__"] = 5131674457337614397
-        self.vs[71]["mm__"] = """apply_contains"""
-        self.vs[71]["GUID__"] = 1616574839252063748
-        self.vs[72]["mm__"] = """apply_contains"""
-        self.vs[72]["GUID__"] = 6305857214565630033
-        self.vs[73]["mm__"] = """apply_contains"""
-        self.vs[73]["GUID__"] = 1235847168141241080
-        self.vs[74]["mm__"] = """apply_contains"""
-        self.vs[74]["GUID__"] = 8845778994265519172
-        self.vs[75]["Type"] = """'String'"""
-        self.vs[75]["name"] = """name"""
-        self.vs[75]["mm__"] = """Attribute"""
-        self.vs[75]["GUID__"] = 2197757139349833837
-        self.vs[76]["Type"] = """'Bool'"""
-        self.vs[76]["name"] = """isComposite"""
-        self.vs[76]["mm__"] = """Attribute"""
-        self.vs[76]["GUID__"] = 8962833021793353177
-        self.vs[77]["Type"] = """'String'"""
-        self.vs[77]["name"] = """channel"""
-        self.vs[77]["mm__"] = """Attribute"""
-        self.vs[77]["GUID__"] = 8319888665927627726
-        self.vs[78]["Type"] = """'String'"""
-        self.vs[78]["name"] = """channel"""
-        self.vs[78]["mm__"] = """Attribute"""
-        self.vs[78]["GUID__"] = 4142666157015224746
-        self.vs[79]["Type"] = """'String'"""
-        self.vs[79]["name"] = """pivot"""
-        self.vs[79]["mm__"] = """Attribute"""
-        self.vs[79]["GUID__"] = 9084607519318594906
-        self.vs[80]["Type"] = """'String'"""
-        self.vs[80]["name"] = """channel"""
-        self.vs[80]["mm__"] = """Attribute"""
-        self.vs[80]["GUID__"] = 9128817518838586738
-        self.vs[81]["Type"] = """'String'"""
-        self.vs[81]["name"] = """pivot"""
-        self.vs[81]["mm__"] = """Attribute"""
-        self.vs[81]["GUID__"] = 4631207762510135525
-
+        #self.vs[55]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr channel() node
+        self.add_node()
+        self.vs[56]["mm__"] = """rightExpr"""
+        #self.vs[56]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # apply attribute atom channel() node
+        self.add_node()
+        self.vs[57]["name"] = """exit_in"""
+        self.vs[57]["mm__"] = """Constant"""
+        self.vs[57]["Type"] = """'String'"""
+        #self.vs[57]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom57')
+        # has apply attribute channel() node
+        self.add_node()
+        self.vs[58]["mm__"] = """hasAttribute_T"""
+        #self.vs[58]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute channel() node
+        self.add_node()
+        self.vs[59]["name"] = """channel"""
+        self.vs[59]["mm__"] = """Attribute"""
+        self.vs[59]["Type"] = """'String'"""
+        #self.vs[59]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation channel() node
+        self.add_node()
+        self.vs[60]["name"] = """eq_"""
+        self.vs[60]["mm__"] = """Equation"""
+        #self.vs[60]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr channel() node
+        self.add_node()
+        self.vs[61]["mm__"] = """leftExpr"""
+        #self.vs[61]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr channel() node
+        self.add_node()
+        self.vs[62]["mm__"] = """rightExpr"""
+        #self.vs[62]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # apply attribute atom channel() node
+        self.add_node()
+        self.vs[63]["name"] = """exack_in"""
+        self.vs[63]["mm__"] = """Constant"""
+        self.vs[63]["Type"] = """'String'"""
+        #self.vs[63]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom63')
+        
+        
+        # Add the edges
+        self.add_edges([
+                (0,4), # matchmodel -> match_contains
+                (4,3), # match_contains -> match_class Transition()
+                (0,6), # matchmodel -> match_contains
+                (6,5), # match_contains -> match_class Vertex()
+                (0,8), # matchmodel -> match_contains
+                (8,7), # match_contains -> match_class StateMachine()
+                (0,10), # matchmodel -> match_contains
+                (10,9), # match_contains -> match_class State()
+                (0,12), # matchmodel -> match_contains
+                (12,11), # match_contains -> match_class Trigger()
+                (0,14), # matchmodel -> match_contains
+                (14,13), # match_contains -> match_class Signal()
+                (0,16), # matchmodel -> match_contains
+                (16,15), # match_contains -> match_class State()
+                (1,18), # applymodel -> apply_contains
+                (18,17), # apply_contains -> apply_class ListenBranch()
+                (1,20), # applymodel -> apply_contains
+                (20,19), # apply_contains -> apply_class Seq()
+                (1,22), # applymodel -> apply_contains
+                (22,21), # apply_contains -> apply_class Trigger()
+                (1,24), # applymodel -> apply_contains
+                (24,23), # apply_contains -> apply_class Listen()
+                (1,26), # applymodel -> apply_contains
+                (26,25), # apply_contains -> apply_class ListenBranch()
+                (1,28), # applymodel -> apply_contains
+                (28,27), # apply_contains -> apply_class Inst()
+                (1,30), # applymodel -> apply_contains
+                (30,29), # apply_contains -> apply_class Listen()
+                (3,31), # match_class Transition() -> association src
+                (31,5), # association src  -> match_class Vertex()
+                (5,32), # match_class Vertex() -> association owningStateMachine
+                (32,7), # association owningStateMachine  -> match_class StateMachine()
+                (7,33), # match_class StateMachine() -> association states
+                (33,9), # association states  -> match_class State()
+                (3,34), # match_class Transition() -> association triggers
+                (34,11), # association triggers  -> match_class Trigger()
+                (11,35), # match_class Trigger() -> association signal
+                (35,13), # association signal  -> match_class Signal()
+                (15,36), # match_class State() -> association outgoingTransitions
+                (36,3), # association outgoingTransitions  -> match_class Transition()
+                (17,37), # apply_class ListenBranch() -> association p
+                (37,19), # association p  -> apply_class Seq()
+                (19,38), # apply_class Seq() -> association p
+                (38,21), # association p  -> apply_class Trigger()
+                (19,39), # apply_class Seq() -> association p
+                (39,23), # association p  -> apply_class Listen()
+                (23,40), # apply_class Listen() -> association branches
+                (40,25), # association branches  -> apply_class ListenBranch()
+                (25,41), # apply_class ListenBranch() -> association p
+                (41,27), # association p  -> apply_class Inst()
+                (29,42), # apply_class Listen() -> association branches
+                (42,17), # association branches  -> apply_class ListenBranch()
+                (27,43), # apply_class Inst() -> backward_association
+                (43,3), #  backward_association -> apply_class Transition()
+                (29,44), # apply_class Listen() -> backward_association
+                (44,15), #  backward_association -> apply_class State()
+                (13,45), # match_class Signal() -> has_match_attribute name ()
+                (45,46), #  has_match_attribute name () -> match_attribute name ()
+                (17,47), # apply_class ListenBranch() -> has_apply_attribute channel ()
+                (47,48), #  has_apply_attribute channel () -> apply_attribute channel ()
+                (49,50), #  equation of apply attribute channel () -> left_expr
+                (50,48), #  left_expr -> apply_attribute channel ()
+                (49,51), #  equation of apply attribute channel () -> right_expr
+                (51,46), # right_expr --> term
+                (21,52), # apply_class Trigger() -> has_apply_attribute channel ()
+                (52,53), #  has_apply_attribute channel () -> apply_attribute channel ()
+                (54,55), #  equation of apply attribute channel () -> left_expr
+                (55,53), #  left_expr -> apply_attribute channel ()
+                (54,56), #  equation of apply attribute channel () -> right_expr
+                (56,57), # right_expr --> term
+                (25,58), # apply_class ListenBranch() -> has_apply_attribute channel ()
+                (58,59), #  has_apply_attribute channel () -> apply_attribute channel ()
+                (60,61), #  equation of apply attribute channel () -> left_expr
+                (61,59), #  left_expr -> apply_attribute channel ()
+                (60,62), #  equation of apply attribute channel () -> right_expr
+                (62,63), # right_expr --> term
+                (0,2), # matchmodel -> pairedwith
+                (2,1) # pairedwith -> applyModel
+        ])
+        

@@ -1,107 +1,177 @@
-
-
 from core.himesis import Himesis
+import uuid
 
 class HBasicStateNoOutgoing2ProcDef(Himesis):
     def __init__(self):
         """
-        Creates the himesis graph representing the AToM3 model HBasicStateNoOutgoing2ProcDef.
+        Creates the himesis graph representing the DSLTrans rule BasicStateNoOutgoing2ProcDef.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(HBasicStateNoOutgoing2ProcDef, self).__init__(name='HBasicStateNoOutgoing2ProcDef', num_nodes=29, edges=[])
+        super(HBasicStateNoOutgoing2ProcDef, self).__init__(name='HBasicStateNoOutgoing2ProcDef', num_nodes=0, edges=[])
         
-        # Add the edges
-        self.add_edges([[8, 0], [0, 7], [18, 14], [14, 27], [17, 15], [15, 26], [19, 16], [16, 28], [8, 1], [1, 22], [5, 2], [2, 12], [2, 13], [6, 3], [3, 4], [4, 10], [10, 20], [4, 11], [11, 21], [9, 4], [6, 5], [17, 23], [18, 24], [19, 25], [13, 7], [12, 8], [8, 9], [23, 20], [24, 21], [25, 22]])
+        
         # Set the graph attributes
-        self["mm__"] = ['UMLRT2Kiltera_MM']
-        self["name"] = """BasicStateNoOutgoing2ProcDef"""
-        self["GUID__"] = 6099964635145944144
+        self["mm__"] = ['HimesisMM']
         
-        # Set the node attributes
-        self.vs[0]["associationType"] = """p"""
-        self.vs[0]["mm__"] = """directLink_T"""
-        self.vs[0]["GUID__"] = 8594045057616115267
-        self.vs[1]["mm__"] = """hasAttribute_T"""
-        self.vs[1]["GUID__"] = 2652801976527318279
-        self.vs[2]["mm__"] = """ApplyModel"""
-        self.vs[2]["GUID__"] = 2246186575130914086
-        self.vs[3]["mm__"] = """match_contains"""
-        self.vs[3]["GUID__"] = 2837358535469550779
-        self.vs[4]["name"] = """state1"""
-        self.vs[4]["classtype"] = """State"""
-        self.vs[4]["mm__"] = """State"""
-        self.vs[4]["cardinality"] = """+"""
-        self.vs[4]["GUID__"] = 7415144559275781691
-        self.vs[5]["mm__"] = """paired_with"""
-        self.vs[5]["GUID__"] = 6910257610741535439
-        self.vs[6]["mm__"] = """MatchModel"""
-        self.vs[6]["GUID__"] = 5384204831269294915
-        self.vs[7]["name"] = """null1"""
+        self["name"] = """BasicStateNoOutgoing2ProcDef"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'BasicStateNoOutgoing2ProcDef')
+        
+        # match model. We only support one match model
+        self.add_node()
+        self.vs[0]["mm__"] = """MatchModel"""
+        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'BasicStateNoOutgoing2ProcDefmatchmodel0')
+        
+        # apply model node
+        self.add_node()
+        self.vs[1]["mm__"] = """ApplyModel"""
+        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'BasicStateNoOutgoing2ProcDefapplymodel1')
+        
+        # paired with relation between match and apply models
+        self.add_node()
+        self.vs[2]["mm__"] = """paired_with"""
+        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'BasicStateNoOutgoing2ProcDefpairedwith2')
+        self.vs[2]["rulename"] = """BasicStateNoOutgoing2ProcDef"""
+        
+        # match class State() node
+        self.add_node()
+        self.vs[3]["name"] = """"""
+        self.vs[3]["classtype"] = """State"""
+        self.vs[3]["mm__"] = """State"""
+        self.vs[3]["cardinality"] = """+"""
+        #self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match_contains node for class State()
+        self.add_node()
+        self.vs[4]["mm__"] = """match_contains"""
+        #self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains4')
+        
+        
+        # apply class ProcDef() node
+        self.add_node()
+        self.vs[5]["name"] = """"""
+        self.vs[5]["classtype"] = """ProcDef"""
+        self.vs[5]["mm__"] = """ProcDef"""
+        self.vs[5]["cardinality"] = """1"""
+        #self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class ProcDef()
+        self.add_node()
+        self.vs[6]["mm__"] = """apply_contains"""
+        #self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains6')
+        # apply class Null() node
+        self.add_node()
+        self.vs[7]["name"] = """"""
         self.vs[7]["classtype"] = """Null"""
         self.vs[7]["mm__"] = """Null"""
         self.vs[7]["cardinality"] = """1"""
-        self.vs[7]["GUID__"] = 8726334918046482046
-        self.vs[8]["name"] = """procdef1"""
-        self.vs[8]["classtype"] = """ProcDef"""
-        self.vs[8]["mm__"] = """ProcDef"""
-        self.vs[8]["cardinality"] = """1"""
-        self.vs[8]["GUID__"] = 3867775458825975895
-        self.vs[9]["mm__"] = """backward_link"""
-        self.vs[9]["type"] = """ruleDef"""
-        self.vs[9]["GUID__"] = 1565499112901273858
-        self.vs[10]["mm__"] = """hasAttribute_S"""
-        self.vs[10]["GUID__"] = 5419670648108149462
+        #self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Null()
+        self.add_node()
+        self.vs[8]["mm__"] = """apply_contains"""
+        #self.vs[8]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains8')
+        
+        
+        
+        # apply association ProcDef--p-->Null node
+        self.add_node()
+        self.vs[9]["associationType"] = """p"""
+        self.vs[9]["mm__"] = """directLink_T"""
+        #self.vs[9]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc9')
+        
+        # backward association State---->ProcDef node
+        self.add_node()
+        self.vs[10]["type"] = """ruleDef"""
+        self.vs[10]["mm__"] = """backward_link"""
+        #self.vs[10]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink10')
+        
+        
+        # has match attribute isComposite() node
+        self.add_node()
         self.vs[11]["mm__"] = """hasAttribute_S"""
-        self.vs[11]["GUID__"] = 6302259747763698082
-        self.vs[12]["mm__"] = """apply_contains"""
-        self.vs[12]["GUID__"] = 5225940711097184717
-        self.vs[13]["mm__"] = """apply_contains"""
-        self.vs[13]["GUID__"] = 6461955502429471902
-        self.vs[14]["mm__"] = """rightExpr"""
-        self.vs[14]["GUID__"] = 5682278460184926931
+        #self.vs[11]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # match attribute isComposite() node
+        self.add_node()
+        self.vs[12]["name"] = """isComposite"""
+        self.vs[12]["mm__"] = """Attribute"""
+        self.vs[12]["Type"] = """'String'"""
+        #self.vs[12]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match attribute equation isComposite() node
+        self.add_node()
+        self.vs[13]["name"] = """eq_"""
+        self.vs[13]["mm__"] = """Equation"""
+        #self.vs[13]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # match attribute equation left expr isComposite() node
+        self.add_node()
+        self.vs[14]["mm__"] = """leftExpr"""
+        #self.vs[14]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # match attribute equation right expr isComposite() node
+        self.add_node()
         self.vs[15]["mm__"] = """rightExpr"""
-        self.vs[15]["GUID__"] = 6826874363091670959
-        self.vs[16]["mm__"] = """rightExpr"""
-        self.vs[16]["GUID__"] = 4017585897012792283
-        self.vs[17]["name"] = """eq1"""
-        self.vs[17]["mm__"] = """Equation"""
-        self.vs[17]["GUID__"] = 3169458542573725647
-        self.vs[18]["name"] = """eq2"""
-        self.vs[18]["mm__"] = """Equation"""
-        self.vs[18]["GUID__"] = 3703076769387195771
-        self.vs[19]["name"] = """eq3"""
+        #self.vs[15]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # apply attribute atom isComposite() node
+        self.add_node()
+        self.vs[16]["name"] = """false"""
+        self.vs[16]["mm__"] = """Constant"""
+        self.vs[16]["Type"] = """'String'"""
+        #self.vs[16]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom16')
+        # has match attribute hasOutgoingTransitions() node
+        self.add_node()
+        self.vs[17]["mm__"] = """hasAttribute_S"""
+        #self.vs[17]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # match attribute hasOutgoingTransitions() node
+        self.add_node()
+        self.vs[18]["name"] = """hasOutgoingTransitions"""
+        self.vs[18]["mm__"] = """Attribute"""
+        self.vs[18]["Type"] = """'String'"""
+        #self.vs[18]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match attribute equation hasOutgoingTransitions() node
+        self.add_node()
+        self.vs[19]["name"] = """eq_"""
         self.vs[19]["mm__"] = """Equation"""
-        self.vs[19]["GUID__"] = 520701530960340312
-        self.vs[20]["name"] = """isComposite"""
-        self.vs[20]["Type"] = """'Bool'"""
-        self.vs[20]["mm__"] = """Attribute"""
-        self.vs[20]["GUID__"] = 1242959223121352013
-        self.vs[21]["name"] = """hasOutgoingTransitions"""
-        self.vs[21]["Type"] = """'Bool'"""
-        self.vs[21]["mm__"] = """Attribute"""
-        self.vs[21]["GUID__"] = 5362055990772679204
-        self.vs[22]["name"] = """pivot"""
+        #self.vs[19]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # match attribute equation left expr hasOutgoingTransitions() node
+        self.add_node()
+        self.vs[20]["mm__"] = """leftExpr"""
+        #self.vs[20]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # match attribute equation right expr hasOutgoingTransitions() node
+        self.add_node()
+        self.vs[21]["mm__"] = """rightExpr"""
+        #self.vs[21]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # apply attribute atom hasOutgoingTransitions() node
+        self.add_node()
+        self.vs[22]["name"] = """false"""
+        self.vs[22]["mm__"] = """Constant"""
         self.vs[22]["Type"] = """'String'"""
-        self.vs[22]["mm__"] = """Attribute"""
-        self.vs[22]["GUID__"] = 2915674714696930349
-        self.vs[23]["mm__"] = """leftExpr"""
-        self.vs[23]["GUID__"] = 4494441341044070787
-        self.vs[24]["mm__"] = """leftExpr"""
-        self.vs[24]["GUID__"] = 1296198394194057184
-        self.vs[25]["mm__"] = """leftExpr"""
-        self.vs[25]["GUID__"] = 7661029515234221783
-        self.vs[26]["name"] = """false"""
-        self.vs[26]["Type"] = """'Bool'"""
-        self.vs[26]["mm__"] = """Constant"""
-        self.vs[26]["GUID__"] = 8184327863903859887
-        self.vs[27]["name"] = """false"""
-        self.vs[27]["Type"] = """'Bool'"""
-        self.vs[27]["mm__"] = """Constant"""
-        self.vs[27]["GUID__"] = 2898597903183493500
-        self.vs[28]["name"] = """procdef"""
-        self.vs[28]["Type"] = """'String'"""
-        self.vs[28]["mm__"] = """Constant"""
-        self.vs[28]["GUID__"] = 4678187015003537421
-
+        #self.vs[22]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom22')
+        
+        
+        
+        
+        # Add the edges
+        self.add_edges([
+                (0,4), # matchmodel -> match_contains
+                (4,3), # match_contains -> match_class State()
+                (1,6), # applymodel -> apply_contains
+                (6,5), # apply_contains -> apply_class ProcDef()
+                (1,8), # applymodel -> apply_contains
+                (8,7), # apply_contains -> apply_class Null()
+                (5,9), # apply_class ProcDef() -> association p
+                (9,7), # association p  -> apply_class Null()
+                (5,10), # apply_class ProcDef() -> backward_association
+                (10,3), #  backward_association -> apply_class State()
+                (3,11), # match_class State() -> has_match_attribute isComposite ()
+                (11,12), #  has_match_attribute isComposite () -> match_attribute isComposite ()
+                (13,14), #  equation of match attribute isComposite () -> left_expr
+                (14,12), #  left_expr -> match_attribute isComposite ()
+                (13,15), #  equation of match attribute isComposite () -> right_expr
+                (15,16), # right_expr --> term
+                (3,17), # match_class State() -> has_match_attribute hasOutgoingTransitions ()
+                (17,18), #  has_match_attribute hasOutgoingTransitions () -> match_attribute hasOutgoingTransitions ()
+                (19,20), #  equation of match attribute hasOutgoingTransitions () -> left_expr
+                (20,18), #  left_expr -> match_attribute hasOutgoingTransitions ()
+                (19,21), #  equation of match attribute hasOutgoingTransitions () -> right_expr
+                (21,22), # right_expr --> term
+                (0,2), # matchmodel -> pairedwith
+                (2,1) # pairedwith -> applyModel
+        ])
+        

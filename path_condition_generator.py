@@ -1068,6 +1068,18 @@ class PathConditionGenerator(object):
 #                 backLinksCacheKeys[backMatcherPosition].append((backLinkMatchers[backMatcherPosition].condition.name + fragment.name, fragment))
 #         return backLinksCacheKeys
 
+    def expand_pc_name_with_multiple_applications(self, name):
+        new_name = ""
+        for token in name.split("_"):
+            if "-" in token:
+                rulename = token.split("-")[0]
+                number = token.split("-")[1]
+                new_name += self.rule_names[rulename] + "-" + str(number) + "_"
+            else:
+                new_name = self.rule_names[token] + "_"
+        new_name = new_name[:-1]
+        return new_name
+
     def expand_pc_name(self, name):
         new_name = ""
         for token in name.split("_"):
@@ -1079,7 +1091,7 @@ class PathConditionGenerator(object):
     def print_path_conditions_screen(self):
         for pathCondName in self.currentpathConditionSet:
             print("----------")
-            print(self.expand_pc_name(pathCondName))
+            print(self.expand_pc_name_with_multiple_applications(pathCondName))
             
     def print_path_conditions_screen_real_name(self):
         for pathCondName in self.currentpathConditionSet:
