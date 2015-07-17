@@ -1,6 +1,6 @@
 
 from t_core.messages import Packet
-from t_core.matcher import Matcher, Matcher_Equation
+from t_core.matcher import Matcher
 from t_core.iterator import Iterator
 
 from t_core.tc_python.arule import ARule

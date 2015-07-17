@@ -280,30 +280,3 @@ class Matcher(RulePrimitive):
             print(tb)
             raise e
         finally: lhsMatcher.reset_recursion_limit()
-
-from solver.simple_attribute_equation_evaluator import SimpleAttributeEquationEvaluator
-
-class Matcher_Equation(Matcher):
-
-    def __init__(self, condition, max=INFINITY):
-        super(Matcher_Equation, self).__init__(condition, max)
-        self.solver = SimpleAttributeEquationEvaluator(0)
-
-
-    def packet_in(self, packet, verbosity = 0, preds=[], succs=[]):
-
-        consistent = self.solver.can_match(packet.graph, self.condition)
-
-        if consistent:
-            for NAC in self.condition.NACs:
-                consistent = self.solver.can_match(packet.graph, NAC)
-                if not consistent:
-                    break
-
-        #did not match or a NAC matched, return failure
-        if not consistent:
-            self.exception = None
-            self.is_success = False
-            return packet
-
-        return super(Matcher_Equation, self).packet_in(packet, verbosity, preds, succs)

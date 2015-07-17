@@ -3,7 +3,7 @@ import re
 import sys
 import os
 from t_core.messages import Packet
-from t_core.matcher import Matcher, Matcher_Equation
+from t_core.matcher import Matcher
 from t_core.rewriter import Rewriter
 from core.himesis_utils import *
 from core.himesis_plus import *
@@ -572,10 +572,7 @@ class PyRamify:
             graph_to_dot(new_name, backward_pattern)
 
         #create the Matcher
-        if backward_pattern["equations"]:
-            matcher = Matcher_Equation(backward_pattern)
-        else:
-            matcher = Matcher(backward_pattern)
+        matcher = Matcher(backward_pattern)
 
         #append the new backward pattern and name mapping
         bwPatterns.append(matcher)
@@ -706,16 +703,16 @@ class PyRamify:
 
         # check what rule the match found is connected to 
         LHS_condition_string += "for node in nodesToCheck:\n"
-        LHS_condition_string += "    print 'Node: ' + str(node)\n"                               
+        #LHS_condition_string += "    print 'Node: ' + str(node)\n"
         LHS_condition_string += "    pairedWithNodes = flood_find_nodes(PreNode(node).index, graph,['directLink_S', 'directLink_T', \
 'indirectLink_S', 'indirectLink_T','hasAttribute_S', 'hasAttribute_T', 'Attribute', 'Equation', \
 'Constant', 'Concat', 'leftExpr', 'rightExpr', 'trace_link'],['paired_with'])\n"
         LHS_condition_string += "    pairedWithNodes = [node for node in pairedWithNodes if graph.vs[node]['mm__'] == 'paired_with']\n"
         LHS_condition_string += "    setsOfpairedWithNodes.append(set(pairedWithNodes))\n"   
-        LHS_condition_string += "    print 'Rule nodes: ' + str(pairedWithNodes)\n"        
+        #LHS_condition_string += "    print 'Rule nodes: ' + str(pairedWithNodes)\n"
                 
         LHS_condition_string += "result = set.intersection(*setsOfpairedWithNodes)\n"
-        LHS_condition_string += "print '>>>>>> Result: ' + str(result)\n"
+        #LHS_condition_string += "print '>>>>>> Result: ' + str(result)\n"
         # it is fully connected to the subsuming rule            
         if writeOnTop:
             LHS_condition_string += "if result == set():\n"
@@ -1048,10 +1045,7 @@ class PyRamify:
                 backward_pattern.NACs = [NAC_graph]
 
             #create the Matcher
-            if backward_pattern["equations"]:
-                matcher = Matcher_Equation(backward_pattern)
-            else:
-                matcher = Matcher(backward_pattern)
+            matcher = Matcher(backward_pattern)
  
  
             #TODO: Make rewriter code simpler, and same as match pattern rewriter
@@ -1385,10 +1379,7 @@ class PyRamify:
 
         #graph_to_dot("the_rewriter_graph_after" + rewriter.name, rewriter)
 
-        if match_graph["equations"]:
-            matcher = Matcher_Equation(match_graph)
-        else:
-            matcher = Matcher(match_graph)
+        matcher = Matcher(match_graph)
 
         return {name : [matcher, Rewriter(rewriter)]}
 
