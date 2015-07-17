@@ -7,6 +7,50 @@ Created on 2015-02-13
 from .attribute_equation_solver import AttributeEquationSolver
 from core.himesis_plus import find_nodes_with_mm
 
+def is_consistent(graph, verbosity=0):
+
+
+    eqs = graph["equations"]
+
+    if not eqs:
+        return True
+
+    duplicates = []
+    var_dict = {}
+
+    if verbosity >= 2:
+        print("is_consistent:")
+        print(eqs)
+
+    i = 0
+    for eq in eqs:
+        node = eq[0][0]
+        attr = eq[0][1]
+        value = eq[1]
+
+        if node not in var_dict:
+            var_dict[node] = {attr : value}
+            continue
+
+        if attr not in var_dict[node]:
+            var_dict[node][attr] = value
+            continue
+
+        #keep track of duplicates to remove
+        duplicates.append(i)
+        # print("Duplicate attr: " + attr + " " + str(value))
+
+        if value != var_dict[node][attr]:
+            if verbosity >= 2:
+                print("Inconsistent values for " + str(eq[0]) + ": " + str(value) + " vs " + str(var_dict[node][attr]))
+            return False
+
+        i += 1
+
+    #remove all duplicates
+    new_eqs = [graph["equations"][i] for i in range(len(graph["equations"])) if i not in duplicates]
+    graph["equations"] = new_eqs
+    return True
 
 class SimpleAttributeEquationEvaluator(AttributeEquationSolver):
     """

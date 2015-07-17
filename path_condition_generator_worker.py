@@ -14,6 +14,7 @@ from core.himesis_utils import expand_graph, shrink_graph, disjoint_model_union,
 from copy import deepcopy
 
 from solver.simple_attribute_equation_evaluator import SimpleAttributeEquationEvaluator
+from solver.simple_attribute_equation_evaluator import is_consistent
 
 import numpy.random as nprnd
 
@@ -286,9 +287,11 @@ class path_condition_generator_worker(Process):
     
                                         # check if the equations on the attributes of the newly created path condition are satisfied
     
-                                        if self.attributeEquationEvaluator(newPathCond):
+                                        if not is_consistent(newPathCond):
+                                            if self.verbosity >= 2:
+                                                print("Graph: " + newPathCondName + " has inconsistent equations")
     
-                                        #if True:
+                                        else:
     
                                             if isTotalCombinator:
     
@@ -382,9 +385,12 @@ class path_condition_generator_worker(Process):
                                             newPathCond.name = newPathCondName
    
                                             # check if the equations on the attributes of the newly created path condition are satisfied
-    
-                                            if self.attributeEquationEvaluator(newPathCond):
-    
+
+                                            if not is_consistent(newPathCond):
+                                                if self.verbosity >= 2:
+                                                    print("Graph: " + newPathCondName + " has inconsistent equations")
+
+                                            else:
                                                 if isTotalCombinator:
                                                     
                                                     # because the rule combines totally with a path condition in the accumulator we just copy it
@@ -488,8 +494,8 @@ class path_condition_generator_worker(Process):
                         p = i.packet_in(p)
                         
 #                        print "Match site:"
-                        for matchSite in p.match_sets.keys():
-                            print str(p.match_sets[matchSite])
+#                         for matchSite in p.match_sets.keys():
+#                             print str(p.match_sets[matchSite])
 
 
                         while i.is_success:
