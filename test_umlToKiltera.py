@@ -123,7 +123,7 @@ class Test():
 
         #self.rules = self.pyramify.get_rules("UMLRT2Kiltera_MM/transformation_eq_outside")
 
-        self.rules = self.pyramify.get_rules("UMLRT2Kiltera_MM/transformation/Himesis")
+        self.rules = self.pyramify.get_rules("UMLRT2Kiltera_MM/transformation_eq_outside/")
 
         #print("Rules: " + str(self.rules.keys()))
 
@@ -163,22 +163,26 @@ class Test():
 
 
 
-        a1 = self.rules['HState2ProcDef']
-        a2 = self.rules['HState2ProcDefCopy']
-        b1 = self.rules['HBasicStateNoOutgoing2ProcDef']
-        b2 = self.rules['HBasicState2ProcDef']
-        b3 = self.rules['HCompositeState2ProcDef']
-        c1 = self.rules['HExitPoint2BProcDefxWhetherOrNotExitPtHasOutgoingTrans']
-        c2 = self.rules['HState2HProcDef']
-        c3 = self.rules['HState2CProcDef']
-#         d1 = self.rules['HTransition2QInstSIBLING']
-#         d2 = self.rules['HTransition2QInstOUT']
-#         d3 = self.rules['HTransition2Inst']
-#         e1 = self.rules['HTransition2ListenBranch']
-#         e2 = self.rules['HConnectOutputsOfxExitPoint2BProcDefxTransition2QInst']
-#         e3 = self.rules['HTransition2HListenBranch']
-#         e4 = self.rules['HConnectOPxState2CProcDefxTransition2InstxOtherInTransitions']
-#         f1 = self.rules['HMapHeirarchyOfStates2HeirarchyOfProcs']
+        try:
+            a1 = self.rules['HState2ProcDef']
+            #a2 = self.rules['HState2ProcDefCopy']
+            b1 = self.rules['HBasicStateNoOutgoing2ProcDef']
+            b2 = self.rules['HBasicState2ProcDef']
+            b3 = self.rules['HCompositeState2ProcDef']
+            c1 = self.rules['HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans']
+            c2 = self.rules['HState2HProcDef']
+            c3 = self.rules['HState2CProcDef']
+            d1 = self.rules['HTransition2QInstSIBLING']
+            d2 = self.rules['HTransition2QInstOUT']
+            d3 = self.rules['HTransition2Inst']
+            e1 = self.rules['HTransition2ListenBranch']
+            e2 = self.rules['HConnectOutputsOfExitPoint2BProcDefTransition2QInst']
+            e3 = self.rules['HTransition2HListenBranch']
+            e4 = self.rules['HConnectOPState2CProcDefTransition2InstotherInTransitions']
+            f1 = self.rules['HMapHeirarchyOfStates2HeirarchyOfProcs']
+        except KeyError as e:
+            print(e)
+            print("Rules: " + str(self.rules.keys()))
 
         #get the expected num from the args
         #expected_num_pcs = args.num_pcs
@@ -187,7 +191,7 @@ class Test():
         #TODO: Change this number if you are modifying the transformation at all
         if args.num_rules == -1:
                 #transformation = [[a1], [b1,b2,b3], [c1]]
-                transformation = [[a1], [b1,b2,b3], [c1,c3]]#, [c1]]#,c2,c3]]#, [d1,d2,d3], [e1,e2,e3,e4], [f1]]
+                transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
         else:
                 transformation = self.select_rules([[a1], [b1]])#,b2,b3], [c1]])#,c2,c3]])#, [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
 
@@ -222,7 +226,7 @@ class Test():
 #            self.pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation_eq_outside", transformation)
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlappingRules] = \
-            self.pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation/Himesis", transformation)
+            self.pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation_eq_outside/", transformation)
 
         s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlappingRules, args)#
     
