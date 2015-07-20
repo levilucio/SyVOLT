@@ -554,7 +554,7 @@ class HimesisMatcher(object):
                             return False
 
                 if found:
-                    break
+                    continue
 
                 try:
                     if src_node[patt_attr] != patt_value:
