@@ -1090,7 +1090,7 @@ class PathConditionGenerator(object):
         return new_name
 
     def print_path_conditions_screen(self):
-        for pathCondName in self.currentpathConditionSet:
+        for pathCondName in sorted(self.currentpathConditionSet):
             print("----------")
             print(self.expand_pc_name_with_multiple_applications(pathCondName))
             
