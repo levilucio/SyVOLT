@@ -562,9 +562,9 @@ class HimesisMatcher(object):
                         #print("Patt eq: " + str(patt_eq))
                         return False
                 except KeyError:
-                    #this is okay, and means that the matcher will define
-                    # a more restrictice graph
-                    continue
+                    #print("Couldn't find " + patt_attr + " on node " + src_node["mm__"])
+                    #the attribute does not exist on the node
+                    return False
 
         
         # Check for attributes value/constraint
