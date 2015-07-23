@@ -19,14 +19,17 @@ def is_consistent(graph, verbosity=0):
     var_dict = {}
 
     if verbosity >= 2:
-        print("is_consistent:")
-        print(eqs)
+        print("\nis_consistent:")
+        for eq in eqs:
+            print(eq)
 
-    i = 0
+    i = -1
     for eq in eqs:
         node = eq[0][0]
         attr = eq[0][1]
         value = eq[1]
+
+        i += 1
 
         if node not in var_dict:
             var_dict[node] = {attr : value}
@@ -45,10 +48,14 @@ def is_consistent(graph, verbosity=0):
                 print("Inconsistent values for " + str(eq[0]) + ": " + str(value) + " vs " + str(var_dict[node][attr]))
             return False
 
-        i += 1
+
 
     #remove all duplicates
     new_eqs = [graph["equations"][i] for i in range(len(graph["equations"])) if i not in duplicates]
+    if verbosity >= 2:
+        print("New eqs: ")
+        for eq in new_eqs:
+            print(eq)
     graph["equations"] = new_eqs
     return True
 
