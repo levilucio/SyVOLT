@@ -16,17 +16,21 @@ class HMoveOneInputDirectLHS(HimesisPreConditionPatternLHS):
         self.add_edges([[3, 0], [0, 2]])
         # Set the graph attributes
         self["mm__"] = ['MT_pre__FamiliesToPersons_MM', 'MoTifRule']
+        self["superclasses_dict"] = {'Person': ['MetaModelElement_T'], 'Family': ['MetaModelElement_S'], 'Woman': ['MetaModelElement_T'], 'CommunityRoot': ['MetaModelElement_T'], 'Man': ['MetaModelElement_T'], 'HouseholdRoot': ['MetaModelElement_S'], 'Member': ['MetaModelElement_S']}
+        self["equations"] = []
+        self["name"] = """"""
         self["MT_constraint__"] = """#if len([i for i in graph.neighbors(PreNode('5').index) if graph.vs[i]['mm__'] == 'match_contains']) == 0:
 #    return True
 
 #return False
 return True
 """
-        self["name"] = """"""
         self["GUID__"] = 9026040482256132464
         
         # Set the node attributes
-        self.vs[0]["MT_subtypeMatching__"] = False
+        self.vs[0]["mm__"] = """MT_pre__directLink_S"""
+        self.vs[0]["MT_label__"] = """9"""
+        self.vs[0]["MT_dirty__"] = False
         self.vs[0]["MT_pre__associationType"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -39,12 +43,9 @@ return True
 
 return True
 """
-        self.vs[0]["MT_label__"] = """9"""
-        self.vs[0]["MT_subtypes__"] = []
-        self.vs[0]["mm__"] = """MT_pre__directLink_S"""
-        self.vs[0]["MT_dirty__"] = False
         self.vs[0]["GUID__"] = 4245889346134004999
-        self.vs[1]["MT_pivotOut__"] = """element1"""
+        self.vs[1]["mm__"] = """MT_pre__MetaModelElement_S"""
+        self.vs[1]["MT_label__"] = """3"""
         self.vs[1]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -57,7 +58,8 @@ return True
 
 return True
 """
-        self.vs[1]["MT_subtypeMatching__"] = True
+        self.vs[1]["MT_dirty__"] = False
+        self.vs[1]["MT_pivotOut__"] = """element1"""
         self.vs[1]["MT_pre__classtype"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -71,10 +73,7 @@ return True
 return True
 """
         self.vs[1]["MT_pivotIn__"] = """element1"""
-        self.vs[1]["MT_label__"] = """3"""
-        self.vs[1]["MT_subtypes__"] = ['MT_pre__HouseholdRoot', 'MT_pre__Family', 'MT_pre__Member']
-        self.vs[1]["mm__"] = """MT_pre__MetaModelElement_S"""
-        self.vs[1]["MT_dirty__"] = False
+        self.vs[1]["GUID__"] = 8462221059666153735
         self.vs[1]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -87,8 +86,8 @@ return True
 
 return True
 """
-        self.vs[1]["GUID__"] = 8462221059666153735
-        self.vs[2]["MT_pivotOut__"] = """element2"""
+        self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
+        self.vs[2]["MT_label__"] = """4"""
         self.vs[2]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -101,7 +100,8 @@ return True
 
 return True
 """
-        self.vs[2]["MT_subtypeMatching__"] = True
+        self.vs[2]["MT_dirty__"] = False
+        self.vs[2]["MT_pivotOut__"] = """element2"""
         self.vs[2]["MT_pre__classtype"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -115,10 +115,7 @@ return True
 return True
 """
         self.vs[2]["MT_pivotIn__"] = """element2"""
-        self.vs[2]["MT_label__"] = """4"""
-        self.vs[2]["MT_subtypes__"] = ['MT_pre__HouseholdRoot', 'MT_pre__Family', 'MT_pre__Member']
-        self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
-        self.vs[2]["MT_dirty__"] = False
+        self.vs[2]["GUID__"] = 6445411719821274215
         self.vs[2]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -131,7 +128,8 @@ return True
 
 return True
 """
-        self.vs[2]["GUID__"] = 6445411719821274215
+        self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
+        self.vs[3]["MT_label__"] = """5"""
         self.vs[3]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -144,7 +142,7 @@ return True
 
 return True
 """
-        self.vs[3]["MT_subtypeMatching__"] = True
+        self.vs[3]["MT_dirty__"] = False
         self.vs[3]["MT_pre__classtype"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -157,10 +155,7 @@ return True
 
 return True
 """
-        self.vs[3]["MT_label__"] = """5"""
-        self.vs[3]["MT_subtypes__"] = ['MT_pre__HouseholdRoot', 'MT_pre__Family', 'MT_pre__Member']
-        self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
-        self.vs[3]["MT_dirty__"] = False
+        self.vs[3]["GUID__"] = 3115721491610293201
         self.vs[3]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -173,7 +168,6 @@ return True
 
 return True
 """
-        self.vs[3]["GUID__"] = 3115721491610293201
 
     def eval_associationType9(self, attr_value, this):
         
