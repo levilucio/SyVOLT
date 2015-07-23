@@ -73,7 +73,7 @@ class Test():
     def setUp(self, args):
         pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
 
-        self.rules = pyramify.get_rules("ATLTrans/")
+        self.rules = pyramify.get_rules("ATLTrans/w_equations/")
 
         #print("Rules: " + str(self.rules.keys()))
 
@@ -136,7 +136,10 @@ class Test():
                 
         #TODO: Change this number if you are modifying the transformation at all
         #if args.num_rules == -1:
-        transformation = [[a1], [b1], [c1], [d1], [e1], [f1], [g1], [h1], [i1]]
+        transformation = [[a1], [b1], [c1], [d1], [e1], [f1], [g1]]#, [h1], [i1]]
+
+
+        transformation = [[a1], [b1], [e1], [h1]]#, [i1]]  # , [h1], [i1]]
         #else:
         #    transformation = self.select_rules([[a1,a2], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
 
@@ -157,7 +160,7 @@ class Test():
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns,
          self.ruleCombinators, self.overlapping_rules] = \
-            pyramify.ramify_directory("ATLTrans/", transformation)
+            pyramify.ramify_directory("ATLTrans/w_equations/", transformation)
 
         s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, args)#
    
@@ -184,6 +187,8 @@ class Test():
         #s.print_path_conditions_screen()
 
         #s.print_path_conditions_file()
+
+        raise Exception()
 
         print("\nProperty proving:")
 
