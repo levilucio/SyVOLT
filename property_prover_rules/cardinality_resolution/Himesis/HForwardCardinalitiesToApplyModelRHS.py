@@ -16,12 +16,16 @@ class HForwardCardinalitiesToApplyModelRHS(HimesisPostConditionPattern):
         self.add_edges([])
         # Set the graph attributes
         self["mm__"] = ['MT_post__FamiliesToPersons_MM', 'MoTifRule']
-        self["MT_action__"] = """PostNode('2')['cardinality'] = '+'
-"""
+        self["superclasses_dict"] = {'Person': ['MetaModelElement_T'], 'Family': ['MetaModelElement_S'], 'Woman': ['MetaModelElement_T'], 'CommunityRoot': ['MetaModelElement_T'], 'Man': ['MetaModelElement_T'], 'HouseholdRoot': ['MetaModelElement_S'], 'Member': ['MetaModelElement_S']}
+        self["equations"] = []
         self["name"] = """"""
         self["GUID__"] = 1837265745987771719
+        self["MT_action__"] = """PostNode('2')['cardinality'] = '+'
+"""
         
         # Set the node attributes
+        self.vs[0]["mm__"] = """MT_post__MetaModelElement_S"""
+        self.vs[0]["MT_label__"] = """1"""
         self.vs[0]["MT_post__cardinality"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -36,22 +40,6 @@ class HForwardCardinalitiesToApplyModelRHS(HimesisPostConditionPattern):
 
 return attr_value
 """
-        self.vs[0]["MT_label__"] = """1"""
-        self.vs[0]["MT_post__name"] = """
-#===============================================================================
-# You can access the value of the current node's attribute value by: attr_value.
-# If the current node shall be created you MUST initialize it here!
-# You can access a node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# Note that the attribute values are those before the match is rewritten.
-# The order in which this code is executed depends on the label value
-# of the encapsulating node.
-# The given action must return the new value of the attribute.
-#===============================================================================
-
-return attr_value
-"""
-        self.vs[0]["mm__"] = """MT_post__MetaModelElement_S"""
         self.vs[0]["MT_post__classtype"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -67,22 +55,7 @@ return attr_value
 return attr_value
 """
         self.vs[0]["GUID__"] = 7402631411483487338
-        self.vs[1]["MT_post__cardinality"] = """
-#===============================================================================
-# You can access the value of the current node's attribute value by: attr_value.
-# If the current node shall be created you MUST initialize it here!
-# You can access a node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# Note that the attribute values are those before the match is rewritten.
-# The order in which this code is executed depends on the label value
-# of the encapsulating node.
-# The given action must return the new value of the attribute.
-#===============================================================================
-
-return attr_value
-"""
-        self.vs[1]["MT_label__"] = """2"""
-        self.vs[1]["MT_post__name"] = """
+        self.vs[0]["MT_post__name"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
 # If the current node shall be created you MUST initialize it here!
@@ -97,6 +70,21 @@ return attr_value
 return attr_value
 """
         self.vs[1]["mm__"] = """MT_post__MetaModelElement_T"""
+        self.vs[1]["MT_label__"] = """2"""
+        self.vs[1]["MT_post__cardinality"] = """
+#===============================================================================
+# You can access the value of the current node's attribute value by: attr_value.
+# If the current node shall be created you MUST initialize it here!
+# You can access a node labelled n by: PreNode('n').
+# To access attribute x of node n, use: PreNode('n')['x'].
+# Note that the attribute values are those before the match is rewritten.
+# The order in which this code is executed depends on the label value
+# of the encapsulating node.
+# The given action must return the new value of the attribute.
+#===============================================================================
+
+return attr_value
+"""
         self.vs[1]["MT_post__classtype"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -112,6 +100,20 @@ return attr_value
 return attr_value
 """
         self.vs[1]["GUID__"] = 870681261413970204
+        self.vs[1]["MT_post__name"] = """
+#===============================================================================
+# You can access the value of the current node's attribute value by: attr_value.
+# If the current node shall be created you MUST initialize it here!
+# You can access a node labelled n by: PreNode('n').
+# To access attribute x of node n, use: PreNode('n')['x'].
+# Note that the attribute values are those before the match is rewritten.
+# The order in which this code is executed depends on the label value
+# of the encapsulating node.
+# The given action must return the new value of the attribute.
+#===============================================================================
+
+return attr_value
+"""
 
         try:
             from .HForwardCardinalitiesToApplyModelLHS import HForwardCardinalitiesToApplyModelLHS
@@ -152,7 +154,8 @@ return attr_value
         #===============================================================================
         # Create new edges
         #===============================================================================
-        
+        graph.add_edges([
+        ])
         #===============================================================================
         # Set the output pivots
         #===============================================================================
