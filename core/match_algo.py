@@ -539,10 +539,6 @@ class HimesisMatcher(object):
                 patt_attr = patt_eq[0]
                 patt_value = patt_eq[1]
 
-                #skip this for now?
-                if "ApplyAttribute" in patt_attr:
-                    continue
-
                 found = False
                 for (src_attr, src_value) in src_equations:
                     if patt_attr == src_attr:
