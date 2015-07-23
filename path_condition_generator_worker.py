@@ -353,7 +353,7 @@ class path_condition_generator_worker(Process):
                                             child_pc_name = childrenPathConditions[child_pc_index]
     
                                             if self.verbosity >= 2 :
-                                                print "--> Combining with path condition: " + child_pc_name
+                                                print("--> Combining with path condition: " + child_pc_name)
     
     #                                         # only combine if the rule hasn't executed yet on that path condition
     #                                                                     
@@ -429,7 +429,7 @@ class path_condition_generator_worker(Process):
                                                 new_pc_dict[newPathCondName] = shrunk_newCond
             
                                                 if self.verbosity >= 2:
-                                                    print "Created path condition with name: " + newPathCondName
+                                                    print("Created path condition with name: " + newPathCondName)
 
                                         p = i.next_in(p)
                                         pathCondSubnum += 1

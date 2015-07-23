@@ -467,7 +467,7 @@ class PathConditionGenerator(object):
             # now that the layer renaming is complete, change the names of the subsuming rules for rules that need overlap treatment
 
             for subsumedRule in subsumedRulesInLayer:
-                print "-------> " + subsumedRule
+                print("-------> " + subsumedRule)
                 for subsumingRuleIndex in range(len(self.overlappingRules[subsumedRule])):
                     ruleName = self.overlappingRules[subsumedRule][subsumingRuleIndex]
                     newRuleName = None
@@ -1035,7 +1035,7 @@ class PathConditionGenerator(object):
 
         for pc_name in sorted(self.currentpathConditionSet):
             
-            print "-> " + pc_name
+            print("-> " + pc_name)
             
             pc = expand_graph(self.pc_dict[pc_name])
 #            pc.name = self.expand_pc_name(pc_name)
