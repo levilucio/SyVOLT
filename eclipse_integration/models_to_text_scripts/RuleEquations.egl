@@ -241,7 +241,7 @@ class H[%=rule.description%](Himesis):
                 ([%=pairedWithNodeIndex%],[%=applyModelIndex%]) # pairedwith -> applyModel				
 		])
 		
-        # Add the equations
+        # Add the attribute equations
         self["equations"] = [[%=equationsStr%]]
 
         
