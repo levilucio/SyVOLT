@@ -242,7 +242,7 @@ class H[%=rule.description%](Himesis):
 		])
 		
         # Add the equations
-        self.equations = [[%=equationsStr%]]
+        self["equations"] = [[%=equationsStr%]]
 
         
 [%
