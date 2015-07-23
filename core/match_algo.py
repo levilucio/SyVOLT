@@ -540,7 +540,7 @@ class HimesisMatcher(object):
                 patt_value = patt_eq[1]
 
                 #skip this for now?
-                if patt_attr == '__ApplyAttribute':
+                if "ApplyAttribute" in patt_attr:
                     continue
 
                 found = False
