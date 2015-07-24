@@ -394,6 +394,9 @@ return attr_value == "daughter"
                 (8,4) # association daughter  -> match_class Member()
         ])
         
+                # Add the attribute equations
+                self["equations"] = []
+        
         def eval_classtype1(self, attr_value, this):
         
                 #===============================================================================

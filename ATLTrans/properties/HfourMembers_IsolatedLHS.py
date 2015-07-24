@@ -242,6 +242,9 @@ return True
 return True
 """
                 self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+                
+                # Add the attribute equations
+                self["equations"] = []
         
         def eval_classtype1(self, attr_value, this):
         
