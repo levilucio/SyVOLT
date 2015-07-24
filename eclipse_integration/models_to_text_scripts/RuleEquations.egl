@@ -82,10 +82,10 @@ class H[%=rule.description%](Himesis):
                         %]
         # match class [%=class.className%]([%=class.id%]) node
         self.add_node()
-        self.vs[[%=nodeIndex%]]["name"] = """[%=class.id%]"""
+        self.vs[[%=nodeIndex%]]["name"] = """[%=class.id%]""" 
         self.vs[[%=nodeIndex%]]["classtype"] = """[%=class.className%]"""
         self.vs[[%=nodeIndex%]]["mm__"] = """[%=class.className%]"""
-        self.vs[[%=nodeIndex%]]["cardinality"] = """[%= getClassCardinality(class) %]"""
+        self.vs[[%=nodeIndex%]]["cardinality"] = """[%= getClassCardinality(class) %]""" 
                 [%
                 nodeIndex = nodeIndex + 1;
                 %]
@@ -107,7 +107,7 @@ class H[%=rule.description%](Himesis):
                         %]
         # apply class [%=class.className%]([%=class.id%]) node
         self.add_node()
-        self.vs[[%=nodeIndex%]]["name"] = """[%=class.id%]"""
+        self.vs[[%=nodeIndex%]]["name"] = """[%=class.id%]""" 
         self.vs[[%=nodeIndex%]]["classtype"] = """[%=class.className%]"""
         self.vs[[%=nodeIndex%]]["mm__"] = """[%=class.className%]"""
         self.vs[[%=nodeIndex%]]["cardinality"] = """1"""

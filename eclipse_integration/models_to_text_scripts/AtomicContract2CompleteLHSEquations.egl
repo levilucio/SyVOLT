@@ -1,0 +1,526 @@
+[%
+var matchClassNodeMap : new Map;
+var matchAssociationNodeMap : new Map;
+var backwardAssociationNodeMap: new Map;
+
+var applyClassNodeMap : new Map;
+var applyAssociationNodeMap : new Map;
+
+var hasMatchAttributeNodeMap: new Map;
+var matchAttributeNodeMap: new Map;
+
+var matchAttributeEquationNodeMap: new Map;
+var matchAttributeEquationLeftExpNodeMap : new Map;
+var matchAttributeEquationRightExpNodeMap : new Map;
+
+var matchAttributeAtomNodeMap : new Map;
+
+var matchAttributeConcatNodeMap : new Map;
+var matchAttributeConcatLeftHasArgsNodeMap: new Map;
+var matchAttributeConcatRightHasArgsNodeMap: new Map;
+
+
+var hasApplyAttributeNodeMap: new Map;
+var applyAttributeNodeMap: new Map;
+
+var applyAttributeEquationNodeMap: new Map;
+var applyAttributeEquationLeftExpNodeMap : new Map;
+var applyAttributeEquationRightExpNodeMap : new Map;
+
+var applyAttributeAtomNodeMap : new Map;
+
+var applyAttributeConcatNodeMap : new Map;
+var applyAttributeConcatLeftHasArgsNodeMap: new Map;
+var applyAttributeConcatRightHasArgsNodeMap: new Map;
+
+var nodeIndex = 0;
+
+var pythonClassName = "H"+contract.name+"_CompleteLHS";
+
+var equationsStr = "";
+
+
+%]
+from core.himesis import Himesis, HimesisPreConditionPatternLHS
+import uuid
+
+class [%= pythonClassName %](HimesisPreConditionPatternLHS):
+        def __init__(self):
+                """
+                Creates the himesis graph representing the AToM3 model [%= pythonClassName %].
+                """
+                # Flag this instance as compiled now
+                self.is_compiled = True
+
+                super([%= pythonClassName%], self).__init__(name='[%= pythonClassName %]', num_nodes=0, edges=[])
+
+                # Set the graph attributes
+                self["mm__"] = []
+
+                self["MT_constraint__"] = """#===============================================================================
+# This code is executed after the nodes in the LHS have been matched.
+# You can access a matched node labelled n by: PreNode('n').
+# To access attribute x of node n, use: PreNode('n')['x'].
+# The given constraint must evaluate to a boolean expression:
+#    returning True enables the rule to be applied,
+#    returning False forbids the rule from being applied.
+#===============================================================================
+
+return True
+"""
+                self["name"] = """"""
+                self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'[%=contract.name%]')
+        
+                # Nodes that represent match classes
+        [%
+        
+                for(class in contract.match.first.class){
+                        matchClassNodeMap.put(class, nodeIndex);
+                        var classLabel = nodeIndex + 1;
+                        %]
+                # match class [%=class.className%]([%=class.id%]) node
+                self.add_node()
+                self.vs[[%=nodeIndex%]]["MT_pre__classtype"] = """
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by: attr_value.
+# You can access any attribute x of this node by: this['x'].
+# If the constraint relies on attribute values from other nodes,
+# use the LHS/NAC constraint instead.
+# The given constraint must evaluate to a boolean expression.
+#===============================================================================
+
+return True
+"""
+                self.vs[[%=nodeIndex%]]["MT_label__"] = """[%=classLabel%]"""
+                self.vs[[%=nodeIndex%]]["MT_dirty__"] = False
+                self.vs[[%=nodeIndex%]]["mm__"] = """MT_pre__[%=class.className%]"""
+
+                self.vs[[%=nodeIndex%]]["MT_pre__cardinality"] = """
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by: attr_value.
+# You can access any attribute x of this node by: this['x'].
+# If the constraint relies on attribute values from other nodes,
+# use the LHS/NAC constraint instead.
+# The given constraint must evaluate to a boolean expression.
+#===============================================================================
+
+return True
+"""
+                self.vs[[%=nodeIndex%]]["MT_pre__name"] = """
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by: attr_value.
+# You can access any attribute x of this node by: this['x'].
+# If the constraint relies on attribute values from other nodes,
+# use the LHS/NAC constraint instead.
+# The given constraint must evaluate to a boolean expression.
+#===============================================================================
+
+return True
+"""
+                self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'[%=class.id%]')
+                [%
+                nodeIndex = nodeIndex + 1;
+        }
+        %]
+        
+        
+        #Nodes that represent apply classes
+        [%
+                for(class in contract.apply.class){
+                        applyClassNodeMap.put(class, nodeIndex);
+                        var classLabel = nodeIndex + 1;
+                        %]
+        # match class [%=class.className%]([%=class.id%]) node
+                self.add_node()
+                self.vs[[%=nodeIndex%]]["MT_subtypeMatching__"] = False
+                self.vs[[%=nodeIndex%]]["MT_pre__classtype"] = """
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by: attr_value.
+# You can access any attribute x of this node by: this['x'].
+# If the constraint relies on attribute values from other nodes,
+# use the LHS/NAC constraint instead.
+# The given constraint must evaluate to a boolean expression.
+#===============================================================================
+
+return True
+"""
+                self.vs[[%=nodeIndex%]]["MT_label__"] = """[%=classLabel%]"""
+                self.vs[[%=nodeIndex%]]["MT_subtypes__"] = []
+                self.vs[[%=nodeIndex%]]["MT_dirty__"] = False
+                self.vs[[%=nodeIndex%]]["mm__"] = """MT_pre__[%=class.className%]"""
+
+                self.vs[[%=nodeIndex%]]["MT_pre__name"] = """
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by: attr_value.
+# You can access any attribute x of this node by: this['x'].
+# If the constraint relies on attribute values from other nodes,
+# use the LHS/NAC constraint instead.
+# The given constraint must evaluate to a boolean expression.
+#===============================================================================
+
+return True
+"""
+                self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'[%=class.id%]')
+                [%
+                nodeIndex = nodeIndex + 1;
+        }
+        %]
+        
+                
+        # Nodes that represent the match associations of the property.
+        [%
+                for(association in contract.match.first.association){
+                        matchAssociationNodeMap.put(association, nodeIndex);
+                        var associationLabel = nodeIndex + 1;
+                        %]
+        # match association [%=association.source.className%]--[%=association.associationName%]-->[%=association.target.className%] node
+                self.add_node()
+                self.vs[[%=nodeIndex%]]["MT_subtypeMatching__"] = False
+                self.vs[[%=nodeIndex%]]["MT_pre__associationType"] = """
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by: attr_value.
+# You can access any attribute x of this node by: this['x'].
+# If the constraint relies on attribute values from other nodes,
+# use the LHS/NAC constraint instead.
+# The given constraint must evaluate to a boolean expression.
+#===============================================================================
+
+return attr_value == "[%=association.associationName%]"
+"""
+                self.vs[[%=nodeIndex%]]["MT_label__"] = """[%= associationLabel %]"""
+                self.vs[[%=nodeIndex%]]["MT_subtypes__"] = []
+                self.vs[[%=nodeIndex%]]["MT_dirty__"] = False
+                self.vs[[%=nodeIndex%]]["mm__"] = """MT_pre__directLink_S"""
+                self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'[%=association.source.id + ("assoc" + nodeIndex) + association.target.id %]')
+                [%
+                nodeIndex = nodeIndex + 1;
+        }
+        %]
+        
+        
+        # Nodes that represent the apply associations of the property.
+        [%
+                for(association in contract.apply.association){
+                        applyAssociationNodeMap.put(association, nodeIndex);
+                        var associationLabel = nodeIndex + 1;
+                        %]
+        # apply association [%=association.source.className%]--[%=association.associationName%]-->[%=association.target.className%] node
+                self.add_node()
+                self.vs[[%=nodeIndex%]]["MT_subtypeMatching__"] = False
+                self.vs[[%=nodeIndex%]]["MT_pre__associationType"] = """
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by: attr_value.
+# You can access any attribute x of this node by: this['x'].
+# If the constraint relies on attribute values from other nodes,
+# use the LHS/NAC constraint instead.
+# The given constraint must evaluate to a boolean expression.
+#===============================================================================
+
+return attr_value == "[%=association.associationName%]"
+"""
+                self.vs[[%=nodeIndex%]]["MT_label__"] = """[%= associationLabel %]"""
+                self.vs[[%=nodeIndex%]]["MT_subtypes__"] = []
+                self.vs[[%=nodeIndex%]]["MT_dirty__"] = False
+                self.vs[[%=nodeIndex%]]["mm__"] = """MT_pre__directLink_T"""
+                self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'[%=association.source.id + ("assoc" + nodeIndex) + association.target.id %]')
+                [%
+                nodeIndex = nodeIndex + 1;
+        }
+        %]
+        
+                # Nodes that represent trace relations
+                [%
+                for(backwardAssociation in contract.backwards){
+                        backwardAssociationNodeMap.put(backwardAssociation, nodeIndex);
+                        var backwardAssociationLabel = nodeIndex + 1;
+                        %]
+                # backward association [%=backwardAssociation.sourceClass.className%]---->[%=backwardAssociation.targetClass.className%] node
+                self.add_node()
+                self.vs[[%=nodeIndex%]]["MT_subtypeMatching__"] = False
+                self.vs[[%=nodeIndex%]]["MT_label__"] = """[%=backwardAssociationLabel%]"""
+                self.vs[[%=nodeIndex%]]["MT_subtypes__"] = []
+                self.vs[[%=nodeIndex%]]["MT_dirty__"] = False
+                self.vs[[%=nodeIndex%]]["mm__"] = """MT_pre__trace_link"""
+                self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'[%=backwardAssociation.sourceClass.id + ("blink" + nodeIndex) + backwardAssociation.targetClass.id %]')
+                [%
+                nodeIndex = nodeIndex + 1;
+                }
+        %]
+
+
+        [%
+                for(class in contract.match.first.class){
+                	for(matchAttribute in class.attribute){
+                    	if (matchAttribute.attributeValue <> null){
+                        	equationsStr = equationsStr + "((" + matchClassNodeMap.get(class) + ",'" + matchAttribute.attributeName + "'),";                                
+                            equationsStr = equationsStr + generateAttributeTermNodes(matchAttribute, matchAttribute.attributeValue, matchClassNodeMap, matchClassNodeMap, contract);    
+							equationsStr = equationsStr + "), ";   
+                        }
+                    }
+                }
+//        }
+        %]
+        
+        
+        [%
+                for(class in contract.apply.class){
+                        for(applyAttribute in class.attribute){
+                        
+                        		var attributeName = applyAttribute.attributeName;
+
+								// if we're dealing with a nameless attribute (for optimization), give it the keyword name "__ApplyAttribute"
+                        		if (applyAttribute.attributeName == "" or  applyAttribute.attributeName == null){
+                        			attributeName = "__ApplyAttribute";
+                        		}
+                        		
+                           		equationsStr = equationsStr + "((" +  applyClassNodeMap.get(class) + ",'" + attributeName + "'),";                                
+                                equationsStr = equationsStr + generateAttributeTermNodes(applyAttribute, applyAttribute.attributeValue, applyClassNodeMap, matchClassNodeMap, contract);    
+								equationsStr = equationsStr + "), ";   
+                        }
+                }
+        %]        
+        
+        
+                # Add the edges
+                self.add_edges([
+                [%
+                // Backward links edges
+                for(backwardAssociation in contract.backwards){
+                        %]
+                ([%= applyClassNodeMap.get(backwardAssociation.targetClass)%],[%= backwardAssociationNodeMap.get(backwardAssociation)%]), # apply_class [%=backwardAssociation.targetClass.className%]([%=backwardAssociation.targetClass.id%]) -> backward_association
+                ([%= backwardAssociationNodeMap.get(backwardAssociation) %],[%= matchClassNodeMap.get(backwardAssociation.sourceClass)%]), #  backward_association -> apply_class [%=backwardAssociation.sourceClass.className%]([%=backwardAssociation.sourceClass.id%])
+                        [%
+                }
+
+
+                //direct apply association edges.
+                for(association in contract.apply.association){
+                        %]
+                ([%= applyClassNodeMap.get(association.source)%],[%= applyAssociationNodeMap.get(association)%]), # apply_class [%=association.source.className%]([%=association.source.id%]) -> association [%=association.associationName%]
+                ([%= applyAssociationNodeMap.get(association) %],[%= applyClassNodeMap.get(association.target)%]), # association [%=association.associationName%]  -> apply_class [%=association.target.className%]([%=association.target.id%])
+                        [%
+                }
+
+                //direct match association edges.
+                var assocsRemmaining = contract.match.first.association.size(); // This is used to avoid putting the coma at the end.
+                for(association in contract.match.first.association){
+                        %]
+                ([%= matchClassNodeMap.get(association.source)%],[%= matchAssociationNodeMap.get(association)%]), # match_class [%=association.source.className%]([%=association.source.id%]) -> association [%=association.associationName%]
+                        [%
+                        if (assocsRemmaining > 1){
+                                %]
+                ([%= matchAssociationNodeMap.get(association) %],[%= matchClassNodeMap.get(association.target)%]), # association [%=association.associationName%]  -> match_class [%=association.target.className%]([%=association.target.id%])
+                                [%
+                        } else {
+                                %]
+                ([%= matchAssociationNodeMap.get(association) %],[%= matchClassNodeMap.get(association.target)%]) # association [%=association.associationName%]  -> match_class [%=association.target.className%]([%=association.target.id%])
+                                [%
+                        }
+                        assocsRemmaining = assocsRemmaining - 1;
+                }
+
+                %]
+                ])
+        
+                # Add the attribute equations
+                self["equations"] = [[%=equationsStr%]]
+        
+        [%
+        // define evaluation methods for each match class.
+                for(class in contract.match.first.class){
+                        var classLabel = matchClassNodeMap.get(class) + 1;
+                        %]
+        def eval_classtype[%= classLabel %](self, attr_value, this):
+
+                        #===============================================================================
+                        # This code is executed when evaluating if a node shall be matched by this rule.
+                        # You can access the value of the current node's attribute value by: attr_value.
+                        # You can access any attribute x of this node by: this['x'].
+                        # If the constraint relies on attribute values from other nodes,
+                        # use the LHS/NAC constraint instead.
+                        # The given constraint must evaluate to a boolean expression.
+                        #===============================================================================
+
+                return True
+        
+        
+        def eval_cardinality[%= classLabel %](self, attr_value, this):
+
+                        #===============================================================================
+                        # This code is executed when evaluating if a node shall be matched by this rule.
+                        # You can access the value of the current node's attribute value by: attr_value.
+                        # You can access any attribute x of this node by: this['x'].
+                        # If the constraint relies on attribute values from other nodes,
+                        # use the LHS/NAC constraint instead.
+                        # The given constraint must evaluate to a boolean expression.
+                        #===============================================================================
+
+                return True
+
+        
+        def eval_name[%= classLabel %](self, attr_value, this):
+
+                        #===============================================================================
+                        # This code is executed when evaluating if a node shall be matched by this rule.
+                        # You can access the value of the current node's attribute value by: attr_value.
+                        # You can access any attribute x of this node by: this['x'].
+                        # If the constraint relies on attribute values from other nodes,
+                        # use the LHS/NAC constraint instead.
+                        # The given constraint must evaluate to a boolean expression.
+                        #===============================================================================
+
+                return True
+
+        
+                [%
+        }
+        %]
+        [%
+        // define evaluation methods for each match association.
+                for(association in contract.match.first.association){
+                        var associationLabel = matchAssociationNodeMap.get(association) + 1;
+                        %]
+        def eval_associationType[%= associationLabel %](self, attr_value, this):
+
+                        #===============================================================================
+                        # This code is executed when evaluating if a node shall be matched by this rule.
+                        # You can access the value of the current node's attribute value by: attr_value.
+                        # You can access any attribute x of this node by: this['x'].
+                        # If the constraint relies on attribute values from other nodes,
+                        # use the LHS/NAC constraint instead.
+                        # The given constraint must evaluate to a boolean expression.
+                        #===============================================================================
+
+                return attr_value == "[%= association.associationName %]"
+
+
+                [%
+        }
+        %]
+        
+        [%
+        // define evaluation methods for each apply class.
+                for(class in contract.apply.class){
+                        var classLabel = applyClassNodeMap.get(class) + 1;
+                        %]
+        def eval_classtype[%= classLabel %](self, attr_value, this):
+
+                        #===============================================================================
+                        # This code is executed when evaluating if a node shall be matched by this rule.
+                        # You can access the value of the current node's attribute value by: attr_value.
+                        # You can access any attribute x of this node by: this['x'].
+                        # If the constraint relies on attribute values from other nodes,
+                        # use the LHS/NAC constraint instead.
+                        # The given constraint must evaluate to a boolean expression.
+                        #===============================================================================
+
+                return True
+
+        
+        def eval_name[%= classLabel %](self, attr_value, this):
+
+                        #===============================================================================
+                        # This code is executed when evaluating if a node shall be matched by this rule.
+                        # You can access the value of the current node's attribute value by: attr_value.
+                        # You can access any attribute x of this node by: this['x'].
+                        # If the constraint relies on attribute values from other nodes,
+                        # use the LHS/NAC constraint instead.
+                        # The given constraint must evaluate to a boolean expression.
+                        #===============================================================================
+
+                return True
+
+        
+                [%
+        }
+        %]
+        [%
+        // define evaluation methods for each apply association.
+                for(association in contract.apply.association){
+                        var associationLabel = applyAssociationNodeMap.get(association) + 1;
+                        %]
+        def eval_associationType[%= associationLabel %](self, attr_value, this):
+
+                        #===============================================================================
+                        # This code is executed when evaluating if a node shall be matched by this rule.
+                        # You can access the value of the current node's attribute value by: attr_value.
+                        # You can access any attribute x of this node by: this['x'].
+                        # If the constraint relies on attribute values from other nodes,
+                        # use the LHS/NAC constraint instead.
+                        # The given constraint must evaluate to a boolean expression.
+                        #===============================================================================
+
+                return attr_value == "[%= association.associationName %]"
+
+
+                [%
+        }
+        %]
+        
+        def constraint(self, PreNode, graph):
+                """
+                Executable constraint code.
+                @param PreNode: Function taking an integer as parameter
+                                                and returns the node corresponding to that label.
+                """
+                        #===============================================================================
+                        # This code is executed after the nodes in the LHS have been matched.
+                        # You can access a matched node labelled n by: PreNode('n').
+                        # To access attribute x of node n, use: PreNode('n')['x'].
+                        # The given constraint must evaluate to a boolean expression:
+                        #    returning True enables the rule to be applied,
+                        #    returning False forbids the rule from being applied.
+                        #===============================================================================
+
+                return True
+
+[%
+
+operation getClassCardinality(class){
+        if (class.isKindOf(AnyMatchClass)){
+                return "+";
+        } else if (class.isKindOf(ExistsMatchClass)){
+                return "1";
+        } else {
+                throw "Only Any Match Class is supported!";
+        }
+}
+
+operation generateAttributeTermNodes(attribute, term, classNodeMap, matchClassNodeMap, rule) {
+		
+        var termStr = "";
+
+        if (term.isKindOf(Atom)){
+                termStr = termStr + "('constant','" + term.value + "')";
+                
+        } else if (term.isKindOf(Concat)){
+			termStr = "('concat',(";
+			// generate sub expressions' nodes
+        	termStr = termStr + generateAttributeTermNodes(attribute, term.leftTerm, classNodeMap, matchClassNodeMap, rule);
+        	termStr = termStr + ",";
+        	termStr = termStr + generateAttributeTermNodes(attribute, term.rightTerm, classNodeMap, matchClassNodeMap, rule);
+        	termStr = termStr + "))";
+        	
+        } else if (term.isKindOf(AttributeRef)){
+        	for(class in rule.match.first.class){
+        		for(attribute in class.attribute){
+        			if (attribute == term.attributeRef){    
+                		termStr = "(" + matchClassNodeMap.get(class) + ",'" + attribute.attributeName + "')";
+                	}
+                }
+           	}
+                
+        } else {
+                throw "Unsupported kind of term: " + term;
+        }
+
+        return termStr;
+}
+%]
