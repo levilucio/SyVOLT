@@ -6,6 +6,15 @@ from core.himesis_utils import update_equations
 
 import traceback
 
+import re
+def sort_nicely( l ):
+    """ Sort the given list in the way that humans expect.
+    """
+    convert = lambda text: int(text) if text.isdigit() else text
+    alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ]
+    l.sort( key=alphanum_key )
+    return l
+
 class Rewriter(RulePrimitive):
     '''
         Transforms the matched source model elements according to the specified post-condition pattern.
@@ -23,7 +32,9 @@ class Rewriter(RulePrimitive):
         s = s.split(' ')
         s.insert(1, '[%s]' % self.condition.name)
         return reduce(lambda x, y: x + ' ' + y, s)
-    
+
+
+
     def packet_in(self, packet, verbosity = 0):
         self.exception = None
         self.is_success = False
@@ -45,14 +56,35 @@ class Rewriter(RulePrimitive):
                 graph_eqs = packet.graph["equations"]
                 cond_eqs = self.condition["equations"]
 
+
+
                 if cond_eqs and graph_eqs != cond_eqs:
-                    # print("\n")
-                    # print("Graph eqs: " + str(graph_eqs))
-                    # print("Cond eqs: " + str(cond_eqs))
-                    # print("Mapping: " + str(mapping))
+
+
+
+                    #get dict from label to node num
+                    RHS_labels = {}
+                    for n in range(self.condition.vcount()):
+                        node = self.condition.vs[n]
+                        RHS_labels[node["MT_label__"]] = n
+
                     new_mapping = {}
-                    for m in mapping.keys():
-                        new_mapping[int(m)] = mapping[m]
+                    j=0
+                    vcount = packet.graph.vcount()
+
+                    #make sure to iterate in natural order
+                    for label in sort_nicely(list(RHS_labels.keys())):
+
+                        #use mapping if possible
+                        if label in mapping:
+                            new_mapping[int(label)] = mapping[label]
+
+                        #assume nodes will be added in this order
+                        #TODO: Handle deleted nodes
+                        else:
+                            new_mapping[int(label)] = vcount + j
+                            j += 1
+
 
                     new_cond_eqs = update_equations(cond_eqs, new_mapping)
                     packet.graph["equations"] += new_cond_eqs
