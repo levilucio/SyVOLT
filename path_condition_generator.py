@@ -1035,10 +1035,10 @@ class PathConditionGenerator(object):
 
         for pc_name in sorted(self.currentpathConditionSet):
             
-            print("-> " + pc_name)
+            #print("-> " + pc_name)
             
             pc = expand_graph(self.pc_dict[pc_name])
-#            pc.name = self.expand_pc_name(pc_name)
+            pc.name = self.expand_pc_name_with_multiple_applications(pc_name)
             yield pc
 
     #@do_cprofile
@@ -1104,7 +1104,7 @@ class PathConditionGenerator(object):
     def print_path_conditions_file(self):
         print("Printing path conditions:")
         for pathCondName in self.currentpathConditionSet:
-            name = pathCondName.translate(None, '-')
+            name = pathCondName#.translate(None, '-')
             try:
                 graph_to_dot(name, expand_graph(self.pc_dict[pathCondName]))
                 #i=i+1
