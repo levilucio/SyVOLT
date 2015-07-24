@@ -38,21 +38,21 @@ from PropertyVerification.PropertyVerifier import PropertyVerifier
 
 #positive
 
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HEmpty_IsolatedConnectedLHS import HEmpty_IsolatedConnectedLHS
+from PropertyVerification.HEmpty_IsolatedConnectedLHS import HEmpty_IsolatedConnectedLHS
 
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HFourMembers_IsolatedLHS import HFourMembers_IsolatedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HFourMembers_ConnectedLHS import HFourMembers_ConnectedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HFourMembers_CompleteLHS import HFourMembers_CompleteLHS
+from ATLTrans.properties.HfourMembers_IsolatedLHS import HfourMembers_IsolatedLHS
+from ATLTrans.properties.HfourMembers_ConnectedLHS import HfourMembers_ConnectedLHS
+from ATLTrans.properties.HfourMembers_CompleteLHS import HfourMembers_CompleteLHS
 
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HMotherFather_IsolatedLHS import HMotherFather_IsolatedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HMotherFather_ConnectedLHS import HMotherFather_ConnectedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HMotherFather_CompleteLHS import HMotherFather_CompleteLHS
+from ATLTrans.properties.HmotherFather_IsolatedLHS import HmotherFather_IsolatedLHS
+from ATLTrans.properties.HmotherFather_ConnectedLHS import HmotherFather_ConnectedLHS
+from ATLTrans.properties.HmotherFather_CompleteLHS import HmotherFather_CompleteLHS
 
 
 #negative
-from FamiliesToPersons_MM.Properties.Negative.Himesis.HDaughterMother_IsolatedLHS import HDaughterMother_IsolatedLHS
-from FamiliesToPersons_MM.Properties.Negative.Himesis.HDaughterMother_ConnectedLHS import HDaughterMother_ConnectedLHS
-from FamiliesToPersons_MM.Properties.Negative.Himesis.HDaughterMother_CompleteLHS import HDaughterMother_CompleteLHS
+from ATLTrans.properties.HdaughterMother_IsolatedLHS import HdaughterMother_IsolatedLHS
+from ATLTrans.properties.HdaughterMother_ConnectedLHS import HdaughterMother_ConnectedLHS
+from ATLTrans.properties.HdaughterMother_CompleteLHS import HdaughterMother_CompleteLHS
 
 
 #implication
@@ -136,10 +136,10 @@ class Test():
                 
         #TODO: Change this number if you are modifying the transformation at all
         #if args.num_rules == -1:
-        transformation = [[a1], [b1], [c1], [d1], [e1], [f1], [g1]]#, [h1], [i1]]
+        transformation = [[a1], [b1], [c1], [d1], [e1], [f1], [g1], [h1], [i1]]
 
 
-        transformation = [[a1], [b1], [e1], [h1]]#, [i1]]  # , [h1], [i1]]
+        #transformation = [[a1], [b1], [c1], [g1]]#, [h1]]#, [i1]]  # , [h1], [i1]]
         #else:
         #    transformation = self.select_rules([[a1,a2], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
 
@@ -161,6 +161,8 @@ class Test():
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns,
          self.ruleCombinators, self.overlapping_rules] = \
             pyramify.ramify_directory("ATLTrans/w_equations/", transformation)
+
+
 
         s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, args)#
    
@@ -184,11 +186,10 @@ class Test():
             #raise Exception(num_pcs_s)
  
         print("printing path conditions")
-        #s.print_path_conditions_screen()
+        s.print_path_conditions_screen()
 
         #s.print_path_conditions_file()
 
-        raise Exception()
 
         print("\nProperty proving:")
 
@@ -206,21 +207,21 @@ class Test():
                 except KeyError:
                     supertypes[subtype] = [supertype[8:]]
 
-        FourMembers = [HFourMembers_IsolatedLHS(), HFourMembers_ConnectedLHS(), HFourMembers_CompleteLHS()]
+        FourMembers = [HfourMembers_IsolatedLHS(), HfourMembers_ConnectedLHS(), HfourMembers_CompleteLHS()]
         for fm in FourMembers:
             fm["superclasses_dict"] = supertypes
 
         HFourMembers_atomic = AtomicStateProperty(FourMembers[0], FourMembers[1], FourMembers[2])
 
 
-        HMotherFather = [HMotherFather_IsolatedLHS(), HMotherFather_ConnectedLHS(), HMotherFather_CompleteLHS()]
+        HMotherFather = [HmotherFather_IsolatedLHS(), HmotherFather_ConnectedLHS(), HmotherFather_CompleteLHS()]
         for c in HMotherFather:
             c["superclasses_dict"] = supertypes
 
         HMotherFather_atomic = AtomicStateProperty(HMotherFather[0], HMotherFather[1], HMotherFather[2])
 
 
-        DaughterMother = [HDaughterMother_IsolatedLHS(), HDaughterMother_ConnectedLHS(), HDaughterMother_CompleteLHS()]
+        DaughterMother = [HdaughterMother_IsolatedLHS(), HdaughterMother_ConnectedLHS(), HdaughterMother_CompleteLHS()]
         for c in DaughterMother:
             c["superclasses_dict"] = supertypes
 
@@ -286,7 +287,7 @@ class Test():
         #atomic_properties = [["HDaughterMother_atomic", HDaughterMother_atomic]]
         atomic_properties = [["HFourMembers_atomic", HFourMembers_atomic], ["HMotherFather_atomic", HMotherFather_atomic], ["HDaughterMother_atomic", HDaughterMother_atomic]]
 
-        if_then_properties = [["HCommunityPerson", HCommunityPersonIfClause, HCommunityPersonThenClause]]
+        if_then_properties = []#["HCommunityPerson", HCommunityPersonIfClause, HCommunityPersonThenClause]]
 
 
         #s.verbosity = 2
