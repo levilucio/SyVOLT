@@ -145,11 +145,11 @@ class Test():
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns,
-         self.ruleCombinators] = \
+         self.ruleCombinators, self.overlapping_rules] = \
             pyramify.ramify_directory("mbeddr2C_MM/real_transformation", transformation)
 
         s = PathConditionGenerator(transformation, self.ruleCombinators,
-                                   self.ruleTraceCheckers, self.matchRulePatterns, args)
+                                   self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, args)
         ts0 = time.time()
         s.build_path_conditions()
         ts1 = time.time()
@@ -167,21 +167,10 @@ class Test():
             # raise Exception(num_pcs_s)
 
         # print("printing path conditions")
-        # s.print_path_conditions_screen()
+        #s.print_path_conditions_screen()
         #
         # s.print_path_conditions_file()
 
-    def _print_states(self, s):
-        for state in s.symbStateSpace:
-            print
-            "----------"
-            if state == ():
-                print
-                'Empty'
-            else:
-                for s in state:
-                    print
-                    s.name
 
 
 if __name__ == "__main__":
