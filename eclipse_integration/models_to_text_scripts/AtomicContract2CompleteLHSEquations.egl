@@ -327,10 +327,10 @@ return attr_value == "[%=association.associationName%]"
                 }
 
                 %]
-        ])
+                ])
         
-        # Add the attribute equations
-        self["equations"] = [[%=equationsStr%]]
+                # Add the attribute equations
+                self["equations"] = [[%=equationsStr%]]
         
         [%
         // define evaluation methods for each match class.
