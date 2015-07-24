@@ -97,7 +97,7 @@ def graph_to_dot(name, g, verbosity = 0):
         
         if node_type in ['paired_with', 'MT_pre__paired_with', 'MT_post__paired_with']:
             try:
-                vattr += "\\n Rule Name = " + str(v['rulename'])
+                vattr += "\\n Rule = " + str(v['rulename'])
             except KeyError:
                 pass
             fillcolor="lightgray"
@@ -107,7 +107,7 @@ def graph_to_dot(name, g, verbosity = 0):
             
         elif node_type in ['match_contains', 'MT_pre__match_contains', 'MT_post__match_contains']:
             fillcolor="#F798A1"
-            vattr += "\\n" + str(v['GUID__'])
+            #vattr += "\\n" + str(v['GUID__'])
             
         elif node_type in ['ApplyModel', 'MT_pre__ApplyModel', 'MT_post__ApplyModel']:
             fillcolor="#FED017"  
@@ -155,14 +155,14 @@ def graph_to_dot(name, g, verbosity = 0):
             #vattr += '\\n'
             if node_type in ['directLink_S', 'directLink_T']:
                 try:
-                    vattr += "A_Type = " + str(v['associationType'])
+                    vattr += "\\naType = " + str(v['associationType'])
                 except Exception:
                     pass
 
             elif node_type in ['MT_pre__directLink_T', 'MT_pre__directLink_S']:
                 try:
                     code_str = re.sub('"', '', v['MT_pre__associationType'])
-                    vattr += get_attribute("\\nA_Type = ", code_str)
+                    vattr += get_attribute("\\naType = ", code_str)
                 except KeyError:
                     pass
                 
@@ -358,11 +358,12 @@ def update_equation(part, node_mapping):
         right = update_equation(part[1][1], node_mapping)
         return ('concat', (left, right))
     else:
-        if part[0] in node_mapping:
+        try:
             return (node_mapping[part[0]], part[1])
-        else:
-            #some nodes were not changed in the rewriter
-            return part
+        except KeyError:
+            print("Could not update equation")
+            print(part)
+            print(node_mapping)
 
 def update_equations(equations, node_mapping):
     new_eqs = []
