@@ -497,14 +497,15 @@ class path_condition_generator_worker(Process):
 #                         for matchSite in p.match_sets.keys():
 #                             print str(p.match_sets[matchSite])
 
-
                         while i.is_success:
                             #print "------------------ found 1 match"
                             p = combinatorRewriter.packet_in(p) 
                             #print "----> Rewrite: " + str(combinatorRewriter.is_success)
                             p = i.next_in(p)
                         
-                        newPathCondName = cpc.name + "_" + rule_name
+                        newPathCondName = cpc.name + "_" + rule_name  + "-OVER"
+                        
+#                        print "-----------------------------------------> " + newPathCondName
                             
                         # replace the original path condition by the result of overlapping the subsumed rule on it
                         del[self.pc_dict[newPathConditionSet[pathConditionIndex]]]
