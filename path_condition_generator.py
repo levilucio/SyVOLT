@@ -467,7 +467,6 @@ class PathConditionGenerator(object):
             # now that the layer renaming is complete, change the names of the subsuming rules for rules that need overlap treatment
 
             for subsumedRule in subsumedRulesInLayer:
-                print("-------> " + subsumedRule)
                 for subsumingRuleIndex in range(len(self.overlappingRules[subsumedRule])):
                     ruleName = self.overlappingRules[subsumedRule][subsumingRuleIndex]
                     newRuleName = None
@@ -555,7 +554,6 @@ class PathConditionGenerator(object):
 
         manager = Manager()
         cpu_count = multiprocessing.cpu_count()
-
         print("CPU Count: " + str(cpu_count))
 
 
