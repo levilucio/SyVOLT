@@ -1,109 +1,194 @@
-
-
 from core.himesis import Himesis
+import uuid
 
 class Hlayer5rule3(Himesis):
     def __init__(self):
+
+    
+    
         """
-        Creates the himesis graph representing the AToM3 model Hlayer5rule3.
+        Creates the himesis graph representing the DSLTrans rule layer5rule3.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(Hlayer5rule3, self).__init__(name='Hlayer5rule3', num_nodes=27, edges=[])
+        super(Hlayer5rule3, self).__init__(name='Hlayer5rule3', num_nodes=0, edges=[])
         
-        # Add the edges
-        self.add_edges([[0, 19], [19, 3], [0, 20], [20, 9], [0, 21], [21, 4], [0, 22], [22, 5], [1, 23], [23, 10], [1, 24], [24, 6], [1, 25], [25, 7], [1, 26], [26, 8], [3, 13], [13, 9], [9, 14], [14, 4], [4, 15], [15, 5], [10, 16], [16, 6], [6, 17], [17, 7], [7, 18], [18, 8], [10, 11], [11, 3], [8, 12], [12, 5], [0, 2], [2, 1]])
+        
         # Set the graph attributes
         self["mm__"] = ['HimesisMM']
-        self["name"] = """layer5rule3"""
-        self["GUID__"] = 6018570213547247165
         
-        # Set the node attributes
+        self["name"] = """layer5rule3"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer5rule3')
+        
+        # match model. We only support one match model
+        self.add_node()
         self.vs[0]["mm__"] = """MatchModel"""
-        self.vs[0]["GUID__"] = 8837701791382003838
+        
+        # apply model node
+        self.add_node()
         self.vs[1]["mm__"] = """ApplyModel"""
-        self.vs[1]["GUID__"] = 8321713293228461173
+        
+        # paired with relation between match and apply models
+        self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["GUID__"] = 5243782266433102559
-        self.vs[3]["name"] = """layer5rule3class0"""
+        self.vs[2]["rulename"] = """layer5rule3"""
+        
+        # match class TestCase(layer5rule3class0) node
+        self.add_node()
+        self.vs[3]["name"] = """layer5rule3class0""" 
         self.vs[3]["classtype"] = """TestCase"""
         self.vs[3]["mm__"] = """TestCase"""
-        self.vs[3]["cardinality"] = """+"""
-        self.vs[3]["GUID__"] = 8764935725910691577
-        self.vs[4]["name"] = """layer5rule3class2"""
-        self.vs[4]["classtype"] = """InitializeConfiguration"""
-        self.vs[4]["mm__"] = """InitializeConfiguration"""
-        self.vs[4]["cardinality"] = """+"""
-        self.vs[4]["GUID__"] = 7098573999961288724
-        self.vs[5]["name"] = """layer5rule3class3"""
-        self.vs[5]["classtype"] = """InstanceConfiguration"""
-        self.vs[5]["mm__"] = """InstanceConfiguration"""
-        self.vs[5]["cardinality"] = """+"""
-        self.vs[5]["GUID__"] = 1634451572400415300
-        self.vs[6]["name"] = """layer5rule3class5"""
-        self.vs[6]["classtype"] = """ExpressionStatement"""
-        self.vs[6]["mm__"] = """ExpressionStatement"""
-        self.vs[6]["cardinality"] = """1"""
-        self.vs[6]["GUID__"] = 2835138067965300303
-        self.vs[7]["name"] = """layer5rule3class6"""
-        self.vs[7]["classtype"] = """FunctionCall"""
-        self.vs[7]["mm__"] = """FunctionCall"""
-        self.vs[7]["cardinality"] = """1"""
-        self.vs[7]["GUID__"] = 8986783094526370827
-        self.vs[8]["name"] = """layer5rule3class7"""
-        self.vs[8]["classtype"] = """FunctionPrototype"""
-        self.vs[8]["mm__"] = """FunctionPrototype"""
-        self.vs[8]["cardinality"] = """1"""
-        self.vs[8]["GUID__"] = 7086533737468980354
-        self.vs[9]["name"] = """layer5rule3class1"""
-        self.vs[9]["classtype"] = """StatementList"""
-        self.vs[9]["mm__"] = """StatementList"""
-        self.vs[9]["cardinality"] = """+"""
-        self.vs[9]["GUID__"] = 7844630876079929512
-        self.vs[10]["name"] = """layer5rule3class4"""
-        self.vs[10]["classtype"] = """StatementList"""
-        self.vs[10]["mm__"] = """StatementList"""
-        self.vs[10]["cardinality"] = """1"""
-        self.vs[10]["GUID__"] = 4488739910730172846
-        self.vs[11]["mm__"] = """backward_link"""
-        self.vs[11]["type"] = """ruleDef"""
-        self.vs[11]["GUID__"] = 6989855752118061649
-        self.vs[12]["mm__"] = """backward_link"""
-        self.vs[12]["type"] = """ruleDef"""
-        self.vs[12]["GUID__"] = 138323538880268831
-        self.vs[13]["associationType"] = """body"""
-        self.vs[13]["mm__"] = """directLink_S"""
-        self.vs[13]["GUID__"] = 8488093956845977087
-        self.vs[14]["associationType"] = """statements"""
-        self.vs[14]["mm__"] = """directLink_S"""
-        self.vs[14]["GUID__"] = 2143720421474475297
-        self.vs[15]["associationType"] = """config"""
-        self.vs[15]["mm__"] = """directLink_S"""
-        self.vs[15]["GUID__"] = 793014014494040735
-        self.vs[16]["associationType"] = """statements"""
-        self.vs[16]["mm__"] = """directLink_T"""
-        self.vs[16]["GUID__"] = 2329001922006328067
-        self.vs[17]["associationType"] = """expr"""
-        self.vs[17]["mm__"] = """directLink_T"""
-        self.vs[17]["GUID__"] = 5678848339153240113
-        self.vs[18]["associationType"] = """function"""
-        self.vs[18]["mm__"] = """directLink_T"""
-        self.vs[18]["GUID__"] = 7224244882222694738
-        self.vs[19]["mm__"] = """match_contains"""
-        self.vs[19]["GUID__"] = 195300450986432221
-        self.vs[20]["mm__"] = """match_contains"""
-        self.vs[20]["GUID__"] = 6645970520437968192
-        self.vs[21]["mm__"] = """match_contains"""
-        self.vs[21]["GUID__"] = 448871555050909251
-        self.vs[22]["mm__"] = """match_contains"""
-        self.vs[22]["GUID__"] = 714992834186226747
-        self.vs[23]["mm__"] = """apply_contains"""
-        self.vs[23]["GUID__"] = 2424098737504988239
-        self.vs[24]["mm__"] = """apply_contains"""
-        self.vs[24]["GUID__"] = 4456444635493012710
-        self.vs[25]["mm__"] = """apply_contains"""
-        self.vs[25]["GUID__"] = 6430038259820044345
-        self.vs[26]["mm__"] = """apply_contains"""
-        self.vs[26]["GUID__"] = 8935170676408349912
+        self.vs[3]["cardinality"] = """+""" 
+        # match_contains node for class TestCase(layer5rule3class0)
+        self.add_node()
+        self.vs[4]["mm__"] = """match_contains"""
+        # match class StatementList(layer5rule3class1) node
+        self.add_node()
+        self.vs[5]["name"] = """layer5rule3class1""" 
+        self.vs[5]["classtype"] = """StatementList"""
+        self.vs[5]["mm__"] = """StatementList"""
+        self.vs[5]["cardinality"] = """+""" 
+        # match_contains node for class StatementList(layer5rule3class1)
+        self.add_node()
+        self.vs[6]["mm__"] = """match_contains"""
+        # match class InitializeConfiguration(layer5rule3class2) node
+        self.add_node()
+        self.vs[7]["name"] = """layer5rule3class2""" 
+        self.vs[7]["classtype"] = """InitializeConfiguration"""
+        self.vs[7]["mm__"] = """InitializeConfiguration"""
+        self.vs[7]["cardinality"] = """+""" 
+        # match_contains node for class InitializeConfiguration(layer5rule3class2)
+        self.add_node()
+        self.vs[8]["mm__"] = """match_contains"""
+        # match class InstanceConfiguration(layer5rule3class3) node
+        self.add_node()
+        self.vs[9]["name"] = """layer5rule3class3""" 
+        self.vs[9]["classtype"] = """InstanceConfiguration"""
+        self.vs[9]["mm__"] = """InstanceConfiguration"""
+        self.vs[9]["cardinality"] = """+""" 
+        # match_contains node for class InstanceConfiguration(layer5rule3class3)
+        self.add_node()
+        self.vs[10]["mm__"] = """match_contains"""
+        
+        
+        # apply class StatementList(layer5rule3class4) node
+        self.add_node()
+        self.vs[11]["name"] = """layer5rule3class4""" 
+        self.vs[11]["classtype"] = """StatementList"""
+        self.vs[11]["mm__"] = """StatementList"""
+        self.vs[11]["cardinality"] = """1"""
+        # apply_contains node for class StatementList(layer5rule3class4)
+        self.add_node()
+        self.vs[12]["mm__"] = """apply_contains"""
+        # apply class ExpressionStatement(layer5rule3class5) node
+        self.add_node()
+        self.vs[13]["name"] = """layer5rule3class5""" 
+        self.vs[13]["classtype"] = """ExpressionStatement"""
+        self.vs[13]["mm__"] = """ExpressionStatement"""
+        self.vs[13]["cardinality"] = """1"""
+        # apply_contains node for class ExpressionStatement(layer5rule3class5)
+        self.add_node()
+        self.vs[14]["mm__"] = """apply_contains"""
+        # apply class FunctionCall(layer5rule3class6) node
+        self.add_node()
+        self.vs[15]["name"] = """layer5rule3class6""" 
+        self.vs[15]["classtype"] = """FunctionCall"""
+        self.vs[15]["mm__"] = """FunctionCall"""
+        self.vs[15]["cardinality"] = """1"""
+        # apply_contains node for class FunctionCall(layer5rule3class6)
+        self.add_node()
+        self.vs[16]["mm__"] = """apply_contains"""
+        # apply class FunctionPrototype(layer5rule3class7) node
+        self.add_node()
+        self.vs[17]["name"] = """layer5rule3class7""" 
+        self.vs[17]["classtype"] = """FunctionPrototype"""
+        self.vs[17]["mm__"] = """FunctionPrototype"""
+        self.vs[17]["cardinality"] = """1"""
+        # apply_contains node for class FunctionPrototype(layer5rule3class7)
+        self.add_node()
+        self.vs[18]["mm__"] = """apply_contains"""
+        
+        
+        # match association TestCase--body-->StatementList node
+        self.add_node()
+        self.vs[19]["associationType"] = """body"""
+        self.vs[19]["mm__"] = """directLink_S"""
+        # match association StatementList--statements-->InitializeConfiguration node
+        self.add_node()
+        self.vs[20]["associationType"] = """statements"""
+        self.vs[20]["mm__"] = """directLink_S"""
+        # match association InitializeConfiguration--config-->InstanceConfiguration node
+        self.add_node()
+        self.vs[21]["associationType"] = """config"""
+        self.vs[21]["mm__"] = """directLink_S"""
+        
+        # apply association StatementList--statements-->ExpressionStatement node
+        self.add_node()
+        self.vs[22]["associationType"] = """statements"""
+        self.vs[22]["mm__"] = """directLink_T"""
+        # apply association ExpressionStatement--expr-->FunctionCall node
+        self.add_node()
+        self.vs[23]["associationType"] = """expr"""
+        self.vs[23]["mm__"] = """directLink_T"""
+        # apply association FunctionCall--function-->FunctionPrototype node
+        self.add_node()
+        self.vs[24]["associationType"] = """function"""
+        self.vs[24]["mm__"] = """directLink_T"""
+        
+        # backward association TestCase---->StatementList node
+        self.add_node()
+        self.vs[25]["type"] = """ruleDef"""
+        self.vs[25]["mm__"] = """backward_link"""
+        # backward association InstanceConfiguration---->FunctionPrototype node
+        self.add_node()
+        self.vs[26]["type"] = """ruleDef"""
+        self.vs[26]["mm__"] = """backward_link"""
+        
+        
+        
+        
+        
+        
+        # Add the edges
+        self.add_edges([
+                (0,4), # matchmodel -> match_contains
+                (4,3), # match_contains -> match_class TestCase(layer5rule3class0)
+                (0,6), # matchmodel -> match_contains
+                (6,5), # match_contains -> match_class StatementList(layer5rule3class1)
+                (0,8), # matchmodel -> match_contains
+                (8,7), # match_contains -> match_class InitializeConfiguration(layer5rule3class2)
+                (0,10), # matchmodel -> match_contains
+                (10,9), # match_contains -> match_class InstanceConfiguration(layer5rule3class3)
+                (1,12), # applymodel -> apply_contains
+                (12,11), # apply_contains -> apply_class StatementList(layer5rule3class4)
+                (1,14), # applymodel -> apply_contains
+                (14,13), # apply_contains -> apply_class ExpressionStatement(layer5rule3class5)
+                (1,16), # applymodel -> apply_contains
+                (16,15), # apply_contains -> apply_class FunctionCall(layer5rule3class6)
+                (1,18), # applymodel -> apply_contains
+                (18,17), # apply_contains -> apply_class FunctionPrototype(layer5rule3class7)
+                (3,19), # match_class TestCase(layer5rule3class0) -> association body
+                (19,5), # association body  -> match_class StatementList(layer5rule3class1)
+                (5,20), # match_class StatementList(layer5rule3class1) -> association statements
+                (20,7), # association statements  -> match_class InitializeConfiguration(layer5rule3class2)
+                (7,21), # match_class InitializeConfiguration(layer5rule3class2) -> association config
+                (21,9), # association config  -> match_class InstanceConfiguration(layer5rule3class3)
+                (11,22), # apply_class StatementList(layer5rule3class4) -> association statements
+                (22,13), # association statements  -> apply_class ExpressionStatement(layer5rule3class5)
+                (13,23), # apply_class ExpressionStatement(layer5rule3class5) -> association expr
+                (23,15), # association expr  -> apply_class FunctionCall(layer5rule3class6)
+                (15,24), # apply_class FunctionCall(layer5rule3class6) -> association function
+                (24,17), # association function  -> apply_class FunctionPrototype(layer5rule3class7)
+                (11,25), # apply_class StatementList(layer5rule3class4) -> backward_association
+                (25,3), #  backward_association -> apply_class TestCase(layer5rule3class0)
+                (17,26), # apply_class FunctionPrototype(layer5rule3class7) -> backward_association
+                (26,9), #  backward_association -> apply_class InstanceConfiguration(layer5rule3class3)
+                (0,2), # matchmodel -> pairedwith
+                (2,1) # pairedwith -> applyModel				
+		])
+		
+        # Add the attribute equations
+        self["equations"] = [((11,'__ApplyAttribute'),('constant','TestCaseFunctionStatements')), ((17,'__ApplyAttribute'),('constant','InstanceConfigurationInit')), ]
 
+        

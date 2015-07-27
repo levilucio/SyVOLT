@@ -1,224 +1,279 @@
-
-
 from core.himesis import Himesis
+import uuid
 
 class Hlayer4rule3(Himesis):
     def __init__(self):
+
+    
+    
         """
-        Creates the himesis graph representing the AToM3 model Hlayer4rule3.
+        Creates the himesis graph representing the DSLTrans rule layer4rule3.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(Hlayer4rule3, self).__init__(name='Hlayer4rule3', num_nodes=65, edges=[])
+        super(Hlayer4rule3, self).__init__(name='Hlayer4rule3', num_nodes=0, edges=[])
         
-        # Add the edges
-        self.add_edges([[0, 24], [24, 8], [0, 26], [26, 25], [0, 27], [27, 9], [1, 55], [55, 10], [1, 56], [56, 28], [1, 57], [57, 3], [1, 58], [58, 11], [1, 59], [59, 29], [1, 60], [60, 12], [1, 61], [61, 13], [1, 62], [62, 4], [1, 63], [63, 5], [1, 64], [64, 6], [8, 14], [14, 25], [25, 15], [15, 9], [10, 46], [46, 28], [28, 47], [47, 3], [28, 48], [48, 11], [10, 49], [49, 29], [29, 50], [50, 13], [29, 51], [51, 12], [12, 52], [52, 4], [4, 53], [53, 5], [5, 54], [54, 6], [10, 16], [16, 8], [6, 17], [17, 25], [8, 18], [18, 42], [25, 19], [19, 43], [30, 31], [31, 43], [30, 32], [32, 33], [28, 20], [20, 44], [34, 35], [35, 44], [34, 36], [7, 21], [21, 42], [7, 22], [22, 37], [36, 7], [29, 23], [23, 45], [38, 39], [39, 45], [38, 40], [40, 41], [0, 2], [2, 1]])
+        
         # Set the graph attributes
         self["mm__"] = ['HimesisMM']
-        self["name"] = """layer4rule3"""
-        self["GUID__"] = 44448878407440489
         
-        # Set the node attributes
+        self["name"] = """layer4rule3"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer4rule3')
+        
+        # match model. We only support one match model
+        self.add_node()
         self.vs[0]["mm__"] = """MatchModel"""
-        self.vs[0]["GUID__"] = 4204236620468180812
+        
+        # apply model node
+        self.add_node()
         self.vs[1]["mm__"] = """ApplyModel"""
-        self.vs[1]["GUID__"] = 698611535966184004
+        
+        # paired with relation between match and apply models
+        self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["GUID__"] = 2893007141701918868
-        self.vs[3]["name"] = """layer4rule3class5"""
-        self.vs[3]["classtype"] = """VoidType"""
-        self.vs[3]["mm__"] = """VoidType"""
-        self.vs[3]["cardinality"] = """1"""
-        self.vs[3]["GUID__"] = 6841863573153982703
-        self.vs[4]["name"] = """layer4rule3class10"""
-        self.vs[4]["classtype"] = """ExpressionStatement"""
-        self.vs[4]["mm__"] = """ExpressionStatement"""
-        self.vs[4]["cardinality"] = """1"""
-        self.vs[4]["GUID__"] = 2269600324461760826
-        self.vs[5]["name"] = """layer4rule3class11"""
-        self.vs[5]["classtype"] = """FunctionCall"""
-        self.vs[5]["mm__"] = """FunctionCall"""
-        self.vs[5]["cardinality"] = """1"""
-        self.vs[5]["GUID__"] = 2282008197654412421
-        self.vs[6]["name"] = """layer4rule3class12"""
-        self.vs[6]["classtype"] = """FunctionPrototype"""
-        self.vs[6]["mm__"] = """FunctionPrototype"""
-        self.vs[6]["cardinality"] = """1"""
-        self.vs[6]["GUID__"] = 3120624305163594936
-        self.vs[7]["name"] = """Concatlayer4rule3class4attribute055"""
-        self.vs[7]["Type"] = """'String'"""
-        self.vs[7]["mm__"] = """Concat"""
-        self.vs[7]["GUID__"] = 2283807723270310689
-        self.vs[8]["name"] = """layer4rule3class0"""
-        self.vs[8]["classtype"] = """ImplementationModule"""
-        self.vs[8]["mm__"] = """ImplementationModule"""
-        self.vs[8]["cardinality"] = """+"""
-        self.vs[8]["GUID__"] = 7221949922217856529
-        self.vs[9]["name"] = """layer4rule3class2"""
-        self.vs[9]["classtype"] = """Int32Type"""
-        self.vs[9]["mm__"] = """Int32Type"""
-        self.vs[9]["cardinality"] = """+"""
-        self.vs[9]["GUID__"] = 60347754240588321
-        self.vs[10]["name"] = """layer4rule3class3"""
-        self.vs[10]["classtype"] = """ImplementationModule"""
-        self.vs[10]["mm__"] = """ImplementationModule"""
-        self.vs[10]["cardinality"] = """1"""
-        self.vs[10]["GUID__"] = 3256900739775458106
-        self.vs[11]["name"] = """layer4rule3class6"""
-        self.vs[11]["classtype"] = """StatementList"""
-        self.vs[11]["mm__"] = """StatementList"""
+        self.vs[2]["rulename"] = """layer4rule3"""
+        
+        # match class ImplementationModule(layer4rule3class0) node
+        self.add_node()
+        self.vs[3]["name"] = """layer4rule3class0""" 
+        self.vs[3]["classtype"] = """ImplementationModule"""
+        self.vs[3]["mm__"] = """ImplementationModule"""
+        self.vs[3]["cardinality"] = """+""" 
+        # match_contains node for class ImplementationModule(layer4rule3class0)
+        self.add_node()
+        self.vs[4]["mm__"] = """match_contains"""
+        # match class Function(layer4rule3class1) node
+        self.add_node()
+        self.vs[5]["name"] = """layer4rule3class1""" 
+        self.vs[5]["classtype"] = """Function"""
+        self.vs[5]["mm__"] = """Function"""
+        self.vs[5]["cardinality"] = """+""" 
+        # match_contains node for class Function(layer4rule3class1)
+        self.add_node()
+        self.vs[6]["mm__"] = """match_contains"""
+        # match class Int32Type(layer4rule3class2) node
+        self.add_node()
+        self.vs[7]["name"] = """layer4rule3class2""" 
+        self.vs[7]["classtype"] = """Int32Type"""
+        self.vs[7]["mm__"] = """Int32Type"""
+        self.vs[7]["cardinality"] = """+""" 
+        # match_contains node for class Int32Type(layer4rule3class2)
+        self.add_node()
+        self.vs[8]["mm__"] = """match_contains"""
+        
+        
+        # apply class ImplementationModule(layer4rule3class3) node
+        self.add_node()
+        self.vs[9]["name"] = """layer4rule3class3""" 
+        self.vs[9]["classtype"] = """ImplementationModule"""
+        self.vs[9]["mm__"] = """ImplementationModule"""
+        self.vs[9]["cardinality"] = """1"""
+        # apply_contains node for class ImplementationModule(layer4rule3class3)
+        self.add_node()
+        self.vs[10]["mm__"] = """apply_contains"""
+        # apply class Function(layer4rule3class4) node
+        self.add_node()
+        self.vs[11]["name"] = """layer4rule3class4""" 
+        self.vs[11]["classtype"] = """Function"""
+        self.vs[11]["mm__"] = """Function"""
         self.vs[11]["cardinality"] = """1"""
-        self.vs[11]["GUID__"] = 5841298012795268527
-        self.vs[12]["name"] = """layer4rule3class8"""
-        self.vs[12]["classtype"] = """StatementList"""
-        self.vs[12]["mm__"] = """StatementList"""
-        self.vs[12]["cardinality"] = """1"""
-        self.vs[12]["GUID__"] = 1268449854649543233
-        self.vs[13]["name"] = """layer4rule3class9"""
-        self.vs[13]["classtype"] = """Int32Type"""
-        self.vs[13]["mm__"] = """Int32Type"""
+        # apply_contains node for class Function(layer4rule3class4)
+        self.add_node()
+        self.vs[12]["mm__"] = """apply_contains"""
+        # apply class VoidType(layer4rule3class5) node
+        self.add_node()
+        self.vs[13]["name"] = """layer4rule3class5""" 
+        self.vs[13]["classtype"] = """VoidType"""
+        self.vs[13]["mm__"] = """VoidType"""
         self.vs[13]["cardinality"] = """1"""
-        self.vs[13]["GUID__"] = 6023260795248884504
-        self.vs[14]["associationType"] = """contents"""
-        self.vs[14]["mm__"] = """directLink_S"""
-        self.vs[14]["GUID__"] = 517369249292327756
-        self.vs[15]["associationType"] = """type"""
-        self.vs[15]["mm__"] = """directLink_S"""
-        self.vs[15]["GUID__"] = 5549078514383916960
-        self.vs[16]["mm__"] = """backward_link"""
-        self.vs[16]["type"] = """ruleDef"""
-        self.vs[16]["GUID__"] = 6922151137126473572
-        self.vs[17]["mm__"] = """backward_link"""
-        self.vs[17]["type"] = """ruleDef"""
-        self.vs[17]["GUID__"] = 7997084671309676048
-        self.vs[18]["mm__"] = """hasAttribute_S"""
-        self.vs[18]["GUID__"] = 8258371259017428589
-        self.vs[19]["mm__"] = """hasAttribute_S"""
-        self.vs[19]["GUID__"] = 1104639819977056987
-        self.vs[20]["mm__"] = """hasAttribute_T"""
-        self.vs[20]["GUID__"] = 4287830731875715220
-        self.vs[21]["mm__"] = """hasArgs"""
-        self.vs[21]["GUID__"] = 402398447990536463
-        self.vs[22]["mm__"] = """hasArgs"""
-        self.vs[22]["GUID__"] = 5297359950363832575
-        self.vs[23]["mm__"] = """hasAttribute_T"""
-        self.vs[23]["GUID__"] = 7618313607709441319
-        self.vs[24]["mm__"] = """match_contains"""
-        self.vs[24]["GUID__"] = 3411177674820169920
-        self.vs[25]["name"] = """layer4rule3class1"""
-        self.vs[25]["classtype"] = """Function"""
-        self.vs[25]["mm__"] = """Function"""
-        self.vs[25]["cardinality"] = """+"""
-        self.vs[25]["GUID__"] = 3117275513933205785
-        self.vs[26]["mm__"] = """match_contains"""
-        self.vs[26]["GUID__"] = 8755830459265867293
-        self.vs[27]["mm__"] = """match_contains"""
-        self.vs[27]["GUID__"] = 5036076794022953875
-        self.vs[28]["name"] = """layer4rule3class4"""
-        self.vs[28]["classtype"] = """Function"""
-        self.vs[28]["mm__"] = """Function"""
-        self.vs[28]["cardinality"] = """1"""
-        self.vs[28]["GUID__"] = 804461660621508836
-        self.vs[29]["name"] = """layer4rule3class7"""
-        self.vs[29]["classtype"] = """Function"""
-        self.vs[29]["mm__"] = """Function"""
-        self.vs[29]["cardinality"] = """1"""
-        self.vs[29]["GUID__"] = 2980995463355211976
-        self.vs[30]["name"] = """eq_"""
-        self.vs[30]["mm__"] = """Equation"""
-        self.vs[30]["GUID__"] = 2941779981250012332
-        self.vs[31]["mm__"] = """leftExpr"""
-        self.vs[31]["GUID__"] = 3169503936107564122
-        self.vs[32]["mm__"] = """rightExpr"""
-        self.vs[32]["GUID__"] = 754367403546078459
-        self.vs[33]["name"] = """main"""
-        self.vs[33]["Type"] = """'String'"""
-        self.vs[33]["mm__"] = """Constant"""
-        self.vs[33]["GUID__"] = 7696411145091982275
-        self.vs[34]["name"] = """eq_"""
-        self.vs[34]["mm__"] = """Equation"""
-        self.vs[34]["GUID__"] = 1695722230555287901
-        self.vs[35]["mm__"] = """leftExpr"""
-        self.vs[35]["GUID__"] = 3769096468863140296
-        self.vs[36]["mm__"] = """rightExpr"""
-        self.vs[36]["GUID__"] = 2966443589549402571
-        self.vs[37]["name"] = """_blockexpr_main_2"""
-        self.vs[37]["Type"] = """'String'"""
-        self.vs[37]["mm__"] = """Constant"""
-        self.vs[37]["GUID__"] = 933466949485061072
-        self.vs[38]["name"] = """eq_"""
-        self.vs[38]["mm__"] = """Equation"""
-        self.vs[38]["GUID__"] = 9192078305384685962
-        self.vs[39]["mm__"] = """leftExpr"""
-        self.vs[39]["GUID__"] = 6413324761959252070
-        self.vs[40]["mm__"] = """rightExpr"""
-        self.vs[40]["GUID__"] = 5754665584043963760
-        self.vs[41]["name"] = """main"""
-        self.vs[41]["Type"] = """'String'"""
-        self.vs[41]["mm__"] = """Constant"""
-        self.vs[41]["GUID__"] = 1305204291003454175
-        self.vs[42]["name"] = """name"""
-        self.vs[42]["Type"] = """'String'"""
-        self.vs[42]["mm__"] = """Attribute"""
-        self.vs[42]["GUID__"] = 4198497171130283228
-        self.vs[43]["name"] = """name"""
-        self.vs[43]["Type"] = """'String'"""
-        self.vs[43]["mm__"] = """Attribute"""
-        self.vs[43]["GUID__"] = 7163616666380864708
-        self.vs[44]["name"] = """name"""
-        self.vs[44]["Type"] = """'String'"""
-        self.vs[44]["mm__"] = """Attribute"""
-        self.vs[44]["GUID__"] = 3143609616875262732
-        self.vs[45]["name"] = """name"""
-        self.vs[45]["Type"] = """'String'"""
-        self.vs[45]["mm__"] = """Attribute"""
-        self.vs[45]["GUID__"] = 5151204400463299119
-        self.vs[46]["associationType"] = """contents"""
-        self.vs[46]["mm__"] = """directLink_T"""
-        self.vs[46]["GUID__"] = 5700063839815790472
-        self.vs[47]["associationType"] = """type"""
-        self.vs[47]["mm__"] = """directLink_T"""
-        self.vs[47]["GUID__"] = 6528257522738302800
-        self.vs[48]["associationType"] = """body"""
-        self.vs[48]["mm__"] = """directLink_T"""
-        self.vs[48]["GUID__"] = 5456774650502424107
-        self.vs[49]["associationType"] = """contents"""
-        self.vs[49]["mm__"] = """directLink_T"""
-        self.vs[49]["GUID__"] = 1412464709156229372
-        self.vs[50]["associationType"] = """type"""
-        self.vs[50]["mm__"] = """directLink_T"""
-        self.vs[50]["GUID__"] = 8232138192671233167
-        self.vs[51]["associationType"] = """body"""
-        self.vs[51]["mm__"] = """directLink_T"""
-        self.vs[51]["GUID__"] = 6434571992923995642
-        self.vs[52]["associationType"] = """statements"""
-        self.vs[52]["mm__"] = """directLink_T"""
-        self.vs[52]["GUID__"] = 206647030909788825
-        self.vs[53]["associationType"] = """expr"""
-        self.vs[53]["mm__"] = """directLink_T"""
-        self.vs[53]["GUID__"] = 8440788033466273696
-        self.vs[54]["associationType"] = """function"""
-        self.vs[54]["mm__"] = """directLink_T"""
-        self.vs[54]["GUID__"] = 2336182275886746415
-        self.vs[55]["mm__"] = """apply_contains"""
-        self.vs[55]["GUID__"] = 7099587001533674763
-        self.vs[56]["mm__"] = """apply_contains"""
-        self.vs[56]["GUID__"] = 4314762484359878032
-        self.vs[57]["mm__"] = """apply_contains"""
-        self.vs[57]["GUID__"] = 1669699656975811445
-        self.vs[58]["mm__"] = """apply_contains"""
-        self.vs[58]["GUID__"] = 7713082992899560373
-        self.vs[59]["mm__"] = """apply_contains"""
-        self.vs[59]["GUID__"] = 9186584927787881746
-        self.vs[60]["mm__"] = """apply_contains"""
-        self.vs[60]["GUID__"] = 6206047357877196344
-        self.vs[61]["mm__"] = """apply_contains"""
-        self.vs[61]["GUID__"] = 4198361005971344409
-        self.vs[62]["mm__"] = """apply_contains"""
-        self.vs[62]["GUID__"] = 2808369852759135568
-        self.vs[63]["mm__"] = """apply_contains"""
-        self.vs[63]["GUID__"] = 4325733150795175303
-        self.vs[64]["mm__"] = """apply_contains"""
-        self.vs[64]["GUID__"] = 633786775317113760
+        # apply_contains node for class VoidType(layer4rule3class5)
+        self.add_node()
+        self.vs[14]["mm__"] = """apply_contains"""
+        # apply class StatementList(layer4rule3class6) node
+        self.add_node()
+        self.vs[15]["name"] = """layer4rule3class6""" 
+        self.vs[15]["classtype"] = """StatementList"""
+        self.vs[15]["mm__"] = """StatementList"""
+        self.vs[15]["cardinality"] = """1"""
+        # apply_contains node for class StatementList(layer4rule3class6)
+        self.add_node()
+        self.vs[16]["mm__"] = """apply_contains"""
+        # apply class Function(layer4rule3class7) node
+        self.add_node()
+        self.vs[17]["name"] = """layer4rule3class7""" 
+        self.vs[17]["classtype"] = """Function"""
+        self.vs[17]["mm__"] = """Function"""
+        self.vs[17]["cardinality"] = """1"""
+        # apply_contains node for class Function(layer4rule3class7)
+        self.add_node()
+        self.vs[18]["mm__"] = """apply_contains"""
+        # apply class StatementList(layer4rule3class8) node
+        self.add_node()
+        self.vs[19]["name"] = """layer4rule3class8""" 
+        self.vs[19]["classtype"] = """StatementList"""
+        self.vs[19]["mm__"] = """StatementList"""
+        self.vs[19]["cardinality"] = """1"""
+        # apply_contains node for class StatementList(layer4rule3class8)
+        self.add_node()
+        self.vs[20]["mm__"] = """apply_contains"""
+        # apply class Int32Type(layer4rule3class9) node
+        self.add_node()
+        self.vs[21]["name"] = """layer4rule3class9""" 
+        self.vs[21]["classtype"] = """Int32Type"""
+        self.vs[21]["mm__"] = """Int32Type"""
+        self.vs[21]["cardinality"] = """1"""
+        # apply_contains node for class Int32Type(layer4rule3class9)
+        self.add_node()
+        self.vs[22]["mm__"] = """apply_contains"""
+        # apply class ExpressionStatement(layer4rule3class10) node
+        self.add_node()
+        self.vs[23]["name"] = """layer4rule3class10""" 
+        self.vs[23]["classtype"] = """ExpressionStatement"""
+        self.vs[23]["mm__"] = """ExpressionStatement"""
+        self.vs[23]["cardinality"] = """1"""
+        # apply_contains node for class ExpressionStatement(layer4rule3class10)
+        self.add_node()
+        self.vs[24]["mm__"] = """apply_contains"""
+        # apply class FunctionCall(layer4rule3class11) node
+        self.add_node()
+        self.vs[25]["name"] = """layer4rule3class11""" 
+        self.vs[25]["classtype"] = """FunctionCall"""
+        self.vs[25]["mm__"] = """FunctionCall"""
+        self.vs[25]["cardinality"] = """1"""
+        # apply_contains node for class FunctionCall(layer4rule3class11)
+        self.add_node()
+        self.vs[26]["mm__"] = """apply_contains"""
+        # apply class FunctionPrototype(layer4rule3class12) node
+        self.add_node()
+        self.vs[27]["name"] = """layer4rule3class12""" 
+        self.vs[27]["classtype"] = """FunctionPrototype"""
+        self.vs[27]["mm__"] = """FunctionPrototype"""
+        self.vs[27]["cardinality"] = """1"""
+        # apply_contains node for class FunctionPrototype(layer4rule3class12)
+        self.add_node()
+        self.vs[28]["mm__"] = """apply_contains"""
+        
+        
+        # match association ImplementationModule--contents-->Function node
+        self.add_node()
+        self.vs[29]["associationType"] = """contents"""
+        self.vs[29]["mm__"] = """directLink_S"""
+        # match association Function--type-->Int32Type node
+        self.add_node()
+        self.vs[30]["associationType"] = """type"""
+        self.vs[30]["mm__"] = """directLink_S"""
+        
+        # apply association ImplementationModule--contents-->Function node
+        self.add_node()
+        self.vs[31]["associationType"] = """contents"""
+        self.vs[31]["mm__"] = """directLink_T"""
+        # apply association Function--type-->VoidType node
+        self.add_node()
+        self.vs[32]["associationType"] = """type"""
+        self.vs[32]["mm__"] = """directLink_T"""
+        # apply association Function--body-->StatementList node
+        self.add_node()
+        self.vs[33]["associationType"] = """body"""
+        self.vs[33]["mm__"] = """directLink_T"""
+        # apply association ImplementationModule--contents-->Function node
+        self.add_node()
+        self.vs[34]["associationType"] = """contents"""
+        self.vs[34]["mm__"] = """directLink_T"""
+        # apply association Function--type-->Int32Type node
+        self.add_node()
+        self.vs[35]["associationType"] = """type"""
+        self.vs[35]["mm__"] = """directLink_T"""
+        # apply association Function--body-->StatementList node
+        self.add_node()
+        self.vs[36]["associationType"] = """body"""
+        self.vs[36]["mm__"] = """directLink_T"""
+        # apply association StatementList--statements-->ExpressionStatement node
+        self.add_node()
+        self.vs[37]["associationType"] = """statements"""
+        self.vs[37]["mm__"] = """directLink_T"""
+        # apply association ExpressionStatement--expr-->FunctionCall node
+        self.add_node()
+        self.vs[38]["associationType"] = """expr"""
+        self.vs[38]["mm__"] = """directLink_T"""
+        # apply association FunctionCall--function-->FunctionPrototype node
+        self.add_node()
+        self.vs[39]["associationType"] = """function"""
+        self.vs[39]["mm__"] = """directLink_T"""
+        
+        # backward association ImplementationModule---->ImplementationModule node
+        self.add_node()
+        self.vs[40]["type"] = """ruleDef"""
+        self.vs[40]["mm__"] = """backward_link"""
+        # backward association Function---->FunctionPrototype node
+        self.add_node()
+        self.vs[41]["type"] = """ruleDef"""
+        self.vs[41]["mm__"] = """backward_link"""
+        
+        
+        
+        
+        
+        
+        # Add the edges
+        self.add_edges([
+                (0,4), # matchmodel -> match_contains
+                (4,3), # match_contains -> match_class ImplementationModule(layer4rule3class0)
+                (0,6), # matchmodel -> match_contains
+                (6,5), # match_contains -> match_class Function(layer4rule3class1)
+                (0,8), # matchmodel -> match_contains
+                (8,7), # match_contains -> match_class Int32Type(layer4rule3class2)
+                (1,10), # applymodel -> apply_contains
+                (10,9), # apply_contains -> apply_class ImplementationModule(layer4rule3class3)
+                (1,12), # applymodel -> apply_contains
+                (12,11), # apply_contains -> apply_class Function(layer4rule3class4)
+                (1,14), # applymodel -> apply_contains
+                (14,13), # apply_contains -> apply_class VoidType(layer4rule3class5)
+                (1,16), # applymodel -> apply_contains
+                (16,15), # apply_contains -> apply_class StatementList(layer4rule3class6)
+                (1,18), # applymodel -> apply_contains
+                (18,17), # apply_contains -> apply_class Function(layer4rule3class7)
+                (1,20), # applymodel -> apply_contains
+                (20,19), # apply_contains -> apply_class StatementList(layer4rule3class8)
+                (1,22), # applymodel -> apply_contains
+                (22,21), # apply_contains -> apply_class Int32Type(layer4rule3class9)
+                (1,24), # applymodel -> apply_contains
+                (24,23), # apply_contains -> apply_class ExpressionStatement(layer4rule3class10)
+                (1,26), # applymodel -> apply_contains
+                (26,25), # apply_contains -> apply_class FunctionCall(layer4rule3class11)
+                (1,28), # applymodel -> apply_contains
+                (28,27), # apply_contains -> apply_class FunctionPrototype(layer4rule3class12)
+                (3,29), # match_class ImplementationModule(layer4rule3class0) -> association contents
+                (29,5), # association contents  -> match_class Function(layer4rule3class1)
+                (5,30), # match_class Function(layer4rule3class1) -> association type
+                (30,7), # association type  -> match_class Int32Type(layer4rule3class2)
+                (9,31), # apply_class ImplementationModule(layer4rule3class3) -> association contents
+                (31,11), # association contents  -> apply_class Function(layer4rule3class4)
+                (11,32), # apply_class Function(layer4rule3class4) -> association type
+                (32,13), # association type  -> apply_class VoidType(layer4rule3class5)
+                (11,33), # apply_class Function(layer4rule3class4) -> association body
+                (33,15), # association body  -> apply_class StatementList(layer4rule3class6)
+                (9,34), # apply_class ImplementationModule(layer4rule3class3) -> association contents
+                (34,17), # association contents  -> apply_class Function(layer4rule3class7)
+                (17,35), # apply_class Function(layer4rule3class7) -> association type
+                (35,21), # association type  -> apply_class Int32Type(layer4rule3class9)
+                (17,36), # apply_class Function(layer4rule3class7) -> association body
+                (36,19), # association body  -> apply_class StatementList(layer4rule3class8)
+                (19,37), # apply_class StatementList(layer4rule3class8) -> association statements
+                (37,23), # association statements  -> apply_class ExpressionStatement(layer4rule3class10)
+                (23,38), # apply_class ExpressionStatement(layer4rule3class10) -> association expr
+                (38,25), # association expr  -> apply_class FunctionCall(layer4rule3class11)
+                (25,39), # apply_class FunctionCall(layer4rule3class11) -> association function
+                (39,27), # association function  -> apply_class FunctionPrototype(layer4rule3class12)
+                (9,40), # apply_class ImplementationModule(layer4rule3class3) -> backward_association
+                (40,3), #  backward_association -> apply_class ImplementationModule(layer4rule3class0)
+                (27,41), # apply_class FunctionPrototype(layer4rule3class12) -> backward_association
+                (41,5), #  backward_association -> apply_class Function(layer4rule3class1)
+                (0,2), # matchmodel -> pairedwith
+                (2,1) # pairedwith -> applyModel				
+		])
+		
+        # Add the attribute equations
+        self["equations"] = [((5,'name'),('constant','main')), ((9,'__ApplyAttribute'),('constant','ImplementationModule')), ((11,'name'),('concat',((3,'name'),('constant','_blockexpr_main_2')))), ((15,'__ApplyAttribute'),('constant','Main2Body')), ((17,'name'),('constant','main')), ((19,'__ApplyAttribute'),('constant','MainBody')), ((27,'__ApplyAttribute'),('constant','Main2Prototype')), ]
 
+        

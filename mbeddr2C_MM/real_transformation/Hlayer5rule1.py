@@ -1,366 +1,639 @@
-
-
 from core.himesis import Himesis
+import uuid
 
 class Hlayer5rule1(Himesis):
     def __init__(self):
+
+    
+    
         """
-        Creates the himesis graph representing the AToM3 model Hlayer5rule1.
+        Creates the himesis graph representing the DSLTrans rule layer5rule1.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(Hlayer5rule1, self).__init__(name='Hlayer5rule1', num_nodes=105, edges=[])
+        super(Hlayer5rule1, self).__init__(name='Hlayer5rule1', num_nodes=0, edges=[])
         
-        # Add the edges
-        self.add_edges([[0, 40], [40, 9], [0, 41], [41, 10], [0, 42], [42, 3], [0, 43], [43, 4], [0, 44], [44, 5], [0, 45], [45, 11], [0, 46], [46, 12], [0, 47], [47, 13], [0, 48], [48, 14], [0, 49], [49, 6], [0, 50], [50, 7], [1, 65], [65, 8], [1, 66], [66, 27], [1, 67], [67, 15], [1, 68], [68, 16], [1, 69], [69, 17], [1, 70], [70, 18], [1, 71], [71, 30], [1, 72], [72, 19], [1, 73], [73, 20], [1, 74], [74, 28], [1, 75], [75, 31], [1, 76], [76, 21], [1, 77], [77, 22], [1, 78], [78, 23], [1, 79], [79, 32], [1, 80], [80, 24], [1, 81], [81, 25], [1, 82], [82, 26], [1, 83], [83, 33], [1, 84], [84, 29], [9, 51], [51, 10], [10, 52], [52, 3], [4, 53], [53, 9], [4, 54], [54, 5], [5, 55], [55, 11], [11, 56], [56, 9], [11, 57], [57, 3], [4, 58], [58, 13], [12, 59], [59, 13], [5, 60], [60, 12], [13, 61], [61, 14], [14, 62], [62, 6], [6, 63], [63, 7], [3, 64], [64, 7], [8, 85], [85, 15], [15, 86], [86, 16], [16, 87], [87, 17], [16, 88], [88, 18], [17, 89], [89, 30], [17, 90], [90, 19], [30, 91], [91, 27], [19, 92], [92, 20], [18, 93], [93, 31], [31, 94], [94, 28], [8, 95], [95, 21], [21, 96], [96, 22], [22, 97], [97, 23], [23, 98], [98, 32], [32, 99], [99, 27], [23, 100], [100, 24], [24, 101], [101, 25], [22, 102], [102, 26], [26, 103], [103, 33], [33, 104], [104, 29], [8, 34], [34, 9], [27, 35], [35, 9], [20, 36], [36, 3], [28, 37], [37, 13], [25, 38], [38, 3], [29, 39], [39, 6], [0, 2], [2, 1]])
+        
         # Set the graph attributes
         self["mm__"] = ['HimesisMM']
-        self["name"] = """layer5rule1"""
-        self["GUID__"] = 4075635623649760577
         
-        # Set the node attributes
+        self["name"] = """layer5rule1"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer5rule1')
+        
+        # match model. We only support one match model
+        self.add_node()
         self.vs[0]["mm__"] = """MatchModel"""
-        self.vs[0]["GUID__"] = 2052043054421287590
+        
+        # apply model node
+        self.add_node()
         self.vs[1]["mm__"] = """ApplyModel"""
-        self.vs[1]["GUID__"] = 1940684558097002154
+        
+        # paired with relation between match and apply models
+        self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["GUID__"] = 7077053865117080010
-        self.vs[3]["name"] = """layer5rule1class2"""
-        self.vs[3]["classtype"] = """RequiredPort"""
-        self.vs[3]["mm__"] = """RequiredPort"""
-        self.vs[3]["cardinality"] = """+"""
-        self.vs[3]["GUID__"] = 2278546439452103318
-        self.vs[4]["name"] = """layer5rule1class3"""
-        self.vs[4]["classtype"] = """InstanceConfiguration"""
-        self.vs[4]["mm__"] = """InstanceConfiguration"""
-        self.vs[4]["cardinality"] = """+"""
-        self.vs[4]["GUID__"] = 5701646281017726664
-        self.vs[5]["name"] = """layer5rule1class4"""
-        self.vs[5]["classtype"] = """AssemblyConnector"""
-        self.vs[5]["mm__"] = """AssemblyConnector"""
-        self.vs[5]["cardinality"] = """+"""
-        self.vs[5]["GUID__"] = 566884869893951861
-        self.vs[6]["name"] = """layer5rule1class9"""
-        self.vs[6]["classtype"] = """ProvidedPort"""
-        self.vs[6]["mm__"] = """ProvidedPort"""
-        self.vs[6]["cardinality"] = """+"""
-        self.vs[6]["GUID__"] = 4795902923079615780
-        self.vs[7]["name"] = """layer5rule1class10"""
-        self.vs[7]["classtype"] = """ClientServerInterface"""
-        self.vs[7]["mm__"] = """ClientServerInterface"""
-        self.vs[7]["cardinality"] = """+"""
-        self.vs[7]["GUID__"] = 6990950175566740528
-        self.vs[8]["name"] = """layer5rule1class11"""
-        self.vs[8]["classtype"] = """StatementList"""
-        self.vs[8]["mm__"] = """StatementList"""
-        self.vs[8]["cardinality"] = """1"""
-        self.vs[8]["GUID__"] = 7026279724949188347
-        self.vs[9]["name"] = """layer5rule1class0"""
-        self.vs[9]["classtype"] = """ComponentInstance"""
-        self.vs[9]["mm__"] = """ComponentInstance"""
-        self.vs[9]["cardinality"] = """+"""
-        self.vs[9]["GUID__"] = 3165740206309948478
-        self.vs[10]["name"] = """layer5rule1class1"""
-        self.vs[10]["classtype"] = """AtomicComponent"""
-        self.vs[10]["mm__"] = """AtomicComponent"""
-        self.vs[10]["cardinality"] = """+"""
-        self.vs[10]["GUID__"] = 3334383470945134921
-        self.vs[11]["name"] = """layer5rule1class5"""
-        self.vs[11]["classtype"] = """InstancePortRef"""
-        self.vs[11]["mm__"] = """InstancePortRef"""
-        self.vs[11]["cardinality"] = """+"""
-        self.vs[11]["GUID__"] = 8465200293713169215
-        self.vs[12]["name"] = """layer5rule1class6"""
-        self.vs[12]["classtype"] = """InstancePortRef"""
-        self.vs[12]["mm__"] = """InstancePortRef"""
-        self.vs[12]["cardinality"] = """+"""
-        self.vs[12]["GUID__"] = 4792194903143107373
-        self.vs[13]["name"] = """layer5rule1class7"""
-        self.vs[13]["classtype"] = """ComponentInstance"""
-        self.vs[13]["mm__"] = """ComponentInstance"""
-        self.vs[13]["cardinality"] = """+"""
-        self.vs[13]["GUID__"] = 855132832278311669
-        self.vs[14]["name"] = """layer5rule1class8"""
-        self.vs[14]["classtype"] = """AtomicComponent"""
-        self.vs[14]["mm__"] = """AtomicComponent"""
-        self.vs[14]["cardinality"] = """+"""
-        self.vs[14]["GUID__"] = 8288465823287656355
-        self.vs[15]["name"] = """layer5rule1class13"""
-        self.vs[15]["classtype"] = """ExpressionStatement"""
-        self.vs[15]["mm__"] = """ExpressionStatement"""
-        self.vs[15]["cardinality"] = """1"""
-        self.vs[15]["GUID__"] = 1414895127512539802
-        self.vs[16]["name"] = """layer5rule1class14"""
-        self.vs[16]["classtype"] = """AssignmentExpr"""
-        self.vs[16]["mm__"] = """AssignmentExpr"""
-        self.vs[16]["cardinality"] = """1"""
-        self.vs[16]["GUID__"] = 6461913828316227201
-        self.vs[17]["name"] = """layer5rule1class15"""
-        self.vs[17]["classtype"] = """GenericDotExpression"""
-        self.vs[17]["mm__"] = """GenericDotExpression"""
-        self.vs[17]["cardinality"] = """1"""
-        self.vs[17]["GUID__"] = 5502968208767511720
-        self.vs[18]["name"] = """layer5rule1class16"""
-        self.vs[18]["classtype"] = """ReferenceExpr"""
-        self.vs[18]["mm__"] = """ReferenceExpr"""
-        self.vs[18]["cardinality"] = """1"""
-        self.vs[18]["GUID__"] = 2834091690193339794
-        self.vs[19]["name"] = """layer5rule1class18"""
-        self.vs[19]["classtype"] = """GenericMemberRef"""
-        self.vs[19]["mm__"] = """GenericMemberRef"""
-        self.vs[19]["cardinality"] = """1"""
-        self.vs[19]["GUID__"] = 4121788949200658253
-        self.vs[20]["name"] = """layer5rule1class19"""
-        self.vs[20]["classtype"] = """Member"""
-        self.vs[20]["mm__"] = """Member"""
-        self.vs[20]["cardinality"] = """1"""
-        self.vs[20]["GUID__"] = 2845400298679367894
-        self.vs[21]["name"] = """layer5rule1class22"""
-        self.vs[21]["classtype"] = """ExpressionStatement"""
-        self.vs[21]["mm__"] = """ExpressionStatement"""
-        self.vs[21]["cardinality"] = """1"""
-        self.vs[21]["GUID__"] = 3550912828267375532
-        self.vs[22]["name"] = """layer5rule1class23"""
-        self.vs[22]["classtype"] = """AssignmentExpr"""
-        self.vs[22]["mm__"] = """AssignmentExpr"""
-        self.vs[22]["cardinality"] = """1"""
-        self.vs[22]["GUID__"] = 2497611635330000995
-        self.vs[23]["name"] = """layer5rule1class24"""
-        self.vs[23]["classtype"] = """GenericDotExpression"""
-        self.vs[23]["mm__"] = """GenericDotExpression"""
-        self.vs[23]["cardinality"] = """1"""
-        self.vs[23]["GUID__"] = 8940884741912196914
-        self.vs[24]["name"] = """layer5rule1class26"""
-        self.vs[24]["classtype"] = """GenericMemberRef"""
-        self.vs[24]["mm__"] = """GenericMemberRef"""
-        self.vs[24]["cardinality"] = """1"""
-        self.vs[24]["GUID__"] = 4392018999046728143
-        self.vs[25]["name"] = """layer5rule1class27"""
-        self.vs[25]["classtype"] = """Member"""
-        self.vs[25]["mm__"] = """Member"""
+        self.vs[2]["rulename"] = """layer5rule1"""
+        
+        # match class ComponentInstance(layer5rule1class0) node
+        self.add_node()
+        self.vs[3]["name"] = """layer5rule1class0""" 
+        self.vs[3]["classtype"] = """ComponentInstance"""
+        self.vs[3]["mm__"] = """ComponentInstance"""
+        self.vs[3]["cardinality"] = """+""" 
+        # match_contains node for class ComponentInstance(layer5rule1class0)
+        self.add_node()
+        self.vs[4]["mm__"] = """match_contains"""
+        # match class AtomicComponent(layer5rule1class1) node
+        self.add_node()
+        self.vs[5]["name"] = """layer5rule1class1""" 
+        self.vs[5]["classtype"] = """AtomicComponent"""
+        self.vs[5]["mm__"] = """AtomicComponent"""
+        self.vs[5]["cardinality"] = """+""" 
+        # match_contains node for class AtomicComponent(layer5rule1class1)
+        self.add_node()
+        self.vs[6]["mm__"] = """match_contains"""
+        # match class RequiredPort(layer5rule1class2) node
+        self.add_node()
+        self.vs[7]["name"] = """layer5rule1class2""" 
+        self.vs[7]["classtype"] = """RequiredPort"""
+        self.vs[7]["mm__"] = """RequiredPort"""
+        self.vs[7]["cardinality"] = """+""" 
+        # match_contains node for class RequiredPort(layer5rule1class2)
+        self.add_node()
+        self.vs[8]["mm__"] = """match_contains"""
+        # match class InstanceConfiguration(layer5rule1class3) node
+        self.add_node()
+        self.vs[9]["name"] = """layer5rule1class3""" 
+        self.vs[9]["classtype"] = """InstanceConfiguration"""
+        self.vs[9]["mm__"] = """InstanceConfiguration"""
+        self.vs[9]["cardinality"] = """+""" 
+        # match_contains node for class InstanceConfiguration(layer5rule1class3)
+        self.add_node()
+        self.vs[10]["mm__"] = """match_contains"""
+        # match class AssemblyConnector(layer5rule1class4) node
+        self.add_node()
+        self.vs[11]["name"] = """layer5rule1class4""" 
+        self.vs[11]["classtype"] = """AssemblyConnector"""
+        self.vs[11]["mm__"] = """AssemblyConnector"""
+        self.vs[11]["cardinality"] = """+""" 
+        # match_contains node for class AssemblyConnector(layer5rule1class4)
+        self.add_node()
+        self.vs[12]["mm__"] = """match_contains"""
+        # match class InstancePortRef(layer5rule1class5) node
+        self.add_node()
+        self.vs[13]["name"] = """layer5rule1class5""" 
+        self.vs[13]["classtype"] = """InstancePortRef"""
+        self.vs[13]["mm__"] = """InstancePortRef"""
+        self.vs[13]["cardinality"] = """+""" 
+        # match_contains node for class InstancePortRef(layer5rule1class5)
+        self.add_node()
+        self.vs[14]["mm__"] = """match_contains"""
+        # match class InstancePortRef(layer5rule1class6) node
+        self.add_node()
+        self.vs[15]["name"] = """layer5rule1class6""" 
+        self.vs[15]["classtype"] = """InstancePortRef"""
+        self.vs[15]["mm__"] = """InstancePortRef"""
+        self.vs[15]["cardinality"] = """+""" 
+        # match_contains node for class InstancePortRef(layer5rule1class6)
+        self.add_node()
+        self.vs[16]["mm__"] = """match_contains"""
+        # match class ComponentInstance(layer5rule1class7) node
+        self.add_node()
+        self.vs[17]["name"] = """layer5rule1class7""" 
+        self.vs[17]["classtype"] = """ComponentInstance"""
+        self.vs[17]["mm__"] = """ComponentInstance"""
+        self.vs[17]["cardinality"] = """+""" 
+        # match_contains node for class ComponentInstance(layer5rule1class7)
+        self.add_node()
+        self.vs[18]["mm__"] = """match_contains"""
+        # match class AtomicComponent(layer5rule1class8) node
+        self.add_node()
+        self.vs[19]["name"] = """layer5rule1class8""" 
+        self.vs[19]["classtype"] = """AtomicComponent"""
+        self.vs[19]["mm__"] = """AtomicComponent"""
+        self.vs[19]["cardinality"] = """+""" 
+        # match_contains node for class AtomicComponent(layer5rule1class8)
+        self.add_node()
+        self.vs[20]["mm__"] = """match_contains"""
+        # match class ProvidedPort(layer5rule1class9) node
+        self.add_node()
+        self.vs[21]["name"] = """layer5rule1class9""" 
+        self.vs[21]["classtype"] = """ProvidedPort"""
+        self.vs[21]["mm__"] = """ProvidedPort"""
+        self.vs[21]["cardinality"] = """+""" 
+        # match_contains node for class ProvidedPort(layer5rule1class9)
+        self.add_node()
+        self.vs[22]["mm__"] = """match_contains"""
+        # match class ClientServerInterface(layer5rule1class10) node
+        self.add_node()
+        self.vs[23]["name"] = """layer5rule1class10""" 
+        self.vs[23]["classtype"] = """ClientServerInterface"""
+        self.vs[23]["mm__"] = """ClientServerInterface"""
+        self.vs[23]["cardinality"] = """+""" 
+        # match_contains node for class ClientServerInterface(layer5rule1class10)
+        self.add_node()
+        self.vs[24]["mm__"] = """match_contains"""
+        
+        
+        # apply class StatementList(layer5rule1class11) node
+        self.add_node()
+        self.vs[25]["name"] = """layer5rule1class11""" 
+        self.vs[25]["classtype"] = """StatementList"""
+        self.vs[25]["mm__"] = """StatementList"""
         self.vs[25]["cardinality"] = """1"""
-        self.vs[25]["GUID__"] = 4610294286892777368
-        self.vs[26]["name"] = """layer5rule1class28"""
-        self.vs[26]["classtype"] = """ReferenceExpr"""
-        self.vs[26]["mm__"] = """ReferenceExpr"""
-        self.vs[26]["cardinality"] = """1"""
-        self.vs[26]["GUID__"] = 8457307959001134597
-        self.vs[27]["name"] = """layer5rule1class12"""
+        # apply_contains node for class StatementList(layer5rule1class11)
+        self.add_node()
+        self.vs[26]["mm__"] = """apply_contains"""
+        # apply class GlobalVariableDeclaration(layer5rule1class12) node
+        self.add_node()
+        self.vs[27]["name"] = """layer5rule1class12""" 
         self.vs[27]["classtype"] = """GlobalVariableDeclaration"""
         self.vs[27]["mm__"] = """GlobalVariableDeclaration"""
         self.vs[27]["cardinality"] = """1"""
-        self.vs[27]["GUID__"] = 4798933551527561068
-        self.vs[28]["name"] = """layer5rule1class20"""
-        self.vs[28]["classtype"] = """GlobalVariableDeclaration"""
-        self.vs[28]["mm__"] = """GlobalVariableDeclaration"""
-        self.vs[28]["cardinality"] = """1"""
-        self.vs[28]["GUID__"] = 792138696734147174
-        self.vs[29]["name"] = """layer5rule1class30"""
-        self.vs[29]["classtype"] = """GlobalVariableDeclaration"""
-        self.vs[29]["mm__"] = """GlobalVariableDeclaration"""
+        # apply_contains node for class GlobalVariableDeclaration(layer5rule1class12)
+        self.add_node()
+        self.vs[28]["mm__"] = """apply_contains"""
+        # apply class ExpressionStatement(layer5rule1class13) node
+        self.add_node()
+        self.vs[29]["name"] = """layer5rule1class13""" 
+        self.vs[29]["classtype"] = """ExpressionStatement"""
+        self.vs[29]["mm__"] = """ExpressionStatement"""
         self.vs[29]["cardinality"] = """1"""
-        self.vs[29]["GUID__"] = 7271876749981980488
-        self.vs[30]["name"] = """layer5rule1class17"""
-        self.vs[30]["classtype"] = """GlobalVarRef"""
-        self.vs[30]["mm__"] = """GlobalVarRef"""
-        self.vs[30]["cardinality"] = """1"""
-        self.vs[30]["GUID__"] = 1248657736644372710
-        self.vs[31]["name"] = """layer5rule1class21"""
-        self.vs[31]["classtype"] = """GlobalVarRef"""
-        self.vs[31]["mm__"] = """GlobalVarRef"""
+        # apply_contains node for class ExpressionStatement(layer5rule1class13)
+        self.add_node()
+        self.vs[30]["mm__"] = """apply_contains"""
+        # apply class AssignmentExpr(layer5rule1class14) node
+        self.add_node()
+        self.vs[31]["name"] = """layer5rule1class14""" 
+        self.vs[31]["classtype"] = """AssignmentExpr"""
+        self.vs[31]["mm__"] = """AssignmentExpr"""
         self.vs[31]["cardinality"] = """1"""
-        self.vs[31]["GUID__"] = 5746669448937685785
-        self.vs[32]["name"] = """layer5rule1class25"""
-        self.vs[32]["classtype"] = """GlobalVarRef"""
-        self.vs[32]["mm__"] = """GlobalVarRef"""
-        self.vs[32]["cardinality"] = """1"""
-        self.vs[32]["GUID__"] = 3808089667186169486
-        self.vs[33]["name"] = """layer5rule1class29"""
-        self.vs[33]["classtype"] = """GlobalVarRef"""
-        self.vs[33]["mm__"] = """GlobalVarRef"""
+        # apply_contains node for class AssignmentExpr(layer5rule1class14)
+        self.add_node()
+        self.vs[32]["mm__"] = """apply_contains"""
+        # apply class GenericDotExpression(layer5rule1class15) node
+        self.add_node()
+        self.vs[33]["name"] = """layer5rule1class15""" 
+        self.vs[33]["classtype"] = """GenericDotExpression"""
+        self.vs[33]["mm__"] = """GenericDotExpression"""
         self.vs[33]["cardinality"] = """1"""
-        self.vs[33]["GUID__"] = 791290602497418938
-        self.vs[34]["mm__"] = """backward_link"""
-        self.vs[34]["type"] = """ruleDef"""
-        self.vs[34]["GUID__"] = 8488909164973646780
-        self.vs[35]["mm__"] = """backward_link"""
-        self.vs[35]["type"] = """ruleDef"""
-        self.vs[35]["GUID__"] = 3916330324200065043
-        self.vs[36]["mm__"] = """backward_link"""
-        self.vs[36]["type"] = """ruleDef"""
-        self.vs[36]["GUID__"] = 2843074005013731889
-        self.vs[37]["mm__"] = """backward_link"""
-        self.vs[37]["type"] = """ruleDef"""
-        self.vs[37]["GUID__"] = 6695279147856263374
-        self.vs[38]["mm__"] = """backward_link"""
-        self.vs[38]["type"] = """ruleDef"""
-        self.vs[38]["GUID__"] = 172726199833494714
-        self.vs[39]["mm__"] = """backward_link"""
-        self.vs[39]["type"] = """ruleDef"""
-        self.vs[39]["GUID__"] = 3540814104995730135
-        self.vs[40]["mm__"] = """match_contains"""
-        self.vs[40]["GUID__"] = 2835122794656424192
-        self.vs[41]["mm__"] = """match_contains"""
-        self.vs[41]["GUID__"] = 4309393491517973973
-        self.vs[42]["mm__"] = """match_contains"""
-        self.vs[42]["GUID__"] = 3272775065603539597
-        self.vs[43]["mm__"] = """match_contains"""
-        self.vs[43]["GUID__"] = 4188353988990928349
-        self.vs[44]["mm__"] = """match_contains"""
-        self.vs[44]["GUID__"] = 8619153941759823689
-        self.vs[45]["mm__"] = """match_contains"""
-        self.vs[45]["GUID__"] = 9133867594460926656
-        self.vs[46]["mm__"] = """match_contains"""
-        self.vs[46]["GUID__"] = 7883342681576106689
-        self.vs[47]["mm__"] = """match_contains"""
-        self.vs[47]["GUID__"] = 1685868017883080192
-        self.vs[48]["mm__"] = """match_contains"""
-        self.vs[48]["GUID__"] = 7552321885587449521
-        self.vs[49]["mm__"] = """match_contains"""
-        self.vs[49]["GUID__"] = 5597441675046982904
-        self.vs[50]["mm__"] = """match_contains"""
-        self.vs[50]["GUID__"] = 555231384787856918
-        self.vs[51]["associationType"] = """component"""
-        self.vs[51]["mm__"] = """directLink_S"""
-        self.vs[51]["GUID__"] = 450941258710339044
-        self.vs[52]["associationType"] = """contents"""
-        self.vs[52]["mm__"] = """directLink_S"""
-        self.vs[52]["GUID__"] = 2502056162401236815
-        self.vs[53]["associationType"] = """contents"""
-        self.vs[53]["mm__"] = """directLink_S"""
-        self.vs[53]["GUID__"] = 451249133040220278
-        self.vs[54]["associationType"] = """contents"""
-        self.vs[54]["mm__"] = """directLink_S"""
-        self.vs[54]["GUID__"] = 8666983352339340044
-        self.vs[55]["associationType"] = """source"""
-        self.vs[55]["mm__"] = """directLink_S"""
-        self.vs[55]["GUID__"] = 6033310371380633032
-        self.vs[56]["associationType"] = """instance"""
-        self.vs[56]["mm__"] = """directLink_S"""
-        self.vs[56]["GUID__"] = 2068939557311156686
-        self.vs[57]["associationType"] = """port"""
-        self.vs[57]["mm__"] = """directLink_S"""
-        self.vs[57]["GUID__"] = 5889722978480370312
-        self.vs[58]["associationType"] = """contents"""
-        self.vs[58]["mm__"] = """directLink_S"""
-        self.vs[58]["GUID__"] = 5635557722753103739
-        self.vs[59]["associationType"] = """instance"""
-        self.vs[59]["mm__"] = """directLink_S"""
-        self.vs[59]["GUID__"] = 738232577495734984
-        self.vs[60]["associationType"] = """target"""
-        self.vs[60]["mm__"] = """directLink_S"""
-        self.vs[60]["GUID__"] = 3056560502811386715
-        self.vs[61]["associationType"] = """component"""
-        self.vs[61]["mm__"] = """directLink_S"""
-        self.vs[61]["GUID__"] = 7275711115870850039
-        self.vs[62]["associationType"] = """contents"""
-        self.vs[62]["mm__"] = """directLink_S"""
-        self.vs[62]["GUID__"] = 2215957957984932088
-        self.vs[63]["associationType"] = """intf"""
-        self.vs[63]["mm__"] = """directLink_S"""
-        self.vs[63]["GUID__"] = 6268602740159573500
-        self.vs[64]["associationType"] = """intf"""
-        self.vs[64]["mm__"] = """directLink_S"""
-        self.vs[64]["GUID__"] = 739924079808027603
-        self.vs[65]["mm__"] = """apply_contains"""
-        self.vs[65]["GUID__"] = 6928831214059886332
-        self.vs[66]["mm__"] = """apply_contains"""
-        self.vs[66]["GUID__"] = 193368235550641100
-        self.vs[67]["mm__"] = """apply_contains"""
-        self.vs[67]["GUID__"] = 2992153972992762977
-        self.vs[68]["mm__"] = """apply_contains"""
-        self.vs[68]["GUID__"] = 5432671007304249299
-        self.vs[69]["mm__"] = """apply_contains"""
-        self.vs[69]["GUID__"] = 3316995644070834993
-        self.vs[70]["mm__"] = """apply_contains"""
-        self.vs[70]["GUID__"] = 1844922497606165472
-        self.vs[71]["mm__"] = """apply_contains"""
-        self.vs[71]["GUID__"] = 8916208194040133783
-        self.vs[72]["mm__"] = """apply_contains"""
-        self.vs[72]["GUID__"] = 5373021176931296402
-        self.vs[73]["mm__"] = """apply_contains"""
-        self.vs[73]["GUID__"] = 6743033641358407685
-        self.vs[74]["mm__"] = """apply_contains"""
-        self.vs[74]["GUID__"] = 3375499243564700413
-        self.vs[75]["mm__"] = """apply_contains"""
-        self.vs[75]["GUID__"] = 7416650065684190272
-        self.vs[76]["mm__"] = """apply_contains"""
-        self.vs[76]["GUID__"] = 7906208432617787689
-        self.vs[77]["mm__"] = """apply_contains"""
-        self.vs[77]["GUID__"] = 7579548150363659262
-        self.vs[78]["mm__"] = """apply_contains"""
-        self.vs[78]["GUID__"] = 7875773960445763049
-        self.vs[79]["mm__"] = """apply_contains"""
-        self.vs[79]["GUID__"] = 2139024345657051868
-        self.vs[80]["mm__"] = """apply_contains"""
-        self.vs[80]["GUID__"] = 6855716902113109160
-        self.vs[81]["mm__"] = """apply_contains"""
-        self.vs[81]["GUID__"] = 4791396472349263473
-        self.vs[82]["mm__"] = """apply_contains"""
-        self.vs[82]["GUID__"] = 2537168089613348351
-        self.vs[83]["mm__"] = """apply_contains"""
-        self.vs[83]["GUID__"] = 9064473495335794706
-        self.vs[84]["mm__"] = """apply_contains"""
-        self.vs[84]["GUID__"] = 3373330040143813927
-        self.vs[85]["associationType"] = """statements"""
+        # apply_contains node for class GenericDotExpression(layer5rule1class15)
+        self.add_node()
+        self.vs[34]["mm__"] = """apply_contains"""
+        # apply class ReferenceExpr(layer5rule1class16) node
+        self.add_node()
+        self.vs[35]["name"] = """layer5rule1class16""" 
+        self.vs[35]["classtype"] = """ReferenceExpr"""
+        self.vs[35]["mm__"] = """ReferenceExpr"""
+        self.vs[35]["cardinality"] = """1"""
+        # apply_contains node for class ReferenceExpr(layer5rule1class16)
+        self.add_node()
+        self.vs[36]["mm__"] = """apply_contains"""
+        # apply class GlobalVarRef(layer5rule1class17) node
+        self.add_node()
+        self.vs[37]["name"] = """layer5rule1class17""" 
+        self.vs[37]["classtype"] = """GlobalVarRef"""
+        self.vs[37]["mm__"] = """GlobalVarRef"""
+        self.vs[37]["cardinality"] = """1"""
+        # apply_contains node for class GlobalVarRef(layer5rule1class17)
+        self.add_node()
+        self.vs[38]["mm__"] = """apply_contains"""
+        # apply class GenericMemberRef(layer5rule1class18) node
+        self.add_node()
+        self.vs[39]["name"] = """layer5rule1class18""" 
+        self.vs[39]["classtype"] = """GenericMemberRef"""
+        self.vs[39]["mm__"] = """GenericMemberRef"""
+        self.vs[39]["cardinality"] = """1"""
+        # apply_contains node for class GenericMemberRef(layer5rule1class18)
+        self.add_node()
+        self.vs[40]["mm__"] = """apply_contains"""
+        # apply class Member(layer5rule1class19) node
+        self.add_node()
+        self.vs[41]["name"] = """layer5rule1class19""" 
+        self.vs[41]["classtype"] = """Member"""
+        self.vs[41]["mm__"] = """Member"""
+        self.vs[41]["cardinality"] = """1"""
+        # apply_contains node for class Member(layer5rule1class19)
+        self.add_node()
+        self.vs[42]["mm__"] = """apply_contains"""
+        # apply class GlobalVariableDeclaration(layer5rule1class20) node
+        self.add_node()
+        self.vs[43]["name"] = """layer5rule1class20""" 
+        self.vs[43]["classtype"] = """GlobalVariableDeclaration"""
+        self.vs[43]["mm__"] = """GlobalVariableDeclaration"""
+        self.vs[43]["cardinality"] = """1"""
+        # apply_contains node for class GlobalVariableDeclaration(layer5rule1class20)
+        self.add_node()
+        self.vs[44]["mm__"] = """apply_contains"""
+        # apply class GlobalVarRef(layer5rule1class21) node
+        self.add_node()
+        self.vs[45]["name"] = """layer5rule1class21""" 
+        self.vs[45]["classtype"] = """GlobalVarRef"""
+        self.vs[45]["mm__"] = """GlobalVarRef"""
+        self.vs[45]["cardinality"] = """1"""
+        # apply_contains node for class GlobalVarRef(layer5rule1class21)
+        self.add_node()
+        self.vs[46]["mm__"] = """apply_contains"""
+        # apply class ExpressionStatement(layer5rule1class22) node
+        self.add_node()
+        self.vs[47]["name"] = """layer5rule1class22""" 
+        self.vs[47]["classtype"] = """ExpressionStatement"""
+        self.vs[47]["mm__"] = """ExpressionStatement"""
+        self.vs[47]["cardinality"] = """1"""
+        # apply_contains node for class ExpressionStatement(layer5rule1class22)
+        self.add_node()
+        self.vs[48]["mm__"] = """apply_contains"""
+        # apply class AssignmentExpr(layer5rule1class23) node
+        self.add_node()
+        self.vs[49]["name"] = """layer5rule1class23""" 
+        self.vs[49]["classtype"] = """AssignmentExpr"""
+        self.vs[49]["mm__"] = """AssignmentExpr"""
+        self.vs[49]["cardinality"] = """1"""
+        # apply_contains node for class AssignmentExpr(layer5rule1class23)
+        self.add_node()
+        self.vs[50]["mm__"] = """apply_contains"""
+        # apply class GenericDotExpression(layer5rule1class24) node
+        self.add_node()
+        self.vs[51]["name"] = """layer5rule1class24""" 
+        self.vs[51]["classtype"] = """GenericDotExpression"""
+        self.vs[51]["mm__"] = """GenericDotExpression"""
+        self.vs[51]["cardinality"] = """1"""
+        # apply_contains node for class GenericDotExpression(layer5rule1class24)
+        self.add_node()
+        self.vs[52]["mm__"] = """apply_contains"""
+        # apply class GlobalVarRef(layer5rule1class25) node
+        self.add_node()
+        self.vs[53]["name"] = """layer5rule1class25""" 
+        self.vs[53]["classtype"] = """GlobalVarRef"""
+        self.vs[53]["mm__"] = """GlobalVarRef"""
+        self.vs[53]["cardinality"] = """1"""
+        # apply_contains node for class GlobalVarRef(layer5rule1class25)
+        self.add_node()
+        self.vs[54]["mm__"] = """apply_contains"""
+        # apply class GenericMemberRef(layer5rule1class26) node
+        self.add_node()
+        self.vs[55]["name"] = """layer5rule1class26""" 
+        self.vs[55]["classtype"] = """GenericMemberRef"""
+        self.vs[55]["mm__"] = """GenericMemberRef"""
+        self.vs[55]["cardinality"] = """1"""
+        # apply_contains node for class GenericMemberRef(layer5rule1class26)
+        self.add_node()
+        self.vs[56]["mm__"] = """apply_contains"""
+        # apply class Member(layer5rule1class27) node
+        self.add_node()
+        self.vs[57]["name"] = """layer5rule1class27""" 
+        self.vs[57]["classtype"] = """Member"""
+        self.vs[57]["mm__"] = """Member"""
+        self.vs[57]["cardinality"] = """1"""
+        # apply_contains node for class Member(layer5rule1class27)
+        self.add_node()
+        self.vs[58]["mm__"] = """apply_contains"""
+        # apply class ReferenceExpr(layer5rule1class28) node
+        self.add_node()
+        self.vs[59]["name"] = """layer5rule1class28""" 
+        self.vs[59]["classtype"] = """ReferenceExpr"""
+        self.vs[59]["mm__"] = """ReferenceExpr"""
+        self.vs[59]["cardinality"] = """1"""
+        # apply_contains node for class ReferenceExpr(layer5rule1class28)
+        self.add_node()
+        self.vs[60]["mm__"] = """apply_contains"""
+        # apply class GlobalVarRef(layer5rule1class29) node
+        self.add_node()
+        self.vs[61]["name"] = """layer5rule1class29""" 
+        self.vs[61]["classtype"] = """GlobalVarRef"""
+        self.vs[61]["mm__"] = """GlobalVarRef"""
+        self.vs[61]["cardinality"] = """1"""
+        # apply_contains node for class GlobalVarRef(layer5rule1class29)
+        self.add_node()
+        self.vs[62]["mm__"] = """apply_contains"""
+        # apply class GlobalVariableDeclaration(layer5rule1class30) node
+        self.add_node()
+        self.vs[63]["name"] = """layer5rule1class30""" 
+        self.vs[63]["classtype"] = """GlobalVariableDeclaration"""
+        self.vs[63]["mm__"] = """GlobalVariableDeclaration"""
+        self.vs[63]["cardinality"] = """1"""
+        # apply_contains node for class GlobalVariableDeclaration(layer5rule1class30)
+        self.add_node()
+        self.vs[64]["mm__"] = """apply_contains"""
+        
+        
+        # match association ComponentInstance--component-->AtomicComponent node
+        self.add_node()
+        self.vs[65]["associationType"] = """component"""
+        self.vs[65]["mm__"] = """directLink_S"""
+        # match association AtomicComponent--contents-->RequiredPort node
+        self.add_node()
+        self.vs[66]["associationType"] = """contents"""
+        self.vs[66]["mm__"] = """directLink_S"""
+        # match association InstanceConfiguration--contents-->ComponentInstance node
+        self.add_node()
+        self.vs[67]["associationType"] = """contents"""
+        self.vs[67]["mm__"] = """directLink_S"""
+        # match association InstanceConfiguration--contents-->AssemblyConnector node
+        self.add_node()
+        self.vs[68]["associationType"] = """contents"""
+        self.vs[68]["mm__"] = """directLink_S"""
+        # match association AssemblyConnector--source-->InstancePortRef node
+        self.add_node()
+        self.vs[69]["associationType"] = """source"""
+        self.vs[69]["mm__"] = """directLink_S"""
+        # match association InstancePortRef--instance-->ComponentInstance node
+        self.add_node()
+        self.vs[70]["associationType"] = """instance"""
+        self.vs[70]["mm__"] = """directLink_S"""
+        # match association InstancePortRef--port-->RequiredPort node
+        self.add_node()
+        self.vs[71]["associationType"] = """port"""
+        self.vs[71]["mm__"] = """directLink_S"""
+        # match association InstanceConfiguration--contents-->ComponentInstance node
+        self.add_node()
+        self.vs[72]["associationType"] = """contents"""
+        self.vs[72]["mm__"] = """directLink_S"""
+        # match association InstancePortRef--instance-->ComponentInstance node
+        self.add_node()
+        self.vs[73]["associationType"] = """instance"""
+        self.vs[73]["mm__"] = """directLink_S"""
+        # match association AssemblyConnector--target-->InstancePortRef node
+        self.add_node()
+        self.vs[74]["associationType"] = """target"""
+        self.vs[74]["mm__"] = """directLink_S"""
+        # match association ComponentInstance--component-->AtomicComponent node
+        self.add_node()
+        self.vs[75]["associationType"] = """component"""
+        self.vs[75]["mm__"] = """directLink_S"""
+        # match association AtomicComponent--contents-->ProvidedPort node
+        self.add_node()
+        self.vs[76]["associationType"] = """contents"""
+        self.vs[76]["mm__"] = """directLink_S"""
+        # match association ProvidedPort--intf-->ClientServerInterface node
+        self.add_node()
+        self.vs[77]["associationType"] = """intf"""
+        self.vs[77]["mm__"] = """directLink_S"""
+        # match association RequiredPort--intf-->ClientServerInterface node
+        self.add_node()
+        self.vs[78]["associationType"] = """intf"""
+        self.vs[78]["mm__"] = """directLink_S"""
+        
+        # apply association StatementList--statements-->ExpressionStatement node
+        self.add_node()
+        self.vs[79]["associationType"] = """statements"""
+        self.vs[79]["mm__"] = """directLink_T"""
+        # apply association ExpressionStatement--expr-->AssignmentExpr node
+        self.add_node()
+        self.vs[80]["associationType"] = """expr"""
+        self.vs[80]["mm__"] = """directLink_T"""
+        # apply association AssignmentExpr--left-->GenericDotExpression node
+        self.add_node()
+        self.vs[81]["associationType"] = """left"""
+        self.vs[81]["mm__"] = """directLink_T"""
+        # apply association AssignmentExpr--right-->ReferenceExpr node
+        self.add_node()
+        self.vs[82]["associationType"] = """right"""
+        self.vs[82]["mm__"] = """directLink_T"""
+        # apply association GenericDotExpression--expression-->GlobalVarRef node
+        self.add_node()
+        self.vs[83]["associationType"] = """expression"""
+        self.vs[83]["mm__"] = """directLink_T"""
+        # apply association GenericDotExpression--target-->GenericMemberRef node
+        self.add_node()
+        self.vs[84]["associationType"] = """target"""
+        self.vs[84]["mm__"] = """directLink_T"""
+        # apply association GlobalVarRef--var-->GlobalVariableDeclaration node
+        self.add_node()
+        self.vs[85]["associationType"] = """var"""
         self.vs[85]["mm__"] = """directLink_T"""
-        self.vs[85]["GUID__"] = 2580636887814996085
-        self.vs[86]["associationType"] = """expr"""
+        # apply association GenericMemberRef--member-->Member node
+        self.add_node()
+        self.vs[86]["associationType"] = """member"""
         self.vs[86]["mm__"] = """directLink_T"""
-        self.vs[86]["GUID__"] = 9116261520009241911
-        self.vs[87]["associationType"] = """left"""
+        # apply association ReferenceExpr--expression-->GlobalVarRef node
+        self.add_node()
+        self.vs[87]["associationType"] = """expression"""
         self.vs[87]["mm__"] = """directLink_T"""
-        self.vs[87]["GUID__"] = 1559809526453944981
-        self.vs[88]["associationType"] = """right"""
+        # apply association GlobalVarRef--var-->GlobalVariableDeclaration node
+        self.add_node()
+        self.vs[88]["associationType"] = """var"""
         self.vs[88]["mm__"] = """directLink_T"""
-        self.vs[88]["GUID__"] = 8079351936672012172
-        self.vs[89]["associationType"] = """expression"""
+        # apply association StatementList--statements-->ExpressionStatement node
+        self.add_node()
+        self.vs[89]["associationType"] = """statements"""
         self.vs[89]["mm__"] = """directLink_T"""
-        self.vs[89]["GUID__"] = 6006276435225655021
-        self.vs[90]["associationType"] = """target"""
+        # apply association ExpressionStatement--expr-->AssignmentExpr node
+        self.add_node()
+        self.vs[90]["associationType"] = """expr"""
         self.vs[90]["mm__"] = """directLink_T"""
-        self.vs[90]["GUID__"] = 6308757172147491389
-        self.vs[91]["associationType"] = """var"""
+        # apply association AssignmentExpr--left-->GenericDotExpression node
+        self.add_node()
+        self.vs[91]["associationType"] = """left"""
         self.vs[91]["mm__"] = """directLink_T"""
-        self.vs[91]["GUID__"] = 5770299289509604249
-        self.vs[92]["associationType"] = """member"""
+        # apply association GenericDotExpression--expression-->GlobalVarRef node
+        self.add_node()
+        self.vs[92]["associationType"] = """expression"""
         self.vs[92]["mm__"] = """directLink_T"""
-        self.vs[92]["GUID__"] = 8801350670167904773
-        self.vs[93]["associationType"] = """expression"""
+        # apply association GlobalVarRef--var-->GlobalVariableDeclaration node
+        self.add_node()
+        self.vs[93]["associationType"] = """var"""
         self.vs[93]["mm__"] = """directLink_T"""
-        self.vs[93]["GUID__"] = 5986662335631120385
-        self.vs[94]["associationType"] = """var"""
+        # apply association GenericDotExpression--target-->GenericMemberRef node
+        self.add_node()
+        self.vs[94]["associationType"] = """target"""
         self.vs[94]["mm__"] = """directLink_T"""
-        self.vs[94]["GUID__"] = 3569364941637319017
-        self.vs[95]["associationType"] = """statements"""
+        # apply association GenericMemberRef--member-->Member node
+        self.add_node()
+        self.vs[95]["associationType"] = """member"""
         self.vs[95]["mm__"] = """directLink_T"""
-        self.vs[95]["GUID__"] = 5559576736443596623
-        self.vs[96]["associationType"] = """expr"""
+        # apply association AssignmentExpr--right-->ReferenceExpr node
+        self.add_node()
+        self.vs[96]["associationType"] = """right"""
         self.vs[96]["mm__"] = """directLink_T"""
-        self.vs[96]["GUID__"] = 1845035504000172926
-        self.vs[97]["associationType"] = """left"""
+        # apply association ReferenceExpr--expression-->GlobalVarRef node
+        self.add_node()
+        self.vs[97]["associationType"] = """expression"""
         self.vs[97]["mm__"] = """directLink_T"""
-        self.vs[97]["GUID__"] = 3115555144797788610
-        self.vs[98]["associationType"] = """expression"""
+        # apply association GlobalVarRef--var-->GlobalVariableDeclaration node
+        self.add_node()
+        self.vs[98]["associationType"] = """var"""
         self.vs[98]["mm__"] = """directLink_T"""
-        self.vs[98]["GUID__"] = 183067086137219531
-        self.vs[99]["associationType"] = """var"""
-        self.vs[99]["mm__"] = """directLink_T"""
-        self.vs[99]["GUID__"] = 870427253361258892
-        self.vs[100]["associationType"] = """target"""
-        self.vs[100]["mm__"] = """directLink_T"""
-        self.vs[100]["GUID__"] = 5670825976054091384
-        self.vs[101]["associationType"] = """member"""
-        self.vs[101]["mm__"] = """directLink_T"""
-        self.vs[101]["GUID__"] = 4831866728489513045
-        self.vs[102]["associationType"] = """right"""
-        self.vs[102]["mm__"] = """directLink_T"""
-        self.vs[102]["GUID__"] = 6748700967079781552
-        self.vs[103]["associationType"] = """expression"""
-        self.vs[103]["mm__"] = """directLink_T"""
-        self.vs[103]["GUID__"] = 6940246333572284279
-        self.vs[104]["associationType"] = """var"""
-        self.vs[104]["mm__"] = """directLink_T"""
-        self.vs[104]["GUID__"] = 3664191527973828346
+        
+        # backward association ComponentInstance---->StatementList node
+        self.add_node()
+        self.vs[99]["type"] = """ruleDef"""
+        self.vs[99]["mm__"] = """backward_link"""
+        # backward association ComponentInstance---->GlobalVariableDeclaration node
+        self.add_node()
+        self.vs[100]["type"] = """ruleDef"""
+        self.vs[100]["mm__"] = """backward_link"""
+        # backward association RequiredPort---->Member node
+        self.add_node()
+        self.vs[101]["type"] = """ruleDef"""
+        self.vs[101]["mm__"] = """backward_link"""
+        # backward association ComponentInstance---->GlobalVariableDeclaration node
+        self.add_node()
+        self.vs[102]["type"] = """ruleDef"""
+        self.vs[102]["mm__"] = """backward_link"""
+        # backward association RequiredPort---->Member node
+        self.add_node()
+        self.vs[103]["type"] = """ruleDef"""
+        self.vs[103]["mm__"] = """backward_link"""
+        # backward association ProvidedPort---->GlobalVariableDeclaration node
+        self.add_node()
+        self.vs[104]["type"] = """ruleDef"""
+        self.vs[104]["mm__"] = """backward_link"""
+        
+        
+        
+        
+        
+        
+        # Add the edges
+        self.add_edges([
+                (0,4), # matchmodel -> match_contains
+                (4,3), # match_contains -> match_class ComponentInstance(layer5rule1class0)
+                (0,6), # matchmodel -> match_contains
+                (6,5), # match_contains -> match_class AtomicComponent(layer5rule1class1)
+                (0,8), # matchmodel -> match_contains
+                (8,7), # match_contains -> match_class RequiredPort(layer5rule1class2)
+                (0,10), # matchmodel -> match_contains
+                (10,9), # match_contains -> match_class InstanceConfiguration(layer5rule1class3)
+                (0,12), # matchmodel -> match_contains
+                (12,11), # match_contains -> match_class AssemblyConnector(layer5rule1class4)
+                (0,14), # matchmodel -> match_contains
+                (14,13), # match_contains -> match_class InstancePortRef(layer5rule1class5)
+                (0,16), # matchmodel -> match_contains
+                (16,15), # match_contains -> match_class InstancePortRef(layer5rule1class6)
+                (0,18), # matchmodel -> match_contains
+                (18,17), # match_contains -> match_class ComponentInstance(layer5rule1class7)
+                (0,20), # matchmodel -> match_contains
+                (20,19), # match_contains -> match_class AtomicComponent(layer5rule1class8)
+                (0,22), # matchmodel -> match_contains
+                (22,21), # match_contains -> match_class ProvidedPort(layer5rule1class9)
+                (0,24), # matchmodel -> match_contains
+                (24,23), # match_contains -> match_class ClientServerInterface(layer5rule1class10)
+                (1,26), # applymodel -> apply_contains
+                (26,25), # apply_contains -> apply_class StatementList(layer5rule1class11)
+                (1,28), # applymodel -> apply_contains
+                (28,27), # apply_contains -> apply_class GlobalVariableDeclaration(layer5rule1class12)
+                (1,30), # applymodel -> apply_contains
+                (30,29), # apply_contains -> apply_class ExpressionStatement(layer5rule1class13)
+                (1,32), # applymodel -> apply_contains
+                (32,31), # apply_contains -> apply_class AssignmentExpr(layer5rule1class14)
+                (1,34), # applymodel -> apply_contains
+                (34,33), # apply_contains -> apply_class GenericDotExpression(layer5rule1class15)
+                (1,36), # applymodel -> apply_contains
+                (36,35), # apply_contains -> apply_class ReferenceExpr(layer5rule1class16)
+                (1,38), # applymodel -> apply_contains
+                (38,37), # apply_contains -> apply_class GlobalVarRef(layer5rule1class17)
+                (1,40), # applymodel -> apply_contains
+                (40,39), # apply_contains -> apply_class GenericMemberRef(layer5rule1class18)
+                (1,42), # applymodel -> apply_contains
+                (42,41), # apply_contains -> apply_class Member(layer5rule1class19)
+                (1,44), # applymodel -> apply_contains
+                (44,43), # apply_contains -> apply_class GlobalVariableDeclaration(layer5rule1class20)
+                (1,46), # applymodel -> apply_contains
+                (46,45), # apply_contains -> apply_class GlobalVarRef(layer5rule1class21)
+                (1,48), # applymodel -> apply_contains
+                (48,47), # apply_contains -> apply_class ExpressionStatement(layer5rule1class22)
+                (1,50), # applymodel -> apply_contains
+                (50,49), # apply_contains -> apply_class AssignmentExpr(layer5rule1class23)
+                (1,52), # applymodel -> apply_contains
+                (52,51), # apply_contains -> apply_class GenericDotExpression(layer5rule1class24)
+                (1,54), # applymodel -> apply_contains
+                (54,53), # apply_contains -> apply_class GlobalVarRef(layer5rule1class25)
+                (1,56), # applymodel -> apply_contains
+                (56,55), # apply_contains -> apply_class GenericMemberRef(layer5rule1class26)
+                (1,58), # applymodel -> apply_contains
+                (58,57), # apply_contains -> apply_class Member(layer5rule1class27)
+                (1,60), # applymodel -> apply_contains
+                (60,59), # apply_contains -> apply_class ReferenceExpr(layer5rule1class28)
+                (1,62), # applymodel -> apply_contains
+                (62,61), # apply_contains -> apply_class GlobalVarRef(layer5rule1class29)
+                (1,64), # applymodel -> apply_contains
+                (64,63), # apply_contains -> apply_class GlobalVariableDeclaration(layer5rule1class30)
+                (3,65), # match_class ComponentInstance(layer5rule1class0) -> association component
+                (65,5), # association component  -> match_class AtomicComponent(layer5rule1class1)
+                (5,66), # match_class AtomicComponent(layer5rule1class1) -> association contents
+                (66,7), # association contents  -> match_class RequiredPort(layer5rule1class2)
+                (9,67), # match_class InstanceConfiguration(layer5rule1class3) -> association contents
+                (67,3), # association contents  -> match_class ComponentInstance(layer5rule1class0)
+                (9,68), # match_class InstanceConfiguration(layer5rule1class3) -> association contents
+                (68,11), # association contents  -> match_class AssemblyConnector(layer5rule1class4)
+                (11,69), # match_class AssemblyConnector(layer5rule1class4) -> association source
+                (69,13), # association source  -> match_class InstancePortRef(layer5rule1class5)
+                (13,70), # match_class InstancePortRef(layer5rule1class5) -> association instance
+                (70,3), # association instance  -> match_class ComponentInstance(layer5rule1class0)
+                (13,71), # match_class InstancePortRef(layer5rule1class5) -> association port
+                (71,7), # association port  -> match_class RequiredPort(layer5rule1class2)
+                (9,72), # match_class InstanceConfiguration(layer5rule1class3) -> association contents
+                (72,17), # association contents  -> match_class ComponentInstance(layer5rule1class7)
+                (15,73), # match_class InstancePortRef(layer5rule1class6) -> association instance
+                (73,17), # association instance  -> match_class ComponentInstance(layer5rule1class7)
+                (11,74), # match_class AssemblyConnector(layer5rule1class4) -> association target
+                (74,15), # association target  -> match_class InstancePortRef(layer5rule1class6)
+                (17,75), # match_class ComponentInstance(layer5rule1class7) -> association component
+                (75,19), # association component  -> match_class AtomicComponent(layer5rule1class8)
+                (19,76), # match_class AtomicComponent(layer5rule1class8) -> association contents
+                (76,21), # association contents  -> match_class ProvidedPort(layer5rule1class9)
+                (21,77), # match_class ProvidedPort(layer5rule1class9) -> association intf
+                (77,23), # association intf  -> match_class ClientServerInterface(layer5rule1class10)
+                (7,78), # match_class RequiredPort(layer5rule1class2) -> association intf
+                (78,23), # association intf  -> match_class ClientServerInterface(layer5rule1class10)
+                (25,79), # apply_class StatementList(layer5rule1class11) -> association statements
+                (79,29), # association statements  -> apply_class ExpressionStatement(layer5rule1class13)
+                (29,80), # apply_class ExpressionStatement(layer5rule1class13) -> association expr
+                (80,31), # association expr  -> apply_class AssignmentExpr(layer5rule1class14)
+                (31,81), # apply_class AssignmentExpr(layer5rule1class14) -> association left
+                (81,33), # association left  -> apply_class GenericDotExpression(layer5rule1class15)
+                (31,82), # apply_class AssignmentExpr(layer5rule1class14) -> association right
+                (82,35), # association right  -> apply_class ReferenceExpr(layer5rule1class16)
+                (33,83), # apply_class GenericDotExpression(layer5rule1class15) -> association expression
+                (83,37), # association expression  -> apply_class GlobalVarRef(layer5rule1class17)
+                (33,84), # apply_class GenericDotExpression(layer5rule1class15) -> association target
+                (84,39), # association target  -> apply_class GenericMemberRef(layer5rule1class18)
+                (37,85), # apply_class GlobalVarRef(layer5rule1class17) -> association var
+                (85,27), # association var  -> apply_class GlobalVariableDeclaration(layer5rule1class12)
+                (39,86), # apply_class GenericMemberRef(layer5rule1class18) -> association member
+                (86,41), # association member  -> apply_class Member(layer5rule1class19)
+                (35,87), # apply_class ReferenceExpr(layer5rule1class16) -> association expression
+                (87,45), # association expression  -> apply_class GlobalVarRef(layer5rule1class21)
+                (45,88), # apply_class GlobalVarRef(layer5rule1class21) -> association var
+                (88,43), # association var  -> apply_class GlobalVariableDeclaration(layer5rule1class20)
+                (25,89), # apply_class StatementList(layer5rule1class11) -> association statements
+                (89,47), # association statements  -> apply_class ExpressionStatement(layer5rule1class22)
+                (47,90), # apply_class ExpressionStatement(layer5rule1class22) -> association expr
+                (90,49), # association expr  -> apply_class AssignmentExpr(layer5rule1class23)
+                (49,91), # apply_class AssignmentExpr(layer5rule1class23) -> association left
+                (91,51), # association left  -> apply_class GenericDotExpression(layer5rule1class24)
+                (51,92), # apply_class GenericDotExpression(layer5rule1class24) -> association expression
+                (92,53), # association expression  -> apply_class GlobalVarRef(layer5rule1class25)
+                (53,93), # apply_class GlobalVarRef(layer5rule1class25) -> association var
+                (93,27), # association var  -> apply_class GlobalVariableDeclaration(layer5rule1class12)
+                (51,94), # apply_class GenericDotExpression(layer5rule1class24) -> association target
+                (94,55), # association target  -> apply_class GenericMemberRef(layer5rule1class26)
+                (55,95), # apply_class GenericMemberRef(layer5rule1class26) -> association member
+                (95,57), # association member  -> apply_class Member(layer5rule1class27)
+                (49,96), # apply_class AssignmentExpr(layer5rule1class23) -> association right
+                (96,59), # association right  -> apply_class ReferenceExpr(layer5rule1class28)
+                (59,97), # apply_class ReferenceExpr(layer5rule1class28) -> association expression
+                (97,61), # association expression  -> apply_class GlobalVarRef(layer5rule1class29)
+                (61,98), # apply_class GlobalVarRef(layer5rule1class29) -> association var
+                (98,63), # association var  -> apply_class GlobalVariableDeclaration(layer5rule1class30)
+                (25,99), # apply_class StatementList(layer5rule1class11) -> backward_association
+                (99,3), #  backward_association -> apply_class ComponentInstance(layer5rule1class0)
+                (27,100), # apply_class GlobalVariableDeclaration(layer5rule1class12) -> backward_association
+                (100,3), #  backward_association -> apply_class ComponentInstance(layer5rule1class0)
+                (41,101), # apply_class Member(layer5rule1class19) -> backward_association
+                (101,7), #  backward_association -> apply_class RequiredPort(layer5rule1class2)
+                (43,102), # apply_class GlobalVariableDeclaration(layer5rule1class20) -> backward_association
+                (102,17), #  backward_association -> apply_class ComponentInstance(layer5rule1class7)
+                (57,103), # apply_class Member(layer5rule1class27) -> backward_association
+                (103,7), #  backward_association -> apply_class RequiredPort(layer5rule1class2)
+                (63,104), # apply_class GlobalVariableDeclaration(layer5rule1class30) -> backward_association
+                (104,21), #  backward_association -> apply_class ProvidedPort(layer5rule1class9)
+                (0,2), # matchmodel -> pairedwith
+                (2,1) # pairedwith -> applyModel				
+		])
+		
+        # Add the attribute equations
+        self["equations"] = [((25,'__ApplyAttribute'),('constant','WireFunctionStatements')), ((27,'__ApplyAttribute'),('constant','GlobalComponentInstanceDeclaration')), ((41,'__ApplyAttribute'),('constant','RequiredPort_port')), ((43,'__ApplyAttribute'),('constant','GlobalComponentInstanceDeclaration')), ((57,'__ApplyAttribute'),('constant','RequiredPort_ops')), ((63,'__ApplyAttribute'),('constant','GlobalVarOps')), ]
 
+        

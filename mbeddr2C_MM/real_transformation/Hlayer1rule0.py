@@ -1,69 +1,126 @@
-
-
 from core.himesis import Himesis
+import uuid
 
 class Hlayer1rule0(Himesis):
     def __init__(self):
+
+    
+    
         """
-        Creates the himesis graph representing the AToM3 model Hlayer1rule0.
+        Creates the himesis graph representing the DSLTrans rule layer1rule0.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(Hlayer1rule0, self).__init__(name='Hlayer1rule0', num_nodes=15, edges=[])
+        super(Hlayer1rule0, self).__init__(name='Hlayer1rule0', num_nodes=0, edges=[])
         
-        # Add the edges
-        self.add_edges([[0, 8], [8, 7], [0, 9], [9, 3], [1, 11], [11, 10], [1, 12], [12, 4], [7, 5], [5, 3], [10, 6], [6, 4], [10, 13], [13, 7], [4, 14], [14, 3], [0, 2], [2, 1]])
+        
         # Set the graph attributes
         self["mm__"] = ['HimesisMM']
-        self["name"] = """layer1rule0"""
-        self["GUID__"] = 6314744001204402404
         
-        # Set the node attributes
+        self["name"] = """layer1rule0"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer1rule0')
+        
+        # match model. We only support one match model
+        self.add_node()
         self.vs[0]["mm__"] = """MatchModel"""
-        self.vs[0]["GUID__"] = 1918678784921909729
+        
+        # apply model node
+        self.add_node()
         self.vs[1]["mm__"] = """ApplyModel"""
-        self.vs[1]["GUID__"] = 8939291449343341912
+        
+        # paired with relation between match and apply models
+        self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["GUID__"] = 2109143650145952819
-        self.vs[3]["name"] = """layer1rule0class1"""
-        self.vs[3]["classtype"] = """ClientServerInterface"""
-        self.vs[3]["mm__"] = """ClientServerInterface"""
-        self.vs[3]["cardinality"] = """+"""
-        self.vs[3]["GUID__"] = 1775466194855625439
-        self.vs[4]["name"] = """layer1rule0class3"""
-        self.vs[4]["classtype"] = """StructDeclaration"""
-        self.vs[4]["mm__"] = """StructDeclaration"""
-        self.vs[4]["cardinality"] = """1"""
-        self.vs[4]["GUID__"] = 764935829196378250
-        self.vs[5]["associationType"] = """contents"""
-        self.vs[5]["mm__"] = """directLink_S"""
-        self.vs[5]["GUID__"] = 4901852162586002696
-        self.vs[6]["associationType"] = """contents"""
-        self.vs[6]["mm__"] = """directLink_T"""
-        self.vs[6]["GUID__"] = 1804763684533491084
-        self.vs[7]["name"] = """layer1rule0class0"""
+        self.vs[2]["rulename"] = """layer1rule0"""
+        
+        # match class ImplementationModule(layer1rule0class0) node
+        self.add_node()
+        self.vs[3]["name"] = """layer1rule0class0""" 
+        self.vs[3]["classtype"] = """ImplementationModule"""
+        self.vs[3]["mm__"] = """ImplementationModule"""
+        self.vs[3]["cardinality"] = """+""" 
+        # match_contains node for class ImplementationModule(layer1rule0class0)
+        self.add_node()
+        self.vs[4]["mm__"] = """match_contains"""
+        # match class ClientServerInterface(layer1rule0class1) node
+        self.add_node()
+        self.vs[5]["name"] = """layer1rule0class1""" 
+        self.vs[5]["classtype"] = """ClientServerInterface"""
+        self.vs[5]["mm__"] = """ClientServerInterface"""
+        self.vs[5]["cardinality"] = """+""" 
+        # match_contains node for class ClientServerInterface(layer1rule0class1)
+        self.add_node()
+        self.vs[6]["mm__"] = """match_contains"""
+        
+        
+        # apply class ImplementationModule(layer1rule0class2) node
+        self.add_node()
+        self.vs[7]["name"] = """layer1rule0class2""" 
         self.vs[7]["classtype"] = """ImplementationModule"""
         self.vs[7]["mm__"] = """ImplementationModule"""
-        self.vs[7]["cardinality"] = """+"""
-        self.vs[7]["GUID__"] = 2392888366680260612
-        self.vs[8]["mm__"] = """match_contains"""
-        self.vs[8]["GUID__"] = 6805116782868179318
-        self.vs[9]["mm__"] = """match_contains"""
-        self.vs[9]["GUID__"] = 5359168389684467476
-        self.vs[10]["name"] = """layer1rule0class2"""
-        self.vs[10]["classtype"] = """ImplementationModule"""
-        self.vs[10]["mm__"] = """ImplementationModule"""
-        self.vs[10]["cardinality"] = """1"""
-        self.vs[10]["GUID__"] = 8542375997091613871
-        self.vs[11]["mm__"] = """apply_contains"""
-        self.vs[11]["GUID__"] = 3031018513445332765
-        self.vs[12]["mm__"] = """apply_contains"""
-        self.vs[12]["GUID__"] = 1450638425885055150
-        self.vs[13]["mm__"] = """backward_link"""
+        self.vs[7]["cardinality"] = """1"""
+        # apply_contains node for class ImplementationModule(layer1rule0class2)
+        self.add_node()
+        self.vs[8]["mm__"] = """apply_contains"""
+        # apply class StructDeclaration(layer1rule0class3) node
+        self.add_node()
+        self.vs[9]["name"] = """layer1rule0class3""" 
+        self.vs[9]["classtype"] = """StructDeclaration"""
+        self.vs[9]["mm__"] = """StructDeclaration"""
+        self.vs[9]["cardinality"] = """1"""
+        # apply_contains node for class StructDeclaration(layer1rule0class3)
+        self.add_node()
+        self.vs[10]["mm__"] = """apply_contains"""
+        
+        
+        # match association ImplementationModule--contents-->ClientServerInterface node
+        self.add_node()
+        self.vs[11]["associationType"] = """contents"""
+        self.vs[11]["mm__"] = """directLink_S"""
+        
+        # apply association ImplementationModule--contents-->StructDeclaration node
+        self.add_node()
+        self.vs[12]["associationType"] = """contents"""
+        self.vs[12]["mm__"] = """directLink_T"""
+        
+        # backward association ImplementationModule---->ImplementationModule node
+        self.add_node()
         self.vs[13]["type"] = """ruleDef"""
-        self.vs[13]["GUID__"] = 3932828859273913499
-        self.vs[14]["mm__"] = """backward_link"""
+        self.vs[13]["mm__"] = """backward_link"""
+        # backward association ClientServerInterface---->StructDeclaration node
+        self.add_node()
         self.vs[14]["type"] = """ruleDef"""
-        self.vs[14]["GUID__"] = 1340373943114851876
+        self.vs[14]["mm__"] = """backward_link"""
+        
+        
+        
+        
+        
+        
+        # Add the edges
+        self.add_edges([
+                (0,4), # matchmodel -> match_contains
+                (4,3), # match_contains -> match_class ImplementationModule(layer1rule0class0)
+                (0,6), # matchmodel -> match_contains
+                (6,5), # match_contains -> match_class ClientServerInterface(layer1rule0class1)
+                (1,8), # applymodel -> apply_contains
+                (8,7), # apply_contains -> apply_class ImplementationModule(layer1rule0class2)
+                (1,10), # applymodel -> apply_contains
+                (10,9), # apply_contains -> apply_class StructDeclaration(layer1rule0class3)
+                (3,11), # match_class ImplementationModule(layer1rule0class0) -> association contents
+                (11,5), # association contents  -> match_class ClientServerInterface(layer1rule0class1)
+                (7,12), # apply_class ImplementationModule(layer1rule0class2) -> association contents
+                (12,9), # association contents  -> apply_class StructDeclaration(layer1rule0class3)
+                (7,13), # apply_class ImplementationModule(layer1rule0class2) -> backward_association
+                (13,3), #  backward_association -> apply_class ImplementationModule(layer1rule0class0)
+                (9,14), # apply_class StructDeclaration(layer1rule0class3) -> backward_association
+                (14,5), #  backward_association -> apply_class ClientServerInterface(layer1rule0class1)
+                (0,2), # matchmodel -> pairedwith
+                (2,1) # pairedwith -> applyModel				
+		])
+		
+        # Add the attribute equations
+        self["equations"] = [((7,'__ApplyAttribute'),('constant','ImplementationModule')), ((9,'__ApplyAttribute'),('constant','ClientServerStructIData')), ]
 
+        

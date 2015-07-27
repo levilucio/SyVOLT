@@ -1,66 +1,120 @@
-
-
 from core.himesis import Himesis
+import uuid
 
 class Hlayer2rule2(Himesis):
     def __init__(self):
+
+    
+    
         """
-        Creates the himesis graph representing the AToM3 model Hlayer2rule2.
+        Creates the himesis graph representing the DSLTrans rule layer2rule2.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(Hlayer2rule2, self).__init__(name='Hlayer2rule2', num_nodes=14, edges=[])
+        super(Hlayer2rule2, self).__init__(name='Hlayer2rule2', num_nodes=0, edges=[])
         
-        # Add the edges
-        self.add_edges([[0, 9], [9, 8], [0, 10], [10, 3], [1, 12], [12, 11], [1, 13], [13, 4], [3, 5], [5, 8], [4, 6], [6, 11], [4, 7], [7, 3], [0, 2], [2, 1]])
+        
         # Set the graph attributes
         self["mm__"] = ['HimesisMM']
-        self["name"] = """layer2rule2"""
-        self["GUID__"] = 7234933100294607637
         
-        # Set the node attributes
+        self["name"] = """layer2rule2"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'layer2rule2')
+        
+        # match model. We only support one match model
+        self.add_node()
         self.vs[0]["mm__"] = """MatchModel"""
-        self.vs[0]["GUID__"] = 9037011019073771219
+        
+        # apply model node
+        self.add_node()
         self.vs[1]["mm__"] = """ApplyModel"""
-        self.vs[1]["GUID__"] = 8300276758138686995
+        
+        # paired with relation between match and apply models
+        self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["GUID__"] = 9042897917184592523
-        self.vs[3]["name"] = """layer2rule2class1"""
-        self.vs[3]["classtype"] = """OperationParameter"""
-        self.vs[3]["mm__"] = """OperationParameter"""
-        self.vs[3]["cardinality"] = """+"""
-        self.vs[3]["GUID__"] = 8707417637409327230
-        self.vs[4]["name"] = """layer2rule2class3"""
-        self.vs[4]["classtype"] = """Argument"""
-        self.vs[4]["mm__"] = """Argument"""
-        self.vs[4]["cardinality"] = """1"""
-        self.vs[4]["GUID__"] = 2231016739216814287
-        self.vs[5]["associationType"] = """type"""
-        self.vs[5]["mm__"] = """directLink_S"""
-        self.vs[5]["GUID__"] = 3408002388607700757
-        self.vs[6]["associationType"] = """type"""
-        self.vs[6]["mm__"] = """directLink_T"""
-        self.vs[6]["GUID__"] = 3872947192363278065
-        self.vs[7]["mm__"] = """backward_link"""
-        self.vs[7]["type"] = """ruleDef"""
-        self.vs[7]["GUID__"] = 7653028462372058491
-        self.vs[8]["name"] = """layer2rule2class0"""
-        self.vs[8]["classtype"] = """VoidType"""
-        self.vs[8]["mm__"] = """VoidType"""
-        self.vs[8]["cardinality"] = """+"""
-        self.vs[8]["GUID__"] = 5800340777388170783
-        self.vs[9]["mm__"] = """match_contains"""
-        self.vs[9]["GUID__"] = 6635987733447237341
-        self.vs[10]["mm__"] = """match_contains"""
-        self.vs[10]["GUID__"] = 8619653930003000127
-        self.vs[11]["name"] = """layer2rule2class2"""
-        self.vs[11]["classtype"] = """VoidType"""
-        self.vs[11]["mm__"] = """VoidType"""
-        self.vs[11]["cardinality"] = """1"""
-        self.vs[11]["GUID__"] = 3736706331170457740
-        self.vs[12]["mm__"] = """apply_contains"""
-        self.vs[12]["GUID__"] = 5704630940335041720
-        self.vs[13]["mm__"] = """apply_contains"""
-        self.vs[13]["GUID__"] = 7290687490708499392
+        self.vs[2]["rulename"] = """layer2rule2"""
+        
+        # match class VoidType(layer2rule2class0) node
+        self.add_node()
+        self.vs[3]["name"] = """layer2rule2class0""" 
+        self.vs[3]["classtype"] = """VoidType"""
+        self.vs[3]["mm__"] = """VoidType"""
+        self.vs[3]["cardinality"] = """+""" 
+        # match_contains node for class VoidType(layer2rule2class0)
+        self.add_node()
+        self.vs[4]["mm__"] = """match_contains"""
+        # match class OperationParameter(layer2rule2class1) node
+        self.add_node()
+        self.vs[5]["name"] = """layer2rule2class1""" 
+        self.vs[5]["classtype"] = """OperationParameter"""
+        self.vs[5]["mm__"] = """OperationParameter"""
+        self.vs[5]["cardinality"] = """+""" 
+        # match_contains node for class OperationParameter(layer2rule2class1)
+        self.add_node()
+        self.vs[6]["mm__"] = """match_contains"""
+        
+        
+        # apply class VoidType(layer2rule2class2) node
+        self.add_node()
+        self.vs[7]["name"] = """layer2rule2class2""" 
+        self.vs[7]["classtype"] = """VoidType"""
+        self.vs[7]["mm__"] = """VoidType"""
+        self.vs[7]["cardinality"] = """1"""
+        # apply_contains node for class VoidType(layer2rule2class2)
+        self.add_node()
+        self.vs[8]["mm__"] = """apply_contains"""
+        # apply class Argument(layer2rule2class3) node
+        self.add_node()
+        self.vs[9]["name"] = """layer2rule2class3""" 
+        self.vs[9]["classtype"] = """Argument"""
+        self.vs[9]["mm__"] = """Argument"""
+        self.vs[9]["cardinality"] = """1"""
+        # apply_contains node for class Argument(layer2rule2class3)
+        self.add_node()
+        self.vs[10]["mm__"] = """apply_contains"""
+        
+        
+        # match association OperationParameter--type-->VoidType node
+        self.add_node()
+        self.vs[11]["associationType"] = """type"""
+        self.vs[11]["mm__"] = """directLink_S"""
+        
+        # apply association Argument--type-->VoidType node
+        self.add_node()
+        self.vs[12]["associationType"] = """type"""
+        self.vs[12]["mm__"] = """directLink_T"""
+        
+        # backward association OperationParameter---->Argument node
+        self.add_node()
+        self.vs[13]["type"] = """ruleDef"""
+        self.vs[13]["mm__"] = """backward_link"""
+        
+        
+        
+        
+        
+        
+        # Add the edges
+        self.add_edges([
+                (0,4), # matchmodel -> match_contains
+                (4,3), # match_contains -> match_class VoidType(layer2rule2class0)
+                (0,6), # matchmodel -> match_contains
+                (6,5), # match_contains -> match_class OperationParameter(layer2rule2class1)
+                (1,8), # applymodel -> apply_contains
+                (8,7), # apply_contains -> apply_class VoidType(layer2rule2class2)
+                (1,10), # applymodel -> apply_contains
+                (10,9), # apply_contains -> apply_class Argument(layer2rule2class3)
+                (5,11), # match_class OperationParameter(layer2rule2class1) -> association type
+                (11,3), # association type  -> match_class VoidType(layer2rule2class0)
+                (9,12), # apply_class Argument(layer2rule2class3) -> association type
+                (12,7), # association type  -> apply_class VoidType(layer2rule2class2)
+                (9,13), # apply_class Argument(layer2rule2class3) -> backward_association
+                (13,5), #  backward_association -> apply_class OperationParameter(layer2rule2class1)
+                (0,2), # matchmodel -> pairedwith
+                (2,1) # pairedwith -> applyModel				
+		])
+		
+        # Add the attribute equations
+        self["equations"] = [((9,'__ApplyAttribute'),('constant','ProvidedPortFunctionPrototypeArgument')), ]
 
+        
