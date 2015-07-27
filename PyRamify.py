@@ -856,7 +856,20 @@ class PyRamify:
         # for node in backwards_links2:
         #      node["mm__"] = "trace_link
         
+        # remove apply classes not connected to any backward link
         
+        apply_nums = []
+        bk_links = find_nodes_with_mm(base_graph, ["MT_pre__trace_link"])
+        bk_links_nums = [get_node_num(base_graph, item) for item in bk_links]
+        apply_contains_nodes = find_nodes_with_mm(base_graph, ["MT_pre__apply_contains"])
+        for node in apply_contains_nodes:
+            apply_node = base_graph.neighbors(node,"out")[0]
+            neighbors_apply_node = base_graph.neighbors(apply_node,"out")
+            print("-----------------------> Neighbors: " + str(neighbors_apply_node))
+            if set(neighbors_apply_node).intersection(bk_links_nums) == set():
+                apply_nums.append(apply_node)
+        
+        print("-------------------> " + str(apply_nums))
 
         structure_nodes = find_nodes_with_mm(base_graph, ["MT_pre__MatchModel", "MT_pre__paired_with",
                                                           "MT_pre__ApplyModel", "MT_pre__match_contains",
@@ -867,10 +880,10 @@ class PyRamify:
         link_nums = [get_node_num(base_graph, item) for item in link_nodes]
 
 
-        base_graph.delete_nodes(structure_nums + link_nums)
+        base_graph.delete_nodes(structure_nums + link_nums + apply_nums)
         
-        if self.draw_svg:
-            graph_to_dot("base_graph_" + base_graph.name, base_graph)
+        #if self.draw_svg:
+        graph_to_dot("base_graph_" + base_graph.name, base_graph)
         
         
         
