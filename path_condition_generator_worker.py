@@ -108,13 +108,12 @@ class path_condition_generator_worker(Process):
                     
                         localPathConditionLayerAccumulator = []
                                
-                        pathCondSubnum = 0
                         for child_pc_index in range(len(childrenPathConditions)):
     
                             child_pc_name = childrenPathConditions[child_pc_index]
     
                             cpc = expand_graph(self.pc_dict[child_pc_name])
-                            new_name = cpc.name + '_' + rule_name + "-" + str(pathCondSubnum)
+                            new_name = cpc.name + '_' + rule_name + "-0"
     
                             # create a new path condition which is the result of combining the rule with the current path condition being examined
                             #newPathCond = deepcopy(cpc)
@@ -123,7 +122,6 @@ class path_condition_generator_worker(Process):
     
     
                             newPathCond.name = new_name
-                            pathCondSubnum += 1
     
                             shrunk_newCond = shrink_graph(newPathCond)
                             self.pc_dict[new_name] = shrunk_newCond
@@ -374,7 +372,7 @@ class path_condition_generator_worker(Process):
                                             # the total combinator is always the one at the end of the combinator list for the rule.
     
                                             # name the new path condition as the combination of the previous path condition and the rule
-                                            newPathCondName = cpc.name + "_" + rule.name + "-" + str(pathCondSubnum)
+                                            newPathCondName = cpc.name + "_" + rule.name
     
                                             p_copy = deepcopy(p)
                                             newPathCond = deepcopy(cpc)
@@ -382,7 +380,6 @@ class path_condition_generator_worker(Process):
                                             p_copy = self.ruleCombinators[rule.name][combinator][1].packet_in(p_copy)
                                                                                               
                                             newPathCond = p_copy.graph
-                                            newPathCond.name = newPathCondName
    
                                             # check if the equations on the attributes of the newly created path condition are satisfied
 
@@ -392,9 +389,16 @@ class path_condition_generator_worker(Process):
 
                                             else:
                                                 if isTotalCombinator:
-                                                    
+
+#                                                    print("Going to write a total: " + newPathCondName)
+
+                                                    newPathCondName = newPathCondName +"-T" + str(pathCondSubnum)
+                                                    newPathCond.name = newPathCondName
+                                                                                                        
                                                     # because the rule combines totally with a path condition in the accumulator we just copy it
                                                     # directly on top of the accumulated path condition
+    
+                                                    # several totals my exist, so the original PC may be rewritten multiple times
     
                                                     previousTotalPC = None                                                    
                                                     writeOverPreviousTotalPC = False
@@ -414,6 +418,12 @@ class path_condition_generator_worker(Process):
                                                     childrenPathConditions[child_pc_index] = newPathCondName
     
                                                 else:
+
+#                                                    print("Going to write a partial: " + newPathCondName)
+
+                                                    newPathCondName = newPathCondName +"-P" + str(pathCondSubnum)
+                                                    newPathCond.name = newPathCondName
+                                                    
                                                     # we are dealing with a partial combination of the rule.
                                                     # create a copy of the path condition in the accumulator because this match of the rule is partial.
     
@@ -488,7 +498,7 @@ class path_condition_generator_worker(Process):
                         p.graph = cpc
                         p = combinatorMatcher.packet_in(p)
 #                         print "----> PC Name: " + newPathConditionSet[pathConditionIndex]                         
-#                         print "----> Match: " + str(combinatorMatcher.is_success)                                                 
+                        print ("-----------------------------> Match: " + str(combinatorMatcher.is_success))                                             
                         
                         i = Iterator()
                         p = i.packet_in(p)
@@ -500,7 +510,7 @@ class path_condition_generator_worker(Process):
                         while i.is_success:
                             #print "------------------ found 1 match"
                             p = combinatorRewriter.packet_in(p) 
-                            #print "----> Rewrite: " + str(combinatorRewriter.is_success)
+                            print("--------------------------------> Rewrite: " + str(combinatorRewriter.is_success))
                             p = i.next_in(p)
                         
                         newPathCondName = cpc.name + "_" + rule_name  + "-OVER"
