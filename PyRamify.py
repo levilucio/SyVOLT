@@ -865,11 +865,8 @@ class PyRamify:
         for node in apply_contains_nodes:
             apply_node = base_graph.neighbors(node,"out")[0]
             neighbors_apply_node = base_graph.neighbors(apply_node,"out")
-            print("-----------------------> Neighbors: " + str(neighbors_apply_node))
             if set(neighbors_apply_node).intersection(bk_links_nums) == set():
                 apply_nums.append(apply_node)
-        
-        print("-------------------> " + str(apply_nums))
 
         structure_nodes = find_nodes_with_mm(base_graph, ["MT_pre__MatchModel", "MT_pre__paired_with",
                                                           "MT_pre__ApplyModel", "MT_pre__match_contains",
@@ -1564,7 +1561,6 @@ class PyRamify:
 
     # return the layer a rule occurs in
     def layer_rule_occurs_in(self, rule):
-        rulesInLayer = []
         for layerIndex in range(len(self.transformation_layers)):
             for ruleIndex in range(len(self.transformation_layers[layerIndex])):
                 if rule == self.transformation_layers[layerIndex][ruleIndex].name:
@@ -1686,6 +1682,8 @@ class PyRamify:
             rule4 = load_class(dir_name + "/" + f)
             matchRulePattern = self.get_match_pattern(rule4)
             matchRulePatterns.update(matchRulePattern)
+            
+        print("------------------------> Transformation: " + str(self.transformation_layers))
 
         self.rules = rules
             
