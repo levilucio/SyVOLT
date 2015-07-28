@@ -16,6 +16,7 @@ import re
 import sys
 import os
 import uuid
+from profiler import *
 
 #cross-compatibility
 try:
@@ -325,6 +326,7 @@ def shrink_graph(graph):
 
 
 #expand the graph from an array
+#@do_cprofile
 def expand_graph(small_value):
 
     if do_pickle:
@@ -340,16 +342,45 @@ def expand_graph(small_value):
     #print(small_value)
     vcount, edgelist, is_directed, gattrs, vattrs, eattrs = small_value[0]
 
-    graph = igraph.Graph(n=vcount, edges=edgelist, directed=is_directed, graph_attrs=gattrs, vertex_attrs=vattrs, edge_attrs=eattrs)
-    graph.__dict__ = small_value[1]
+
+    do_old_expand = False
+    if do_old_expand:
+
+
+
+        graph = igraph.Graph(n=vcount, edges=edgelist, directed=is_directed, graph_attrs=gattrs, vertex_attrs=vattrs, edge_attrs=eattrs)
+        graph.__dict__ = small_value[1]
+
+        from .himesis import Himesis
+        graph.__class__ = Himesis
+
+    else:
+
+        from .himesis import Himesis
+        graph = Himesis.__new__(Himesis)
+        graph.__class__ = Himesis
+
+        igraph.GraphBase.__init__(graph, vcount, edgelist, is_directed)
+        # Set the graph attributes
+        for key, value in gattrs.items():
+            graph[key] = value
+
+
+        # Set the vertex attributes
+        vs = graph.vs
+        for key, value in vattrs.items():
+            vs[key] = value
+
+        graph.__dict__ = small_value[1]
+
+        #assume no edge attributes
 
 
     #graph.name = name
     #print(graph.name)
     #graph.is_compiled = is_compiled
 
-    from .himesis import Himesis
-    graph.__class__ = Himesis
+
 
     return graph
 
