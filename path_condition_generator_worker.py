@@ -104,7 +104,18 @@ class path_condition_generator_worker(Process):
                     
                     # The rule only gets ran in the first phase if it does not overlap with any other rule.
                     
-                    if rule not in self.overlappingRules:
+                    # check if any of the subsuming rules exists in the path condition
+
+                    subsumedRulesinPC = False
+                    
+                    if rule_name in self.overlappingRules.keys():
+                        subsumingRules = self.overlappingRules[rule_name]
+                        for sRule in subsumingRules:
+                            if sRule in pc_name:
+                                subsumedRulesinPC = True
+                                break                
+                    
+                    if rule_name not in self.overlappingRules.keys() or not subsumedRulesinPC:
                     
                         localPathConditionLayerAccumulator = []
                                
@@ -136,6 +147,7 @@ class path_condition_generator_worker(Process):
                             childrenPathConditions.append(new_name)
     
                         newPathConditionSet.extend(localPathConditionLayerAccumulator)
+
 
                 else:
 
@@ -455,26 +467,29 @@ class path_condition_generator_worker(Process):
             ruleNamesInLayer = [rule.name for rule in self.transformation[self.layer]]
             rulesForSecondPhase = set(self.overlappingRules.keys()).intersection(ruleNamesInLayer)
             
-#             print "--------------------------------"
-#             print "overlapping rules: " + str(self.overlappingRules.keys())
-#             print "rules in layer: " + str(ruleNamesInLayer)
-#             print "Rules for second phase: " + str(rulesForSecondPhase)      
+#             print("--------------------------------")
+#             print("overlapping rules: " + str(self.overlappingRules.keys()))
+#             print("rules in layer: " + str(ruleNamesInLayer))
+#             print("Rules for second phase: " + str(rulesForSecondPhase))
+
                 
-            for pathConditionIndex in range(len(newPathConditionSet)):
+            for pathConditionIndex in range(len(childrenPathConditions)):
                 
                 for rule_name in rulesForSecondPhase:
                     
                     ruleNamesInPC = []
-                    for token in newPathConditionSet[pathConditionIndex].split("_"):
+                    for token in childrenPathConditions[pathConditionIndex].split("_"):
                         ruleNamesInPC.append(token.split("-")[0])
                         
-#                     print "Rule names in PC: " + str(ruleNamesInPC)
-#                     print "Overlaps looked for: " + str(self.overlappingRules[rule_name])                 
-#                     print "Intersection: " + str(set(self.overlappingRules[rule_name]).intersection(set(ruleNamesInPC)))
+#                     print("Rule names in PC: " + str(ruleNamesInPC))
+#                     print("Overlaps looked for: " + str(self.overlappingRules[rule_name]))                 
+#                     print("Intersection: " + str(set(self.overlappingRules[rule_name]).intersection(set(ruleNamesInPC))))
                     
                     # check if any of the subsuming rules exists in the path condition's name,
-                    # otherwise don't even try to apply the rule
-                    if set(self.overlappingRules[rule_name]).intersection(set(ruleNamesInPC)) != set():
+                    # otherwise don't even try to apply the rule.
+                    # check also if the rules has not been previously executed as a rule with no dependencies
+                    if set(self.overlappingRules[rule_name]).intersection(set(ruleNamesInPC)) != set() and\
+                        rule_name not in childrenPathConditions[pathConditionIndex]:
                         
                         if self.verbosity >= 2 : print("Executing rule " + self.rule_names[rule_name] + " in second phase for overlaps.")
                         
@@ -494,11 +509,11 @@ class path_condition_generator_worker(Process):
                         # execute the rule
 
                         p = Packet()
-                        cpc = expand_graph(self.pc_dict[newPathConditionSet[pathConditionIndex]])
+                        cpc = expand_graph(self.pc_dict[childrenPathConditions[pathConditionIndex]])
                         p.graph = cpc
                         p = combinatorMatcher.packet_in(p)
-#                         print "----> PC Name: " + newPathConditionSet[pathConditionIndex]                         
-                        print ("-----------------------------> Match: " + str(combinatorMatcher.is_success))                                             
+#                         print "----> PC Name: " + childrenPathConditions[pathConditionIndex]                         
+                        #print ("-----------------------------> Match: " + str(combinatorMatcher.is_success))                                             
                         
                         i = Iterator()
                         p = i.packet_in(p)
@@ -507,20 +522,39 @@ class path_condition_generator_worker(Process):
 #                         for matchSite in p.match_sets.keys():
 #                             print str(p.match_sets[matchSite])
 
+                        numOfOverlaps = 0
+
                         while i.is_success:
-                            #print "------------------ found 1 match"
+                            numOfOverlaps = numOfOverlaps + 1
                             p = combinatorRewriter.packet_in(p) 
-                            print("--------------------------------> Rewrite: " + str(combinatorRewriter.is_success))
+                            #print("--------------------------------> Rewrite: " + str(combinatorRewriter.is_success))
                             p = i.next_in(p)
                         
-                        newPathCondName = cpc.name + "_" + rule_name  + "-OVER"
+                        newPathCondName = cpc.name + "_" + rule_name  + "-OVER" + str(numOfOverlaps)
                         
 #                        print "-----------------------------------------> " + newPathCondName
                             
                         # replace the original path condition by the result of overlapping the subsumed rule on it
-                        del[self.pc_dict[newPathConditionSet[pathConditionIndex]]]
+                        #del[self.pc_dict[childrenPathConditions[pathConditionIndex]]]
+                  
+                        previousTotalPC = None                                                    
+                        writeOverPreviousTotalPC = False
+
+                        for nameTotalPC in name_dict.keys():
+                            if name_dict[nameTotalPC] == cpc.name:
+                                previousTotalPC = nameTotalPC
+                                writeOverPreviousTotalPC = True
+                                break
+                        
+                        if not writeOverPreviousTotalPC:
+                            name_dict[cpc.name] = newPathCondName
+                        else:
+                            name_dict[previousTotalPC] = newPathCondName                  
+
+                        childrenPathConditions[pathConditionIndex] = newPathCondName
+                        
+                        p.graph.name = newPathCondName
                         shrunk_pc = shrink_graph(p.graph)   
-                        newPathConditionSet[pathConditionIndex] = newPathCondName
                         self.pc_dict[newPathCondName] = shrunk_pc
                         new_pc_dict[newPathCondName] = shrunk_pc
 
