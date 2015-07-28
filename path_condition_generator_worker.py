@@ -526,7 +526,13 @@ class path_condition_generator_worker(Process):
 
                         while i.is_success:
                             numOfOverlaps = numOfOverlaps + 1
-                            p = combinatorRewriter.packet_in(p) 
+                            beforeOverlappingPC = deepcopy(p.graph)
+                            p = combinatorRewriter.packet_in(p)
+                            
+                            if not is_consistent(p.graph):
+                                if self.verbosity >= 2:
+                                    print("Graph: " + newPathCondName + " has inconsistent equations")
+                                    p.graph = beforeOverlappingPC                                    
                             #print("--------------------------------> Rewrite: " + str(combinatorRewriter.is_success))
                             p = i.next_in(p)
                         
