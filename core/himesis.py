@@ -54,7 +54,7 @@ class Himesis(ig.Graph):
             @param edges: the list of edges where each edge is a tuple representing the ids of the source and target nodes
         """
 
-        ig.Graph.__init__(self, directed=True, n=num_nodes, edges=edges)
+        ig.GraphBase.__init__(self, n=num_nodes, edges=edges, directed=True)
         if not name:
             name = self.__class__.__name__
         self.name = standardize_name(name)
