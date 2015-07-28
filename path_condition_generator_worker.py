@@ -115,7 +115,7 @@ class path_condition_generator_worker(Process):
                                 subsumedRulesinPC = True
                                 break                
                     
-                    if rule_name not in self.overlappingRules.keys() or not subsumedRulesinPC:
+                    if rule_name not in self.overlappingRules.keys() and not subsumedRulesinPC:
                     
                         localPathConditionLayerAccumulator = []
                                

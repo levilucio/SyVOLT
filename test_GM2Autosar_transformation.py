@@ -160,12 +160,12 @@ class Test():
     def setUp(self,args):
         pyramify = PyRamify(verbosity = args.verbosity, draw_svg = args.draw_svg)
 
-        self.do_old_transformation = True
+        self.do_old_transformation = False
 
-        self.transformation_dir = "GM2AUTOSAR_MM/transformation_from_ATL/"
+        self.transformation_dir = "GM2AUTOSAR_MM/transformation_w_equations/"
 
         if self.do_old_transformation:
-            self.transformation_dir = "GM2AUTOSAR_MM/transformation/HimesisWOFaulty/"
+            self.transformation_dir = "GM2AUTOSAR_MM/transformation"
 
         self.rules = pyramify.get_rules(self.transformation_dir)
 
@@ -181,21 +181,21 @@ class Test():
 
 
         #change the properties to match the metamodel
-        mapping = {'MT_pre__Service':'MT_pre__Signal',
-                   'MT_pre__Scheduler':'MT_pre__ExecFrame',
-                   'MT_pre__Module':'MT_pre__Distributable',
-                   'MT_pre__Partition':'MT_pre__VirtualDevice',
-                   'MT_pre__PhysicalNode': 'MT_pre__ECU'}
-
-        #reverse the mapping for the new transformation
-        if not self.do_old_transformation:
-            mapping = {v: k for k, v in mapping.items()}
-
-        property_dir = "GM2AUTOSAR_MM/Properties/"
-        pyramify.changeGraphMetamodel(mapping, property_dir)
-
-        if args.draw_svg:
-            draw_graphs("property", property_dir)
+#         mapping = {'MT_pre__Service':'MT_pre__Signal',
+#                    'MT_pre__Scheduler':'MT_pre__ExecFrame',
+#                    'MT_pre__Module':'MT_pre__Distributable',
+#                    'MT_pre__Partition':'MT_pre__VirtualDevice',
+#                    'MT_pre__PhysicalNode': 'MT_pre__ECU'}
+# 
+#         #reverse the mapping for the new transformation
+#         if not self.do_old_transformation:
+#             mapping = {v: k for k, v in mapping.items()}
+# 
+#         property_dir = "GM2AUTOSAR_MM/Properties/"
+#         pyramify.changeGraphMetamodel(mapping, property_dir)
+# 
+#         if args.draw_svg:
+#             draw_graphs("property", property_dir)
 
         if self.do_old_transformation:
             self.transformation = [
@@ -208,13 +208,13 @@ class Test():
 
         else:
             self.transformation = [
-                [self.rules['HcreateComponent'], self.rules['HinitSysTemp'], self.rules['HinitSingleSwc2EcuMapping']],
-                [self.rules['Hsysmapping_swMapping_SolveRef_PhysicalNode_Partition_SystemMapping_SwcToEcuMapping']],
-                [self.rules['Hcompostype_component_SolveRef_PhysicalNode_Partition_Module_CompositionType_ComponentPrototype']],
-                [self.rules['Hmapping_component_SolveRef_Partition_Module_SwcToEcuMapping_SwCompToEcuMapping_component']],
-                [self.rules['Hmapping_ecuInstance_SolveRef_PhysicalNode_Partition_SwcToEcuMapping_EcuInstance']],
-                [self.rules['Hcompostype_port_SolveRef_PhysicalNode_Partition_Module_Scheduler_Service_CompositionType_PPortPrototype'],
-                 self.rules['Hcompostype_port_SolveRef_PhysicalNode_Partition_Module_Scheduler_Service_CompositionType_RPortPrototype']]]
+                [self.rules['HMapPN2FiveElements'], self.rules['HMapPartition'], self.rules['HMapModule']],
+                [self.rules['HConnECU2VirtualDevice1']],
+                [self.rules['HConnECU2VirtualDevice2']],
+                [self.rules['HConnVirtualDevice2Distributable1']],
+                [self.rules['HConnVirtualDevice2Distributable2']],
+                [self.rules['HConnectPPortPrototype']],
+                [self.rules['HConnectRPortPrototype']]]
 
 
 
@@ -345,15 +345,13 @@ class Test():
 
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
 
+        print("+++++++++++++++++++++++ " + str(self.transformation))
 
-        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns,
-         self.ruleCombinators] = \
-            pyramify.ramify_directory(self.transformation_dir, self.transformation)
+        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlappingRules] = \
+            pyramify.ramify_directory("GM2AUTOSAR_MM/transformation_w_equations/", self.transformation)
 
+        s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlappingRules, args)#
 
-        print("create path conditions")
-        s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, \
-                                   self.matchRulePatterns, args)
 
 
         ts0 = time.time()
@@ -365,17 +363,21 @@ class Test():
         print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
         # print("Size of the set of path conditions: " + str(float(sys.getsizeof(s.pathConditionSet) / 1024)))
         print("Number of path conditions: " + str(s.num_path_conditions))
+        
+        s.print_path_conditions_screen()
+#
+        s.print_path_conditions_file()
 
 
-        expected_num_pcs = 3
-        # check if the correct number of path conditions were produced
-        if not int(expected_num_pcs) == -1 and not int(expected_num_pcs) == s.num_path_conditions:
-            #TODO: Make this an exception
-            num_pcs_s = "The number of produced path conditions is incorrect.\n" + str(
-                expected_num_pcs) + " were expected, but " + str(s.num_path_conditions) + " were produced."
-            print(num_pcs_s)
-
-        print("printing states")
+#         expected_num_pcs = 3
+#         # check if the correct number of path conditions were produced
+#         if not int(expected_num_pcs) == -1 and not int(expected_num_pcs) == s.num_path_conditions:
+#             #TODO: Make this an exception
+#             num_pcs_s = "The number of produced path conditions is incorrect.\n" + str(
+#                 expected_num_pcs) + " were expected, but " + str(s.num_path_conditions) + " were produced."
+#             print(num_pcs_s)
+# 
+#         print("printing states")
         #self._print_states(s)
 
 #         graph_to_dot('symbolic_exec', s.symbStateSpace[1][0], 1)

@@ -1561,7 +1561,6 @@ class PyRamify:
 
     # return the layer a rule occurs in
     def layer_rule_occurs_in(self, rule):
-        rulesInLayer = []
         for layerIndex in range(len(self.transformation_layers)):
             for ruleIndex in range(len(self.transformation_layers[layerIndex])):
                 if rule == self.transformation_layers[layerIndex][ruleIndex].name:
@@ -1683,6 +1682,8 @@ class PyRamify:
             rule4 = load_class(dir_name + "/" + f)
             matchRulePattern = self.get_match_pattern(rule4)
             matchRulePatterns.update(matchRulePattern)
+            
+        print("------------------------> Transformation: " + str(self.transformation_layers))
 
         self.rules = rules
             
