@@ -28,6 +28,8 @@ import time
 
 from copy import deepcopy
 
+from util.newsizeof import total_size
+
 
 #used to check if a constraint has been left as default
 #note that all whitespace is removed to increase accuracy
@@ -336,10 +338,10 @@ def expand_graph(small_value):
 
     #constructor = igraph_dict[0]
     #print(small_value)
-    vcount, edgelist, is_directed, gattrs, vattrs, eattrs = small_value[1]
+    vcount, edgelist, is_directed, gattrs, vattrs, eattrs = small_value[0]
 
     graph = igraph.Graph(n=vcount, edges=edgelist, directed=is_directed, graph_attrs=gattrs, vertex_attrs=vattrs, edge_attrs=eattrs)
-    graph.__dict__ = small_value[2]
+    graph.__dict__ = small_value[1]
 
 
     #graph.name = name

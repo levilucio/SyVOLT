@@ -81,7 +81,7 @@ class Himesis(ig.Graph):
 
 
     def __reduce__(self):
-        return ig.Graph.__reduce__(self)
+        return ig.Graph.__reduce__(self)[1:]
 
         #remove constructor
         #return (value[1], value[2])
