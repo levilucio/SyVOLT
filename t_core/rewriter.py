@@ -4,6 +4,8 @@ from .messages import TransformationException
 from core.himesis import Himesis
 from core.himesis_utils import update_equations
 
+from solver.simple_attribute_equation_evaluator import is_consistent
+
 import traceback
 
 import re
@@ -57,10 +59,7 @@ class Rewriter(RulePrimitive):
                 cond_eqs = self.condition["equations"]
 
 
-
                 if cond_eqs and graph_eqs != cond_eqs:
-
-
 
                     #get dict from label to node num
                     RHS_labels = {}
@@ -88,7 +87,15 @@ class Rewriter(RulePrimitive):
 
                     new_cond_eqs = update_equations(cond_eqs, new_mapping)
                     packet.graph["equations"] += new_cond_eqs
+
+                    if not is_consistent(packet.graph):
+                        if verbosity >= 2:
+                            print("Graph: " + packet.graph.name + " has inconsistent equations inside")
+                        self.is_success = False
+                        return packet
+
                 self.condition.execute(packet, mapping)     # Sets dirty nodes as well
+
             except Exception as e:
 
                 tb = traceback.format_exc()

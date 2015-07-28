@@ -389,13 +389,16 @@ class path_condition_generator_worker(Process):
                                             p_copy = deepcopy(p)
                                             newPathCond = deepcopy(cpc)
                                             p_copy.graph = newPathCond
-                                            p_copy = self.ruleCombinators[rule.name][combinator][1].packet_in(p_copy)
+
+                                            rewriter = self.ruleCombinators[rule.name][combinator][1]
+                                            p_copy = rewriter.packet_in(p_copy)
                                                                                               
                                             newPathCond = p_copy.graph
    
                                             # check if the equations on the attributes of the newly created path condition are satisfied
 
-                                            if not is_consistent(newPathCond):
+                                            #if not is_consistent(newPathCond):
+                                            if not rewriter.is_success:
                                                 if self.verbosity >= 2:
                                                     print("Graph: " + newPathCondName + " has inconsistent equations")
 
@@ -529,7 +532,7 @@ class path_condition_generator_worker(Process):
                             beforeOverlappingPC = deepcopy(p.graph)
                             p = combinatorRewriter.packet_in(p)
                             
-                            if not is_consistent(p.graph):
+                            if not combinatorRewriter.is_success:
                                 if self.verbosity >= 2:
                                     print("Graph: " + newPathCondName + " has inconsistent equations")
                                     p.graph = beforeOverlappingPC                                    
