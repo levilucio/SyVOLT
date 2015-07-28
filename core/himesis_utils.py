@@ -325,15 +325,17 @@ def shrink_graph(graph):
 #expand the graph from an array
 def expand_graph(small_value):
 
-
     if do_pickle:
         f = gzip.open(pickle_dir + small_value, "rb")
         small_value = pickle.load(f)
         f.close()
+    else:
+        small_value = deepcopy(small_value)
 
     #igraph_dict = small_value
 
     #constructor = igraph_dict[0]
+    #print(small_value)
     vcount, edgelist, is_directed, gattrs, vattrs, eattrs = small_value[1]
 
     graph = igraph.Graph(n=vcount, edges=edgelist, directed=is_directed, graph_attrs=gattrs, vertex_attrs=vattrs, edge_attrs=eattrs)
