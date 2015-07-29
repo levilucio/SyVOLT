@@ -880,9 +880,9 @@ class HimesisPostConditionPattern(HimesisPattern):
                     if self.attribute_is_specified(attr):
                         old_value = 'None'
                         if has_old_values:
-                            old_value = "graph.vs[%s]['%s']" % (index, to_non_RAM_attribute(attrName))
+                            old_value = "vs[%s]['%s']" % (index, to_non_RAM_attribute(attrName))
                         #TODO: This should be a TransformationLanguageSpecificException
-                        transformationCode.append("""graph.vs[%s]['%s'] = self.%s(%s, lambda i: graph.vs[match[i]], graph)
+                        transformationCode.append("""vs[%s]['%s'] = self.%s(%s, lambda i: graph.vs[match[i]], graph)
 """ \
     % (index, to_non_RAM_attribute(attrName),
        self.get_attr_action_name(node, attrName),
@@ -903,6 +903,8 @@ class HimesisPostConditionPattern(HimesisPattern):
         # Update attributes
         transformationCode = ["""graph = packet.graph
 
+vs = graph.vs
+
 # Build a dictionary {label: node index} mapping each label of the pattern to a node in the graph to rewrite.
 # Because of the uniqueness property of labels in a rule, we can store all LHS labels
 # and subsequently add the labels corresponding to the nodes to be created.
@@ -921,7 +923,7 @@ labels = match.copy()
 %s""" % (to_non_RAM_attribute(self.vs[rhsNode][Himesis.Constants.META_MODEL]), label, updateCode))
                 # Only set the dirty flag if there was a modification in the attributes
                 transformationCode.append("""
-graph.vs[labels['%s']][Himesis.Constants.MT_DIRTY] = True
+vs[labels['%s']][Himesis.Constants.MT_DIRTY] = True
 """ % label)
         
         # Create new nodes
@@ -929,6 +931,7 @@ graph.vs[labels['%s']][Himesis.Constants.MT_DIRTY] = True
 #===============================================================================
 # Create new nodes
 #===============================================================================
+
 """)
         new_labels = []
         for label in RHS_labels:
@@ -939,7 +942,7 @@ graph.vs[labels['%s']][Himesis.Constants.MT_DIRTY] = True
                 transformationCode.append("""# %s%s
 new_node = graph.add_node()
 labels['%s'] = new_node
-graph.vs[new_node]["mm__"] = '%s'
+vs[new_node]["mm__"] = '%s'
 """ % (className, label, label, className))
                 transformationCode += set_attributes(rhsNode, 'new_node', has_old_values=False)
         
