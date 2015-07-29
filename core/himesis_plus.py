@@ -119,7 +119,7 @@ def makePreConditionPatternNAC(graph):
 
 
 def makePostConditionPattern(old_graph):
-    graph = copy.deepcopy(old_graph)
+    graph = old_graph.copy()
 
     # force the class to be different
     graph.__class__ = HimesisPostConditionPattern
@@ -148,7 +148,7 @@ def buildPreListFromClassNames(classNameList):
 
 #TODO: Use Himesis' copy operation to do this
 def copy_graph(graph2):
-    graph1 = copy.deepcopy(graph2)
+    graph1 = graph2.copy()
 
     try:
         graph1.nodes_label = copy.deepcopy(graph2.nodes_label)
@@ -168,7 +168,7 @@ def copy_graph(graph2):
     #graph1.import_name = copy.deepcopy(graph2.import_name)
 
     try:
-        graph1.NACs = copy.deepcopy(graph2.NACs)
+        graph1.NACs = [N.copy() for N in graph2.NACs]
     except AttributeError:
         pass
 

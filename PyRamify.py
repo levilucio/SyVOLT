@@ -473,7 +473,7 @@ class PyRamify:
         out_dir = "./patterns/"
         outfile = out_dir + self.get_RAMified_name(name) + ".py"
 
-        graph = copy.deepcopy(graph)
+        graph = graph.copy()
         graph = self.do_RAMify(graph, out_dir, remove_rule_nodes = False)
 
 
@@ -490,7 +490,7 @@ class PyRamify:
 
 
         # make sure to copy the graph, as we will make multiple smaller matchers from it
-        new_graph = copy.deepcopy(graph)
+        new_graph = graph.copy()
         new_graph = makePreConditionPattern(new_graph)
 
 

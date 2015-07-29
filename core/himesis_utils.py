@@ -417,10 +417,10 @@ def disjoint_model_union(first, second):
     """
     
     if first.vcount() == 0:
-        return deepcopy(second)
+        return second.copy()
     
     if second.vcount() == 0:
-        return deepcopy(first)
+        return first.copy()
 
     nb_nodes_first = first.vcount()
 

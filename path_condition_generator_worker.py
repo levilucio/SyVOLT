@@ -275,7 +275,7 @@ class path_condition_generator_worker(Process):
                                         newPathCondName = cpc.name + "_" + rule.name
 
                                         p_copy = deepcopy(p)
-                                        newPathCond = deepcopy(cpc)
+                                        newPathCond = cpc.copy()
                                         p_copy.graph = newPathCond
 
                                         rewriter = self.ruleCombinators[rule.name][combinator][1]
@@ -418,7 +418,7 @@ class path_condition_generator_worker(Process):
 
                         while i.is_success:
                             numOfOverlaps = numOfOverlaps + 1
-                            beforeOverlappingPC = deepcopy(p.graph)
+                            beforeOverlappingPC = p.graph.copy()
                             p = combinatorRewriter.packet_in(p)
                             
                             if not combinatorRewriter.is_success:
