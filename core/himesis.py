@@ -905,6 +905,8 @@ class HimesisPostConditionPattern(HimesisPattern):
 
 vs = graph.vs
 
+import numpy.random as nprnd
+
 # Build a dictionary {label: node index} mapping each label of the pattern to a node in the graph to rewrite.
 # Because of the uniqueness property of labels in a rule, we can store all LHS labels
 # and subsequently add the labels corresponding to the nodes to be created.
@@ -932,7 +934,18 @@ vs[labels['%s']][Himesis.Constants.MT_DIRTY] = True
 # Create new nodes
 #===============================================================================
 
+node_num = graph.vcount()
 """)
+        num_nodes_to_add = 0
+        for label in RHS_labels:
+            if label not in LHS_labels:
+                num_nodes_to_add += 1
+
+        transformationCode.append("""
+graph.add_vertices(%s)
+
+""" % str(num_nodes_to_add))
+
         new_labels = []
         for label in RHS_labels:
             rhsNode = self.get_node_with_label(label)
@@ -940,11 +953,20 @@ vs[labels['%s']][Himesis.Constants.MT_DIRTY] = True
                 new_labels += [label]
                 className = to_non_RAM_attribute(self.vs[rhsNode]["mm__"])
                 transformationCode.append("""# %s%s
-new_node = graph.add_node()
-labels['%s'] = new_node
-vs[new_node]["mm__"] = '%s'
+labels['%s'] = node_num
+vs[node_num]["mm__"] = '%s'
+vs[node_num]['GUID__'] = nprnd.randint(9223372036854775806)
 """ % (className, label, label, className))
-                transformationCode += set_attributes(rhsNode, 'new_node', has_old_values=False)
+                transformationCode += set_attributes(rhsNode, 'node_num', has_old_values = False)
+                transformationCode.append("""
+node_num += 1
+""")
+#                 transformationCode.append("""# %s%s
+# new_node = graph.add_node()
+# labels['%s'] = node_num
+# vs[node_num]["mm__"] = '%s'
+# """ % (className, label, label, className))
+#                 transformationCode += set_attributes(rhsNode, 'node_num', has_old_values=False)
         
         # Link the new nodes
         transformationCode.append("""
