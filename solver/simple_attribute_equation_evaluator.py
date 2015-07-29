@@ -51,7 +51,7 @@ def is_consistent(graph, verbosity=0):
 
 
     #remove all duplicates
-    new_eqs = [graph["equations"][i] for i in range(len(graph["equations"])) if i not in duplicates]
+    new_eqs = [eqs[i] for i in range(len(eqs)) if i not in duplicates]
     if verbosity >= 2:
         print("New eqs: ")
         for eq in new_eqs:
