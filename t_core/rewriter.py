@@ -9,13 +9,6 @@ from solver.simple_attribute_equation_evaluator import is_consistent
 import traceback
 
 import re
-def sort_nicely( l ):
-    """ Sort the given list in the way that humans expect.
-    """
-    convert = lambda text: int(text) if text.isdigit() else text
-    alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ]
-    l.sort( key=alphanum_key )
-    return l
 
 class Rewriter(RulePrimitive):
     '''
@@ -65,23 +58,25 @@ class Rewriter(RulePrimitive):
                     RHS_labels = {}
                     for n in range(self.condition.vcount()):
                         node = self.condition.vs[n]
-                        RHS_labels[node["MT_label__"]] = n
+                        if node["MT_label__"] == '':
+                            continue
+                        RHS_labels[int(node["MT_label__"])] = n
 
                     new_mapping = {}
                     j=0
                     vcount = packet.graph.vcount()
 
                     #make sure to iterate in natural order
-                    for label in sort_nicely(list(RHS_labels.keys())):
+                    for label in sorted(RHS_labels.keys()):
 
                         #use mapping if possible
-                        if label in mapping:
-                            new_mapping[int(label)] = mapping[label]
+                        if str(label) in mapping:
+                            new_mapping[label] = mapping[str(label)]
 
                         #assume nodes will be added in this order
                         #TODO: Handle deleted nodes
                         else:
-                            new_mapping[int(label)] = vcount + j
+                            new_mapping[label] = vcount + j
                             j += 1
 
 
