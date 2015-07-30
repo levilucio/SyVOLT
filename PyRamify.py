@@ -1131,7 +1131,8 @@ class PyRamify:
         return graph
 
     def remove_structure_nodes(self, graph):
-        structure_nodes = find_nodes_with_mm(graph, ["MatchModel", "match_contains", "paired_with", "ApplyModel", "apply_contains"])
+        #structure_nodes = find_nodes_with_mm(graph, ["MatchModel", "match_contains", "paired_with", "ApplyModel", "apply_contains"])
+        structure_nodes = find_nodes_with_mm(graph, ["paired_with", "ApplyModel", "apply_contains"])
         graph.delete_nodes(structure_nodes)
         return graph
 
@@ -1682,8 +1683,6 @@ class PyRamify:
             rule4 = load_class(dir_name + "/" + f)
             matchRulePattern = self.get_match_pattern(rule4)
             matchRulePatterns.update(matchRulePattern)
-            
-        print("------------------------> Transformation: " + str(self.transformation_layers))
 
         self.rules = rules
             
