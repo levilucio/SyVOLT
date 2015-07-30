@@ -155,12 +155,12 @@ class Test():
 
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns,
-         self.ruleCombinators, self.overlapping_rules] = \
+         self.ruleCombinators, self.overlapping_rules, self.loopingRuleSubsumption] = \
             pyramify.ramify_directory("ATLTrans/w_equations/", transformation)
 
 
 
-        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, args)#
+        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.loopingRuleSubsumption, args)#
    
         ts0 = time.time()
         s.build_path_conditions()
