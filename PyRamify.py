@@ -42,6 +42,7 @@ class PyRamify:
         self.ruleSubsumption = {}
         self.transformation_layers = []
         self.rules = {}
+        self.loopingRuleSubsumption = []
 
     '''
      changeAttrType (M): Changes the type of attributes to 'string', which allows conditions and actions to be specified on attribute values in patterns.
@@ -1527,6 +1528,9 @@ class PyRamify:
                             ruleSubsumption[lastElementOfFirstChain] = firstElementOfSecondChain                           
                             del ruleChains[indexOfExistingChain[0]]
                             del ruleChains[indexOfExistingChain[1]]
+            
+            # store the information about rules having looping subsumption relations
+            self.loopingRuleSubsumption = ruleChains
                                     
         remainingRulepairs = [rule for rule in rulepairs if rule not in rulesToRemove]
         
@@ -1691,6 +1695,7 @@ class PyRamify:
         print("Subsumption order between rules for all layers:")
         print(self.ruleSubsumption)
         print("Rules that need overlap treatment: " + str(self.rules_needing_overlap_treatment()))
+        print("Rules fully overlapping with each other: " + str(self.loopingRuleSubsumption))        
 
         #build the combinators only after calculating the dependencies between rules
         for f in os.listdir(dir_name):
@@ -1709,7 +1714,7 @@ class PyRamify:
         print("Finished PyRamify")
         print("==================================\n")
 
-        return [rules, backwardPatterns, backwardPatterns2Rules, {}, matchRulePatterns, ruleCombinators, self.rules_needing_overlap_treatment()]
+        return [rules, backwardPatterns, backwardPatterns2Rules, {}, matchRulePatterns, ruleCombinators, self.rules_needing_overlap_treatment(), self.loopingRuleSubsumption]
 
 
     #================================================================================

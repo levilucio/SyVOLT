@@ -59,7 +59,7 @@ class PathConditionGenerator(object):
     """
 
     #@do_cprofile
-    def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, overlappingRules, args):
+    def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, overlappingRules, loopingRuleSubsumption, args):
 
         # the empty path condition
 
@@ -75,6 +75,7 @@ class PathConditionGenerator(object):
         self.ruleTraceCheckers = ruleTraceCheckers
         self.matchRulePatterns = matchRulePatterns
         self.overlappingRules = overlappingRules
+        self.loopingRuleSubsumption = loopingRuleSubsumption
         
         self.rulesRequiringDisambiguation = {}
 

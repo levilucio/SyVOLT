@@ -163,26 +163,31 @@ class Test():
 
 
 
-        try:
-            a1 = self.rules['HState2ProcDef']
-            #a2 = self.rules['HState2ProcDefCopy']
-            b1 = self.rules['HBasicStateNoOutgoing2ProcDef']
-            b2 = self.rules['HBasicState2ProcDef']
-            b3 = self.rules['HCompositeState2ProcDef']
-            c1 = self.rules['HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans']
-            c2 = self.rules['HState2HProcDef']
-            c3 = self.rules['HState2CProcDef']
-            d1 = self.rules['HTransition2QInstSIBLING']
-            d2 = self.rules['HTransition2QInstOUT']
-            d3 = self.rules['HTransition2Inst']
-            e1 = self.rules['HTransition2ListenBranch']
-            e2 = self.rules['HConnectOutputsOfExitPoint2BProcDefTransition2QInst']
-            e3 = self.rules['HTransition2HListenBranch']
-            e4 = self.rules['HConnectOPState2CProcDefTransition2InstotherInTransitions']
-            f1 = self.rules['HMapHeirarchyOfStates2HeirarchyOfProcs']
-        except KeyError as e:
-            print(e)
-            print("Rules: " + str(self.rules.keys()))
+#        try:
+#         a1 = self.rules["Hr11"]
+#         a2 = self.rules['Hr12']
+#         b1 = self.rules['Hr22']
+#         a0 = self.rules["HMapRootElementRule"]
+        a1 = self.rules['HState2ProcDef']
+        #a2 = self.rules['HState2ProcDefCopy']
+        b1 = self.rules['HBasicStateNoOutgoing2ProcDef']
+        b2 = self.rules['HBasicState2ProcDef']
+        b3 = self.rules['HCompositeState2ProcDef']
+        c1 = self.rules['HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans']
+        c2 = self.rules['HState2HProcDef']
+        c3 = self.rules['HState2CProcDef']
+#          d1 = self.rules['HTransition2QInstSIBLING']
+#          d2 = self.rules['HTransition2QInstOUT']
+#          d3 = self.rules['HTransition2Inst']
+#          e1 = self.rules['HTransition2ListenBranch']
+#          e2 = self.rules['HConnectOutputsOfExitPoint2BProcDefTransition2QInst']
+#          e3 = self.rules['HTransition2HListenBranch']
+#          e4 = self.rules['HConnectOPState2CProcDefTransition2InstotherInTransitions']
+#          f1 = self.rules['HMapHeirarchyOfStates2HeirarchyOfProcs']
+#        f2 = self.rules['HRuleConnect2RootElement']
+#         except KeyError as e:
+#             print(e)
+#             print("Rules: " + str(self.rules.keys()))
 
         #get the expected num from the args
         #expected_num_pcs = args.num_pcs
@@ -191,7 +196,7 @@ class Test():
         #TODO: Change this number if you are modifying the transformation at all
         if args.num_rules == -1:
                 #transformation = [[a1], [b1,b2,b3], [c1]]
-                transformation = [[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
+                transformation = [[a1],[b1,b2,b3],[c1,c2,c3]]#,[d1,d2,d3],[e1,e2,e3,e4], [f1]]
         else:
                 transformation = self.select_rules([[a1], [b1]])#,b2,b3], [c1]])#,c2,c3]])#, [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
 
@@ -209,13 +214,13 @@ class Test():
                             "MT_pre__SIBLING0", "MT_pre__InitialPoint", "MT_pre__PortConnector", "MT_pre__SignalType", "MT_pre__Transition",\
                             "MT_pre__EntryPoint", "MT_pre__CONJUGATE1", "MT_pre__Protocol", "MT_pre__StateMachine", "MT_pre__Model_S",\
                             "MT_pre__StateMachineElement", "MT_pre__Port", "MT_pre__TransitionType", "MT_pre__Capsule", "MT_pre__Trigger_S",\
-                            "MT_pre__State", "MT_pre__PLUGIN2", "MT_pre__Action", "MT_pre__CapsuleRole", "MT_pre__ExitPoint", "MT_pre__FIXED0"]
+                            "MT_pre__State", "MT_pre__PLUGIN2", "MT_pre__Action", "MT_pre__CapsuleRole", "MT_pre__ExitPoint", "MT_pre__FIXED0", "MT_pre__RootElement"]
 
         subclasses_dict["MT_pre__MetaModelElement_T"] = ["MT_pre__Name", "MT_pre__Module", "MT_pre__ConditionBranch", "MT_pre__Delay", "MT_pre__LocalDef",\
                               "MT_pre__Expr", "MT_pre__ConditionSet", "MT_pre__Proc", "MT_pre__MatchCase", "MT_pre__Match",\
                               "MT_pre__FuncDef", "MT_pre__Null", "MT_pre__Par", "MT_pre__Inst", "MT_pre__Listen", "MT_pre__Site",\
                               "MT_pre__New", "MT_pre__PythonRef", "MT_pre__Def", "MT_pre__Seq", "MT_pre__ParIndexed", "MT_pre__Condition",\
-                              "MT_pre__Print", "MT_pre__Pattern", "MT_pre__ListenBranch", "MT_pre__ProcDef", "MT_pre__Trigger_T","MT_pre__Model_T"]
+                              "MT_pre__Print", "MT_pre__Pattern", "MT_pre__ListenBranch", "MT_pre__ProcDef", "MT_pre__Trigger_T","MT_pre__Model_T", "MT_pre__RootElement"]
 
         subclasses_dict["MT_pre__StateMachine"] = ["MT_pre__State"]
    
@@ -225,10 +230,10 @@ class Test():
 #        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlappingRules] = \
 #            self.pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation_eq_outside", transformation)
 
-        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlappingRules] = \
+        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlappingRules, self.loopingRuleSubsumption] = \
             self.pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation_eq_outside/", transformation)
 
-        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlappingRules, args)#
+        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlappingRules, self.loopingRuleSubsumption, args)#
     
         ts0 = time.time()
         s.build_path_conditions()
@@ -248,8 +253,8 @@ class Test():
  
         #print("printing path conditions")
         s.print_path_conditions_screen()
-#
-#        s.print_path_conditions_file()
+
+        s.print_path_conditions_file()
 #
 #         atprop=AtomicStateProperty(HState2procdef_IsolatedLHS(),HState2procdef_IsolatedLHS(), HState2procdef_CompleteLHS())
 #         exitpt2procdefparprop_withattr=AtomicStateProperty(HExitpoint2procdefparTrue_IsolatedLHS(),HExitpoint2procdefparTrue_ConnectedLHS(),HExitpoint2procdefparTrue_CompleteLHS())

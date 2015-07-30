@@ -79,58 +79,58 @@ class Test():
         a10 = self.rules['Hlayer0rule10']
         a11 = self.rules['Hlayer0rule11']
 
-        b0 = self.rules['Hlayer1rule0']
-        b1 = self.rules['Hlayer1rule1']
-        b2 = self.rules['Hlayer1rule2']
-        b3 = self.rules['Hlayer1rule3']
-        b4 = self.rules['Hlayer1rule4']
-        b5 = self.rules['Hlayer1rule5']
-        b6 = self.rules['Hlayer1rule6']
-        b7 = self.rules['Hlayer1rule7']
-        b8 = self.rules['Hlayer1rule8']
-        b9 = self.rules['Hlayer1rule9']
-        b10 = self.rules['Hlayer1rule10']
-        b11 = self.rules['Hlayer1rule11']
-        b12 = self.rules['Hlayer1rule12']
-        b13 = self.rules['Hlayer1rule13']
-        b14 = self.rules['Hlayer1rule14']
-        b15 = self.rules['Hlayer1rule15']
-
-        c0 = self.rules['Hlayer2rule0']
-        c1 = self.rules['Hlayer2rule1']
-        c2 = self.rules['Hlayer2rule2']
-        c3 = self.rules['Hlayer2rule3']
-
-        d0 = self.rules['Hlayer3rule0']
-        d1 = self.rules['Hlayer3rule1']
-        d2 = self.rules['Hlayer3rule2']
-        d3 = self.rules['Hlayer3rule3']
-        d4 = self.rules['Hlayer3rule4']
-        d5 = self.rules['Hlayer3rule5']
-        
-        e0 = self.rules['Hlayer4rule0']
-        e1 = self.rules['Hlayer4rule1']
-        e2 = self.rules['Hlayer4rule2']
-        e3 = self.rules['Hlayer4rule3']
-
-        f0 = self.rules['Hlayer5rule0']
-        f1 = self.rules['Hlayer5rule1']
-        f2 = self.rules['Hlayer5rule2']
-        f3 = self.rules['Hlayer5rule3']
-        f4 = self.rules['Hlayer5rule4']
-        f5 = self.rules['Hlayer5rule5']
-        
-        g0 = self.rules['Hlayer6rule0']        
+#         b0 = self.rules['Hlayer1rule0']
+#         b1 = self.rules['Hlayer1rule1']
+#         b2 = self.rules['Hlayer1rule2']
+#         b3 = self.rules['Hlayer1rule3']
+#         b4 = self.rules['Hlayer1rule4']
+#         b5 = self.rules['Hlayer1rule5']
+#         b6 = self.rules['Hlayer1rule6']
+#         b7 = self.rules['Hlayer1rule7']
+#         b8 = self.rules['Hlayer1rule8']
+#         b9 = self.rules['Hlayer1rule9']
+#         b10 = self.rules['Hlayer1rule10']
+#         b11 = self.rules['Hlayer1rule11']
+#         b12 = self.rules['Hlayer1rule12']
+#         b13 = self.rules['Hlayer1rule13']
+#         b14 = self.rules['Hlayer1rule14']
+#         b15 = self.rules['Hlayer1rule15']
+ 
+#         c0 = self.rules['Hlayer2rule0']
+#         c1 = self.rules['Hlayer2rule1']
+#         c2 = self.rules['Hlayer2rule2']
+#         c3 = self.rules['Hlayer2rule3']
+#  
+#         d0 = self.rules['Hlayer3rule0']
+#         d1 = self.rules['Hlayer3rule1']
+#         d2 = self.rules['Hlayer3rule2']
+#         d3 = self.rules['Hlayer3rule3']
+#         d4 = self.rules['Hlayer3rule4']
+#         d5 = self.rules['Hlayer3rule5']
+#          
+#         e0 = self.rules['Hlayer4rule0']
+#         e1 = self.rules['Hlayer4rule1']
+#         e2 = self.rules['Hlayer4rule2']
+#         e3 = self.rules['Hlayer4rule3']
+#  
+#         f0 = self.rules['Hlayer5rule0']
+#         f1 = self.rules['Hlayer5rule1']
+#         f2 = self.rules['Hlayer5rule2']
+#         f3 = self.rules['Hlayer5rule3']
+#         f4 = self.rules['Hlayer5rule4']
+#         f5 = self.rules['Hlayer5rule5']
+#          
+#         g0 = self.rules['Hlayer6rule0']        
 
         expected_num_pcs = args.num_pcs
 
         if args.num_rules == -1:
             # change this to select by hand the number of rules to execute
-            transformation = [[a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11],[b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15],\
-                              [c0, c1, c2, c3], [d0, d1, d2, d3, d4, d5], [e0, e1, e2, e3], [f0, f1, f2, f3, f4, f5], [g0]]
-        else:
-            transformation = self.select_rules([[a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11],[b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15],\
-                              [c0, c1, c2, c3], [d0, d1, d2, d3, d4, d5], [e0, e1, e2, e3], [f0, f1, f2, f3, f4, f5], [g0]], args.num_rules)
+            transformation = [[a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11]]#,[b0, b1, b2, b3, b4, b5, b6, b7]]#, b8, b9, b10, b11, b12, b13, b14, b15]]#,\
+#            [c0, c1, c2, c3], [d0, d1, d2, d3, d4, d5], [e0, e1, e2, e3], [f0, f1, f2, f3, f4, f5], [g0]]
+#         else:
+#             transformation = self.select_rules([[a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11]])#,[b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15],\
+            #[c0, c1, c2, c3], [d0, d1, d2, d3, d4, d5], [e0, e1, e2, e3], [f0, f1, f2, f3, f4, f5], [g0]], args.num_rules)
 
 
         pre_metamodel = ["MT_pre__mbeddr_MM", "MoTifRule"]
@@ -145,26 +145,28 @@ class Test():
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns,
-         self.ruleCombinators, self.overlapping_rules] = \
+         self.ruleCombinators, self.overlapping_rules, self.loopingRuleSubsumption] = \
             pyramify.ramify_directory("mbeddr2C_MM/real_transformation", transformation)
 
         s = PathConditionGenerator(transformation, self.ruleCombinators,
-                                   self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, args)
+                                   self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.loopingRuleSubsumption, args)
         ts0 = time.time()
         s.build_path_conditions()
         ts1 = time.time()
 
-        print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
-        print("Number of path conditions: " + str(len(s.pathConditionSet)))
-
-        # check if the correct number of path conditions were produced
-        if not int(expected_num_pcs) == -1 and not int(expected_num_pcs) == len(s.pathConditionSet):
-            # TODO: Make this an exception
-            num_pcs_s = "The number of produced path conditions is incorrect.\n" + str(
-                expected_num_pcs) + " were expected, but " + str(
-                len(s.pathConditionSet)) + " were produced."
-            print(num_pcs_s)
-            # raise Exception(num_pcs_s)
+        pc_time = ts1 - ts0
+        print("\n\nTime to build the set of path conditions: " + str(pc_time))
+#        print("Size of the set of path conditions: " + str(float(sys.getsizeof(s.pathConditionSet) / 1024)))
+        print("Number of path conditions: " + str(s.num_path_conditions))
+# 
+#         # check if the correct number of path conditions were produced
+#         if not int(expected_num_pcs) == -1 and not int(expected_num_pcs) == len(s.pathConditionSet):
+#             # TODO: Make this an exception
+#             num_pcs_s = "The number of produced path conditions is incorrect.\n" + str(
+#                 expected_num_pcs) + " were expected, but " + str(
+#                 len(s.pathConditionSet)) + " were produced."
+#             print(num_pcs_s)
+#             # raise Exception(num_pcs_s)
 
         # print("printing path conditions")
         #s.print_path_conditions_screen()
