@@ -391,434 +391,107 @@ class PathConditionGenerator(object):
 
             name_dict = {}
 
-            if self.do_parallel:
 
-                #sort_time = time.time()
-                shuffle(currentpathConditionSet)
+            #sort_time = time.time()
+            shuffle(currentpathConditionSet)
 
-                #print("Time to sort: " + str(time.time() - sort_time))
+            #print("Time to sort: " + str(time.time() - sort_time))
 
-                #name_dict = manager.dict()
+            #name_dict = manager.dict()
 
-                #print("After ceil: " + str(math.ceil(pathConSetLength / float(cpu_count))))
-                chunkSize = int(math.ceil(pathConSetLength / float(cpu_count)))
+            #print("After ceil: " + str(math.ceil(pathConSetLength / float(cpu_count))))
+            chunkSize = int(math.ceil(pathConSetLength / float(cpu_count)))
 
-                print("Path Cond Set Size: " + str(pathConSetLength))
-                print("Chunksize: " + str(chunkSize))
+            print("Path Cond Set Size: " + str(pathConSetLength))
+            print("Chunksize: " + str(chunkSize))
 
-                workers = []
+            workers = []
 
-                #chunk_time = time.time()
-                #divide the path conditions up into little pieces
-                pc_chunks = self.chunks(currentpathConditionSet, chunkSize)
+            #chunk_time = time.time()
+            #divide the path conditions up into little pieces
+            pc_chunks = self.chunks(currentpathConditionSet, chunkSize)
 
-                #print("Time to chunk: " + str(time.time() - chunk_time))
+            #print("Time to chunk: " + str(time.time() - chunk_time))
 
-                results_queue = manager.Queue()
+            results_queue = manager.Queue()
 
 
-                #initialize the workers
-                for i in range(len(pc_chunks)):#range(cpu_count):
-                    #worker_time = time.time()
+            #initialize the workers
+            for i in range(len(pc_chunks)):#range(cpu_count):
+                #worker_time = time.time()
 
-                    #print("Chunk size: " + str(len(pc_chunks[i])))
-                    new_worker = path_condition_generator_worker(self.verbosity, layer*1000+i)
-                    new_worker.currentPathConditionSet = pc_chunks[i]#pc_queue
-                    new_worker.attributeEquationEvaluator = self.attributeEquationEvaluator
+                #print("Chunk size: " + str(len(pc_chunks[i])))
+                new_worker = path_condition_generator_worker(self.verbosity, layer*1000+i)
+                new_worker.currentPathConditionSet = pc_chunks[i]#pc_queue
+                new_worker.attributeEquationEvaluator = self.attributeEquationEvaluator
 
-                    #print("Size of chunk: " + str(len(pc_chunks[i])))
+                #print("Size of chunk: " + str(len(pc_chunks[i])))
 
-                    new_worker.results_queue = results_queue
+                new_worker.results_queue = results_queue
 
-                    new_worker.pc_dict = pc_dict
+                new_worker.pc_dict = pc_dict
 
-                    #new_worker.verbosity = self.verbosity
-                    new_worker.layer = layer
-                    new_worker.transformation = self.transformation
+                #new_worker.verbosity = self.verbosity
+                new_worker.layer = layer
+                new_worker.transformation = self.transformation
 
-                    new_worker.rule_names = self.rule_names
+                new_worker.rule_names = self.rule_names
 
 
-                    #new_worker.name_dict = name_dict
+                #new_worker.name_dict = name_dict
 
 
-                    new_worker.ruleCombinators = self.ruleCombinators
-                    new_worker.ruleTraceCheckers =  self.ruleTraceCheckers
-                    new_worker.overlappingRules = self.overlappingRules
+                new_worker.ruleCombinators = self.ruleCombinators
+                new_worker.ruleTraceCheckers =  self.ruleTraceCheckers
+                new_worker.overlappingRules = self.overlappingRules
 
-                    workers.append(new_worker)
+                workers.append(new_worker)
 
-                    #print("Time to initialize worker: " + str(time.time() - worker_time))
+                #print("Time to initialize worker: " + str(time.time() - worker_time))
 
 
-                #worker_start_time = time.time()
-                for worker in workers:
-                    worker.start()
+            #worker_start_time = time.time()
+            for worker in workers:
+                worker.start()
 
-                #print("Time to start workers: " + str(time.time() - worker_start_time))
+            #print("Time to start workers: " + str(time.time() - worker_start_time))
 
 
-                for worker in workers:
-                    worker.join()
+            for worker in workers:
+                worker.join()
 
 
-                #result_time = time.time()
+            #result_time = time.time()
 
-                currentpathConditionSet = []
+            currentpathConditionSet = []
 
-                for worker in workers:
-                    r = results_queue.get()
-                    currentpathConditionSet.extend(r[0])
+            for worker in workers:
+                r = results_queue.get()
+                currentpathConditionSet.extend(r[0])
 
-                    pc_dict.update(r[1])
+                pc_dict.update(r[1])
 
-                    name_dict.update(r[2])
+                name_dict.update(r[2])
 
-                #print("Time to collect results: " + str(time.time() - result_time ))
+            #print("Time to collect results: " + str(time.time() - result_time ))
 
-                #change_names_time = time.time()
-                if len(name_dict.keys()) > 0:
-                    for i in range(len(currentpathConditionSet)):
-                        try:
-                            pc_name = currentpathConditionSet[i]
-                            currentpathConditionSet[i] = name_dict[pc_name]
-                            #print("Changed " + pc_name + " to " + name_dict[pc_name])
+            #change_names_time = time.time()
+            if len(name_dict.keys()) > 0:
+                for i in range(len(currentpathConditionSet)):
+                    try:
+                        pc_name = currentpathConditionSet[i]
+                        currentpathConditionSet[i] = name_dict[pc_name]
+                        #print("Changed " + pc_name + " to " + name_dict[pc_name])
 
-                        except KeyError:
-                            pass
+                    except KeyError:
+                        pass
 
 
-                #print("PC Dict Keys: " + str(pc_dict.keys()))
-                #print("Time to change names: " + str(time.time() - change_names_time))
-                #print("PC Length: " + str(len(currentpathConditionSet)))
+            #print("PC Dict Keys: " + str(pc_dict.keys()))
+            #print("Time to change names: " + str(time.time() - change_names_time))
+            #print("PC Length: " + str(len(currentpathConditionSet)))
 
 
-            else:
-
-                # the path condition set generated for the layer being treated starts off with the set of path
-                # conditions generated for the previous layer
-
-                # build a dictionary to remember which path condition in the current layer is built from
-                # which path condition from the previous layer
-                # This is needed because the layerPathCondAccumulator set keeps all path conditions generated
-                # for the current layer, starting from the same set as the ones accumulated for the previous layer.
-                # for every rule pass we need to know which path conditions for the current layer were built
-                # from which path condition from the previous layer, since they are all in a vector.
-                # this can be optimized by having a dictionary for each rule from the previous layer containing
-                # the path conditions generated for it, instead of going though the whole vector each time.
-
-    #             for pc_name in currentpathConditionSet:
-    #                 childrenPathConditions[pc_name] = [pc_name]
-
-                currentpathConditionSet = sorted(currentpathConditionSet)
-                for pathConditionIndex in range(pathConSetLength):
-
-                    # for each rule in the current layer, combine it with the path condition.
-                    # start with the local path condition set with just a copy of the path condition being combined.
-
-                    pathCondition_name = currentpathConditionSet[pathConditionIndex]
-
-                    pathCondition = expand_graph(pc_dict[pathCondition_name])
-
-
-                    childrenPathConditions = [pathCondition_name]
-
-                    # produce a fresh copy of the path condition in pc_dict, associated with the name of the path condition.
-                    # this frees up the original parent path condition that will not be changed throughout the execution of
-                    # the rules in the layer, while its copy will. This will avoid matching over a rewritten parent path condition.
-                    pc_dict[pathCondition_name] = shrink_graph(deepcopy(pathCondition))
-
-                    if not isinstance(pathCondition_name, str):
-                        raise Exception("Not string")
-
-                    for rule in self.transformation[layer]:
-
-                        if self.verbosity >= 2:
-                            print("--------------------------------------")
-                            print("Treating rule:")
-                            print(self.rule_names[rule.name])
-                            print("Combining with:")
-                            print("Path Condition:" + pathCondition.name)
-                        #if self.verbosity >= 1:
-                            #print("Layer: " + str(layer+1))
-                            #print("Number of Path Conditions generated so far: " +  str(len(currentpathConditionSet)))
-                            #print("Number of Path Conditions to go in this layer: " +  str(pathConSetLength - pathConditionIndex))
-
-                        # first check if the rule requires any other rules to execute with it,
-                        # in case of rule overlapping. If all the rules that are required to execute
-                        # are already present in the path condition, then the rule executes.
-                        # If they are not, then the combination is not possible and we can skip it.
-
-                        # function to return all the rules that have to execute if the current rule executes.
-    #                    requiredRules = self.calc_required([rule], layer)
-
-                        # now check if all the required rules exist in the path condition
-                        # by checking the path condition's name. Note that "_" (underscore) is
-                        # the rule name separator, so rules names cannot have underscores
-
-    #                     combinationIsPossible = True
-    #                     if requiredRules is not []:
-    #                         namesOfRulesinPathCond = pathCondition.name.split("_")
-    #                         for rule in requiredRules:
-    #                             if rule.name not in set(namesOfRulesinPathCond):
-    #                                 combinationIsPossible = False
-    #
-    #                     if not combinationIsPossible:
-    #                         if self.verbosity >= 2:
-    #                             print("Cannot combine: missing required rules that should have executed\
-    #                                     because they are subsumed by the executed rule!")
-    #                         continue
-
-
-                        # possible cases of rule combination
-
-                        ######################################
-                        # Case 1: Rule has no dependencies
-                        ######################################
-
-                        # the rule is disjointly added to the path condition
-                        if self.ruleCombinators[rule.name] is None:
-                            if self.verbosity >= 2 : print("Case 1: Rule has no dependencies")
-
-                            localPathConditionLayerAccumulator = []
-
-
-                            num = 0
-                            for child_pc_index in range(len(childrenPathConditions)):
-
-                                child_pc_name = childrenPathConditions[child_pc_index]
-
-    #                             # TODO: delete this when the overlapping is finished with the new algorithm
-    #                             # Check if the child being treated already contains the rule.
-    #                             # This happens if the match of a rule contains the match of another rule, in which case they need to execute together.
-    #                             # During the Pre-Process step rules are merged with rules they subsume to deal with this joint execution.
-    #                             # In the path condition construction algorithm this has to be taken into consideration by preventing path conditions
-    #                             # where a rule B subsumed by a rule A has already executed (meaning A merged with B already exists in the path condition),
-    #                             # that rule B executes again (or vice-versa)).
-    #                             # This is achieved by looking at whether the name of the path condition already includes the rule being executed now,
-    #                             # in which case the rule does not get executed over the path condition. Note that the rule executed may subsume others, in
-    #                             # which case all the names of subsumed rules have to be checked in the path condition name.
-    #
-    #                             # get all the rule names in the name of the rule being executed (can be merged with subsumed rules).
-    #                             # also get the rule names of all rules already present in the path condition
-
-    #                             ruleNamesInRule = rule.name.split("_")
-    #                             ruleNamesInPC = child_pc_name.split("_")
-    #                             # cleanup the dashes from the rule names in the path condition
-    #                             for nameIndex in range(len(ruleNamesInPC)):
-    #                                 ruleNamesInPC[nameIndex] = ruleNamesInPC[nameIndex].split("-")[0]
-
-                                cpc = expand_graph(pc_dict[child_pc_name])
-
-                                # create a new path condition which is the result of combining the rule with the current path condition being examined
-                                newPathCond = deepcopy(cpc)
-                                newPathCond = disjoint_model_union(newPathCond,rule)
-                                # name the new path condition as the combination of the previous path condition and the rule
-                                newPathCond.name = cpc.name + '_' + rule.name + "-" + str(num)
-                                num += 1
-
-                                pc_dict[newPathCond.name] = shrink_graph(newPathCond)
-
-                                if self.verbosity >= 2 : print("Created path condition with name: " + newPathCond.name)
-                                localPathConditionLayerAccumulator.append(newPathCond.name)
-
-
-                                #print_graph(newPathCond)
-
-                                # store the newly created path condition as a child
-                                childrenPathConditions.append(newPathCond.name)
-
-                            currentpathConditionSet.extend(localPathConditionLayerAccumulator)
-
-                        else:
-
-                            #########################################################################
-                            # Case 2: Rule has dependencies but cannot execute because
-                            #         not all the backward links can be found in the path condition
-                            #########################################################################
-
-                            # gather the matcher for only the backward links in the rule being combined.
-                            # it is the first matcher (LHS) of the combinators in the list.
-
-                            ruleBackwardLinksMatcher = self.ruleTraceCheckers[rule.name]
-
-                            # check if the backward links cannot be found by matching them on the path condition
-
-
-                            p = Packet()
-                            p.graph = pathCondition
-                            ruleBackwardLinksMatcher.packet_in(p)
-                            if not ruleBackwardLinksMatcher.is_success:
-                                if self.verbosity >= 2 : print("Case 2: Rule has dependencies but cannot execute")
-
-                            else:
-                                #graph_to_dot(pathCondition.name + "_non_par", pathCondition)
-
-                                #########################################################################
-                                # Case 3: Rule has dependencies that may or will execute
-                                #########################################################################
-
-                                if self.verbosity >= 2 : print("Case 3: Rule has dependencies that may or will execute")
-
-                                # go through all LHS (matchers) in rule combinators
-                                for combinator in range(len(self.ruleCombinators[rule.name])):
-
-                                    combinatorMatcher = self.ruleCombinators[rule.name][combinator][0]
-
-                                    #graph_to_dot(combinatorMatcher.condition.name, combinatorMatcher.condition)
-
-                                    if self.verbosity >= 2 : print("Combinator: " + combinatorMatcher.condition.name)
-
-                                    # check whether we are dealing with a partial or a total combinator
-
-                                    isTotalCombinator = False
-
-                                    if combinator == len(self.ruleCombinators[rule.name]) - 1:
-                                        isTotalCombinator = True
-
-                                    # find all the matches of the rule combinator in the path condition that the rule combines with
-
-                                    p = Packet()
-                                    p.graph = pathCondition
-
-                                    #print_graph(p.graph)
-
-                                    combinatorMatcher.packet_in(p)
-
-                                    # if self.rule_names[rule.name] == "HereferenceOUTeTypeSolveRefEReferenceEClassifierEReferenceEClassifier":
-                                    #
-                                    #     graph_to_dot("pathCondition_non_par_" + pathCondition.name, pathCondition)
-                                    #graph_to_dot("combinator_non_par_" + combinatorMatcher.condition.name, combinatorMatcher.condition)
-
-                                    # now go through the path conditions resulting from combination of the rule and the
-                                    # path condition from the previous layer currently being treated in order to apply
-                                    # the combinator's RHS to every possibility of match of the combinator's LHS
-
-                                    #print_graph(combinatorMatcher.condition)
-                                    #print_graph(pathCondition)
-
-                                    if self.verbosity >= 2 :
-                                        if combinatorMatcher.is_success:
-                                            print("Matching was successful")
-                                        else:
-                                            print("Matching was not successful")
-
-                                    if combinatorMatcher.is_success:
-
-                                        # holds the result of combining the path conditions generated so far when combining
-                                        # the rule with the path condition using the multiple combinators
-
-                                        partialTotalPathCondLayerAccumulator = []
-
-                                        #go through all the children of this path condition
-                                        num = 0
-                                        for child_pc_index in range(len(childrenPathConditions)):
-
-
-                                            #get the name of the child
-                                            child_pc_name = childrenPathConditions[child_pc_index]
-
-                                            if self.verbosity >= 2 :
-                                                print("--> Combining with path condition: " + child_pc_name)
-
-    #                                         # only combine if the rule hasn't executed yet on that path condition
-    #
-    #                                         # get all the rule names in the name of the rule being executed (can be merged with subsumed rules).
-    #                                         # also get the rule names of all rules already present in the path condition
-    #                                         ruleNamesInRule = rule.name.split("_")
-    #                                         ruleNamesInPC = child_pc_name.split("_")
-    #                                         # cleanup the dashes from the rule names in the path condition
-    #                                         for nameIndex in range(len(ruleNamesInPC)):
-    #                                             ruleNamesInPC[nameIndex] = ruleNamesInPC[nameIndex].split("-")[0]
-
-
-                                            #get the path condition from the dictionary
-                                            cpc = expand_graph(pc_dict[child_pc_name])
-
-                                            # if the combinator is not the total one, make a copy of the path condition in the set
-                                            # of combinations generated so far.
-                                            # the total combinator is always the one at the end of the combinator list for the rule.
-
-                                            # name the new path condition as the combination of the previous path condition and the rule
-                                            newPathCondName = cpc.name + "_" + rule.name + "-" + str(num)
-                                            num += 1
-
-                                            # print("CPC name")
-                                            # print(cpc.name)
-                                            # print_graph(cpc)
-
-                                            newPathCond = deepcopy(cpc)
-
-                                            # now combine the rule with the newly created path condition using the current combinator
-                                            # in all the places where the rule matched on top of the path condition
-                                            i = Iterator()
-                                            p_copy = deepcopy(p)
-                                            p_copy.graph = newPathCond
-                                            #print_graph(p_copy.graph)
-                                            p_copy = i.packet_in(p_copy)
-
-
-                                            while i.is_success:
-                                                #print("Rewriting")
-                                                #print_graph(self.ruleCombinators[rule.name][combinator][1].condition)
-                                                p_copy = self.ruleCombinators[rule.name][combinator][1].packet_in(p_copy)
-                                                p_copy = i.next_in(p_copy)
-
-                                            newPathCond = p_copy.graph
-
-
-                                            newPathCond.name = newPathCondName
-
-                                            #graph_to_dot("produced_" + newPathCond.name + "_non_par", newPathCond)
-
-                                            # check if the equations on the attributes of the newly created path condition are satisfied
-
-                                            if self.attributeEquationEvaluator(newPathCond):
-
-                                            #if True:
-
-                                                if isTotalCombinator:
-
-                                                    # because the rule combines totally with a path condition in the accumulator we just copy it
-                                                    # directly on top of the accumulated path condition
-
-                                                    #find the path condition and change its name
-                                                    #TODO: Make this faster
-                                                    for pathConditionIndex in range(len(currentpathConditionSet)):
-                                                        if currentpathConditionSet[pathConditionIndex] == cpc.name:
-                                                            currentpathConditionSet[pathConditionIndex] = newPathCond.name
-                                                            #print("Changed " + cpc.name + " to " + newPathCond.name)
-
-                                                    #change the child's name in the child's array
-                                                    childrenPathConditions[child_pc_index] = newPathCond.name
-
-                                                else:
-                                                    # we are dealing with a partial combination of the rule.
-                                                    # create a copy of the path condition in the accumulator because this match of the rule is partial.
-
-                                                    # add the result to the local accumulator
-                                                    partialTotalPathCondLayerAccumulator.append(newPathCond.name)
-
-                                                    # store the parent of the newly created path condition
-                                                    childrenPathConditions.append(newPathCond.name)
-
-                                                # store the new path condition
-                                                pc_dict[newPathCond.name] = shrink_graph(newPathCond)
-
-    #                                                 print("----------------------")
-    #                                                 print("Adding: " + newPathCond.name)
-    #                                                 print("Parent is: " + parentPathCondition[layerPathCondAccumulator[currentPathCondition]])
-    #                                                 print("----------------------")
-
-                                                if self.verbosity >= 2:
-                                                    print("Created path condition with name: " + newPathCond.name)
-
-                                        currentpathConditionSet.extend(partialTotalPathCondLayerAccumulator)
-
-                #pathConSetLength-=1
-
-            # when the layer treatment is finished the set of path conditions for the transformation can receive the
-            # accumulated path condition set for the layer
 
         # h = global_hp.heap()
         # print("\nMemory usage:")
