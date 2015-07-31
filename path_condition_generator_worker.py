@@ -40,6 +40,8 @@ class path_condition_generator_worker(Process):
     #@profile
     def run(self):
 
+        start_time = time.time()
+
         #print("Running thread")
 
         pathConSetLength = len(self.currentPathConditionSet)
@@ -460,7 +462,7 @@ class path_condition_generator_worker(Process):
         #print("newPathConditionSet: " + str(newPathConditionSet))
         #print("currentPathConditionSet: " + str(self.currentPathConditionSet))
 
-        print("Thread finished")
+        print("Thread finished: Took " + str(time.time() - start_time) + " seconds")
 
         self.currentPathConditionSet.extend(newPathConditionSet)
         self.results_queue.put((self.currentPathConditionSet, new_pc_dict, name_dict))

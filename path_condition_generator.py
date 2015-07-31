@@ -391,25 +391,44 @@ class PathConditionGenerator(object):
 
             name_dict = {}
 
-
-            #sort_time = time.time()
-            shuffle(currentpathConditionSet)
-
-            #print("Time to sort: " + str(time.time() - sort_time))
-
-            #name_dict = manager.dict()
-
-            #print("After ceil: " + str(math.ceil(pathConSetLength / float(cpu_count))))
             chunkSize = int(math.ceil(pathConSetLength / float(cpu_count)))
+
+
 
             print("Path Cond Set Size: " + str(pathConSetLength))
             print("Chunksize: " + str(chunkSize))
+
+
+            use_bin_packing = True
+            sort_time = time.time()
+
+            if use_bin_packing:
+                pc_chunks = [[] for i in range(cpu_count)]
+                pc_count = [0] * cpu_count
+
+                for pc in currentpathConditionSet:
+                    weight = len(pc)
+
+                    min_index = pc_count.index(min(pc_count))
+
+                    pc_chunks[min_index].append(pc)
+                    pc_count[min_index] += weight
+            else:
+                shuffle(currentpathConditionSet)
+                pc_chunks = self.chunks(currentpathConditionSet, chunkSize)
+
+
+            print("Time to sort: " + str(time.time() - sort_time))
+            #name_dict = manager.dict()
+
+            #print("After ceil: " + str(math.ceil(pathConSetLength / float(cpu_count))))
+
 
             workers = []
 
             #chunk_time = time.time()
             #divide the path conditions up into little pieces
-            pc_chunks = self.chunks(currentpathConditionSet, chunkSize)
+
 
             #print("Time to chunk: " + str(time.time() - chunk_time))
 
