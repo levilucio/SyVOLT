@@ -649,14 +649,15 @@ class PathConditionGenerator(object):
         print("Checking Reachability: ")
         for layer in self.transformation:
             for rule in layer:
+                ruleNotFound = True
                 for pc_name in sorted(self.currentpathConditionSet):
-                    ruleNotFound = True
+
                     if rule.name in pc_name:
-                        print("Found: " + rule.name)
+                        print("Found: " + rule.name + " (" + self.rule_names[rule.name] + ")")
                         ruleNotFound = False
                         break
                 if ruleNotFound: 
-                    print("Could not find: " + rule.name)
+                    print("Could not find: " + rule.name + " (" + self.rule_names[rule.name] + ")")
                 
                     
                 
