@@ -294,28 +294,28 @@ class PathConditionGenerator(object):
                         break
                 loop[ruleIndex] = newRuleName
                     
-        # calculate the set of rules the require disambiguation.
-        # these are the rules that have elements in the match part connected to two or more backward links.
-        # keep in the dictionary the name of the rule and the element(s) that require disambiguation
-
-        for layerIndex in range(len(self.transformation)):
-            for ruleIndex in range(len(self.transformation[layerIndex])):
-                rule = self.transformation[layerIndex][ruleIndex]
-                matchContainsNodes = find_nodes_with_mm(rule, ["match_contains"])
-                matchNodes = [rule.neighbors(node,"out")[0] for node in matchContainsNodes]
-                
-                for mNode in matchNodes:
-                    matchOutgoingNodes = rule.neighbors(rule.vs[mNode],"in")                    
-                    backLinks = [node for node in matchOutgoingNodes if rule.vs[node]["mm__"] == "backward_link"]
-                    
-                    if len(backLinks) > 1:
-                        if rule.name not in self.rulesRequiringDisambiguation.keys():
-                            self.rulesRequiringDisambiguation[rule.name] = [rule.vs[mNode]["mm__"]]
-                        else:
-                            self.rulesRequiringDisambiguation[rule.name].append(rule.vs[mNode]["mm__"])
+#         # calculate the set of rules the require disambiguation.
+#         # these are the rules that have elements in the match part connected to two or more backward links.
+#         # keep in the dictionary the name of the rule and the element(s) that require disambiguation
+# 
+#         for layerIndex in range(len(self.transformation)):
+#             for ruleIndex in range(len(self.transformation[layerIndex])):
+#                 rule = self.transformation[layerIndex][ruleIndex]
+#                 matchContainsNodes = find_nodes_with_mm(rule, ["match_contains"])
+#                 matchNodes = [rule.neighbors(node,"out")[0] for node in matchContainsNodes]
+#                 
+#                 for mNode in matchNodes:
+#                     matchOutgoingNodes = rule.neighbors(rule.vs[mNode],"in")                    
+#                     backLinks = [node for node in matchOutgoingNodes if rule.vs[node]["mm__"] == "backward_link"]
+#                     
+#                     if len(backLinks) > 1:
+#                         if rule.name not in self.rulesRequiringDisambiguation.keys():
+#                             self.rulesRequiringDisambiguation[rule.name] = [rule.vs[mNode]["mm__"]]
+#                         else:
+#                             self.rulesRequiringDisambiguation[rule.name].append(rule.vs[mNode]["mm__"])
                             
-        print("Rules requiring disambiguation:" + str(self.rulesRequiringDisambiguation))
-        print("\n")
+#         print("Rules requiring disambiguation:" + str(self.rulesRequiringDisambiguation))
+#         print("\n")
         
 
         if self.verbosity >= 2:                

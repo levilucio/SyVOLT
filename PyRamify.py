@@ -1691,11 +1691,9 @@ class PyRamify:
         self.rules = rules
             
         self.ruleSubsumption = self.calculate_rule_subsumption(matchRulePatterns)
-
-        print("Subsumption order between rules for all layers:")
-        print(self.ruleSubsumption)
-        print("Rules that need overlap treatment: " + str(self.rules_needing_overlap_treatment()))
-        print("Rules fully overlapping with each other: " + str(self.loopingRuleSubsumption))        
+        
+        rulesNeedingOverlapTreatment = self.rules_needing_overlap_treatment()
+        
 
         #build the combinators only after calculating the dependencies between rules
         for f in os.listdir(dir_name):
@@ -1709,10 +1707,6 @@ class PyRamify:
             rule_combinator = self.get_rule_combinators(rule5)
             ruleCombinators.update(rule_combinator)
        
-            
-
-        print("Finished PyRamify")
-        print("==================================\n")
         
         # remove from the subsumption relation subsumption between a rule in a layer and a rule in a layer appearing before
         # TODO: this should be replaced by layer ordering to avoid tests all the time during PC construction
@@ -1735,11 +1729,34 @@ class PyRamify:
         except Exception:
             print("Error in subsuming rules")
             
-        #print(">>>>>>>>> Rule Subsumption: " + str(self.ruleSubsumption))
-        
-                    
+        # remove from loopingRuleSubsumption relation rules that completeley overlap but belong to different layers, as they
+        # will be treated by the total combinators. If rules belonging to more than one layer exist keep them only if two or
+        # more belong to the same layer, otherwise discard
 
-        return [rules, backwardPatterns, backwardPatterns2Rules, {}, matchRulePatterns, ruleCombinators, self.rules_needing_overlap_treatment(), self.ruleSubsumption, self.loopingRuleSubsumption]
+        cleanLoopingRuleSubsumption = []
+
+        for loopingRules in self.loopingRuleSubsumption:
+            loopDict = {}
+            for rule in loopingRules:
+                if self.layer_rule_occurs_in(rule) not in loopDict:
+                    loopDict[self.layer_rule_occurs_in(rule)] = [rule]
+                else:
+                    loopDict[self.layer_rule_occurs_in(rule)].append(rule) 
+            # keep entries that only have more than one rule
+            for layer in loopDict.keys():
+                if len(loopDict[layer]) > 1:
+                    cleanLoopingRuleSubsumption.append(loopDict[layer])
+            
+
+        print("Rules that need overlap treatment: " + str(rulesNeedingOverlapTreatment))            
+        print("Subsumption order between rules for all layers: " + str(self.ruleSubsumption))
+        print("Rules fully overlapping with each other: " + str(cleanLoopingRuleSubsumption))           
+
+        print("\n")
+        print("Finished PyRamify")
+        print("==================================\n")                    
+
+        return [rules, backwardPatterns, backwardPatterns2Rules, {}, matchRulePatterns, ruleCombinators, rulesNeedingOverlapTreatment, self.ruleSubsumption, cleanLoopingRuleSubsumption]
 
 
     #================================================================================

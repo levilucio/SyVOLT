@@ -127,7 +127,7 @@ class Test():
         if args.num_rules == -1:
             # change this to select by hand the number of rules to execute
             transformation = [[a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11], [b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15],\
-            [c0, c1, c2, c3], [d0, d3, d2, e0, d1, e1, d4, d5, e2], [e3], [f0, f1, f2, f3, f4, f5], [g0]]
+            [c0, c1, c2, c3], [d0, d4, d3, d2, d1, d5], [e0, e2, e1, e3], [f0, f1, f2, f3, f4, f5], [g0]]
 #            transformation = [[b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15]]#,\
 
 #         else:
@@ -155,12 +155,12 @@ class Test():
         ts0 = time.time()
         s.build_path_conditions()
         ts1 = time.time()
-  
+   
         pc_time = ts1 - ts0
         print("\n\nTime to build the set of path conditions: " + str(pc_time))
 #        print("Size of the set of path conditions: " + str(float(sys.getsizeof(s.pathConditionSet) / 1024)))
         print("Number of path conditions: " + str(s.num_path_conditions))
-        
+         
         s.check_rule_reachability()
 
 #        s.print_path_conditions_screen()
