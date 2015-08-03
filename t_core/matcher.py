@@ -153,18 +153,10 @@ class Matcher(RulePrimitive):
     
     def _match(self, graph, pivots) :
         def getSourceNodeFromLabel(label, mapping, pattern_graph):
-            vs = pattern_graph.vs(MT_label__ = label)
-            if len(vs) == 0:
-                #TODO: This should be a TransformationLanguageSpecificException
-                raise Exception('Label %d does not exist in the pattern' % label)
-            elif len(vs) > 1:
-                #TODO: This should be a TransformationLanguageSpecificException
-                raise Exception('Duplicate label %d in the pattern' % label)
-            elif not vs[0].index in mapping:
-                #TODO: This should be a TransformationLanguageSpecificException
-                raise Exception('Node with label %d was not matched' % label)
-            else:
-                return graph.vs[mapping[vs[0].index]]
+
+            new_vs = pattern_graph.get_node_with_label(label)
+            return graph.vs[mapping[new_vs]]
+
         '''
             Matcher with pivots and (possibly) multiple NACs
             1. Verify that no unbound NAC has a match
