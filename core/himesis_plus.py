@@ -51,7 +51,7 @@ def look_for_attached_of_attached(link_node, graph):
 #until a stop mm is reached
 #stop mm nodes will not be included in the returned array
 #while stop_and_include mms will
-def flood_find_nodes(start_node, graph, stop_mms = None, stop_and_include_mms = None):
+def flood_find_nodes(start_node, graph, stop_mms = None, stop_and_include_mms = None, filter_mms = None):
 
     return_nodes = []
 
@@ -88,7 +88,8 @@ def flood_find_nodes(start_node, graph, stop_mms = None, stop_and_include_mms = 
         if stop_mms is not None and mms[node] in stop_mms:
             continue
 
-        return_nodes.append(node)
+        if not filter_mms or mms[node] in filter_mms:
+            return_nodes.append(node)
 
         #add neighbours to the stack
         new_neighbours = [n for n in neighbours[node] if not visited[n]]
