@@ -55,33 +55,49 @@ def flood_find_nodes(start_node, graph, stop_mms = None, stop_and_include_mms = 
 
     return_nodes = []
 
+    mms = graph.vs["mm__"]
+
+    vcount = graph.vcount()
+
+    neighbours = [[] for i in range(vcount)]
+
+    for e in graph.es:
+        neighbours[e.source].append(e.target)
+        neighbours[e.target].append(e.source)
+
+    visited = [False] * vcount
+
     node_stack = [start_node]
     while len(node_stack) > 0:
         node = node_stack.pop()
 
+        visited[node] = True
+
+        #don't look at already-included nodes
+        #if node in return_nodes:
+        #    continue
+
         #include this node, but don't add neighbours to the stack
-        if stop_and_include_mms is not None and graph.vs[node]["mm__"] in stop_and_include_mms:
+        if stop_and_include_mms is not None and mms[node] in stop_and_include_mms:
             return_nodes.append(node)
             continue
 
         #don't add neighbours to the stack
-        if stop_mms is not None and graph.vs[node]["mm__"] in stop_mms:
-            continue
-
-        #don't look at already-included nodes
-        if node in return_nodes:
+        if stop_mms is not None and mms[node] in stop_mms:
             continue
 
         return_nodes.append(node)
 
         #add neighbours to the stack
-        for edge in graph.get_edgelist():
-            if node == edge[0]:
-                node_stack.append(edge[1])
-            elif node == edge[1]:
-                node_stack.append(edge[0])
+        new_neighbours = [n for n in neighbours[node] if not visited[n]]
+        node_stack += new_neighbours
+        # for edge in graph.get_edgelist():
+        #     if node == edge[0]:
+        #         node_stack.append(edge[1])
+        #     elif node == edge[1]:
+        #         node_stack.append(edge[0])
 
-    return return_nodes
+    return set(return_nodes)
 
 
 #Very hacky way of making the graph a HimesisPreConditionPatternLHS
