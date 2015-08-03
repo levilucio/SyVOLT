@@ -301,6 +301,23 @@ def draw_graphs(title, g_dir):
             graph_to_dot(title +"_" + name, graph)
 
 
+def get_preds_and_succs(graph):
+    vcount = graph.vcount()
+    preds = [[0, []] for i in range(vcount)]
+    succs = [[0, []] for i in range(vcount)]
+
+    for e in graph.get_edgelist():
+        source = e[0]
+        target = e[1]
+        preds[target][0] += 1
+        preds[target][1].append(source)
+
+        succs[source][0] += 1
+        succs[source][1].append(target)
+
+    return preds, succs
+
+
 import gzip
 import hashlib
 

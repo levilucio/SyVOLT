@@ -6,7 +6,7 @@ from core.himesis import HConstants as HC
 from .rule_primitive import RulePrimitive
 from .messages import MatchSet, Match, TransformationException
 
-from core.himesis_utils import print_graph, print_GUIDs
+from core.himesis_utils import print_graph, print_GUIDs, get_preds_and_succs
 import traceback
 
 from profiler import *
@@ -27,15 +27,17 @@ class Matcher(RulePrimitive):
         self.condition = condition
 
         #igraph.IN = 2, igraph.OUT = 1
-        self.condition_pred = [(len(tmp), tmp) for tmp in condition.get_adjlist(mode=2)]
-        self.condition_succ = [(len(tmp), tmp) for tmp in condition.get_adjlist(mode=1)]
+        self.condition_pred, self.condition_succ = get_preds_and_succs(condition)
+        #self.condition_pred = [(len(tmp), tmp) for tmp in condition.get_adjlist(mode=2)]
+        #self.condition_succ = [(len(tmp), tmp) for tmp in condition.get_adjlist(mode=1)]
 
 
         self.NAC_preds = {}
         self.NAC_succs = {}
         for NAC in self.condition.NACs:
-            self.NAC_preds[NAC.name] = [(len(tmp), tmp) for tmp in NAC.get_adjlist(mode=2)]
-            self.NAC_succs[NAC.name] = [(len(tmp), tmp) for tmp in NAC.get_adjlist(mode=1)]
+            self.NAC_preds[NAC.name], self.NAC_succs[NAC.name] = get_preds_and_succs(NAC)
+            #self.NAC_preds[NAC.name] = [(len(tmp), tmp) for tmp in NAC.get_adjlist(mode=2)]
+            #self.NAC_succs[NAC.name] = [(len(tmp), tmp) for tmp in NAC.get_adjlist(mode=1)]
 
 
         #0 = ignore errors, 1 = give warnings, 2 = give errors
@@ -66,15 +68,13 @@ class Matcher(RulePrimitive):
 
         #cache the packet graph's neighbours
         #igraph.IN = 2, igraph.OUT = 1
-        if preds:
+        if preds or succs:
             self.graph_pred = preds
-        else:
-            self.graph_pred = [(len(tmp), tmp) for tmp in packet.graph.get_adjlist(mode=2)]
-
-        if succs:
             self.graph_succ = succs
         else:
-            self.graph_succ = [(len(tmp), tmp) for tmp in packet.graph.get_adjlist(mode=1)]
+            self.graph_pred, self.graph_succ = get_preds_and_succs(packet.graph)
+            #self.graph_pred = [(len(tmp), tmp) for tmp in packet.graph.get_adjlist(mode=2)]
+            #self.graph_succ = [(len(tmp), tmp) for tmp in packet.graph.get_adjlist(mode=1)]
 
         if self.condition[HC.GUID] in packet.match_sets:
             matchSet = packet.match_sets[self.condition[HC.GUID]]

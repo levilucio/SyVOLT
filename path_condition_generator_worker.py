@@ -9,7 +9,7 @@ from t_core.tc_python.frule import FRule
 import time
 
 from multiprocessing import Process
-from core.himesis_utils import expand_graph, shrink_graph, disjoint_model_union, print_graph, graph_to_dot
+from core.himesis_utils import expand_graph, shrink_graph, disjoint_model_union, print_graph, graph_to_dot, get_preds_and_succs
 
 from copy import deepcopy
 
@@ -167,8 +167,9 @@ class path_condition_generator_worker(Process):
                     # check if the backward links cannot be found by matching them on the path condition
 
                     if not pc_preds or not pc_succs:
-                        pc_preds = [(len(tmp), tmp) for tmp in pc.get_adjlist(mode=2)]
-                        pc_succs = [(len(tmp), tmp) for tmp in pc.get_adjlist(mode=1)]
+                        pc_preds, pc_succs = get_preds_and_succs(pc)
+                        #pc_preds = [(len(tmp), tmp) for tmp in pc.get_adjlist(mode=2)]
+                        #pc_succs = [(len(tmp), tmp) for tmp in pc.get_adjlist(mode=1)]
 
 
                     p = Packet()
