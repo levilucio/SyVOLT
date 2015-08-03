@@ -306,9 +306,9 @@ def get_preds_and_succs(graph):
     preds = [[0, []] for i in range(vcount)]
     succs = [[0, []] for i in range(vcount)]
 
-    for e in graph.get_edgelist():
-        source = e[0]
-        target = e[1]
+    for e in graph.es:
+        source = e.source
+        target = e.target
         preds[target][0] += 1
         preds[target][1].append(source)
 
