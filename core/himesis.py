@@ -444,9 +444,15 @@ class HimesisPattern(Himesis):
         #if label in self.nodes_label:
         #    return self.nodes_label[label]
 
-        for i in range(self.vcount()):
-            if label == self.vs[i]['MT_label__']:
-                return i
+        try:
+            return self.vs['MT_label__'].index(label)
+        except ValueError:
+            #it's alright for some labels to not be here
+            pass
+
+        # for i in range(self.vcount()):
+        #     if label == self.vs[i]['MT_label__']:
+        #         return i
     
     def get_pivot_out(self, pivot):
         """
