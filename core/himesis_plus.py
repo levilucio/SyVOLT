@@ -62,8 +62,10 @@ def flood_find_nodes(start_node, graph, stop_mms = None, stop_and_include_mms = 
     neighbours = [[] for i in range(vcount)]
 
     for e in graph.es:
-        neighbours[e.source].append(e.target)
-        neighbours[e.target].append(e.source)
+        source = e.source
+        target = e.target
+        neighbours[source].append(target)
+        neighbours[target].append(source)
 
     visited = [False] * vcount
 
