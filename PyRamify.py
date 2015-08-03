@@ -18,6 +18,7 @@ from itertools import combinations
 
 from itertools import permutations
 
+from profiler import *
 
 '''
 
@@ -878,8 +879,8 @@ class PyRamify:
 
         base_graph.delete_nodes(structure_nums + link_nums + apply_nums)
         
-        #if self.draw_svg:
-        graph_to_dot("base_graph_" + base_graph.name, base_graph)
+        if self.draw_svg:
+            graph_to_dot("base_graph_" + base_graph.name, base_graph)
         
         
         
@@ -1645,6 +1646,7 @@ class PyRamify:
 
 
     #ramify a whole directory
+    #@do_cprofile
     def ramify_directory(self, dir_name, transformation_layers):
         print("Ramifying directory: " + dir_name)
         

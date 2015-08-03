@@ -64,7 +64,7 @@ class Test():
 
 
     def test_correct_mbeddr(self, args):
-        pyramify = PyRamify(verbosity = 0)
+        pyramify = PyRamify(verbosity = 0, draw_svg = args.draw_svg)
 
         a0 = self.rules['Hlayer0rule0']
         a1 = self.rules['Hlayer0rule1']
