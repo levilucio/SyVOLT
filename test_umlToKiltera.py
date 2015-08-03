@@ -176,14 +176,14 @@ class Test():
         c1 = self.rules['HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans']
         c2 = self.rules['HState2HProcDef']
         c3 = self.rules['HState2CProcDef']
-#          d1 = self.rules['HTransition2QInstSIBLING']
-#          d2 = self.rules['HTransition2QInstOUT']
-#          d3 = self.rules['HTransition2Inst']
-#          e1 = self.rules['HTransition2ListenBranch']
-#          e2 = self.rules['HConnectOutputsOfExitPoint2BProcDefTransition2QInst']
-#          e3 = self.rules['HTransition2HListenBranch']
-#          e4 = self.rules['HConnectOPState2CProcDefTransition2InstotherInTransitions']
-#          f1 = self.rules['HMapHeirarchyOfStates2HeirarchyOfProcs']
+        d1 = self.rules['HTransition2QInstSIBLING']
+        d2 = self.rules['HTransition2QInstOUT']
+        d3 = self.rules['HTransition2Inst']
+        e1 = self.rules['HTransition2ListenBranch']
+        e2 = self.rules['HConnectOutputsOfExitPoint2BProcDefTransition2QInst']
+        e3 = self.rules['HTransition2HListenBranch']
+        e4 = self.rules['HConnectOPState2CProcDefTransition2InstotherInTransitions']
+        f1 = self.rules['HMapHeirarchyOfStates2HeirarchyOfProcs']
 #        f2 = self.rules['HRuleConnect2RootElement']
 #         except KeyError as e:
 #             print(e)
@@ -196,7 +196,7 @@ class Test():
         #TODO: Change this number if you are modifying the transformation at all
         if args.num_rules == -1:
                 #transformation = [[a1], [b1,b2,b3], [c1]]
-                transformation = [[a1],[b1,b2,b3],[c1,c2,c3]]#,[d1,d2,d3],[e1,e2,e3,e4], [f1]]
+                transformation = [[a1],[b1,b2,b3],[c1,c3,c2],[d1,d2,d3],[e1,e2,e3,e4], [f1]]
         else:
                 transformation = self.select_rules([[a1], [b1]])#,b2,b3], [c1]])#,c2,c3]])#, [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
 
@@ -230,10 +230,10 @@ class Test():
 #        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlappingRules] = \
 #            self.pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation_eq_outside", transformation)
 
-        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlappingRules, self.loopingRuleSubsumption] = \
+        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlappingRules, self.subsumption, self.loopingRuleSubsumption] = \
             self.pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation_eq_outside/", transformation)
 
-        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlappingRules, self.loopingRuleSubsumption, args)#
+        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlappingRules, self.subsumption, self.loopingRuleSubsumption, args)#
     
         ts0 = time.time()
         s.build_path_conditions()
@@ -254,7 +254,7 @@ class Test():
         #print("printing path conditions")
         s.print_path_conditions_screen()
 
-        s.print_path_conditions_file()
+#        s.print_path_conditions_file()
 #
 #         atprop=AtomicStateProperty(HState2procdef_IsolatedLHS(),HState2procdef_IsolatedLHS(), HState2procdef_CompleteLHS())
 #         exitpt2procdefparprop_withattr=AtomicStateProperty(HExitpoint2procdefparTrue_IsolatedLHS(),HExitpoint2procdefparTrue_ConnectedLHS(),HExitpoint2procdefparTrue_CompleteLHS())

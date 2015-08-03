@@ -59,7 +59,7 @@ class PathConditionGenerator(object):
     """
 
     #@do_cprofile
-    def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, overlappingRules, loopingRuleSubsumption, args):
+    def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, overlappingRules, subsumption, loopingRuleSubsumption, args):
 
         # the empty path condition
 
@@ -75,6 +75,7 @@ class PathConditionGenerator(object):
         self.ruleTraceCheckers = ruleTraceCheckers
         self.matchRulePatterns = matchRulePatterns
         self.overlappingRules = overlappingRules
+        self.subsumption = subsumption
         self.loopingRuleSubsumption = loopingRuleSubsumption
         
         self.rulesRequiringDisambiguation = {}
@@ -228,6 +229,7 @@ class PathConditionGenerator(object):
         for layer in range(len(self.transformation)):
             i = 0
             subsumedRulesInLayer = []
+            subsumingRulesInLayer = []
             for rule in self.transformation[layer]:
  
                 new_name = "L" + str(layer) + "R" + str(i)
@@ -248,6 +250,12 @@ class PathConditionGenerator(object):
                     self.overlappingRules[new_name] = self.overlappingRules[rule.name]
                     del self.overlappingRules[rule.name]
                     subsumedRulesInLayer.append(new_name)
+                
+                #remove this when layer is ordered
+                if rule.name in self.subsumption.keys():
+                    self.subsumption[new_name] = self.subsumption[rule.name]
+                    del self.subsumption[rule.name]
+                    subsumingRulesInLayer.append(new_name)
                    
                 rule.name = new_name
                 
@@ -262,6 +270,29 @@ class PathConditionGenerator(object):
                             newRuleName = newRuleNameIter
                             break
                     self.overlappingRules[subsumedRule][subsumingRuleIndex] = newRuleName
+            
+            # remove this when layer is ordered        
+            for subsumedRule in subsumingRulesInLayer:
+                for subsumingRuleIndex in range(len(self.subsumption[subsumedRule])):
+                    ruleName = self.subsumption[subsumedRule][subsumingRuleIndex]
+                    newRuleName = None
+                    for newRuleNameIter in self.rule_names.keys():
+                        if ruleName == self.rule_names[newRuleNameIter]:
+                            newRuleName = newRuleNameIter
+                            break
+                    self.subsumption[subsumedRule][subsumingRuleIndex] = newRuleName
+
+                    
+        # change the names of the rules in a subsumption loop
+
+        for loop in self.loopingRuleSubsumption:
+            for ruleIndex in range(len(loop)):
+                newRuleName = None
+                for newRuleNameIter in self.rule_names.keys():
+                    if loop[ruleIndex] == self.rule_names[newRuleNameIter]:
+                        newRuleName = newRuleNameIter
+                        break
+                loop[ruleIndex] = newRuleName
                     
         # calculate the set of rules the require disambiguation.
         # these are the rules that have elements in the match part connected to two or more backward links.
@@ -363,6 +394,7 @@ class PathConditionGenerator(object):
 
         manager = Manager()
         cpu_count = multiprocessing.cpu_count()
+#        cpu_count = 1
         print("CPU Count: " + str(cpu_count))
 
 
@@ -463,6 +495,8 @@ class PathConditionGenerator(object):
                 new_worker.ruleCombinators = self.ruleCombinators
                 new_worker.ruleTraceCheckers =  self.ruleTraceCheckers
                 new_worker.overlappingRules = self.overlappingRules
+                new_worker.subsumption = self.subsumption
+                new_worker.loopingRuleSubsumption = self.loopingRuleSubsumption
 
                 workers.append(new_worker)
 
@@ -610,3 +644,19 @@ class PathConditionGenerator(object):
                 #i=i+1
             except IOError:
                 print("Graph name is too long: " + pathCondName)
+                
+    def check_rule_reachability(self):
+        print("Checking Reachability: ")
+        for layer in self.transformation:
+            for rule in layer:
+                for pc_name in sorted(self.currentpathConditionSet):
+                    ruleNotFound = True
+                    if rule.name in pc_name:
+                        print("Found: " + rule.name)
+                        ruleNotFound = False
+                        break
+                if ruleNotFound: 
+                    print("Could not find: " + rule.name)
+                
+                    
+                

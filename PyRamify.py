@@ -1003,9 +1003,9 @@ class PyRamify:
 
         for i in range(len(combinator_matchers)):
             
-            if len(combinator_matchers) == 3 and i < 2:
-                combinator_matchers[i]["MT_constraint__"] = self.get_LHS_combinator_match_code(combinator_matchers[i], False)
-            elif len(combinator_matchers) == 3 and i == 2:
+#             if len(combinator_matchers) == 3 and i < 2:
+#                 combinator_matchers[i]["MT_constraint__"] = self.get_LHS_combinator_match_code(combinator_matchers[i], False)
+            if len(combinator_matchers) == 3 and i == 2:
                 combinator_matchers[i]["MT_constraint__"] = self.get_LHS_combinator_match_code(combinator_matchers[i], True)
             elif len(combinator_matchers) == 1 and subsuming_rules != []:
                 combinator_matchers[i]["MT_constraint__"] = self.get_LHS_combinator_match_code(combinator_matchers[i], True)
@@ -1530,7 +1530,7 @@ class PyRamify:
                             del ruleChains[indexOfExistingChain[1]]
             
             # store the information about rules having looping subsumption relations
-            self.loopingRuleSubsumption = ruleChains
+            self.loopingRuleSubsumption = list(ruleChains)
                                     
         remainingRulepairs = [rule for rule in rulepairs if rule not in rulesToRemove]
         
@@ -1713,8 +1713,30 @@ class PyRamify:
 
         print("Finished PyRamify")
         print("==================================\n")
+        
+        # remove from the subsumption relation subsumption between a rule in a layer and a rule in a layer appearing before
+        # TODO: this should be replaced by layer ordering to avoid tests all the time during PC construction
+        for rule in self.ruleSubsumption.keys():
+            rulesToDelete = []
+            for subsumedRule in self.ruleSubsumption[rule]:
+                if self.layer_rule_occurs_in(rule) > self.layer_rule_occurs_in(subsumedRule) or\
+                   (self.layer_rule_occurs_in(rule) < self.layer_rule_occurs_in(subsumedRule) and
+                    self.rule_has_backward_links(rule) and self.rule_has_backward_links(subsumedRule)):
+                    rulesToDelete.append(subsumedRule)
+            self.ruleSubsumption[rule] = [r for r in self.ruleSubsumption[rule] if r not in rulesToDelete]
+        # now remove empty dictionary entries
+        emptyEntries = []
+        for rule in self.ruleSubsumption.keys():
+            if self.ruleSubsumption[rule] == []:
+                emptyEntries.append(rule)
+        for rule in emptyEntries:
+            del self.ruleSubsumption[rule]
+            
+        #print(">>>>>>>>> Rule Subsumption: " + str(self.ruleSubsumption))
+        
+                    
 
-        return [rules, backwardPatterns, backwardPatterns2Rules, {}, matchRulePatterns, ruleCombinators, self.rules_needing_overlap_treatment(), self.loopingRuleSubsumption]
+        return [rules, backwardPatterns, backwardPatterns2Rules, {}, matchRulePatterns, ruleCombinators, self.rules_needing_overlap_treatment(), self.ruleSubsumption, self.loopingRuleSubsumption]
 
 
     #================================================================================

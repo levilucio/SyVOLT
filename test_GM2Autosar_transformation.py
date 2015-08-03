@@ -211,10 +211,10 @@ class Test():
                 [self.rules['HMapPN2FiveElements'], self.rules['HMapPartition'], self.rules['HMapModule']],
                 [self.rules['HConnECU2VirtualDevice1']],
                 [self.rules['HConnECU2VirtualDevice2']],
-                [self.rules['HConnVirtualDevice2Distributable1']],
-                [self.rules['HConnVirtualDevice2Distributable2']],
-                [self.rules['HConnectPPortPrototype']],
-                [self.rules['HConnectRPortPrototype']]]
+                 [self.rules['HConnVirtualDevice2Distributable1']],
+                 [self.rules['HConnVirtualDevice2Distributable2']],
+                 [self.rules['HConnectPPortPrototype']],
+                 [self.rules['HConnectRPortPrototype']]]
 
 
 
@@ -345,10 +345,11 @@ class Test():
 
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
 
-        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlappingRules, self.loopingRuleSubsumption] = \
+        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlappingRules, self.subsumption, self.loopingRuleSubsumption] = \
             pyramify.ramify_directory("GM2AUTOSAR_MM/transformation_w_equations/", self.transformation)
 
-        s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlappingRules, self.loopingRuleSubsumption, args)#
+
+        s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlappingRules, self.subsumption, self.loopingRuleSubsumption, args)#
 
 
 
@@ -363,8 +364,10 @@ class Test():
         print("Number of path conditions: " + str(s.num_path_conditions))
         
         s.print_path_conditions_screen()
+
+        s.check_rule_reachability()
 #
-        s.print_path_conditions_file()
+#        s.print_path_conditions_file()
 
 
 #         expected_num_pcs = 3

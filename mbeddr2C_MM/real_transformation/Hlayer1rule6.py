@@ -43,42 +43,55 @@ class Hlayer1rule6(Himesis):
         # match_contains node for class ClientServerInterface(layer1rule6class0)
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
+        # match class ImplementationModule() node
+        self.add_node()
+        self.vs[5]["name"] = """""" 
+        self.vs[5]["classtype"] = """ImplementationModule"""
+        self.vs[5]["mm__"] = """ImplementationModule"""
+        self.vs[5]["cardinality"] = """+""" 
+        # match_contains node for class ImplementationModule()
+        self.add_node()
+        self.vs[6]["mm__"] = """match_contains"""
         
         
         # apply class StructDeclaration(layer1rule6class1) node
         self.add_node()
-        self.vs[5]["name"] = """layer1rule6class1""" 
-        self.vs[5]["classtype"] = """StructDeclaration"""
-        self.vs[5]["mm__"] = """StructDeclaration"""
-        self.vs[5]["cardinality"] = """1"""
+        self.vs[7]["name"] = """layer1rule6class1""" 
+        self.vs[7]["classtype"] = """StructDeclaration"""
+        self.vs[7]["mm__"] = """StructDeclaration"""
+        self.vs[7]["cardinality"] = """1"""
         # apply_contains node for class StructDeclaration(layer1rule6class1)
         self.add_node()
-        self.vs[6]["mm__"] = """apply_contains"""
+        self.vs[8]["mm__"] = """apply_contains"""
         # apply class StructType(layer1rule6class2) node
         self.add_node()
-        self.vs[7]["name"] = """layer1rule6class2""" 
-        self.vs[7]["classtype"] = """StructType"""
-        self.vs[7]["mm__"] = """StructType"""
-        self.vs[7]["cardinality"] = """1"""
+        self.vs[9]["name"] = """layer1rule6class2""" 
+        self.vs[9]["classtype"] = """StructType"""
+        self.vs[9]["mm__"] = """StructType"""
+        self.vs[9]["cardinality"] = """1"""
         # apply_contains node for class StructType(layer1rule6class2)
         self.add_node()
-        self.vs[8]["mm__"] = """apply_contains"""
+        self.vs[10]["mm__"] = """apply_contains"""
         
         
+        # match association ImplementationModule--contents-->ClientServerInterface node
+        self.add_node()
+        self.vs[11]["associationType"] = """contents"""
+        self.vs[11]["mm__"] = """directLink_S"""
         
         # apply association StructType--struct-->StructDeclaration node
         self.add_node()
-        self.vs[9]["associationType"] = """struct"""
-        self.vs[9]["mm__"] = """directLink_T"""
+        self.vs[12]["associationType"] = """struct"""
+        self.vs[12]["mm__"] = """directLink_T"""
         
-        # backward association ClientServerInterface---->StructType node
-        self.add_node()
-        self.vs[10]["type"] = """ruleDef"""
-        self.vs[10]["mm__"] = """backward_link"""
         # backward association ClientServerInterface---->StructDeclaration node
         self.add_node()
-        self.vs[11]["type"] = """ruleDef"""
-        self.vs[11]["mm__"] = """backward_link"""
+        self.vs[13]["type"] = """ruleDef"""
+        self.vs[13]["mm__"] = """backward_link"""
+        # backward association ImplementationModule---->StructType node
+        self.add_node()
+        self.vs[14]["type"] = """ruleDef"""
+        self.vs[14]["mm__"] = """backward_link"""
         
         
         
@@ -89,21 +102,25 @@ class Hlayer1rule6(Himesis):
         self.add_edges([
                 (0,4), # matchmodel -> match_contains
                 (4,3), # match_contains -> match_class ClientServerInterface(layer1rule6class0)
-                (1,6), # applymodel -> apply_contains
-                (6,5), # apply_contains -> apply_class StructDeclaration(layer1rule6class1)
+                (0,6), # matchmodel -> match_contains
+                (6,5), # match_contains -> match_class ImplementationModule()
                 (1,8), # applymodel -> apply_contains
-                (8,7), # apply_contains -> apply_class StructType(layer1rule6class2)
-                (7,9), # apply_class StructType(layer1rule6class2) -> association struct
-                (9,5), # association struct  -> apply_class StructDeclaration(layer1rule6class1)
-                (7,10), # apply_class StructType(layer1rule6class2) -> backward_association
-                (10,3), #  backward_association -> apply_class ClientServerInterface(layer1rule6class0)
-                (5,11), # apply_class StructDeclaration(layer1rule6class1) -> backward_association
-                (11,3), #  backward_association -> apply_class ClientServerInterface(layer1rule6class0)
+                (8,7), # apply_contains -> apply_class StructDeclaration(layer1rule6class1)
+                (1,10), # applymodel -> apply_contains
+                (10,9), # apply_contains -> apply_class StructType(layer1rule6class2)
+                (5,11), # match_class ImplementationModule() -> association contents
+                (11,3), # association contents  -> match_class ClientServerInterface(layer1rule6class0)
+                (9,12), # apply_class StructType(layer1rule6class2) -> association struct
+                (12,7), # association struct  -> apply_class StructDeclaration(layer1rule6class1)
+                (7,13), # apply_class StructDeclaration(layer1rule6class1) -> backward_association
+                (13,3), #  backward_association -> apply_class ClientServerInterface(layer1rule6class0)
+                (9,14), # apply_class StructType(layer1rule6class2) -> backward_association
+                (14,5), #  backward_association -> apply_class ImplementationModule()
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])
 		
         # Add the attribute equations
-        self["equations"] = [((5,'__ApplyAttribute'),('constant','ClientServerStructIData')), ((7,'__ApplyAttribute'),('constant','TypeDefInterfaceStructType')), ]
+        self["equations"] = [((7,'__ApplyAttribute'),('constant','ClientServerStructIData')), ((9,'__ApplyAttribute'),('constant','TypeDefInterfaceStructType')), ]
 
         

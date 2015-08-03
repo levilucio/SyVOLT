@@ -17,6 +17,23 @@
         <class className="ProcDef"/>
       </apply>
     </hasRule>
+    <hasRule description="r1.2">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" className="Transition"/>
+      </match>
+      <apply>
+        <class className="LocalDef"/>
+      </apply>
+    </hasRule>
+    <hasRule description="r1.1">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" className="Transition"/>
+        <class xsi:type="dsltrans:AnyMatchClass" className="State"/>
+      </match>
+      <apply>
+        <class className="ProcDef"/>
+      </apply>
+    </hasRule>
   </source>
   <source xsi:type="dsltrans:Sequential" description="second" previousSource="//@source.1">
     <metaModelId metaModelURI="klt_new.ecore" metaModelName="klt.Klt"/>
@@ -33,6 +50,70 @@
       </apply>
       <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.2/@hasRule.0/@apply/@class.0" sourceClass="//@source.2/@hasRule.0/@match.0/@class.0"/>
       <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.2/@hasRule.0/@apply/@class.0" sourceClass="//@source.2/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+    <hasRule description="r2.2">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" className="State"/>
+        <class xsi:type="dsltrans:AnyMatchClass" className="Transition"/>
+      </match>
+      <apply>
+        <class className="Listen"/>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" description="third" previousSource="//@source.2">
+    <metaModelId metaModelURI="klt_new.ecore" metaModelName="klt.Klt"/>
+    <hasRule description="r3">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" className="State"/>
+        <class xsi:type="dsltrans:AnyMatchClass" className="Transition"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="relMatch" source="//@source.3/@hasRule.0/@match.0/@class.0" target="//@source.3/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class className="Listen"/>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" description="fourth" previousSource="//@source.3">
+    <metaModelId metaModelURI="klt_new.ecore" metaModelName="klt.Klt"/>
+    <hasRule description="r4">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" className="State"/>
+      </match>
+      <apply>
+        <class className="ProcDef"/>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" description="fifth" previousSource="//@source.4">
+    <metaModelId metaModelURI="klt_new.ecore" metaModelName="klt.Klt"/>
+    <hasRule description="r5">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" className="State"/>
+        <class xsi:type="dsltrans:AnyMatchClass" className="Transition"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="relMatch1" source="//@source.5/@hasRule.0/@match.0/@class.0" target="//@source.5/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class className="ProcDef"/>
+        <class className="Listen"/>
+        <association associationName="relApply1" source="//@source.5/@hasRule.0/@apply/@class.0" target="//@source.5/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.5/@hasRule.0/@apply/@class.0" sourceClass="//@source.5/@hasRule.0/@match.0/@class.0"/>
+    </hasRule>
+    <hasRule description="r6">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" className="State"/>
+        <class xsi:type="dsltrans:AnyMatchClass" className="Transition"/>
+        <class xsi:type="dsltrans:AnyMatchClass" className="EntryPoint"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="relMatch1" source="//@source.5/@hasRule.1/@match.0/@class.0" target="//@source.5/@hasRule.1/@match.0/@class.1"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="relMatch2" source="//@source.5/@hasRule.1/@match.0/@class.1" target="//@source.5/@hasRule.1/@match.0/@class.2"/>
+      </match>
+      <apply>
+        <class className="ProcDef"/>
+        <class className="LocalDef"/>
+        <association associationName="relApply2" source="//@source.5/@hasRule.1/@apply/@class.0" target="//@source.5/@hasRule.1/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.5/@hasRule.1/@apply/@class.0" sourceClass="//@source.5/@hasRule.1/@match.0/@class.0"/>
     </hasRule>
   </source>
 </dsltrans:TransformationModel>

@@ -15,56 +15,43 @@ class HBuildTraceabilityForRuleLHS(HimesisPreConditionPatternLHS):
         # Add the edges
         self.add_edges([[3, 0], [0, 4], [1, 2], [2, 5]])
         # Set the graph attributes
-        self["mm__"] = ['MT_pre__FamiliesToPersons_MM', 'MoTifRule']
-        self["superclasses_dict"] = {'Person': ['MetaModelElement_T'], 'Family': ['MetaModelElement_S'], 'Woman': ['MetaModelElement_T'], 'CommunityRoot': ['MetaModelElement_T'], 'Man': ['MetaModelElement_T'], 'HouseholdRoot': ['MetaModelElement_S'], 'Member': ['MetaModelElement_S']}
-        self["equations"] = []
         self["name"] = """"""
+        self["mm__"] = ['MT_pre__UMLRT2Kiltera_MM', 'MoTifRule']
         self["MT_constraint__"] = """if set([i for i in graph.neighbors(PreNode('1').index) if graph.vs[i]['mm__'] == 'trace_link']).intersection(set([i for i in graph.neighbors(PreNode('2').index) if graph.vs[i]['mm__'] == 'trace_link'])) == set():
     return True
 
 return False
 """
+        self["superclasses_dict"] = {'OPTIONAL1,': ['MetaModelElement_S'], 'Par': ['MetaModelElement_T'], 'NamedElement': ['MetaModelElement_S'], 'Pattern': ['MetaModelElement_T'], 'InitialPoint': ['MetaModelElement_S'], 'PortRef': ['MetaModelElement_S'], 'IN0': ['MetaModelElement_S'], 'OUT2': ['MetaModelElement_S'], 'MatchCase': ['MetaModelElement_T'], 'Site': ['MetaModelElement_T'], 'Delay': ['MetaModelElement_T'], 'Print': ['MetaModelElement_T'], 'State': ['MetaModelElement_S', 'StateMachine'], 'SignalType': ['MetaModelElement_S'], 'FuncDef': ['MetaModelElement_T'], 'New': ['MetaModelElement_T'], 'ExitPoint': ['MetaModelElement_S'], 'Proc': ['MetaModelElement_T'], 'Match': ['MetaModelElement_T'], 'Listen': ['MetaModelElement_T'], 'StateMachineElement': ['MetaModelElement_S'], 'Thread': ['MetaModelElement_S'], 'StateMachine': ['MetaModelElement_S'], 'TransitionType': ['MetaModelElement_S'], 'Vertex': ['MetaModelElement_S'], 'ListenBranch': ['MetaModelElement_T'], 'Capsule': ['MetaModelElement_S'], 'Trigger_S': ['MetaModelElement_S'], 'Inst': ['MetaModelElement_T'], 'LocalDef': ['MetaModelElement_T'], 'Trigger_T': ['MetaModelElement_T'], 'FIXED0': ['MetaModelElement_S'], 'LogicalThread': ['MetaModelElement_S'], 'Condition': ['MetaModelElement_T'], 'RoleType': ['MetaModelElement_S'], 'CONJUGATE1': ['MetaModelElement_S'], 'Transition': ['MetaModelElement_S'], 'Name': ['MetaModelElement_T'], 'PhysicalThread': ['MetaModelElement_S'], 'Package': ['MetaModelElement_S'], 'Expr': ['MetaModelElement_T'], 'Signal': ['MetaModelElement_S'], 'RootElement': ['MetaModelElement_T', 'MetaModelElement_S'], 'PortConnectorRef': ['MetaModelElement_S'], 'Element': ['MetaModelElement_S'], 'IN1': ['MetaModelElement_S'], 'Model_S': ['MetaModelElement_S'], 'Model_T': ['MetaModelElement_T'], 'PLUGIN2': ['MetaModelElement_S'], 'Action': ['MetaModelElement_S'], 'PortType': ['MetaModelElement_S'], 'SIBLING0': ['MetaModelElement_S'], 'PackageContainer': ['MetaModelElement_S'], 'Def': ['MetaModelElement_T'], 'CapsuleRole': ['MetaModelElement_S'], 'ProcDef': ['MetaModelElement_T'], 'Protocol': ['MetaModelElement_S'], 'Seq': ['MetaModelElement_T'], 'OUT1': ['MetaModelElement_S'], 'PythonRef': ['MetaModelElement_T'], 'ConditionSet': ['MetaModelElement_T'], 'Module': ['MetaModelElement_T'], 'BASE0': ['MetaModelElement_S'], 'EntryPoint': ['MetaModelElement_S'], 'ConditionBranch': ['MetaModelElement_T'], 'ParIndexed': ['MetaModelElement_T'], 'Null': ['MetaModelElement_T'], 'Port': ['MetaModelElement_S'], 'PortConnector': ['MetaModelElement_S']}
+        self["equations"] = []
         self["GUID__"] = 1339043830988334966
         
         # Set the node attributes
-        self.vs[0]["mm__"] = """MT_pre__apply_contains"""
-        self.vs[0]["MT_label__"] = """6"""
-        self.vs[0]["MT_dirty__"] = False
-        self.vs[0]["MT_subtypes__"] = []
         self.vs[0]["MT_subtypeMatching__"] = False
+        self.vs[0]["MT_label__"] = """6"""
+        self.vs[0]["mm__"] = """MT_pre__apply_contains"""
+        self.vs[0]["MT_subtypes__"] = []
+        self.vs[0]["MT_dirty__"] = False
         self.vs[0]["GUID__"] = 6601769124712063922
-        self.vs[1]["mm__"] = """MT_pre__MatchModel"""
-        self.vs[1]["MT_label__"] = """3"""
-        self.vs[1]["MT_dirty__"] = False
-        self.vs[1]["MT_subtypes__"] = []
         self.vs[1]["MT_subtypeMatching__"] = False
+        self.vs[1]["MT_label__"] = """3"""
+        self.vs[1]["mm__"] = """MT_pre__MatchModel"""
+        self.vs[1]["MT_subtypes__"] = []
+        self.vs[1]["MT_dirty__"] = False
         self.vs[1]["GUID__"] = 3211031155982416150
-        self.vs[2]["mm__"] = """MT_pre__match_contains"""
-        self.vs[2]["MT_label__"] = """5"""
-        self.vs[2]["MT_dirty__"] = False
-        self.vs[2]["MT_subtypes__"] = []
         self.vs[2]["MT_subtypeMatching__"] = False
+        self.vs[2]["MT_label__"] = """5"""
+        self.vs[2]["mm__"] = """MT_pre__match_contains"""
+        self.vs[2]["MT_subtypes__"] = []
+        self.vs[2]["MT_dirty__"] = False
         self.vs[2]["GUID__"] = 3676593120352744638
-        self.vs[3]["mm__"] = """MT_pre__ApplyModel"""
-        self.vs[3]["MT_label__"] = """4"""
-        self.vs[3]["MT_dirty__"] = False
-        self.vs[3]["MT_subtypes__"] = []
         self.vs[3]["MT_subtypeMatching__"] = False
+        self.vs[3]["MT_label__"] = """4"""
+        self.vs[3]["mm__"] = """MT_pre__ApplyModel"""
+        self.vs[3]["MT_subtypes__"] = []
+        self.vs[3]["MT_dirty__"] = False
         self.vs[3]["GUID__"] = 3729121856167067283
-        self.vs[4]["mm__"] = """MT_pre__MetaModelElement_T"""
-        self.vs[4]["MT_label__"] = """2"""
-        self.vs[4]["MT_pre__name"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
+        self.vs[4]["MT_subtypeMatching__"] = True
         self.vs[4]["MT_pre__classtype"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -77,10 +64,22 @@ return True
 
 return True
 """
-        self.vs[4]["MT_dirty__"] = False
+        self.vs[4]["MT_pre__name"] = """
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by: attr_value.
+# You can access any attribute x of this node by: this['x'].
+# If the constraint relies on attribute values from other nodes,
+# use the LHS/NAC constraint instead.
+# The given constraint must evaluate to a boolean expression.
+#===============================================================================
+
+return True
+"""
+        self.vs[4]["MT_label__"] = """2"""
+        self.vs[4]["mm__"] = """MT_pre__MetaModelElement_T"""
         self.vs[4]["MT_subtypes__"] = ['MT_pre__CommunityRoot', 'MT_pre__Person', 'MT_pre__Man', 'MT_pre__Woman']
-        self.vs[4]["MT_subtypeMatching__"] = True
-        self.vs[4]["GUID__"] = 925503974014884163
+        self.vs[4]["MT_dirty__"] = False
         self.vs[4]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -93,20 +92,8 @@ return True
 
 return True
 """
-        self.vs[5]["mm__"] = """MT_pre__MetaModelElement_S"""
-        self.vs[5]["MT_label__"] = """1"""
-        self.vs[5]["MT_pre__name"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
+        self.vs[4]["GUID__"] = 925503974014884163
+        self.vs[5]["MT_subtypeMatching__"] = True
         self.vs[5]["MT_pre__classtype"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -119,10 +106,22 @@ return True
 
 return True
 """
-        self.vs[5]["MT_dirty__"] = False
+        self.vs[5]["MT_pre__name"] = """
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by: attr_value.
+# You can access any attribute x of this node by: this['x'].
+# If the constraint relies on attribute values from other nodes,
+# use the LHS/NAC constraint instead.
+# The given constraint must evaluate to a boolean expression.
+#===============================================================================
+
+return True
+"""
+        self.vs[5]["MT_label__"] = """1"""
+        self.vs[5]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[5]["MT_subtypes__"] = ['MT_pre__HouseholdRoot', 'MT_pre__Family', 'MT_pre__Member']
-        self.vs[5]["MT_subtypeMatching__"] = True
-        self.vs[5]["GUID__"] = 9053659576832917539
+        self.vs[5]["MT_dirty__"] = False
         self.vs[5]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -135,8 +134,9 @@ return True
 
 return True
 """
+        self.vs[5]["GUID__"] = 9053659576832917539
 
-    def eval_name2(self, attr_value, this):
+    def eval_classtype2(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.
@@ -150,7 +150,7 @@ return True
         return True
 
 
-    def eval_classtype2(self, attr_value, this):
+    def eval_name2(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.
@@ -178,7 +178,7 @@ return True
         return True
 
 
-    def eval_name1(self, attr_value, this):
+    def eval_classtype1(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.
@@ -192,7 +192,7 @@ return True
         return True
 
 
-    def eval_classtype1(self, attr_value, this):
+    def eval_name1(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.
