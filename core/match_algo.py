@@ -1,7 +1,7 @@
 
 import sys
 from .himesis import Himesis
-from .himesis_utils import standardize_name, is_RAM_attribute, to_non_RAM_attribute
+from .himesis_utils import standardize_name, is_RAM_attribute, to_non_RAM_attribute, get_preds_and_succs
 
 class Priority(object):
     """
@@ -167,21 +167,14 @@ class HimesisMatcher(object):
         # for each node store the number of neighbours and the list
 
         #igraph.IN = 2, igraph.OUT = 1
-        if  not self.pred1:
-            self.pred1 = [(len(tmp), tmp) for tmp in self.G1.get_adjlist(mode=2)]
-
-        if not self.succ1:
-            self.succ1 = [(len(tmp), tmp) for tmp in self.G1.get_adjlist(mode=1)]
+        if not self.pred1 or not self.succ1:
+            self.pred1, self.succ1 = get_preds_and_succs(self.G1)
 
         self.pred2 = pred2
         self.succ2 = succ2
 
-        if not pred2:
-            #print("No pred2 for graph: " + self.G2.name)
-            self.pred2 = [(len(tmp), tmp) for tmp in self.G2.get_adjlist(mode=2)]
-
-        if not succ2:
-            self.succ2 = [(len(tmp), tmp) for tmp in self.G2.get_adjlist(mode=1)]
+        if not self.pred2 or not self.succ2:
+            self.pred2, self.succ2 = get_preds_and_succs(self.G2)
 
 
         self.has_super = None
