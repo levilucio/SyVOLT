@@ -19,11 +19,12 @@ from solver.simple_attribute_equation_evaluator import is_consistent
 import numpy.random as nprnd
 
 from profiler import *
+from util.progress import ProgressBar
 
 class path_condition_generator_worker(Process):
 
 
-    def __init__(self, verbosity, num):
+    def __init__(self, verbosity, num, report_progress):
         super(path_condition_generator_worker, self).__init__()
         self.num = num
         self.currentPathConditionSet = None
@@ -34,6 +35,8 @@ class path_condition_generator_worker(Process):
         #self.attributeEquationEvaluator = SimpleAttributeEquationEvaluator(verbosity)
 
         nprnd.seed(num)
+
+        self.report_progress = report_progress
 
     #@do_cprofile
     #@profile
@@ -50,10 +53,16 @@ class path_condition_generator_worker(Process):
 
         name_dict = {}
 
+        if self.report_progress:
+            progress_bar = ProgressBar(pathConSetLength)
+
         for pathConditionIndex in range(pathConSetLength):
         #while True:
 
             pc_name = self.currentPathConditionSet[pathConditionIndex]
+
+            if self.report_progress:
+                progress_bar.update_progress(pathConditionIndex)
 
 
             #newPathConditionSet.append(pc_name)

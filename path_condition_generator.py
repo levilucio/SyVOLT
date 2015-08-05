@@ -471,8 +471,14 @@ class PathConditionGenerator(object):
             for i in range(len(pc_chunks)):#range(cpu_count):
                 #worker_time = time.time()
 
+                #only one thread should print a progress bar
+                if i == 0:
+                    report_progress = True
+                else:
+                    report_progress = False
+
                 #print("Chunk size: " + str(len(pc_chunks[i])))
-                new_worker = path_condition_generator_worker(self.verbosity, layer*1000+i)
+                new_worker = path_condition_generator_worker(self.verbosity, layer*1000+i, report_progress)
                 new_worker.currentPathConditionSet = pc_chunks[i]#pc_queue
                 new_worker.attributeEquationEvaluator = self.attributeEquationEvaluator
 
@@ -497,6 +503,8 @@ class PathConditionGenerator(object):
                 new_worker.overlappingRules = self.overlappingRules
                 new_worker.subsumption = self.subsumption
                 new_worker.loopingRuleSubsumption = self.loopingRuleSubsumption
+
+
 
                 workers.append(new_worker)
 
