@@ -40,6 +40,10 @@ return True
 
 return True
 """
+        self.vs[0]["MT_label__"] = """9"""
+        self.vs[0]["MT_subtypes__"] = ['MT_pre__CommunityRoot', 'MT_pre__Person', 'MT_pre__Man', 'MT_pre__Woman']
+        self.vs[0]["MT_dirty__"] = False
+        self.vs[0]["mm__"] = """MT_pre__MetaModelElement_T"""
         self.vs[0]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -52,9 +56,6 @@ return True
 
 return True
 """
-        self.vs[0]["MT_label__"] = """9"""
-        self.vs[0]["MT_subtypes__"] = ['MT_pre__CommunityRoot', 'MT_pre__Person', 'MT_pre__Man', 'MT_pre__Woman']
-        self.vs[0]["mm__"] = """MT_pre__MetaModelElement_T"""
         self.vs[0]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -67,11 +68,10 @@ return True
 
 return True
 """
-        self.vs[0]["MT_dirty__"] = False
         self.vs[0]["GUID__"] = 2331649011858856719
         self.vs[1]["MT_label__"] = """10"""
-        self.vs[1]["mm__"] = """MT_pre__trace_link"""
         self.vs[1]["MT_dirty__"] = False
+        self.vs[1]["mm__"] = """MT_pre__trace_link"""
         self.vs[1]["GUID__"] = 643142311743453749
         self.vs[2]["MT_pivotOut__"] = """element1"""
         self.vs[2]["MT_pre__classtype"] = """
@@ -86,6 +86,10 @@ return True
 
 return True
 """
+        self.vs[2]["MT_pivotIn__"] = """element1"""
+        self.vs[2]["MT_label__"] = """7"""
+        self.vs[2]["MT_dirty__"] = False
+        self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[2]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -98,9 +102,6 @@ return True
 
 return True
 """
-        self.vs[2]["MT_pivotIn__"] = """element1"""
-        self.vs[2]["MT_label__"] = """7"""
-        self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[2]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -113,7 +114,6 @@ return True
 
 return True
 """
-        self.vs[2]["MT_dirty__"] = False
         self.vs[2]["GUID__"] = 8612786979184624768
         self.vs[3]["MT_pivotOut__"] = """element2"""
         self.vs[3]["MT_pre__classtype"] = """
@@ -128,6 +128,10 @@ return True
 
 return True
 """
+        self.vs[3]["MT_pivotIn__"] = """element2"""
+        self.vs[3]["MT_label__"] = """8"""
+        self.vs[3]["MT_dirty__"] = False
+        self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[3]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -140,9 +144,6 @@ return True
 
 return True
 """
-        self.vs[3]["MT_pivotIn__"] = """element2"""
-        self.vs[3]["MT_label__"] = """8"""
-        self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[3]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -155,7 +156,6 @@ return True
 
 return True
 """
-        self.vs[3]["MT_dirty__"] = False
         self.vs[3]["GUID__"] = 1749774053392192765
 
     def eval_classtype9(self, attr_value, this):

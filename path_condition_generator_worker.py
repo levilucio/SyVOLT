@@ -359,7 +359,7 @@ class path_condition_generator_worker(Process):
                                             else:
                                                 if isTotalCombinator:
     
-    #                                                    print("Going to write a total: " + newPathCondName)
+                                                    #print("Going to write a total: " + newPathCondName)
     
                                                     newPathCondName = newPathCondName +"-T" + str(pathCondSubnum)
                                                     newPathCond.name = newPathCondName
@@ -388,7 +388,7 @@ class path_condition_generator_worker(Process):
     
                                                 else:
     
-    #                                                    print("Going to write a partial: " + newPathCondName)
+                                                    #print("Going to write a partial: " + newPathCondName)
     
                                                     newPathCondName = newPathCondName +"-P" + str(pathCondSubnum)
                                                     newPathCond.name = newPathCondName
@@ -411,8 +411,8 @@ class path_condition_generator_worker(Process):
                                                     print("Created path condition with name: " + newPathCondName)
     
     
-                                        p = i.next_in(p)
-                                        pathCondSubnum += 1
+                                    p = i.next_in(p)
+                                    pathCondSubnum += 1
                                     
 
                                 newPathConditionSet.extend(partialTotalPathCondLayerAccumulator)

@@ -252,7 +252,7 @@ class Test():
             #raise Exception(num_pcs_s)
  
         #print("printing path conditions")
-        s.print_path_conditions_screen()
+        #s.print_path_conditions_screen()
 
 #        s.print_path_conditions_file()
 #

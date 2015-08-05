@@ -95,19 +95,19 @@ class Test():
         b13 = self.rules['Hlayer1rule13']
         b14 = self.rules['Hlayer1rule14']
         b15 = self.rules['Hlayer1rule15']
-  
+   
         c0 = self.rules['Hlayer2rule0']
         c1 = self.rules['Hlayer2rule1']
         c2 = self.rules['Hlayer2rule2']
         c3 = self.rules['Hlayer2rule3']
-   
+    
         d0 = self.rules['Hlayer3rule0']
         d1 = self.rules['Hlayer3rule1']
         d2 = self.rules['Hlayer3rule2']
         d3 = self.rules['Hlayer3rule3']
         d4 = self.rules['Hlayer3rule4']
         d5 = self.rules['Hlayer3rule5']
-            
+             
         e0 = self.rules['Hlayer4rule0']
         e1 = self.rules['Hlayer4rule1']
         e2 = self.rules['Hlayer4rule2']
@@ -119,7 +119,7 @@ class Test():
         f3 = self.rules['Hlayer5rule3']
         f4 = self.rules['Hlayer5rule4']
         f5 = self.rules['Hlayer5rule5']
-            
+             
         g0 = self.rules['Hlayer6rule0']        
 
         expected_num_pcs = args.num_pcs
