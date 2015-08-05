@@ -13,6 +13,7 @@ from core.himesis_utils import graph_to_dot
 from core.himesis_utils import clean_graph
 from core.himesis_utils import print_graph
 from core.himesis_utils import set_do_pickle
+from core.himesis_utils import set_compression
 
 from core.himesis_plus import *
 
@@ -69,6 +70,7 @@ class PathConditionGenerator(object):
         self.do_parallel = args.do_parallel
 
         set_do_pickle(args.do_pickle)
+        set_compression(args.compression)
 
         self.transformation = transformation
         self.ruleCombinators = ruleCombinators

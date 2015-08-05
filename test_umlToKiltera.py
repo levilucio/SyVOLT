@@ -513,6 +513,10 @@ if __name__ == "__main__":
                         help = 'Option to skip the use of pickling')
     parser.set_defaults(do_pickle = True)
 
+    parser.add_argument('--compression', type = int, default = 6,
+                        help = 'Level of compression to use with pickling. Range: 0 (no compression) to 9 (high compression) (default: 6)')
+    parser.set_defaults(compression = True)
+
     parser.add_argument('--no_svg', dest = 'draw_svg', action = 'store_false',
                         help = 'Flag to force svg files to not be drawn')
     parser.set_defaults(draw_svg = True)

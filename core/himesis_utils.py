@@ -326,6 +326,10 @@ def set_do_pickle(value):
     global do_pickle
     do_pickle = value
 
+def set_compression(value):
+    global compression
+    compression = value
+
 pickle_dir = "pickle/"
 
 # shrink a graph into an array
@@ -334,7 +338,11 @@ def shrink_graph(graph):
 
     if do_pickle:
         file_name = hashlib.sha256(graph.name.encode("UTF-8")).hexdigest()
-        f = gzip.open(pickle_dir + file_name, "wb", compresslevel=6)
+
+        if compression == 0:
+            f = open(pickle_dir + file_name, "wb")
+        else:
+            f = gzip.open(pickle_dir + file_name, "wb", compresslevel=compression)
         pickle.dump(value, f)
         f.close()
         return file_name
@@ -347,7 +355,10 @@ def shrink_graph(graph):
 def expand_graph(small_value):
 
     if do_pickle:
-        f = gzip.open(pickle_dir + small_value, "rb")
+        if compression == 0:
+            f = open(pickle_dir + small_value, "rb")
+        else:
+            f = gzip.open(pickle_dir + small_value, "rb")
         small_value = pickle.load(f)
         f.close()
     else:
