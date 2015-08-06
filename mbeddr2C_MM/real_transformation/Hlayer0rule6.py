@@ -32,7 +32,7 @@ class Hlayer0rule6(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """layer0rule6"""
+ 
         
         # match class ClientServerInterface(layer0rule6class0) node
         self.add_node()
@@ -107,7 +107,7 @@ class Hlayer0rule6(Himesis):
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])
-		
+
         # Add the attribute equations
         self["equations"] = [((7,'name'),('concat',((5,'name'),('concat',(('constant','_'),('concat',((3,'name'),('concat',(('constant','__'),('constant','idata_t')))))))))), ((7,'__ApplyAttribute'),('constant','TypeDefInterfaceStruct')), ((9,'__ApplyAttribute'),('constant','TypeDefInterfaceStructType')), ]
 

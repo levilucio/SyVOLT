@@ -32,7 +32,7 @@ class Hlayer0rule9(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """layer0rule9"""
+ 
         
         # match class RequiredPort(layer0rule9class0) node
         self.add_node()
@@ -107,7 +107,7 @@ class Hlayer0rule9(Himesis):
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])
-		
+
         # Add the attribute equations
         self["equations"] = [((5,'name'),('concat',((3,'name'),('constant','__port')))), ((5,'__ApplyAttribute'),('constant','RequiredPort_port')), ]
 

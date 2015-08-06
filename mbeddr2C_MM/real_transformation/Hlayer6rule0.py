@@ -32,7 +32,7 @@ class Hlayer6rule0(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """layer6rule0"""
+ 
         
         # match class Function(layer6rule0class0) node
         self.add_node()
@@ -113,7 +113,7 @@ class Hlayer6rule0(Himesis):
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])
-		
+
         # Add the attribute equations
         self["equations"] = [((3,'name'),('constant','main')), ((5,'__ApplyAttribute'),('constant','MainBody')), ((9,'value'),('constant','0')), ]
 

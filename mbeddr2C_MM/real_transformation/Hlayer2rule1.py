@@ -32,7 +32,7 @@ class Hlayer2rule1(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """layer2rule1"""
+ 
         
         # match class StringType(layer2rule1class0) node
         self.add_node()
@@ -113,7 +113,7 @@ class Hlayer2rule1(Himesis):
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])
-		
+
         # Add the attribute equations
         self["equations"] = [((9,'__ApplyAttribute'),('constant','ProvidedPortFunctionPrototypeArgument')), ]
 

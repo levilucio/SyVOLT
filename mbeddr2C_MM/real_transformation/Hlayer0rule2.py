@@ -32,7 +32,7 @@ class Hlayer0rule2(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """layer0rule2"""
+ 
         
         # match class Operation(layer0rule2class0) node
         self.add_node()
@@ -124,7 +124,7 @@ class Hlayer0rule2(Himesis):
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])
-		
+
         # Add the attribute equations
         self["equations"] = [((5,'name'),(3,'name')), ((5,'__ApplyAttribute'),('constant','CFunctionPointerStructMember')), ((7,'__ApplyAttribute'),('constant','FunctionRefType')), ((9,'__ApplyAttribute'),('constant','InstancePointer')), ]
 
