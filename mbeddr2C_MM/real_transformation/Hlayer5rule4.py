@@ -32,7 +32,7 @@ class Hlayer5rule4(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """layer5rule4"""
+ 
         
         # match class TestCase(layer5rule4class0) node
         self.add_node()
@@ -369,7 +369,7 @@ class Hlayer5rule4(Himesis):
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])
-		
+
         # Add the attribute equations
         self["equations"] = [((25,'__ApplyAttribute'),('constant','TestCaseFunctionStatements')), ((31,'__ApplyAttribute'),('constant','ProvidedPortFunctionPrototype')), ((37,'__ApplyAttribute'),('constant','GlobalComponentInstanceDeclaration')), ]
 

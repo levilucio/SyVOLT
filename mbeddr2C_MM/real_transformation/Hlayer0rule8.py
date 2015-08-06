@@ -32,7 +32,7 @@ class Hlayer0rule8(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """layer0rule8"""
+ 
         
         # match class AtomicComponent(layer0rule8class0) node
         self.add_node()
@@ -107,7 +107,7 @@ class Hlayer0rule8(Himesis):
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])
-		
+
         # Add the attribute equations
         self["equations"] = [((7,'name'),('concat',((5,'name'),('concat',(('constant','_'),('concat',((3,'name'),('concat',(('constant','__'),('constant','cdata_t')))))))))), ((7,'__ApplyAttribute'),('constant','TypeDefComponentStruct')), ((9,'__ApplyAttribute'),('constant','TypeComponentStructType')), ]
 

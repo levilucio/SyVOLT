@@ -32,7 +32,7 @@ class Hlayer4rule3(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """layer4rule3"""
+ 
         
         # match class ImplementationModule(layer4rule3class0) node
         self.add_node()
@@ -272,7 +272,7 @@ class Hlayer4rule3(Himesis):
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])
-		
+
         # Add the attribute equations
         self["equations"] = [((5,'name'),('constant','main')), ((9,'__ApplyAttribute'),('constant','ImplementationModule')), ((11,'name'),('concat',((3,'name'),('constant','_blockexpr_main_2')))), ((15,'__ApplyAttribute'),('constant','Main2Body')), ((17,'name'),('constant','main')), ((19,'__ApplyAttribute'),('constant','MainBody')), ((27,'__ApplyAttribute'),('constant','Main2Prototype')), ]
 
