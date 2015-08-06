@@ -71,7 +71,7 @@ class H[%=rule.description%](Himesis):
         %]
         self.add_node()
         self.vs[[%=nodeIndex%]]["mm__"] = """paired_with"""
-        self.vs[[%=nodeIndex%]]["rulename"] = """[%=rule.description%]"""
+ [*-       self.vs[[%=nodeIndex%]]["rulename"] = """[%=rule.description%]""" *]
         [%
         nodeIndex = nodeIndex + 1;
         %]
