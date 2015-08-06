@@ -368,7 +368,7 @@ def expand_graph(small_value):
 
     #constructor = igraph_dict[0]
     #print(small_value)
-    vcount, edgelist, is_directed, gattrs, vattrs, eattrs = small_value[0]
+    vcount, edgelist, is_directed, gattrs, vattrs, eattrs = small_value[1]
 
 
     do_old_expand = False
@@ -377,7 +377,7 @@ def expand_graph(small_value):
 
 
         graph = igraph.Graph(n=vcount, edges=edgelist, directed=is_directed, graph_attrs=gattrs, vertex_attrs=vattrs, edge_attrs=eattrs)
-        graph.__dict__ = small_value[1]
+        graph.name = small_value[0]
 
         from .himesis import Himesis
         graph.__class__ = Himesis
@@ -399,7 +399,7 @@ def expand_graph(small_value):
         for key, value in vattrs.items():
             vs[key] = value
 
-        graph.__dict__ = small_value[1]
+        graph.name = small_value[0]
 
         #assume no edge attributes
 
