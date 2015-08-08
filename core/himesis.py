@@ -81,7 +81,7 @@ class Himesis(ig.Graph):
 
 
     def __reduce__(self):
-        return ig.Graph.__reduce__(self)[1:]
+        return (self.name, ig.Graph.__reduce__(self)[1])
 
         #remove constructor
         #return (value[1], value[2])
@@ -104,7 +104,10 @@ class Himesis(ig.Graph):
 
         # cpy.init_params = copy.deepcopy(self.init_params)
         #cpy.import_name = copy.deepcopy(self.import_name)
-        cpy.is_compiled = self.is_compiled
+        try:
+            cpy.is_compiled = self.is_compiled
+        except AttributeError:
+            pass
         cpy.name = self.name
         return cpy
     
