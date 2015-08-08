@@ -3,7 +3,7 @@ __MT_post__PortPrototype.py_____________________________________________________
 
 Automatically generated AToM3 syntactic object (DO NOT MODIFY DIRECTLY)
 Author: levi
-Modified: Sat Aug 24 20:17:54 2013
+Modified: Fri Aug  7 22:19:30 2015
 ________________________________________________________________________________
 """
 from ASGNode import *
@@ -26,18 +26,16 @@ class MT_post__PortPrototype(ASGNode, ATOM3Type):
       if(hasattr(self, '_setHierarchicalNode')):
         self._setHierarchicalNode(False)
       self.parent = parent
-      self.MT_post__cardinality=ATOM3Text('\n#===============================================================================\n# You can access the value of the current node\'s attribute value by: attr_value.\n# If the current node shall be created you MUST initialize it here!\n# You can access a node labelled n by: PreNode(\'n\').\n# To access attribute x of node n, use: PreNode(\'n\')[\'x\'].\n# Note that the attribute values are those before the match is rewritten.\n# The order in which this code is executed depends on the label value\n# of the encapsulating node.\n# The given action must return the new value of the attribute.\n#===============================================================================\n\nreturn attr_value\n', 80,15 )
-      self.MT_post__classtype=ATOM3Text('\n#===============================================================================\n# You can access the value of the current node\'s attribute value by: attr_value.\n# If the current node shall be created you MUST initialize it here!\n# You can access a node labelled n by: PreNode(\'n\').\n# To access attribute x of node n, use: PreNode(\'n\')[\'x\'].\n# Note that the attribute values are those before the match is rewritten.\n# The order in which this code is executed depends on the label value\n# of the encapsulating node.\n# The given action must return the new value of the attribute.\n#===============================================================================\n\nreturn attr_value\n', 80,15 )
-      self.MT_post__name=ATOM3Text('\n#===============================================================================\n# You can access the value of the current node\'s attribute value by: attr_value.\n# If the current node shall be created you MUST initialize it here!\n# You can access a node labelled n by: PreNode(\'n\').\n# To access attribute x of node n, use: PreNode(\'n\')[\'x\'].\n# Note that the attribute values are those before the match is rewritten.\n# The order in which this code is executed depends on the label value\n# of the encapsulating node.\n# The given action must return the new value of the attribute.\n#===============================================================================\n\nreturn attr_value\n', 80,15 )
+      self.MT_post__attr1=ATOM3Text('\n#===============================================================================\n# You can access the value of the current node\'s attribute value by: attr_value.\n# If the current node shall be created you MUST initialize it here!\n# You can access a node labelled n by: PreNode(\'n\').\n# To access attribute x of node n, use: PreNode(\'n\')[\'x\'].\n# Note that the attribute values are those before the match is rewritten.\n# The order in which this code is executed depends on the label value\n# of the encapsulating node.\n# The given action must return the new value of the attribute.\n#===============================================================================\n\nreturn attr_value\n', 80,15 )
+      self.MT_post__attr2=ATOM3Text('\n#===============================================================================\n# You can access the value of the current node\'s attribute value by: attr_value.\n# If the current node shall be created you MUST initialize it here!\n# You can access a node labelled n by: PreNode(\'n\').\n# To access attribute x of node n, use: PreNode(\'n\')[\'x\'].\n# Note that the attribute values are those before the match is rewritten.\n# The order in which this code is executed depends on the label value\n# of the encapsulating node.\n# The given action must return the new value of the attribute.\n#===============================================================================\n\nreturn attr_value\n', 80,15 )
       self.MT_label__=ATOM3String('', 20)
       self.MT_pivotOut__=ATOM3String('', 20)
-      self.generatedAttributes = {'MT_post__cardinality': ('ATOM3Text', ),
-                                  'MT_post__classtype': ('ATOM3Text', ),
-                                  'MT_post__name': ('ATOM3Text', ),
+      self.generatedAttributes = {'MT_post__attr1': ('ATOM3Text', ),
+                                  'MT_post__attr2': ('ATOM3Text', ),
                                   'MT_label__': ('ATOM3String', ),
                                   'MT_pivotOut__': ('ATOM3String', )      }
-      self.realOrder = ['MT_post__cardinality','MT_post__classtype','MT_post__name','MT_label__','MT_pivotOut__']
-      self.directEditing = [0,0,0,1,1]
+      self.realOrder = ['MT_post__attr1','MT_post__attr2','MT_label__','MT_pivotOut__']
+      self.directEditing = [0,0,1,1]
    def clone(self):
       cloneObject = MT_post__PortPrototype( self.parent )
       for atr in self.realOrder:

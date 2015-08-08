@@ -3,7 +3,7 @@ __MT_post__GenericEdge_GM2AUTOSAR_MM.py_________________________________________
 
 Automatically generated AToM3 syntactic object (DO NOT MODIFY DIRECTLY)
 Author: levi
-Modified: Sat Aug 24 20:17:54 2013
+Modified: Fri Aug  7 22:19:30 2015
 ____________________________________________________________________________________________
 """
 from ASGNode import *

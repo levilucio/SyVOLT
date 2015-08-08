@@ -3,7 +3,7 @@ __directLink_S.py_____________________________________________________
 
 Automatically generated AToM3 syntactic object (DO NOT MODIFY DIRECTLY)
 Author: levi
-Modified: Sat Aug 24 20:15:56 2013
+Modified: Fri Aug  7 22:15:25 2015
 ______________________________________________________________________
 """
 from ASGNode import *
@@ -25,9 +25,9 @@ class directLink_S(ASGNode, ATOM3Type):
       if(hasattr(self, '_setHierarchicalNode')):
         self._setHierarchicalNode(False)
       self.parent = parent
-      self.associationType=ATOM3String('t_', 20)
-      self.generatedAttributes = {'associationType': ('ATOM3String', )      }
-      self.realOrder = ['associationType']
+      self.attr1=ATOM3String('t_', 20)
+      self.generatedAttributes = {'attr1': ('ATOM3String', )      }
+      self.realOrder = ['attr1']
       self.directEditing = [1]
    def clone(self):
       cloneObject = directLink_S( self.parent )

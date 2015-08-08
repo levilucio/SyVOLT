@@ -3,7 +3,7 @@ __Signal.py_____________________________________________________
 
 Automatically generated AToM3 syntactic object (DO NOT MODIFY DIRECTLY)
 Author: levi
-Modified: Sat Aug 24 20:15:56 2013
+Modified: Fri Aug  7 22:15:25 2015
 ________________________________________________________________
 """
 from ASGNode import *
@@ -25,20 +25,16 @@ class Signal(ASGNode, ATOM3Type):
       if(hasattr(self, '_setHierarchicalNode')):
         self._setHierarchicalNode(False)
       self.parent = parent
-      self.name=ATOM3String('s_', 20)
-      self.keyword_= self.name
-      self.cardinality=ATOM3String('1', 20)
-      self.classtype=ATOM3String('t_', 20)
-      self.generatedAttributes = {'cardinality': ('ATOM3String', ),
-                                  'classtype': ('ATOM3String', ),
-                                  'name': ('ATOM3String', )      }
-      self.realOrder = ['cardinality','classtype','name']
-      self.directEditing = [1,1,1]
+      self.attr1=ATOM3String('1', 20)
+      self.attr2=ATOM3String('t_', 20)
+      self.generatedAttributes = {'attr1': ('ATOM3String', ),
+                                  'attr2': ('ATOM3String', )      }
+      self.realOrder = ['attr1','attr2']
+      self.directEditing = [1,1]
    def clone(self):
       cloneObject = Signal( self.parent )
       for atr in self.realOrder:
          cloneObject.setAttrValue(atr, self.getAttrValue(atr).clone() )
-      cloneObject.keyword_ = cloneObject.name
       ASGNode.cloneActions(self, cloneObject)
 
       return cloneObject
@@ -46,7 +42,6 @@ class Signal(ASGNode, ATOM3Type):
       ATOM3Type.copy(self, other)
       for atr in self.realOrder:
          self.setAttrValue(atr, other.getAttrValue(atr) )
-      self.keyword_ = self.name
       ASGNode.copy(self, other)
 
    def preCondition (self, actionID, * params):

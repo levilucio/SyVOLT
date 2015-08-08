@@ -3,7 +3,7 @@ __RPortPrototype.py_____________________________________________________
 
 Automatically generated AToM3 syntactic object (DO NOT MODIFY DIRECTLY)
 Author: levi
-Modified: Sat Aug 24 20:15:56 2013
+Modified: Fri Aug  7 22:15:25 2015
 ________________________________________________________________________
 """
 from ASGNode import *
@@ -25,14 +25,12 @@ class RPortPrototype(ASGNode, ATOM3Type):
       if(hasattr(self, '_setHierarchicalNode')):
         self._setHierarchicalNode(False)
       self.parent = parent
-      self.cardinality=ATOM3String('1', 20)
-      self.classtype=ATOM3String('t_', 20)
-      self.name=ATOM3String('s_', 20)
-      self.generatedAttributes = {'cardinality': ('ATOM3String', ),
-                                  'classtype': ('ATOM3String', ),
-                                  'name': ('ATOM3String', )      }
-      self.realOrder = ['cardinality','classtype','name']
-      self.directEditing = [1,1,1]
+      self.attr1=ATOM3String('1', 20)
+      self.attr2=ATOM3String('t_', 20)
+      self.generatedAttributes = {'attr1': ('ATOM3String', ),
+                                  'attr2': ('ATOM3String', )      }
+      self.realOrder = ['attr1','attr2']
+      self.directEditing = [1,1]
    def clone(self):
       cloneObject = RPortPrototype( self.parent )
       for atr in self.realOrder:
