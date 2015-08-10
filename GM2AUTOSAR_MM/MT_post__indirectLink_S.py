@@ -3,7 +3,7 @@ __MT_post__indirectLink_S.py____________________________________________________
 
 Automatically generated AToM3 syntactic object (DO NOT MODIFY DIRECTLY)
 Author: levi
-Modified: Fri Aug  7 22:19:30 2015
+Modified: Sun Aug  9 23:46:05 2015
 _________________________________________________________________________________
 """
 from ASGNode import *

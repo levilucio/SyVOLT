@@ -3,7 +3,7 @@ __GM2AUTOSAR_MM_MDL.py_____________________________________________________
 
 Automatically generated AToM3 Model File (Do not modify directly)
 Author: levi
-Modified: Sun Aug  9 22:55:52 2015
+Modified: Sun Aug  9 23:41:35 2015
 ___________________________________________________________________________
 """
 from stickylink import *
@@ -329,11 +329,6 @@ def GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
     cobj2.initialValue=ATOM3String('1', 20)
     cobj2.isDerivedAttribute = False
     lcobj2.append(cobj2)
-    cobj2=ATOM3Attribute(self.types)
-    cobj2.setValue(('attr2', 'String', None, ('Key', 0), ('Direct Editing', 1)))
-    cobj2.initialValue=ATOM3String('t_', 20)
-    cobj2.isDerivedAttribute = False
-    lcobj2.append(cobj2)
     self.obj31.attributes.setValue(lcobj2)
 
     # Abstract
@@ -361,7 +356,7 @@ def GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
     self.obj31.cardinality.setValue(lcobj2)
 
     # display
-    self.obj31.display.setValue('Attributes:\n  - attr1 :: String\n  - attr2 :: String\nMultiplicities:\n  - To directLink_T: 0 to N\n  - From directLink_T: 0 to N\n  - From apply_contains: 0 to N\n  - To backward_link: 0 to N\n  - To trace_link: 0 to N\n')
+    self.obj31.display.setValue('Attributes:\n  - attr1 :: String\nMultiplicities:\n  - To directLink_T: 0 to N\n  - From directLink_T: 0 to N\n  - From apply_contains: 0 to N\n  - To backward_link: 0 to N\n  - To trace_link: 0 to N\n')
     self.obj31.display.setHeight(15)
 
     # Actions
@@ -381,7 +376,7 @@ def GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
        self.UMLmodel.addtag_withtag("CD_Class3", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
        new_obj.layConstraints['Text Scale'] = 0.91
-       new_obj.layConstraints['scale'] = [1.0, 1.3168032786885246]
+       new_obj.layConstraints['scale'] = [1.0, 1.1704918032786886]
     else: new_obj = None
     self.obj31.graphObject_ = new_obj
 
@@ -731,11 +726,6 @@ def GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
     cobj2.initialValue=ATOM3String('1', 20)
     cobj2.isDerivedAttribute = True
     lcobj2.append(cobj2)
-    cobj2=ATOM3Attribute(self.types)
-    cobj2.setValue(('attr2', 'String', None, ('Key', 0), ('Direct Editing', 1)))
-    cobj2.initialValue=ATOM3String('t_', 20)
-    cobj2.isDerivedAttribute = True
-    lcobj2.append(cobj2)
     self.obj37.attributes.setValue(lcobj2)
 
     # Abstract
@@ -797,11 +787,6 @@ def GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
     cobj2=ATOM3Attribute(self.types)
     cobj2.setValue(('attr1', 'String', None, ('Key', 0), ('Direct Editing', 1)))
     cobj2.initialValue=ATOM3String('1', 20)
-    cobj2.isDerivedAttribute = True
-    lcobj2.append(cobj2)
-    cobj2=ATOM3Attribute(self.types)
-    cobj2.setValue(('attr2', 'String', None, ('Key', 0), ('Direct Editing', 1)))
-    cobj2.initialValue=ATOM3String('t_', 20)
     cobj2.isDerivedAttribute = True
     lcobj2.append(cobj2)
     self.obj38.attributes.setValue(lcobj2)
@@ -867,11 +852,6 @@ def GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
     cobj2.initialValue=ATOM3String('1', 20)
     cobj2.isDerivedAttribute = True
     lcobj2.append(cobj2)
-    cobj2=ATOM3Attribute(self.types)
-    cobj2.setValue(('attr2', 'String', None, ('Key', 0), ('Direct Editing', 1)))
-    cobj2.initialValue=ATOM3String('t_', 20)
-    cobj2.isDerivedAttribute = True
-    lcobj2.append(cobj2)
     self.obj39.attributes.setValue(lcobj2)
 
     # Abstract
@@ -933,11 +913,6 @@ def GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
     cobj2=ATOM3Attribute(self.types)
     cobj2.setValue(('attr1', 'String', None, ('Key', 0), ('Direct Editing', 1)))
     cobj2.initialValue=ATOM3String('1', 20)
-    cobj2.isDerivedAttribute = True
-    lcobj2.append(cobj2)
-    cobj2=ATOM3Attribute(self.types)
-    cobj2.setValue(('attr2', 'String', None, ('Key', 0), ('Direct Editing', 1)))
-    cobj2.initialValue=ATOM3String('t_', 20)
     cobj2.isDerivedAttribute = True
     lcobj2.append(cobj2)
     self.obj40.attributes.setValue(lcobj2)
@@ -1003,11 +978,6 @@ def GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
     cobj2.initialValue=ATOM3String('1', 20)
     cobj2.isDerivedAttribute = True
     lcobj2.append(cobj2)
-    cobj2=ATOM3Attribute(self.types)
-    cobj2.setValue(('attr2', 'String', None, ('Key', 0), ('Direct Editing', 1)))
-    cobj2.initialValue=ATOM3String('t_', 20)
-    cobj2.isDerivedAttribute = True
-    lcobj2.append(cobj2)
     self.obj41.attributes.setValue(lcobj2)
 
     # Abstract
@@ -1069,11 +1039,6 @@ def GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
     cobj2=ATOM3Attribute(self.types)
     cobj2.setValue(('attr1', 'String', None, ('Key', 0), ('Direct Editing', 1)))
     cobj2.initialValue=ATOM3String('1', 20)
-    cobj2.isDerivedAttribute = True
-    lcobj2.append(cobj2)
-    cobj2=ATOM3Attribute(self.types)
-    cobj2.setValue(('attr2', 'String', None, ('Key', 0), ('Direct Editing', 1)))
-    cobj2.initialValue=ATOM3String('t_', 20)
     cobj2.isDerivedAttribute = True
     lcobj2.append(cobj2)
     self.obj42.attributes.setValue(lcobj2)
@@ -1139,11 +1104,6 @@ def GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
     cobj2.initialValue=ATOM3String('1', 20)
     cobj2.isDerivedAttribute = True
     lcobj2.append(cobj2)
-    cobj2=ATOM3Attribute(self.types)
-    cobj2.setValue(('attr2', 'String', None, ('Key', 0), ('Direct Editing', 1)))
-    cobj2.initialValue=ATOM3String('t_', 20)
-    cobj2.isDerivedAttribute = True
-    lcobj2.append(cobj2)
     self.obj43.attributes.setValue(lcobj2)
 
     # Abstract
@@ -1205,11 +1165,6 @@ def GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
     cobj2=ATOM3Attribute(self.types)
     cobj2.setValue(('attr1', 'String', None, ('Key', 0), ('Direct Editing', 1)))
     cobj2.initialValue=ATOM3String('1', 20)
-    cobj2.isDerivedAttribute = True
-    lcobj2.append(cobj2)
-    cobj2=ATOM3Attribute(self.types)
-    cobj2.setValue(('attr2', 'String', None, ('Key', 0), ('Direct Editing', 1)))
-    cobj2.initialValue=ATOM3String('t_', 20)
     cobj2.isDerivedAttribute = True
     lcobj2.append(cobj2)
     self.obj44.attributes.setValue(lcobj2)
@@ -1275,11 +1230,6 @@ def GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
     cobj2.initialValue=ATOM3String('1', 20)
     cobj2.isDerivedAttribute = True
     lcobj2.append(cobj2)
-    cobj2=ATOM3Attribute(self.types)
-    cobj2.setValue(('attr2', 'String', None, ('Key', 0), ('Direct Editing', 1)))
-    cobj2.initialValue=ATOM3String('t_', 20)
-    cobj2.isDerivedAttribute = True
-    lcobj2.append(cobj2)
     self.obj45.attributes.setValue(lcobj2)
 
     # Abstract
@@ -1341,11 +1291,6 @@ def GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
     cobj2=ATOM3Attribute(self.types)
     cobj2.setValue(('attr1', 'String', None, ('Key', 0), ('Direct Editing', 1)))
     cobj2.initialValue=ATOM3String('1', 20)
-    cobj2.isDerivedAttribute = True
-    lcobj2.append(cobj2)
-    cobj2=ATOM3Attribute(self.types)
-    cobj2.setValue(('attr2', 'String', None, ('Key', 0), ('Direct Editing', 1)))
-    cobj2.initialValue=ATOM3String('t_', 20)
     cobj2.isDerivedAttribute = True
     lcobj2.append(cobj2)
     self.obj46.attributes.setValue(lcobj2)
@@ -1411,11 +1356,6 @@ def GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
     cobj2.initialValue=ATOM3String('1', 20)
     cobj2.isDerivedAttribute = True
     lcobj2.append(cobj2)
-    cobj2=ATOM3Attribute(self.types)
-    cobj2.setValue(('attr2', 'String', None, ('Key', 0), ('Direct Editing', 1)))
-    cobj2.initialValue=ATOM3String('t_', 20)
-    cobj2.isDerivedAttribute = True
-    lcobj2.append(cobj2)
     self.obj47.attributes.setValue(lcobj2)
 
     # Abstract
@@ -1477,11 +1417,6 @@ def GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
     cobj2=ATOM3Attribute(self.types)
     cobj2.setValue(('attr1', 'String', None, ('Key', 0), ('Direct Editing', 1)))
     cobj2.initialValue=ATOM3String('1', 20)
-    cobj2.isDerivedAttribute = True
-    lcobj2.append(cobj2)
-    cobj2=ATOM3Attribute(self.types)
-    cobj2.setValue(('attr2', 'String', None, ('Key', 0), ('Direct Editing', 1)))
-    cobj2.initialValue=ATOM3String('t_', 20)
     cobj2.isDerivedAttribute = True
     lcobj2.append(cobj2)
     self.obj48.attributes.setValue(lcobj2)
@@ -2820,9 +2755,9 @@ def GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
 (self.obj30,self.obj54,[793.6640625, 166.65573770491804, 1273.3561700079981, 158.99844672131144, 1273.35617001, 158.998446721],"true", 3) )
     # Connections for obj31 (graphObject_: Obj3) named MetaModelElement_T
     self.drawConnections(
-(self.obj31,self.obj52,[811.0, 666.3196721311475, 1316.3611994201624, 658.7410039215686, 1316.36119942, 658.741003922],"true", 3),
-(self.obj31,self.obj55,[811.0, 645.3196721311475, 1334.0076837951624, 406.61395474124066, 1335.6819269, 322.343085977],"true", 3),
-(self.obj31,self.obj56,[811.0, 645.3196721311475, 1132.0, 606.0, 1334.0, 485.0],"true", 3) )
+(self.obj31,self.obj52,[811.0, 659.9508196721312, 1316.3611994201624, 658.7410039215686, 1316.36119942, 658.741003922],"true", 3),
+(self.obj31,self.obj55,[811.0, 659.9508196721312, 1334.0076837951624, 406.61395474124066, 1335.6819269, 322.343085977],"true", 3),
+(self.obj31,self.obj56,[811.0, 659.9508196721312, 1132.0, 606.0, 1334.0, 485.0],"true", 3) )
     # Connections for obj32 (graphObject_: Obj4) named ECU
     self.drawConnections(
 (self.obj32,self.obj57,[505.0, 251.0, 545.94511815, 232.933238441],"true", 2) )
@@ -2885,19 +2820,19 @@ def GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
 (self.obj51,self.obj30,[1018.35617001, 75.74025, 1018.3561700079981, 75.74024999999999, 793.6640625, 125.68852459016392],"true", 3) )
     # Connections for obj52 (graphObject_: Obj27) named directLink_T
     self.drawConnections(
-(self.obj52,self.obj31,[1316.36119942, 658.741003922, 1316.3611994201624, 658.7410039215686, 811.0, 666.3196721311475],"true", 3) )
+(self.obj52,self.obj31,[1316.36119942, 658.741003922, 1316.3611994201624, 658.7410039215686, 811.0, 659.9508196721312],"true", 3) )
     # Connections for obj53 (graphObject_: Obj29) named apply_contains
     self.drawConnections(
-(self.obj53,self.obj31,[446.046746295, 686.241003922, 621.0, 703.1901639344262],"true", 2) )
+(self.obj53,self.obj31,[446.046746295, 686.241003922, 621.0, 692.7245901639344],"true", 2) )
     # Connections for obj54 (graphObject_: Obj31) named indirectLink_S
     self.drawConnections(
 (self.obj54,self.obj30,[1273.35617001, 158.998446721, 1273.3561700079981, 158.99844672131144, 793.6640625, 166.65573770491804],"true", 3) )
     # Connections for obj55 (graphObject_: Obj33) named backward_link
     self.drawConnections(
-(self.obj55,self.obj30,[1335.6819269, 322.343085977, 1337.3561700079981, 238.0722172131147, 793.6640625, 242.7377049180328],"true", 3) )
+(self.obj55,self.obj30,[1335.6819269, 322.343085977, 1337.3561700079981, 238.0722172131147, 793.6640625, 222.7377049180328],"true", 3) )
     # Connections for obj56 (graphObject_: Obj35) named trace_link
     self.drawConnections(
-(self.obj56,self.obj30,[1334.0, 485.0, 1154.0, 328.0, 793.6640625, 242.7377049180328],"true", 3) )
+(self.obj56,self.obj30,[1334.0, 485.0, 1154.0, 328.0, 793.6640625, 222.7377049180328],"true", 3) )
     # Connections for obj57 (graphObject_: Obj37) of type CD_Inheritance3
     self.drawConnections(
 (self.obj57,self.obj30,[545.94511815, 232.933238441, 600.3984375, 242.7377049180328],"true", 2) )
@@ -2915,40 +2850,40 @@ def GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
 (self.obj61,self.obj30,[907.33203125, 291.868852459, 793.6640625, 242.7377049180328],"true", 2) )
     # Connections for obj62 (graphObject_: Obj47) of type CD_Inheritance3
     self.drawConnections(
-(self.obj62,self.obj31,[494.910784314, 787.069775845, 621.0, 771.6639344262295],"true", 2) )
+(self.obj62,self.obj31,[494.910784314, 787.069775845, 621.0, 753.5901639344262],"true", 2) )
     # Connections for obj63 (graphObject_: Obj49) of type CD_Inheritance3
     self.drawConnections(
-(self.obj63,self.obj31,[599.0, 787.515081967, 621.0, 771.6639344262295],"true", 2) )
+(self.obj63,self.obj31,[599.0, 787.515081967, 621.0, 753.5901639344262],"true", 2) )
     # Connections for obj64 (graphObject_: Obj51) of type CD_Inheritance3
     self.drawConnections(
-(self.obj64,self.obj31,[668.0, 779.0, 656.0, 798.0],"true", 2) )
+(self.obj64,self.obj31,[668.0, 779.0, 656.0, 777.0],"true", 2) )
     # Connections for obj65 (graphObject_: Obj53) of type CD_Inheritance3
     self.drawConnections(
-(self.obj65,self.obj31,[803.765625, 798.5, 776.0, 798.0],"true", 2) )
+(self.obj65,self.obj31,[803.765625, 798.5, 776.0, 777.0],"true", 2) )
     # Connections for obj66 (graphObject_: Obj55) of type CD_Inheritance3
     self.drawConnections(
-(self.obj66,self.obj31,[833.0, 853.0, 776.0, 798.0],"true", 2) )
+(self.obj66,self.obj31,[833.0, 853.0, 776.0, 777.0],"true", 2) )
     # Connections for obj67 (graphObject_: Obj57) of type CD_Inheritance3
     self.drawConnections(
-(self.obj67,self.obj31,[707.5, 852.0, 696.0, 798.0],"true", 2) )
+(self.obj67,self.obj31,[707.5, 852.0, 696.0, 777.0],"true", 2) )
     # Connections for obj68 (graphObject_: Obj59) of type CD_Inheritance3
     self.drawConnections(
-(self.obj68,self.obj31,[559.0, 839.295081967, 621.0, 771.6639344262295],"true", 2) )
+(self.obj68,self.obj31,[559.0, 839.295081967, 621.0, 753.5901639344262],"true", 2) )
     # Connections for obj69 (graphObject_: Obj61) of type CD_Inheritance3
     self.drawConnections(
-(self.obj69,self.obj31,[476.127935606, 859.105081967, 621.0, 771.6639344262295],"true", 2) )
+(self.obj69,self.obj31,[476.127935606, 859.105081967, 621.0, 753.5901639344262],"true", 2) )
     # Connections for obj70 (graphObject_: Obj63) of type CD_Inheritance3
     self.drawConnections(
-(self.obj70,self.obj31,[549.542878788, 925.565, 656.0, 798.0],"true", 2) )
+(self.obj70,self.obj31,[549.542878788, 925.565, 656.0, 777.0],"true", 2) )
     # Connections for obj71 (graphObject_: Obj65) of type CD_Inheritance3
     self.drawConnections(
-(self.obj71,self.obj31,[652.26, 925.45, 656.0, 798.0],"true", 2) )
+(self.obj71,self.obj31,[652.26, 925.45, 656.0, 777.0],"true", 2) )
     # Connections for obj72 (graphObject_: Obj67) of type CD_Inheritance3
     self.drawConnections(
-(self.obj72,self.obj31,[735.0, 926.0, 736.0, 798.0],"true", 2) )
+(self.obj72,self.obj31,[735.0, 926.0, 736.0, 777.0],"true", 2) )
     # Connections for obj73 (graphObject_: Obj69) of type CD_Inheritance3
     self.drawConnections(
-(self.obj73,self.obj31,[857.5, 926.0, 776.0, 798.0],"true", 2) )
+(self.obj73,self.obj31,[857.5, 926.0, 776.0, 777.0],"true", 2) )
 
 newfunction = GM2AUTOSAR_MM_MDL
 

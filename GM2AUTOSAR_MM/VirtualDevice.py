@@ -3,7 +3,7 @@ __VirtualDevice.py_____________________________________________________
 
 Automatically generated AToM3 syntactic object (DO NOT MODIFY DIRECTLY)
 Author: levi
-Modified: Sun Aug  9 22:55:53 2015
+Modified: Sun Aug  9 23:43:00 2015
 _______________________________________________________________________
 """
 from ASGNode import *

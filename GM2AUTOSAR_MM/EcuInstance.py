@@ -3,7 +3,7 @@ __EcuInstance.py_____________________________________________________
 
 Automatically generated AToM3 syntactic object (DO NOT MODIFY DIRECTLY)
 Author: levi
-Modified: Fri Aug  7 22:15:25 2015
+Modified: Sun Aug  9 23:43:00 2015
 _____________________________________________________________________
 """
 from ASGNode import *
@@ -26,11 +26,9 @@ class EcuInstance(ASGNode, ATOM3Type):
         self._setHierarchicalNode(False)
       self.parent = parent
       self.attr1=ATOM3String('1', 20)
-      self.attr2=ATOM3String('t_', 20)
-      self.generatedAttributes = {'attr1': ('ATOM3String', ),
-                                  'attr2': ('ATOM3String', )      }
-      self.realOrder = ['attr1','attr2']
-      self.directEditing = [1,1]
+      self.generatedAttributes = {'attr1': ('ATOM3String', )      }
+      self.realOrder = ['attr1']
+      self.directEditing = [1]
    def clone(self):
       cloneObject = EcuInstance( self.parent )
       for atr in self.realOrder:

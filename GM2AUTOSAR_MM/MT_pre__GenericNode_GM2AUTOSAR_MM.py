@@ -3,7 +3,7 @@ __MT_pre__GenericNode_GM2AUTOSAR_MM.py__________________________________________
 
 Automatically generated AToM3 syntactic object (DO NOT MODIFY DIRECTLY)
 Author: levi
-Modified: Fri Aug  7 22:18:36 2015
+Modified: Sun Aug  9 23:45:38 2015
 ___________________________________________________________________________________________
 """
 from ASGNode import *

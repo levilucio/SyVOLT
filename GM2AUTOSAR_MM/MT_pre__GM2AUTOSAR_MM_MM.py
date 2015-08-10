@@ -3,7 +3,7 @@ __MT_pre__GM2AUTOSAR_MM_MM.py___________________________________________________
 
 Automatically generated AToM3 MetaModel (DO NOT MODIFY DIRECTLY)
 Author: levi
-Modified: Fri Aug  7 22:18:36 2015
+Modified: Sun Aug  9 23:45:38 2015
 ___________________________________________________________________________________
 """
 from ASG_MT_pre__GM2AUTOSAR_MM import *

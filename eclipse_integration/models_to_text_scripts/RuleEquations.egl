@@ -82,10 +82,10 @@ class H[%=rule.description%](Himesis):
                         %]
         # match class [%=class.className%]([%=class.id%]) node
         self.add_node()
-        self.vs[[%=nodeIndex%]]["name"] = """[%=class.id%]""" 
-        self.vs[[%=nodeIndex%]]["classtype"] = """[%=class.className%]"""
-        self.vs[[%=nodeIndex%]]["mm__"] = """[%=class.className%]"""
-        self.vs[[%=nodeIndex%]]["cardinality"] = """[%= getClassCardinality(class) %]""" 
+[*-        self.vs[[%=nodeIndex%]]["name"] = """[%=class.id%]""" 
+        self.vs[[%=nodeIndex%]]["classtype"] = """[%=class.className%]"""*]
+        self.vs[[%=nodeIndex%]]["mm__"] = """[%=class.className%]""" 
+        self.vs[[%=nodeIndex%]]["attr1"] = """[%= getClassCardinality(class) %]""" 
                 [%
                 nodeIndex = nodeIndex + 1;
                 %]
@@ -107,10 +107,10 @@ class H[%=rule.description%](Himesis):
                         %]
         # apply class [%=class.className%]([%=class.id%]) node
         self.add_node()
-        self.vs[[%=nodeIndex%]]["name"] = """[%=class.id%]""" 
-        self.vs[[%=nodeIndex%]]["classtype"] = """[%=class.className%]"""
-        self.vs[[%=nodeIndex%]]["mm__"] = """[%=class.className%]"""
-        self.vs[[%=nodeIndex%]]["cardinality"] = """1"""
+[*-        self.vs[[%=nodeIndex%]]["name"] = """[%=class.id%]""" 
+        self.vs[[%=nodeIndex%]]["classtype"] = """[%=class.className%]"""*]
+        self.vs[[%=nodeIndex%]]["mm__"] = """[%=class.className%]""" 
+        self.vs[[%=nodeIndex%]]["attr1"] = """1"""
                 [%
                 nodeIndex = nodeIndex + 1;
                 %]
@@ -132,7 +132,7 @@ class H[%=rule.description%](Himesis):
                         %]
         # match association [%=association.source.className%]--[%=association.associationName%]-->[%=association.target.className%] node
         self.add_node()
-        self.vs[[%=nodeIndex%]]["associationType"] = """[%=association.associationName%]"""
+        self.vs[[%=nodeIndex%]]["attr1"] = """[%=association.associationName%]"""
         self.vs[[%=nodeIndex%]]["mm__"] = """directLink_S"""
                 [%
                 nodeIndex = nodeIndex + 1;
@@ -145,7 +145,7 @@ class H[%=rule.description%](Himesis):
                         %]
         # apply association [%=association.source.className%]--[%=association.associationName%]-->[%=association.target.className%] node
         self.add_node()
-        self.vs[[%=nodeIndex%]]["associationType"] = """[%=association.associationName%]"""
+        self.vs[[%=nodeIndex%]]["attr1"] = """[%=association.associationName%]"""
         self.vs[[%=nodeIndex%]]["mm__"] = """directLink_T"""
                 [%
                 nodeIndex = nodeIndex + 1;
@@ -158,7 +158,7 @@ class H[%=rule.description%](Himesis):
                         %]
         # backward association [%=backwardAssociation.sourceClass.className%]---->[%=backwardAssociation.targetClass.className%] node
         self.add_node()
-        self.vs[[%=nodeIndex%]]["type"] = """ruleDef"""
+[*-        self.vs[[%=nodeIndex%]]["type"] = """ruleDef""" *]
         self.vs[[%=nodeIndex%]]["mm__"] = """backward_link"""
                 [%
                 nodeIndex = nodeIndex + 1;

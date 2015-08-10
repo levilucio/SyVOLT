@@ -3,7 +3,7 @@ __ASG_GM2AUTOSAR_MM.py_____________________________________________________
 
 Automatically generated AToM3 ASGroot node (DO NOT MODIFY DIRECTLY)
 Author: levi
-Modified: Fri Aug  7 22:15:25 2015
+Modified: Sun Aug  9 23:43:00 2015
 ___________________________________________________________________________
 """
 from ASG import *
