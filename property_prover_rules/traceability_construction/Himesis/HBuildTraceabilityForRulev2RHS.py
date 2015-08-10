@@ -23,32 +23,23 @@ p2
 aS'MoTifRule'
 p3
 a.""")
-        self["MT_action__"] = pickle.loads("""Vif set([i for i in graph.neighbors(PreNode('1').index) if graph.vs[i]['mm__'] == 'trace_link']).intersection(set([i for i in graph.neighbors(PreNode('2').index) if graph.vs[i]['mm__'] == 'trace_link'])) == set():\u000a    return True\u000a\u000areturn False\u000a
-p1
-.""")
+        self["MT_action__"] = """#===============================================================================
+# This code is executed after the rule has been applied.
+# You can access a node labelled n matched by this rule by: PostNode('n').
+# To access attribute x of node n, use: PostNode('n')['x'].
+#===============================================================================
+
+pass
+"""
         self["name"] = """"""
-        self["GUID__"] = UUID('8783d80d-d447-4cb4-a14f-a628ffd8908f')
+        self["GUID__"] = UUID('8ad8e40b-ff6c-4919-8738-c3ea2cea02cb')
         
         # Set the node attributes
         self.vs[0]["mm__"] = """MT_post__match_contains"""
         self.vs[0]["MT_label__"] = """5"""
-        self.vs[0]["GUID__"] = UUID('9af9f313-6d30-45d9-9af1-c65dcb5d6988')
+        self.vs[0]["GUID__"] = UUID('6cbc0f47-2ac3-456b-b8eb-092768ce3d9d')
         self.vs[1]["mm__"] = """MT_post__MetaModelElement_S"""
         self.vs[1]["MT_label__"] = """3"""
-        self.vs[1]["MT_post__attr2"] = """
-#===============================================================================
-# You can access the value of the current node's attribute value by: attr_value.
-# If the current node shall be created you MUST initialize it here!
-# You can access a node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# Note that the attribute values are those before the match is rewritten.
-# The order in which this code is executed depends on the label value
-# of the encapsulating node.
-# The given action must return the new value of the attribute.
-#===============================================================================
-
-return attr_value
-"""
         self.vs[1]["MT_post__attr1"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
@@ -63,10 +54,10 @@ return attr_value
 
 return attr_value
 """
-        self.vs[1]["GUID__"] = UUID('2b0899ef-66c8-4cc5-ba18-28d4dd765887')
+        self.vs[1]["GUID__"] = UUID('855572d2-b93b-41bc-a921-843bc34d5a03')
         self.vs[2]["mm__"] = """MT_post__trace_link"""
         self.vs[2]["MT_label__"] = """7"""
-        self.vs[2]["GUID__"] = UUID('25de610b-6c3b-4e7c-bd71-13fcd3bd23b4')
+        self.vs[2]["GUID__"] = UUID('df5341ba-ee2d-494e-a55f-f35a7c0e2c22')
         self.vs[3]["mm__"] = """MT_post__MetaModelElement_T"""
         self.vs[3]["MT_label__"] = """4"""
         self.vs[3]["MT_post__attr2"] = """
@@ -97,16 +88,16 @@ return attr_value
 
 return attr_value
 """
-        self.vs[3]["GUID__"] = UUID('d8b6dcf9-49e0-49ea-86e9-be9a220e77ad')
+        self.vs[3]["GUID__"] = UUID('740143a6-d883-40f2-a52e-95d2e80d1b73')
         self.vs[4]["mm__"] = """MT_post__MatchModel"""
         self.vs[4]["MT_label__"] = """1"""
-        self.vs[4]["GUID__"] = UUID('d122e03d-2708-4855-826d-15b29cb835b6')
+        self.vs[4]["GUID__"] = UUID('aac06a57-fd54-45fa-b62d-cebd260cf0f0')
         self.vs[5]["mm__"] = """MT_post__ApplyModel"""
         self.vs[5]["MT_label__"] = """2"""
-        self.vs[5]["GUID__"] = UUID('2a25df3d-d291-4218-8e1f-374a9c300424')
+        self.vs[5]["GUID__"] = UUID('92a4c3b9-ee56-4545-bbbf-e133eb9b2405')
         self.vs[6]["mm__"] = """MT_post__apply_contains"""
         self.vs[6]["MT_label__"] = """6"""
-        self.vs[6]["GUID__"] = UUID('dd8a143e-d989-43f8-a753-fc4560b50955')
+        self.vs[6]["GUID__"] = UUID('ab652b66-2d1e-4b50-a5f4-b95104a6d44f')
 
         from HBuildTraceabilityForRulev2LHS import HBuildTraceabilityForRulev2LHS
         self.pre = HBuildTraceabilityForRulev2LHS()
@@ -117,10 +108,13 @@ return attr_value
             @param PostNode: Function taking an integer as parameter
                              and returns the node corresponding to that label.
         """
-        if set([i for i in graph.neighbors(PreNode('1').index) if graph.vs[i]['mm__'] == 'trace_link']).intersection(set([i for i in graph.neighbors(PreNode('2').index) if graph.vs[i]['mm__'] == 'trace_link'])) == set():
-            return True
+        #===============================================================================
+        # This code is executed after the rule has been applied.
+        # You can access a node labelled n matched by this rule by: PostNode('n').
+        # To access attribute x of node n, use: PostNode('n')['x'].
+        #===============================================================================
         
-        return False
+        pass
 
     def execute(self, packet, match):
         """

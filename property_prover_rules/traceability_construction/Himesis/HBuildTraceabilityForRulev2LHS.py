@@ -23,19 +23,11 @@ p2
 aS'MoTifRule'
 p3
 a.""")
-        self["MT_constraint__"] = """#===============================================================================
-# This code is executed after the nodes in the LHS have been matched.
-# You can access a matched node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# The given constraint must evaluate to a boolean expression:
-#    returning True enables the rule to be applied,
-#    returning False forbids the rule from being applied.
-#===============================================================================
-
-return True
-"""
+        self["MT_constraint__"] = pickle.loads("""Vif set([i for i in graph.neighbors(PreNode('1').index) if graph.vs[i]['mm__'] == 'trace_link']).intersection(set([i for i in graph.neighbors(PreNode('2').index) if graph.vs[i]['mm__'] == 'trace_link'])) == set():\u000a    return True\u000a\u000areturn False\u000a
+p1
+.""")
         self["name"] = """"""
-        self["GUID__"] = UUID('65aaec03-654d-4565-b9f3-73ba5e19ac87')
+        self["GUID__"] = UUID('c79342d7-0728-4a3e-82e8-e1215c308e99')
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
@@ -44,28 +36,28 @@ return True
 .""")
         self.vs[0]["mm__"] = """MT_pre__apply_contains"""
         self.vs[0]["MT_dirty__"] = False
-        self.vs[0]["GUID__"] = UUID('7d337757-dc6c-4e6a-b6a3-6d6c9eefcd24')
+        self.vs[0]["GUID__"] = UUID('8109b044-5022-47ad-958d-33423dac6f20')
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_label__"] = """1"""
         self.vs[1]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[1]["mm__"] = """MT_pre__MatchModel"""
         self.vs[1]["MT_dirty__"] = False
-        self.vs[1]["GUID__"] = UUID('9e71b08e-46e6-4bd9-8ac9-68d1dccfe200')
+        self.vs[1]["GUID__"] = UUID('028dc295-095b-49cf-948b-10544b0f1404')
         self.vs[2]["MT_subtypeMatching__"] = False
         self.vs[2]["MT_label__"] = """5"""
         self.vs[2]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[2]["mm__"] = """MT_pre__match_contains"""
         self.vs[2]["MT_dirty__"] = False
-        self.vs[2]["GUID__"] = UUID('4c6d2697-f599-43aa-8304-65cacb8b7fa4')
+        self.vs[2]["GUID__"] = UUID('4ab590ab-9f9b-421a-8039-ebccf5c5e8ca')
         self.vs[3]["MT_subtypeMatching__"] = False
         self.vs[3]["MT_label__"] = """2"""
         self.vs[3]["MT_subtypes__"] = pickle.loads("""(lp1
 .""")
         self.vs[3]["mm__"] = """MT_pre__ApplyModel"""
         self.vs[3]["MT_dirty__"] = False
-        self.vs[3]["GUID__"] = UUID('94db7cbf-453d-47d4-8230-157faaf0665f')
+        self.vs[3]["GUID__"] = UUID('a0696a21-b00a-4a1c-9d1e-4e02b5bcdc21')
         self.vs[4]["MT_subtypeMatching__"] = False
         self.vs[4]["MT_label__"] = """4"""
         self.vs[4]["MT_subtypes__"] = pickle.loads("""(lp1
@@ -120,7 +112,7 @@ return True
 
 return True
 """
-        self.vs[4]["GUID__"] = UUID('38b941ed-7953-447f-8f13-e39fd12665e7')
+        self.vs[4]["GUID__"] = UUID('07544f59-e86f-43b4-a5a9-f4ec13d52498')
         self.vs[5]["MT_subtypeMatching__"] = False
         self.vs[5]["MT_label__"] = """3"""
         self.vs[5]["MT_subtypes__"] = pickle.loads("""(lp1
@@ -136,18 +128,6 @@ aS'MT_pre__ECU'
 p6
 a.""")
         self.vs[5]["mm__"] = """MT_pre__MetaModelElement_S"""
-        self.vs[5]["MT_pre__attr2"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
         self.vs[5]["MT_dirty__"] = False
         self.vs[5]["MT_pre__attr1"] = """
 #===============================================================================
@@ -161,7 +141,7 @@ return True
 
 return True
 """
-        self.vs[5]["GUID__"] = UUID('07051890-8f01-40a9-a9da-970231cbffb2')
+        self.vs[5]["GUID__"] = UUID('c957ad45-c723-4f5b-877b-74c965fea469')
 
     def eval_attr24(self, attr_value, this):
         
@@ -178,20 +158,6 @@ return True
 
 
     def eval_attr14(self, attr_value, this):
-        
-        #===============================================================================
-        # This code is executed when evaluating if a node shall be matched by this rule.
-        # You can access the value of the current node's attribute value by: attr_value.
-        # You can access any attribute x of this node by: this['x'].
-        # If the constraint relies on attribute values from other nodes,
-        # use the LHS/NAC constraint instead.
-        # The given constraint must evaluate to a boolean expression.
-        #===============================================================================
-        
-        return True
-
-
-    def eval_attr23(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.
@@ -225,14 +191,8 @@ return True
             @param PreNode: Function taking an integer as parameter
                             and returns the node corresponding to that label.
         """
-        #===============================================================================
-        # This code is executed after the nodes in the LHS have been matched.
-        # You can access a matched node labelled n by: PreNode('n').
-        # To access attribute x of node n, use: PreNode('n')['x'].
-        # The given constraint must evaluate to a boolean expression:
-        #    returning True enables the rule to be applied,
-        #    returning False forbids the rule from being applied.
-        #===============================================================================
+        if set([i for i in graph.neighbors(PreNode('1').index) if graph.vs[i]['mm__'] == 'trace_link']).intersection(set([i for i in graph.neighbors(PreNode('2').index) if graph.vs[i]['mm__'] == 'trace_link'])) == set():
+            return True
         
-        return True
+        return False
 

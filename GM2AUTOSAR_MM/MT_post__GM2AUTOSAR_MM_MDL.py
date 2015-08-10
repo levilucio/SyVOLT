@@ -3,7 +3,7 @@ __MT_post__GM2AUTOSAR_MM_MDL.py_________________________________________________
 
 Automatically generated AToM3 Model File (Do not modify directly)
 Author: levi
-Modified: Fri Aug  7 22:17:30 2015
+Modified: Sun Aug  9 22:57:39 2015
 ____________________________________________________________________________________
 """
 from stickylink import *
@@ -277,11 +277,6 @@ def MT_post__GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
     cobj2.isDerivedAttribute = False
     lcobj2.append(cobj2)
     cobj2=ATOM3Attribute(self.types)
-    cobj2.setValue(('MT_post__attr2', 'Text', None, ('Key', 0), ('Direct Editing', 0)))
-    cobj2.initialValue=ATOM3Text('\n#===============================================================================\n# You can access the value of the current node\'s attribute value by: attr_value.\n# If the current node shall be created you MUST initialize it here!\n# You can access a node labelled n by: PreNode(\'n\').\n# To access attribute x of node n, use: PreNode(\'n\')[\'x\'].\n# Note that the attribute values are those before the match is rewritten.\n# The order in which this code is executed depends on the label value\n# of the encapsulating node.\n# The given action must return the new value of the attribute.\n#===============================================================================\n\nreturn attr_value\n', 80,15 )
-    cobj2.isDerivedAttribute = False
-    lcobj2.append(cobj2)
-    cobj2=ATOM3Attribute(self.types)
     cobj2.setValue(('MT_label__', 'String', None, ('Key', 0), ('Direct Editing', 1)))
     cobj2.initialValue=ATOM3String('', 20)
     cobj2.isDerivedAttribute = False
@@ -327,7 +322,7 @@ def MT_post__GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
     self.obj91.cardinality.setValue(lcobj2)
 
     # display
-    self.obj91.display.setValue('Attributes:\n  - attr1 :: String\n  - attr2 :: String\nMultiplicities:\n  - From match_contains: 0 to N\n  - To directLink_S: 0 to N\n  - From directLink_S: 0 to N\n  - To indirectLink_S: 0 to N\n  - From indirectLink_S: 0 to N\n  - From backward_link: 0 to N\n  - From trace_link: 0 to N\n  - From GenericEdge_GM2AUTOSAR_MM: 0 to N\n')
+    self.obj91.display.setValue('Attributes:\n  - attr1 :: String\nMultiplicities:\n  - From match_contains: 0 to N\n  - To directLink_S: 0 to N\n  - From directLink_S: 0 to N\n  - To indirectLink_S: 0 to N\n  - From indirectLink_S: 0 to N\n  - From backward_link: 0 to N\n  - From trace_link: 0 to N\n  - From GenericEdge_GM2AUTOSAR_MM: 0 to N\n')
     self.obj91.display.setHeight(15)
 
     # Actions
@@ -350,7 +345,7 @@ def MT_post__GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
        self.UMLmodel.addtag_withtag("CD_Class3", new_obj.tag)
        new_obj.layConstraints = dict() # Graphical Layout Constraints 
        new_obj.layConstraints['Text Scale'] = 0.9
-       new_obj.layConstraints['scale'] = [1.6296875000000002, 1.755737704918033]
+       new_obj.layConstraints['scale'] = [1.6296875000000002, 1.609426229508197]
     else: new_obj = None
     self.obj91.graphObject_ = new_obj
 
@@ -483,11 +478,6 @@ def MT_post__GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
     cobj2.isDerivedAttribute = False
     lcobj2.append(cobj2)
     cobj2=ATOM3Attribute(self.types)
-    cobj2.setValue(('MT_post__attr2', 'Text', None, ('Key', 0), ('Direct Editing', 0)))
-    cobj2.initialValue=ATOM3Text('\n#===============================================================================\n# You can access the value of the current node\'s attribute value by: attr_value.\n# If the current node shall be created you MUST initialize it here!\n# You can access a node labelled n by: PreNode(\'n\').\n# To access attribute x of node n, use: PreNode(\'n\')[\'x\'].\n# Note that the attribute values are those before the match is rewritten.\n# The order in which this code is executed depends on the label value\n# of the encapsulating node.\n# The given action must return the new value of the attribute.\n#===============================================================================\n\nreturn attr_value\n', 80,15 )
-    cobj2.isDerivedAttribute = False
-    lcobj2.append(cobj2)
-    cobj2=ATOM3Attribute(self.types)
     cobj2.setValue(('MT_label__', 'String', None, ('Key', 0), ('Direct Editing', 1)))
     cobj2.initialValue=ATOM3String('', 20)
     cobj2.isDerivedAttribute = False
@@ -563,11 +553,6 @@ def MT_post__GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
     lcobj2 =[]
     cobj2=ATOM3Attribute(self.types)
     cobj2.setValue(('MT_post__attr1', 'Text', None, ('Key', 0), ('Direct Editing', 0)))
-    cobj2.initialValue=ATOM3Text('\n#===============================================================================\n# You can access the value of the current node\'s attribute value by: attr_value.\n# If the current node shall be created you MUST initialize it here!\n# You can access a node labelled n by: PreNode(\'n\').\n# To access attribute x of node n, use: PreNode(\'n\')[\'x\'].\n# Note that the attribute values are those before the match is rewritten.\n# The order in which this code is executed depends on the label value\n# of the encapsulating node.\n# The given action must return the new value of the attribute.\n#===============================================================================\n\nreturn attr_value\n', 80,15 )
-    cobj2.isDerivedAttribute = False
-    lcobj2.append(cobj2)
-    cobj2=ATOM3Attribute(self.types)
-    cobj2.setValue(('MT_post__attr2', 'Text', None, ('Key', 0), ('Direct Editing', 0)))
     cobj2.initialValue=ATOM3Text('\n#===============================================================================\n# You can access the value of the current node\'s attribute value by: attr_value.\n# If the current node shall be created you MUST initialize it here!\n# You can access a node labelled n by: PreNode(\'n\').\n# To access attribute x of node n, use: PreNode(\'n\')[\'x\'].\n# Note that the attribute values are those before the match is rewritten.\n# The order in which this code is executed depends on the label value\n# of the encapsulating node.\n# The given action must return the new value of the attribute.\n#===============================================================================\n\nreturn attr_value\n', 80,15 )
     cobj2.isDerivedAttribute = False
     lcobj2.append(cobj2)
@@ -652,11 +637,6 @@ def MT_post__GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
     cobj2.isDerivedAttribute = False
     lcobj2.append(cobj2)
     cobj2=ATOM3Attribute(self.types)
-    cobj2.setValue(('MT_post__attr2', 'Text', None, ('Key', 0), ('Direct Editing', 0)))
-    cobj2.initialValue=ATOM3Text('\n#===============================================================================\n# You can access the value of the current node\'s attribute value by: attr_value.\n# If the current node shall be created you MUST initialize it here!\n# You can access a node labelled n by: PreNode(\'n\').\n# To access attribute x of node n, use: PreNode(\'n\')[\'x\'].\n# Note that the attribute values are those before the match is rewritten.\n# The order in which this code is executed depends on the label value\n# of the encapsulating node.\n# The given action must return the new value of the attribute.\n#===============================================================================\n\nreturn attr_value\n', 80,15 )
-    cobj2.isDerivedAttribute = False
-    lcobj2.append(cobj2)
-    cobj2=ATOM3Attribute(self.types)
     cobj2.setValue(('MT_label__', 'String', None, ('Key', 0), ('Direct Editing', 1)))
     cobj2.initialValue=ATOM3String('', 20)
     cobj2.isDerivedAttribute = False
@@ -737,11 +717,6 @@ def MT_post__GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
     cobj2.isDerivedAttribute = False
     lcobj2.append(cobj2)
     cobj2=ATOM3Attribute(self.types)
-    cobj2.setValue(('MT_post__attr2', 'Text', None, ('Key', 0), ('Direct Editing', 0)))
-    cobj2.initialValue=ATOM3Text('\n#===============================================================================\n# You can access the value of the current node\'s attribute value by: attr_value.\n# If the current node shall be created you MUST initialize it here!\n# You can access a node labelled n by: PreNode(\'n\').\n# To access attribute x of node n, use: PreNode(\'n\')[\'x\'].\n# Note that the attribute values are those before the match is rewritten.\n# The order in which this code is executed depends on the label value\n# of the encapsulating node.\n# The given action must return the new value of the attribute.\n#===============================================================================\n\nreturn attr_value\n', 80,15 )
-    cobj2.isDerivedAttribute = False
-    lcobj2.append(cobj2)
-    cobj2=ATOM3Attribute(self.types)
     cobj2.setValue(('MT_label__', 'String', None, ('Key', 0), ('Direct Editing', 1)))
     cobj2.initialValue=ATOM3String('', 20)
     cobj2.isDerivedAttribute = False
@@ -818,11 +793,6 @@ def MT_post__GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
     lcobj2 =[]
     cobj2=ATOM3Attribute(self.types)
     cobj2.setValue(('MT_post__attr1', 'Text', None, ('Key', 0), ('Direct Editing', 0)))
-    cobj2.initialValue=ATOM3Text('\n#===============================================================================\n# You can access the value of the current node\'s attribute value by: attr_value.\n# If the current node shall be created you MUST initialize it here!\n# You can access a node labelled n by: PreNode(\'n\').\n# To access attribute x of node n, use: PreNode(\'n\')[\'x\'].\n# Note that the attribute values are those before the match is rewritten.\n# The order in which this code is executed depends on the label value\n# of the encapsulating node.\n# The given action must return the new value of the attribute.\n#===============================================================================\n\nreturn attr_value\n', 80,15 )
-    cobj2.isDerivedAttribute = False
-    lcobj2.append(cobj2)
-    cobj2=ATOM3Attribute(self.types)
-    cobj2.setValue(('MT_post__attr2', 'Text', None, ('Key', 0), ('Direct Editing', 0)))
     cobj2.initialValue=ATOM3Text('\n#===============================================================================\n# You can access the value of the current node\'s attribute value by: attr_value.\n# If the current node shall be created you MUST initialize it here!\n# You can access a node labelled n by: PreNode(\'n\').\n# To access attribute x of node n, use: PreNode(\'n\')[\'x\'].\n# Note that the attribute values are those before the match is rewritten.\n# The order in which this code is executed depends on the label value\n# of the encapsulating node.\n# The given action must return the new value of the attribute.\n#===============================================================================\n\nreturn attr_value\n', 80,15 )
     cobj2.isDerivedAttribute = False
     lcobj2.append(cobj2)
@@ -3555,13 +3525,13 @@ def MT_post__GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
 (self.obj90,self.obj114,[274.8359375, 690.0, 446.046746295, 686.241003922],"true", 2) )
     # Connections for obj91 (graphObject_: Obj76) named MT_post__MetaModelElement_S
     self.drawConnections(
-(self.obj91,self.obj112,[793.6640625, 117.42622950819671, 1018.3561700079981, 75.74024999999999, 1018.35617001, 75.74025],"true", 3),
-(self.obj91,self.obj115,[793.6640625, 166.5868852459016, 1273.3561700079981, 158.99844672131144, 1273.35617001, 158.998446721],"true", 3) )
+(self.obj91,self.obj112,[793.6640625, 125.68852459016392, 1018.3561700079981, 75.74024999999999, 1018.35617001, 75.74025],"true", 3),
+(self.obj91,self.obj115,[793.6640625, 166.65573770491804, 1273.3561700079981, 158.99844672131144, 1273.35617001, 158.998446721],"true", 3) )
     # Connections for obj92 (graphObject_: Obj77) named MT_post__MetaModelElement_T
     self.drawConnections(
 (self.obj92,self.obj113,[811.0, 666.3196721311475, 1316.3611994201624, 658.7410039215686, 1316.36119942, 658.741003922],"true", 3),
-(self.obj92,self.obj116,[811.0, 666.3196721311475, 1334.0076837951624, 406.61395474124066, 1335.6819269, 322.343085977],"true", 3),
-(self.obj92,self.obj117,[811.0, 666.3196721311475, 1132.0, 606.0, 1334.0, 485.0],"true", 3) )
+(self.obj92,self.obj116,[811.0, 645.3196721311475, 1334.0076837951624, 406.61395474124066, 1335.6819269, 322.343085977],"true", 3),
+(self.obj92,self.obj117,[811.0, 645.3196721311475, 1132.0, 606.0, 1334.0, 485.0],"true", 3) )
     # Connections for obj93 (graphObject_: Obj78) named MT_post__ECU
     self.drawConnections(
 (self.obj93,self.obj118,[505.0, 251.0, 545.94511815, 232.933238441],"true", 2) )
@@ -3621,10 +3591,10 @@ def MT_post__GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
 (self.obj110,self.obj90,[153.0, 394.0, 150.3125, 622.0],"true", 2) )
     # Connections for obj111 (graphObject_: Obj97) named MT_post__match_contains
     self.drawConnections(
-(self.obj111,self.obj91,[425.350433087, 120.205, 600.3984375, 117.42622950819671],"true", 2) )
+(self.obj111,self.obj91,[425.350433087, 120.205, 600.3984375, 125.68852459016392],"true", 2) )
     # Connections for obj112 (graphObject_: Obj99) named MT_post__directLink_S
     self.drawConnections(
-(self.obj112,self.obj91,[1018.35617001, 75.74025, 1018.3561700079981, 75.74024999999999, 793.6640625, 117.42622950819671],"true", 3) )
+(self.obj112,self.obj91,[1018.35617001, 75.74025, 1018.3561700079981, 75.74024999999999, 793.6640625, 125.68852459016392],"true", 3) )
     # Connections for obj113 (graphObject_: Obj101) named MT_post__directLink_T
     self.drawConnections(
 (self.obj113,self.obj92,[1316.36119942, 658.741003922, 1316.3611994201624, 658.7410039215686, 811.0, 666.3196721311475],"true", 3) )
@@ -3633,19 +3603,19 @@ def MT_post__GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
 (self.obj114,self.obj92,[446.046746295, 686.241003922, 621.0, 703.1901639344262],"true", 2) )
     # Connections for obj115 (graphObject_: Obj105) named MT_post__indirectLink_S
     self.drawConnections(
-(self.obj115,self.obj91,[1273.35617001, 158.998446721, 1273.3561700079981, 158.99844672131144, 793.6640625, 166.5868852459016],"true", 3) )
+(self.obj115,self.obj91,[1273.35617001, 158.998446721, 1273.3561700079981, 158.99844672131144, 793.6640625, 166.65573770491804],"true", 3) )
     # Connections for obj116 (graphObject_: Obj107) named MT_post__backward_link
     self.drawConnections(
-(self.obj116,self.obj91,[1335.6819269, 322.343085977, 1337.3561700079981, 238.0722172131147, 793.6640625, 220.57581967213113],"true", 3) )
+(self.obj116,self.obj91,[1335.6819269, 322.343085977, 1337.3561700079981, 238.0722172131147, 793.6640625, 242.7377049180328],"true", 3) )
     # Connections for obj117 (graphObject_: Obj109) named MT_post__trace_link
     self.drawConnections(
-(self.obj117,self.obj91,[1334.0, 485.0, 1154.0, 328.0, 793.6640625, 260.8114754098361],"true", 3) )
+(self.obj117,self.obj91,[1334.0, 485.0, 1154.0, 328.0, 793.6640625, 242.7377049180328],"true", 3) )
     # Connections for obj136 (graphObject_: Obj146) named MT_post__GenericEdge_GM2AUTOSAR_MM
     self.drawConnections(
 (self.obj136,self.obj135,[-2.0, 5.0, 185.1875, 1.0], 0, 2),
 (self.obj136,self.obj89,[-0.48, 5.0, 162.0, 51.0], 0, 2),
 (self.obj136,self.obj90,[-0.48, 5.0, 193.625, 622.0], 0, 2),
-(self.obj136,self.obj91,[-0.48, 5.0, 600.3984375, 111.0573770491803], 0, 2),
+(self.obj136,self.obj91,[-0.48, 5.0, 600.3984375, 105.68852459016392], 0, 2),
 (self.obj136,self.obj92,[-0.48, 5.0, 656.0, 592.6475409836065], 0, 2),
 (self.obj136,self.obj93,[-0.48, 5.0, 350.0, 211.0], 0, 2),
 (self.obj136,self.obj94,[-0.48, 5.0, 336.0, 381.0], 0, 2),
@@ -3667,19 +3637,19 @@ def MT_post__GM2AUTOSAR_MM_MDL(self, rootNode, CD_ClassDiagramsV3RootNode=None):
 (self.obj136,self.obj135,[-2.0, 5.0, 185.1875, 1.0], 0, 2) )
     # Connections for obj118 (graphObject_: Obj111) of type CD_Inheritance3
     self.drawConnections(
-(self.obj118,self.obj91,[545.94511815, 232.933238441, 600.3984375, 213.9918032786885],"true", 2) )
+(self.obj118,self.obj91,[545.94511815, 232.933238441, 600.3984375, 242.7377049180328],"true", 2) )
     # Connections for obj119 (graphObject_: Obj113) of type CD_Inheritance3
     self.drawConnections(
-(self.obj119,self.obj91,[581.0, 302.0, 600.3984375, 257.88524590163934],"true", 2) )
+(self.obj119,self.obj91,[581.0, 302.0, 600.3984375, 242.7377049180328],"true", 2) )
     # Connections for obj120 (graphObject_: Obj115) of type CD_Inheritance3
     self.drawConnections(
-(self.obj120,self.obj91,[712.1875, 292.5, 717.375, 293.0],"true", 2) )
+(self.obj120,self.obj91,[712.1875, 292.5, 717.375, 272.0],"true", 2) )
     # Connections for obj121 (graphObject_: Obj117) of type CD_Inheritance3
     self.drawConnections(
-(self.obj121,self.obj91,[797.03125, 316.5, 758.0625, 293.0],"true", 2) )
+(self.obj121,self.obj91,[797.03125, 316.5, 758.0625, 272.0],"true", 2) )
     # Connections for obj122 (graphObject_: Obj119) of type CD_Inheritance3
     self.drawConnections(
-(self.obj122,self.obj91,[907.33203125, 291.868852459, 793.6640625, 257.88524590163934],"true", 2) )
+(self.obj122,self.obj91,[907.33203125, 291.868852459, 793.6640625, 242.7377049180328],"true", 2) )
     # Connections for obj123 (graphObject_: Obj121) of type CD_Inheritance3
     self.drawConnections(
 (self.obj123,self.obj92,[494.910784314, 787.069775845, 621.0, 771.6639344262295],"true", 2) )
