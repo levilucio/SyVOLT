@@ -71,9 +71,21 @@ from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 class Test():
 
     def setUp(self, args):
+
+        full_transformation = [
+            ['HRootRule'],
+            ['HMotherRule'],
+            ['HFatherRule'],
+            ['HSonRule'],
+            ['HDaughterRule'],
+            ['HUnionMotherRule'],
+            ['HUnionManRule'],
+            ['HUnionDaughterRule'],
+            ['HUnionSonRule']
+        ]
         pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
 
-        self.rules = pyramify.get_rules("ATLTrans/w_equations/")
+        self.rules, self.transformation = pyramify.get_rules("ATLTrans/w_equations/", full_transformation)
 
         #print("Rules: " + str(self.rules.keys()))
 
@@ -113,35 +125,11 @@ class Test():
 
 
 
-        a1 = self.rules['HRootRule']
-        b1 = self.rules['HMotherRule']
-        c1 = self.rules['HFatherRule']
-        d1 = self.rules['HSonRule']
-        e1 = self.rules['HDaughterRule']
-        f1 = self.rules['HUnionMotherRule']
-        g1 = self.rules['HUnionManRule']
-        h1 = self.rules['HUnionDaughterRule']
-        i1 = self.rules['HUnionSonRule']
-
-
-
         #get the expected num from the args
         #expected_num_pcs = args.num_pcs
         expected_num_pcs = 330
                 
         #TODO: Change this number if you are modifying the transformation at all
-        #if args.num_rules == -1:
-        transformation = [[a1], [b1], [c1], [d1], [e1], [f1], [g1], [h1], [i1]]
-#        transformation = [[a1], [c1], [d1], [g1], [i1]]
-
-
-        #transformation = [[a1], [b1], [c1], [g1]]#, [h1]]#, [i1]]  # , [h1], [i1]]
-        #else:
-        #    transformation = self.select_rules([[a1,a2], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
-
-
-        #transformation =[[a1], [ b3]]
-        #transformation =[[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
         pre_metamodel = ["MT_pre__FamiliesToPersons_MM", "MoTifRule"]
         post_metamodel = ["MT_post__FamiliesToPersons_MM", "MoTifRule"]
 
@@ -156,11 +144,11 @@ class Test():
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns,
          self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
-            pyramify.ramify_directory("ATLTrans/w_equations/", transformation)
+            pyramify.ramify_directory("ATLTrans/w_equations/", self.transformation)
 
 
 
-        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)#
+        s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)#
    
         ts0 = time.time()
         s.build_path_conditions()

@@ -1624,25 +1624,28 @@ class PyRamify:
 #             for rule2 in self.rules.keys()
 
     # get all the rules in the transformation 
-    def get_rules(self, dir_name):
+    def get_rules(self, dir_name, full_transformation):
         print("Ramifying directory: " + dir_name)
         
         rules = {}
-        
-        #examine all the files in this dir
-        for f in os.listdir(dir_name):
+        transformation = []
 
-            #skip these files
-            if not f.endswith(".py") or f.startswith("__") or os.path.isdir(dir_name + "/" + f):
-                continue
+        for layer in full_transformation:
 
-            print("\nFile: " + f)
+            new_layer = []
+            for rule_name in layer:
+                print("Loading rule: " + rule_name)
 
-            #add the rule to the rules dict
-            rule = load_class(dir_name + "/" + f)
-            rules.update(rule)
 
-        return rules
+                #add the rule to the rules dict
+                rule = load_class(dir_name + "/" + rule_name + ".py")
+                rules.update(rule)
+
+                new_layer.append(list(rule.values())[0])
+
+            transformation.append(new_layer)
+
+        return rules, transformation
 
 
     #ramify a whole directory
