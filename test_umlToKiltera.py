@@ -16,6 +16,9 @@ from t_core.messages import Packet
 from PyRamify import PyRamify
 
 from core.himesis_utils import graph_to_dot
+
+from util.select_rules import select_rules
+
 # all runs are the same transformation, but with different metamodel elements
 # the purpose is to do scalability testing with multiple configurations and multiple sets of rules
 
@@ -121,27 +124,26 @@ class Test():
     def setUp(self, args):
         self.pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
 
-        #self.rules = self.pyramify.get_rules("UMLRT2Kiltera_MM/transformation_eq_outside")
 
-        self.rules = self.pyramify.get_rules("UMLRT2Kiltera_MM/transformation_eq_outside/")
+        full_transformation = [
 
-        #print("Rules: " + str(self.rules.keys()))
+            ['HState2ProcDef'],
+            ['HBasicStateNoOutgoing2ProcDef', 'HBasicState2ProcDef', 'HCompositeState2ProcDef'],
+            ['HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans', 'HState2HProcDef', 'HState2CProcDef'],
+            ['HTransition2QInstSIBLING', 'HTransition2QInstOUT', 'HTransition2Inst'],
+            ['HTransition2ListenBranch','HConnectOutputsOfExitPoint2BProcDefTransition2QInst',
+             'HTransition2HListenBranch','HConnectOPState2CProcDefTransition2InstotherInTransitions'],
+            ['HMapHeirarchyOfStates2HeirarchyOfProcs']
+        ]
+
+        #get the expected num from the args
+        #expected_num_pcs = args.num_pcs
+        expected_num_pcs = 330
 
 
-    def select_rules(self, full_transformation, num_rules):
-        selected_transformation = []
 
-        print("Selecting " + str(num_rules) + " rules")
+        self.rules, self.transformation = self.pyramify.get_rules("UMLRT2Kiltera_MM/transformation_eq_outside/", full_transformation)
 
-        i = 1
-        for layer in range(len(full_transformation)):
-            selected_transformation.append([])
-            for rule in full_transformation[layer]:
-                selected_transformation[layer].append(rule)
-                i += 1
-                if i > num_rules:
-                    print("Returning: " + str(selected_transformation))
-                    return selected_transformation
 
     def test_correct_uml2kiltera(self,args):
 
@@ -154,55 +156,12 @@ class Test():
 #Layer5: Transition2ListenBranch
 #Layer6: MapHeirarchyOfStates2HeirarchyOfProcs
 
-#         a1 = self.rules['HState2ProcDef']
-#         b1 = self.rules['HBasicStateNoOutgoing2ProcDef']
-#         b2 = self.rules['HBasicState2ProcDef']
-#         b3 = self.rules['HCompositeState2ProcDef']
 
         #pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
 
 
 
-#        try:
-#         a1 = self.rules["Hr11"]
-#         a2 = self.rules['Hr12']
-#         b1 = self.rules['Hr22']
-#         a0 = self.rules["HMapRootElementRule"]
-        a1 = self.rules['HState2ProcDef']
-        #a2 = self.rules['HState2ProcDefCopy']
-        b1 = self.rules['HBasicStateNoOutgoing2ProcDef']
-        b2 = self.rules['HBasicState2ProcDef']
-        b3 = self.rules['HCompositeState2ProcDef']
-        c1 = self.rules['HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans']
-        c2 = self.rules['HState2HProcDef']
-        c3 = self.rules['HState2CProcDef']
-        d1 = self.rules['HTransition2QInstSIBLING']
-        d2 = self.rules['HTransition2QInstOUT']
-        d3 = self.rules['HTransition2Inst']
-        e1 = self.rules['HTransition2ListenBranch']
-        e2 = self.rules['HConnectOutputsOfExitPoint2BProcDefTransition2QInst']
-        e3 = self.rules['HTransition2HListenBranch']
-        e4 = self.rules['HConnectOPState2CProcDefTransition2InstotherInTransitions']
-        f1 = self.rules['HMapHeirarchyOfStates2HeirarchyOfProcs']
-#        f2 = self.rules['HRuleConnect2RootElement']
-#         except KeyError as e:
-#             print(e)
-#             print("Rules: " + str(self.rules.keys()))
 
-        #get the expected num from the args
-        #expected_num_pcs = args.num_pcs
-        expected_num_pcs = 330
-                
-        #TODO: Change this number if you are modifying the transformation at all
-        if args.num_rules == -1:
-                #transformation = [[a1], [b1,b2,b3], [c1]]
-                transformation = [[a1],[b1,b2,b3],[c1,c3,c2],[d1,d2,d3],[e1,e2,e3,e4], [f1]]
-        else:
-                transformation = self.select_rules([[a1], [b1]])#,b2,b3], [c1]])#,c2,c3]])#, [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
-
-
-        #transformation =[[a1], [ b3]]
-        #transformation =[[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
         post_metamodel = ["MT_post__UMLRT2Kiltera_MM", "MoTifRule"]
 
@@ -231,9 +190,9 @@ class Test():
 #            self.pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation_eq_outside", transformation)
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlappingRules, self.subsumption, self.loopingRuleSubsumption] = \
-            self.pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation_eq_outside/", transformation)
+            self.pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation_eq_outside/", self.transformation)
 
-        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlappingRules, self.subsumption, self.loopingRuleSubsumption, args)#
+        s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlappingRules, self.subsumption, self.loopingRuleSubsumption, args)#
     
         ts0 = time.time()
         s.build_path_conditions()

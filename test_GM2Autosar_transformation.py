@@ -17,6 +17,9 @@ from PyRamify import PyRamify
 
 from core.himesis_utils import graph_to_dot
 from core.himesis_utils import draw_graphs
+
+from util.select_rules import select_rules
+
 # all runs are the same transformation, but with different metamodel elements
 # the purpose is to do scalability testing with multiple configurations and multiple sets of rules
 
@@ -167,7 +170,27 @@ class Test():
         if self.do_old_transformation:
             self.transformation_dir = "GM2AUTOSAR_MM/transformation"
 
-        self.rules = pyramify.get_rules(self.transformation_dir)
+            full_transformation = [
+             ['HMapDistributable', 'HMapECU2FiveElements', 'HMapVirtualDevice'],
+             ['HConnECU2VirtualDevice',  'HConnVirtualDeviceToDistributable'],
+             ['HConnectPPortPrototype', 'HConnectRPortPrototype']
+            ]
+
+
+
+
+        else:
+            full_transformation = [
+                ['HMapPN2FiveElements', 'HMapPartition', 'HMapModule'],
+                ['HConnECU2VirtualDevice1'],
+                ['HConnECU2VirtualDevice2'],
+                 ['HConnVirtualDevice2Distributable1'],
+                 ['HConnVirtualDevice2Distributable2'],
+                 ['HConnectPPortPrototype'],
+                 ['HConnectRPortPrototype']]
+
+
+        self.rules, self.transformation = pyramify.get_rules(self.transformation_dir, full_transformation)
 
 
 
@@ -197,103 +220,9 @@ class Test():
 #         if args.draw_svg:
 #             draw_graphs("property", property_dir)
 
-        if self.do_old_transformation:
-            self.transformation = [
-             [self.rules['HMapDistributable'], self.rules['HMapECU2FiveElements'], self.rules['HMapVirtualDevice']],
-             [self.rules['HConnECU2VirtualDevice'],  self.rules['HConnVirtualDeviceToDistributable']],
-             [self.rules['HConnectPPortPrototype'], self.rules['HConnectRPortPrototype']]]
 
 
 
-
-        else:
-            self.transformation = [
-                [self.rules['HMapPN2FiveElements'], self.rules['HMapPartition'], self.rules['HMapModule']],
-                [self.rules['HConnECU2VirtualDevice1']],
-                [self.rules['HConnECU2VirtualDevice2']],
-                 [self.rules['HConnVirtualDevice2Distributable1']],
-                 [self.rules['HConnVirtualDevice2Distributable2']],
-                 [self.rules['HConnectPPortPrototype']],
-                 [self.rules['HConnectRPortPrototype']]]
-
-
-
-        # 
-#         ConnectPPortPrototype_Back_CompositionType2ECU = Matcher(HConnectPPortPrototype_Back_CompositionType2ECULHS())
-#         ConnectRPortPrototype_Back_CompositionType2ECU = Matcher(HConnectRPortPrototype_Back_CompositionType2ECULHS())
-#         ConnECU2VirtualDevice_Back_EcuInst2ECU = Matcher(HConnECU2VirtualDevice_Back_EcuInst2ECULHS())
-#         ConnECU2VirtualDevice_Back_STEM2VirtualDevice = Matcher(HConnECU2VirtualDevice_Back_STEM2VirtualDeviceLHS())
-#         ConnECU2VirtualDevice_Back_SystemMapping2ECU = Matcher(HConnECU2VirtualDevice_Back_SystemMapping2ECULHS())
-#         ConnVirtualDevice2Distributable_Back_ComponentPrototype2Distributable = Matcher(HConnVirtualDevice2Distributable_Back_ComponentPrototype2DistributableLHS())
-#         ConnVirtualDevice2Distributable_Back_CompositionType2ECU = Matcher(HConnVirtualDevice2Distributable_Back_CompositionType2ECULHS())
-#         ConnVirtualDevice2Distributable_Back_SCTEMc2Distributable = Matcher(HConnVirtualDevice2Distributable_Back_SCTEMc2DistributableLHS())
-#         ConnVirtualDevice2Distributable_Back_STEM2VirtualDevice = Matcher(HConnVirtualDevice2Distributable_Back_STEM2VirtualDeviceLHS())
-
-#         
-#         self.rules = {                'HMapECU2FiveElements': HMapECU2FiveElements(),
-#                                       'HMapDistributable': HMapDistributable(),
-#                                       'HMapVirtualDevice': HMapVirtualDevice(),
-#                                       'HConnectPPortPrototype': HConnectPPortPrototype(),
-#                                       'HConnectRPortPrototype': HConnectRPortPrototype(),
-#                                       'HConnECU2VirtualDevice': HConnECU2VirtualDevice(),
-#                                       'HConnVirtualDeviceToDistributable': HConnVirtualDeviceToDistributable()}
-
-#         self.backwardPatterns = {     'HMapECU2FiveElements': [],
-#                                       'HMapDistributable': [],
-#                                       'HMapVirtualDevice': [],
-#                                       'HConnectPPortPrototype': [ConnectPPortPrototype_Back_CompositionType2ECU],
-#                                       'HConnectRPortPrototype': [ConnectRPortPrototype_Back_CompositionType2ECU],
-#                                       'HConnECU2VirtualDevice': [ConnECU2VirtualDevice_Back_EcuInst2ECU, ConnECU2VirtualDevice_Back_STEM2VirtualDevice, ConnECU2VirtualDevice_Back_SystemMapping2ECU],
-#                                       'HConnVirtualDeviceToDistributable': [ConnVirtualDevice2Distributable_Back_ComponentPrototype2Distributable, ConnVirtualDevice2Distributable_Back_CompositionType2ECU, ConnVirtualDevice2Distributable_Back_SCTEMc2Distributable, ConnVirtualDevice2Distributable_Back_STEM2VirtualDevice]}
-#          
-#         self.backwardPatterns2Rules = {
-#                                       ConnectPPortPrototype_Back_CompositionType2ECU: 'HConnectPPortPrototype',
-#                                       ConnectRPortPrototype_Back_CompositionType2ECU: 'HConnectRPortPrototype',
-#                                       ConnECU2VirtualDevice_Back_EcuInst2ECU: 'HConnECU2VirtualDevice',
-#                                       ConnECU2VirtualDevice_Back_STEM2VirtualDevice: 'HConnECU2VirtualDevice',
-#                                       ConnECU2VirtualDevice_Back_SystemMapping2ECU: 'HConnECU2VirtualDevice',
-#                                       ConnVirtualDevice2Distributable_Back_ComponentPrototype2Distributable: 'HConnVirtualDeviceToDistributable', 
-#                                       ConnVirtualDevice2Distributable_Back_CompositionType2ECU: 'HConnVirtualDeviceToDistributable', 
-#                                       ConnVirtualDevice2Distributable_Back_SCTEMc2Distributable: 'HConnVirtualDeviceToDistributable', 
-#                                       ConnVirtualDevice2Distributable_Back_STEM2VirtualDevice: 'HConnVirtualDeviceToDistributable'}
-#         
-#         self.backwardPatternsComplete = {
-#                                       'HMapECU2FiveElements': [],
-#                                       'HMapDistributable': [],
-#                                       'HMapVirtualDevice': [],
-#                                       'HConnectPPortPrototype': [Matcher(HConnectPPortPrototype_Back_CompleteLHS())],
-#                                       'HConnectRPortPrototype': [Matcher(HConnectRPortPrototype_Back_CompleteLHS())],
-#                                       'HConnECU2VirtualDevice': [Matcher(HConnECU2VirtualDevice_Back_CompleteLHS())],
-#                                       'HConnVirtualDeviceToDistributable': [Matcher(HConnVirtualDevice2Distributable_Back_CompleteLHS())]}
-#         
-#         self.matchRulePatterns = {    'HMapECU2FiveElements': Matcher(HMapECU2FiveElements_overlapLHS()),
-#                                       'HMapDistributable': Matcher(HMapDistributable_overlapLHS()),
-#                                       'HMapVirtualDevice': Matcher(HMapVirtualDevice_overlapLHS()),
-#                                       'HConnectPPortPrototype': Matcher(HConnectPPortPrototype_overlapLHS()),
-#                                       'HConnectRPortPrototype': Matcher(HConnectRPortPrototype_overlapLHS()),
-#                                       'HConnECU2VirtualDevice': Matcher(HConnECU2VirtualDevice_overlapLHS()),
-#                                       'HConnVirtualDeviceToDistributable': Matcher(HConnVirtualDeviceToDistributable_overlapLHS())}
-
-
-        # print("\n===\nrules:")
-        # for rule in sorted(self.rules):
-        #     print(str(rule))
-        #
-        # print("\n===\nbackwardPatterns:")
-        # for backwardPattern in sorted(self.backwardPatterns):
-        #     print(str(backwardPattern))
-        #
-        # print("\n===\nbackwardPatterns2Rules:")
-        # for backwardPatterns2Rule in sorted(self.backwardPatterns2Rules):
-        #     print(str(backwardPatterns2Rule))
-        #
-        # print("\n===\nbackwardPatternsComplete:")
-        # for backwardPatternsComplete in sorted(self.backwardPatternsComplete):
-        #     print(str(backwardPatternsComplete))
-        #
-        # print("\n===\nmatchRulePatterns:")
-        # for matchRulePattern in sorted(self.matchRulePatterns):
-        #     print(str(matchRulePattern))
 
     def test_correct_GM_transformation(self,args):
 #         pass
@@ -583,6 +512,10 @@ if __name__ == "__main__":
     parser.add_argument('--skip_pickle', dest = 'do_pickle', action = 'store_false',
                         help = 'Option to skip the use of pickling')
     parser.set_defaults(do_pickle = True)
+
+    parser.add_argument('--compression', type = int, default = 6,
+                        help = 'Level of compression to use with pickling. Range: 0 (no compression) to 9 (high compression) (default: 6)')
+    parser.set_defaults(compression = True)
 
     parser.add_argument('--no_svg', dest = 'draw_svg', action = 'store_false',
                         help = 'Flag to force svg files to not be drawn')

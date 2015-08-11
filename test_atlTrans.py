@@ -15,6 +15,8 @@ from t_core.messages import Packet
 
 from PyRamify import PyRamify
 
+from util.select_rules import select_rules
+
 from core.himesis_utils import graph_to_dot
 # all runs are the same transformation, but with different metamodel elements
 # the purpose is to do scalability testing with multiple configurations and multiple sets of rules
@@ -87,23 +89,6 @@ class Test():
 
         self.rules, self.transformation = pyramify.get_rules("ATLTrans/w_equations/", full_transformation)
 
-        #print("Rules: " + str(self.rules.keys()))
-
-
-    def select_rules(self, full_transformation, num_rules):
-        selected_transformation = []
-
-        print("Selecting " + str(num_rules) + " rules")
-
-        i = 1
-        for layer in range(len(full_transformation)):
-            selected_transformation.append([])
-            for rule in full_transformation[layer]:
-                selected_transformation[layer].append(rule)
-                i += 1
-                if i > num_rules:
-                    print("Returning: " + str(selected_transformation))
-                    return selected_transformation
 
     def test_correct_uml2kiltera(self,args):
 

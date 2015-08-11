@@ -1663,33 +1663,29 @@ class PyRamify:
         matchRulePatterns = {}
         ruleCombinators = {}
 
-        #examine all the files in this dir
-        for f in os.listdir(dir_name):
+        for layer in transformation_layers:
+            for rule in layer:
 
-            #skip these files
-            if not f.endswith(".py") or f.startswith("__") or os.path.isdir(dir_name + "/" + f):
-                continue
-            
-            #add the rule to the rules dict
-            rule = load_class(dir_name + "/" + f)
-            rules.update(rule)
+                #add the rule to the rules dict
+                rule2 = load_class(dir_name + "/" + rule.name + ".py")
+                rules.update(rule2)
 
-            #reload the rule
-            #this is probably not needed
-            #but there were problems with aliasing and copying
+                #reload the rule
+                #this is probably not needed
+                #but there were problems with aliasing and copying
 
-            #get the backwards pattern for this rule
-            rule3 = load_class(dir_name + "/" + f)
-            (bwPattern, bwP2Rule) = self.get_backward_patterns(rule3)
-            backwardPatterns.update(bwPattern)
+                #get the backwards pattern for this rule
+                rule3 = load_class(dir_name + "/" + rule.name + ".py")
+                (bwPattern, bwP2Rule) = self.get_backward_patterns(rule3)
+                backwardPatterns.update(bwPattern)
 
-            if not bwP2Rule is None:
-                backwardPatterns2Rules.update(bwP2Rule)
+                if not bwP2Rule is None:
+                    backwardPatterns2Rules.update(bwP2Rule)
 
-            #fresh rule for the match pattern
-            rule4 = load_class(dir_name + "/" + f)
-            matchRulePattern = self.get_match_pattern(rule4)
-            matchRulePatterns.update(matchRulePattern)
+                #fresh rule for the match pattern
+                rule4 = load_class(dir_name + "/" + rule.name + ".py")
+                matchRulePattern = self.get_match_pattern(rule4)
+                matchRulePatterns.update(matchRulePattern)
 
         self.rules = rules
             
@@ -1699,16 +1695,13 @@ class PyRamify:
         
 
         #build the combinators only after calculating the dependencies between rules
-        for f in os.listdir(dir_name):
+        for layer in transformation_layers:
+            for rule in layer:
 
-            #skip these files
-            if not f.endswith(".py") or f.startswith("__") or os.path.isdir(dir_name + "/" + f):
-                continue
-
-            # fresh rule for the rule combinators
-            rule5 = load_class(dir_name + "/" + f)
-            rule_combinator = self.get_rule_combinators(rule5)
-            ruleCombinators.update(rule_combinator)
+                # fresh rule for the rule combinators
+                rule5 = load_class(dir_name + "/" + rule.name + ".py")
+                rule_combinator = self.get_rule_combinators(rule5)
+                ruleCombinators.update(rule_combinator)
        
         
         # remove from the subsumption relation subsumption between a rule in a layer and a rule in a layer appearing before

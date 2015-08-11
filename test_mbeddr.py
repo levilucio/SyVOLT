@@ -19,6 +19,7 @@ from core.himesis_utils import graph_to_dot
 
 from ecore_utils import EcoreUtils
 from core.himesis_plus import buildPreListFromClassNames
+from util.select_rules import select_rules
 
 # all runs are the same transformation, but with different metamodel elements
 # the purpose is to do scalability testing with multiple configurations and multiple sets of rules
@@ -43,95 +44,81 @@ class Test():
     def setUp(self, args):
         pyramify = PyRamify(draw_svg = args.draw_svg)
 
-        self.rules = pyramify.get_rules("mbeddr2C_MM/real_transformation")
+
+
+        full_transformation = [
+
+            ['Hlayer0rule0',
+            'Hlayer0rule1',
+            'Hlayer0rule2',
+            'Hlayer0rule3',
+            'Hlayer0rule4',
+            'Hlayer0rule6',
+            'Hlayer0rule7',
+            'Hlayer0rule8',
+            'Hlayer0rule9',
+            'Hlayer0rule10',
+            'Hlayer0rule11'],
+
+            ['Hlayer1rule0',
+            'Hlayer1rule1',
+            'Hlayer1rule2',
+            'Hlayer1rule3',
+            'Hlayer1rule4',
+            'Hlayer1rule5',
+            'Hlayer1rule6',
+            'Hlayer1rule7',
+            'Hlayer1rule8',
+            'Hlayer1rule9',
+            'Hlayer1rule10',
+            'Hlayer1rule11',
+            'Hlayer1rule12',
+            'Hlayer1rule13',
+            'Hlayer1rule14',
+            'Hlayer1rule15'],
+
+    #        'Hlayer2rule0']
+            ['Hlayer2rule1',
+            'Hlayer2rule2',
+            'Hlayer2rule3'],
+
+            ['Hlayer3rule0',
+            'Hlayer3rule1',
+            'Hlayer3rule2',
+            'Hlayer3rule3',
+            'Hlayer3rule4',
+            'Hlayer3rule5'],
+
+            ['Hlayer4rule0',
+            'Hlayer4rule1',
+            'Hlayer4rule2',
+            'Hlayer4rule3'],
+
+            ['Hlayer5rule0',
+            'Hlayer5rule1',
+            'Hlayer5rule2',
+            'Hlayer5rule3',
+            'Hlayer5rule4',
+            'Hlayer5rule5']
+
+
+
+        ]
+
+        self.rules, self.transformation = pyramify.get_rules("mbeddr2C_MM/real_transformation", full_transformation)
 
         # print("Rules: " + str(self.rules.keys()))
-
-    def select_rules(self, full_transformation, num_rules):
-        selected_transformation = []
-
-        print("Selecting " + str(num_rules) + " rules")
-
-        i = 1
-        for layer in range(len(full_transformation)):
-            selected_transformation.append([])
-            for rule in full_transformation[layer]:
-                selected_transformation[layer].append(rule)
-                i += 1
-                if i > num_rules:
-                    print("Returning: " + str(selected_transformation))
-                    return selected_transformation
 
 
     def test_correct_mbeddr(self, args):
         pyramify = PyRamify(verbosity = 0, draw_svg = args.draw_svg)
 
-        a0 = self.rules['Hlayer0rule0']
-        a1 = self.rules['Hlayer0rule1']
-        a2 = self.rules['Hlayer0rule2']
-        a3 = self.rules['Hlayer0rule3']
-        a4 = self.rules['Hlayer0rule4']
-        a6 = self.rules['Hlayer0rule6']
-        a7 = self.rules['Hlayer0rule7']
-        a8 = self.rules['Hlayer0rule8']
-        a9 = self.rules['Hlayer0rule9']
-        a10 = self.rules['Hlayer0rule10']
-        a11 = self.rules['Hlayer0rule11']
 
-        b0 = self.rules['Hlayer1rule0']
-        b1 = self.rules['Hlayer1rule1']
-        b2 = self.rules['Hlayer1rule2']
-        b3 = self.rules['Hlayer1rule3']
-        b4 = self.rules['Hlayer1rule4']
-        b5 = self.rules['Hlayer1rule5']
-        b6 = self.rules['Hlayer1rule6']
-        b7 = self.rules['Hlayer1rule7']
-        b8 = self.rules['Hlayer1rule8']
-        b9 = self.rules['Hlayer1rule9']
-        b10 = self.rules['Hlayer1rule10']
-        b11 = self.rules['Hlayer1rule11']
-        b12 = self.rules['Hlayer1rule12']
-        b13 = self.rules['Hlayer1rule13']
-        b14 = self.rules['Hlayer1rule14']
-        b15 = self.rules['Hlayer1rule15']
-    
-#        c0 = self.rules['Hlayer2rule0']
-        c1 = self.rules['Hlayer2rule1']
-        c2 = self.rules['Hlayer2rule2']
-        c3 = self.rules['Hlayer2rule3']
-     
-        d0 = self.rules['Hlayer3rule0']
-        d1 = self.rules['Hlayer3rule1']
-        d2 = self.rules['Hlayer3rule2']
-        d3 = self.rules['Hlayer3rule3']
-        d4 = self.rules['Hlayer3rule4']
-        d5 = self.rules['Hlayer3rule5']
-              
-        e0 = self.rules['Hlayer4rule0']
-        e1 = self.rules['Hlayer4rule1']
-        e2 = self.rules['Hlayer4rule2']
-        e3 = self.rules['Hlayer4rule3']
-     
-        f0 = self.rules['Hlayer5rule0']
-        f1 = self.rules['Hlayer5rule1']
-        f2 = self.rules['Hlayer5rule2']
-        f3 = self.rules['Hlayer5rule3']
-        f4 = self.rules['Hlayer5rule4']
-        f5 = self.rules['Hlayer5rule5']
 #              
 #         g0 = self.rules['Hlayer6rule0']        
 
         expected_num_pcs = args.num_pcs
 
-        if args.num_rules == -1:
-            # change this to select by hand the number of rules to execute
-            transformation = [[a0, a1, a2, a3, a4, a6, a7, a8, a9, a10, a11], [b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15],\
-            [c1, c2, c3], [d0, d4, d3, d2, d1, d5], [e0, e2, e1, e3], [f0, f1, f2, f3, f4, f5]]
-#            transformation = [[b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15]]#,\
-
-#         else:
-#             transformation = self.select_rules([[a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11]])#,[b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15],\
-            #[c0, c1, c2, c3], [d0, d1, d2, d3, d4, d5], [e0, e1, e2, e3], [f0, f1, f2, f3, f4, f5], [g0]], args.num_rules)
 
 
         pre_metamodel = ["MT_pre__mbeddr_MM", "MoTifRule"]
@@ -147,9 +134,9 @@ class Test():
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns,
          self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
-            pyramify.ramify_directory("mbeddr2C_MM/real_transformation", transformation)
+            pyramify.ramify_directory("mbeddr2C_MM/real_transformation", self.transformation)
 
-        s = PathConditionGenerator(transformation, self.ruleCombinators,
+        s = PathConditionGenerator(self.transformation, self.ruleCombinators,
                                    self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
         ts0 = time.time()
         s.build_path_conditions()
