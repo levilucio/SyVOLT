@@ -77,49 +77,49 @@ from PropertyVerification.BACKUP_atomic_state_property import BKUPAtomicStatePro
 # from GM2AUTOSAR_MM.Properties.positive.Himesis.HECUSysTrivialTrueCompleteLHS import HECUSysTrivialTrueCompleteLHS
 #
 # #Properties from he MODELS paper
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HP1IsolatedLHS import HP1IsolatedLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HP1ConnectedLHS import HP1ConnectedLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HP1CompleteLHS import HP1CompleteLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HP2IsolatedLHS import HP2IsolatedLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HP2ConnectedLHS import HP2ConnectedLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HP2CompleteLHS import HP2CompleteLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HS1IfClauseIsolatedConnectedLHS import HS1IfClauseIsolatedConnectedLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HS1IfClauseCompleteLHS import HS1IfClauseCompleteLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HS1ThenClauseIsolatedConnectedLHS import HS1ThenClauseIsolatedConnectedLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HS1ThenClauseCompleteLHS import HS1ThenClauseCompleteLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM1IfClauseIsolatedConnectedLHS import HM1IfClauseIsolatedConnectedLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM1IfClauseCompleteLHS import HM1IfClauseCompleteLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM1ThenClausePart1IsolatedConnectedLHS import HM1ThenClausePart1IsolatedConnectedLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM1ThenClausePart1CompleteLHS import HM1ThenClausePart1CompleteLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM3IfClauseIsolatedConnectedLHS import HM3IfClauseIsolatedConnectedLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM3IfClauseCompleteLHS import HM3IfClauseCompleteLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM3ThenClausePart1IsolatedConnectedLHS import HM3ThenClausePart1IsolatedConnectedLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM3ThenClausePart1CompleteLHS import HM3ThenClausePart1CompleteLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2IfClauseIsolatedConnectedLHS import HM2IfClauseIsolatedConnectedLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2IfClauseCompleteLHS import HM2IfClauseCompleteLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2ThenClausePart1IsolatedConnectedLHS import HM2ThenClausePart1IsolatedConnectedLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2ThenClausePart1CompleteLHS import HM2ThenClausePart1CompleteLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2ThenClausePart2IsolatedConnectedLHS import HM2ThenClausePart2IsolatedConnectedLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2ThenClausePart2CompleteLHS import HM2ThenClausePart2CompleteLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4IfClauseIsolatedConnectedLHS import HM4IfClauseIsolatedConnectedLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4IfClauseCompleteLHS import HM4IfClauseCompleteLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4ThenClausePart1IsolatedConnectedLHS import HM4ThenClausePart1IsolatedConnectedLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4ThenClausePart1CompleteLHS import HM4ThenClausePart1CompleteLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4ThenClausePart2IsolatedConnectedLHS import HM4ThenClausePart2IsolatedConnectedLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4ThenClausePart2CompleteLHS import HM4ThenClausePart2CompleteLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5IfClauseIsolatedConnectedLHS import HM5IfClauseIsolatedConnectedLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5IfClauseCompleteLHS import HM5IfClauseCompleteLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5ThenClausePart1IsolatedConnectedLHS import HM5ThenClausePart1IsolatedConnectedLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5ThenClausePart1CompleteLHS import HM5ThenClausePart1CompleteLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5ThenClausePart2IsolatedConnectedLHS import HM5ThenClausePart2IsolatedConnectedLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5ThenClausePart2CompleteLHS import HM5ThenClausePart2CompleteLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6IfClauseIsolatedConnectedLHS import HM6IfClauseIsolatedConnectedLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6IfClauseCompleteLHS import HM6IfClauseCompleteLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6ThenClausePart1IsolatedConnectedLHS import HM6ThenClausePart1IsolatedConnectedLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6ThenClausePart1CompleteLHS import HM6ThenClausePart1CompleteLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6ThenClausePart2IsolatedConnectedLHS import HM6ThenClausePart2IsolatedConnectedLHS
-# from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6ThenClausePart2CompleteLHS import HM6ThenClausePart2CompleteLHS
-#
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HP1IsolatedLHS import HP1IsolatedLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HP1ConnectedLHS import HP1ConnectedLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HP1CompleteLHS import HP1CompleteLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HP2IsolatedLHS import HP2IsolatedLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HP2ConnectedLHS import HP2ConnectedLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HP2CompleteLHS import HP2CompleteLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HS1IfClauseIsolatedConnectedLHS import HS1IfClauseIsolatedConnectedLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HS1IfClauseCompleteLHS import HS1IfClauseCompleteLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HS1ThenClauseIsolatedConnectedLHS import HS1ThenClauseIsolatedConnectedLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HS1ThenClauseCompleteLHS import HS1ThenClauseCompleteLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM1IfClauseIsolatedConnectedLHS import HM1IfClauseIsolatedConnectedLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM1IfClauseCompleteLHS import HM1IfClauseCompleteLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM1ThenClausePart1IsolatedConnectedLHS import HM1ThenClausePart1IsolatedConnectedLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM1ThenClausePart1CompleteLHS import HM1ThenClausePart1CompleteLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM3IfClauseIsolatedConnectedLHS import HM3IfClauseIsolatedConnectedLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM3IfClauseCompleteLHS import HM3IfClauseCompleteLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM3ThenClausePart1IsolatedConnectedLHS import HM3ThenClausePart1IsolatedConnectedLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM3ThenClausePart1CompleteLHS import HM3ThenClausePart1CompleteLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2IfClauseIsolatedConnectedLHS import HM2IfClauseIsolatedConnectedLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2IfClauseCompleteLHS import HM2IfClauseCompleteLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2ThenClausePart1IsolatedConnectedLHS import HM2ThenClausePart1IsolatedConnectedLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2ThenClausePart1CompleteLHS import HM2ThenClausePart1CompleteLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2ThenClausePart2IsolatedConnectedLHS import HM2ThenClausePart2IsolatedConnectedLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM2ThenClausePart2CompleteLHS import HM2ThenClausePart2CompleteLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4IfClauseIsolatedConnectedLHS import HM4IfClauseIsolatedConnectedLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4IfClauseCompleteLHS import HM4IfClauseCompleteLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4ThenClausePart1IsolatedConnectedLHS import HM4ThenClausePart1IsolatedConnectedLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4ThenClausePart1CompleteLHS import HM4ThenClausePart1CompleteLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4ThenClausePart2IsolatedConnectedLHS import HM4ThenClausePart2IsolatedConnectedLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM4ThenClausePart2CompleteLHS import HM4ThenClausePart2CompleteLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5IfClauseIsolatedConnectedLHS import HM5IfClauseIsolatedConnectedLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5IfClauseCompleteLHS import HM5IfClauseCompleteLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5ThenClausePart1IsolatedConnectedLHS import HM5ThenClausePart1IsolatedConnectedLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5ThenClausePart1CompleteLHS import HM5ThenClausePart1CompleteLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5ThenClausePart2IsolatedConnectedLHS import HM5ThenClausePart2IsolatedConnectedLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM5ThenClausePart2CompleteLHS import HM5ThenClausePart2CompleteLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6IfClauseIsolatedConnectedLHS import HM6IfClauseIsolatedConnectedLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6IfClauseCompleteLHS import HM6IfClauseCompleteLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6ThenClausePart1IsolatedConnectedLHS import HM6ThenClausePart1IsolatedConnectedLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6ThenClausePart1CompleteLHS import HM6ThenClausePart1CompleteLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6ThenClausePart2IsolatedConnectedLHS import HM6ThenClausePart2IsolatedConnectedLHS
+from GM2AUTOSAR_MM.Properties.positive.Himesis.HM6ThenClausePart2CompleteLHS import HM6ThenClausePart2CompleteLHS
+
 # #A property that should trivially NOT hold
 # from GM2AUTOSAR_MM.Properties.negative.Himesis.HTrivialFalseECUplusSystem1IsolatedLHS import HTrivialFalseECUplusSystem1IsolatedLHS
 # from GM2AUTOSAR_MM.Properties.negative.Himesis.HTrivialFalseECUplusSystem1ConnectedLHS import HTrivialFalseECUplusSystem1ConnectedLHS
@@ -224,36 +224,63 @@ class Test():
 
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
 
-        
-#         self.rules = {                'HMapECU2FiveElements': HMapECU2FiveElementsFAULTY(),
-#                                       'HMapDistributable': HMapDistributable(),
-#                                       'HMapVirtualDevice': HMapVirtualDeviceFAULTY(),
-#                                       'HConnectPPortPrototype': HConnectPPortPrototype(),
-#                                       'HConnectRPortPrototype': HConnectRPortPrototype(),
-#                                       'HConnECU2VirtualDevice': HConnECU2VirtualDevice(),
-#                                       'HConnVirtualDeviceToDistributable': HConnVirtualDeviceToDistributable()}
 
 
-        #change the properties to match the metamodel
-#         mapping = {'MT_pre__Service':'MT_pre__Signal',
-#                    'MT_pre__Scheduler':'MT_pre__ExecFrame',
-#                    'MT_pre__Module':'MT_pre__Distributable',
-#                    'MT_pre__Partition':'MT_pre__VirtualDevice',
-#                    'MT_pre__PhysicalNode': 'MT_pre__ECU'}
-# 
-#         #reverse the mapping for the new transformation
-#         if not self.do_old_transformation:
-#             mapping = {v: k for k, v in mapping.items()}
-# 
-#         property_dir = "GM2AUTOSAR_MM/Properties/"
-#         pyramify.changeGraphMetamodel(mapping, property_dir)
-# 
-#         if args.draw_svg:
-#             draw_graphs("property", property_dir)
+        P1atomic=AtomicStateProperty(HP1IsolatedLHS(),HP1ConnectedLHS(), HP1CompleteLHS())
+        P2atomic=AtomicStateProperty(HP2IsolatedLHS(),HP2ConnectedLHS(), HP2CompleteLHS())
+        S1IfClause=AtomicStateProperty(HS1IfClauseIsolatedConnectedLHS(), HS1IfClauseIsolatedConnectedLHS(), HS1IfClauseCompleteLHS())
+        S1ThenClause=AtomicStateProperty(HS1ThenClauseIsolatedConnectedLHS(), HS1ThenClauseIsolatedConnectedLHS(), HS1ThenClauseCompleteLHS())
 
 
+        M1IfClause=AtomicStateProperty(HM1IfClauseIsolatedConnectedLHS(),HM1IfClauseIsolatedConnectedLHS(),HM1IfClauseCompleteLHS())
+        M1ThenClause=NotStateProperty(AtomicStateProperty(HM1ThenClausePart1IsolatedConnectedLHS(),HM1ThenClausePart1IsolatedConnectedLHS(),HM1ThenClausePart1CompleteLHS()))
+        M3IfClause=AtomicStateProperty(HM3IfClauseIsolatedConnectedLHS(),HM3IfClauseIsolatedConnectedLHS(), HM3IfClauseCompleteLHS())
+        M3ThenClause=NotStateProperty(AtomicStateProperty(HM3ThenClausePart1IsolatedConnectedLHS(), HM3ThenClausePart1IsolatedConnectedLHS(),HM3ThenClausePart1CompleteLHS()))
 
 
+        M2IfClause = AtomicStateProperty(HM2IfClauseIsolatedConnectedLHS(), HM2IfClauseIsolatedConnectedLHS(),
+            HM2IfClauseCompleteLHS())
+        M2ThenClause = NotStateProperty(
+            AtomicStateProperty(HM2ThenClausePart2IsolatedConnectedLHS(), HM2ThenClausePart2IsolatedConnectedLHS(),
+                HM2ThenClausePart2CompleteLHS()))
+        M4IfClause = AtomicStateProperty(HM4IfClauseIsolatedConnectedLHS(), HM4IfClauseIsolatedConnectedLHS(),
+            HM4IfClauseCompleteLHS())
+        M4ThenClause = NotStateProperty(
+            AtomicStateProperty(HM4ThenClausePart2IsolatedConnectedLHS(), HM4ThenClausePart2IsolatedConnectedLHS(),
+                HM4ThenClausePart2CompleteLHS()))
+
+        M5IfClause = AtomicStateProperty(HM5IfClauseIsolatedConnectedLHS(), HM5IfClauseIsolatedConnectedLHS(),
+            HM5IfClauseCompleteLHS())
+        M5ThenClause = NotStateProperty(
+            AtomicStateProperty(HM5ThenClausePart2IsolatedConnectedLHS(), HM5ThenClausePart2IsolatedConnectedLHS(),
+                HM5ThenClausePart2CompleteLHS()))
+        M6IfClause = AtomicStateProperty(HM6IfClauseIsolatedConnectedLHS(), HM6IfClauseIsolatedConnectedLHS(),
+            HM6IfClauseCompleteLHS())
+        M6ThenClause = NotStateProperty(
+            AtomicStateProperty(HM6ThenClausePart2IsolatedConnectedLHS(), HM6ThenClausePart2IsolatedConnectedLHS(),
+                HM6ThenClausePart2CompleteLHS()))
+
+
+# M2IfClause=AtomicStateProperty(HM2IfClauseIsolatedConnectedLHS(),HM2IfClauseIsolatedConnectedLHS(),HM2IfClauseCompleteLHS())
+        # M2ThenClause=AndStateProperty(AtomicStateProperty(HM2ThenClausePart1IsolatedConnectedLHS(),HM2ThenClausePart1IsolatedConnectedLHS(), HM2ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM2ThenClausePart2IsolatedConnectedLHS(),HM2ThenClausePart2IsolatedConnectedLHS(),HM2ThenClausePart2CompleteLHS())))
+        # M4IfClause=AtomicStateProperty(HM4IfClauseIsolatedConnectedLHS(),HM4IfClauseIsolatedConnectedLHS(),HM4IfClauseCompleteLHS())
+        # M4ThenClause=AndStateProperty(AtomicStateProperty(HM4ThenClausePart1IsolatedConnectedLHS(),HM4ThenClausePart1IsolatedConnectedLHS(), HM4ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM4ThenClausePart2IsolatedConnectedLHS(),HM4ThenClausePart2IsolatedConnectedLHS(),HM4ThenClausePart2CompleteLHS())))
+        # M5IfClause=AtomicStateProperty(HM5IfClauseIsolatedConnectedLHS(),HM5IfClauseIsolatedConnectedLHS(),HM5IfClauseCompleteLHS())
+        # M5ThenClause=AndStateProperty(AtomicStateProperty(HM5ThenClausePart1IsolatedConnectedLHS(),HM5ThenClausePart1IsolatedConnectedLHS(), HM5ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM5ThenClausePart2IsolatedConnectedLHS(),HM5ThenClausePart2IsolatedConnectedLHS(),HM5ThenClausePart2CompleteLHS())))
+        # M6IfClause=AtomicStateProperty(HM6IfClauseIsolatedConnectedLHS(),HM6IfClauseIsolatedConnectedLHS(),HM6IfClauseCompleteLHS())
+        # M6ThenClause=AndStateProperty(AtomicStateProperty(HM6ThenClausePart1IsolatedConnectedLHS(),HM6ThenClausePart1IsolatedConnectedLHS(), HM6ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM6ThenClausePart2IsolatedConnectedLHS(),HM6ThenClausePart2IsolatedConnectedLHS(),HM6ThenClausePart2CompleteLHS())))
+
+        self.atomic_properties = [["P1", P1atomic], ["P2", P2atomic]]
+
+        self.if_then_properties = []
+        #["S1", S1IfClause, S1ThenClause], ["M1", M1IfClause, M1ThenClause],
+                      #["M3", M3IfClause, M3ThenClause], ["M2", M2IfClause, M2ThenClause], ["M4", M4IfClause, M4ThenClause],
+                      #["M5", M5IfClause, M5ThenClause], ["M6", M6IfClause, M6ThenClause]]
+
+
+        if args.slice > 0:
+            contract = self.atomic_properties[args.slice - 1]
+            self.rules, self.transformation = slice_transformation(self.rules, self.transformation, contract, args)
 
     def test_correct_GM_transformation(self,args):
 #         pass
@@ -323,170 +350,36 @@ class Test():
 
 
         #s.print_path_conditions_file()
-#
-#         for layer in s.transformation:
-#             for rule in layer:
-#                 StateProperty.checkRuleReachability(s.rule_names[rule.name], s)
-#
-#
+
 #         #s.verbosity = 2
 #
-#         ts0 = time.time()
-#
-#         print("\nProperty Proving:")
-#         P1atomic=AtomicStateProperty(HP1IsolatedLHS(),HP1ConnectedLHS(), HP1CompleteLHS())
-#         P2atomic=AtomicStateProperty(HP2IsolatedLHS(),HP2ConnectedLHS(), HP2CompleteLHS())
-#         S1IfClause=AtomicStateProperty(HS1IfClauseIsolatedConnectedLHS(), HS1IfClauseIsolatedConnectedLHS(), HS1IfClauseCompleteLHS())
-#         S1ThenClause=AtomicStateProperty(HS1ThenClauseIsolatedConnectedLHS(), HS1ThenClauseIsolatedConnectedLHS(), HS1ThenClauseCompleteLHS())
-#
-#
-#         M1IfClause=AtomicStateProperty(HM1IfClauseIsolatedConnectedLHS(),HM1IfClauseIsolatedConnectedLHS(),HM1IfClauseCompleteLHS())
-#         M1ThenClause=NotStateProperty(AtomicStateProperty(HM1ThenClausePart1IsolatedConnectedLHS(),HM1ThenClausePart1IsolatedConnectedLHS(),HM1ThenClausePart1CompleteLHS()))
-#         M3IfClause=AtomicStateProperty(HM3IfClauseIsolatedConnectedLHS(),HM3IfClauseIsolatedConnectedLHS(), HM3IfClauseCompleteLHS())
-#         M3ThenClause=NotStateProperty(AtomicStateProperty(HM3ThenClausePart1IsolatedConnectedLHS(), HM3ThenClausePart1IsolatedConnectedLHS(),HM3ThenClausePart1CompleteLHS()))
-#
-#
-#         M2IfClause = AtomicStateProperty(HM2IfClauseIsolatedConnectedLHS(), HM2IfClauseIsolatedConnectedLHS(),
-#             HM2IfClauseCompleteLHS())
-#         M2ThenClause = NotStateProperty(
-#             AtomicStateProperty(HM2ThenClausePart2IsolatedConnectedLHS(), HM2ThenClausePart2IsolatedConnectedLHS(),
-#                 HM2ThenClausePart2CompleteLHS()))
-#         M4IfClause = AtomicStateProperty(HM4IfClauseIsolatedConnectedLHS(), HM4IfClauseIsolatedConnectedLHS(),
-#             HM4IfClauseCompleteLHS())
-#         M4ThenClause = NotStateProperty(
-#             AtomicStateProperty(HM4ThenClausePart2IsolatedConnectedLHS(), HM4ThenClausePart2IsolatedConnectedLHS(),
-#                 HM4ThenClausePart2CompleteLHS()))
-#
-#         M5IfClause = AtomicStateProperty(HM5IfClauseIsolatedConnectedLHS(), HM5IfClauseIsolatedConnectedLHS(),
-#             HM5IfClauseCompleteLHS())
-#         M5ThenClause = NotStateProperty(
-#             AtomicStateProperty(HM5ThenClausePart2IsolatedConnectedLHS(), HM5ThenClausePart2IsolatedConnectedLHS(),
-#                 HM5ThenClausePart2CompleteLHS()))
-#         M6IfClause = AtomicStateProperty(HM6IfClauseIsolatedConnectedLHS(), HM6IfClauseIsolatedConnectedLHS(),
-#             HM6IfClauseCompleteLHS())
-#         M6ThenClause = NotStateProperty(
-#             AtomicStateProperty(HM6ThenClausePart2IsolatedConnectedLHS(), HM6ThenClausePart2IsolatedConnectedLHS(),
-#                 HM6ThenClausePart2CompleteLHS()))
-#
-#
-# # M2IfClause=AtomicStateProperty(HM2IfClauseIsolatedConnectedLHS(),HM2IfClauseIsolatedConnectedLHS(),HM2IfClauseCompleteLHS())
-#         # M2ThenClause=AndStateProperty(AtomicStateProperty(HM2ThenClausePart1IsolatedConnectedLHS(),HM2ThenClausePart1IsolatedConnectedLHS(), HM2ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM2ThenClausePart2IsolatedConnectedLHS(),HM2ThenClausePart2IsolatedConnectedLHS(),HM2ThenClausePart2CompleteLHS())))
-#         # M4IfClause=AtomicStateProperty(HM4IfClauseIsolatedConnectedLHS(),HM4IfClauseIsolatedConnectedLHS(),HM4IfClauseCompleteLHS())
-#         # M4ThenClause=AndStateProperty(AtomicStateProperty(HM4ThenClausePart1IsolatedConnectedLHS(),HM4ThenClausePart1IsolatedConnectedLHS(), HM4ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM4ThenClausePart2IsolatedConnectedLHS(),HM4ThenClausePart2IsolatedConnectedLHS(),HM4ThenClausePart2CompleteLHS())))
-#         # M5IfClause=AtomicStateProperty(HM5IfClauseIsolatedConnectedLHS(),HM5IfClauseIsolatedConnectedLHS(),HM5IfClauseCompleteLHS())
-#         # M5ThenClause=AndStateProperty(AtomicStateProperty(HM5ThenClausePart1IsolatedConnectedLHS(),HM5ThenClausePart1IsolatedConnectedLHS(), HM5ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM5ThenClausePart2IsolatedConnectedLHS(),HM5ThenClausePart2IsolatedConnectedLHS(),HM5ThenClausePart2CompleteLHS())))
-#         # M6IfClause=AtomicStateProperty(HM6IfClauseIsolatedConnectedLHS(),HM6IfClauseIsolatedConnectedLHS(),HM6IfClauseCompleteLHS())
-#         # M6ThenClause=AndStateProperty(AtomicStateProperty(HM6ThenClausePart1IsolatedConnectedLHS(),HM6ThenClausePart1IsolatedConnectedLHS(), HM6ThenClausePart1CompleteLHS()),NotStateProperty(AtomicStateProperty(HM6ThenClausePart2IsolatedConnectedLHS(),HM6ThenClausePart2IsolatedConnectedLHS(),HM6ThenClausePart2CompleteLHS())))
-#
-#         atomic_properties = [["P1", P1atomic], ["P2", P2atomic]]
-#
-#         if_then_properties = [["S1", S1IfClause, S1ThenClause], ["M1", M1IfClause, M1ThenClause],
-#                       ["M3", M3IfClause, M3ThenClause], ["M2", M2IfClause, M2ThenClause], ["M4", M4IfClause, M4ThenClause],
-#                       ["M5", M5IfClause, M5ThenClause], ["M6", M6IfClause, M6ThenClause]]
-#
-#         #andprop=AndStateProperty(AndStateProperty(atomic1,atomic2),atomic1)
-#         #P1atomicOldImpl=BKUPAtomicStateProperty(HP1IsolatedLHS(),HP1ConnectedLHS(), HP1CompleteLHS())
-#         #P2atomicOldImpl=BKUPAtomicStateProperty(HP2IsolatedLHS(),HP2ConnectedLHS(), HP2CompleteLHS())
-#
-# #        trivatomicprop=AtomicStateProperty(HECUSysTrivialTrueIsolatedLHS(),HECUSysTrivialTrueConnectedLHS(), HECUSysTrivialTrueCompleteLHS())
-#
-#         #NOTE: Even if you are verifying an ANDstateProperty where the 2 operands are the same AtomicStateProperty, then store two copies of the AtomicStateProperty in 2 different variables
-#         #Why? variables in this case are references to objects. So if you want the 2 copies of the same AtomicStateProperty to have different values set for certain attributes, then you must store them in 2 different variables
-# #        trivnegativeprop=AtomicStateProperty(HTrivialFalseECUplusSystem1IsolatedLHS(),HTrivialFalseECUplusSystem1ConnectedLHS(),HTrivialFalseECUplusSystem1CompleteLHS())
-# #        trivnegativepropcopy=AtomicStateProperty(HTrivialFalseECUplusSystem1IsolatedLHS(),HTrivialFalseECUplusSystem1ConnectedLHS(),HTrivialFalseECUplusSystem1CompleteLHS())
-# #        trivatomicpropOldImpl=BKUPAtomicStateProperty(HECUSysTrivialTrueIsolatedLHS(),HECUSysTrivialTrueConnectedLHS(), HECUSysTrivialTrueCompleteLHS())
-# #        trivnegativepropOldImpl=BKUPAtomicStateProperty(HTrivialFalseECUplusSystem1IsolatedLHS(),HTrivialFalseECUplusSystem1ConnectedLHS(),HTrivialFalseECUplusSystem1CompleteLHS())
-# #        IsolHasNoMatch=AtomicStateProperty(HIsolHasNoMatchIsolatedLHS(), HIsolHasNoMatchConnectedLHS(), HIsolHasNoMatchCompleteLHS())
-#         #trivnegativepropOldImpl.verify(s)
-#         #finalresult=StateProperty.verifyCompositeStateProperty(s, P1atomic)
-#         #StateProperty.verifyCompositeStateProperty(s, OrStateProperty(P2atomic,trivnegativeprop))
-#         #finalresult=StateProperty.verifyCompositeStateProperty(s, ImplicationStateProperty(M5IfClause, M5ThenClause))
-#         #finalresult=StateProperty.verifyCompositeStateProperty(s, ImplicationStateProperty(S1IfClause,S1ThenClause))
-#         #print ('finalresult : ')
-#         #print (finalresult)
-#
-#
-#         for name, atomic_prop in atomic_properties:
-#             finalresult = StateProperty.verifyCompositeStateProperty(s, atomic_prop)
-#             if len(finalresult) == 0:
-#                 print("Atomic property: " + name + " does hold\n")
-#             else:
-#                 print("Atomic property: " + name + " does not hold\n")
-#
-#
-#         for name, i, t in if_then_properties:
-#             finalresult = StateProperty.verifyCompositeStateProperty(s, ImplicationStateProperty(i, t))
-#             if len(finalresult) == 0:
-#                 print("If-then property: " + name + " does hold\n")
-#             else:
-#                 print("If-then property: " + name + " does not hold\n")
-#
-#
-#         ts1 = time.time()
-#
-#         prop_length = len(atomic_properties) + len(if_then_properties)
-#         print("\n\nTime to verify " + str(prop_length) + " properties: " + str(ts1 - ts0))
+        ts0 = time.time()
 
-        #Experimenting with using framework1 and framework 2 together
-        #Not(StateProperty.verifyCompositeStateProperty(s, OrStateProperty(trivnegativeprop,trivnegativeprop))).verify()
-        #Or(   StateProperty.verifyCompositeStateProperty(s, OrStateProperty(P1atomic,P2atomic))   ,   StateProperty.verifyCompositeStateProperty(s, OrStateProperty(trivnegativeprop, trivnegativeprop))   ).verify()
+        print("\nProperty Proving:")
 
-        ##DUMMY EXPERIMENTATION: Verifying simple atomic formulae and propositional logic formulae
-        ##To verify AtomicProp only use the following two lines:
-        # AtomicProperty(HECUSysTrivialTrueIsolatedLHS(),HECUSysTrivialTrueConnectedLHS(), HECUSysTrivialTrueCompleteLHS()).verify(s)
-        # simpleProp=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        # simpleProp.verify(s)
-        #
-        # ##To verify NotProp, use the following lines
-        # atomicProperty=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        # NotProperty(atomicProperty).verify(s)
-        #
-        # ##To verify AndProp, use the following lines
-        # atomicProperty=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        # AndProperty(atomicProperty,atomicProperty).verify(s)
-        #
-        # ##To verify OrProp, use the following lines
-        # atomicProperty=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        # OrProperty(atomicProperty,atomicProperty).verify(s)
-        #
-        # ##To verify ImplicationProp, use the following lines
-        # atomicProperty=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        # ImplicationProperty(atomicProperty,atomicProperty).verify(s)
-        #
-        # ##To verify complex propositional logic formulae, use the following lines
-        # atomicProperty=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        # OrProperty(NotProperty(atomicProperty),atomicProperty).verify(s)
-        #
-        # atomicProperty=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        # AndProperty(NotProperty(atomicProperty),atomicProperty).verify(s)
-        #
-        # atomicProperty=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        # ImplicationProperty(NotProperty(atomicProperty),NotProperty(atomicProperty)).verify(s)
-        #
-        # ##To verify 2 properties in 1 complex propositional logic formulae, use the following lines
-        # atomicprop1=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        # atomicprop2=AtomicProperty(HECUSysTrivialTrueIsolatedLHS(),HECUSysTrivialTrueConnectedLHS(), HECUSysTrivialTrueCompleteLHS())
-        # OrProperty(NotProperty(atomicprop1),NotProperty(atomicprop2)).verify(s)
-        # ImplicationProperty(NotProperty(atomicprop1),atomicprop2).verify(s)
-#
-#         ORIGINAL CODE FROM LEVI
-#         transformation = [[HMapDistributable(), HMapECU2FiveElements(), HMapVirtualDevice()],
-#                          [HConnECU2VirtualDevice(), HConnVirtualDeviceToDistributable()],
-#                          [HConnectPPortPrototype(), HConnectRPortPrototype()]]
-#
-#         rulesIncludingBackLinks = [[],\
-#                                    [transformation[1][0], transformation[1][1]],\
-#                                    [transformation[2][0], transformation[2][1]]]
-#
-#         s = PathConditionGenerator(transformation, rulesIncludingBackLinks, self.backwardPatterns, self.backwardPatterns2Rules,\
-#         self.overlapRulePatterns, self.multipleSameBackwardLinkRule, 1, False)
-#         s.build_path_conditions()
-#
-#         self._print_states(s)
-#         print '\n'
-#         print 'Built ' + str(len(s.symbStateSpace)) + ' states.'
-#
-#         s.verify_property(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
+
+        verifier = StateProperty()
+        for name, atomic_prop in self.atomic_properties:
+            finalresult = verifier.verifyCompositeStateProperty(s, atomic_prop)
+            if len(finalresult) == 0:
+                print("Atomic property: " + name + " does hold\n")
+            else:
+                print("Atomic property: " + name + " does not hold\n")
+
+
+        for name, i, t in self.if_then_properties:
+            finalresult = verifier.verifyCompositeStateProperty(s, ImplicationStateProperty(i, t))
+            if len(finalresult) == 0:
+                print("If-then property: " + name + " does hold\n")
+            else:
+                print("If-then property: " + name + " does not hold\n")
+
+
+        ts1 = time.time()
+
+        prop_length = len(self.atomic_properties) + len(self.if_then_properties)
+        print("\n\nTime to verify " + str(prop_length) + " properties: " + str(ts1 - ts0))
+
 
 
     def _print_states(self,s):
