@@ -20,17 +20,26 @@ def find_required_rules(graph, transformation, is_contract = False):
     graph_mms = graph.vs["mm__"]
 
 
-
-
-
     #take off the MT_pre__ if this is a contract
     if is_contract:
-        mms_required = set([mm for mm in graph_mms if mm not in ['MT_pre__directLink_S', 'MT_pre__directLink_T', 'MT_pre__trace_link']])
+        mms_required = set([mm for mm in graph_mms if mm not in ['MT_pre__directLink_S', 'MT_pre__directLink_T', 'MT_pre__trace_link',
+                                                                 # Remove this
+                                                                 'MT_pre__leftExpr', 'MT_pre__hasAttribute_S', 'MT_pre__Attribute',
+                                                                 'MT_pre__rightExpr', 'MT_pre__hasAttribute_T', 'MT_pre__Equation',
+                                                                 'MT_pre__hasAttr_S', 'MT_pre__hasAttr_T'
+                                                                 ]])
+
     else:
         mms_required = set([mm for mm in graph_mms if mm not in ['match_contains', 'apply_contains',
                                                                  'directLink_S', 'directLink_T',
                                                                  'trace_link', 'backward_link',
-                                                                 'ApplyModel', 'MatchModel', 'paired_with']])
+                                                                 'ApplyModel', 'MatchModel', 'paired_with',
+
+                                                                 #Remove this
+                                                                 'leftExpr', 'hasAttribute_S', 'Attribute',
+                                                                 'rightExpr', 'hasAttribute_T', 'Equation',
+                                                                 'hasAttr_S', 'hasAttr_T'
+                                                                 ]])
 
     if is_contract:
         mms_required = [mm[8:] for mm in mms_required]
@@ -50,7 +59,7 @@ def find_required_rules(graph, transformation, is_contract = False):
     mms_required = list(set(mms_required))
 
 
-    #print("MMs Required: " + str(mms_required))
+    print("MMs Required: " + str(mms_required))
 
 
     required_rules = []
@@ -66,6 +75,8 @@ def find_required_rules(graph, transformation, is_contract = False):
             for mm in mms_required:
                 if mm in rule_mms and rule not in required_rules:
                     required_rules.append(rule)
+
+                    #print("Add rule: " + rule.name + " with mms: " + str(rule_mms))
                     rule_added = True
                     continue
 
@@ -85,6 +96,7 @@ def slice_transformation(rules, transformation, contract, args):
     required_rules = find_required_rules(contract, transformation, True)
 
     rr_names = [rule.name for rule in required_rules]
+    print("Required rules: " + str(rr_names))
 
     for rr in required_rules:
 

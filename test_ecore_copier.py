@@ -153,7 +153,6 @@ class Test():
 
         # if self.slice_for_prop1:
         #     transformation = [[a1], [a1_2], [b1], [b1_2], [c1], [d1], [e1], [f1], [g1], [h1], [i1], [j1], [k1], [l1], [m1]]
-        #     # transformation = [[a1], [a1_2], [b1],  [g1]]
         # else:
         #     transformation = [[a1], [b1], [q1], [c1], [d1], [e1], [f1], [g1], [h1], [i1], [j1], [k1], [l1], [m1], [n1], [o1],
         #                       [p1]]
@@ -181,9 +180,19 @@ class Test():
         # if_then_properties = [["HCommunityPerson", HCommunityPersonIfClause, HCommunityPersonThenClause]]
         #
 
+        print("Trans length before: " + str(len(self.transformation)))
         if args.slice > 0:
             contract = self.atomic_properties[args.slice - 1]
             self.rules, self.transformation = slice_transformation(self.rules, self.transformation, contract, args)
+
+        print("Transformation:")
+        print("Trans length after: " + str(len(self.transformation)))
+        # for layer in self.transformation:
+        #     for rule in layer:
+        #         print(rule.name)
+
+        raise Exception()
+
 
     def test_correct_ecore_copier(self,args):
 
