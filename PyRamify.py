@@ -169,7 +169,7 @@ class PyRamify:
                 elif "Constant" in node["mm__"] and attrib == "MT_post__name":
                     node[attrib] = "return '" + node[attrib] + "'"
 
-                elif "directLink" in node["mm__"] and attrib == "MT_post__associationType":
+                elif "directLink" in node["mm__"] and attrib == "MT_post__attr1":
                     node[attrib] = "return '" + node[attrib] + "'"
                     
                 elif "paired_with" in node["mm__"] and attrib == "MT_post__rulename":
@@ -315,7 +315,7 @@ class PyRamify:
                 elif "Constant" in node["mm__"] and attrib == "MT_post__value":
                     node[attrib] = "return '" + node[attrib] + "'"
 
-                elif "directLink" in node["mm__"] and attrib == "MT_post__associationType":
+                elif "directLink" in node["mm__"] and attrib == "MT_post__attr1":
                     node[attrib] = "return '" + node[attrib] + "'"
 
                 elif "Attribute" in node["mm__"] and attrib == "MT_post__name":

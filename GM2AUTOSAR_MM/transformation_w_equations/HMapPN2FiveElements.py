@@ -32,32 +32,29 @@ class HMapPN2FiveElements(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """MapPN2FiveElements"""
+ 
         
         # match class PhysicalNode() node
         self.add_node()
-        self.vs[3]["name"] = """""" 
-        self.vs[3]["classtype"] = """PhysicalNode"""
-        self.vs[3]["mm__"] = """PhysicalNode"""
-        self.vs[3]["cardinality"] = """+""" 
+
+        self.vs[3]["mm__"] = """PhysicalNode""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class PhysicalNode()
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         # match class Partition() node
         self.add_node()
-        self.vs[5]["name"] = """""" 
-        self.vs[5]["classtype"] = """Partition"""
-        self.vs[5]["mm__"] = """Partition"""
-        self.vs[5]["cardinality"] = """1""" 
+
+        self.vs[5]["mm__"] = """Partition""" 
+        self.vs[5]["attr1"] = """1""" 
         # match_contains node for class Partition()
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
         # match class Module() node
         self.add_node()
-        self.vs[7]["name"] = """""" 
-        self.vs[7]["classtype"] = """Module"""
-        self.vs[7]["mm__"] = """Module"""
-        self.vs[7]["cardinality"] = """1""" 
+
+        self.vs[7]["mm__"] = """Module""" 
+        self.vs[7]["attr1"] = """1""" 
         # match_contains node for class Module()
         self.add_node()
         self.vs[8]["mm__"] = """match_contains"""
@@ -65,46 +62,41 @@ class HMapPN2FiveElements(Himesis):
         
         # apply class SystemMapping() node
         self.add_node()
-        self.vs[9]["name"] = """""" 
-        self.vs[9]["classtype"] = """SystemMapping"""
-        self.vs[9]["mm__"] = """SystemMapping"""
-        self.vs[9]["cardinality"] = """1"""
+
+        self.vs[9]["mm__"] = """SystemMapping""" 
+        self.vs[9]["attr1"] = """1"""
         # apply_contains node for class SystemMapping()
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
         # apply class System() node
         self.add_node()
-        self.vs[11]["name"] = """""" 
-        self.vs[11]["classtype"] = """System"""
-        self.vs[11]["mm__"] = """System"""
-        self.vs[11]["cardinality"] = """1"""
+
+        self.vs[11]["mm__"] = """System""" 
+        self.vs[11]["attr1"] = """1"""
         # apply_contains node for class System()
         self.add_node()
         self.vs[12]["mm__"] = """apply_contains"""
         # apply class SoftwareComposition() node
         self.add_node()
-        self.vs[13]["name"] = """""" 
-        self.vs[13]["classtype"] = """SoftwareComposition"""
-        self.vs[13]["mm__"] = """SoftwareComposition"""
-        self.vs[13]["cardinality"] = """1"""
+
+        self.vs[13]["mm__"] = """SoftwareComposition""" 
+        self.vs[13]["attr1"] = """1"""
         # apply_contains node for class SoftwareComposition()
         self.add_node()
         self.vs[14]["mm__"] = """apply_contains"""
         # apply class CompositionType() node
         self.add_node()
-        self.vs[15]["name"] = """""" 
-        self.vs[15]["classtype"] = """CompositionType"""
-        self.vs[15]["mm__"] = """CompositionType"""
-        self.vs[15]["cardinality"] = """1"""
+
+        self.vs[15]["mm__"] = """CompositionType""" 
+        self.vs[15]["attr1"] = """1"""
         # apply_contains node for class CompositionType()
         self.add_node()
         self.vs[16]["mm__"] = """apply_contains"""
         # apply class EcuInstance() node
         self.add_node()
-        self.vs[17]["name"] = """""" 
-        self.vs[17]["classtype"] = """EcuInstance"""
-        self.vs[17]["mm__"] = """EcuInstance"""
-        self.vs[17]["cardinality"] = """1"""
+
+        self.vs[17]["mm__"] = """EcuInstance""" 
+        self.vs[17]["attr1"] = """1"""
         # apply_contains node for class EcuInstance()
         self.add_node()
         self.vs[18]["mm__"] = """apply_contains"""
@@ -112,24 +104,24 @@ class HMapPN2FiveElements(Himesis):
         
         # match association PhysicalNode--partition-->Partition node
         self.add_node()
-        self.vs[19]["associationType"] = """partition"""
+        self.vs[19]["attr1"] = """partition"""
         self.vs[19]["mm__"] = """directLink_S"""
         # match association Partition--module-->Module node
         self.add_node()
-        self.vs[20]["associationType"] = """module"""
+        self.vs[20]["attr1"] = """module"""
         self.vs[20]["mm__"] = """directLink_S"""
         
         # apply association System--mapping-->SystemMapping node
         self.add_node()
-        self.vs[21]["associationType"] = """mapping"""
+        self.vs[21]["attr1"] = """mapping"""
         self.vs[21]["mm__"] = """directLink_T"""
         # apply association System--softwareComposition-->SoftwareComposition node
         self.add_node()
-        self.vs[22]["associationType"] = """softwareComposition"""
+        self.vs[22]["attr1"] = """softwareComposition"""
         self.vs[22]["mm__"] = """directLink_T"""
         # apply association SoftwareComposition--softwareComposition-->CompositionType node
         self.add_node()
-        self.vs[23]["associationType"] = """softwareComposition"""
+        self.vs[23]["attr1"] = """softwareComposition"""
         self.vs[23]["mm__"] = """directLink_T"""
         
         
@@ -169,7 +161,7 @@ class HMapPN2FiveElements(Himesis):
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])
-		
+
         # Add the attribute equations
         self["equations"] = [((9,'shortName'),('concat',(('constant','SysMapping_'),(3,'name')))), ((9,'ApplyAttribute'),('constant','solveRef')), ((11,'shortName'),('concat',(('constant','SysTemplate_'),(3,'name')))), ((11,'ApplyAttribute'),('constant','solveRef')), ((13,'shortName'),('concat',(('constant','SoftwareComposition_'),(3,'name')))), ((13,'ApplyAttribute'),('constant','solveRef')), ((15,'shortName'),('concat',(('constant','CompositionType_'),(3,'name')))), ((15,'ApplyAttribute'),('constant','solveRef')), ((17,'shortName'),('concat',(('constant','EcuInstance_'),(3,'name')))), ((17,'ApplyAttribute'),('constant','solveRef')), ]
 

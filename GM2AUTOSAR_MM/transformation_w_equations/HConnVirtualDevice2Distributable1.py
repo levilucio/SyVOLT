@@ -32,32 +32,29 @@ class HConnVirtualDevice2Distributable1(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """ConnVirtualDevice2Distributable1"""
+ 
         
         # match class PhysicalNode() node
         self.add_node()
-        self.vs[3]["name"] = """""" 
-        self.vs[3]["classtype"] = """PhysicalNode"""
-        self.vs[3]["mm__"] = """PhysicalNode"""
-        self.vs[3]["cardinality"] = """+""" 
+
+        self.vs[3]["mm__"] = """PhysicalNode""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class PhysicalNode()
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         # match class Partition() node
         self.add_node()
-        self.vs[5]["name"] = """""" 
-        self.vs[5]["classtype"] = """Partition"""
-        self.vs[5]["mm__"] = """Partition"""
-        self.vs[5]["cardinality"] = """+""" 
+
+        self.vs[5]["mm__"] = """Partition""" 
+        self.vs[5]["attr1"] = """+""" 
         # match_contains node for class Partition()
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
         # match class Module() node
         self.add_node()
-        self.vs[7]["name"] = """""" 
-        self.vs[7]["classtype"] = """Module"""
-        self.vs[7]["mm__"] = """Module"""
-        self.vs[7]["cardinality"] = """+""" 
+
+        self.vs[7]["mm__"] = """Module""" 
+        self.vs[7]["attr1"] = """+""" 
         # match_contains node for class Module()
         self.add_node()
         self.vs[8]["mm__"] = """match_contains"""
@@ -65,19 +62,17 @@ class HConnVirtualDevice2Distributable1(Himesis):
         
         # apply class CompositionType() node
         self.add_node()
-        self.vs[9]["name"] = """""" 
-        self.vs[9]["classtype"] = """CompositionType"""
-        self.vs[9]["mm__"] = """CompositionType"""
-        self.vs[9]["cardinality"] = """1"""
+
+        self.vs[9]["mm__"] = """CompositionType""" 
+        self.vs[9]["attr1"] = """1"""
         # apply_contains node for class CompositionType()
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
         # apply class ComponentPrototype() node
         self.add_node()
-        self.vs[11]["name"] = """""" 
-        self.vs[11]["classtype"] = """ComponentPrototype"""
-        self.vs[11]["mm__"] = """ComponentPrototype"""
-        self.vs[11]["cardinality"] = """1"""
+
+        self.vs[11]["mm__"] = """ComponentPrototype""" 
+        self.vs[11]["attr1"] = """1"""
         # apply_contains node for class ComponentPrototype()
         self.add_node()
         self.vs[12]["mm__"] = """apply_contains"""
@@ -85,29 +80,29 @@ class HConnVirtualDevice2Distributable1(Himesis):
         
         # match association PhysicalNode--partition-->Partition node
         self.add_node()
-        self.vs[13]["associationType"] = """partition"""
+        self.vs[13]["attr1"] = """partition"""
         self.vs[13]["mm__"] = """directLink_S"""
         # match association Partition--module-->Module node
         self.add_node()
-        self.vs[14]["associationType"] = """module"""
+        self.vs[14]["attr1"] = """module"""
         self.vs[14]["mm__"] = """directLink_S"""
         
         # apply association CompositionType--component-->ComponentPrototype node
         self.add_node()
-        self.vs[15]["associationType"] = """component"""
+        self.vs[15]["attr1"] = """component"""
         self.vs[15]["mm__"] = """directLink_T"""
         # apply association ComponentPrototype--type-->CompositionType node
         self.add_node()
-        self.vs[16]["associationType"] = """type"""
+        self.vs[16]["attr1"] = """type"""
         self.vs[16]["mm__"] = """directLink_T"""
         
         # backward association PhysicalNode---->CompositionType node
         self.add_node()
-        self.vs[17]["type"] = """ruleDef"""
+
         self.vs[17]["mm__"] = """backward_link"""
         # backward association Module---->ComponentPrototype node
         self.add_node()
-        self.vs[18]["type"] = """ruleDef"""
+
         self.vs[18]["mm__"] = """backward_link"""
         
         
@@ -142,7 +137,7 @@ class HConnVirtualDevice2Distributable1(Himesis):
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])
-		
+
         # Add the attribute equations
         self["equations"] = [((9,'ApplyAttribute'),('constant','solveRef')), ((11,'ApplyAttribute'),('constant','solveRef')), ]
 

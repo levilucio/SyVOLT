@@ -32,41 +32,37 @@ class HConnectOPState2CProcDefTransition2InstotherInTransitions(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """ConnectOPState2CProcDefTransition2InstotherInTransitions"""
+ 
         
         # match class Transition() node
         self.add_node()
-        self.vs[3]["name"] = """"""
-        self.vs[3]["classtype"] = """Transition"""
-        self.vs[3]["mm__"] = """Transition"""
-        self.vs[3]["cardinality"] = """+"""
+
+        self.vs[3]["mm__"] = """Transition""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class Transition()
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         # match class IN1() node
         self.add_node()
-        self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """IN1"""
-        self.vs[5]["mm__"] = """IN1"""
-        self.vs[5]["cardinality"] = """+"""
+
+        self.vs[5]["mm__"] = """IN1""" 
+        self.vs[5]["attr1"] = """+""" 
         # match_contains node for class IN1()
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
         # match class State() node
         self.add_node()
-        self.vs[7]["name"] = """"""
-        self.vs[7]["classtype"] = """State"""
-        self.vs[7]["mm__"] = """State"""
-        self.vs[7]["cardinality"] = """+"""
+
+        self.vs[7]["mm__"] = """State""" 
+        self.vs[7]["attr1"] = """+""" 
         # match_contains node for class State()
         self.add_node()
         self.vs[8]["mm__"] = """match_contains"""
         # match class Vertex() node
         self.add_node()
-        self.vs[9]["name"] = """"""
-        self.vs[9]["classtype"] = """Vertex"""
-        self.vs[9]["mm__"] = """Vertex"""
-        self.vs[9]["cardinality"] = """+"""
+
+        self.vs[9]["mm__"] = """Vertex""" 
+        self.vs[9]["attr1"] = """+""" 
         # match_contains node for class Vertex()
         self.add_node()
         self.vs[10]["mm__"] = """match_contains"""
@@ -74,37 +70,33 @@ class HConnectOPState2CProcDefTransition2InstotherInTransitions(Himesis):
         
         # apply class ConditionSet() node
         self.add_node()
-        self.vs[11]["name"] = """"""
-        self.vs[11]["classtype"] = """ConditionSet"""
-        self.vs[11]["mm__"] = """ConditionSet"""
-        self.vs[11]["cardinality"] = """1"""
+
+        self.vs[11]["mm__"] = """ConditionSet""" 
+        self.vs[11]["attr1"] = """1"""
         # apply_contains node for class ConditionSet()
         self.add_node()
         self.vs[12]["mm__"] = """apply_contains"""
         # apply class ConditionBranch() node
         self.add_node()
-        self.vs[13]["name"] = """"""
-        self.vs[13]["classtype"] = """ConditionBranch"""
-        self.vs[13]["mm__"] = """ConditionBranch"""
-        self.vs[13]["cardinality"] = """1"""
+
+        self.vs[13]["mm__"] = """ConditionBranch""" 
+        self.vs[13]["attr1"] = """1"""
         # apply_contains node for class ConditionBranch()
         self.add_node()
         self.vs[14]["mm__"] = """apply_contains"""
         # apply class Expr() node
         self.add_node()
-        self.vs[15]["name"] = """"""
-        self.vs[15]["classtype"] = """Expr"""
-        self.vs[15]["mm__"] = """Expr"""
-        self.vs[15]["cardinality"] = """1"""
+
+        self.vs[15]["mm__"] = """Expr""" 
+        self.vs[15]["attr1"] = """1"""
         # apply_contains node for class Expr()
         self.add_node()
         self.vs[16]["mm__"] = """apply_contains"""
         # apply class Inst() node
         self.add_node()
-        self.vs[17]["name"] = """"""
-        self.vs[17]["classtype"] = """Inst"""
-        self.vs[17]["mm__"] = """Inst"""
-        self.vs[17]["cardinality"] = """1"""
+
+        self.vs[17]["mm__"] = """Inst""" 
+        self.vs[17]["attr1"] = """1"""
         # apply_contains node for class Inst()
         self.add_node()
         self.vs[18]["mm__"] = """apply_contains"""
@@ -112,37 +104,37 @@ class HConnectOPState2CProcDefTransition2InstotherInTransitions(Himesis):
         
         # match association State--transitions-->Transition node
         self.add_node()
-        self.vs[19]["associationType"] = """transitions"""
+        self.vs[19]["attr1"] = """transitions"""
         self.vs[19]["mm__"] = """directLink_S"""
         # match association Transition--type-->IN1 node
         self.add_node()
-        self.vs[20]["associationType"] = """type"""
+        self.vs[20]["attr1"] = """type"""
         self.vs[20]["mm__"] = """directLink_S"""
         # match association Transition--src-->Vertex node
         self.add_node()
-        self.vs[21]["associationType"] = """src"""
+        self.vs[21]["attr1"] = """src"""
         self.vs[21]["mm__"] = """directLink_S"""
         
         # apply association ConditionSet--branches-->ConditionBranch node
         self.add_node()
-        self.vs[22]["associationType"] = """branches"""
+        self.vs[22]["attr1"] = """branches"""
         self.vs[22]["mm__"] = """directLink_T"""
         # apply association ConditionBranch--if-->Expr node
         self.add_node()
-        self.vs[23]["associationType"] = """if"""
+        self.vs[23]["attr1"] = """if"""
         self.vs[23]["mm__"] = """directLink_T"""
         # apply association ConditionBranch--then-->Inst node
         self.add_node()
-        self.vs[24]["associationType"] = """then"""
+        self.vs[24]["attr1"] = """then"""
         self.vs[24]["mm__"] = """directLink_T"""
         
         # backward association State---->ConditionSet node
         self.add_node()
-        self.vs[25]["type"] = """ruleDef"""
+
         self.vs[25]["mm__"] = """backward_link"""
         # backward association Transition---->Inst node
         self.add_node()
-        self.vs[26]["type"] = """ruleDef"""
+
         self.vs[26]["mm__"] = """backward_link"""
         
         
@@ -185,9 +177,10 @@ class HConnectOPState2CProcDefTransition2InstotherInTransitions(Himesis):
                 (17,26), # apply_class Inst() -> backward_association
                 (26,3), #  backward_association -> apply_class Transition()
                 (0,2), # matchmodel -> pairedwith
-                (2,1) # pairedwith -> applyModel
+                (2,1) # pairedwith -> applyModel				
 		])
-		
-        # Add the equations
+
+        # Add the attribute equations
         self["equations"] = [((7,'isComposite'),('constant','true')), ((11,'__ApplyAttribute'),('constant','condsetcompstate')), ((15,'literal'),('concat',(('constant','enp=A'),('concat',((9,'name'),('constant','A')))))), ((17,'__ApplyAttribute'),('constant','instForInTrans')), ]
+
         

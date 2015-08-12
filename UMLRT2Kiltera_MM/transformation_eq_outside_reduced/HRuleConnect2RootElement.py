@@ -32,23 +32,21 @@ class HRuleConnect2RootElement(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """RuleConnect2RootElement"""
+ 
         
         # match class RootElement() node
         self.add_node()
-        self.vs[3]["name"] = """"""
-        self.vs[3]["classtype"] = """RootElement"""
-        self.vs[3]["mm__"] = """RootElement"""
-        self.vs[3]["cardinality"] = """+"""
+
+        self.vs[3]["mm__"] = """RootElement""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class RootElement()
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         # match class State() node
         self.add_node()
-        self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """State"""
-        self.vs[5]["mm__"] = """State"""
-        self.vs[5]["cardinality"] = """+"""
+
+        self.vs[5]["mm__"] = """State""" 
+        self.vs[5]["attr1"] = """+""" 
         # match_contains node for class State()
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
@@ -56,19 +54,17 @@ class HRuleConnect2RootElement(Himesis):
         
         # apply class RootElement() node
         self.add_node()
-        self.vs[7]["name"] = """"""
-        self.vs[7]["classtype"] = """RootElement"""
-        self.vs[7]["mm__"] = """RootElement"""
-        self.vs[7]["cardinality"] = """1"""
+
+        self.vs[7]["mm__"] = """RootElement""" 
+        self.vs[7]["attr1"] = """1"""
         # apply_contains node for class RootElement()
         self.add_node()
         self.vs[8]["mm__"] = """apply_contains"""
         # apply class ProcDef() node
         self.add_node()
-        self.vs[9]["name"] = """"""
-        self.vs[9]["classtype"] = """ProcDef"""
-        self.vs[9]["mm__"] = """ProcDef"""
-        self.vs[9]["cardinality"] = """1"""
+
+        self.vs[9]["mm__"] = """ProcDef""" 
+        self.vs[9]["attr1"] = """1"""
         # apply_contains node for class ProcDef()
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
@@ -76,21 +72,21 @@ class HRuleConnect2RootElement(Himesis):
         
         # match association RootElement--state-->State node
         self.add_node()
-        self.vs[11]["associationType"] = """state"""
+        self.vs[11]["attr1"] = """state"""
         self.vs[11]["mm__"] = """directLink_S"""
         
         # apply association RootElement--procDef-->ProcDef node
         self.add_node()
-        self.vs[12]["associationType"] = """procDef"""
+        self.vs[12]["attr1"] = """procDef"""
         self.vs[12]["mm__"] = """directLink_T"""
         
         # backward association RootElement---->RootElement node
         self.add_node()
-        self.vs[13]["type"] = """ruleDef"""
+
         self.vs[13]["mm__"] = """backward_link"""
         # backward association State---->ProcDef node
         self.add_node()
-        self.vs[14]["type"] = """ruleDef"""
+
         self.vs[14]["mm__"] = """backward_link"""
         
         
@@ -117,9 +113,10 @@ class HRuleConnect2RootElement(Himesis):
                 (9,14), # apply_class ProcDef() -> backward_association
                 (14,5), #  backward_association -> apply_class State()
                 (0,2), # matchmodel -> pairedwith
-                (2,1) # pairedwith -> applyModel
+                (2,1) # pairedwith -> applyModel				
 		])
-		
-        # Add the equations
+
+        # Add the attribute equations
         self["equations"] = [((7,'__ApplyAttribute'),('constant','root')), ((9,'__ApplyAttribute'),('constant','procdef')), ]
+
         

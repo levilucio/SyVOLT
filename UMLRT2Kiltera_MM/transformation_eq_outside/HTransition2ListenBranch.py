@@ -32,41 +32,37 @@ class HTransition2ListenBranch(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """Transition2ListenBranch"""
+ 
         
         # match class State() node
         self.add_node()
-        self.vs[3]["name"] = """"""
-        self.vs[3]["classtype"] = """State"""
-        self.vs[3]["mm__"] = """State"""
-        self.vs[3]["cardinality"] = """+"""
+
+        self.vs[3]["mm__"] = """State""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class State()
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         # match class Transition() node
         self.add_node()
-        self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """Transition"""
-        self.vs[5]["mm__"] = """Transition"""
-        self.vs[5]["cardinality"] = """+"""
+
+        self.vs[5]["mm__"] = """Transition""" 
+        self.vs[5]["attr1"] = """+""" 
         # match_contains node for class Transition()
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
         # match class Trigger() node
         self.add_node()
-        self.vs[7]["name"] = """"""
-        self.vs[7]["classtype"] = """Trigger"""
-        self.vs[7]["mm__"] = """Trigger"""
-        self.vs[7]["cardinality"] = """1"""
+
+        self.vs[7]["mm__"] = """Trigger""" 
+        self.vs[7]["attr1"] = """1""" 
         # match_contains node for class Trigger()
         self.add_node()
         self.vs[8]["mm__"] = """match_contains"""
         # match class Signal() node
         self.add_node()
-        self.vs[9]["name"] = """"""
-        self.vs[9]["classtype"] = """Signal"""
-        self.vs[9]["mm__"] = """Signal"""
-        self.vs[9]["cardinality"] = """1"""
+
+        self.vs[9]["mm__"] = """Signal""" 
+        self.vs[9]["attr1"] = """1""" 
         # match_contains node for class Signal()
         self.add_node()
         self.vs[10]["mm__"] = """match_contains"""
@@ -74,28 +70,25 @@ class HTransition2ListenBranch(Himesis):
         
         # apply class Listen() node
         self.add_node()
-        self.vs[11]["name"] = """"""
-        self.vs[11]["classtype"] = """Listen"""
-        self.vs[11]["mm__"] = """Listen"""
-        self.vs[11]["cardinality"] = """1"""
+
+        self.vs[11]["mm__"] = """Listen""" 
+        self.vs[11]["attr1"] = """1"""
         # apply_contains node for class Listen()
         self.add_node()
         self.vs[12]["mm__"] = """apply_contains"""
         # apply class ListenBranch() node
         self.add_node()
-        self.vs[13]["name"] = """"""
-        self.vs[13]["classtype"] = """ListenBranch"""
-        self.vs[13]["mm__"] = """ListenBranch"""
-        self.vs[13]["cardinality"] = """1"""
+
+        self.vs[13]["mm__"] = """ListenBranch""" 
+        self.vs[13]["attr1"] = """1"""
         # apply_contains node for class ListenBranch()
         self.add_node()
         self.vs[14]["mm__"] = """apply_contains"""
         # apply class Inst() node
         self.add_node()
-        self.vs[15]["name"] = """"""
-        self.vs[15]["classtype"] = """Inst"""
-        self.vs[15]["mm__"] = """Inst"""
-        self.vs[15]["cardinality"] = """1"""
+
+        self.vs[15]["mm__"] = """Inst""" 
+        self.vs[15]["attr1"] = """1"""
         # apply_contains node for class Inst()
         self.add_node()
         self.vs[16]["mm__"] = """apply_contains"""
@@ -103,33 +96,33 @@ class HTransition2ListenBranch(Himesis):
         
         # match association State--outgoingTransitions-->Transition node
         self.add_node()
-        self.vs[17]["associationType"] = """outgoingTransitions"""
+        self.vs[17]["attr1"] = """outgoingTransitions"""
         self.vs[17]["mm__"] = """directLink_S"""
         # match association Transition--triggers-->Trigger node
         self.add_node()
-        self.vs[18]["associationType"] = """triggers"""
+        self.vs[18]["attr1"] = """triggers"""
         self.vs[18]["mm__"] = """directLink_S"""
         # match association Trigger--signal-->Signal node
         self.add_node()
-        self.vs[19]["associationType"] = """signal"""
+        self.vs[19]["attr1"] = """signal"""
         self.vs[19]["mm__"] = """directLink_S"""
         
         # apply association Listen--branches-->ListenBranch node
         self.add_node()
-        self.vs[20]["associationType"] = """branches"""
+        self.vs[20]["attr1"] = """branches"""
         self.vs[20]["mm__"] = """directLink_T"""
         # apply association ListenBranch--p-->Inst node
         self.add_node()
-        self.vs[21]["associationType"] = """p"""
+        self.vs[21]["attr1"] = """p"""
         self.vs[21]["mm__"] = """directLink_T"""
         
         # backward association State---->Listen node
         self.add_node()
-        self.vs[22]["type"] = """ruleDef"""
+
         self.vs[22]["mm__"] = """backward_link"""
         # backward association Transition---->Inst node
         self.add_node()
-        self.vs[23]["type"] = """ruleDef"""
+
         self.vs[23]["mm__"] = """backward_link"""
         
         
@@ -168,9 +161,10 @@ class HTransition2ListenBranch(Himesis):
                 (15,23), # apply_class Inst() -> backward_association
                 (23,5), #  backward_association -> apply_class Transition()
                 (0,2), # matchmodel -> pairedwith
-                (2,1) # pairedwith -> applyModel
+                (2,1) # pairedwith -> applyModel				
 		])
-		
-        # Add the equations
+
+        # Add the attribute equations
         self["equations"] = [((3,'isComposite'),('constant','false')), ((3,'hasOutgoingTransitions'),('constant','true')), ((11,'__ApplyAttribute'),('constant','listensimplestate')), ((13,'channel'),(9,'name')), ((15,'__ApplyAttribute'),('constant','instfortrans')), ]
+
         

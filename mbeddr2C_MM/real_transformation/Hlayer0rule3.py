@@ -36,10 +36,9 @@ class Hlayer0rule3(Himesis):
         
         # match class StringType(layer0rule3class0) node
         self.add_node()
-        self.vs[3]["name"] = """layer0rule3class0""" 
-        self.vs[3]["classtype"] = """StringType"""
-        self.vs[3]["mm__"] = """StringType"""
-        self.vs[3]["cardinality"] = """+""" 
+
+        self.vs[3]["mm__"] = """StringType""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class StringType(layer0rule3class0)
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
@@ -47,10 +46,9 @@ class Hlayer0rule3(Himesis):
         
         # apply class StringType(layer0rule3class1) node
         self.add_node()
-        self.vs[5]["name"] = """layer0rule3class1""" 
-        self.vs[5]["classtype"] = """StringType"""
-        self.vs[5]["mm__"] = """StringType"""
-        self.vs[5]["cardinality"] = """1"""
+
+        self.vs[5]["mm__"] = """StringType""" 
+        self.vs[5]["attr1"] = """1"""
         # apply_contains node for class StringType(layer0rule3class1)
         self.add_node()
         self.vs[6]["mm__"] = """apply_contains"""

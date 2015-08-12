@@ -36,10 +36,9 @@ class Hlayer0rule2(Himesis):
         
         # match class Operation(layer0rule2class0) node
         self.add_node()
-        self.vs[3]["name"] = """layer0rule2class0""" 
-        self.vs[3]["classtype"] = """Operation"""
-        self.vs[3]["mm__"] = """Operation"""
-        self.vs[3]["cardinality"] = """+""" 
+
+        self.vs[3]["mm__"] = """Operation""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class Operation(layer0rule2class0)
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
@@ -47,37 +46,33 @@ class Hlayer0rule2(Himesis):
         
         # apply class CFunctionPointerStructMember(layer0rule2class2) node
         self.add_node()
-        self.vs[5]["name"] = """layer0rule2class2""" 
-        self.vs[5]["classtype"] = """CFunctionPointerStructMember"""
-        self.vs[5]["mm__"] = """CFunctionPointerStructMember"""
-        self.vs[5]["cardinality"] = """1"""
+
+        self.vs[5]["mm__"] = """CFunctionPointerStructMember""" 
+        self.vs[5]["attr1"] = """1"""
         # apply_contains node for class CFunctionPointerStructMember(layer0rule2class2)
         self.add_node()
         self.vs[6]["mm__"] = """apply_contains"""
         # apply class FunctionRefType(layer0rule2class3) node
         self.add_node()
-        self.vs[7]["name"] = """layer0rule2class3""" 
-        self.vs[7]["classtype"] = """FunctionRefType"""
-        self.vs[7]["mm__"] = """FunctionRefType"""
-        self.vs[7]["cardinality"] = """1"""
+
+        self.vs[7]["mm__"] = """FunctionRefType""" 
+        self.vs[7]["attr1"] = """1"""
         # apply_contains node for class FunctionRefType(layer0rule2class3)
         self.add_node()
         self.vs[8]["mm__"] = """apply_contains"""
         # apply class PointerType(layer0rule5class2) node
         self.add_node()
-        self.vs[9]["name"] = """layer0rule5class2""" 
-        self.vs[9]["classtype"] = """PointerType"""
-        self.vs[9]["mm__"] = """PointerType"""
-        self.vs[9]["cardinality"] = """1"""
+
+        self.vs[9]["mm__"] = """PointerType""" 
+        self.vs[9]["attr1"] = """1"""
         # apply_contains node for class PointerType(layer0rule5class2)
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
         # apply class VoidType(layer0rule5class3) node
         self.add_node()
-        self.vs[11]["name"] = """layer0rule5class3""" 
-        self.vs[11]["classtype"] = """VoidType"""
-        self.vs[11]["mm__"] = """VoidType"""
-        self.vs[11]["cardinality"] = """1"""
+
+        self.vs[11]["mm__"] = """VoidType""" 
+        self.vs[11]["attr1"] = """1"""
         # apply_contains node for class VoidType(layer0rule5class3)
         self.add_node()
         self.vs[12]["mm__"] = """apply_contains"""
@@ -86,15 +81,15 @@ class Hlayer0rule2(Himesis):
         
         # apply association CFunctionPointerStructMember--type-->FunctionRefType node
         self.add_node()
-        self.vs[13]["associationType"] = """type"""
+        self.vs[13]["attr1"] = """type"""
         self.vs[13]["mm__"] = """directLink_T"""
         # apply association FunctionRefType--argTypes-->PointerType node
         self.add_node()
-        self.vs[14]["associationType"] = """argTypes"""
+        self.vs[14]["attr1"] = """argTypes"""
         self.vs[14]["mm__"] = """directLink_T"""
         # apply association PointerType--baseType-->VoidType node
         self.add_node()
-        self.vs[15]["associationType"] = """baseType"""
+        self.vs[15]["attr1"] = """baseType"""
         self.vs[15]["mm__"] = """directLink_T"""
         
         

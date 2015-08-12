@@ -32,23 +32,21 @@ class HConnVirtualDevice2Distributable2(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """ConnVirtualDevice2Distributable2"""
+ 
         
         # match class Partition() node
         self.add_node()
-        self.vs[3]["name"] = """""" 
-        self.vs[3]["classtype"] = """Partition"""
-        self.vs[3]["mm__"] = """Partition"""
-        self.vs[3]["cardinality"] = """+""" 
+
+        self.vs[3]["mm__"] = """Partition""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class Partition()
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         # match class Module() node
         self.add_node()
-        self.vs[5]["name"] = """""" 
-        self.vs[5]["classtype"] = """Module"""
-        self.vs[5]["mm__"] = """Module"""
-        self.vs[5]["cardinality"] = """+""" 
+
+        self.vs[5]["mm__"] = """Module""" 
+        self.vs[5]["attr1"] = """+""" 
         # match_contains node for class Module()
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
@@ -56,19 +54,17 @@ class HConnVirtualDevice2Distributable2(Himesis):
         
         # apply class SwcToEcuMapping() node
         self.add_node()
-        self.vs[7]["name"] = """""" 
-        self.vs[7]["classtype"] = """SwcToEcuMapping"""
-        self.vs[7]["mm__"] = """SwcToEcuMapping"""
-        self.vs[7]["cardinality"] = """1"""
+
+        self.vs[7]["mm__"] = """SwcToEcuMapping""" 
+        self.vs[7]["attr1"] = """1"""
         # apply_contains node for class SwcToEcuMapping()
         self.add_node()
         self.vs[8]["mm__"] = """apply_contains"""
         # apply class SwCompToEcuMapping_component() node
         self.add_node()
-        self.vs[9]["name"] = """""" 
-        self.vs[9]["classtype"] = """SwCompToEcuMapping_component"""
-        self.vs[9]["mm__"] = """SwCompToEcuMapping_component"""
-        self.vs[9]["cardinality"] = """1"""
+
+        self.vs[9]["mm__"] = """SwCompToEcuMapping_component""" 
+        self.vs[9]["attr1"] = """1"""
         # apply_contains node for class SwCompToEcuMapping_component()
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
@@ -76,21 +72,21 @@ class HConnVirtualDevice2Distributable2(Himesis):
         
         # match association Partition--module-->Module node
         self.add_node()
-        self.vs[11]["associationType"] = """module"""
+        self.vs[11]["attr1"] = """module"""
         self.vs[11]["mm__"] = """directLink_S"""
         
         # apply association SwcToEcuMapping--component-->SwCompToEcuMapping_component node
         self.add_node()
-        self.vs[12]["associationType"] = """component"""
+        self.vs[12]["attr1"] = """component"""
         self.vs[12]["mm__"] = """directLink_T"""
         
         # backward association Partition---->SwcToEcuMapping node
         self.add_node()
-        self.vs[13]["type"] = """ruleDef"""
+
         self.vs[13]["mm__"] = """backward_link"""
         # backward association Module---->SwCompToEcuMapping_component node
         self.add_node()
-        self.vs[14]["type"] = """ruleDef"""
+
         self.vs[14]["mm__"] = """backward_link"""
         
         
@@ -119,7 +115,7 @@ class HConnVirtualDevice2Distributable2(Himesis):
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])
-		
+
         # Add the attribute equations
         self["equations"] = [((7,'ApplyAttribute'),('constant','solveRef')), ((9,'ApplyAttribute'),('constant','solveRef')), ]
 

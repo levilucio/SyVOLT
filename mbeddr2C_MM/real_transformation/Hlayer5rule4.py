@@ -36,100 +36,89 @@ class Hlayer5rule4(Himesis):
         
         # match class TestCase(layer5rule4class0) node
         self.add_node()
-        self.vs[3]["name"] = """layer5rule4class0""" 
-        self.vs[3]["classtype"] = """TestCase"""
-        self.vs[3]["mm__"] = """TestCase"""
-        self.vs[3]["cardinality"] = """+""" 
+
+        self.vs[3]["mm__"] = """TestCase""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class TestCase(layer5rule4class0)
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         # match class StatementList(layer5rule4class1) node
         self.add_node()
-        self.vs[5]["name"] = """layer5rule4class1""" 
-        self.vs[5]["classtype"] = """StatementList"""
-        self.vs[5]["mm__"] = """StatementList"""
-        self.vs[5]["cardinality"] = """+""" 
+
+        self.vs[5]["mm__"] = """StatementList""" 
+        self.vs[5]["attr1"] = """+""" 
         # match_contains node for class StatementList(layer5rule4class1)
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
         # match class ExpressionStatement(layer5rule4class2) node
         self.add_node()
-        self.vs[7]["name"] = """layer5rule4class2""" 
-        self.vs[7]["classtype"] = """ExpressionStatement"""
-        self.vs[7]["mm__"] = """ExpressionStatement"""
-        self.vs[7]["cardinality"] = """+""" 
+
+        self.vs[7]["mm__"] = """ExpressionStatement""" 
+        self.vs[7]["attr1"] = """+""" 
         # match_contains node for class ExpressionStatement(layer5rule4class2)
         self.add_node()
         self.vs[8]["mm__"] = """match_contains"""
         # match class PortAdapterOpCallExpr(layer5rule4class3) node
         self.add_node()
-        self.vs[9]["name"] = """layer5rule4class3""" 
-        self.vs[9]["classtype"] = """PortAdapterOpCallExpr"""
-        self.vs[9]["mm__"] = """PortAdapterOpCallExpr"""
-        self.vs[9]["cardinality"] = """+""" 
+
+        self.vs[9]["mm__"] = """PortAdapterOpCallExpr""" 
+        self.vs[9]["attr1"] = """+""" 
         # match_contains node for class PortAdapterOpCallExpr(layer5rule4class3)
         self.add_node()
         self.vs[10]["mm__"] = """match_contains"""
         # match class PortAdapterRefExpr(layer5rule4class4) node
         self.add_node()
-        self.vs[11]["name"] = """layer5rule4class4""" 
-        self.vs[11]["classtype"] = """PortAdapterRefExpr"""
-        self.vs[11]["mm__"] = """PortAdapterRefExpr"""
-        self.vs[11]["cardinality"] = """+""" 
+
+        self.vs[11]["mm__"] = """PortAdapterRefExpr""" 
+        self.vs[11]["attr1"] = """+""" 
         # match_contains node for class PortAdapterRefExpr(layer5rule4class4)
         self.add_node()
         self.vs[12]["mm__"] = """match_contains"""
         # match class PortAdapter(layer5rule4class5) node
         self.add_node()
-        self.vs[13]["name"] = """layer5rule4class5""" 
-        self.vs[13]["classtype"] = """PortAdapter"""
-        self.vs[13]["mm__"] = """PortAdapter"""
-        self.vs[13]["cardinality"] = """+""" 
+
+        self.vs[13]["mm__"] = """PortAdapter""" 
+        self.vs[13]["attr1"] = """+""" 
         # match_contains node for class PortAdapter(layer5rule4class5)
         self.add_node()
         self.vs[14]["mm__"] = """match_contains"""
         # match class Operation(layer5rule4class6) node
         self.add_node()
-        self.vs[15]["name"] = """layer5rule4class6""" 
-        self.vs[15]["classtype"] = """Operation"""
-        self.vs[15]["mm__"] = """Operation"""
-        self.vs[15]["cardinality"] = """+""" 
+
+        self.vs[15]["mm__"] = """Operation""" 
+        self.vs[15]["attr1"] = """+""" 
         # match_contains node for class Operation(layer5rule4class6)
         self.add_node()
         self.vs[16]["mm__"] = """match_contains"""
         # match class AdapterInstancePortRef(layer5rule4class7) node
         self.add_node()
-        self.vs[17]["name"] = """layer5rule4class7""" 
-        self.vs[17]["classtype"] = """AdapterInstancePortRef"""
-        self.vs[17]["mm__"] = """AdapterInstancePortRef"""
-        self.vs[17]["cardinality"] = """+""" 
+
+        self.vs[17]["mm__"] = """AdapterInstancePortRef""" 
+        self.vs[17]["attr1"] = """+""" 
         # match_contains node for class AdapterInstancePortRef(layer5rule4class7)
         self.add_node()
         self.vs[18]["mm__"] = """match_contains"""
         # match class ComponentInstance(layer5rule4class8) node
         self.add_node()
-        self.vs[19]["name"] = """layer5rule4class8""" 
-        self.vs[19]["classtype"] = """ComponentInstance"""
-        self.vs[19]["mm__"] = """ComponentInstance"""
-        self.vs[19]["cardinality"] = """+""" 
+
+        self.vs[19]["mm__"] = """ComponentInstance""" 
+        self.vs[19]["attr1"] = """+""" 
         # match_contains node for class ComponentInstance(layer5rule4class8)
         self.add_node()
         self.vs[20]["mm__"] = """match_contains"""
         # match class ProvidedPort(layer5rule4class9) node
         self.add_node()
-        self.vs[21]["name"] = """layer5rule4class9""" 
-        self.vs[21]["classtype"] = """ProvidedPort"""
-        self.vs[21]["mm__"] = """ProvidedPort"""
-        self.vs[21]["cardinality"] = """+""" 
+
+        self.vs[21]["mm__"] = """ProvidedPort""" 
+        self.vs[21]["attr1"] = """+""" 
         # match_contains node for class ProvidedPort(layer5rule4class9)
         self.add_node()
         self.vs[22]["mm__"] = """match_contains"""
         # match class ClientServerInterface(layer5rule4class10) node
         self.add_node()
-        self.vs[23]["name"] = """layer5rule4class10""" 
-        self.vs[23]["classtype"] = """ClientServerInterface"""
-        self.vs[23]["mm__"] = """ClientServerInterface"""
-        self.vs[23]["cardinality"] = """+""" 
+
+        self.vs[23]["mm__"] = """ClientServerInterface""" 
+        self.vs[23]["attr1"] = """+""" 
         # match_contains node for class ClientServerInterface(layer5rule4class10)
         self.add_node()
         self.vs[24]["mm__"] = """match_contains"""
@@ -137,64 +126,57 @@ class Hlayer5rule4(Himesis):
         
         # apply class StatementList(layer5rule4class11) node
         self.add_node()
-        self.vs[25]["name"] = """layer5rule4class11""" 
-        self.vs[25]["classtype"] = """StatementList"""
-        self.vs[25]["mm__"] = """StatementList"""
-        self.vs[25]["cardinality"] = """1"""
+
+        self.vs[25]["mm__"] = """StatementList""" 
+        self.vs[25]["attr1"] = """1"""
         # apply_contains node for class StatementList(layer5rule4class11)
         self.add_node()
         self.vs[26]["mm__"] = """apply_contains"""
         # apply class ExpressionStatement(layer5rule4class12) node
         self.add_node()
-        self.vs[27]["name"] = """layer5rule4class12""" 
-        self.vs[27]["classtype"] = """ExpressionStatement"""
-        self.vs[27]["mm__"] = """ExpressionStatement"""
-        self.vs[27]["cardinality"] = """1"""
+
+        self.vs[27]["mm__"] = """ExpressionStatement""" 
+        self.vs[27]["attr1"] = """1"""
         # apply_contains node for class ExpressionStatement(layer5rule4class12)
         self.add_node()
         self.vs[28]["mm__"] = """apply_contains"""
         # apply class FunctionCall(layer5rule4class13) node
         self.add_node()
-        self.vs[29]["name"] = """layer5rule4class13""" 
-        self.vs[29]["classtype"] = """FunctionCall"""
-        self.vs[29]["mm__"] = """FunctionCall"""
-        self.vs[29]["cardinality"] = """1"""
+
+        self.vs[29]["mm__"] = """FunctionCall""" 
+        self.vs[29]["attr1"] = """1"""
         # apply_contains node for class FunctionCall(layer5rule4class13)
         self.add_node()
         self.vs[30]["mm__"] = """apply_contains"""
         # apply class FunctionPrototype(layer5rule4class14) node
         self.add_node()
-        self.vs[31]["name"] = """layer5rule4class14""" 
-        self.vs[31]["classtype"] = """FunctionPrototype"""
-        self.vs[31]["mm__"] = """FunctionPrototype"""
-        self.vs[31]["cardinality"] = """1"""
+
+        self.vs[31]["mm__"] = """FunctionPrototype""" 
+        self.vs[31]["attr1"] = """1"""
         # apply_contains node for class FunctionPrototype(layer5rule4class14)
         self.add_node()
         self.vs[32]["mm__"] = """apply_contains"""
         # apply class ReferenceExpr(layer5rule4class15) node
         self.add_node()
-        self.vs[33]["name"] = """layer5rule4class15""" 
-        self.vs[33]["classtype"] = """ReferenceExpr"""
-        self.vs[33]["mm__"] = """ReferenceExpr"""
-        self.vs[33]["cardinality"] = """1"""
+
+        self.vs[33]["mm__"] = """ReferenceExpr""" 
+        self.vs[33]["attr1"] = """1"""
         # apply_contains node for class ReferenceExpr(layer5rule4class15)
         self.add_node()
         self.vs[34]["mm__"] = """apply_contains"""
         # apply class GlobalVarRef(layer5rule4class16) node
         self.add_node()
-        self.vs[35]["name"] = """layer5rule4class16""" 
-        self.vs[35]["classtype"] = """GlobalVarRef"""
-        self.vs[35]["mm__"] = """GlobalVarRef"""
-        self.vs[35]["cardinality"] = """1"""
+
+        self.vs[35]["mm__"] = """GlobalVarRef""" 
+        self.vs[35]["attr1"] = """1"""
         # apply_contains node for class GlobalVarRef(layer5rule4class16)
         self.add_node()
         self.vs[36]["mm__"] = """apply_contains"""
         # apply class GlobalVariableDeclaration(layer5rule4class17) node
         self.add_node()
-        self.vs[37]["name"] = """layer5rule4class17""" 
-        self.vs[37]["classtype"] = """GlobalVariableDeclaration"""
-        self.vs[37]["mm__"] = """GlobalVariableDeclaration"""
-        self.vs[37]["cardinality"] = """1"""
+
+        self.vs[37]["mm__"] = """GlobalVariableDeclaration""" 
+        self.vs[37]["attr1"] = """1"""
         # apply_contains node for class GlobalVariableDeclaration(layer5rule4class17)
         self.add_node()
         self.vs[38]["mm__"] = """apply_contains"""
@@ -202,85 +184,85 @@ class Hlayer5rule4(Himesis):
         
         # match association TestCase--body-->StatementList node
         self.add_node()
-        self.vs[39]["associationType"] = """body"""
+        self.vs[39]["attr1"] = """body"""
         self.vs[39]["mm__"] = """directLink_S"""
         # match association StatementList--statements-->ExpressionStatement node
         self.add_node()
-        self.vs[40]["associationType"] = """statements"""
+        self.vs[40]["attr1"] = """statements"""
         self.vs[40]["mm__"] = """directLink_S"""
         # match association ExpressionStatement--expr-->PortAdapterOpCallExpr node
         self.add_node()
-        self.vs[41]["associationType"] = """expr"""
+        self.vs[41]["attr1"] = """expr"""
         self.vs[41]["mm__"] = """directLink_S"""
         # match association PortAdapterOpCallExpr--expression-->PortAdapterRefExpr node
         self.add_node()
-        self.vs[42]["associationType"] = """expression"""
+        self.vs[42]["attr1"] = """expression"""
         self.vs[42]["mm__"] = """directLink_S"""
         # match association PortAdapterRefExpr--portAdater-->PortAdapter node
         self.add_node()
-        self.vs[43]["associationType"] = """portAdater"""
+        self.vs[43]["attr1"] = """portAdater"""
         self.vs[43]["mm__"] = """directLink_S"""
         # match association PortAdapterOpCallExpr--operation-->Operation node
         self.add_node()
-        self.vs[44]["associationType"] = """operation"""
+        self.vs[44]["attr1"] = """operation"""
         self.vs[44]["mm__"] = """directLink_S"""
         # match association PortAdapter--portRef-->AdapterInstancePortRef node
         self.add_node()
-        self.vs[45]["associationType"] = """portRef"""
+        self.vs[45]["attr1"] = """portRef"""
         self.vs[45]["mm__"] = """directLink_S"""
         # match association AdapterInstancePortRef--instance-->ComponentInstance node
         self.add_node()
-        self.vs[46]["associationType"] = """instance"""
+        self.vs[46]["attr1"] = """instance"""
         self.vs[46]["mm__"] = """directLink_S"""
         # match association AdapterInstancePortRef--port-->ProvidedPort node
         self.add_node()
-        self.vs[47]["associationType"] = """port"""
+        self.vs[47]["attr1"] = """port"""
         self.vs[47]["mm__"] = """directLink_S"""
         # match association ProvidedPort--intf-->ClientServerInterface node
         self.add_node()
-        self.vs[48]["associationType"] = """intf"""
+        self.vs[48]["attr1"] = """intf"""
         self.vs[48]["mm__"] = """directLink_S"""
         # match association ClientServerInterface--contents-->Operation node
         self.add_node()
-        self.vs[49]["associationType"] = """contents"""
+        self.vs[49]["attr1"] = """contents"""
         self.vs[49]["mm__"] = """directLink_S"""
         
         # apply association StatementList--statements-->ExpressionStatement node
         self.add_node()
-        self.vs[50]["associationType"] = """statements"""
+        self.vs[50]["attr1"] = """statements"""
         self.vs[50]["mm__"] = """directLink_T"""
         # apply association ExpressionStatement--expr-->FunctionCall node
         self.add_node()
-        self.vs[51]["associationType"] = """expr"""
+        self.vs[51]["attr1"] = """expr"""
         self.vs[51]["mm__"] = """directLink_T"""
         # apply association FunctionCall--function-->FunctionPrototype node
         self.add_node()
-        self.vs[52]["associationType"] = """function"""
+        self.vs[52]["attr1"] = """function"""
         self.vs[52]["mm__"] = """directLink_T"""
         # apply association FunctionCall--actuals-->ReferenceExpr node
         self.add_node()
-        self.vs[53]["associationType"] = """actuals"""
+        self.vs[53]["attr1"] = """actuals"""
         self.vs[53]["mm__"] = """directLink_T"""
         # apply association ReferenceExpr--expression-->GlobalVarRef node
         self.add_node()
-        self.vs[54]["associationType"] = """expression"""
+        self.vs[54]["attr1"] = """expression"""
         self.vs[54]["mm__"] = """directLink_T"""
         # apply association GlobalVarRef--var-->GlobalVariableDeclaration node
         self.add_node()
-        self.vs[55]["associationType"] = """var"""
+        self.vs[55]["attr1"] = """var"""
         self.vs[55]["mm__"] = """directLink_T"""
         
         # backward association TestCase---->StatementList node
         self.add_node()
-        self.vs[56]["type"] = """ruleDef"""
+
         self.vs[56]["mm__"] = """backward_link"""
         # backward association ProvidedPort---->FunctionPrototype node
         self.add_node()
-        self.vs[57]["type"] = """ruleDef"""
+
         self.vs[57]["mm__"] = """backward_link"""
         # backward association ComponentInstance---->GlobalVariableDeclaration node
         self.add_node()
-        self.vs[58]["type"] = """ruleDef"""
+
         self.vs[58]["mm__"] = """backward_link"""
         
         

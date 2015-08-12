@@ -32,23 +32,21 @@ class HFatherRule(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """FatherRule"""
+ 
         
         # match class Family() node
         self.add_node()
-        self.vs[3]["name"] = """"""
-        self.vs[3]["classtype"] = """Family"""
-        self.vs[3]["mm__"] = """Family"""
-        self.vs[3]["cardinality"] = """+"""
+
+        self.vs[3]["mm__"] = """Family""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class Family()
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         # match class Member() node
         self.add_node()
-        self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """Member"""
-        self.vs[5]["mm__"] = """Member"""
-        self.vs[5]["cardinality"] = """+"""
+
+        self.vs[5]["mm__"] = """Member""" 
+        self.vs[5]["attr1"] = """+""" 
         # match_contains node for class Member()
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
@@ -56,10 +54,9 @@ class HFatherRule(Himesis):
         
         # apply class Man() node
         self.add_node()
-        self.vs[7]["name"] = """"""
-        self.vs[7]["classtype"] = """Man"""
-        self.vs[7]["mm__"] = """Man"""
-        self.vs[7]["cardinality"] = """1"""
+
+        self.vs[7]["mm__"] = """Man""" 
+        self.vs[7]["attr1"] = """1"""
         # apply_contains node for class Man()
         self.add_node()
         self.vs[8]["mm__"] = """apply_contains"""
@@ -67,7 +64,7 @@ class HFatherRule(Himesis):
         
         # match association Family--father-->Member node
         self.add_node()
-        self.vs[9]["associationType"] = """father"""
+        self.vs[9]["attr1"] = """father"""
         self.vs[9]["mm__"] = """directLink_S"""
         
         
@@ -90,8 +87,8 @@ class HFatherRule(Himesis):
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])
-		
-        # Add the equations
+
+        # Add the attribute equations
         self["equations"] = [((7,'ApplyAttribute'),('constant','famMemberFather')), ((7,'name'),('concat',((5,'name'),(3,'name')))), ]
 
         

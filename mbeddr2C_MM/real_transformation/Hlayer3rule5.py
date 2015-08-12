@@ -36,19 +36,17 @@ class Hlayer3rule5(Himesis):
         
         # match class ImplementationModule(layer3rule5class0) node
         self.add_node()
-        self.vs[3]["name"] = """layer3rule5class0""" 
-        self.vs[3]["classtype"] = """ImplementationModule"""
-        self.vs[3]["mm__"] = """ImplementationModule"""
-        self.vs[3]["cardinality"] = """+""" 
+
+        self.vs[3]["mm__"] = """ImplementationModule""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class ImplementationModule(layer3rule5class0)
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         # match class TestCase(layer3rule5class1) node
         self.add_node()
-        self.vs[5]["name"] = """layer3rule5class1""" 
-        self.vs[5]["classtype"] = """TestCase"""
-        self.vs[5]["mm__"] = """TestCase"""
-        self.vs[5]["cardinality"] = """+""" 
+
+        self.vs[5]["mm__"] = """TestCase""" 
+        self.vs[5]["attr1"] = """+""" 
         # match_contains node for class TestCase(layer3rule5class1)
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
@@ -56,28 +54,25 @@ class Hlayer3rule5(Himesis):
         
         # apply class ImplementationModule(layer3rule5class2) node
         self.add_node()
-        self.vs[7]["name"] = """layer3rule5class2""" 
-        self.vs[7]["classtype"] = """ImplementationModule"""
-        self.vs[7]["mm__"] = """ImplementationModule"""
-        self.vs[7]["cardinality"] = """1"""
+
+        self.vs[7]["mm__"] = """ImplementationModule""" 
+        self.vs[7]["attr1"] = """1"""
         # apply_contains node for class ImplementationModule(layer3rule5class2)
         self.add_node()
         self.vs[8]["mm__"] = """apply_contains"""
         # apply class FunctionPrototype(layer3rule5class3) node
         self.add_node()
-        self.vs[9]["name"] = """layer3rule5class3""" 
-        self.vs[9]["classtype"] = """FunctionPrototype"""
-        self.vs[9]["mm__"] = """FunctionPrototype"""
-        self.vs[9]["cardinality"] = """1"""
+
+        self.vs[9]["mm__"] = """FunctionPrototype""" 
+        self.vs[9]["attr1"] = """1"""
         # apply_contains node for class FunctionPrototype(layer3rule5class3)
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
         # apply class VoidType(layer3rule5class4) node
         self.add_node()
-        self.vs[11]["name"] = """layer3rule5class4""" 
-        self.vs[11]["classtype"] = """VoidType"""
-        self.vs[11]["mm__"] = """VoidType"""
-        self.vs[11]["cardinality"] = """1"""
+
+        self.vs[11]["mm__"] = """VoidType""" 
+        self.vs[11]["attr1"] = """1"""
         # apply_contains node for class VoidType(layer3rule5class4)
         self.add_node()
         self.vs[12]["mm__"] = """apply_contains"""
@@ -85,21 +80,21 @@ class Hlayer3rule5(Himesis):
         
         # match association ImplementationModule--contents-->TestCase node
         self.add_node()
-        self.vs[13]["associationType"] = """contents"""
+        self.vs[13]["attr1"] = """contents"""
         self.vs[13]["mm__"] = """directLink_S"""
         
         # apply association ImplementationModule--contents-->FunctionPrototype node
         self.add_node()
-        self.vs[14]["associationType"] = """contents"""
+        self.vs[14]["attr1"] = """contents"""
         self.vs[14]["mm__"] = """directLink_T"""
         # apply association FunctionPrototype--type-->VoidType node
         self.add_node()
-        self.vs[15]["associationType"] = """type"""
+        self.vs[15]["attr1"] = """type"""
         self.vs[15]["mm__"] = """directLink_T"""
         
         # backward association ImplementationModule---->ImplementationModule node
         self.add_node()
-        self.vs[16]["type"] = """ruleDef"""
+
         self.vs[16]["mm__"] = """backward_link"""
         
         

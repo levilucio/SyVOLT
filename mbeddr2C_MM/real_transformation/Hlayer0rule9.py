@@ -36,10 +36,9 @@ class Hlayer0rule9(Himesis):
         
         # match class RequiredPort(layer0rule9class0) node
         self.add_node()
-        self.vs[3]["name"] = """layer0rule9class0""" 
-        self.vs[3]["classtype"] = """RequiredPort"""
-        self.vs[3]["mm__"] = """RequiredPort"""
-        self.vs[3]["cardinality"] = """+""" 
+
+        self.vs[3]["mm__"] = """RequiredPort""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class RequiredPort(layer0rule9class0)
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
@@ -47,28 +46,25 @@ class Hlayer0rule9(Himesis):
         
         # apply class Member(layer0rule9class1) node
         self.add_node()
-        self.vs[5]["name"] = """layer0rule9class1""" 
-        self.vs[5]["classtype"] = """Member"""
-        self.vs[5]["mm__"] = """Member"""
-        self.vs[5]["cardinality"] = """1"""
+
+        self.vs[5]["mm__"] = """Member""" 
+        self.vs[5]["attr1"] = """1"""
         # apply_contains node for class Member(layer0rule9class1)
         self.add_node()
         self.vs[6]["mm__"] = """apply_contains"""
         # apply class VoidType(layer0rule9class2) node
         self.add_node()
-        self.vs[7]["name"] = """layer0rule9class2""" 
-        self.vs[7]["classtype"] = """VoidType"""
-        self.vs[7]["mm__"] = """VoidType"""
-        self.vs[7]["cardinality"] = """1"""
+
+        self.vs[7]["mm__"] = """VoidType""" 
+        self.vs[7]["attr1"] = """1"""
         # apply_contains node for class VoidType(layer0rule9class2)
         self.add_node()
         self.vs[8]["mm__"] = """apply_contains"""
         # apply class PointerType(layer0rule9class3) node
         self.add_node()
-        self.vs[9]["name"] = """layer0rule9class3""" 
-        self.vs[9]["classtype"] = """PointerType"""
-        self.vs[9]["mm__"] = """PointerType"""
-        self.vs[9]["cardinality"] = """1"""
+
+        self.vs[9]["mm__"] = """PointerType""" 
+        self.vs[9]["attr1"] = """1"""
         # apply_contains node for class PointerType(layer0rule9class3)
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
@@ -77,11 +73,11 @@ class Hlayer0rule9(Himesis):
         
         # apply association Member--type-->PointerType node
         self.add_node()
-        self.vs[11]["associationType"] = """type"""
+        self.vs[11]["attr1"] = """type"""
         self.vs[11]["mm__"] = """directLink_T"""
         # apply association PointerType--baseType-->VoidType node
         self.add_node()
-        self.vs[12]["associationType"] = """baseType"""
+        self.vs[12]["attr1"] = """baseType"""
         self.vs[12]["mm__"] = """directLink_T"""
         
         

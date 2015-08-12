@@ -36,19 +36,17 @@ class Hlayer1rule11(Himesis):
         
         # match class ClientServerInterface(layer1rule11class0) node
         self.add_node()
-        self.vs[3]["name"] = """layer1rule11class0""" 
-        self.vs[3]["classtype"] = """ClientServerInterface"""
-        self.vs[3]["mm__"] = """ClientServerInterface"""
-        self.vs[3]["cardinality"] = """+""" 
+
+        self.vs[3]["mm__"] = """ClientServerInterface""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class ClientServerInterface(layer1rule11class0)
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         # match class RequiredPort(layer1rule11class1) node
         self.add_node()
-        self.vs[5]["name"] = """layer1rule11class1""" 
-        self.vs[5]["classtype"] = """RequiredPort"""
-        self.vs[5]["mm__"] = """RequiredPort"""
-        self.vs[5]["cardinality"] = """+""" 
+
+        self.vs[5]["mm__"] = """RequiredPort""" 
+        self.vs[5]["attr1"] = """+""" 
         # match_contains node for class RequiredPort(layer1rule11class1)
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
@@ -56,37 +54,33 @@ class Hlayer1rule11(Himesis):
         
         # apply class TypeDef(layer1rule11class2) node
         self.add_node()
-        self.vs[7]["name"] = """layer1rule11class2""" 
-        self.vs[7]["classtype"] = """TypeDef"""
-        self.vs[7]["mm__"] = """TypeDef"""
-        self.vs[7]["cardinality"] = """1"""
+
+        self.vs[7]["mm__"] = """TypeDef""" 
+        self.vs[7]["attr1"] = """1"""
         # apply_contains node for class TypeDef(layer1rule11class2)
         self.add_node()
         self.vs[8]["mm__"] = """apply_contains"""
         # apply class Member(layer1rule11class3) node
         self.add_node()
-        self.vs[9]["name"] = """layer1rule11class3""" 
-        self.vs[9]["classtype"] = """Member"""
-        self.vs[9]["mm__"] = """Member"""
-        self.vs[9]["cardinality"] = """1"""
+
+        self.vs[9]["mm__"] = """Member""" 
+        self.vs[9]["attr1"] = """1"""
         # apply_contains node for class Member(layer1rule11class3)
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
         # apply class PointerType(layer1rule11class4) node
         self.add_node()
-        self.vs[11]["name"] = """layer1rule11class4""" 
-        self.vs[11]["classtype"] = """PointerType"""
-        self.vs[11]["mm__"] = """PointerType"""
-        self.vs[11]["cardinality"] = """1"""
+
+        self.vs[11]["mm__"] = """PointerType""" 
+        self.vs[11]["attr1"] = """1"""
         # apply_contains node for class PointerType(layer1rule11class4)
         self.add_node()
         self.vs[12]["mm__"] = """apply_contains"""
         # apply class TypeDefType(layer1rule11class5) node
         self.add_node()
-        self.vs[13]["name"] = """layer1rule11class5""" 
-        self.vs[13]["classtype"] = """TypeDefType"""
-        self.vs[13]["mm__"] = """TypeDefType"""
-        self.vs[13]["cardinality"] = """1"""
+
+        self.vs[13]["mm__"] = """TypeDefType""" 
+        self.vs[13]["attr1"] = """1"""
         # apply_contains node for class TypeDefType(layer1rule11class5)
         self.add_node()
         self.vs[14]["mm__"] = """apply_contains"""
@@ -94,29 +88,29 @@ class Hlayer1rule11(Himesis):
         
         # match association RequiredPort--intf-->ClientServerInterface node
         self.add_node()
-        self.vs[15]["associationType"] = """intf"""
+        self.vs[15]["attr1"] = """intf"""
         self.vs[15]["mm__"] = """directLink_S"""
         
         # apply association Member--type-->PointerType node
         self.add_node()
-        self.vs[16]["associationType"] = """type"""
+        self.vs[16]["attr1"] = """type"""
         self.vs[16]["mm__"] = """directLink_T"""
         # apply association PointerType--baseType-->TypeDefType node
         self.add_node()
-        self.vs[17]["associationType"] = """baseType"""
+        self.vs[17]["attr1"] = """baseType"""
         self.vs[17]["mm__"] = """directLink_T"""
         # apply association TypeDefType--typeDef-->TypeDef node
         self.add_node()
-        self.vs[18]["associationType"] = """typeDef"""
+        self.vs[18]["attr1"] = """typeDef"""
         self.vs[18]["mm__"] = """directLink_T"""
         
         # backward association ClientServerInterface---->TypeDef node
         self.add_node()
-        self.vs[19]["type"] = """ruleDef"""
+
         self.vs[19]["mm__"] = """backward_link"""
         # backward association RequiredPort---->Member node
         self.add_node()
-        self.vs[20]["type"] = """ruleDef"""
+
         self.vs[20]["mm__"] = """backward_link"""
         
         

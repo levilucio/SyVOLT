@@ -36,46 +36,41 @@ class Hlayer1rule12(Himesis):
         
         # match class ImplementationModule(layer1rule12class0) node
         self.add_node()
-        self.vs[3]["name"] = """layer1rule12class0""" 
-        self.vs[3]["classtype"] = """ImplementationModule"""
-        self.vs[3]["mm__"] = """ImplementationModule"""
-        self.vs[3]["cardinality"] = """+""" 
+
+        self.vs[3]["mm__"] = """ImplementationModule""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class ImplementationModule(layer1rule12class0)
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         # match class AtomicComponent(layer1rule12class4) node
         self.add_node()
-        self.vs[5]["name"] = """layer1rule12class4""" 
-        self.vs[5]["classtype"] = """AtomicComponent"""
-        self.vs[5]["mm__"] = """AtomicComponent"""
-        self.vs[5]["cardinality"] = """+""" 
+
+        self.vs[5]["mm__"] = """AtomicComponent""" 
+        self.vs[5]["attr1"] = """+""" 
         # match_contains node for class AtomicComponent(layer1rule12class4)
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
         # match class ProvidedPort(layer1rule12class5) node
         self.add_node()
-        self.vs[7]["name"] = """layer1rule12class5""" 
-        self.vs[7]["classtype"] = """ProvidedPort"""
-        self.vs[7]["mm__"] = """ProvidedPort"""
-        self.vs[7]["cardinality"] = """+""" 
+
+        self.vs[7]["mm__"] = """ProvidedPort""" 
+        self.vs[7]["attr1"] = """+""" 
         # match_contains node for class ProvidedPort(layer1rule12class5)
         self.add_node()
         self.vs[8]["mm__"] = """match_contains"""
         # match class ClientServerInterface(layer1rule12class6) node
         self.add_node()
-        self.vs[9]["name"] = """layer1rule12class6""" 
-        self.vs[9]["classtype"] = """ClientServerInterface"""
-        self.vs[9]["mm__"] = """ClientServerInterface"""
-        self.vs[9]["cardinality"] = """+""" 
+
+        self.vs[9]["mm__"] = """ClientServerInterface""" 
+        self.vs[9]["attr1"] = """+""" 
         # match_contains node for class ClientServerInterface(layer1rule12class6)
         self.add_node()
         self.vs[10]["mm__"] = """match_contains"""
         # match class Operation(layer1rule12class7) node
         self.add_node()
-        self.vs[11]["name"] = """layer1rule12class7""" 
-        self.vs[11]["classtype"] = """Operation"""
-        self.vs[11]["mm__"] = """Operation"""
-        self.vs[11]["cardinality"] = """+""" 
+
+        self.vs[11]["mm__"] = """Operation""" 
+        self.vs[11]["attr1"] = """+""" 
         # match_contains node for class Operation(layer1rule12class7)
         self.add_node()
         self.vs[12]["mm__"] = """match_contains"""
@@ -83,19 +78,17 @@ class Hlayer1rule12(Himesis):
         
         # apply class ImplementationModule(layer1rule12class1) node
         self.add_node()
-        self.vs[13]["name"] = """layer1rule12class1""" 
-        self.vs[13]["classtype"] = """ImplementationModule"""
-        self.vs[13]["mm__"] = """ImplementationModule"""
-        self.vs[13]["cardinality"] = """1"""
+
+        self.vs[13]["mm__"] = """ImplementationModule""" 
+        self.vs[13]["attr1"] = """1"""
         # apply_contains node for class ImplementationModule(layer1rule12class1)
         self.add_node()
         self.vs[14]["mm__"] = """apply_contains"""
         # apply class FunctionPrototype(layer1rule12class2) node
         self.add_node()
-        self.vs[15]["name"] = """layer1rule12class2""" 
-        self.vs[15]["classtype"] = """FunctionPrototype"""
-        self.vs[15]["mm__"] = """FunctionPrototype"""
-        self.vs[15]["cardinality"] = """1"""
+
+        self.vs[15]["mm__"] = """FunctionPrototype""" 
+        self.vs[15]["attr1"] = """1"""
         # apply_contains node for class FunctionPrototype(layer1rule12class2)
         self.add_node()
         self.vs[16]["mm__"] = """apply_contains"""
@@ -103,33 +96,33 @@ class Hlayer1rule12(Himesis):
         
         # match association ImplementationModule--contents-->AtomicComponent node
         self.add_node()
-        self.vs[17]["associationType"] = """contents"""
+        self.vs[17]["attr1"] = """contents"""
         self.vs[17]["mm__"] = """directLink_S"""
         # match association AtomicComponent--contents-->ProvidedPort node
         self.add_node()
-        self.vs[18]["associationType"] = """contents"""
+        self.vs[18]["attr1"] = """contents"""
         self.vs[18]["mm__"] = """directLink_S"""
         # match association ProvidedPort--intf-->ClientServerInterface node
         self.add_node()
-        self.vs[19]["associationType"] = """intf"""
+        self.vs[19]["attr1"] = """intf"""
         self.vs[19]["mm__"] = """directLink_S"""
         # match association ClientServerInterface--contents-->Operation node
         self.add_node()
-        self.vs[20]["associationType"] = """contents"""
+        self.vs[20]["attr1"] = """contents"""
         self.vs[20]["mm__"] = """directLink_S"""
         
         # apply association ImplementationModule--contents-->FunctionPrototype node
         self.add_node()
-        self.vs[21]["associationType"] = """contents"""
+        self.vs[21]["attr1"] = """contents"""
         self.vs[21]["mm__"] = """directLink_T"""
         
         # backward association ImplementationModule---->ImplementationModule node
         self.add_node()
-        self.vs[22]["type"] = """ruleDef"""
+
         self.vs[22]["mm__"] = """backward_link"""
         # backward association Operation---->FunctionPrototype node
         self.add_node()
-        self.vs[23]["type"] = """ruleDef"""
+
         self.vs[23]["mm__"] = """backward_link"""
         
         

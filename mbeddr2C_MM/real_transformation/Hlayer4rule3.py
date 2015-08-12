@@ -36,28 +36,25 @@ class Hlayer4rule3(Himesis):
         
         # match class ImplementationModule(layer4rule3class0) node
         self.add_node()
-        self.vs[3]["name"] = """layer4rule3class0""" 
-        self.vs[3]["classtype"] = """ImplementationModule"""
-        self.vs[3]["mm__"] = """ImplementationModule"""
-        self.vs[3]["cardinality"] = """+""" 
+
+        self.vs[3]["mm__"] = """ImplementationModule""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class ImplementationModule(layer4rule3class0)
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         # match class Function(layer4rule3class1) node
         self.add_node()
-        self.vs[5]["name"] = """layer4rule3class1""" 
-        self.vs[5]["classtype"] = """Function"""
-        self.vs[5]["mm__"] = """Function"""
-        self.vs[5]["cardinality"] = """+""" 
+
+        self.vs[5]["mm__"] = """Function""" 
+        self.vs[5]["attr1"] = """+""" 
         # match_contains node for class Function(layer4rule3class1)
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
         # match class Int32Type(layer4rule3class2) node
         self.add_node()
-        self.vs[7]["name"] = """layer4rule3class2""" 
-        self.vs[7]["classtype"] = """Int32Type"""
-        self.vs[7]["mm__"] = """Int32Type"""
-        self.vs[7]["cardinality"] = """+""" 
+
+        self.vs[7]["mm__"] = """Int32Type""" 
+        self.vs[7]["attr1"] = """+""" 
         # match_contains node for class Int32Type(layer4rule3class2)
         self.add_node()
         self.vs[8]["mm__"] = """match_contains"""
@@ -65,91 +62,81 @@ class Hlayer4rule3(Himesis):
         
         # apply class ImplementationModule(layer4rule3class3) node
         self.add_node()
-        self.vs[9]["name"] = """layer4rule3class3""" 
-        self.vs[9]["classtype"] = """ImplementationModule"""
-        self.vs[9]["mm__"] = """ImplementationModule"""
-        self.vs[9]["cardinality"] = """1"""
+
+        self.vs[9]["mm__"] = """ImplementationModule""" 
+        self.vs[9]["attr1"] = """1"""
         # apply_contains node for class ImplementationModule(layer4rule3class3)
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
         # apply class Function(layer4rule3class4) node
         self.add_node()
-        self.vs[11]["name"] = """layer4rule3class4""" 
-        self.vs[11]["classtype"] = """Function"""
-        self.vs[11]["mm__"] = """Function"""
-        self.vs[11]["cardinality"] = """1"""
+
+        self.vs[11]["mm__"] = """Function""" 
+        self.vs[11]["attr1"] = """1"""
         # apply_contains node for class Function(layer4rule3class4)
         self.add_node()
         self.vs[12]["mm__"] = """apply_contains"""
         # apply class VoidType(layer4rule3class5) node
         self.add_node()
-        self.vs[13]["name"] = """layer4rule3class5""" 
-        self.vs[13]["classtype"] = """VoidType"""
-        self.vs[13]["mm__"] = """VoidType"""
-        self.vs[13]["cardinality"] = """1"""
+
+        self.vs[13]["mm__"] = """VoidType""" 
+        self.vs[13]["attr1"] = """1"""
         # apply_contains node for class VoidType(layer4rule3class5)
         self.add_node()
         self.vs[14]["mm__"] = """apply_contains"""
         # apply class StatementList(layer4rule3class6) node
         self.add_node()
-        self.vs[15]["name"] = """layer4rule3class6""" 
-        self.vs[15]["classtype"] = """StatementList"""
-        self.vs[15]["mm__"] = """StatementList"""
-        self.vs[15]["cardinality"] = """1"""
+
+        self.vs[15]["mm__"] = """StatementList""" 
+        self.vs[15]["attr1"] = """1"""
         # apply_contains node for class StatementList(layer4rule3class6)
         self.add_node()
         self.vs[16]["mm__"] = """apply_contains"""
         # apply class Function(layer4rule3class7) node
         self.add_node()
-        self.vs[17]["name"] = """layer4rule3class7""" 
-        self.vs[17]["classtype"] = """Function"""
-        self.vs[17]["mm__"] = """Function"""
-        self.vs[17]["cardinality"] = """1"""
+
+        self.vs[17]["mm__"] = """Function""" 
+        self.vs[17]["attr1"] = """1"""
         # apply_contains node for class Function(layer4rule3class7)
         self.add_node()
         self.vs[18]["mm__"] = """apply_contains"""
         # apply class StatementList(layer4rule3class8) node
         self.add_node()
-        self.vs[19]["name"] = """layer4rule3class8""" 
-        self.vs[19]["classtype"] = """StatementList"""
-        self.vs[19]["mm__"] = """StatementList"""
-        self.vs[19]["cardinality"] = """1"""
+
+        self.vs[19]["mm__"] = """StatementList""" 
+        self.vs[19]["attr1"] = """1"""
         # apply_contains node for class StatementList(layer4rule3class8)
         self.add_node()
         self.vs[20]["mm__"] = """apply_contains"""
         # apply class Int32Type(layer4rule3class9) node
         self.add_node()
-        self.vs[21]["name"] = """layer4rule3class9""" 
-        self.vs[21]["classtype"] = """Int32Type"""
-        self.vs[21]["mm__"] = """Int32Type"""
-        self.vs[21]["cardinality"] = """1"""
+
+        self.vs[21]["mm__"] = """Int32Type""" 
+        self.vs[21]["attr1"] = """1"""
         # apply_contains node for class Int32Type(layer4rule3class9)
         self.add_node()
         self.vs[22]["mm__"] = """apply_contains"""
         # apply class ExpressionStatement(layer4rule3class10) node
         self.add_node()
-        self.vs[23]["name"] = """layer4rule3class10""" 
-        self.vs[23]["classtype"] = """ExpressionStatement"""
-        self.vs[23]["mm__"] = """ExpressionStatement"""
-        self.vs[23]["cardinality"] = """1"""
+
+        self.vs[23]["mm__"] = """ExpressionStatement""" 
+        self.vs[23]["attr1"] = """1"""
         # apply_contains node for class ExpressionStatement(layer4rule3class10)
         self.add_node()
         self.vs[24]["mm__"] = """apply_contains"""
         # apply class FunctionCall(layer4rule3class11) node
         self.add_node()
-        self.vs[25]["name"] = """layer4rule3class11""" 
-        self.vs[25]["classtype"] = """FunctionCall"""
-        self.vs[25]["mm__"] = """FunctionCall"""
-        self.vs[25]["cardinality"] = """1"""
+
+        self.vs[25]["mm__"] = """FunctionCall""" 
+        self.vs[25]["attr1"] = """1"""
         # apply_contains node for class FunctionCall(layer4rule3class11)
         self.add_node()
         self.vs[26]["mm__"] = """apply_contains"""
         # apply class FunctionPrototype(layer4rule3class12) node
         self.add_node()
-        self.vs[27]["name"] = """layer4rule3class12""" 
-        self.vs[27]["classtype"] = """FunctionPrototype"""
-        self.vs[27]["mm__"] = """FunctionPrototype"""
-        self.vs[27]["cardinality"] = """1"""
+
+        self.vs[27]["mm__"] = """FunctionPrototype""" 
+        self.vs[27]["attr1"] = """1"""
         # apply_contains node for class FunctionPrototype(layer4rule3class12)
         self.add_node()
         self.vs[28]["mm__"] = """apply_contains"""
@@ -157,57 +144,57 @@ class Hlayer4rule3(Himesis):
         
         # match association ImplementationModule--contents-->Function node
         self.add_node()
-        self.vs[29]["associationType"] = """contents"""
+        self.vs[29]["attr1"] = """contents"""
         self.vs[29]["mm__"] = """directLink_S"""
         # match association Function--type-->Int32Type node
         self.add_node()
-        self.vs[30]["associationType"] = """type"""
+        self.vs[30]["attr1"] = """type"""
         self.vs[30]["mm__"] = """directLink_S"""
         
         # apply association ImplementationModule--contents-->Function node
         self.add_node()
-        self.vs[31]["associationType"] = """contents"""
+        self.vs[31]["attr1"] = """contents"""
         self.vs[31]["mm__"] = """directLink_T"""
         # apply association Function--type-->VoidType node
         self.add_node()
-        self.vs[32]["associationType"] = """type"""
+        self.vs[32]["attr1"] = """type"""
         self.vs[32]["mm__"] = """directLink_T"""
         # apply association Function--body-->StatementList node
         self.add_node()
-        self.vs[33]["associationType"] = """body"""
+        self.vs[33]["attr1"] = """body"""
         self.vs[33]["mm__"] = """directLink_T"""
         # apply association ImplementationModule--contents-->Function node
         self.add_node()
-        self.vs[34]["associationType"] = """contents"""
+        self.vs[34]["attr1"] = """contents"""
         self.vs[34]["mm__"] = """directLink_T"""
         # apply association Function--type-->Int32Type node
         self.add_node()
-        self.vs[35]["associationType"] = """type"""
+        self.vs[35]["attr1"] = """type"""
         self.vs[35]["mm__"] = """directLink_T"""
         # apply association Function--body-->StatementList node
         self.add_node()
-        self.vs[36]["associationType"] = """body"""
+        self.vs[36]["attr1"] = """body"""
         self.vs[36]["mm__"] = """directLink_T"""
         # apply association StatementList--statements-->ExpressionStatement node
         self.add_node()
-        self.vs[37]["associationType"] = """statements"""
+        self.vs[37]["attr1"] = """statements"""
         self.vs[37]["mm__"] = """directLink_T"""
         # apply association ExpressionStatement--expr-->FunctionCall node
         self.add_node()
-        self.vs[38]["associationType"] = """expr"""
+        self.vs[38]["attr1"] = """expr"""
         self.vs[38]["mm__"] = """directLink_T"""
         # apply association FunctionCall--function-->FunctionPrototype node
         self.add_node()
-        self.vs[39]["associationType"] = """function"""
+        self.vs[39]["attr1"] = """function"""
         self.vs[39]["mm__"] = """directLink_T"""
         
         # backward association ImplementationModule---->ImplementationModule node
         self.add_node()
-        self.vs[40]["type"] = """ruleDef"""
+
         self.vs[40]["mm__"] = """backward_link"""
         # backward association Function---->FunctionPrototype node
         self.add_node()
-        self.vs[41]["type"] = """ruleDef"""
+
         self.vs[41]["mm__"] = """backward_link"""
         
         

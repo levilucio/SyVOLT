@@ -36,10 +36,9 @@ class Hlayer6rule0(Himesis):
         
         # match class Function(layer6rule0class0) node
         self.add_node()
-        self.vs[3]["name"] = """layer6rule0class0""" 
-        self.vs[3]["classtype"] = """Function"""
-        self.vs[3]["mm__"] = """Function"""
-        self.vs[3]["cardinality"] = """+""" 
+
+        self.vs[3]["mm__"] = """Function""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class Function(layer6rule0class0)
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
@@ -47,28 +46,25 @@ class Hlayer6rule0(Himesis):
         
         # apply class StatementList(layer6rule0class1) node
         self.add_node()
-        self.vs[5]["name"] = """layer6rule0class1""" 
-        self.vs[5]["classtype"] = """StatementList"""
-        self.vs[5]["mm__"] = """StatementList"""
-        self.vs[5]["cardinality"] = """1"""
+
+        self.vs[5]["mm__"] = """StatementList""" 
+        self.vs[5]["attr1"] = """1"""
         # apply_contains node for class StatementList(layer6rule0class1)
         self.add_node()
         self.vs[6]["mm__"] = """apply_contains"""
         # apply class ReturnStatement(layer6rule0class2) node
         self.add_node()
-        self.vs[7]["name"] = """layer6rule0class2""" 
-        self.vs[7]["classtype"] = """ReturnStatement"""
-        self.vs[7]["mm__"] = """ReturnStatement"""
-        self.vs[7]["cardinality"] = """1"""
+
+        self.vs[7]["mm__"] = """ReturnStatement""" 
+        self.vs[7]["attr1"] = """1"""
         # apply_contains node for class ReturnStatement(layer6rule0class2)
         self.add_node()
         self.vs[8]["mm__"] = """apply_contains"""
         # apply class NumberLiteral(layer6rule0class3) node
         self.add_node()
-        self.vs[9]["name"] = """layer6rule0class3""" 
-        self.vs[9]["classtype"] = """NumberLiteral"""
-        self.vs[9]["mm__"] = """NumberLiteral"""
-        self.vs[9]["cardinality"] = """1"""
+
+        self.vs[9]["mm__"] = """NumberLiteral""" 
+        self.vs[9]["attr1"] = """1"""
         # apply_contains node for class NumberLiteral(layer6rule0class3)
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
@@ -77,16 +73,16 @@ class Hlayer6rule0(Himesis):
         
         # apply association StatementList--statements-->ReturnStatement node
         self.add_node()
-        self.vs[11]["associationType"] = """statements"""
+        self.vs[11]["attr1"] = """statements"""
         self.vs[11]["mm__"] = """directLink_T"""
         # apply association ReturnStatement--expression-->NumberLiteral node
         self.add_node()
-        self.vs[12]["associationType"] = """expression"""
+        self.vs[12]["attr1"] = """expression"""
         self.vs[12]["mm__"] = """directLink_T"""
         
         # backward association Function---->StatementList node
         self.add_node()
-        self.vs[13]["type"] = """ruleDef"""
+
         self.vs[13]["mm__"] = """backward_link"""
         
         

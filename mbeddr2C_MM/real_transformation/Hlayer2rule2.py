@@ -36,19 +36,17 @@ class Hlayer2rule2(Himesis):
         
         # match class VoidType(layer2rule2class0) node
         self.add_node()
-        self.vs[3]["name"] = """layer2rule2class0""" 
-        self.vs[3]["classtype"] = """VoidType"""
-        self.vs[3]["mm__"] = """VoidType"""
-        self.vs[3]["cardinality"] = """+""" 
+
+        self.vs[3]["mm__"] = """VoidType""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class VoidType(layer2rule2class0)
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         # match class OperationParameter(layer2rule2class1) node
         self.add_node()
-        self.vs[5]["name"] = """layer2rule2class1""" 
-        self.vs[5]["classtype"] = """OperationParameter"""
-        self.vs[5]["mm__"] = """OperationParameter"""
-        self.vs[5]["cardinality"] = """+""" 
+
+        self.vs[5]["mm__"] = """OperationParameter""" 
+        self.vs[5]["attr1"] = """+""" 
         # match_contains node for class OperationParameter(layer2rule2class1)
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
@@ -56,19 +54,17 @@ class Hlayer2rule2(Himesis):
         
         # apply class VoidType(layer2rule2class2) node
         self.add_node()
-        self.vs[7]["name"] = """layer2rule2class2""" 
-        self.vs[7]["classtype"] = """VoidType"""
-        self.vs[7]["mm__"] = """VoidType"""
-        self.vs[7]["cardinality"] = """1"""
+
+        self.vs[7]["mm__"] = """VoidType""" 
+        self.vs[7]["attr1"] = """1"""
         # apply_contains node for class VoidType(layer2rule2class2)
         self.add_node()
         self.vs[8]["mm__"] = """apply_contains"""
         # apply class Argument(layer2rule2class3) node
         self.add_node()
-        self.vs[9]["name"] = """layer2rule2class3""" 
-        self.vs[9]["classtype"] = """Argument"""
-        self.vs[9]["mm__"] = """Argument"""
-        self.vs[9]["cardinality"] = """1"""
+
+        self.vs[9]["mm__"] = """Argument""" 
+        self.vs[9]["attr1"] = """1"""
         # apply_contains node for class Argument(layer2rule2class3)
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
@@ -76,17 +72,17 @@ class Hlayer2rule2(Himesis):
         
         # match association OperationParameter--type-->VoidType node
         self.add_node()
-        self.vs[11]["associationType"] = """type"""
+        self.vs[11]["attr1"] = """type"""
         self.vs[11]["mm__"] = """directLink_S"""
         
         # apply association Argument--type-->VoidType node
         self.add_node()
-        self.vs[12]["associationType"] = """type"""
+        self.vs[12]["attr1"] = """type"""
         self.vs[12]["mm__"] = """directLink_T"""
         
         # backward association OperationParameter---->Argument node
         self.add_node()
-        self.vs[13]["type"] = """ruleDef"""
+
         self.vs[13]["mm__"] = """backward_link"""
         
         
