@@ -17,7 +17,7 @@ from PyRamify import PyRamify
 
 from core.himesis_utils import graph_to_dot
 
-from util.select_rules import select_rules
+from util.test_script_utils import select_rules, slice_transformation
 
 # all runs are the same transformation, but with different metamodel elements
 # the purpose is to do scalability testing with multiple configurations and multiple sets of rules
@@ -203,11 +203,11 @@ class Test():
         print("Number of path conditions: " + str(s.num_path_conditions))
  
         #check if the correct number of path conditions were produced
-        if not int(expected_num_pcs) == -1 and not int(expected_num_pcs) == s.num_path_conditions:
- 
-            #TODO: Make this an exception
-            num_pcs_s = "The number of produced path conditions is incorrect.\n" + str(expected_num_pcs) + " were expected, but " + str(s.num_path_conditions) + " were produced."
-            print(num_pcs_s)
+        # if not int(expected_num_pcs) == -1 and not int(expected_num_pcs) == s.num_path_conditions:
+        #
+        #     #TODO: Make this an exception
+        #     num_pcs_s = "The number of produced path conditions is incorrect.\n" + str(expected_num_pcs) + " were expected, but " + str(s.num_path_conditions) + " were produced."
+        #     print(num_pcs_s)
             #raise Exception(num_pcs_s)
  
         #print("printing path conditions")
@@ -475,6 +475,10 @@ if __name__ == "__main__":
     parser.add_argument('--compression', type = int, default = 6,
                         help = 'Level of compression to use with pickling. Range: 0 (no compression) to 9 (high compression) (default: 6)')
     parser.set_defaults(compression = True)
+
+    parser.add_argument('--slice', type = int, default = 0,
+                        help = 'Index of contract to slice for. Range: 0 (no slicing) to #CONTRACTS (default: 0)')
+    parser.set_defaults(slice = 0)
 
     parser.add_argument('--no_svg', dest = 'draw_svg', action = 'store_false',
                         help = 'Flag to force svg files to not be drawn')
