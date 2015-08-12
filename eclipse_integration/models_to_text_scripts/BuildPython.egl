@@ -101,6 +101,8 @@ class Prover():
 		} 
 		%]
         transformation = [[%=transformationArrayStr%]]
+        
+        subclasses_dict, superclasses_dict = self.get_sub_and_super_classes()
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
             pyramify.ramify_directory("[%=absoluteBackendPath%]", transformation)   
@@ -108,33 +110,10 @@ class Prover():
         [*- Generate operations to deal with Polymorphism *]        
         pre_metamodel = ["MT_pre__S_MM", "MoTifRule"]
         post_metamodel = ["MT_post__T_MM", "MoTifRule"]
-        
-        subclasses_dict = {}     
-             
-        inMM = EcoreUtils("[%=inputMM%]")          
-        subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(inMM.getMetamodelClassNames())
-        
-        print(subclasses_dict["MT_pre__MetaModelElement_S"])
-
-        outMM = EcoreUtils("[%=outputMM%]")  
-        subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(outMM.getMetamodelClassNames()) 
-        
-        print(subclasses_dict["MT_pre__MetaModelElement_T"])
 
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict, "[%=dsltransInstallPath%]")
         
         # go through all the matchers, combinators and tracers to add polymorphism on all classes in an inheritance hierarchy
-        
-        # keep a dictionary from each child to its parent
-        supertypes = {}
-
-        for supertype in subclasses_dict:
-            for subtype in subclasses_dict[supertype]:
-                subtype = subtype[8:]
-                try:
-                    supertypes[subtype].append(supertype[8:])
-                except KeyError:
-                    supertypes[subtype] = [supertype[8:]]
                                                                   
         
         # add polymorphism for the matchers
@@ -206,7 +185,31 @@ class Prover():
         print("\n\nTime to verify properties: " + str(ts1 - ts0) + " seconds.")
 
         
+        def get_sub_and_super_classes(self):
+                subclasses_dict = {}     
+             
+                inMM = EcoreUtils("[%=inputMM%]")          
+                subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(inMM.getMetamodelClassNames())
+                
+                print(subclasses_dict["MT_pre__MetaModelElement_S"])
 
+                outMM = EcoreUtils("[%=outputMM%]")  
+                subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(outMM.getMetamodelClassNames()) 
+                
+                print(subclasses_dict["MT_pre__MetaModelElement_T"])
+
+                # keep a dictionary from each child to its parent
+                supertypes = {}
+
+                for supertype in subclasses_dict:
+                    for subtype in subclasses_dict[supertype]:
+                        subtype = subtype[8:]
+                        try:
+                            supertypes[subtype].append(supertype[8:])
+                        except KeyError:
+                            supertypes[subtype] = [supertype[8:]]
+
+                return subclasses_dict, supertypes
 
 
 
@@ -229,7 +232,11 @@ if __name__ == "__main__":
     
     parser.add_argument('--compression', type = int, default = 6,
                         help = 'Level of compression to use with pickling. Range: 0 (no compression) to 9 (high compression) (default: 6)')
-    parser.set_defaults(compression = True)
+    parser.set_defaults(compression = 6)
+    
+    parser.add_argument('--slice', type = int, default = 0,
+                        help = 'Index of contract to slice for. Range: 0 (no slicing) to #CONTRACTS (default: 0)')
+    parser.set_defaults(slice = 0)
     
     parser.add_argument('--no_svg', dest = 'draw_svg', action = 'store_false',
                         help = 'Flag to force svg files to not be drawn')
