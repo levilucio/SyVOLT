@@ -18,7 +18,7 @@ from PyRamify import PyRamify
 from core.himesis_utils import graph_to_dot
 from core.himesis_utils import draw_graphs
 
-from util.select_rules import select_rules
+from util.test_script_utils import select_rules, slice_transformation
 
 # all runs are the same transformation, but with different metamodel elements
 # the purpose is to do scalability testing with multiple configurations and multiple sets of rules
@@ -192,8 +192,39 @@ class Test():
 
         self.rules, self.transformation = pyramify.get_rules(self.transformation_dir, full_transformation)
 
+        pre_metamodel = ["MT_pre__GM2AUTOSAR_MM", "MoTifRule"]
+        post_metamodel = ["MT_post__GM2AUTOSAR_MM", "MoTifRule"]
+
+        # sanitized metamodel
+        subclasses_dict = {}
+        # subclasses_dict["MT_pre__MetaModelElement_S"] = ["MT_pre__PhysicalNode", "MT_pre__Partition", "MT_pre__Module",
+        #                                                  "MT_pre__Scheduler", "MT_pre__Service"]
+        # subclasses_dict["MT_pre__MetaModelElement_T"] = ['MT_pre__EcuInstance','MT_pre__System','MT_pre__SystemMapping','MT_pre__ComponentPrototype','MT_pre__SwCompToEcuMapping_component','MT_pre__CompositionType','MT_pre__PPortPrototype','MT_pre__SwcToEcuMapping','MT_pre__SoftwareComposition','MT_pre__RPortPrototype','MT_pre__PortPrototype', 'MT_pre__ComponentType']
 
 
+        # unsanitized metamodel
+        # subclasses_dict = {}
+
+        if self.do_old_transformation:
+            subclasses_dict["MT_pre__MetaModelElement_S"] = ["MT_pre__VirtualDevice", 'MT_pre__Distributable',
+                                                             'MT_pre__ExecFrame', 'MT_pre__Signal', 'MT_pre__ECU']
+        else:
+            subclasses_dict["MT_pre__MetaModelElement_S"] = ["MT_pre__PhysicalNode", "MT_pre__Partition",
+                                                             "MT_pre__Module",
+                                                             "MT_pre__Scheduler", "MT_pre__Service"]
+
+        subclasses_dict["MT_pre__MetaModelElement_T"] = ['MT_pre__EcuInstance', 'MT_pre__System',
+                                                         'MT_pre__SystemMapping',
+                                                         'MT_pre__ComponentPrototype',
+                                                         'MT_pre__SwCompToEcuMapping_component',
+                                                         'MT_pre__CompositionType', 'MT_pre__PPortPrototype',
+                                                         'MT_pre__SwcToEcuMapping', 'MT_pre__SoftwareComposition',
+                                                         'MT_pre__RPortPrototype', 'MT_pre__PortPrototype',
+                                                         'MT_pre__ComponentType']
+
+        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
+
+        
 #         self.rules = {                'HMapECU2FiveElements': HMapECU2FiveElementsFAULTY(),
 #                                       'HMapDistributable': HMapDistributable(),
 #                                       'HMapVirtualDevice': HMapVirtualDeviceFAULTY(),
@@ -243,36 +274,7 @@ class Test():
         pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
         #self.rulesIncludingBackLinks = pyramify.getRulesIncludingBackLinks(transformation, self.backwardPatterns)
 
-        pre_metamodel = ["MT_pre__GM2AUTOSAR_MM", "MoTifRule"]
-        post_metamodel = ["MT_post__GM2AUTOSAR_MM", "MoTifRule"]
 
-        #sanitized metamodel
-        subclasses_dict = {}
-        # subclasses_dict["MT_pre__MetaModelElement_S"] = ["MT_pre__PhysicalNode", "MT_pre__Partition", "MT_pre__Module",
-        #                                                  "MT_pre__Scheduler", "MT_pre__Service"]
-        # subclasses_dict["MT_pre__MetaModelElement_T"] = ['MT_pre__EcuInstance','MT_pre__System','MT_pre__SystemMapping','MT_pre__ComponentPrototype','MT_pre__SwCompToEcuMapping_component','MT_pre__CompositionType','MT_pre__PPortPrototype','MT_pre__SwcToEcuMapping','MT_pre__SoftwareComposition','MT_pre__RPortPrototype','MT_pre__PortPrototype', 'MT_pre__ComponentType']
-
-
-        # unsanitized metamodel
-        # subclasses_dict = {}
-
-        if self.do_old_transformation:
-            subclasses_dict["MT_pre__MetaModelElement_S"] =  ["MT_pre__VirtualDevice", 'MT_pre__Distributable','MT_pre__ExecFrame', 'MT_pre__Signal', 'MT_pre__ECU']
-        else:
-            subclasses_dict["MT_pre__MetaModelElement_S"] = ["MT_pre__PhysicalNode", "MT_pre__Partition",
-                                                             "MT_pre__Module",
-                                                             "MT_pre__Scheduler", "MT_pre__Service"]
-
-
-        subclasses_dict["MT_pre__MetaModelElement_T"] = ['MT_pre__EcuInstance', 'MT_pre__System', 'MT_pre__SystemMapping',
-                                                 'MT_pre__ComponentPrototype', 'MT_pre__SwCompToEcuMapping_component',
-                                                 'MT_pre__CompositionType', 'MT_pre__PPortPrototype',
-                                                 'MT_pre__SwcToEcuMapping', 'MT_pre__SoftwareComposition',
-                                                 'MT_pre__RPortPrototype', 'MT_pre__PortPrototype',
-                                                 'MT_pre__ComponentType']
-
-
-        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlappingRules, self.subsumption, self.loopingRuleSubsumption] = \
             pyramify.ramify_directory("GM2AUTOSAR_MM/transformation_w_equations/", self.transformation)
@@ -515,7 +517,11 @@ if __name__ == "__main__":
 
     parser.add_argument('--compression', type = int, default = 6,
                         help = 'Level of compression to use with pickling. Range: 0 (no compression) to 9 (high compression) (default: 6)')
-    parser.set_defaults(compression = True)
+    parser.set_defaults(compression = 6)
+
+    parser.add_argument('--slice', type = int, default = 0,
+                        help = 'Index of contract to slice for. Range: 0 (no slicing) to #CONTRACTS (default: 0)')
+    parser.set_defaults(slice = 0)
 
     parser.add_argument('--no_svg', dest = 'draw_svg', action = 'store_false',
                         help = 'Flag to force svg files to not be drawn')
