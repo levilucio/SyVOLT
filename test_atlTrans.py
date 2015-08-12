@@ -173,7 +173,9 @@ class Test():
 
         self.if_then_properties = []#["HCommunityPerson", HCommunityPersonIfClause, HCommunityPersonThenClause]]
 
-        self.rules, self.transformation = slice_transformation(self.rules, self.transformation, self.atomic_properties, args)
+        if args.slice > 0:
+            contract = self.atomic_properties[args.slice - 1]
+            self.rules, self.transformation = slice_transformation(self.rules, self.transformation, contract, args)
 
 
     def test_correct_uml2kiltera(self,args):
@@ -294,7 +296,12 @@ if __name__ == "__main__":
 
     parser.add_argument('--compression', type = int, default = 6,
                         help = 'Level of compression to use with pickling. Range: 0 (no compression) to 9 (high compression) (default: 6)')
-    parser.set_defaults(compression = True)
+    parser.set_defaults(compression = 6)
+
+    parser.add_argument('--slice', type = int, default = 0,
+                        help = 'Index of contract to slice for. Range: 0 (no slicing) to #CONTRACTS (default: 0)')
+    parser.set_defaults(slice = 0)
+
 
     parser.add_argument('--no_svg', dest = 'draw_svg', action = 'store_false',
                         help = 'Flag to force svg files to not be drawn')

@@ -1,4 +1,4 @@
-def select_rules(self, full_transformation, num_rules):
+def select_rules(full_transformation, num_rules):
     selected_transformation = []
 
     print("Selecting " + str(num_rules) + " rules")
@@ -76,9 +76,9 @@ def find_required_rules(graph, transformation, is_contract = False):
 
 
 
-def slice_transformation(rules, transformation, contracts, args):
+def slice_transformation(rules, transformation, contract, args):
 
-    contract = contracts[0][1].CompleteQuantified
+    contract = contract[1].CompleteQuantified
 
     print("Slicing for: " + contract.name)
 
