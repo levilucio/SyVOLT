@@ -1,3 +1,5 @@
+from core.himesis_utils import graph_to_dot
+
 def select_rules(full_transformation, num_rules):
     selected_transformation = []
 
@@ -19,27 +21,31 @@ def find_required_rules(graph, transformation, is_contract = False):
 
     graph_mms = graph.vs["mm__"]
 
+    contract_mms_to_remove = ['MT_pre__directLink_S', 'MT_pre__directLink_T', 'MT_pre__trace_link',
+                              # Remove this
+                              'MT_pre__leftExpr', 'MT_pre__hasAttribute_S', 'MT_pre__Attribute',
+                              'MT_pre__rightExpr', 'MT_pre__hasAttribute_T', 'MT_pre__Equation',
+                              'MT_pre__hasAttr_S', 'MT_pre__hasAttr_T', 'MT_pre__Constant'
+                              ]
+
+    rule_mms_to_remove = ['match_contains', 'apply_contains',
+                          'directLink_S', 'directLink_T',
+                          'trace_link', 'backward_link',
+                          'ApplyModel', 'MatchModel', 'paired_with',
+                          # Remove this
+                          'leftExpr', 'hasAttribute_S', 'Attribute',
+                          'rightExpr', 'hasAttribute_T', 'Equation',
+                          'hasAttr_S', 'hasAttr_T', 'Constant'
+                          ]
+
+
 
     #take off the MT_pre__ if this is a contract
     if is_contract:
-        mms_required = set([mm for mm in graph_mms if mm not in ['MT_pre__directLink_S', 'MT_pre__directLink_T', 'MT_pre__trace_link',
-                                                                 # Remove this
-                                                                 'MT_pre__leftExpr', 'MT_pre__hasAttribute_S', 'MT_pre__Attribute',
-                                                                 'MT_pre__rightExpr', 'MT_pre__hasAttribute_T', 'MT_pre__Equation',
-                                                                 'MT_pre__hasAttr_S', 'MT_pre__hasAttr_T'
-                                                                 ]])
+        mms_required = set([mm for mm in graph_mms if mm not in contract_mms_to_remove])
 
     else:
-        mms_required = set([mm for mm in graph_mms if mm not in ['match_contains', 'apply_contains',
-                                                                 'directLink_S', 'directLink_T',
-                                                                 'trace_link', 'backward_link',
-                                                                 'ApplyModel', 'MatchModel', 'paired_with',
-
-                                                                 #Remove this
-                                                                 'leftExpr', 'hasAttribute_S', 'Attribute',
-                                                                 'rightExpr', 'hasAttribute_T', 'Equation',
-                                                                 'hasAttr_S', 'hasAttr_T'
-                                                                 ]])
+        mms_required = set([mm for mm in graph_mms if mm not in rule_mms_to_remove])
 
     if is_contract:
         mms_required = [mm[8:] for mm in mms_required]
@@ -65,15 +71,22 @@ def find_required_rules(graph, transformation, is_contract = False):
     required_rules = []
 
     for layer in transformation:
+        found_rule = False
         for rule in layer:
+            if rule.name == graph.name:
+                found_rule = True
+                break
 
-            rule_mms = set(rule.vs["mm__"])
+            if rule in required_rules:
+                continue
 
-            #print("Rule MMS: " + str(rule_mms))
+            rule_mms = set([mm for mm in rule.vs["mm__"] if mm not in rule_mms_to_remove])
+
+            print("\nRule " + rule.name + " MMS: " + str(rule_mms))
 
             rule_added = False
             for mm in mms_required:
-                if mm in rule_mms and rule not in required_rules:
+                if mm in rule_mms:
                     required_rules.append(rule)
 
                     #print("Add rule: " + rule.name + " with mms: " + str(rule_mms))
@@ -82,6 +95,8 @@ def find_required_rules(graph, transformation, is_contract = False):
 
             if rule_added:
                 continue
+        if found_rule:
+            break
 
     return required_rules
 
@@ -92,6 +107,11 @@ def slice_transformation(rules, transformation, contract, args):
     contract = contract[1].CompleteQuantified
 
     print("Slicing for: " + contract.name)
+
+    # graph_to_dot(contract.name, contract)
+    # for layer in transformation:
+    #     for rule in layer:
+    #         graph_to_dot(rule.name, rule)
 
     required_rules = find_required_rules(contract, transformation, True)
 
@@ -122,7 +142,9 @@ def slice_transformation(rules, transformation, contract, args):
         for rule in layer:
             if rule.name in rr_names:
                 new_layer.append(rule)
-        new_transformation.append(new_layer)
+
+        if len(new_layer) > 0:
+            new_transformation.append(new_layer)
 
 
     return new_rules, new_transformation
