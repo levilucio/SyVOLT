@@ -36,19 +36,17 @@ class Hlayer0rule6(Himesis):
         
         # match class ClientServerInterface(layer0rule6class0) node
         self.add_node()
-        self.vs[3]["name"] = """layer0rule6class0""" 
-        self.vs[3]["classtype"] = """ClientServerInterface"""
-        self.vs[3]["mm__"] = """ClientServerInterface"""
-        self.vs[3]["cardinality"] = """+""" 
+
+        self.vs[3]["mm__"] = """ClientServerInterface""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class ClientServerInterface(layer0rule6class0)
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         # match class ImplementationModule(layer0rule6class1) node
         self.add_node()
-        self.vs[5]["name"] = """layer0rule6class1""" 
-        self.vs[5]["classtype"] = """ImplementationModule"""
-        self.vs[5]["mm__"] = """ImplementationModule"""
-        self.vs[5]["cardinality"] = """+""" 
+
+        self.vs[5]["mm__"] = """ImplementationModule""" 
+        self.vs[5]["attr1"] = """+""" 
         # match_contains node for class ImplementationModule(layer0rule6class1)
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
@@ -56,19 +54,17 @@ class Hlayer0rule6(Himesis):
         
         # apply class TypeDef(layer0rule6class2) node
         self.add_node()
-        self.vs[7]["name"] = """layer0rule6class2""" 
-        self.vs[7]["classtype"] = """TypeDef"""
-        self.vs[7]["mm__"] = """TypeDef"""
-        self.vs[7]["cardinality"] = """1"""
+
+        self.vs[7]["mm__"] = """TypeDef""" 
+        self.vs[7]["attr1"] = """1"""
         # apply_contains node for class TypeDef(layer0rule6class2)
         self.add_node()
         self.vs[8]["mm__"] = """apply_contains"""
         # apply class StructType(layer0rule6class3) node
         self.add_node()
-        self.vs[9]["name"] = """layer0rule6class3""" 
-        self.vs[9]["classtype"] = """StructType"""
-        self.vs[9]["mm__"] = """StructType"""
-        self.vs[9]["cardinality"] = """1"""
+
+        self.vs[9]["mm__"] = """StructType""" 
+        self.vs[9]["attr1"] = """1"""
         # apply_contains node for class StructType(layer0rule6class3)
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
@@ -76,12 +72,12 @@ class Hlayer0rule6(Himesis):
         
         # match association ImplementationModule--contents-->ClientServerInterface node
         self.add_node()
-        self.vs[11]["associationType"] = """contents"""
+        self.vs[11]["attr1"] = """contents"""
         self.vs[11]["mm__"] = """directLink_S"""
         
         # apply association TypeDef--original-->StructType node
         self.add_node()
-        self.vs[12]["associationType"] = """original"""
+        self.vs[12]["attr1"] = """original"""
         self.vs[12]["mm__"] = """directLink_T"""
         
         

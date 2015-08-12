@@ -32,23 +32,21 @@ class HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """ExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans"""
+ 
         
         # match class State() node
         self.add_node()
-        self.vs[3]["name"] = """"""
-        self.vs[3]["classtype"] = """State"""
-        self.vs[3]["mm__"] = """State"""
-        self.vs[3]["cardinality"] = """+"""
+
+        self.vs[3]["mm__"] = """State""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class State()
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         # match class ExitPoint() node
         self.add_node()
-        self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """ExitPoint"""
-        self.vs[5]["mm__"] = """ExitPoint"""
-        self.vs[5]["cardinality"] = """+"""
+
+        self.vs[5]["mm__"] = """ExitPoint""" 
+        self.vs[5]["attr1"] = """+""" 
         # match_contains node for class ExitPoint()
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
@@ -56,46 +54,41 @@ class HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans(Himesis):
         
         # apply class LocalDef() node
         self.add_node()
-        self.vs[7]["name"] = """"""
-        self.vs[7]["classtype"] = """LocalDef"""
-        self.vs[7]["mm__"] = """LocalDef"""
-        self.vs[7]["cardinality"] = """1"""
+
+        self.vs[7]["mm__"] = """LocalDef""" 
+        self.vs[7]["attr1"] = """1"""
         # apply_contains node for class LocalDef()
         self.add_node()
         self.vs[8]["mm__"] = """apply_contains"""
         # apply class ProcDef() node
         self.add_node()
-        self.vs[9]["name"] = """"""
-        self.vs[9]["classtype"] = """ProcDef"""
-        self.vs[9]["mm__"] = """ProcDef"""
-        self.vs[9]["cardinality"] = """1"""
+
+        self.vs[9]["mm__"] = """ProcDef""" 
+        self.vs[9]["attr1"] = """1"""
         # apply_contains node for class ProcDef()
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
         # apply class Name() node
         self.add_node()
-        self.vs[11]["name"] = """"""
-        self.vs[11]["classtype"] = """Name"""
-        self.vs[11]["mm__"] = """Name"""
-        self.vs[11]["cardinality"] = """1"""
+
+        self.vs[11]["mm__"] = """Name""" 
+        self.vs[11]["attr1"] = """1"""
         # apply_contains node for class Name()
         self.add_node()
         self.vs[12]["mm__"] = """apply_contains"""
         # apply class Par() node
         self.add_node()
-        self.vs[13]["name"] = """"""
-        self.vs[13]["classtype"] = """Par"""
-        self.vs[13]["mm__"] = """Par"""
-        self.vs[13]["cardinality"] = """1"""
+
+        self.vs[13]["mm__"] = """Par""" 
+        self.vs[13]["attr1"] = """1"""
         # apply_contains node for class Par()
         self.add_node()
         self.vs[14]["mm__"] = """apply_contains"""
         # apply class Trigger() node
         self.add_node()
-        self.vs[15]["name"] = """"""
-        self.vs[15]["classtype"] = """Trigger"""
-        self.vs[15]["mm__"] = """Trigger"""
-        self.vs[15]["cardinality"] = """1"""
+
+        self.vs[15]["mm__"] = """Trigger""" 
+        self.vs[15]["attr1"] = """1"""
         # apply_contains node for class Trigger()
         self.add_node()
         self.vs[16]["mm__"] = """apply_contains"""
@@ -103,29 +96,29 @@ class HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans(Himesis):
         
         # match association State--exitPoints-->ExitPoint node
         self.add_node()
-        self.vs[17]["associationType"] = """exitPoints"""
+        self.vs[17]["attr1"] = """exitPoints"""
         self.vs[17]["mm__"] = """directLink_S"""
         
         # apply association LocalDef--def-->ProcDef node
         self.add_node()
-        self.vs[18]["associationType"] = """def"""
+        self.vs[18]["attr1"] = """def"""
         self.vs[18]["mm__"] = """directLink_T"""
         # apply association ProcDef--channelNames-->Name node
         self.add_node()
-        self.vs[19]["associationType"] = """channelNames"""
+        self.vs[19]["attr1"] = """channelNames"""
         self.vs[19]["mm__"] = """directLink_T"""
         # apply association ProcDef--p-->Par node
         self.add_node()
-        self.vs[20]["associationType"] = """p"""
+        self.vs[20]["attr1"] = """p"""
         self.vs[20]["mm__"] = """directLink_T"""
         # apply association Par--p-->Trigger node
         self.add_node()
-        self.vs[21]["associationType"] = """p"""
+        self.vs[21]["attr1"] = """p"""
         self.vs[21]["mm__"] = """directLink_T"""
         
         # backward association State---->LocalDef node
         self.add_node()
-        self.vs[22]["type"] = """ruleDef"""
+
         self.vs[22]["mm__"] = """backward_link"""
         
         
@@ -162,9 +155,10 @@ class HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans(Himesis):
                 (7,22), # apply_class LocalDef() -> backward_association
                 (22,3), #  backward_association -> apply_class State()
                 (0,2), # matchmodel -> pairedwith
-                (2,1) # pairedwith -> applyModel
+                (2,1) # pairedwith -> applyModel				
 		])
-		
-        # Add the equations
+
+        # Add the attribute equations
         self["equations"] = [((3,'isComposite'),('constant','true')), ((7,'__ApplyAttribute'),('constant','localdefcompstate')), ((9,'name'),('concat',(('constant','B'),(5,'name')))), ((11,'literal'),('constant','sh_in')), ((13,'__ApplyAttribute'),('constant','parexitpoint')), ((15,'channel'),('constant','sh_in')), ]
+
         

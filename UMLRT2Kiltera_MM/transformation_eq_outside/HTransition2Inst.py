@@ -32,50 +32,45 @@ class HTransition2Inst(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """Transition2Inst"""
+ 
         
         # match class State() node
         self.add_node()
-        self.vs[3]["name"] = """"""
-        self.vs[3]["classtype"] = """State"""
-        self.vs[3]["mm__"] = """State"""
-        self.vs[3]["cardinality"] = """+"""
+
+        self.vs[3]["mm__"] = """State""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class State()
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         # match class Transition() node
         self.add_node()
-        self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """Transition"""
-        self.vs[5]["mm__"] = """Transition"""
-        self.vs[5]["cardinality"] = """+"""
+
+        self.vs[5]["mm__"] = """Transition""" 
+        self.vs[5]["attr1"] = """+""" 
         # match_contains node for class Transition()
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
         # match class IN1() node
         self.add_node()
-        self.vs[7]["name"] = """"""
-        self.vs[7]["classtype"] = """IN1"""
-        self.vs[7]["mm__"] = """IN1"""
-        self.vs[7]["cardinality"] = """1"""
+
+        self.vs[7]["mm__"] = """IN1""" 
+        self.vs[7]["attr1"] = """1""" 
         # match_contains node for class IN1()
         self.add_node()
         self.vs[8]["mm__"] = """match_contains"""
         # match class EntryPoint() node
         self.add_node()
-        self.vs[9]["name"] = """"""
-        self.vs[9]["classtype"] = """EntryPoint"""
-        self.vs[9]["mm__"] = """EntryPoint"""
-        self.vs[9]["cardinality"] = """1"""
+
+        self.vs[9]["mm__"] = """EntryPoint""" 
+        self.vs[9]["attr1"] = """1""" 
         # match_contains node for class EntryPoint()
         self.add_node()
         self.vs[10]["mm__"] = """match_contains"""
         # match class StateMachine() node
         self.add_node()
-        self.vs[11]["name"] = """"""
-        self.vs[11]["classtype"] = """StateMachine"""
-        self.vs[11]["mm__"] = """StateMachine"""
-        self.vs[11]["cardinality"] = """1"""
+
+        self.vs[11]["mm__"] = """StateMachine""" 
+        self.vs[11]["attr1"] = """1""" 
         # match_contains node for class StateMachine()
         self.add_node()
         self.vs[12]["mm__"] = """match_contains"""
@@ -83,46 +78,41 @@ class HTransition2Inst(Himesis):
         
         # apply class Inst() node
         self.add_node()
-        self.vs[13]["name"] = """"""
-        self.vs[13]["classtype"] = """Inst"""
-        self.vs[13]["mm__"] = """Inst"""
-        self.vs[13]["cardinality"] = """1"""
+
+        self.vs[13]["mm__"] = """Inst""" 
+        self.vs[13]["attr1"] = """1"""
         # apply_contains node for class Inst()
         self.add_node()
         self.vs[14]["mm__"] = """apply_contains"""
         # apply class Name() node
         self.add_node()
-        self.vs[15]["name"] = """"""
-        self.vs[15]["classtype"] = """Name"""
-        self.vs[15]["mm__"] = """Name"""
-        self.vs[15]["cardinality"] = """1"""
+
+        self.vs[15]["mm__"] = """Name""" 
+        self.vs[15]["attr1"] = """1"""
         # apply_contains node for class Name()
         self.add_node()
         self.vs[16]["mm__"] = """apply_contains"""
         # apply class Name() node
         self.add_node()
-        self.vs[17]["name"] = """"""
-        self.vs[17]["classtype"] = """Name"""
-        self.vs[17]["mm__"] = """Name"""
-        self.vs[17]["cardinality"] = """1"""
+
+        self.vs[17]["mm__"] = """Name""" 
+        self.vs[17]["attr1"] = """1"""
         # apply_contains node for class Name()
         self.add_node()
         self.vs[18]["mm__"] = """apply_contains"""
         # apply class Name() node
         self.add_node()
-        self.vs[19]["name"] = """"""
-        self.vs[19]["classtype"] = """Name"""
-        self.vs[19]["mm__"] = """Name"""
-        self.vs[19]["cardinality"] = """1"""
+
+        self.vs[19]["mm__"] = """Name""" 
+        self.vs[19]["attr1"] = """1"""
         # apply_contains node for class Name()
         self.add_node()
         self.vs[20]["mm__"] = """apply_contains"""
         # apply class Name() node
         self.add_node()
-        self.vs[21]["name"] = """"""
-        self.vs[21]["classtype"] = """Name"""
-        self.vs[21]["mm__"] = """Name"""
-        self.vs[21]["cardinality"] = """1"""
+
+        self.vs[21]["mm__"] = """Name""" 
+        self.vs[21]["attr1"] = """1"""
         # apply_contains node for class Name()
         self.add_node()
         self.vs[22]["mm__"] = """apply_contains"""
@@ -130,36 +120,36 @@ class HTransition2Inst(Himesis):
         
         # match association State--transitions-->Transition node
         self.add_node()
-        self.vs[23]["associationType"] = """transitions"""
+        self.vs[23]["attr1"] = """transitions"""
         self.vs[23]["mm__"] = """directLink_S"""
         # match association Transition--type-->IN1 node
         self.add_node()
-        self.vs[24]["associationType"] = """type"""
+        self.vs[24]["attr1"] = """type"""
         self.vs[24]["mm__"] = """directLink_S"""
         # match association Transition--dest-->EntryPoint node
         self.add_node()
-        self.vs[25]["associationType"] = """dest"""
+        self.vs[25]["attr1"] = """dest"""
         self.vs[25]["mm__"] = """directLink_S"""
         # match association EntryPoint--owningStateMachine-->StateMachine node
         self.add_node()
-        self.vs[26]["associationType"] = """owningStateMachine"""
+        self.vs[26]["attr1"] = """owningStateMachine"""
         self.vs[26]["mm__"] = """directLink_S"""
         
         # apply association Inst--channelNames-->Name node
         self.add_node()
-        self.vs[27]["associationType"] = """channelNames"""
+        self.vs[27]["attr1"] = """channelNames"""
         self.vs[27]["mm__"] = """directLink_T"""
         # apply association Inst--channelNames-->Name node
         self.add_node()
-        self.vs[28]["associationType"] = """channelNames"""
+        self.vs[28]["attr1"] = """channelNames"""
         self.vs[28]["mm__"] = """directLink_T"""
         # apply association Inst--channelNames-->Name node
         self.add_node()
-        self.vs[29]["associationType"] = """channelNames"""
+        self.vs[29]["attr1"] = """channelNames"""
         self.vs[29]["mm__"] = """directLink_T"""
         # apply association Inst--channelNames-->Name node
         self.add_node()
-        self.vs[30]["associationType"] = """channelNames"""
+        self.vs[30]["attr1"] = """channelNames"""
         self.vs[30]["mm__"] = """directLink_T"""
         
         
@@ -207,9 +197,10 @@ class HTransition2Inst(Himesis):
                 (13,30), # apply_class Inst() -> association channelNames
                 (30,21), # association channelNames  -> apply_class Name()
                 (0,2), # matchmodel -> pairedwith
-                (2,1) # pairedwith -> applyModel
+                (2,1) # pairedwith -> applyModel				
 		])
-		
-        # Add the equations
+
+        # Add the attribute equations
         self["equations"] = [((3,'isComposite'),('constant','true')), ((13,'name'),('concat',(('constant','S'),(11,'name')))), ((13,'__ApplyAttribute'),('constant','instForInTrans')), ((15,'literal'),('constant','exit_in')), ((17,'literal'),('constant','exack_in')), ((19,'literal'),('concat',(('constant','A'),('concat',((9,'name'),('constant','A')))))), ((21,'literal'),('constant','sh_in')), ]
+
         

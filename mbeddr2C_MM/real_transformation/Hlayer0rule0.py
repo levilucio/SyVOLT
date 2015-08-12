@@ -36,10 +36,9 @@ class Hlayer0rule0(Himesis):
         
         # match class ImplementationModule(layer0rule0class0) node
         self.add_node()
-        self.vs[3]["name"] = """layer0rule0class0""" 
-        self.vs[3]["classtype"] = """ImplementationModule"""
-        self.vs[3]["mm__"] = """ImplementationModule"""
-        self.vs[3]["cardinality"] = """+""" 
+
+        self.vs[3]["mm__"] = """ImplementationModule""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class ImplementationModule(layer0rule0class0)
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
@@ -47,10 +46,9 @@ class Hlayer0rule0(Himesis):
         
         # apply class ImplementationModule(layer0rule0class1) node
         self.add_node()
-        self.vs[5]["name"] = """layer0rule0class1""" 
-        self.vs[5]["classtype"] = """ImplementationModule"""
-        self.vs[5]["mm__"] = """ImplementationModule"""
-        self.vs[5]["cardinality"] = """1"""
+
+        self.vs[5]["mm__"] = """ImplementationModule""" 
+        self.vs[5]["attr1"] = """1"""
         # apply_contains node for class ImplementationModule(layer0rule0class1)
         self.add_node()
         self.vs[6]["mm__"] = """apply_contains"""

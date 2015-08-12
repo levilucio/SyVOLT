@@ -32,14 +32,13 @@ class HState2ProcDef(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """State2ProcDef"""
+ 
         
         # match class State() node
         self.add_node()
-        self.vs[3]["name"] = """"""
-        self.vs[3]["classtype"] = """State"""
-        self.vs[3]["mm__"] = """State"""
-        self.vs[3]["cardinality"] = """+"""
+
+        self.vs[3]["mm__"] = """State""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class State()
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
@@ -47,37 +46,33 @@ class HState2ProcDef(Himesis):
         
         # apply class ProcDef() node
         self.add_node()
-        self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """ProcDef"""
-        self.vs[5]["mm__"] = """ProcDef"""
-        self.vs[5]["cardinality"] = """1"""
+
+        self.vs[5]["mm__"] = """ProcDef""" 
+        self.vs[5]["attr1"] = """1"""
         # apply_contains node for class ProcDef()
         self.add_node()
         self.vs[6]["mm__"] = """apply_contains"""
         # apply class Name() node
         self.add_node()
-        self.vs[7]["name"] = """"""
-        self.vs[7]["classtype"] = """Name"""
-        self.vs[7]["mm__"] = """Name"""
-        self.vs[7]["cardinality"] = """1"""
+
+        self.vs[7]["mm__"] = """Name""" 
+        self.vs[7]["attr1"] = """1"""
         # apply_contains node for class Name()
         self.add_node()
         self.vs[8]["mm__"] = """apply_contains"""
         # apply class Name() node
         self.add_node()
-        self.vs[9]["name"] = """"""
-        self.vs[9]["classtype"] = """Name"""
-        self.vs[9]["mm__"] = """Name"""
-        self.vs[9]["cardinality"] = """1"""
+
+        self.vs[9]["mm__"] = """Name""" 
+        self.vs[9]["attr1"] = """1"""
         # apply_contains node for class Name()
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
         # apply class Name() node
         self.add_node()
-        self.vs[11]["name"] = """"""
-        self.vs[11]["classtype"] = """Name"""
-        self.vs[11]["mm__"] = """Name"""
-        self.vs[11]["cardinality"] = """1"""
+
+        self.vs[11]["mm__"] = """Name""" 
+        self.vs[11]["attr1"] = """1"""
         # apply_contains node for class Name()
         self.add_node()
         self.vs[12]["mm__"] = """apply_contains"""
@@ -86,15 +81,15 @@ class HState2ProcDef(Himesis):
         
         # apply association ProcDef--channelNames-->Name node
         self.add_node()
-        self.vs[13]["associationType"] = """channelNames"""
+        self.vs[13]["attr1"] = """channelNames"""
         self.vs[13]["mm__"] = """directLink_T"""
         # apply association ProcDef--channelNames-->Name node
         self.add_node()
-        self.vs[14]["associationType"] = """channelNames"""
+        self.vs[14]["attr1"] = """channelNames"""
         self.vs[14]["mm__"] = """directLink_T"""
         # apply association ProcDef--channelNames-->Name node
         self.add_node()
-        self.vs[15]["associationType"] = """channelNames"""
+        self.vs[15]["attr1"] = """channelNames"""
         self.vs[15]["mm__"] = """directLink_T"""
         
         
@@ -122,9 +117,10 @@ class HState2ProcDef(Himesis):
                 (5,15), # apply_class ProcDef() -> association channelNames
                 (15,11), # association channelNames  -> apply_class Name()
                 (0,2), # matchmodel -> pairedwith
-                (2,1) # pairedwith -> applyModel
+                (2,1) # pairedwith -> applyModel				
 		])
-		
-        # Add the equations
+
+        # Add the attribute equations
         self["equations"] = [((5,'name'),('concat',(('constant','S'),(3,'name')))), ((5,'__ApplyAttribute'),('constant','procdef')), ((7,'literal'),('constant','exit')), ((9,'literal'),('constant','exack')), ((11,'literal'),('constant','enp')), ]
+
         

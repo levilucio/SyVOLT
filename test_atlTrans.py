@@ -42,29 +42,29 @@ from PropertyVerification.PropertyVerifier import PropertyVerifier
 
 from PropertyVerification.HEmpty_IsolatedConnectedLHS import HEmpty_IsolatedConnectedLHS
 
-from ATLTrans.properties.HfourMembers_IsolatedLHS import HfourMembers_IsolatedLHS
-from ATLTrans.properties.HfourMembers_ConnectedLHS import HfourMembers_ConnectedLHS
-from ATLTrans.properties.HfourMembers_CompleteLHS import HfourMembers_CompleteLHS
-
-from ATLTrans.properties.HmotherFather_IsolatedLHS import HmotherFather_IsolatedLHS
-from ATLTrans.properties.HmotherFather_ConnectedLHS import HmotherFather_ConnectedLHS
-from ATLTrans.properties.HmotherFather_CompleteLHS import HmotherFather_CompleteLHS
-
-
-#negative
-from ATLTrans.properties.HdaughterMother_IsolatedLHS import HdaughterMother_IsolatedLHS
-from ATLTrans.properties.HdaughterMother_ConnectedLHS import HdaughterMother_ConnectedLHS
-from ATLTrans.properties.HdaughterMother_CompleteLHS import HdaughterMother_CompleteLHS
-
-
-#implication
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson1_IsolatedLHS import HCommunityPerson1_IsolatedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson1_ConnectedLHS import HCommunityPerson1_ConnectedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson1_CompleteLHS import HCommunityPerson1_CompleteLHS
-
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson2_IsolatedLHS import HCommunityPerson2_IsolatedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson2_ConnectedLHS import HCommunityPerson2_ConnectedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson2_CompleteLHS import HCommunityPerson2_CompleteLHS
+# from ATLTrans.properties.HfourMembers_IsolatedLHS import HfourMembers_IsolatedLHS
+# from ATLTrans.properties.HfourMembers_ConnectedLHS import HfourMembers_ConnectedLHS
+# from ATLTrans.properties.HfourMembers_CompleteLHS import HfourMembers_CompleteLHS
+# 
+# from ATLTrans.properties.HmotherFather_IsolatedLHS import HmotherFather_IsolatedLHS
+# from ATLTrans.properties.HmotherFather_ConnectedLHS import HmotherFather_ConnectedLHS
+# from ATLTrans.properties.HmotherFather_CompleteLHS import HmotherFather_CompleteLHS
+# 
+# 
+# #negative
+# from ATLTrans.properties.HdaughterMother_IsolatedLHS import HdaughterMother_IsolatedLHS
+# from ATLTrans.properties.HdaughterMother_ConnectedLHS import HdaughterMother_ConnectedLHS
+# from ATLTrans.properties.HdaughterMother_CompleteLHS import HdaughterMother_CompleteLHS
+# 
+# 
+# #implication
+# from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson1_IsolatedLHS import HCommunityPerson1_IsolatedLHS
+# from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson1_ConnectedLHS import HCommunityPerson1_ConnectedLHS
+# from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson1_CompleteLHS import HCommunityPerson1_CompleteLHS
+# 
+# from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson2_IsolatedLHS import HCommunityPerson2_IsolatedLHS
+# from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson2_ConnectedLHS import HCommunityPerson2_ConnectedLHS
+# from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson2_CompleteLHS import HCommunityPerson2_CompleteLHS
 
 
 
@@ -119,43 +119,43 @@ class Test():
 
 
 
-        FourMembers = [HfourMembers_IsolatedLHS(), HfourMembers_ConnectedLHS(), HfourMembers_CompleteLHS()]
-        for fm in FourMembers:
-            fm["superclasses_dict"] = supertypes
-
-        HFourMembers_atomic = AtomicStateProperty(FourMembers[0], FourMembers[1], FourMembers[2])
-
-
-        HMotherFather = [HmotherFather_IsolatedLHS(), HmotherFather_ConnectedLHS(), HmotherFather_CompleteLHS()]
-        for c in HMotherFather:
-            c["superclasses_dict"] = supertypes
-
-        HMotherFather_atomic = AtomicStateProperty(HMotherFather[0], HMotherFather[1], HMotherFather[2])
-
-
-        DaughterMother = [HdaughterMother_IsolatedLHS(), HdaughterMother_ConnectedLHS(), HdaughterMother_CompleteLHS()]
-        for c in DaughterMother:
-            c["superclasses_dict"] = supertypes
-
-        HDaughterMother_atomic = AtomicStateProperty(DaughterMother[0], DaughterMother[1], DaughterMother[2])
-
-
-
-        # HCommunityPersonIfClause = AtomicStateProperty(HCommunityPerson1_IsolatedLHS(), HCommunityPerson1_ConnectedLHS(), HCommunityPerson1_CompleteLHS())
-        #
-        #
-        # HCommunityPersonThenClause = AndStateProperty(
-        #     AtomicStateProperty(HCommunityPerson1_IsolatedLHS(), HCommunityPerson1_ConnectedLHS(),
-        #         HCommunityPerson1_CompleteLHS()),
-        #     NotStateProperty(
-        #         AtomicStateProperty(HCommunityPerson2_IsolatedLHS(), HCommunityPerson2_ConnectedLHS(),
-        #             HCommunityPerson2_CompleteLHS())))
-
-        CommunityPerson1 = HCommunityPerson1_CompleteLHS()
-        CommunityPerson1["superclasses_dict"] = supertypes
-
-        CommunityPerson2 = HCommunityPerson2_CompleteLHS()
-        CommunityPerson2["superclasses_dict"] = supertypes
+#         FourMembers = [HfourMembers_IsolatedLHS(), HfourMembers_ConnectedLHS(), HfourMembers_CompleteLHS()]
+#         for fm in FourMembers:
+#             fm["superclasses_dict"] = supertypes
+# 
+#         HFourMembers_atomic = AtomicStateProperty(FourMembers[0], FourMembers[1], FourMembers[2])
+# 
+# 
+#         HMotherFather = [HmotherFather_IsolatedLHS(), HmotherFather_ConnectedLHS(), HmotherFather_CompleteLHS()]
+#         for c in HMotherFather:
+#             c["superclasses_dict"] = supertypes
+# 
+#         HMotherFather_atomic = AtomicStateProperty(HMotherFather[0], HMotherFather[1], HMotherFather[2])
+# 
+# 
+#         DaughterMother = [HdaughterMother_IsolatedLHS(), HdaughterMother_ConnectedLHS(), HdaughterMother_CompleteLHS()]
+#         for c in DaughterMother:
+#             c["superclasses_dict"] = supertypes
+# 
+#         HDaughterMother_atomic = AtomicStateProperty(DaughterMother[0], DaughterMother[1], DaughterMother[2])
+# 
+# 
+# 
+#         # HCommunityPersonIfClause = AtomicStateProperty(HCommunityPerson1_IsolatedLHS(), HCommunityPerson1_ConnectedLHS(), HCommunityPerson1_CompleteLHS())
+#         #
+#         #
+#         # HCommunityPersonThenClause = AndStateProperty(
+#         #     AtomicStateProperty(HCommunityPerson1_IsolatedLHS(), HCommunityPerson1_ConnectedLHS(),
+#         #         HCommunityPerson1_CompleteLHS()),
+#         #     NotStateProperty(
+#         #         AtomicStateProperty(HCommunityPerson2_IsolatedLHS(), HCommunityPerson2_ConnectedLHS(),
+#         #             HCommunityPerson2_CompleteLHS())))
+# 
+#         CommunityPerson1 = HCommunityPerson1_CompleteLHS()
+#         CommunityPerson1["superclasses_dict"] = supertypes
+# 
+#         CommunityPerson2 = HCommunityPerson2_CompleteLHS()
+#         CommunityPerson2["superclasses_dict"] = supertypes
 
         # HCommunityPersonIfClause = AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(),
         #     CommunityPerson1)
@@ -169,13 +169,13 @@ class Test():
         #HCommunityPerson1 = AtomicStateProperty(HCommunityPerson1_IsolatedLHS(), HCommunityPerson1_ConnectedLHS(), HCommunityPerson1_CompleteLHS())
 
         #atomic_properties = [["HDaughterMother_atomic", HDaughterMother_atomic]]
-        self.atomic_properties = [["HFourMembers_atomic", HFourMembers_atomic], ["HMotherFather_atomic", HMotherFather_atomic], ["HDaughterMother_atomic", HDaughterMother_atomic]]
-
-        self.if_then_properties = []#["HCommunityPerson", HCommunityPersonIfClause, HCommunityPersonThenClause]]
-
-        if args.slice > 0:
-            contract = self.atomic_properties[args.slice - 1]
-            self.rules, self.transformation = slice_transformation(self.rules, self.transformation, contract, args)
+#         self.atomic_properties = [["HFourMembers_atomic", HFourMembers_atomic], ["HMotherFather_atomic", HMotherFather_atomic], ["HDaughterMother_atomic", HDaughterMother_atomic]]
+# 
+#         self.if_then_properties = []#["HCommunityPerson", HCommunityPersonIfClause, HCommunityPersonThenClause]]
+# 
+#         if args.slice > 0:
+#             contract = self.atomic_properties[args.slice - 1]
+#             self.rules, self.transformation = slice_transformation(self.rules, self.transformation, contract, args)
 
 
     def test_correct_uml2kiltera(self,args):

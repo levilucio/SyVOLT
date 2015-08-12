@@ -36,37 +36,33 @@ class Hlayer5rule3(Himesis):
         
         # match class TestCase(layer5rule3class0) node
         self.add_node()
-        self.vs[3]["name"] = """layer5rule3class0""" 
-        self.vs[3]["classtype"] = """TestCase"""
-        self.vs[3]["mm__"] = """TestCase"""
-        self.vs[3]["cardinality"] = """+""" 
+
+        self.vs[3]["mm__"] = """TestCase""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class TestCase(layer5rule3class0)
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         # match class StatementList(layer5rule3class1) node
         self.add_node()
-        self.vs[5]["name"] = """layer5rule3class1""" 
-        self.vs[5]["classtype"] = """StatementList"""
-        self.vs[5]["mm__"] = """StatementList"""
-        self.vs[5]["cardinality"] = """+""" 
+
+        self.vs[5]["mm__"] = """StatementList""" 
+        self.vs[5]["attr1"] = """+""" 
         # match_contains node for class StatementList(layer5rule3class1)
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
         # match class InitializeConfiguration(layer5rule3class2) node
         self.add_node()
-        self.vs[7]["name"] = """layer5rule3class2""" 
-        self.vs[7]["classtype"] = """InitializeConfiguration"""
-        self.vs[7]["mm__"] = """InitializeConfiguration"""
-        self.vs[7]["cardinality"] = """+""" 
+
+        self.vs[7]["mm__"] = """InitializeConfiguration""" 
+        self.vs[7]["attr1"] = """+""" 
         # match_contains node for class InitializeConfiguration(layer5rule3class2)
         self.add_node()
         self.vs[8]["mm__"] = """match_contains"""
         # match class InstanceConfiguration(layer5rule3class3) node
         self.add_node()
-        self.vs[9]["name"] = """layer5rule3class3""" 
-        self.vs[9]["classtype"] = """InstanceConfiguration"""
-        self.vs[9]["mm__"] = """InstanceConfiguration"""
-        self.vs[9]["cardinality"] = """+""" 
+
+        self.vs[9]["mm__"] = """InstanceConfiguration""" 
+        self.vs[9]["attr1"] = """+""" 
         # match_contains node for class InstanceConfiguration(layer5rule3class3)
         self.add_node()
         self.vs[10]["mm__"] = """match_contains"""
@@ -74,37 +70,33 @@ class Hlayer5rule3(Himesis):
         
         # apply class StatementList(layer5rule3class4) node
         self.add_node()
-        self.vs[11]["name"] = """layer5rule3class4""" 
-        self.vs[11]["classtype"] = """StatementList"""
-        self.vs[11]["mm__"] = """StatementList"""
-        self.vs[11]["cardinality"] = """1"""
+
+        self.vs[11]["mm__"] = """StatementList""" 
+        self.vs[11]["attr1"] = """1"""
         # apply_contains node for class StatementList(layer5rule3class4)
         self.add_node()
         self.vs[12]["mm__"] = """apply_contains"""
         # apply class ExpressionStatement(layer5rule3class5) node
         self.add_node()
-        self.vs[13]["name"] = """layer5rule3class5""" 
-        self.vs[13]["classtype"] = """ExpressionStatement"""
-        self.vs[13]["mm__"] = """ExpressionStatement"""
-        self.vs[13]["cardinality"] = """1"""
+
+        self.vs[13]["mm__"] = """ExpressionStatement""" 
+        self.vs[13]["attr1"] = """1"""
         # apply_contains node for class ExpressionStatement(layer5rule3class5)
         self.add_node()
         self.vs[14]["mm__"] = """apply_contains"""
         # apply class FunctionCall(layer5rule3class6) node
         self.add_node()
-        self.vs[15]["name"] = """layer5rule3class6""" 
-        self.vs[15]["classtype"] = """FunctionCall"""
-        self.vs[15]["mm__"] = """FunctionCall"""
-        self.vs[15]["cardinality"] = """1"""
+
+        self.vs[15]["mm__"] = """FunctionCall""" 
+        self.vs[15]["attr1"] = """1"""
         # apply_contains node for class FunctionCall(layer5rule3class6)
         self.add_node()
         self.vs[16]["mm__"] = """apply_contains"""
         # apply class FunctionPrototype(layer5rule3class7) node
         self.add_node()
-        self.vs[17]["name"] = """layer5rule3class7""" 
-        self.vs[17]["classtype"] = """FunctionPrototype"""
-        self.vs[17]["mm__"] = """FunctionPrototype"""
-        self.vs[17]["cardinality"] = """1"""
+
+        self.vs[17]["mm__"] = """FunctionPrototype""" 
+        self.vs[17]["attr1"] = """1"""
         # apply_contains node for class FunctionPrototype(layer5rule3class7)
         self.add_node()
         self.vs[18]["mm__"] = """apply_contains"""
@@ -112,37 +104,37 @@ class Hlayer5rule3(Himesis):
         
         # match association TestCase--body-->StatementList node
         self.add_node()
-        self.vs[19]["associationType"] = """body"""
+        self.vs[19]["attr1"] = """body"""
         self.vs[19]["mm__"] = """directLink_S"""
         # match association StatementList--statements-->InitializeConfiguration node
         self.add_node()
-        self.vs[20]["associationType"] = """statements"""
+        self.vs[20]["attr1"] = """statements"""
         self.vs[20]["mm__"] = """directLink_S"""
         # match association InitializeConfiguration--config-->InstanceConfiguration node
         self.add_node()
-        self.vs[21]["associationType"] = """config"""
+        self.vs[21]["attr1"] = """config"""
         self.vs[21]["mm__"] = """directLink_S"""
         
         # apply association StatementList--statements-->ExpressionStatement node
         self.add_node()
-        self.vs[22]["associationType"] = """statements"""
+        self.vs[22]["attr1"] = """statements"""
         self.vs[22]["mm__"] = """directLink_T"""
         # apply association ExpressionStatement--expr-->FunctionCall node
         self.add_node()
-        self.vs[23]["associationType"] = """expr"""
+        self.vs[23]["attr1"] = """expr"""
         self.vs[23]["mm__"] = """directLink_T"""
         # apply association FunctionCall--function-->FunctionPrototype node
         self.add_node()
-        self.vs[24]["associationType"] = """function"""
+        self.vs[24]["attr1"] = """function"""
         self.vs[24]["mm__"] = """directLink_T"""
         
         # backward association TestCase---->StatementList node
         self.add_node()
-        self.vs[25]["type"] = """ruleDef"""
+
         self.vs[25]["mm__"] = """backward_link"""
         # backward association InstanceConfiguration---->FunctionPrototype node
         self.add_node()
-        self.vs[26]["type"] = """ruleDef"""
+
         self.vs[26]["mm__"] = """backward_link"""
         
         

@@ -32,14 +32,13 @@ class HBasicStateNoOutgoing2ProcDef(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """BasicStateNoOutgoing2ProcDef"""
+ 
         
         # match class State() node
         self.add_node()
-        self.vs[3]["name"] = """"""
-        self.vs[3]["classtype"] = """State"""
-        self.vs[3]["mm__"] = """State"""
-        self.vs[3]["cardinality"] = """+"""
+
+        self.vs[3]["mm__"] = """State""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class State()
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
@@ -47,19 +46,17 @@ class HBasicStateNoOutgoing2ProcDef(Himesis):
         
         # apply class ProcDef() node
         self.add_node()
-        self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """ProcDef"""
-        self.vs[5]["mm__"] = """ProcDef"""
-        self.vs[5]["cardinality"] = """1"""
+
+        self.vs[5]["mm__"] = """ProcDef""" 
+        self.vs[5]["attr1"] = """1"""
         # apply_contains node for class ProcDef()
         self.add_node()
         self.vs[6]["mm__"] = """apply_contains"""
         # apply class Null() node
         self.add_node()
-        self.vs[7]["name"] = """"""
-        self.vs[7]["classtype"] = """Null"""
-        self.vs[7]["mm__"] = """Null"""
-        self.vs[7]["cardinality"] = """1"""
+
+        self.vs[7]["mm__"] = """Null""" 
+        self.vs[7]["attr1"] = """1"""
         # apply_contains node for class Null()
         self.add_node()
         self.vs[8]["mm__"] = """apply_contains"""
@@ -68,12 +65,12 @@ class HBasicStateNoOutgoing2ProcDef(Himesis):
         
         # apply association ProcDef--p-->Null node
         self.add_node()
-        self.vs[9]["associationType"] = """p"""
+        self.vs[9]["attr1"] = """p"""
         self.vs[9]["mm__"] = """directLink_T"""
         
         # backward association State---->ProcDef node
         self.add_node()
-        self.vs[10]["type"] = """ruleDef"""
+
         self.vs[10]["mm__"] = """backward_link"""
         
         
@@ -94,9 +91,10 @@ class HBasicStateNoOutgoing2ProcDef(Himesis):
                 (5,10), # apply_class ProcDef() -> backward_association
                 (10,3), #  backward_association -> apply_class State()
                 (0,2), # matchmodel -> pairedwith
-                (2,1) # pairedwith -> applyModel
+                (2,1) # pairedwith -> applyModel				
 		])
-		
-        # Add the equations
+
+        # Add the attribute equations
         self["equations"] = [((3,'isComposite'),('constant','false')), ((3,'hasOutgoingTransitions'),('constant','false')), ((5,'__ApplyAttribute'),('constant','procdef')), ]
+
         

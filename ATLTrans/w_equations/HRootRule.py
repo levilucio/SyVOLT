@@ -32,14 +32,13 @@ class HRootRule(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """RootRule"""
+ 
         
         # match class HouseholdRoot() node
         self.add_node()
-        self.vs[3]["name"] = """"""
-        self.vs[3]["classtype"] = """HouseholdRoot"""
-        self.vs[3]["mm__"] = """HouseholdRoot"""
-        self.vs[3]["cardinality"] = """+"""
+
+        self.vs[3]["mm__"] = """HouseholdRoot""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class HouseholdRoot()
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
@@ -47,10 +46,9 @@ class HRootRule(Himesis):
         
         # apply class CommunityRoot() node
         self.add_node()
-        self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """CommunityRoot"""
-        self.vs[5]["mm__"] = """CommunityRoot"""
-        self.vs[5]["cardinality"] = """1"""
+
+        self.vs[5]["mm__"] = """CommunityRoot""" 
+        self.vs[5]["attr1"] = """1"""
         # apply_contains node for class CommunityRoot()
         self.add_node()
         self.vs[6]["mm__"] = """apply_contains"""
@@ -73,8 +71,8 @@ class HRootRule(Himesis):
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])
-		
-        # Add the equations
+
+        # Add the attribute equations
         self["equations"] = [((5,'ApplyAttribute'),('constant','root')), ]
 
         

@@ -36,55 +36,49 @@ class Hlayer3rule3(Himesis):
         
         # match class ImplementationModule(layer3rule3class0) node
         self.add_node()
-        self.vs[3]["name"] = """layer3rule3class0""" 
-        self.vs[3]["classtype"] = """ImplementationModule"""
-        self.vs[3]["mm__"] = """ImplementationModule"""
-        self.vs[3]["cardinality"] = """+""" 
+
+        self.vs[3]["mm__"] = """ImplementationModule""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class ImplementationModule(layer3rule3class0)
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         # match class InstanceConfiguration(layer3rule3class1) node
         self.add_node()
-        self.vs[5]["name"] = """layer3rule3class1""" 
-        self.vs[5]["classtype"] = """InstanceConfiguration"""
-        self.vs[5]["mm__"] = """InstanceConfiguration"""
-        self.vs[5]["cardinality"] = """+""" 
+
+        self.vs[5]["mm__"] = """InstanceConfiguration""" 
+        self.vs[5]["attr1"] = """+""" 
         # match_contains node for class InstanceConfiguration(layer3rule3class1)
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
         # match class ComponentInstance(layer3rule3class2) node
         self.add_node()
-        self.vs[7]["name"] = """layer3rule3class2""" 
-        self.vs[7]["classtype"] = """ComponentInstance"""
-        self.vs[7]["mm__"] = """ComponentInstance"""
-        self.vs[7]["cardinality"] = """+""" 
+
+        self.vs[7]["mm__"] = """ComponentInstance""" 
+        self.vs[7]["attr1"] = """+""" 
         # match_contains node for class ComponentInstance(layer3rule3class2)
         self.add_node()
         self.vs[8]["mm__"] = """match_contains"""
         # match class AtomicComponent(layer3rule3class3) node
         self.add_node()
-        self.vs[9]["name"] = """layer3rule3class3""" 
-        self.vs[9]["classtype"] = """AtomicComponent"""
-        self.vs[9]["mm__"] = """AtomicComponent"""
-        self.vs[9]["cardinality"] = """+""" 
+
+        self.vs[9]["mm__"] = """AtomicComponent""" 
+        self.vs[9]["attr1"] = """+""" 
         # match_contains node for class AtomicComponent(layer3rule3class3)
         self.add_node()
         self.vs[10]["mm__"] = """match_contains"""
         # match class ProvidedPort(layer3rule3class4) node
         self.add_node()
-        self.vs[11]["name"] = """layer3rule3class4""" 
-        self.vs[11]["classtype"] = """ProvidedPort"""
-        self.vs[11]["mm__"] = """ProvidedPort"""
-        self.vs[11]["cardinality"] = """+""" 
+
+        self.vs[11]["mm__"] = """ProvidedPort""" 
+        self.vs[11]["attr1"] = """+""" 
         # match_contains node for class ProvidedPort(layer3rule3class4)
         self.add_node()
         self.vs[12]["mm__"] = """match_contains"""
         # match class ClientServerInterface(layer3rule3class5) node
         self.add_node()
-        self.vs[13]["name"] = """layer3rule3class5""" 
-        self.vs[13]["classtype"] = """ClientServerInterface"""
-        self.vs[13]["mm__"] = """ClientServerInterface"""
-        self.vs[13]["cardinality"] = """+""" 
+
+        self.vs[13]["mm__"] = """ClientServerInterface""" 
+        self.vs[13]["attr1"] = """+""" 
         # match_contains node for class ClientServerInterface(layer3rule3class5)
         self.add_node()
         self.vs[14]["mm__"] = """match_contains"""
@@ -92,37 +86,33 @@ class Hlayer3rule3(Himesis):
         
         # apply class ImplementationModule(layer3rule3class6) node
         self.add_node()
-        self.vs[15]["name"] = """layer3rule3class6""" 
-        self.vs[15]["classtype"] = """ImplementationModule"""
-        self.vs[15]["mm__"] = """ImplementationModule"""
-        self.vs[15]["cardinality"] = """1"""
+
+        self.vs[15]["mm__"] = """ImplementationModule""" 
+        self.vs[15]["attr1"] = """1"""
         # apply_contains node for class ImplementationModule(layer3rule3class6)
         self.add_node()
         self.vs[16]["mm__"] = """apply_contains"""
         # apply class GlobalVariableDeclaration(layer3rule3class7) node
         self.add_node()
-        self.vs[17]["name"] = """layer3rule3class7""" 
-        self.vs[17]["classtype"] = """GlobalVariableDeclaration"""
-        self.vs[17]["mm__"] = """GlobalVariableDeclaration"""
-        self.vs[17]["cardinality"] = """1"""
+
+        self.vs[17]["mm__"] = """GlobalVariableDeclaration""" 
+        self.vs[17]["attr1"] = """1"""
         # apply_contains node for class GlobalVariableDeclaration(layer3rule3class7)
         self.add_node()
         self.vs[18]["mm__"] = """apply_contains"""
         # apply class TypeDef(layer3rule3class8) node
         self.add_node()
-        self.vs[19]["name"] = """layer3rule3class8""" 
-        self.vs[19]["classtype"] = """TypeDef"""
-        self.vs[19]["mm__"] = """TypeDef"""
-        self.vs[19]["cardinality"] = """1"""
+
+        self.vs[19]["mm__"] = """TypeDef""" 
+        self.vs[19]["attr1"] = """1"""
         # apply_contains node for class TypeDef(layer3rule3class8)
         self.add_node()
         self.vs[20]["mm__"] = """apply_contains"""
         # apply class TypeDefType(layer3rule3class9) node
         self.add_node()
-        self.vs[21]["name"] = """layer3rule3class9""" 
-        self.vs[21]["classtype"] = """TypeDefType"""
-        self.vs[21]["mm__"] = """TypeDefType"""
-        self.vs[21]["cardinality"] = """1"""
+
+        self.vs[21]["mm__"] = """TypeDefType""" 
+        self.vs[21]["attr1"] = """1"""
         # apply_contains node for class TypeDefType(layer3rule3class9)
         self.add_node()
         self.vs[22]["mm__"] = """apply_contains"""
@@ -130,45 +120,45 @@ class Hlayer3rule3(Himesis):
         
         # match association ImplementationModule--contents-->InstanceConfiguration node
         self.add_node()
-        self.vs[23]["associationType"] = """contents"""
+        self.vs[23]["attr1"] = """contents"""
         self.vs[23]["mm__"] = """directLink_S"""
         # match association InstanceConfiguration--contents-->ComponentInstance node
         self.add_node()
-        self.vs[24]["associationType"] = """contents"""
+        self.vs[24]["attr1"] = """contents"""
         self.vs[24]["mm__"] = """directLink_S"""
         # match association ComponentInstance--component-->AtomicComponent node
         self.add_node()
-        self.vs[25]["associationType"] = """component"""
+        self.vs[25]["attr1"] = """component"""
         self.vs[25]["mm__"] = """directLink_S"""
         # match association AtomicComponent--contents-->ProvidedPort node
         self.add_node()
-        self.vs[26]["associationType"] = """contents"""
+        self.vs[26]["attr1"] = """contents"""
         self.vs[26]["mm__"] = """directLink_S"""
         # match association ProvidedPort--intf-->ClientServerInterface node
         self.add_node()
-        self.vs[27]["associationType"] = """intf"""
+        self.vs[27]["attr1"] = """intf"""
         self.vs[27]["mm__"] = """directLink_S"""
         
         # apply association ImplementationModule--contents-->GlobalVariableDeclaration node
         self.add_node()
-        self.vs[28]["associationType"] = """contents"""
+        self.vs[28]["attr1"] = """contents"""
         self.vs[28]["mm__"] = """directLink_T"""
         # apply association GlobalVariableDeclaration--type-->TypeDefType node
         self.add_node()
-        self.vs[29]["associationType"] = """type"""
+        self.vs[29]["attr1"] = """type"""
         self.vs[29]["mm__"] = """directLink_T"""
         # apply association TypeDefType--typeDef-->TypeDef node
         self.add_node()
-        self.vs[30]["associationType"] = """typeDef"""
+        self.vs[30]["attr1"] = """typeDef"""
         self.vs[30]["mm__"] = """directLink_T"""
         
         # backward association ImplementationModule---->ImplementationModule node
         self.add_node()
-        self.vs[31]["type"] = """ruleDef"""
+
         self.vs[31]["mm__"] = """backward_link"""
         # backward association ClientServerInterface---->TypeDef node
         self.add_node()
-        self.vs[32]["type"] = """ruleDef"""
+
         self.vs[32]["mm__"] = """backward_link"""
         
         

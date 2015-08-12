@@ -36,28 +36,25 @@ class Hlayer1rule4(Himesis):
         
         # match class Operation(layer1rule4class0) node
         self.add_node()
-        self.vs[3]["name"] = """layer1rule4class0""" 
-        self.vs[3]["classtype"] = """Operation"""
-        self.vs[3]["mm__"] = """Operation"""
-        self.vs[3]["cardinality"] = """+""" 
+
+        self.vs[3]["mm__"] = """Operation""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class Operation(layer1rule4class0)
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         # match class OperationParameter(layer1rule4class1) node
         self.add_node()
-        self.vs[5]["name"] = """layer1rule4class1""" 
-        self.vs[5]["classtype"] = """OperationParameter"""
-        self.vs[5]["mm__"] = """OperationParameter"""
-        self.vs[5]["cardinality"] = """+""" 
+
+        self.vs[5]["mm__"] = """OperationParameter""" 
+        self.vs[5]["attr1"] = """+""" 
         # match_contains node for class OperationParameter(layer1rule4class1)
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
         # match class StringType(layer1rule4class2) node
         self.add_node()
-        self.vs[7]["name"] = """layer1rule4class2""" 
-        self.vs[7]["classtype"] = """StringType"""
-        self.vs[7]["mm__"] = """StringType"""
-        self.vs[7]["cardinality"] = """+""" 
+
+        self.vs[7]["mm__"] = """StringType""" 
+        self.vs[7]["attr1"] = """+""" 
         # match_contains node for class StringType(layer1rule4class2)
         self.add_node()
         self.vs[8]["mm__"] = """match_contains"""
@@ -65,19 +62,17 @@ class Hlayer1rule4(Himesis):
         
         # apply class FunctionRefType(layer1rule4class3) node
         self.add_node()
-        self.vs[9]["name"] = """layer1rule4class3""" 
-        self.vs[9]["classtype"] = """FunctionRefType"""
-        self.vs[9]["mm__"] = """FunctionRefType"""
-        self.vs[9]["cardinality"] = """1"""
+
+        self.vs[9]["mm__"] = """FunctionRefType""" 
+        self.vs[9]["attr1"] = """1"""
         # apply_contains node for class FunctionRefType(layer1rule4class3)
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
         # apply class StringType(layer1rule4class4) node
         self.add_node()
-        self.vs[11]["name"] = """layer1rule4class4""" 
-        self.vs[11]["classtype"] = """StringType"""
-        self.vs[11]["mm__"] = """StringType"""
-        self.vs[11]["cardinality"] = """1"""
+
+        self.vs[11]["mm__"] = """StringType""" 
+        self.vs[11]["attr1"] = """1"""
         # apply_contains node for class StringType(layer1rule4class4)
         self.add_node()
         self.vs[12]["mm__"] = """apply_contains"""
@@ -85,25 +80,25 @@ class Hlayer1rule4(Himesis):
         
         # match association Operation--parameters-->OperationParameter node
         self.add_node()
-        self.vs[13]["associationType"] = """parameters"""
+        self.vs[13]["attr1"] = """parameters"""
         self.vs[13]["mm__"] = """directLink_S"""
         # match association OperationParameter--type-->StringType node
         self.add_node()
-        self.vs[14]["associationType"] = """type"""
+        self.vs[14]["attr1"] = """type"""
         self.vs[14]["mm__"] = """directLink_S"""
         
         # apply association FunctionRefType--argTypes-->StringType node
         self.add_node()
-        self.vs[15]["associationType"] = """argTypes"""
+        self.vs[15]["attr1"] = """argTypes"""
         self.vs[15]["mm__"] = """directLink_T"""
         
         # backward association StringType---->StringType node
         self.add_node()
-        self.vs[16]["type"] = """ruleDef"""
+
         self.vs[16]["mm__"] = """backward_link"""
         # backward association Operation---->FunctionRefType node
         self.add_node()
-        self.vs[17]["type"] = """ruleDef"""
+
         self.vs[17]["mm__"] = """backward_link"""
         
         

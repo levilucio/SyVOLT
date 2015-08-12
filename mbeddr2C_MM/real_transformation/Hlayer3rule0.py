@@ -36,28 +36,25 @@ class Hlayer3rule0(Himesis):
         
         # match class ImplementationModule(layer3rule0class0) node
         self.add_node()
-        self.vs[3]["name"] = """layer3rule0class0""" 
-        self.vs[3]["classtype"] = """ImplementationModule"""
-        self.vs[3]["mm__"] = """ImplementationModule"""
-        self.vs[3]["cardinality"] = """+""" 
+
+        self.vs[3]["mm__"] = """ImplementationModule""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class ImplementationModule(layer3rule0class0)
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         # match class Function(layer3rule0class1) node
         self.add_node()
-        self.vs[5]["name"] = """layer3rule0class1""" 
-        self.vs[5]["classtype"] = """Function"""
-        self.vs[5]["mm__"] = """Function"""
-        self.vs[5]["cardinality"] = """+""" 
+
+        self.vs[5]["mm__"] = """Function""" 
+        self.vs[5]["attr1"] = """+""" 
         # match_contains node for class Function(layer3rule0class1)
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
         # match class Int32Type(layer3rule0class2) node
         self.add_node()
-        self.vs[7]["name"] = """layer3rule0class2""" 
-        self.vs[7]["classtype"] = """Int32Type"""
-        self.vs[7]["mm__"] = """Int32Type"""
-        self.vs[7]["cardinality"] = """+""" 
+
+        self.vs[7]["mm__"] = """Int32Type""" 
+        self.vs[7]["attr1"] = """+""" 
         # match_contains node for class Int32Type(layer3rule0class2)
         self.add_node()
         self.vs[8]["mm__"] = """match_contains"""
@@ -65,28 +62,25 @@ class Hlayer3rule0(Himesis):
         
         # apply class ImplementationModule(layer3rule0class3) node
         self.add_node()
-        self.vs[9]["name"] = """layer3rule0class3""" 
-        self.vs[9]["classtype"] = """ImplementationModule"""
-        self.vs[9]["mm__"] = """ImplementationModule"""
-        self.vs[9]["cardinality"] = """1"""
+
+        self.vs[9]["mm__"] = """ImplementationModule""" 
+        self.vs[9]["attr1"] = """1"""
         # apply_contains node for class ImplementationModule(layer3rule0class3)
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
         # apply class FunctionPrototype(layer3rule0class4) node
         self.add_node()
-        self.vs[11]["name"] = """layer3rule0class4""" 
-        self.vs[11]["classtype"] = """FunctionPrototype"""
-        self.vs[11]["mm__"] = """FunctionPrototype"""
-        self.vs[11]["cardinality"] = """1"""
+
+        self.vs[11]["mm__"] = """FunctionPrototype""" 
+        self.vs[11]["attr1"] = """1"""
         # apply_contains node for class FunctionPrototype(layer3rule0class4)
         self.add_node()
         self.vs[12]["mm__"] = """apply_contains"""
         # apply class VoidType(layer3rule0class5) node
         self.add_node()
-        self.vs[13]["name"] = """layer3rule0class5""" 
-        self.vs[13]["classtype"] = """VoidType"""
-        self.vs[13]["mm__"] = """VoidType"""
-        self.vs[13]["cardinality"] = """1"""
+
+        self.vs[13]["mm__"] = """VoidType""" 
+        self.vs[13]["attr1"] = """1"""
         # apply_contains node for class VoidType(layer3rule0class5)
         self.add_node()
         self.vs[14]["mm__"] = """apply_contains"""
@@ -94,25 +88,25 @@ class Hlayer3rule0(Himesis):
         
         # match association ImplementationModule--contents-->Function node
         self.add_node()
-        self.vs[15]["associationType"] = """contents"""
+        self.vs[15]["attr1"] = """contents"""
         self.vs[15]["mm__"] = """directLink_S"""
         # match association Function--type-->Int32Type node
         self.add_node()
-        self.vs[16]["associationType"] = """type"""
+        self.vs[16]["attr1"] = """type"""
         self.vs[16]["mm__"] = """directLink_S"""
         
         # apply association ImplementationModule--contents-->FunctionPrototype node
         self.add_node()
-        self.vs[17]["associationType"] = """contents"""
+        self.vs[17]["attr1"] = """contents"""
         self.vs[17]["mm__"] = """directLink_T"""
         # apply association FunctionPrototype--type-->VoidType node
         self.add_node()
-        self.vs[18]["associationType"] = """type"""
+        self.vs[18]["attr1"] = """type"""
         self.vs[18]["mm__"] = """directLink_T"""
         
         # backward association ImplementationModule---->ImplementationModule node
         self.add_node()
-        self.vs[19]["type"] = """ruleDef"""
+
         self.vs[19]["mm__"] = """backward_link"""
         
         

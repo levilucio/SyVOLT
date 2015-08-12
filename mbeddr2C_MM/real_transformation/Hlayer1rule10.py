@@ -36,19 +36,17 @@ class Hlayer1rule10(Himesis):
         
         # match class AtomicComponent(layer1rule10class0) node
         self.add_node()
-        self.vs[3]["name"] = """layer1rule10class0""" 
-        self.vs[3]["classtype"] = """AtomicComponent"""
-        self.vs[3]["mm__"] = """AtomicComponent"""
-        self.vs[3]["cardinality"] = """+""" 
+
+        self.vs[3]["mm__"] = """AtomicComponent""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class AtomicComponent(layer1rule10class0)
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         # match class RequiredPort(layer1rule10class1) node
         self.add_node()
-        self.vs[5]["name"] = """layer1rule10class1""" 
-        self.vs[5]["classtype"] = """RequiredPort"""
-        self.vs[5]["mm__"] = """RequiredPort"""
-        self.vs[5]["cardinality"] = """+""" 
+
+        self.vs[5]["mm__"] = """RequiredPort""" 
+        self.vs[5]["attr1"] = """+""" 
         # match_contains node for class RequiredPort(layer1rule10class1)
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
@@ -56,28 +54,25 @@ class Hlayer1rule10(Himesis):
         
         # apply class StructDeclaration(layer1rule10class2) node
         self.add_node()
-        self.vs[7]["name"] = """layer1rule10class2""" 
-        self.vs[7]["classtype"] = """StructDeclaration"""
-        self.vs[7]["mm__"] = """StructDeclaration"""
-        self.vs[7]["cardinality"] = """1"""
+
+        self.vs[7]["mm__"] = """StructDeclaration""" 
+        self.vs[7]["attr1"] = """1"""
         # apply_contains node for class StructDeclaration(layer1rule10class2)
         self.add_node()
         self.vs[8]["mm__"] = """apply_contains"""
         # apply class Member(layer1rule10class3) node
         self.add_node()
-        self.vs[9]["name"] = """layer1rule10class3""" 
-        self.vs[9]["classtype"] = """Member"""
-        self.vs[9]["mm__"] = """Member"""
-        self.vs[9]["cardinality"] = """1"""
+
+        self.vs[9]["mm__"] = """Member""" 
+        self.vs[9]["attr1"] = """1"""
         # apply_contains node for class Member(layer1rule10class3)
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
         # apply class Member(layer1rule10class4) node
         self.add_node()
-        self.vs[11]["name"] = """layer1rule10class4""" 
-        self.vs[11]["classtype"] = """Member"""
-        self.vs[11]["mm__"] = """Member"""
-        self.vs[11]["cardinality"] = """1"""
+
+        self.vs[11]["mm__"] = """Member""" 
+        self.vs[11]["attr1"] = """1"""
         # apply_contains node for class Member(layer1rule10class4)
         self.add_node()
         self.vs[12]["mm__"] = """apply_contains"""
@@ -85,29 +80,29 @@ class Hlayer1rule10(Himesis):
         
         # match association AtomicComponent--contents-->RequiredPort node
         self.add_node()
-        self.vs[13]["associationType"] = """contents"""
+        self.vs[13]["attr1"] = """contents"""
         self.vs[13]["mm__"] = """directLink_S"""
         
         # apply association StructDeclaration--members-->Member node
         self.add_node()
-        self.vs[14]["associationType"] = """members"""
+        self.vs[14]["attr1"] = """members"""
         self.vs[14]["mm__"] = """directLink_T"""
         # apply association StructDeclaration--members-->Member node
         self.add_node()
-        self.vs[15]["associationType"] = """members"""
+        self.vs[15]["attr1"] = """members"""
         self.vs[15]["mm__"] = """directLink_T"""
         
         # backward association AtomicComponent---->StructDeclaration node
         self.add_node()
-        self.vs[16]["type"] = """ruleDef"""
+
         self.vs[16]["mm__"] = """backward_link"""
         # backward association RequiredPort---->Member node
         self.add_node()
-        self.vs[17]["type"] = """ruleDef"""
+
         self.vs[17]["mm__"] = """backward_link"""
         # backward association RequiredPort---->Member node
         self.add_node()
-        self.vs[18]["type"] = """ruleDef"""
+
         self.vs[18]["mm__"] = """backward_link"""
         
         

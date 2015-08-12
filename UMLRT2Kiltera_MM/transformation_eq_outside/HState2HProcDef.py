@@ -32,14 +32,13 @@ class HState2HProcDef(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """State2HProcDef"""
+ 
         
         # match class State() node
         self.add_node()
-        self.vs[3]["name"] = """"""
-        self.vs[3]["classtype"] = """State"""
-        self.vs[3]["mm__"] = """State"""
-        self.vs[3]["cardinality"] = """+"""
+
+        self.vs[3]["mm__"] = """State""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class State()
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
@@ -47,127 +46,113 @@ class HState2HProcDef(Himesis):
         
         # apply class LocalDef() node
         self.add_node()
-        self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """LocalDef"""
-        self.vs[5]["mm__"] = """LocalDef"""
-        self.vs[5]["cardinality"] = """1"""
+
+        self.vs[5]["mm__"] = """LocalDef""" 
+        self.vs[5]["attr1"] = """1"""
         # apply_contains node for class LocalDef()
         self.add_node()
         self.vs[6]["mm__"] = """apply_contains"""
         # apply class ProcDef() node
         self.add_node()
-        self.vs[7]["name"] = """"""
-        self.vs[7]["classtype"] = """ProcDef"""
-        self.vs[7]["mm__"] = """ProcDef"""
-        self.vs[7]["cardinality"] = """1"""
+
+        self.vs[7]["mm__"] = """ProcDef""" 
+        self.vs[7]["attr1"] = """1"""
         # apply_contains node for class ProcDef()
         self.add_node()
         self.vs[8]["mm__"] = """apply_contains"""
         # apply class Name() node
         self.add_node()
-        self.vs[9]["name"] = """"""
-        self.vs[9]["classtype"] = """Name"""
-        self.vs[9]["mm__"] = """Name"""
-        self.vs[9]["cardinality"] = """1"""
+
+        self.vs[9]["mm__"] = """Name""" 
+        self.vs[9]["attr1"] = """1"""
         # apply_contains node for class Name()
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
         # apply class Name() node
         self.add_node()
-        self.vs[11]["name"] = """"""
-        self.vs[11]["classtype"] = """Name"""
-        self.vs[11]["mm__"] = """Name"""
-        self.vs[11]["cardinality"] = """1"""
+
+        self.vs[11]["mm__"] = """Name""" 
+        self.vs[11]["attr1"] = """1"""
         # apply_contains node for class Name()
         self.add_node()
         self.vs[12]["mm__"] = """apply_contains"""
         # apply class Name() node
         self.add_node()
-        self.vs[13]["name"] = """"""
-        self.vs[13]["classtype"] = """Name"""
-        self.vs[13]["mm__"] = """Name"""
-        self.vs[13]["cardinality"] = """1"""
+
+        self.vs[13]["mm__"] = """Name""" 
+        self.vs[13]["attr1"] = """1"""
         # apply_contains node for class Name()
         self.add_node()
         self.vs[14]["mm__"] = """apply_contains"""
         # apply class Listen() node
         self.add_node()
-        self.vs[15]["name"] = """"""
-        self.vs[15]["classtype"] = """Listen"""
-        self.vs[15]["mm__"] = """Listen"""
-        self.vs[15]["cardinality"] = """1"""
+
+        self.vs[15]["mm__"] = """Listen""" 
+        self.vs[15]["attr1"] = """1"""
         # apply_contains node for class Listen()
         self.add_node()
         self.vs[16]["mm__"] = """apply_contains"""
         # apply class ListenBranch() node
         self.add_node()
-        self.vs[17]["name"] = """"""
-        self.vs[17]["classtype"] = """ListenBranch"""
-        self.vs[17]["mm__"] = """ListenBranch"""
-        self.vs[17]["cardinality"] = """1"""
+
+        self.vs[17]["mm__"] = """ListenBranch""" 
+        self.vs[17]["attr1"] = """1"""
         # apply_contains node for class ListenBranch()
         self.add_node()
         self.vs[18]["mm__"] = """apply_contains"""
         # apply class Null() node
         self.add_node()
-        self.vs[19]["name"] = """"""
-        self.vs[19]["classtype"] = """Null"""
-        self.vs[19]["mm__"] = """Null"""
-        self.vs[19]["cardinality"] = """1"""
+
+        self.vs[19]["mm__"] = """Null""" 
+        self.vs[19]["attr1"] = """1"""
         # apply_contains node for class Null()
         self.add_node()
         self.vs[20]["mm__"] = """apply_contains"""
         # apply class ListenBranch() node
         self.add_node()
-        self.vs[21]["name"] = """"""
-        self.vs[21]["classtype"] = """ListenBranch"""
-        self.vs[21]["mm__"] = """ListenBranch"""
-        self.vs[21]["cardinality"] = """1"""
+
+        self.vs[21]["mm__"] = """ListenBranch""" 
+        self.vs[21]["attr1"] = """1"""
         # apply_contains node for class ListenBranch()
         self.add_node()
         self.vs[22]["mm__"] = """apply_contains"""
         # apply class Seq() node
         self.add_node()
-        self.vs[23]["name"] = """"""
-        self.vs[23]["classtype"] = """Seq"""
-        self.vs[23]["mm__"] = """Seq"""
-        self.vs[23]["cardinality"] = """1"""
+
+        self.vs[23]["mm__"] = """Seq""" 
+        self.vs[23]["attr1"] = """1"""
         # apply_contains node for class Seq()
         self.add_node()
         self.vs[24]["mm__"] = """apply_contains"""
         # apply class Trigger() node
         self.add_node()
-        self.vs[25]["name"] = """"""
-        self.vs[25]["classtype"] = """Trigger"""
-        self.vs[25]["mm__"] = """Trigger"""
-        self.vs[25]["cardinality"] = """1"""
+
+        self.vs[25]["mm__"] = """Trigger""" 
+        self.vs[25]["attr1"] = """1"""
         # apply_contains node for class Trigger()
         self.add_node()
         self.vs[26]["mm__"] = """apply_contains"""
         # apply class Listen() node
         self.add_node()
-        self.vs[27]["name"] = """"""
-        self.vs[27]["classtype"] = """Listen"""
-        self.vs[27]["mm__"] = """Listen"""
-        self.vs[27]["cardinality"] = """1"""
+
+        self.vs[27]["mm__"] = """Listen""" 
+        self.vs[27]["attr1"] = """1"""
         # apply_contains node for class Listen()
         self.add_node()
         self.vs[28]["mm__"] = """apply_contains"""
         # apply class ListenBranch() node
         self.add_node()
-        self.vs[29]["name"] = """"""
-        self.vs[29]["classtype"] = """ListenBranch"""
-        self.vs[29]["mm__"] = """ListenBranch"""
-        self.vs[29]["cardinality"] = """1"""
+
+        self.vs[29]["mm__"] = """ListenBranch""" 
+        self.vs[29]["attr1"] = """1"""
         # apply_contains node for class ListenBranch()
         self.add_node()
         self.vs[30]["mm__"] = """apply_contains"""
         # apply class Trigger() node
         self.add_node()
-        self.vs[31]["name"] = """"""
-        self.vs[31]["classtype"] = """Trigger"""
-        self.vs[31]["mm__"] = """Trigger"""
-        self.vs[31]["cardinality"] = """1"""
+
+        self.vs[31]["mm__"] = """Trigger""" 
+        self.vs[31]["attr1"] = """1"""
         # apply_contains node for class Trigger()
         self.add_node()
         self.vs[32]["mm__"] = """apply_contains"""
@@ -176,60 +161,60 @@ class HState2HProcDef(Himesis):
         
         # apply association LocalDef--def-->ProcDef node
         self.add_node()
-        self.vs[33]["associationType"] = """def"""
+        self.vs[33]["attr1"] = """def"""
         self.vs[33]["mm__"] = """directLink_T"""
         # apply association ProcDef--channelNames-->Name node
         self.add_node()
-        self.vs[34]["associationType"] = """channelNames"""
+        self.vs[34]["attr1"] = """channelNames"""
         self.vs[34]["mm__"] = """directLink_T"""
         # apply association ProcDef--channelNames-->Name node
         self.add_node()
-        self.vs[35]["associationType"] = """channelNames"""
+        self.vs[35]["attr1"] = """channelNames"""
         self.vs[35]["mm__"] = """directLink_T"""
         # apply association ProcDef--channelNames-->Name node
         self.add_node()
-        self.vs[36]["associationType"] = """channelNames"""
+        self.vs[36]["attr1"] = """channelNames"""
         self.vs[36]["mm__"] = """directLink_T"""
         # apply association ProcDef--p-->Listen node
         self.add_node()
-        self.vs[37]["associationType"] = """p"""
+        self.vs[37]["attr1"] = """p"""
         self.vs[37]["mm__"] = """directLink_T"""
         # apply association Listen--branches-->ListenBranch node
         self.add_node()
-        self.vs[38]["associationType"] = """branches"""
+        self.vs[38]["attr1"] = """branches"""
         self.vs[38]["mm__"] = """directLink_T"""
         # apply association ListenBranch--p-->Null node
         self.add_node()
-        self.vs[39]["associationType"] = """p"""
+        self.vs[39]["attr1"] = """p"""
         self.vs[39]["mm__"] = """directLink_T"""
         # apply association Listen--branches-->ListenBranch node
         self.add_node()
-        self.vs[40]["associationType"] = """branches"""
+        self.vs[40]["attr1"] = """branches"""
         self.vs[40]["mm__"] = """directLink_T"""
         # apply association ListenBranch--p-->Seq node
         self.add_node()
-        self.vs[41]["associationType"] = """p"""
+        self.vs[41]["attr1"] = """p"""
         self.vs[41]["mm__"] = """directLink_T"""
         # apply association Seq--p-->Trigger node
         self.add_node()
-        self.vs[42]["associationType"] = """p"""
+        self.vs[42]["attr1"] = """p"""
         self.vs[42]["mm__"] = """directLink_T"""
         # apply association Seq--p-->Listen node
         self.add_node()
-        self.vs[43]["associationType"] = """p"""
+        self.vs[43]["attr1"] = """p"""
         self.vs[43]["mm__"] = """directLink_T"""
         # apply association Listen--branches-->ListenBranch node
         self.add_node()
-        self.vs[44]["associationType"] = """branches"""
+        self.vs[44]["attr1"] = """branches"""
         self.vs[44]["mm__"] = """directLink_T"""
         # apply association ListenBranch--p-->Trigger node
         self.add_node()
-        self.vs[45]["associationType"] = """p"""
+        self.vs[45]["attr1"] = """p"""
         self.vs[45]["mm__"] = """directLink_T"""
         
         # backward association State---->LocalDef node
         self.add_node()
-        self.vs[46]["type"] = """ruleDef"""
+
         self.vs[46]["mm__"] = """backward_link"""
         
         
@@ -298,9 +283,10 @@ class HState2HProcDef(Himesis):
                 (5,46), # apply_class LocalDef() -> backward_association
                 (46,3), #  backward_association -> apply_class State()
                 (0,2), # matchmodel -> pairedwith
-                (2,1) # pairedwith -> applyModel
+                (2,1) # pairedwith -> applyModel				
 		])
-		
-        # Add the equations
+
+        # Add the attribute equations
         self["equations"] = [((3,'isComposite'),('constant','true')), ((5,'__ApplyAttribute'),('constant','localdefcompstate')), ((7,'name'),('constant','H')), ((9,'literal'),('constant','exit_in')), ((11,'literal'),('constant','exack_in')), ((13,'literal'),('constant','sh_in')), ((15,'__ApplyAttribute'),('constant','listenhproc')), ((17,'channel'),('constant','sh_in')), ((21,'channel'),('constant','exit')), ((25,'channel'),('constant','exit_in')), ((29,'channel'),('constant','exack_in')), ((31,'channel'),('constant','exack')), ]
+
         

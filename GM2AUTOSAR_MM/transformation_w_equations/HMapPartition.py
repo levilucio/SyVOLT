@@ -32,32 +32,29 @@ class HMapPartition(Himesis):
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["rulename"] = """MapPartition"""
+ 
         
         # match class Partition() node
         self.add_node()
-        self.vs[3]["name"] = """""" 
-        self.vs[3]["classtype"] = """Partition"""
-        self.vs[3]["mm__"] = """Partition"""
-        self.vs[3]["cardinality"] = """+""" 
+
+        self.vs[3]["mm__"] = """Partition""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class Partition()
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
         # match class PhysicalNode() node
         self.add_node()
-        self.vs[5]["name"] = """""" 
-        self.vs[5]["classtype"] = """PhysicalNode"""
-        self.vs[5]["mm__"] = """PhysicalNode"""
-        self.vs[5]["cardinality"] = """1""" 
+
+        self.vs[5]["mm__"] = """PhysicalNode""" 
+        self.vs[5]["attr1"] = """1""" 
         # match_contains node for class PhysicalNode()
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
         # match class Module() node
         self.add_node()
-        self.vs[7]["name"] = """""" 
-        self.vs[7]["classtype"] = """Module"""
-        self.vs[7]["mm__"] = """Module"""
-        self.vs[7]["cardinality"] = """1""" 
+
+        self.vs[7]["mm__"] = """Module""" 
+        self.vs[7]["attr1"] = """1""" 
         # match_contains node for class Module()
         self.add_node()
         self.vs[8]["mm__"] = """match_contains"""
@@ -65,10 +62,9 @@ class HMapPartition(Himesis):
         
         # apply class SwcToEcuMapping() node
         self.add_node()
-        self.vs[9]["name"] = """""" 
-        self.vs[9]["classtype"] = """SwcToEcuMapping"""
-        self.vs[9]["mm__"] = """SwcToEcuMapping"""
-        self.vs[9]["cardinality"] = """1"""
+
+        self.vs[9]["mm__"] = """SwcToEcuMapping""" 
+        self.vs[9]["attr1"] = """1"""
         # apply_contains node for class SwcToEcuMapping()
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
@@ -76,11 +72,11 @@ class HMapPartition(Himesis):
         
         # match association PhysicalNode--partition-->Partition node
         self.add_node()
-        self.vs[11]["associationType"] = """partition"""
+        self.vs[11]["attr1"] = """partition"""
         self.vs[11]["mm__"] = """directLink_S"""
         # match association Partition--module-->Module node
         self.add_node()
-        self.vs[12]["associationType"] = """module"""
+        self.vs[12]["attr1"] = """module"""
         self.vs[12]["mm__"] = """directLink_S"""
         
         
@@ -107,7 +103,7 @@ class HMapPartition(Himesis):
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])
-		
+
         # Add the attribute equations
         self["equations"] = [((9,'shortName'),('concat',(('constant','Swc2EcuMapping_'),(3,'name')))), ((9,'ApplyAttribute'),('constant','solveRef')), ]
 
