@@ -474,7 +474,7 @@ if __name__ == "__main__":
 
     parser.add_argument('--compression', type = int, default = 6,
                         help = 'Level of compression to use with pickling. Range: 0 (no compression) to 9 (high compression) (default: 6)')
-    parser.set_defaults(compression = True)
+    parser.set_defaults(compression = 6)
 
     parser.add_argument('--slice', type = int, default = 0,
                         help = 'Index of contract to slice for. Range: 0 (no slicing) to #CONTRACTS (default: 0)')
