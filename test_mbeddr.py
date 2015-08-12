@@ -48,6 +48,7 @@ class Test():
 
         full_transformation = [
 
+            #a layer
             ['Hlayer0rule0',
             'Hlayer0rule1',
             'Hlayer0rule2',
@@ -60,6 +61,7 @@ class Test():
             'Hlayer0rule10',
             'Hlayer0rule11'],
 
+            #b layer
             ['Hlayer1rule0',
             'Hlayer1rule1',
             'Hlayer1rule2',
@@ -77,11 +79,13 @@ class Test():
             'Hlayer1rule14',
             'Hlayer1rule15'],
 
-    #        'Hlayer2rule0']
+            #c layer
+    #       ['Hlayer2rule0',
             ['Hlayer2rule1',
             'Hlayer2rule2',
             'Hlayer2rule3'],
 
+            # d layer
             ['Hlayer3rule0',
             'Hlayer3rule1',
             'Hlayer3rule2',
@@ -89,17 +93,22 @@ class Test():
             'Hlayer3rule4',
             'Hlayer3rule5'],
 
+            # e layer
             ['Hlayer4rule0',
             'Hlayer4rule1',
             'Hlayer4rule2',
             'Hlayer4rule3'],
 
+            #f layer
             ['Hlayer5rule0',
             'Hlayer5rule1',
             'Hlayer5rule2',
             'Hlayer5rule3',
             'Hlayer5rule4',
-            'Hlayer5rule5']
+            'Hlayer5rule5'],
+
+            #g layer
+            ['HLayer6rule0']
 
 
 
@@ -109,13 +118,34 @@ class Test():
 
         # print("Rules: " + str(self.rules.keys()))
 
+        # make sure the superclasses are there
+        subclasses_dict, superclasses_dict = self.get_sub_and_super_classes()
+
+        for rule in self.rules.values():
+            rule["superclasses_dict"] = superclasses_dict
+
+        for layer in self.transformation:
+            for rule in layer:
+                rule["superclasses_dict"] = superclasses_dict
+
+        # prop1_atomic = AtomicStateProperty(HProperty1_isolatedLHS(), HProperty1_connectedLHS(),
+        #                                    HProperty1_completeLHS())
+        # prop2_atomic = AtomicStateProperty(HProperty2_isolatedLHS(), HProperty2_connectedLHS(),
+        #                                    HProperty2_completeLHS())
+        #
+        # self.atomic_properties = [["prop1", prop1_atomic], ["prop2", prop2_atomic]]
+        #
+        # self.if_then_properties = []
+
+
+        if args.slice > 0:
+            contract = self.atomic_properties[args.slice - 1]
+            contract[1].CompleteQuantified["superclasses_dict"] = superclasses_dict
+            self.rules, self.transformation = slice_transformation(self.rules, self.transformation, contract, args)
+
 
     def test_correct_mbeddr(self, args):
         pyramify = PyRamify(verbosity = 0, draw_svg = args.draw_svg)
-
-
-#              
-#         g0 = self.rules['Hlayer6rule0']        
 
         expected_num_pcs = args.num_pcs
 
@@ -124,11 +154,7 @@ class Test():
         pre_metamodel = ["MT_pre__mbeddr_MM", "MoTifRule"]
         post_metamodel = ["MT_post__mbeddr", "MoTifRule"]
 
-        subclasses_dict = {}
-        eu1 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/Module.ecore")
-        subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(eu1.getMetamodelClassNames())
-        eu2 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/C.ecore")
-        subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(eu2.getMetamodelClassNames())
+        subclasses_dict, superclasses_dict = self.get_sub_and_super_classes()
 
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
 
@@ -165,6 +191,25 @@ class Test():
         #
         # s.print_path_conditions_file()
 
+    def get_sub_and_super_classes(self):
+        subclasses_dict = {}
+        eu1 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/Module.ecore")
+        subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(eu1.getMetamodelClassNames())
+        eu2 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/C.ecore")
+        subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(eu2.getMetamodelClassNames())
+
+        # keep a dictionary from each child to its parent
+        supertypes = {}
+
+        for supertype in subclasses_dict:
+            for subtype in subclasses_dict[supertype]:
+                subtype = subtype[8:]
+                try:
+                    supertypes[subtype].append(supertype[8:])
+                except KeyError:
+                    supertypes[subtype] = [supertype[8:]]
+
+        return subclasses_dict, supertypes
 
 
 if __name__ == "__main__":
@@ -186,7 +231,11 @@ if __name__ == "__main__":
 
     parser.add_argument('--compression', type = int, default = 6,
                         help = 'Level of compression to use with pickling. Range: 0 (no compression) to 9 (high compression) (default: 6)')
-    parser.set_defaults(compression = True)
+    parser.set_defaults(compression = 6)
+
+    parser.add_argument('--slice', type = int, default = 0,
+                        help = 'Index of contract to slice for. Range: 0 (no slicing) to #CONTRACTS (default: 0)')
+    parser.set_defaults(slice = 0)
 
     parser.add_argument('--no_svg', dest = 'draw_svg', action = 'store_false',
                         help = 'Flag to force svg files to not be drawn')
