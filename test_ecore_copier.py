@@ -118,42 +118,44 @@ class Test():
         # ]
 
         full_transformation = [
-            ['HEClass'],
-            ['HEClass_Copy'],
+            ['HEClass'], #a1
+            ['HEClass_Copy'], #a1_2
 
-            ['HEReference'],
-            ['HEReference_Copy'],
+            ['HEReference'], #b1
+            ['HEReference_Copy'], #b1_2
 
-            ['HeclassOUTeAnnotationsSolveRefEClassEAnnotationEClassEAnnotation'],
-            ['HeclassOUTeTypeParametersSolveRefEClassETypeParameterEClassETypeParameter'],
+            ['HeclassOUTeAnnotationsSolveRefEClassEAnnotationEClassEAnnotation'], #c1
+            ['HeclassOUTeTypeParametersSolveRefEClassETypeParameterEClassETypeParameter'], #d1
 
-            ['HeclassOUTeSuperTypesSolveRefEClassEClassEClassEClass'],
-            ['HeclassOUTeOperationsSolveRefEClassEOperationEClassEOperation'],
+            ['HeclassOUTeSuperTypesSolveRefEClassEClassEClassEClass'], #e1
+            ['HeclassOUTeOperationsSolveRefEClassEOperationEClassEOperation'], #f1
 
-            ['HeclassOUTeStructuralFeaturesSolveRefEClassEStructuralFeatureEClassEStructuralFeature'],
-            ['HeclassOUTeGenericSuperTypesSolveRefEClassEGenericTypeEClassEGenericType'],
+            ['HeclassOUTeStructuralFeaturesSolveRefEClassEStructuralFeatureEClassEStructuralFeature'], #g1
+            ['HeclassOUTeGenericSuperTypesSolveRefEClassEGenericTypeEClassEGenericType'], #h1
 
-            ['HereferenceOUTeAnnotationsSolveRefEReferenceEAnnotationEReferenceEAnnotation'],
-            ['HereferenceOUTeTypeSolveRefEReferenceEClassifierEReferenceEClassifier'],
+            ['HereferenceOUTeAnnotationsSolveRefEReferenceEAnnotationEReferenceEAnnotation'], #i1
+            ['HereferenceOUTeTypeSolveRefEReferenceEClassifierEReferenceEClassifier'], #j1
 
-            ['HereferenceOUTeGenericTypeSolveRefEReferenceEGenericTypeEReferenceEGenericType'],
-            ['HereferenceOUTeOppositeSolveRefEReferenceEReferenceEReferenceEReference'],
+            ['HereferenceOUTeGenericTypeSolveRefEReferenceEGenericTypeEReferenceEGenericType'], #k1
+            ['HereferenceOUTeOppositeSolveRefEReferenceEReferenceEReferenceEReference'], #l1
 
-            ['HereferenceOUTeKeysSolveRefEReferenceEAttributeEReferenceEAttribute'],
+            ['HereferenceOUTeKeysSolveRefEReferenceEAttributeEReferenceEAttribute'], #m1
 
-            ['HeattributeOUTeAnnotationsSolveRefEAttributeEAnnotationEAttributeEAnnotation'],
-            ['HeattributeOUTeTypeSolveRefEAttributeEClassifierEAttributeEClassifier'],
+            ['HeattributeOUTeAnnotationsSolveRefEAttributeEAnnotationEAttributeEAnnotation'], #n1
+            ['HeattributeOUTeTypeSolveRefEAttributeEClassifierEAttributeEClassifier'], #o1
 
-            ['HeattributeOUTeGenericTypeSolveRefEAttributeEGenericTypeEAttributeEGenericType'],
+            ['HeattributeOUTeGenericTypeSolveRefEAttributeEGenericTypeEAttributeEGenericType'], #p1
 
-            ['HEAttribute']
+            ['HEAttribute'] #q1
         ]
 
 
 
         # if self.slice_for_prop1:
+        #  #15 rules
         #     transformation = [[a1], [a1_2], [b1], [b1_2], [c1], [d1], [e1], [f1], [g1], [h1], [i1], [j1], [k1], [l1], [m1]]
         # else:
+        #  #17 rules
         #     transformation = [[a1], [b1], [q1], [c1], [d1], [e1], [f1], [g1], [h1], [i1], [j1], [k1], [l1], [m1], [n1], [o1],
         #                       [p1]]
 
@@ -162,6 +164,16 @@ class Test():
         self.rules, self.transformation = pyramify.get_rules("ECore_Copier_Large_MM/transformation/", full_transformation)
 
         #print("Rules: " + str(self.rules.keys()))
+
+        #make sure the superclasses are there
+        subclasses_dict, superclasses_dict = self.get_sub_and_super_classes()
+
+        for rule in self.rules.values():
+            rule["superclasses_dict"] = superclasses_dict
+
+        for layer in self.transformation:
+            for rule in layer:
+                rule["superclasses_dict"] = superclasses_dict
 
 
         prop1_atomic = AtomicStateProperty(HProperty1_isolatedLHS(), HProperty1_connectedLHS(), HProperty1_completeLHS())
@@ -180,13 +192,14 @@ class Test():
         # if_then_properties = [["HCommunityPerson", HCommunityPersonIfClause, HCommunityPersonThenClause]]
         #
 
-        print("Trans length before: " + str(len(self.transformation)))
+        #print("Trans length before: " + str(len(self.transformation)))
         if args.slice > 0:
             contract = self.atomic_properties[args.slice - 1]
+            contract[1].CompleteQuantified["superclasses_dict"] = superclasses_dict
             self.rules, self.transformation = slice_transformation(self.rules, self.transformation, contract, args)
 
-        print("Transformation:")
-        print("Trans length after: " + str(len(self.transformation)))
+        #print("Transformation:")
+        #print("Trans length after: " + str(len(self.transformation)))
         # for layer in self.transformation:
         #     for rule in layer:
         #         print(rule.name)
@@ -205,35 +218,11 @@ class Test():
         pre_metamodel = ["MT_pre__S_MM", "MoTifRule"]
         post_metamodel = ["MT_post__T_MM", "MoTifRule"]
 
-        subclasses_dict = {}
-        eu1 = EcoreUtils("ECore_Copier_MM/Ecore.ecore")
-        subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(eu1.getMetamodelClassNames())
-        subclasses_dict["MT_pre__EStructuralFeature"] = ["MT_pre__EAttribute", "MT_pre__EReference"]
-        subclasses_dict["MT_pre__ModelElement"] = ["MT_pre__EAnnotation", "MT_pre__EFactory", "MT_pre__ENamedElement"]
-        subclasses_dict["MT_pre__EClassifier"] = ["MT_pre__EClass", "MT_pre__EDataType"]
-        subclasses_dict["MT_pre__EDataType"] = ["MT_pre__EEnum"]
-        subclasses_dict["MT_pre__ENamedElement"] = ["MT_pre__EEnumLiteral", "MT_pre__ENamedElement", "MT_pre__EPackage", "MT_pre__ETypedElement"]        
-        subclasses_dict["MT_pre__EObject"] = ["MT_pre__EModelElement"]    
-        subclasses_dict["MT_pre__ETypedElement"] = ["MT_pre__EOperation", "MT_pre__EParameter", "MT_pre__EStructuralFeature"]  
-        subclasses_dict["MT_pre__EStructuralFeature"] = ["MT_pre__EReference"]
-            
-        
-        eu2 = EcoreUtils("ECore_Copier_Large_MM/Ecore.ecore")
-        subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(eu2.getMetamodelClassNames())
-
+        subclasses_dict, superclasses_dict = self.get_sub_and_super_classes()
 
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
 
-        # keep a dictionary from each child to its parent
-        supertypes = {}
 
-        for supertype in subclasses_dict:
-            for subtype in subclasses_dict[supertype]:
-                subtype = subtype[8:]
-                try:
-                    supertypes[subtype].append(supertype[8:])
-                except KeyError:
-                    supertypes[subtype] = [supertype[8:]]
 
 
         # def change_subtype_matching(match_rule, subclass_info):
@@ -326,6 +315,40 @@ class Test():
         # print("\n\nTime to verify " + str(prop_length) + " properties: " + str(ts1 - ts0))
 
 
+    def get_sub_and_super_classes(self):
+
+
+        subclasses_dict = {}
+        eu1 = EcoreUtils("ECore_Copier_MM/Ecore.ecore")
+        subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(eu1.getMetamodelClassNames())
+        subclasses_dict["MT_pre__EStructuralFeature"] = ["MT_pre__EAttribute", "MT_pre__EReference"]
+        subclasses_dict["MT_pre__ModelElement"] = ["MT_pre__EAnnotation", "MT_pre__EFactory", "MT_pre__ENamedElement"]
+        subclasses_dict["MT_pre__EClassifier"] = ["MT_pre__EClass", "MT_pre__EDataType"]
+        subclasses_dict["MT_pre__EDataType"] = ["MT_pre__EEnum"]
+        subclasses_dict["MT_pre__ENamedElement"] = ["MT_pre__EEnumLiteral", "MT_pre__ENamedElement", "MT_pre__EPackage",
+                                                    "MT_pre__ETypedElement"]
+        subclasses_dict["MT_pre__EObject"] = ["MT_pre__EModelElement"]
+        subclasses_dict["MT_pre__ETypedElement"] = ["MT_pre__EOperation", "MT_pre__EParameter",
+                                                    "MT_pre__EStructuralFeature"]
+
+        #TODO: Is this an error?
+        #subclasses_dict["MT_pre__EStructuralFeature"] = ["MT_pre__EReference"]
+
+        eu2 = EcoreUtils("ECore_Copier_Large_MM/Ecore.ecore")
+        subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(eu2.getMetamodelClassNames())
+
+        # keep a dictionary from each child to its parent
+        supertypes = {}
+
+        for supertype in subclasses_dict:
+            for subtype in subclasses_dict[supertype]:
+                subtype = subtype[8:]
+                try:
+                    supertypes[subtype].append(supertype[8:])
+                except KeyError:
+                    supertypes[subtype] = [supertype[8:]]
+
+        return subclasses_dict, supertypes
 
 
 def _print_states(self,s):

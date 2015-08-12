@@ -42,10 +42,10 @@ def find_required_rules(graph, transformation, is_contract = False):
 
     #take off the MT_pre__ if this is a contract
     if is_contract:
-        mms_required = set([mm for mm in graph_mms if mm not in contract_mms_to_remove])
+        mms_required = list(set([mm for mm in graph_mms if mm not in contract_mms_to_remove]))
 
     else:
-        mms_required = set([mm for mm in graph_mms if mm not in rule_mms_to_remove])
+        mms_required = list(([mm for mm in graph_mms if mm not in rule_mms_to_remove]))
 
     if is_contract:
         mms_required = [mm[8:] for mm in mms_required]
@@ -56,16 +56,20 @@ def find_required_rules(graph, transformation, is_contract = False):
         print("Graph: " + graph.name + " does not have a superclasses dict")
         supertypes = []
 
+    #print("MMs Required Before: " + str(mms_required))
+
     if supertypes:
         for mm in mms_required:
-            if mm in supertypes:
-                mms_required += supertypes[mm]
+
+            for s in supertypes:
+                if mm in supertypes[s]:
+                    mms_required.append(s)
 
     #remove duplicates
     mms_required = list(set(mms_required))
 
 
-    print("MMs Required: " + str(mms_required))
+    #print("MMs Required After: " + str(mms_required))
 
 
     required_rules = []
@@ -75,14 +79,14 @@ def find_required_rules(graph, transformation, is_contract = False):
         for rule in layer:
             if rule.name == graph.name:
                 found_rule = True
-                break
+                continue
 
             if rule in required_rules:
                 continue
 
             rule_mms = set([mm for mm in rule.vs["mm__"] if mm not in rule_mms_to_remove])
 
-            print("\nRule " + rule.name + " MMS: " + str(rule_mms))
+            #print("\nRule " + rule.name + " MMS: " + str(rule_mms))
 
             rule_added = False
             for mm in mms_required:
@@ -116,7 +120,7 @@ def slice_transformation(rules, transformation, contract, args):
     required_rules = find_required_rules(contract, transformation, True)
 
     rr_names = [rule.name for rule in required_rules]
-    print("Required rules: " + str(rr_names))
+    #print("Required rules: " + str(rr_names))
 
     for rr in required_rules:
 
