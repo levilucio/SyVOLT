@@ -34,8 +34,8 @@ return True
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
         self.vs[0]["MT_label__"] = """2"""
-        self.vs[0]["MT_subtypes__"] = []
         self.vs[0]["mm__"] = """MT_pre__Attribute"""
+        self.vs[0]["MT_subtypes__"] = []
         self.vs[0]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -78,8 +78,8 @@ return True
 """
         self.vs[1]["MT_pivotIn__"] = """element2"""
         self.vs[1]["MT_label__"] = """1"""
-        self.vs[1]["MT_subtypes__"] = ['MT_pre__HouseholdRoot', 'MT_pre__Family', 'MT_pre__Member']
         self.vs[1]["mm__"] = """MT_pre__MetaModelElement_S"""
+        self.vs[1]["MT_subtypes__"] = ['MT_pre__HouseholdRoot', 'MT_pre__Family', 'MT_pre__Member']
         self.vs[1]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -96,8 +96,8 @@ return True
         self.vs[1]["GUID__"] = 6821802905909168752
         self.vs[2]["MT_subtypeMatching__"] = False
         self.vs[2]["MT_label__"] = """3"""
-        self.vs[2]["MT_subtypes__"] = []
         self.vs[2]["mm__"] = """MT_pre__hasAttribute_S"""
+        self.vs[2]["MT_subtypes__"] = []
         self.vs[2]["MT_dirty__"] = False
         self.vs[2]["GUID__"] = 7604373770602094770
 

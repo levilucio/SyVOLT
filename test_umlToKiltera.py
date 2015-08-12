@@ -384,66 +384,6 @@ class Test():
 #         print ('finalresult : ')
 #         print (finalresult)
          
-        #Experimenting with using framework1 and framework 2 together
-        #Not(StateProperty.verifyCompositeStateProperty(s, OrStateProperty(trivnegativeprop,trivnegativeprop))).verify()
-        #Or(   StateProperty.verifyCompositeStateProperty(s, OrStateProperty(P1atomic,P2atomic))   ,   StateProperty.verifyCompositeStateProperty(s, OrStateProperty(trivnegativeprop, trivnegativeprop))   ).verify()
-         
-        ###DUMMY EXPERIMENTATION: Verifying simple atomic formulae and propositional logic formulae
-        ###To verify AtomicProp only use the following two lines:
-        #AtomicProperty(HECUSysTrivialTrueIsolatedLHS(),HECUSysTrivialTrueConnectedLHS(), HECUSysTrivialTrueCompleteLHS()).verify(s)
-        #simpleProp=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        #simpleProp.verify(s)
-         
-        ###To verify NotProp, use the following lines
-        #atomicProperty=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        #NotProperty(atomicProperty).verify(s)
-         
-        ###To verify AndProp, use the following lines
-        #atomicProperty=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        #AndProperty(atomicProperty,atomicProperty).verify(s)
-         
-        ###To verify OrProp, use the following lines
-        #atomicProperty=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        #OrProperty(atomicProperty,atomicProperty).verify(s)
-         
-        ###To verify ImplicationProp, use the following lines
-        #atomicProperty=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        #ImplicationProperty(atomicProperty,atomicProperty).verify(s)
-         
-        ###To verify complex propositional logic formulae, use the following lines
-        #atomicProperty=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        #OrProperty(NotProperty(atomicProperty),atomicProperty).verify(s)
-         
-        #atomicProperty=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        #AndProperty(NotProperty(atomicProperty),atomicProperty).verify(s)
-         
-        #atomicProperty=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        #ImplicationProperty(NotProperty(atomicProperty),NotProperty(atomicProperty)).verify(s)
-         
-        ###To verify 2 properties in 1 complex propositional logic formulae, use the following lines
-        #atomicprop1=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        #atomicprop2=AtomicProperty(HECUSysTrivialTrueIsolatedLHS(),HECUSysTrivialTrueConnectedLHS(), HECUSysTrivialTrueCompleteLHS())
-        #OrProperty(NotProperty(atomicprop1),NotProperty(atomicprop2)).verify(s)
-        #ImplicationProperty(NotProperty(atomicprop1),atomicprop2).verify(s)
-         
-        #ORIGINAL CODE FROM LEVI 
-        #transformation = [[HMapDistributable(), HMapECU2FiveElements(), HMapVirtualDevice()],
-        #                  [HConnECU2VirtualDevice(), HConnVirtualDeviceToDistributable()],
-        #                  [HConnectPPortPrototype(), HConnectRPortPrototype()]]
-        #
-        #rulesIncludingBackLinks = [[],\
-        #                            [transformation[1][0], transformation[1][1]],\
-        #                            [transformation[2][0], transformation[2][1]]]
-        #
-        #s = PathConditionGenerator(transformation, rulesIncludingBackLinks, self.backwardPatterns, self.backwardPatterns2Rules,\
-        #self.overlapRulePatterns, self.multipleSameBackwardLinkRule, 1, False)
-        #s.build_path_conditions()
-        #
-        #self._print_states(s)
-        #print '\n'
-        #print 'Built ' + str(len(s.symbStateSpace)) + ' states.'
-        #
-        #s.verify_property(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
 
 
     def _print_states(self,s):

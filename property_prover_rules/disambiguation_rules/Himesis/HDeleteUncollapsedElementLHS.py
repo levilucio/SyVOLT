@@ -32,7 +32,7 @@ class HDeleteUncollapsedElementLHS(HimesisPreConditionPatternLHS):
         self.vs[1]["MT_dirty__"] = False
         self.vs[1]["GUID__"] = 1356976907983983460
         self.vs[2]["MT_pivotOut__"] = """element2"""
-        self.vs[2]["MT_pre__classtype"] = """
+        self.vs[2]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -44,7 +44,7 @@ class HDeleteUncollapsedElementLHS(HimesisPreConditionPatternLHS):
 
 return True
 """
-        self.vs[2]["MT_pre__cardinality"] = """
+        self.vs[2]["MT_pre__classtype"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -60,7 +60,7 @@ return True
         self.vs[2]["MT_label__"] = """2"""
         self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[2]["MT_dirty__"] = False
-        self.vs[2]["MT_pre__name"] = """
+        self.vs[2]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -74,7 +74,7 @@ return True
 """
         self.vs[2]["GUID__"] = 5061772226935437731
         self.vs[3]["MT_pivotOut__"] = """element1"""
-        self.vs[3]["MT_pre__classtype"] = """
+        self.vs[3]["MT_pre__name"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -86,7 +86,7 @@ return True
 
 return True
 """
-        self.vs[3]["MT_pre__cardinality"] = """
+        self.vs[3]["MT_pre__classtype"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -102,7 +102,7 @@ return True
         self.vs[3]["MT_label__"] = """1"""
         self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[3]["MT_dirty__"] = False
-        self.vs[3]["MT_pre__name"] = """
+        self.vs[3]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -123,6 +123,20 @@ return True
         self.vs[5]["mm__"] = """MT_pre__MatchModel"""
         self.vs[5]["MT_dirty__"] = False
         self.vs[5]["GUID__"] = 589586432928941143
+
+    def eval_name2(self, attr_value, this):
+        
+        #===============================================================================
+        # This code is executed when evaluating if a node shall be matched by this rule.
+        # You can access the value of the current node's attribute value by: attr_value.
+        # You can access any attribute x of this node by: this['x'].
+        # If the constraint relies on attribute values from other nodes,
+        # use the LHS/NAC constraint instead.
+        # The given constraint must evaluate to a boolean expression.
+        #===============================================================================
+        
+        return True
+
 
     def eval_classtype2(self, attr_value, this):
         
@@ -152,7 +166,7 @@ return True
         return True
 
 
-    def eval_name2(self, attr_value, this):
+    def eval_name1(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.
@@ -181,20 +195,6 @@ return True
 
 
     def eval_cardinality1(self, attr_value, this):
-        
-        #===============================================================================
-        # This code is executed when evaluating if a node shall be matched by this rule.
-        # You can access the value of the current node's attribute value by: attr_value.
-        # You can access any attribute x of this node by: this['x'].
-        # If the constraint relies on attribute values from other nodes,
-        # use the LHS/NAC constraint instead.
-        # The given constraint must evaluate to a boolean expression.
-        #===============================================================================
-        
-        return True
-
-
-    def eval_name1(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.

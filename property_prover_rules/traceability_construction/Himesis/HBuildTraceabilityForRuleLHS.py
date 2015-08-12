@@ -30,32 +30,32 @@ return False
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
         self.vs[0]["MT_label__"] = """6"""
-        self.vs[0]["mm__"] = """MT_pre__apply_contains"""
         self.vs[0]["MT_subtypes__"] = []
+        self.vs[0]["mm__"] = """MT_pre__apply_contains"""
         self.vs[0]["MT_dirty__"] = False
         self.vs[0]["GUID__"] = 6601769124712063922
         self.vs[1]["MT_subtypeMatching__"] = False
         self.vs[1]["MT_label__"] = """3"""
-        self.vs[1]["mm__"] = """MT_pre__MatchModel"""
         self.vs[1]["MT_subtypes__"] = []
+        self.vs[1]["mm__"] = """MT_pre__MatchModel"""
         self.vs[1]["MT_dirty__"] = False
         self.vs[1]["GUID__"] = 3211031155982416150
         self.vs[2]["MT_subtypeMatching__"] = False
         self.vs[2]["MT_label__"] = """5"""
-        self.vs[2]["mm__"] = """MT_pre__match_contains"""
         self.vs[2]["MT_subtypes__"] = []
+        self.vs[2]["mm__"] = """MT_pre__match_contains"""
         self.vs[2]["MT_dirty__"] = False
         self.vs[2]["GUID__"] = 3676593120352744638
         self.vs[3]["MT_subtypeMatching__"] = False
         self.vs[3]["MT_label__"] = """4"""
-        self.vs[3]["mm__"] = """MT_pre__ApplyModel"""
         self.vs[3]["MT_subtypes__"] = []
+        self.vs[3]["mm__"] = """MT_pre__ApplyModel"""
         self.vs[3]["MT_dirty__"] = False
         self.vs[3]["GUID__"] = 3729121856167067283
         self.vs[4]["MT_subtypeMatching__"] = True
         self.vs[4]["MT_label__"] = """2"""
-        self.vs[4]["mm__"] = """MT_pre__MetaModelElement_T"""
         self.vs[4]["MT_subtypes__"] = ['MT_pre__CommunityRoot', 'MT_pre__Person', 'MT_pre__Man', 'MT_pre__Woman']
+        self.vs[4]["mm__"] = """MT_pre__MetaModelElement_T"""
         self.vs[4]["MT_dirty__"] = False
         self.vs[4]["MT_pre__attr1"] = """
 #===============================================================================
@@ -72,8 +72,8 @@ return True
         self.vs[4]["GUID__"] = 925503974014884163
         self.vs[5]["MT_subtypeMatching__"] = True
         self.vs[5]["MT_label__"] = """1"""
-        self.vs[5]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[5]["MT_subtypes__"] = ['MT_pre__HouseholdRoot', 'MT_pre__Family', 'MT_pre__Member']
+        self.vs[5]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[5]["MT_dirty__"] = False
         self.vs[5]["MT_pre__attr1"] = """
 #===============================================================================

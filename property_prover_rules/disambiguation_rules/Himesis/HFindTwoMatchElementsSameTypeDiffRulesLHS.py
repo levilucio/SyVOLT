@@ -54,14 +54,14 @@ return False
 
 return True
 """
-        self.vs[2]["MT_pre__cardinality"] = """
+        self.vs[2]["MT_pre__name"] = """
 
 return True
 """
         self.vs[2]["MT_label__"] = """1"""
         self.vs[2]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[2]["MT_dirty__"] = False
-        self.vs[2]["MT_pre__name"] = """
+        self.vs[2]["MT_pre__cardinality"] = """
 
 return True
 """
@@ -71,14 +71,14 @@ return True
 
 return True
 """
-        self.vs[3]["MT_pre__cardinality"] = """
+        self.vs[3]["MT_pre__name"] = """
 
 return True
 """
         self.vs[3]["MT_label__"] = """2"""
         self.vs[3]["mm__"] = """MT_pre__MetaModelElement_S"""
         self.vs[3]["MT_dirty__"] = False
-        self.vs[3]["MT_pre__name"] = """
+        self.vs[3]["MT_pre__cardinality"] = """
 
 return True
 """
@@ -106,13 +106,13 @@ return True
         return True
 
 
-    def eval_cardinality1(self, attr_value, this):
+    def eval_name1(self, attr_value, this):
         
         
         return True
 
 
-    def eval_name1(self, attr_value, this):
+    def eval_cardinality1(self, attr_value, this):
         
         
         return True
@@ -124,13 +124,13 @@ return True
         return True
 
 
-    def eval_cardinality2(self, attr_value, this):
+    def eval_name2(self, attr_value, this):
         
         
         return True
 
 
-    def eval_name2(self, attr_value, this):
+    def eval_cardinality2(self, attr_value, this):
         
         
         return True
