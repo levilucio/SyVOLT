@@ -158,13 +158,13 @@ def graph_to_dot(name, g, verbosity = 0):
             #vattr += '\\n'
             if node_type in ['directLink_S', 'directLink_T']:
                 try:
-                    vattr += "\\naType = " + str(v['associationType'])
+                    vattr += "\\naType = " + str(v['attr1'])
                 except Exception:
                     pass
 
             elif node_type in ['MT_pre__directLink_T', 'MT_pre__directLink_S']:
                 try:
-                    code_str = re.sub('"', '', v['MT_pre__associationType'])
+                    code_str = re.sub('"', '', v['MT_pre__attr1'])
                     vattr += get_attribute("\\naType = ", code_str)
                 except KeyError:
                     pass
@@ -174,7 +174,7 @@ def graph_to_dot(name, g, verbosity = 0):
         elif node_type in ['indirectLink_S', 'indirectLink_T', 'MT_pre__indirectLink_S', 'MT_pre__indirectLink_T', 'MT_post__indirectLink_S', 'MT_post__indirectLink_T']:
             fillcolor="lightgreen"
             try:
-                vattr += "\\n Classtype = " + str(v['associationType'])
+                vattr += "\\n Classtype = " + str(v['attr1'])
             except Exception:
                 pass
 
