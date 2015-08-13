@@ -157,7 +157,7 @@ class PyRamify:
                 elif "Constant" in node["mm__"] and attrib == "MT_pre__value":
                     node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
                     
-                elif "directLink" in node["mm__"] and attrib == "MT_pre__associationType":
+                elif "directLink" in node["mm__"] and attrib == "MT_pre__attr1":
                     node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
                     
                 elif "Constant" in node["mm__"] and attrib == "MT_post__value":
@@ -309,7 +309,7 @@ class PyRamify:
                 elif "Constant" in node["mm__"] and attrib == "MT_pre__value":
                     node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
                     
-                elif "directLink" in node["mm__"] and attrib == "MT_pre__associationType":
+                elif "directLink" in node["mm__"] and attrib == "MT_pre__attr1":
                     node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
                     
                 elif "Constant" in node["mm__"] and attrib == "MT_post__value":
