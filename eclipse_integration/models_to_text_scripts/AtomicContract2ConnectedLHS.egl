@@ -47,7 +47,7 @@ return True
                         %]
                 # match class [%=class.className%]([%=class.id%]) node
                 self.add_node()
-                self.vs[[%=nodeIndex%]]["MT_pre__classtype"] = """
+                self.vs[[%=nodeIndex%]]["MT_pre__attr1"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -62,42 +62,6 @@ return True
                 self.vs[[%=nodeIndex%]]["MT_label__"] = """[%=classLabel%]"""
                 self.vs[[%=nodeIndex%]]["MT_dirty__"] = False
                 self.vs[[%=nodeIndex%]]["mm__"] = """MT_pre__[%=class.className%]"""
-                self.vs[[%=nodeIndex%]]["MT_pre__cardinality"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
-                self.vs[[%=nodeIndex%]]["MT_pre__cardinality"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
-                self.vs[[%=nodeIndex%]]["MT_pre__name"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
                 self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'[%=class.id%]')
                 [%
                 nodeIndex = nodeIndex + 1;
@@ -112,7 +76,7 @@ return True
                         %]
         # match association [%=association.source.className%]--[%=association.associationName%]-->[%=association.target.className%] node
                 self.add_node()
-                self.vs[[%=nodeIndex%]]["MT_pre__associationType"] = """
+                self.vs[[%=nodeIndex%]]["MT_pre__attr1"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
