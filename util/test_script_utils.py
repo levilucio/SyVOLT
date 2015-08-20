@@ -66,20 +66,18 @@ def find_required_rules(graph, transformation, is_contract = False):
                     mms_required.append(s)
 
     #remove duplicates
-    mms_required = list(set(mms_required))
-
-
+    mms_required = sorted(list(set(mms_required)))
     #print("MMs Required After: " + str(mms_required))
 
 
     required_rules = []
 
     for layer in transformation:
-        found_rule = False
+
+        if graph in layer:
+            break
+
         for rule in layer:
-            if rule.name == graph.name:
-                found_rule = True
-                continue
 
             if rule in required_rules:
                 continue
@@ -88,19 +86,12 @@ def find_required_rules(graph, transformation, is_contract = False):
 
             #print("\nRule " + rule.name + " MMS: " + str(rule_mms))
 
-            rule_added = False
             for mm in mms_required:
                 if mm in rule_mms:
                     required_rules.append(rule)
 
                     #print("Add rule: " + rule.name + " with mms: " + str(rule_mms))
-                    rule_added = True
-                    continue
-
-            if rule_added:
-                continue
-        if found_rule:
-            break
+                    break
 
     return required_rules
 
@@ -130,7 +121,7 @@ def slice_transformation(rules, transformation, contract, args):
                 required_rules.append(new_rr)
 
     rr_names = [rule.name for rule in required_rules]
-    print("Required rules: " + str(rr_names))
+    print("Required rules: " + str(sorted(set(rr_names))))
 
 
 
