@@ -16,8 +16,11 @@ def find_nodes_with_mm(graph, mm_names):
 def look_for_attached(link_node, graph):
     attached_node_nums = []
 
-    #find the index of the node
-    node_num = link_node.index
+    try:
+        node_num = int(link_node)
+    except TypeError:
+        #find the index of the node
+        node_num = link_node.index
 
     #check the edge list to see if there are attached edges
     for edge in graph.es:
