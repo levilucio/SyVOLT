@@ -190,13 +190,16 @@ class Prover():
         
     def get_sub_and_super_classes(self):
             subclasses_dict = {}     
+            
+            inputMM = "[%=inputMM%]".split("/")[-1]
+            outputMM = "[%=outputMM%]".split("/")[-1]
          
-            inMM = EcoreUtils("[%=inputMM%]")          
+            inMM = EcoreUtils(inputMM)          
             subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(inMM.getMetamodelClassNames())
             
             print(subclasses_dict["MT_pre__MetaModelElement_S"])
 
-            outMM = EcoreUtils("[%=outputMM%]")  
+            outMM = EcoreUtils(outputMM)  
             subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(outMM.getMetamodelClassNames()) 
             
             print(subclasses_dict["MT_pre__MetaModelElement_T"])
