@@ -1,29 +1,17 @@
-'''
-Created on 2015-02-14
 
-@author: levi
-'''
+#-----------------------------------------------------------------------------
+# Auto generated from the DSLTrans transformation and the properties to prove
+#-----------------------------------------------------------------------------
 
-import unittest
 import time
-import sys
 
 from path_condition_generator import PathConditionGenerator
-
-from t_core.matcher import Matcher
-from t_core.messages import Packet
-
 from PyRamify import PyRamify
-
-from core.himesis_utils import graph_to_dot
 
 from ecore_utils import EcoreUtils
 from core.himesis_plus import buildPreListFromClassNames
-#from util.select_rules import select_rules
 
-# all runs are the same transformation, but with different metamodel elements
-# the purpose is to do scalability testing with multiple configurations and multiple sets of rules
-
+from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 
 from PropertyVerification.state_property import StateProperty
 from PropertyVerification.atomic_state_property import AtomicStateProperty
@@ -31,192 +19,241 @@ from PropertyVerification.and_state_property import AndStateProperty
 from PropertyVerification.or_state_property import OrStateProperty
 from PropertyVerification.not_state_property import NotStateProperty
 from PropertyVerification.implication_state_property import ImplicationStateProperty
-from PropertyVerification.Not import Not  # StateSpace Prop
-from PropertyVerification.Implication import Implication  # StateSpace Prop
-from PropertyVerification.And import And  # StateSpace Prop
-from PropertyVerification.Or import Or  # StateSpace Prop
-from PropertyVerification.BACKUP_atomic_state_property import BKUPAtomicStateProperty
-# from lib2to3.fixer_util import p1
+
+from PropertyVerification.Not import Not 					#StateSpace Prop
+from PropertyVerification.Implication import Implication 	#StateSpace Prop
+from PropertyVerification.And import And 					#StateSpace Prop
+from PropertyVerification.Or import Or 						#StateSpace Prop
+
+from core.himesis_utils import graph_to_dot
+from util.test_script_utils import select_rules, slice_transformation
+
+# imports for properties' atomic contracts
+
+from mbeddr2C_MM.Contracts.HAssignmentInstance_IsolatedLHS import HAssignmentInstance_IsolatedLHS
+from mbeddr2C_MM.Contracts.HAssignmentInstance_ConnectedLHS import HAssignmentInstance_ConnectedLHS
+from mbeddr2C_MM.Contracts.HAssignmentInstance_CompleteLHS import HAssignmentInstance_CompleteLHS
+from mbeddr2C_MM.Contracts.HGlobalVarGetsCorrectFunctionAddressAtInit_IsolatedLHS import HGlobalVarGetsCorrectFunctionAddressAtInit_IsolatedLHS
+from mbeddr2C_MM.Contracts.HGlobalVarGetsCorrectFunctionAddressAtInit_ConnectedLHS import HGlobalVarGetsCorrectFunctionAddressAtInit_ConnectedLHS
+from mbeddr2C_MM.Contracts.HGlobalVarGetsCorrectFunctionAddressAtInit_CompleteLHS import HGlobalVarGetsCorrectFunctionAddressAtInit_CompleteLHS
 
 
-
-class Test():
-    def setUp(self, args):
-        pyramify = PyRamify(draw_svg = args.draw_svg)
+class Prover():
 
 
+    def do_proof(self,args):    
 
-        full_transformation = [
-
-            #a layer
-            ['Hlayer0rule0',
-            'Hlayer0rule1',
-            'Hlayer0rule2',
-            'Hlayer0rule3',
-            'Hlayer0rule4',
-            'Hlayer0rule6',
-            'Hlayer0rule7',
-            'Hlayer0rule8',
-            'Hlayer0rule9',
-            'Hlayer0rule10',
-            'Hlayer0rule11'],
-
-            #b layer
-            ['Hlayer1rule0',
-            'Hlayer1rule1',
-            'Hlayer1rule2',
-            'Hlayer1rule3',
-            'Hlayer1rule4',
-            'Hlayer1rule5',
-            'Hlayer1rule6',
-            'Hlayer1rule7',
-            'Hlayer1rule8',
-            'Hlayer1rule9',
-            'Hlayer1rule10',
-            'Hlayer1rule11',
-            'Hlayer1rule12',
-            'Hlayer1rule13',
-            'Hlayer1rule14',
-            'Hlayer1rule15'],
-
-            #c layer
-    #       ['Hlayer2rule0',
-#             ['Hlayer2rule1',
-#             'Hlayer2rule2',
-#             'Hlayer2rule3'],
-# 
-#             # d layer
-#             ['Hlayer3rule0',
-#             'Hlayer3rule1',
-#             'Hlayer3rule2',
-#             'Hlayer3rule3',
-#             'Hlayer3rule4',
-#             'Hlayer3rule5'],
-
-#             # e layer
-#             ['Hlayer4rule0',
-#             'Hlayer4rule1',
-#             'Hlayer4rule2',
-#             'Hlayer4rule3'],
-# 
-#             #f layer
-#             ['Hlayer5rule0',
-#             'Hlayer5rule1',
-#             'Hlayer5rule2',
-#             'Hlayer5rule3',
-#             'Hlayer5rule4',
-#             'Hlayer5rule5'],
-# 
-#             #g layer
-#             ['HLayer6rule0']
-
-
-
-        ]
-
-        self.rules, self.transformation = pyramify.get_rules("mbeddr2C_MM/real_transformation", full_transformation)
-
-        # print("Rules: " + str(self.rules.keys()))
-
-        # make sure the superclasses are there
+        pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
+        
+        
+        
+        
+        
+        r0 = 'Hlayer0rule0'
+        r1 = 'Hlayer0rule1'
+        r2 = 'Hlayer0rule2'
+        r3 = 'Hlayer0rule3'
+        r4 = 'Hlayer0rule4'
+        r5 = 'Hlayer0rule5'
+        r6 = 'Hlayer0rule6'
+        r7 = 'Hlayer0rule7'
+        r8 = 'Hlayer0rule8'
+        r9 = 'Hlayer0rule9'
+        r10 = 'Hlayer0rule10'
+        r11 = 'Hlayer0rule11'
+        r12 = 'Hlayer1rule0'
+        r13 = 'Hlayer1rule1'
+        r14 = 'Hlayer1rule2'
+        r15 = 'Hlayer1rule3'
+        r16 = 'Hlayer1rule4'
+        r17 = 'Hlayer1rule5'
+        r18 = 'Hlayer1rule6'
+        r19 = 'Hlayer1rule7'
+        r20 = 'Hlayer1rule8'
+        r21 = 'Hlayer1rule9'
+        r22 = 'Hlayer1rule10'
+        r23 = 'Hlayer1rule11'
+        r24 = 'Hlayer1rule12'
+        r25 = 'Hlayer1rule13'
+        r26 = 'Hlayer1rule14'
+        r27 = 'Hlayer1rule15'
+        r28 = 'Hlayer2rule0'
+        r29 = 'Hlayer2rule1'
+        r30 = 'Hlayer2rule2'
+        r31 = 'Hlayer2rule3'
+        r32 = 'Hlayer3rule0'
+        r33 = 'Hlayer3rule1'
+        r34 = 'Hlayer3rule2'
+        r35 = 'Hlayer3rule3'
+        r36 = 'Hlayer3rule4'
+        r37 = 'Hlayer3rule5'
+        r38 = 'Hlayer4rule0'
+        r39 = 'Hlayer4rule1'
+        r40 = 'Hlayer4rule2'
+        r41 = 'Hlayer4rule3'
+        r42 = 'Hlayer5rule0'
+        r43 = 'Hlayer5rule1'
+        r44 = 'Hlayer5rule2'
+        r45 = 'Hlayer5rule3'
+        r46 = 'Hlayer5rule4'
+        r47 = 'Hlayer5rule5'
+        r48 = 'Hlayer6rule0'
+    
+        
+                             
+        full_transformation = [[r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,]]#,[r12,r13,r14,r15,r16,r17,r18,r19,r20,r21,r22,r23,r24,r25,r26,r27,],[r28,r29,r30,r31,],[r32,r33,r34,r35,r36,r37,],[r38,r39,r40,r41,],[r42,r43,r44,r45,r46,r47,],[r48,],]
+        
+        self.rules, self.transformation = pyramify.get_rules("/home/boakes/Projects/SyVOLT/eclipse_integration/backend/generated/transformation", full_transformation)
+        
         subclasses_dict, superclasses_dict = self.get_sub_and_super_classes()
 
-        for rule in self.rules.values():
-            rule["superclasses_dict"] = superclasses_dict
+        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
+            pyramify.ramify_directory("/home/boakes/Projects/SyVOLT/eclipse_integration/backend/generated/transformation", self.transformation)   
 
-        for layer in self.transformation:
-            for rule in layer:
-                rule["superclasses_dict"] = superclasses_dict
+                
+        pre_metamodel = ["MT_pre__S_MM", "MoTifRule"]
+        post_metamodel = ["MT_post__T_MM", "MoTifRule"]
 
-        # prop1_atomic = AtomicStateProperty(HProperty1_isolatedLHS(), HProperty1_connectedLHS(),
-        #                                    HProperty1_completeLHS())
-        # prop2_atomic = AtomicStateProperty(HProperty2_isolatedLHS(), HProperty2_connectedLHS(),
-        #                                    HProperty2_completeLHS())
-        #
-        # self.atomic_properties = [["prop1", prop1_atomic], ["prop2", prop2_atomic]]
-        #
-        # self.if_then_properties = []
+        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict, "/home/boakes/Projects/SyVOLT")
+        
+        # go through all the matchers, combinators and tracers to add polymorphism on all classes in an inheritance hierarchy
+                                                                  
+        
+        # add polymorphism for the matchers
+        for matcher_key in self.matchRulePatterns.keys():
+            self.matchRulePatterns[matcher_key][0].condition["superclasses_dict"] = superclasses_dict
+            
+        # add polymorphism for the combinators
+        for combs_key in self.ruleCombinators.keys():
+            if self.ruleCombinators[combs_key] != None:
+                for combinator in self.ruleCombinators[combs_key]:
+                    combinator[0].condition["superclasses_dict"] = superclasses_dict
+
+        # add polymorphism for the tracers
+        for tracer_key in self.ruleTraceCheckers.keys():
+            if self.ruleTraceCheckers[tracer_key] != None:
+                self.ruleTraceCheckers[tracer_key].condition["superclasses_dict"] = superclasses_dict    
+            
+		# load the contracts, and add polymorphism
+
+        if (args.draw_svg):
+        	graph_to_dot("property_AssignmentInstance_isolated", HAssignmentInstance_IsolatedLHS())
+        	graph_to_dot("property_AssignmentInstance_connected", HAssignmentInstance_ConnectedLHS())
+        	graph_to_dot("property_AssignmentInstance_complete", HAssignmentInstance_CompleteLHS())
+        	graph_to_dot("property_GlobalVarGetsCorrectFunctionAddressAtInit_isolated", HGlobalVarGetsCorrectFunctionAddressAtInit_IsolatedLHS())
+        	graph_to_dot("property_GlobalVarGetsCorrectFunctionAddressAtInit_connected", HGlobalVarGetsCorrectFunctionAddressAtInit_ConnectedLHS())
+        	graph_to_dot("property_GlobalVarGetsCorrectFunctionAddressAtInit_complete", HGlobalVarGetsCorrectFunctionAddressAtInit_CompleteLHS())
 
 
-#         if args.slice > 0:
-#             contract = self.atomic_properties[args.slice - 1]
-#             contract[1].CompleteQuantified["superclasses_dict"] = superclasses_dict
-#             self.rules, self.transformation = slice_transformation(self.rules, self.transformation, contract, args)
+        self.atomic_contracts = []
 
 
-    def test_correct_mbeddr(self, args):
-        pyramify = PyRamify(verbosity = 0, draw_svg = args.draw_svg)
+        isolated = HAssignmentInstance_IsolatedLHS()
+        connected = HAssignmentInstance_ConnectedLHS()
+        complete = HAssignmentInstance_CompleteLHS()
 
-        expected_num_pcs = args.num_pcs
+        isolated["superclasses_dict"] = superclasses_dict
+        connected["superclasses_dict"] = superclasses_dict
+        complete["superclasses_dict"] = superclasses_dict
+
+        c0 = AtomicStateProperty(isolated, connected, complete)
+
+        self.atomic_contracts.append(("AssignmentInstance", c0))
 
 
 
-        pre_metamodel = ["MT_pre__mbeddr_MM", "MoTifRule"]
-        post_metamodel = ["MT_post__mbeddr", "MoTifRule"]
+        isolated = HGlobalVarGetsCorrectFunctionAddressAtInit_IsolatedLHS()
+        connected = HGlobalVarGetsCorrectFunctionAddressAtInit_ConnectedLHS()
+        complete = HGlobalVarGetsCorrectFunctionAddressAtInit_CompleteLHS()
 
-        subclasses_dict, superclasses_dict = self.get_sub_and_super_classes()
+        isolated["superclasses_dict"] = superclasses_dict
+        connected["superclasses_dict"] = superclasses_dict
+        complete["superclasses_dict"] = superclasses_dict
 
-        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
+        c0 = AtomicStateProperty(isolated, connected, complete)
 
-        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns,
-         self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
-            pyramify.ramify_directory("mbeddr2C_MM/real_transformation", self.transformation)
+        self.atomic_contracts.append(("GlobalVarGetsCorrectFunctionAddressAtInit", c0))
 
-        s = PathConditionGenerator(self.transformation, self.ruleCombinators,
-                                   self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
+
+        if args.slice > 0:
+            print("Slicing for contract number " + str(args.slice))
+            contract = self.atomic_contracts[args.slice - 1]
+            self.rules, self.transformation = slice_transformation(self.rules, self.transformation, contract, args)
+
+
+		# generate path conditions
+        pc_set = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
+
         ts0 = time.time()
-        s.build_path_conditions()
+        pc_set.build_path_conditions()
         ts1 = time.time()
-   
-        pc_time = ts1 - ts0
-        print("\n\nTime to build the set of path conditions: " + str(pc_time))
-#        print("Size of the set of path conditions: " + str(float(sys.getsizeof(s.pathConditionSet) / 1024)))
-        print("Number of path conditions: " + str(s.num_path_conditions))
-         
-        s.check_rule_reachability()
 
-#        s.print_path_conditions_screen()
-# 
-#         # check if the correct number of path conditions were produced
-#         if not int(expected_num_pcs) == -1 and not int(expected_num_pcs) == len(s.pathConditionSet):
-#             # TODO: Make this an exception
-#             num_pcs_s = "The number of produced path conditions is incorrect.\n" + str(
-#                 expected_num_pcs) + " were expected, but " + str(
-#                 len(s.pathConditionSet)) + " were produced."
-#             print(num_pcs_s)
-#             # raise Exception(num_pcs_s)
+        print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
+        print("Number of path conditions: " + str(pc_set.num_path_conditions))
 
-        # print("printing path conditions")
-        #s.print_path_conditions_screen()
-        #
-        # s.print_path_conditions_file()
+        # print path conditions to screen
 
+        if pc_set.num_path_conditions < 300:
+            pc_set.print_path_conditions_screen()
+
+        # now actually prove these contracts
+
+
+        ts0 = time.time()
+
+        verifier = StateProperty()
+
+        for name, a_c in self.atomic_contracts:
+            result = verifier.verifyCompositeStateProperty(pc_set, a_c)
+            if len(result) == 0:
+            	print("\n")
+            	print("Contract " + name + " holds!")
+            else:
+            	print("\n")
+            	print("Contract " + name + " does not hold!")
+            	print(result)
+        
+        ts1 = time.time()
+        
+        print("\n\nTime to verify properties: " + str(ts1 - ts0) + " seconds.")
+
+        
     def get_sub_and_super_classes(self):
-        subclasses_dict = {}
-        eu1 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/Module.ecore")
-        subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(eu1.getMetamodelClassNames())
-        eu2 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/C.ecore")
-        subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(eu2.getMetamodelClassNames())
+            subclasses_dict = {}     
+            
+            inputMM = "./mbeddr2C_MM/ecore_metamodels/Module.ecore"
+            outputMM = "./mbeddr2C_MM/ecore_metamodels/C.ecore"
+         
+            inMM = EcoreUtils(inputMM)          
+            subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(inMM.getMetamodelClassNames())
+            
+            print(subclasses_dict["MT_pre__MetaModelElement_S"])
 
-        # keep a dictionary from each child to its parent
-        supertypes = {}
+            outMM = EcoreUtils(outputMM)  
+            subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(outMM.getMetamodelClassNames()) 
+            
+            print(subclasses_dict["MT_pre__MetaModelElement_T"])
 
-        for supertype in subclasses_dict:
-            for subtype in subclasses_dict[supertype]:
-                subtype = subtype[8:]
-                try:
-                    supertypes[subtype].append(supertype[8:])
-                except KeyError:
-                    supertypes[subtype] = [supertype[8:]]
+            # keep a dictionary from each child to its parent
+            supertypes = {}
 
-        return subclasses_dict, supertypes
+            for supertype in subclasses_dict:
+                for subtype in subclasses_dict[supertype]:
+                    subtype = subtype[8:]
+                    try:
+                        supertypes[subtype].append(supertype[8:])
+                    except KeyError:
+                        supertypes[subtype] = [supertype[8:]]
+
+            return subclasses_dict, supertypes
+
 
 
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description = 'Run the mbeddr test.')
-
+    parser = argparse.ArgumentParser(description='Run the ecore_copier test.')
+    
     parser.add_argument('--skip_tests', dest = 'run_tests', action = 'store_false',
                         help = 'Option to skip the running of matching tests')
     parser.set_defaults(run_tests = True)
@@ -228,15 +265,15 @@ if __name__ == "__main__":
     parser.add_argument('--skip_pickle', dest = 'do_pickle', action = 'store_false',
                         help = 'Option to skip the use of pickling')
     parser.set_defaults(do_pickle = True)
-
+    
     parser.add_argument('--compression', type = int, default = 6,
                         help = 'Level of compression to use with pickling. Range: 0 (no compression) to 9 (high compression) (default: 6)')
     parser.set_defaults(compression = 6)
-
+    
     parser.add_argument('--slice', type = int, default = 0,
                         help = 'Index of contract to slice for. Range: 0 (no slicing) to #CONTRACTS (default: 0)')
     parser.set_defaults(slice = 0)
-
+    
     parser.add_argument('--no_svg', dest = 'draw_svg', action = 'store_false',
                         help = 'Flag to force svg files to not be drawn')
     parser.set_defaults(draw_svg = True)
@@ -246,13 +283,13 @@ if __name__ == "__main__":
 
     parser.add_argument('--num_rules', type = int, default = -1,
                         help = 'Number of rules in the transformation (default: -1)')
-
+                        
     parser.add_argument('--verbosity', type = int, default = 0,
                         help = 'Verbosity level (default: 0 - minimum output)')
-
+                        
     args = parser.parse_args()
 
-    mbeddr = Test()
-    mbeddr.setUp(args)
-    mbeddr.test_correct_mbeddr(args)
-    
+
+    prover = Prover()
+    prover.do_proof(args)
+        
