@@ -26,7 +26,8 @@ from PropertyVerification.And import And 					#StateSpace Prop
 from PropertyVerification.Or import Or 						#StateSpace Prop
 
 from core.himesis_utils import graph_to_dot
-from util.test_script_utils import select_rules, slice_transformation
+from util.test_script_utils import select_rules
+from util.slicer import Slicer
 
 # imports for properties' atomic contracts
 
@@ -101,7 +102,7 @@ class Prover():
     
         
                              
-        full_transformation = [[r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,]]#,[r12,r13,r14,r15,r16,r17,r18,r19,r20,r21,r22,r23,r24,r25,r26,r27,],[r28,r29,r30,r31,],[r32,r33,r34,r35,r36,r37,],[r38,r39,r40,r41,],[r42,r43,r44,r45,r46,r47,],[r48,],]
+        full_transformation = [[r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,],[r12,r13,r14,r15,r16,r17,r18,r19,r20,r21,r22,r23,r24,r25,r26,r27,],[r28,r29,r30,r31,],[r32,r33,r34,r35,r36,r37,],[r38,r39,r40,r41,],[r42,r43,r44,r45,r46,r47,],[r48,],]
         
         self.rules, self.transformation = pyramify.get_rules("/home/boakes/Projects/SyVOLT/eclipse_integration/backend/generated/transformation", full_transformation)
         
@@ -132,7 +133,15 @@ class Prover():
         # add polymorphism for the tracers
         for tracer_key in self.ruleTraceCheckers.keys():
             if self.ruleTraceCheckers[tracer_key] != None:
-                self.ruleTraceCheckers[tracer_key].condition["superclasses_dict"] = superclasses_dict    
+                self.ruleTraceCheckers[tracer_key].condition["superclasses_dict"] = superclasses_dict
+
+        #also make sure the transformation has this information
+        for rule in self.rules.values():
+            rule["superclasses_dict"] = superclasses_dict
+
+        for layer in self.transformation:
+            for rule in layer:
+                rule["superclasses_dict"] = superclasses_dict
             
 		# load the contracts, and add polymorphism
 
@@ -176,10 +185,21 @@ class Prover():
 
 
         if args.slice > 0:
-            print("Slicing for contract number " + str(args.slice))
             contract = self.atomic_contracts[args.slice - 1]
-            self.rules, self.transformation = slice_transformation(self.rules, self.transformation, contract, args)
+            print("Slicing for contract number " + str(args.slice) + " : " + contract[0])
 
+            slicer = Slicer()
+
+            print("Number rules before: " + str(len(self.rules)))
+            self.rules, self.transformation = slicer.slice_transformation(self.rules, self.transformation, contract, args)
+            print("Number rules after: " + str(len(self.rules)))
+
+        # for layer in self.transformation:
+        #     print("Layer:")
+        #     for rule in layer:
+        #         print(rule.name)
+
+        #raise Exception()
 
 		# generate path conditions
         pc_set = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
