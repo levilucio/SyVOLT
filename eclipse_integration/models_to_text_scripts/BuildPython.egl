@@ -52,11 +52,12 @@ class Prover():
 
         pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
         
-        self.rules = pyramify.get_rules("[%=absoluteBackendPath%]")
+        
+        
         
         [*- get all the rules from the files generated to disk *]
         [% for (r in Rule.all) { %]
-        r[%=ruleIndex%] = self.rules['H[%=r.Description%]']
+        r[%=ruleIndex%] = 'H[%=r.Description%]'
         [% ruleShortMap.put(r, ruleIndex);
         	ruleIndex = ruleIndex + 1;
            }
@@ -100,12 +101,14 @@ class Prover():
         	 }
 		} 
 		%]
-        transformation = [[%=transformationArrayStr%]]
+        full_transformation = [[%=transformationArrayStr%]]
+        
+        self.rules, self.transformation = pyramify.get_rules("[%=absoluteBackendPath%]", full_transformation)
         
         subclasses_dict, superclasses_dict = self.get_sub_and_super_classes()
 
-        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
-            pyramify.ramify_directory("[%=absoluteBackendPath%]", transformation)   
+        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
+            pyramify.ramify_directory("[%=absoluteBackendPath%]", self.transformation)   
 
         [*- Generate operations to deal with Polymorphism *]        
         pre_metamodel = ["MT_pre__S_MM", "MoTifRule"]
@@ -118,21 +121,21 @@ class Prover():
         
         # add polymorphism for the matchers
         for matcher_key in self.matchRulePatterns.keys():
-            self.matchRulePatterns[matcher_key][0].condition["superclasses_dict"] = supertypes
+            self.matchRulePatterns[matcher_key][0].condition["superclasses_dict"] = superclasses_dict
             
         # add polymorphism for the combinators
         for combs_key in self.ruleCombinators.keys():
             if self.ruleCombinators[combs_key] != None:
                 for combinator in self.ruleCombinators[combs_key]:
-                    combinator[0].condition["superclasses_dict"] = supertypes
+                    combinator[0].condition["superclasses_dict"] = superclasses_dict
 
         # add polymorphism for the tracers
         for tracer_key in self.ruleTraceCheckers.keys():
             if self.ruleTraceCheckers[tracer_key] != None:
-                self.ruleTraceCheckers[tracer_key].condition["superclasses_dict"] = supertypes    
+                self.ruleTraceCheckers[tracer_key].condition["superclasses_dict"] = superclasses_dict    
             
 		# generate path conditions
-        pc_set = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, args)
+        pc_set = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
     
         ts0 = time.time()
         pc_set.build_path_conditions()
@@ -163,9 +166,9 @@ class Prover():
         connected = H[%=ac.Name%]_ConnectedLHS()
         complete = H[%=ac.Name%]_CompleteLHS()
         
-        isolated["superclasses_dict"] = supertypes
-        connected["superclasses_dict"] = supertypes
-        complete["superclasses_dict"] = supertypes
+        isolated["superclasses_dict"] = superclasses_dict 
+        connected["superclasses_dict"] = superclasses_dict 
+        complete["superclasses_dict"] = superclasses_dict 
         
         c[%=atomicContractIndex%] = AtomicStateProperty(isolated, connected, complete)
         
@@ -185,31 +188,31 @@ class Prover():
         print("\n\nTime to verify properties: " + str(ts1 - ts0) + " seconds.")
 
         
-        def get_sub_and_super_classes(self):
-                subclasses_dict = {}     
-             
-                inMM = EcoreUtils("[%=inputMM%]")          
-                subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(inMM.getMetamodelClassNames())
-                
-                print(subclasses_dict["MT_pre__MetaModelElement_S"])
+    def get_sub_and_super_classes(self):
+            subclasses_dict = {}     
+         
+            inMM = EcoreUtils("[%=inputMM%]")          
+            subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(inMM.getMetamodelClassNames())
+            
+            print(subclasses_dict["MT_pre__MetaModelElement_S"])
 
-                outMM = EcoreUtils("[%=outputMM%]")  
-                subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(outMM.getMetamodelClassNames()) 
-                
-                print(subclasses_dict["MT_pre__MetaModelElement_T"])
+            outMM = EcoreUtils("[%=outputMM%]")  
+            subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(outMM.getMetamodelClassNames()) 
+            
+            print(subclasses_dict["MT_pre__MetaModelElement_T"])
 
-                # keep a dictionary from each child to its parent
-                supertypes = {}
+            # keep a dictionary from each child to its parent
+            supertypes = {}
 
-                for supertype in subclasses_dict:
-                    for subtype in subclasses_dict[supertype]:
-                        subtype = subtype[8:]
-                        try:
-                            supertypes[subtype].append(supertype[8:])
-                        except KeyError:
-                            supertypes[subtype] = [supertype[8:]]
+            for supertype in subclasses_dict:
+                for subtype in subclasses_dict[supertype]:
+                    subtype = subtype[8:]
+                    try:
+                        supertypes[subtype].append(supertype[8:])
+                    except KeyError:
+                        supertypes[subtype] = [supertype[8:]]
 
-                return subclasses_dict, supertypes
+            return subclasses_dict, supertypes
 
 
 
