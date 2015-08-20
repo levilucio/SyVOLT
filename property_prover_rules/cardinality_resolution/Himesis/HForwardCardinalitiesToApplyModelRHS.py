@@ -18,8 +18,8 @@ class HForwardCardinalitiesToApplyModelRHS(HimesisPostConditionPattern):
         self["name"] = """"""
         self["MT_action__"] = """PostNode('2')['cardinality'] = '+'
 """
-        self["mm__"] = ['MT_post__GM2AUTOSAR_MM', 'MoTifRule']
-        self["superclasses_dict"] = {'SoftwareComposition': ['MetaModelElement_T'], 'Partition': ['MetaModelElement_S'], 'ComponentPrototype': ['MetaModelElement_T'], 'SwcToEcuMapping': ['MetaModelElement_T'], 'Service': ['MetaModelElement_S'], 'SystemMapping': ['MetaModelElement_T'], 'PortPrototype': ['MetaModelElement_T'], 'SwCompToEcuMapping_component': ['MetaModelElement_T'], 'EcuInstance': ['MetaModelElement_T'], 'System': ['MetaModelElement_T'], 'Module': ['MetaModelElement_S'], 'ComponentType': ['MetaModelElement_T'], 'PhysicalNode': ['MetaModelElement_S'], 'Scheduler': ['MetaModelElement_S'], 'CompositionType': ['MetaModelElement_T'], 'RPortPrototype': ['MetaModelElement_T'], 'PPortPrototype': ['MetaModelElement_T']}
+        self["mm__"] = ['MT_post__FamiliesToPersons_MM', 'MoTifRule']
+        self["superclasses_dict"] = {'Woman': ['MetaModelElement_T'], 'HouseholdRoot': ['MetaModelElement_S'], 'Family': ['MetaModelElement_S'], 'Member': ['MetaModelElement_S'], 'Person': ['MetaModelElement_T'], 'CommunityRoot': ['MetaModelElement_T'], 'Man': ['MetaModelElement_T']}
         self["equations"] = []
         self["GUID__"] = 1837265745987771719
         

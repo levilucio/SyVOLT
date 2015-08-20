@@ -80,14 +80,10 @@ class Hr22(Himesis):
         self.vs[12]["attr1"] = """relApply2"""
         self.vs[12]["mm__"] = """directLink_T"""
         
-        # backward association Transition---->ProcDef node
-        self.add_node()
-
-        self.vs[13]["mm__"] = """backward_link"""
         # backward association State---->ProcDef node
         self.add_node()
 
-        self.vs[14]["mm__"] = """backward_link"""
+        self.vs[13]["mm__"] = """backward_link"""
         
         
         
@@ -109,9 +105,7 @@ class Hr22(Himesis):
                 (9,12), # apply_class ProcDef() -> association relApply2
                 (12,7), # association relApply2  -> apply_class Listen()
                 (9,13), # apply_class ProcDef() -> backward_association
-                (13,5), #  backward_association -> apply_class Transition()
-                (9,14), # apply_class ProcDef() -> backward_association
-                (14,3), #  backward_association -> apply_class State()
+                (13,3), #  backward_association -> apply_class State()
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])

@@ -31,7 +31,7 @@ return True
         
                 # match class Family() node
                 self.add_node()
-                self.vs[0]["MT_pre__classtype"] = """
+                self.vs[0]["MT_pre__attr1"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -46,46 +46,10 @@ return True
                 self.vs[0]["MT_label__"] = """1"""
                 self.vs[0]["MT_dirty__"] = False
                 self.vs[0]["mm__"] = """MT_pre__Family"""
-                self.vs[0]["MT_pre__cardinality"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
-                self.vs[0]["MT_pre__cardinality"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
-                self.vs[0]["MT_pre__name"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
                 self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
                 # match class Member() node
                 self.add_node()
-                self.vs[1]["MT_pre__classtype"] = """
+                self.vs[1]["MT_pre__attr1"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -100,46 +64,10 @@ return True
                 self.vs[1]["MT_label__"] = """2"""
                 self.vs[1]["MT_dirty__"] = False
                 self.vs[1]["mm__"] = """MT_pre__Member"""
-                self.vs[1]["MT_pre__cardinality"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
-                self.vs[1]["MT_pre__cardinality"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
-                self.vs[1]["MT_pre__name"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
                 self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
                 # match class Member() node
                 self.add_node()
-                self.vs[2]["MT_pre__classtype"] = """
+                self.vs[2]["MT_pre__attr1"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -154,48 +82,13 @@ return True
                 self.vs[2]["MT_label__"] = """3"""
                 self.vs[2]["MT_dirty__"] = False
                 self.vs[2]["mm__"] = """MT_pre__Member"""
-                self.vs[2]["MT_pre__cardinality"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
-                self.vs[2]["MT_pre__cardinality"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
-                self.vs[2]["MT_pre__name"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
                 self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        
         
         # Nodes that represent the edges of the property.
         # match association Family--mother-->Member node
                 self.add_node()
-                self.vs[3]["MT_pre__associationType"] = """
+                self.vs[3]["MT_pre__attr1"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -215,7 +108,7 @@ return attr_value == "mother"
                 self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc3')
         # match association Family--daughter-->Member node
                 self.add_node()
-                self.vs[4]["MT_pre__associationType"] = """
+                self.vs[4]["MT_pre__attr1"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -244,7 +137,8 @@ return attr_value == "daughter"
         
                 # Add the attribute equations
                 self["equations"] = []
-        def eval_classtype1(self, attr_value, this):
+        
+        def eval_attr11(self, attr_value, this):
         
                 #===============================================================================
                 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -255,24 +149,9 @@ return attr_value == "daughter"
                 # The given constraint must evaluate to a boolean expression.
                 #===============================================================================
 
-                return True
+                return True        
         
-        
-        def eval_cardinality1(self, attr_value, this):
-        
-                #===============================================================================
-                # This code is executed when evaluating if a node shall be matched by this rule.
-                # You can access the value of the current node's attribute value by: attr_value.
-                # You can access any attribute x of this node by: this['x'].
-                # If the constraint relies on attribute values from other nodes,
-                # use the LHS/NAC constraint instead.
-                # The given constraint must evaluate to a boolean expression.
-                #===============================================================================
-
-                return True
-
-        
-        def eval_name1(self, attr_value, this):
+        def eval_attr12(self, attr_value, this):
         
                 #===============================================================================
                 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -283,24 +162,9 @@ return attr_value == "daughter"
                 # The given constraint must evaluate to a boolean expression.
                 #===============================================================================
 
-                return True
+                return True        
         
-        
-        def eval_classtype2(self, attr_value, this):
-        
-                #===============================================================================
-                # This code is executed when evaluating if a node shall be matched by this rule.
-                # You can access the value of the current node's attribute value by: attr_value.
-                # You can access any attribute x of this node by: this['x'].
-                # If the constraint relies on attribute values from other nodes,
-                # use the LHS/NAC constraint instead.
-                # The given constraint must evaluate to a boolean expression.
-                #===============================================================================
-
-                return True
-        
-        
-        def eval_cardinality2(self, attr_value, this):
+        def eval_attr13(self, attr_value, this):
         
                 #===============================================================================
                 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -311,66 +175,10 @@ return attr_value == "daughter"
                 # The given constraint must evaluate to a boolean expression.
                 #===============================================================================
 
-                return True
+                return True        
+        
 
-        
-        def eval_name2(self, attr_value, this):
-        
-                #===============================================================================
-                # This code is executed when evaluating if a node shall be matched by this rule.
-                # You can access the value of the current node's attribute value by: attr_value.
-                # You can access any attribute x of this node by: this['x'].
-                # If the constraint relies on attribute values from other nodes,
-                # use the LHS/NAC constraint instead.
-                # The given constraint must evaluate to a boolean expression.
-                #===============================================================================
-
-                return True
-        
-        
-        def eval_classtype3(self, attr_value, this):
-        
-                #===============================================================================
-                # This code is executed when evaluating if a node shall be matched by this rule.
-                # You can access the value of the current node's attribute value by: attr_value.
-                # You can access any attribute x of this node by: this['x'].
-                # If the constraint relies on attribute values from other nodes,
-                # use the LHS/NAC constraint instead.
-                # The given constraint must evaluate to a boolean expression.
-                #===============================================================================
-
-                return True
-        
-        
-        def eval_cardinality3(self, attr_value, this):
-        
-                #===============================================================================
-                # This code is executed when evaluating if a node shall be matched by this rule.
-                # You can access the value of the current node's attribute value by: attr_value.
-                # You can access any attribute x of this node by: this['x'].
-                # If the constraint relies on attribute values from other nodes,
-                # use the LHS/NAC constraint instead.
-                # The given constraint must evaluate to a boolean expression.
-                #===============================================================================
-
-                return True
-
-        
-        def eval_name3(self, attr_value, this):
-        
-                #===============================================================================
-                # This code is executed when evaluating if a node shall be matched by this rule.
-                # You can access the value of the current node's attribute value by: attr_value.
-                # You can access any attribute x of this node by: this['x'].
-                # If the constraint relies on attribute values from other nodes,
-                # use the LHS/NAC constraint instead.
-                # The given constraint must evaluate to a boolean expression.
-                #===============================================================================
-
-                return True
-        
-        
-        def eval_associationType4(self, attr_value, this):
+        def eval_attr14(self, attr_value, this):
         
                 #===============================================================================
                 # This code is executed when evaluating if a node shall be matched by this rule.
@@ -384,7 +192,7 @@ return attr_value == "daughter"
                 return attr_value == "mother"
 
 
-        def eval_associationType5(self, attr_value, this):
+        def eval_attr15(self, attr_value, this):
         
                 #===============================================================================
                 # This code is executed when evaluating if a node shall be matched by this rule.

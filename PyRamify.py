@@ -1851,6 +1851,7 @@ class PyRamify:
                     continue
 
                 rule_file = rule_dir + f
+                
                 try:
                     rule = load_class(rule_file)
                 except ImportError as e:

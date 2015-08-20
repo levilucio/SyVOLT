@@ -6,6 +6,7 @@ var nodeIndex = 0;
 
 var pythonClassName = "H"+contract.name+"_ConnectedLHS";
 
+var equationsStr = "";
 
 %]
 from core.himesis import Himesis, HimesisPreConditionPatternLHS
@@ -68,6 +69,19 @@ return True
         }
         %]
         
+        [%
+                for(class in contract.match.first.class){
+                	for(matchAttribute in class.attribute){
+                    	if (matchAttribute.attributeValue <> null){
+                        	equationsStr = equationsStr + "((" + matchClassNodeMap.get(class) + ",'" + matchAttribute.attributeName + "'),";                                
+                            equationsStr = equationsStr + generateAttributeTermNodes(matchAttribute, matchAttribute.attributeValue, matchClassNodeMap, matchClassNodeMap, contract);    
+							equationsStr = equationsStr + "), ";   
+                        }
+                    }
+                }
+//        }
+        %]
+        
         # Nodes that represent the edges of the property.
         [%
                 for(association in contract.match.first.association){
@@ -121,6 +135,9 @@ return attr_value == "[%=association.associationName%]"
                 %]
         ])
         
+                # Add the attribute equations
+                self["equations"] = [[%=equationsStr%]]
+        
         [%
         // define evaluation methods for each class.
                 for(class in contract.match.first.class){
@@ -142,6 +159,7 @@ return attr_value == "[%=association.associationName%]"
                 [%
         }
         %]
+
         [%
         // define evaluation methods for each association.
                 for(association in contract.match.first.association){

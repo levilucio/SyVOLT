@@ -30,7 +30,7 @@ class Test():
 
         self.transformation_dir = "tests/transformation_multiple_partials/"
 
-        full_transformation = [["Hr11"], ["Hr22"]]
+        full_transformation = [["Hr11"], ["Hr22", "Hr7"]]
 
         self.rules, self.transformation = self.pyramify.get_rules(self.transformation_dir, full_transformation)
 
@@ -52,14 +52,14 @@ class Test():
 
     def test_correct_uml2kiltera(self,args):
 
-        a1 = self.rules["Hr11"]
-        b1 = self.rules['Hr22']
+#         a1 = self.rules["Hr11"]
+#         b1 = self.rules['Hr22']
 
         expected_num_pcs = 5
                 
         #TODO: Change this number if you are modifying the transformation at all
-        if args.num_rules == -1:
-                transformation = [[a1],[b1]]#,b1,b3]]
+#         if args.num_rules == -1:
+#                 transformation = [[a1],[b1]]#,b1,b3]]
 
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
         post_metamodel = ["MT_post__UMLRT2Kiltera_MM", "MoTifRule"]
@@ -89,9 +89,9 @@ class Test():
 #            self.pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation_eq_outside", transformation)
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlappingRules, self.subsumption, self.loopingRuleSubsumption] = \
-            self.pyramify.ramify_directory("tests/transformation_multiple_partials/", transformation)
+            self.pyramify.ramify_directory("tests/transformation_multiple_partials/", self.transformation)
 
-        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlappingRules, self.subsumption, self.loopingRuleSubsumption, args)#
+        s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlappingRules, self.subsumption, self.loopingRuleSubsumption, args)#
     
         ts0 = time.time()
         s.build_path_conditions()

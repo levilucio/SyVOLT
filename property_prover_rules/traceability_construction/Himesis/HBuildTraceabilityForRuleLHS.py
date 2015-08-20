@@ -16,14 +16,14 @@ class HBuildTraceabilityForRuleLHS(HimesisPreConditionPatternLHS):
         self.add_edges([[3, 0], [0, 4], [1, 2], [2, 5]])
         # Set the graph attributes
         self["name"] = """"""
-        self["mm__"] = ['MT_pre__GM2AUTOSAR_MM', 'MoTifRule']
+        self["mm__"] = ['MT_pre__FamiliesToPersons_MM', 'MoTifRule']
         self["MT_constraint__"] = """mms = graph.vs["mm__"]
 if set([i for i in graph.neighbors(PreNode('1').index) if mms[i] == 'trace_link']).intersection(set([i for i in graph.neighbors(PreNode('2').index) if mms[i] == 'trace_link'])) == set():
     return True
 
 return False
 """
-        self["superclasses_dict"] = {'SoftwareComposition': ['MetaModelElement_T'], 'Partition': ['MetaModelElement_S'], 'ComponentPrototype': ['MetaModelElement_T'], 'SwcToEcuMapping': ['MetaModelElement_T'], 'Service': ['MetaModelElement_S'], 'SystemMapping': ['MetaModelElement_T'], 'PortPrototype': ['MetaModelElement_T'], 'SwCompToEcuMapping_component': ['MetaModelElement_T'], 'EcuInstance': ['MetaModelElement_T'], 'System': ['MetaModelElement_T'], 'Module': ['MetaModelElement_S'], 'ComponentType': ['MetaModelElement_T'], 'PhysicalNode': ['MetaModelElement_S'], 'Scheduler': ['MetaModelElement_S'], 'CompositionType': ['MetaModelElement_T'], 'RPortPrototype': ['MetaModelElement_T'], 'PPortPrototype': ['MetaModelElement_T']}
+        self["superclasses_dict"] = {'Woman': ['MetaModelElement_T'], 'HouseholdRoot': ['MetaModelElement_S'], 'Family': ['MetaModelElement_S'], 'Member': ['MetaModelElement_S'], 'Person': ['MetaModelElement_T'], 'CommunityRoot': ['MetaModelElement_T'], 'Man': ['MetaModelElement_T']}
         self["equations"] = []
         self["GUID__"] = 1339043830988334966
         

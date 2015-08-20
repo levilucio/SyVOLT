@@ -201,6 +201,8 @@ class Test():
         print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
 #        print("Size of the set of path conditions: " + str(float(sys.getsizeof(s.pathConditionSet) / 1024)))
         print("Number of path conditions: " + str(s.num_path_conditions))
+        
+        s.check_rule_reachability()
  
         #check if the correct number of path conditions were produced
         # if not int(expected_num_pcs) == -1 and not int(expected_num_pcs) == s.num_path_conditions:
@@ -210,8 +212,8 @@ class Test():
         #     print(num_pcs_s)
             #raise Exception(num_pcs_s)
  
-        #print("printing path conditions")
-        #s.print_path_conditions_screen()
+#         print("printing path conditions")
+#         s.print_path_conditions_screen()
 
 #        s.print_path_conditions_file()
 #

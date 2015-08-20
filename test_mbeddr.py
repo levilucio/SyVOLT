@@ -19,7 +19,7 @@ from core.himesis_utils import graph_to_dot
 
 from ecore_utils import EcoreUtils
 from core.himesis_plus import buildPreListFromClassNames
-from util.select_rules import select_rules
+#from util.select_rules import select_rules
 
 # all runs are the same transformation, but with different metamodel elements
 # the purpose is to do scalability testing with multiple configurations and multiple sets of rules
@@ -81,34 +81,34 @@ class Test():
 
             #c layer
     #       ['Hlayer2rule0',
-            ['Hlayer2rule1',
-            'Hlayer2rule2',
-            'Hlayer2rule3'],
+#             ['Hlayer2rule1',
+#             'Hlayer2rule2',
+#             'Hlayer2rule3'],
+# 
+#             # d layer
+#             ['Hlayer3rule0',
+#             'Hlayer3rule1',
+#             'Hlayer3rule2',
+#             'Hlayer3rule3',
+#             'Hlayer3rule4',
+#             'Hlayer3rule5'],
 
-            # d layer
-            ['Hlayer3rule0',
-            'Hlayer3rule1',
-            'Hlayer3rule2',
-            'Hlayer3rule3',
-            'Hlayer3rule4',
-            'Hlayer3rule5'],
-
-            # e layer
-            ['Hlayer4rule0',
-            'Hlayer4rule1',
-            'Hlayer4rule2',
-            'Hlayer4rule3'],
-
-            #f layer
-            ['Hlayer5rule0',
-            'Hlayer5rule1',
-            'Hlayer5rule2',
-            'Hlayer5rule3',
-            'Hlayer5rule4',
-            'Hlayer5rule5'],
-
-            #g layer
-            ['HLayer6rule0']
+#             # e layer
+#             ['Hlayer4rule0',
+#             'Hlayer4rule1',
+#             'Hlayer4rule2',
+#             'Hlayer4rule3'],
+# 
+#             #f layer
+#             ['Hlayer5rule0',
+#             'Hlayer5rule1',
+#             'Hlayer5rule2',
+#             'Hlayer5rule3',
+#             'Hlayer5rule4',
+#             'Hlayer5rule5'],
+# 
+#             #g layer
+#             ['HLayer6rule0']
 
 
 
@@ -138,10 +138,10 @@ class Test():
         # self.if_then_properties = []
 
 
-        if args.slice > 0:
-            contract = self.atomic_properties[args.slice - 1]
-            contract[1].CompleteQuantified["superclasses_dict"] = superclasses_dict
-            self.rules, self.transformation = slice_transformation(self.rules, self.transformation, contract, args)
+#         if args.slice > 0:
+#             contract = self.atomic_properties[args.slice - 1]
+#             contract[1].CompleteQuantified["superclasses_dict"] = superclasses_dict
+#             self.rules, self.transformation = slice_transformation(self.rules, self.transformation, contract, args)
 
 
     def test_correct_mbeddr(self, args):

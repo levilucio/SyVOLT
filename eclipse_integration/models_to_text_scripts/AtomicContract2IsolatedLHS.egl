@@ -67,8 +67,11 @@ return True
                 self.vs[[%=nodeIndex%]]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'[%=class.id%]')
                 [%
                 nodeIndex = nodeIndex + 1;
-        }
+        }    
         %]
+        
+                # Add the attribute equations
+                self["equations"] = []    
         
         [%
         // define evaluation methods for each class.

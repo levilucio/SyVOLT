@@ -186,8 +186,8 @@ class Test():
                 ['HConnECU2VirtualDevice2'],
                  ['HConnVirtualDevice2Distributable1'],
                  ['HConnVirtualDevice2Distributable2'],
-                 ['HConnectPPortPrototype'],
-                 ['HConnectRPortPrototype']]
+                 ['HConnectRPortPrototype'],
+                 ['HConnectPPortPrototype']]
 
 
         self.rules, self.transformation = pyramify.get_rules(self.transformation_dir, full_transformation)

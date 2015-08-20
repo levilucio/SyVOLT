@@ -309,18 +309,18 @@ class Disambiguator():
 
                     p = self.move_trace.packet_in(p)
                     if self.verbosity >= 2:
-                        print('move_trace:' + str(move_trace.is_success))
+                        print('move_trace:' + str(self.move_trace.is_success))
                         if self.debug:
                             #print(p2)
                             graph_to_dot("before_move_trace_" + str(self.move_trace.is_success), p.graph)
 
-                    if self.debug:
-                        graph_to_dot("before_move_one_attribute", p.graph)
+                    #if self.debug:
+                    #    graph_to_dot("before_move_one_attribute", p.graph)
 
-                    p = self.move_one_attribute.packet_in(p)
+                    #p = self.move_one_attribute.packet_in(p)
                     # #if not delete_attributes_from_uncollapsed_element.is_success:
                     #    raise Exception("Attributes were not deleted from uncollapsed element")
-                    if self.verbosity >= 2: print('move_one_attribute:' + str(self.move_one_attribute.is_success))
+                    #if self.verbosity >= 2: print('move_one_attribute:' + str(self.move_one_attribute.is_success))
 
                     # graph_to_dot("before_delete_attributes_from_uncollapsed_element", p2.graph)
                     # p2 = delete_attributes_from_uncollapsed_element.packet_in(p2)
