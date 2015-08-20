@@ -135,6 +135,13 @@ class Prover():
             if self.ruleTraceCheckers[tracer_key] != None:
                 self.ruleTraceCheckers[tracer_key].condition["superclasses_dict"] = superclasses_dict    
             
+        #also make sure the transformation has this information
+        for rule in self.rules.values():
+            rule["superclasses_dict"] = superclasses_dict
+
+        for layer in self.transformation:
+            for rule in layer:
+                rule["superclasses_dict"] = superclasses_dict
             
         # load the contracts, and add polymorphism
 
