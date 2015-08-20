@@ -1,4 +1,84 @@
+from core.himesis_plus import look_for_attached
+
+
 class Slicer():
+
+
+    def __init__(self, rules, transformation):
+
+        self.backward_links = {}
+        self.direct_links = {}
+        self.match_elements = {}
+        self.apply_elements = {}
+
+        self.rules = rules
+        self.transformation = transformation
+
+        for r in self.rules.values():
+            self.decompose_graph(r)
+
+
+    def decompose_graph(self, graph):
+        #decompose graph into directLinks, backwardLinks, and isolated elements
+
+
+        #print("Decomposing graph: " + graph.name)
+        direct_links = []
+        backward_links = []
+        match_elements = []
+        apply_elements = []
+
+        vs = graph.vs
+        for i in range(len(vs)):
+            v = vs[i]
+            mm = v["mm__"]
+
+            if "directLink" in mm:
+                direct_links.append(i)
+            elif "trace_link" in mm or "backward_link" in mm:
+                backward_links.append(i)
+            else:
+                if mm in ["MatchModel", "ApplyModel", "paired_with"]:
+                    continue
+
+                neighbours = look_for_attached(i, graph)
+                for n in neighbours[:1]:
+                    n_mm = vs[n]["mm__"]
+                    if n_mm == "match_contains":
+                        match_elements.append(mm)
+                        break
+                    elif n_mm == "apply_contains":
+                        apply_elements.append(mm)
+                        break
+
+
+        self.direct_links[graph.name] = []
+        for dl in direct_links:
+
+            neighbours = look_for_attached(dl, graph)
+            n0 = vs[neighbours[0]]["mm__"].replace("MT_pre__","")
+            n1 = vs[neighbours[1]]["mm__"].replace("MT_pre__","")
+            self.direct_links[graph.name].append((n0, n1))
+
+        #print("Direct links: " + str(self.direct_links[graph.name]))
+
+        self.backward_links[graph.name] = []
+        for bl in backward_links:
+
+            neighbours = look_for_attached(bl, graph)
+            n0 = vs[neighbours[0]]["mm__"].replace("MT_pre__","")
+            n1 = vs[neighbours[1]]["mm__"].replace("MT_pre__","")
+            self.backward_links[graph.name].append((n0, n1))
+
+       # print("Backward links: " + str(self.backward_links[graph.name]))
+
+        self.match_elements[graph.name] = match_elements
+        self.apply_elements[graph.name] = apply_elements
+
+        #print("Match contains: " + str(match_elements))
+        #print("Apply contains: " + str(apply_elements))
+
+
 
     def find_required_rules(self, graph, transformation, is_contract = False):
 
@@ -80,11 +160,15 @@ class Slicer():
 
 
 
-    def slice_transformation(self,rules, transformation, contract, args):
+    def slice_transformation(self, contract):
 
         contract = contract[1].CompleteQuantified
 
         print("Slicing for: " + contract.name)
+
+        self.decompose_graph(contract)
+
+        raise Exception()
 
         # graph_to_dot(contract.name, contract)
         # for layer in transformation:
@@ -98,7 +182,7 @@ class Slicer():
 
         for rr in required_rules:
 
-            new_rrs = self.find_required_rules(rr, transformation)
+            new_rrs = self.find_required_rules(rr, self.transformation)
             for new_rr in new_rrs:
                 if new_rr not in required_rules:
                     required_rules.append(new_rr)
@@ -109,13 +193,13 @@ class Slicer():
 
 
         new_rules = {}
-        for k in rules.keys():
+        for k in self.rules.keys():
             if k in rr_names:
-                new_rules[k] = rules[k]
+                new_rules[k] = self.rules[k]
 
 
         new_transformation = []
-        for layer in transformation:
+        for layer in self.transformation:
             new_layer = []
             for rule in layer:
                 if rule.name in rr_names:
