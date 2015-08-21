@@ -15,7 +15,8 @@ from t_core.messages import Packet
 
 from PyRamify import PyRamify
 
-from util.test_script_utils import select_rules, slice_transformation
+from util.test_script_utils import select_rules
+from util.slicer import Slicer
 
 from core.himesis_utils import graph_to_dot
 # all runs are the same transformation, but with different metamodel elements
@@ -118,6 +119,13 @@ class Test():
                     supertypes[subtype] = [supertype[8:]]
 
 
+        # also make sure the transformation has this information
+        for rule in self.rules.values():
+            rule["superclasses_dict"] = supertypes
+
+        for layer in self.transformation:
+            for rule in layer:
+                rule["superclasses_dict"] = supertypes
 
         FourMembers = [HfourMembers_IsolatedLHS(), HfourMembers_ConnectedLHS(), HfourMembers_CompleteLHS()]
         for fm in FourMembers:
@@ -175,8 +183,15 @@ class Test():
  
         if args.slice > 0:
             contract = self.atomic_properties[args.slice - 1]
-            self.rules, self.transformation = slice_transformation(self.rules, self.transformation, contract, args)
+            print("Slicing for contract number " + str(args.slice) + " : " + contract[0])
 
+            slicer = Slicer(self.rules, self.transformation)
+
+            print("Number rules before: " + str(len(self.rules)))
+            self.rules, self.transformation = slicer.slice_transformation(contract)
+            print("Number rules after: " + str(len(self.rules)))
+
+            raise Exception()
 
     def test_correct_uml2kiltera(self,args):
 

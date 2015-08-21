@@ -1,5 +1,5 @@
 from core.himesis_plus import look_for_attached
-
+from core.himesis_utils import graph_to_dot
 
 class Slicer():
 
@@ -80,38 +80,49 @@ class Slicer():
 
 
 
-    def find_required_rules(self, graph, transformation, is_contract = False):
-
-        graph_mms = graph.vs["mm__"]
-
-        contract_mms_to_remove = ['MT_pre__directLink_S', 'MT_pre__directLink_T', 'MT_pre__trace_link',
-                                  # Remove this
-                                  'MT_pre__leftExpr', 'MT_pre__hasAttribute_S', 'MT_pre__Attribute',
-                                  'MT_pre__rightExpr', 'MT_pre__hasAttribute_T', 'MT_pre__Equation',
-                                  'MT_pre__hasAttr_S', 'MT_pre__hasAttr_T', 'MT_pre__Constant'
-                                  ]
-
-        rule_mms_to_remove = ['match_contains', 'apply_contains',
-                              'directLink_S', 'directLink_T',
-                              'trace_link', 'backward_link',
-                              'ApplyModel', 'MatchModel', 'paired_with',
-                              # Remove this
-                              'leftExpr', 'hasAttribute_S', 'Attribute',
-                              'rightExpr', 'hasAttribute_T', 'Equation',
-                              'hasAttr_S', 'hasAttr_T', 'Constant'
-                              ]
+    def find_required_rules(self, graph, is_contract = False):
 
 
 
-        #take off the MT_pre__ if this is a contract
-        if is_contract:
-            mms_required = list(set([mm for mm in graph_mms if mm not in contract_mms_to_remove]))
+        dls = self.direct_links[graph.name]
+        bls = self.backward_links[graph.name]
 
-        else:
-            mms_required = list(([mm for mm in graph_mms if mm not in rule_mms_to_remove]))
+        #print("Contract DLs: " + str(dls))
+        #print("Contract Match Elements: " + str(self.match_elements[graph.name]))
+        #print("Contract Apply Elements: " + str(self.apply_elements[graph.name]))
 
-        if is_contract:
-            mms_required = [mm[8:] for mm in mms_required]
+
+
+        # graph_mms = graph.vs["mm__"]
+        #
+        # contract_mms_to_remove = ['MT_pre__directLink_S', 'MT_pre__directLink_T', 'MT_pre__trace_link',
+        #                           # Remove this
+        #                           'MT_pre__leftExpr', 'MT_pre__hasAttribute_S', 'MT_pre__Attribute',
+        #                           'MT_pre__rightExpr', 'MT_pre__hasAttribute_T', 'MT_pre__Equation',
+        #                           'MT_pre__hasAttr_S', 'MT_pre__hasAttr_T', 'MT_pre__Constant'
+        #                           ]
+        #
+        # rule_mms_to_remove = ['match_contains', 'apply_contains',
+        #                       'directLink_S', 'directLink_T',
+        #                       'trace_link', 'backward_link',
+        #                       'ApplyModel', 'MatchModel', 'paired_with',
+        #                       # Remove this
+        #                       'leftExpr', 'hasAttribute_S', 'Attribute',
+        #                       'rightExpr', 'hasAttribute_T', 'Equation',
+        #                       'hasAttr_S', 'hasAttr_T', 'Constant'
+        #                       ]
+        #
+        #
+        #
+        # #take off the MT_pre__ if this is a contract
+        # if is_contract:
+        #     mms_required = list(set([mm for mm in graph_mms if mm not in contract_mms_to_remove]))
+        #
+        # else:
+        #     mms_required = list(([mm for mm in graph_mms if mm not in rule_mms_to_remove]))
+        #
+        # if is_contract:
+        #     mms_required = [mm[8:] for mm in mms_required]
 
         try:
             supertypes = graph["superclasses_dict"]
@@ -121,21 +132,21 @@ class Slicer():
 
         #print("MMs Required Before: " + str(mms_required))
 
-        if supertypes:
-            for mm in mms_required:
-
-                for s in supertypes:
-                    if mm in supertypes[s]:
-                        mms_required.append(s)
-
-        #remove duplicates
-        mms_required = sorted(list(set(mms_required)))
-        #print("MMs Required After: " + str(mms_required))
+        # if supertypes:
+        #     for mm in mms_required:
+        #
+        #         for s in supertypes:
+        #             if mm in supertypes[s]:
+        #                 mms_required.append(s)
+        #
+        # #remove duplicates
+        # mms_required = sorted(list(set(mms_required)))
+        # #print("MMs Required After: " + str(mms_required))
 
 
         required_rules = []
 
-        for layer in transformation:
+        for layer in self.transformation:
 
             if graph in layer:
                 break
@@ -145,16 +156,63 @@ class Slicer():
                 if rule in required_rules:
                     continue
 
-                rule_mms = set([mm for mm in rule.vs["mm__"] if mm not in rule_mms_to_remove])
+                #
+
+                #rule_mms = set([mm for mm in rule.vs["mm__"] if mm not in rule_mms_to_remove])
+
+                rule_dls = self.direct_links[rule.name]
+
+                #print("Rule DLs: " + str(rule_dls))
+
+                added_rule = False
+
+                for dl in dls:
+
+                    if dl in rule_dls:
+                        required_rules.append(rule)
+                        #print("Add rule: " + rule.name)
+                        added_rule = True
+                        break
+
+                if added_rule:
+                    continue
+
+
+
+                added_rule = False
+
+                for backward_link in bls:
+                    a, m = backward_link
+
+                    if m in self.match_elements[rule.name] and \
+                        a in self.apply_elements[rule.name]:
+                        required_rules.append(rule)
+                        added_rule = True
+                        break
+
+                if added_rule:
+                    continue
+
+                # print("WARNING: HAVENT ADDED RULE YET")
+                # print("Rule: " + rule.name)
+
+                #rule_bls = self.backward_links[rule.name]
+
+                # print("Rule BLs: " + str(rule_bls))
+                #
+                # print("Match Elements: " + str(self.match_elements[rule.name]))
+                # print("Apply Elements: " + str(self.apply_elements[rule.name]))
+                #
+                # print("Contract BLs: " + str(bls))
 
                 #print("\nRule " + rule.name + " MMS: " + str(rule_mms))
 
-                for mm in mms_required:
-                    if mm in rule_mms:
-                        required_rules.append(rule)
-
-                        #print("Add rule: " + rule.name + " with mms: " + str(rule_mms))
-                        break
+                # for mm in mms_required:
+                #     if mm in rule_mms:
+                #         required_rules.append(rule)
+                #
+                #         #print("Add rule: " + rule.name + " with mms: " + str(rule_mms))
+                #         break
 
         return required_rules
 
@@ -168,14 +226,15 @@ class Slicer():
 
         self.decompose_graph(contract)
 
-        raise Exception()
 
-        # graph_to_dot(contract.name, contract)
-        # for layer in transformation:
-        #     for rule in layer:
-        #         graph_to_dot(rule.name, rule)
 
-        required_rules = self.find_required_rules(contract, transformation, True)
+        graph_to_dot(contract.name, contract)
+        for layer in self.transformation:
+            for rule in layer:
+                graph_to_dot(rule.name, rule)
+
+        required_rules = self.find_required_rules(contract, True)
+
 
         rr_names = [rule.name for rule in required_rules]
         #print("Required rules: " + str(rr_names))
@@ -189,7 +248,6 @@ class Slicer():
 
         rr_names = [rule.name for rule in required_rules]
         print("Required rules: " + str(sorted(set(rr_names))))
-
 
 
         new_rules = {}
@@ -207,6 +265,7 @@ class Slicer():
 
             if len(new_layer) > 0:
                 new_transformation.append(new_layer)
+
 
 
         return new_rules, new_transformation
