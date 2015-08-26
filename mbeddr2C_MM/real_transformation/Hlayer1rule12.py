@@ -42,88 +42,40 @@ class Hlayer1rule12(Himesis):
         # match_contains node for class ImplementationModule(layer1rule12class0)
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
-        # match class AtomicComponent(layer1rule12class4) node
-        self.add_node()
-
-        self.vs[5]["mm__"] = """AtomicComponent""" 
-        self.vs[5]["attr1"] = """+""" 
-        # match_contains node for class AtomicComponent(layer1rule12class4)
-        self.add_node()
-        self.vs[6]["mm__"] = """match_contains"""
-        # match class ProvidedPort(layer1rule12class5) node
-        self.add_node()
-
-        self.vs[7]["mm__"] = """ProvidedPort""" 
-        self.vs[7]["attr1"] = """+""" 
-        # match_contains node for class ProvidedPort(layer1rule12class5)
-        self.add_node()
-        self.vs[8]["mm__"] = """match_contains"""
-        # match class ClientServerInterface(layer1rule12class6) node
-        self.add_node()
-
-        self.vs[9]["mm__"] = """ClientServerInterface""" 
-        self.vs[9]["attr1"] = """+""" 
-        # match_contains node for class ClientServerInterface(layer1rule12class6)
-        self.add_node()
-        self.vs[10]["mm__"] = """match_contains"""
-        # match class Operation(layer1rule12class7) node
-        self.add_node()
-
-        self.vs[11]["mm__"] = """Operation""" 
-        self.vs[11]["attr1"] = """+""" 
-        # match_contains node for class Operation(layer1rule12class7)
-        self.add_node()
-        self.vs[12]["mm__"] = """match_contains"""
         
         
         # apply class ImplementationModule(layer1rule12class1) node
         self.add_node()
 
-        self.vs[13]["mm__"] = """ImplementationModule""" 
-        self.vs[13]["attr1"] = """1"""
+        self.vs[5]["mm__"] = """ImplementationModule""" 
+        self.vs[5]["attr1"] = """1"""
         # apply_contains node for class ImplementationModule(layer1rule12class1)
         self.add_node()
-        self.vs[14]["mm__"] = """apply_contains"""
+        self.vs[6]["mm__"] = """apply_contains"""
         # apply class FunctionPrototype(layer1rule12class2) node
         self.add_node()
 
-        self.vs[15]["mm__"] = """FunctionPrototype""" 
-        self.vs[15]["attr1"] = """1"""
+        self.vs[7]["mm__"] = """FunctionPrototype""" 
+        self.vs[7]["attr1"] = """1"""
         # apply_contains node for class FunctionPrototype(layer1rule12class2)
         self.add_node()
-        self.vs[16]["mm__"] = """apply_contains"""
+        self.vs[8]["mm__"] = """apply_contains"""
         
         
-        # match association ImplementationModule--contents-->AtomicComponent node
-        self.add_node()
-        self.vs[17]["attr1"] = """contents"""
-        self.vs[17]["mm__"] = """directLink_S"""
-        # match association AtomicComponent--contents-->ProvidedPort node
-        self.add_node()
-        self.vs[18]["attr1"] = """contents"""
-        self.vs[18]["mm__"] = """directLink_S"""
-        # match association ProvidedPort--intf-->ClientServerInterface node
-        self.add_node()
-        self.vs[19]["attr1"] = """intf"""
-        self.vs[19]["mm__"] = """directLink_S"""
-        # match association ClientServerInterface--contents-->Operation node
-        self.add_node()
-        self.vs[20]["attr1"] = """contents"""
-        self.vs[20]["mm__"] = """directLink_S"""
         
         # apply association ImplementationModule--contents-->FunctionPrototype node
         self.add_node()
-        self.vs[21]["attr1"] = """contents"""
-        self.vs[21]["mm__"] = """directLink_T"""
+        self.vs[9]["attr1"] = """contents"""
+        self.vs[9]["mm__"] = """directLink_T"""
         
         # backward association ImplementationModule---->ImplementationModule node
         self.add_node()
 
-        self.vs[22]["mm__"] = """backward_link"""
-        # backward association Operation---->FunctionPrototype node
+        self.vs[10]["mm__"] = """backward_link"""
+        # backward association ImplementationModule---->FunctionPrototype node
         self.add_node()
 
-        self.vs[23]["mm__"] = """backward_link"""
+        self.vs[11]["mm__"] = """backward_link"""
         
         
         
@@ -134,37 +86,21 @@ class Hlayer1rule12(Himesis):
         self.add_edges([
                 (0,4), # matchmodel -> match_contains
                 (4,3), # match_contains -> match_class ImplementationModule(layer1rule12class0)
-                (0,6), # matchmodel -> match_contains
-                (6,5), # match_contains -> match_class AtomicComponent(layer1rule12class4)
-                (0,8), # matchmodel -> match_contains
-                (8,7), # match_contains -> match_class ProvidedPort(layer1rule12class5)
-                (0,10), # matchmodel -> match_contains
-                (10,9), # match_contains -> match_class ClientServerInterface(layer1rule12class6)
-                (0,12), # matchmodel -> match_contains
-                (12,11), # match_contains -> match_class Operation(layer1rule12class7)
-                (1,14), # applymodel -> apply_contains
-                (14,13), # apply_contains -> apply_class ImplementationModule(layer1rule12class1)
-                (1,16), # applymodel -> apply_contains
-                (16,15), # apply_contains -> apply_class FunctionPrototype(layer1rule12class2)
-                (3,17), # match_class ImplementationModule(layer1rule12class0) -> association contents
-                (17,5), # association contents  -> match_class AtomicComponent(layer1rule12class4)
-                (5,18), # match_class AtomicComponent(layer1rule12class4) -> association contents
-                (18,7), # association contents  -> match_class ProvidedPort(layer1rule12class5)
-                (7,19), # match_class ProvidedPort(layer1rule12class5) -> association intf
-                (19,9), # association intf  -> match_class ClientServerInterface(layer1rule12class6)
-                (9,20), # match_class ClientServerInterface(layer1rule12class6) -> association contents
-                (20,11), # association contents  -> match_class Operation(layer1rule12class7)
-                (13,21), # apply_class ImplementationModule(layer1rule12class1) -> association contents
-                (21,15), # association contents  -> apply_class FunctionPrototype(layer1rule12class2)
-                (13,22), # apply_class ImplementationModule(layer1rule12class1) -> backward_association
-                (22,3), #  backward_association -> apply_class ImplementationModule(layer1rule12class0)
-                (15,23), # apply_class FunctionPrototype(layer1rule12class2) -> backward_association
-                (23,11), #  backward_association -> apply_class Operation(layer1rule12class7)
+                (1,6), # applymodel -> apply_contains
+                (6,5), # apply_contains -> apply_class ImplementationModule(layer1rule12class1)
+                (1,8), # applymodel -> apply_contains
+                (8,7), # apply_contains -> apply_class FunctionPrototype(layer1rule12class2)
+                (5,9), # apply_class ImplementationModule(layer1rule12class1) -> association contents
+                (9,7), # association contents  -> apply_class FunctionPrototype(layer1rule12class2)
+                (5,10), # apply_class ImplementationModule(layer1rule12class1) -> backward_association
+                (10,3), #  backward_association -> apply_class ImplementationModule(layer1rule12class0)
+                (7,11), # apply_class FunctionPrototype(layer1rule12class2) -> backward_association
+                (11,3), #  backward_association -> apply_class ImplementationModule(layer1rule12class0)
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])
 
         # Add the attribute equations
-        self["equations"] = [((13,'__ApplyAttribute'),('constant','ImplementationModule')), ((15,'__ApplyAttribute'),('constant','ProvidedPortFunctionPrototype')), ]
+        self["equations"] = [((5,'__ApplyAttribute'),('constant','ImplementationModule')), ((7,'__ApplyAttribute'),('constant','ProvidedPortFunctionPrototype')), ]
 
         

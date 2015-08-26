@@ -42,52 +42,40 @@ class Hlayer1rule9(Himesis):
         # match_contains node for class AtomicComponent(layer1rule9class0)
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
-        # match class ImplementationModule(layer1rule9class5) node
-        self.add_node()
-
-        self.vs[5]["mm__"] = """ImplementationModule""" 
-        self.vs[5]["attr1"] = """+""" 
-        # match_contains node for class ImplementationModule(layer1rule9class5)
-        self.add_node()
-        self.vs[6]["mm__"] = """match_contains"""
         
         
         # apply class StructDeclaration(layer1rule9class1) node
         self.add_node()
 
-        self.vs[7]["mm__"] = """StructDeclaration""" 
-        self.vs[7]["attr1"] = """1"""
+        self.vs[5]["mm__"] = """StructDeclaration""" 
+        self.vs[5]["attr1"] = """1"""
         # apply_contains node for class StructDeclaration(layer1rule9class1)
         self.add_node()
-        self.vs[8]["mm__"] = """apply_contains"""
+        self.vs[6]["mm__"] = """apply_contains"""
         # apply class StructType(layer1rule9class2) node
         self.add_node()
 
-        self.vs[9]["mm__"] = """StructType""" 
-        self.vs[9]["attr1"] = """1"""
+        self.vs[7]["mm__"] = """StructType""" 
+        self.vs[7]["attr1"] = """1"""
         # apply_contains node for class StructType(layer1rule9class2)
         self.add_node()
-        self.vs[10]["mm__"] = """apply_contains"""
+        self.vs[8]["mm__"] = """apply_contains"""
         
         
-        # match association ImplementationModule--contents-->AtomicComponent node
-        self.add_node()
-        self.vs[11]["attr1"] = """contents"""
-        self.vs[11]["mm__"] = """directLink_S"""
         
         # apply association StructType--struct-->StructDeclaration node
         self.add_node()
-        self.vs[12]["attr1"] = """struct"""
-        self.vs[12]["mm__"] = """directLink_T"""
+        self.vs[9]["attr1"] = """struct"""
+        self.vs[9]["mm__"] = """directLink_T"""
         
-        # backward association ImplementationModule---->StructType node
+        # backward association AtomicComponent---->StructType node
         self.add_node()
 
-        self.vs[13]["mm__"] = """backward_link"""
+        self.vs[10]["mm__"] = """backward_link"""
         # backward association AtomicComponent---->StructDeclaration node
         self.add_node()
 
-        self.vs[14]["mm__"] = """backward_link"""
+        self.vs[11]["mm__"] = """backward_link"""
         
         
         
@@ -98,25 +86,21 @@ class Hlayer1rule9(Himesis):
         self.add_edges([
                 (0,4), # matchmodel -> match_contains
                 (4,3), # match_contains -> match_class AtomicComponent(layer1rule9class0)
-                (0,6), # matchmodel -> match_contains
-                (6,5), # match_contains -> match_class ImplementationModule(layer1rule9class5)
+                (1,6), # applymodel -> apply_contains
+                (6,5), # apply_contains -> apply_class StructDeclaration(layer1rule9class1)
                 (1,8), # applymodel -> apply_contains
-                (8,7), # apply_contains -> apply_class StructDeclaration(layer1rule9class1)
-                (1,10), # applymodel -> apply_contains
-                (10,9), # apply_contains -> apply_class StructType(layer1rule9class2)
-                (5,11), # match_class ImplementationModule(layer1rule9class5) -> association contents
-                (11,3), # association contents  -> match_class AtomicComponent(layer1rule9class0)
-                (9,12), # apply_class StructType(layer1rule9class2) -> association struct
-                (12,7), # association struct  -> apply_class StructDeclaration(layer1rule9class1)
-                (9,13), # apply_class StructType(layer1rule9class2) -> backward_association
-                (13,5), #  backward_association -> apply_class ImplementationModule(layer1rule9class5)
-                (7,14), # apply_class StructDeclaration(layer1rule9class1) -> backward_association
-                (14,3), #  backward_association -> apply_class AtomicComponent(layer1rule9class0)
+                (8,7), # apply_contains -> apply_class StructType(layer1rule9class2)
+                (7,9), # apply_class StructType(layer1rule9class2) -> association struct
+                (9,5), # association struct  -> apply_class StructDeclaration(layer1rule9class1)
+                (7,10), # apply_class StructType(layer1rule9class2) -> backward_association
+                (10,3), #  backward_association -> apply_class AtomicComponent(layer1rule9class0)
+                (5,11), # apply_class StructDeclaration(layer1rule9class1) -> backward_association
+                (11,3), #  backward_association -> apply_class AtomicComponent(layer1rule9class0)
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])
 
         # Add the attribute equations
-        self["equations"] = [((7,'__ApplyAttribute'),('constant','AtomicComponentStructCData')), ((9,'__ApplyAttribute'),('constant','TypeComponentStructType')), ]
+        self["equations"] = [((5,'__ApplyAttribute'),('constant','AtomicComponentStructCData')), ((7,'__ApplyAttribute'),('constant','TypeComponentStructType')), ]
 
         
