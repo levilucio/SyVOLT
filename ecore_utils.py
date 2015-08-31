@@ -28,8 +28,25 @@ class EcoreUtils(object):
         return [str(item.attributes['name'].value) for item in classNameList]
 
 
-# if __name__ == '__main__':
-#     t1 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/C.ecore")
-#     t2 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/Module.ecore")
-#     t1.getMetamodelClassNames()
-#     t2.getMetamodelClassNames()
+    def getMetamodelContainmentLinks(self):
+        '''
+        Get all the containment links in a metamodel.
+        '''
+        containmentLinkList = self.xmldoc.getElementsByTagName('eStructuralFeatures')
+        containmentReferences = []
+        for element in containmentLinkList:
+            try:
+                if element.attributes.item(4).value == "true":
+                    containmentReferences.append(str(element.attributes['name'].value))
+            except Exception:
+                pass 
+        return containmentReferences
+
+
+if __name__ == '__main__':
+    t1 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/C.ecore")
+#    t2 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/Module.ecore")
+    r1 = t1.getMetamodelContainmentLinks()
+#    r2 = t2.getMetamodelContainmentLinks()
+    print(r1)
+#    print(r2)    
