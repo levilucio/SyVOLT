@@ -174,6 +174,21 @@ class Slicer():
                         added_rule = True
                         break
 
+                    else:
+
+                        #check for supertype matching
+
+                        a, b = dl
+                        for rule_dl in rule_dls:
+                            ra, rb = rule_dl
+
+                            if a in supertypes and ra in supertypes[a] and \
+                                b in supertypes and rb in supertypes[b]:
+                                required_rules.append(rule)
+                                #print("Add rule (supertypes): " + rule.name)
+                                added_rule = True
+                                break
+
                 if added_rule:
                     continue
 
@@ -189,6 +204,16 @@ class Slicer():
                         required_rules.append(rule)
                         added_rule = True
                         break
+                    else:
+
+                        #check for supertype matching
+
+                        if a in supertypes and supertypes[a] in self.apply_elements[rule.name] and \
+                            m in supertypes and supertypes[m] in self.match_elements[rule.name]:
+                            required_rules.append(rule)
+                            #print("Add rule (supertypes): " + rule.name)
+                            added_rule = True
+                            break
 
                 if added_rule:
                     continue
@@ -226,12 +251,14 @@ class Slicer():
 
         self.decompose_graph(contract)
 
+        debug = False
+        if debug:
+            print("Direct links: " + str(self.direct_links))
 
-
-        graph_to_dot(contract.name, contract)
-        for layer in self.transformation:
-            for rule in layer:
-                graph_to_dot(rule.name, rule)
+            graph_to_dot(contract.name, contract)
+            for layer in self.transformation:
+                for rule in layer:
+                    graph_to_dot(rule.name, rule)
 
         required_rules = self.find_required_rules(contract, True)
 
