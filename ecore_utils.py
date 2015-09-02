@@ -43,13 +43,10 @@ class EcoreUtils(object):
         return containmentReferences
     
     
-    def buildContaimentDependenciesForClass(self, targetClass, depth):
+    def buildContaimentDependenciesForClass(self, targetClass):
         '''
         auxiliary, build all containment relations for a class, recursively
         '''        
-        
-        print("------------------> Depth: " + str(depth))
-        depth = depth + 1
         
         metamodelClasses = self.xmldoc.getElementsByTagName('eClassifiers')  
         
@@ -71,17 +68,16 @@ class EcoreUtils(object):
                 print("   -------------------")
                 if trgtClassName == str(targetClass.attributes['name'].value):
                     #return [str(cRel.attributes['name'].value)].extend(self.buildContaimentDependenciesForClass(sourceClass))
-                    containerClasses = self.buildContaimentDependenciesForClass(sourceClass, depth)
                     res = [str(cRel.attributes['name'].value)]
-                    res.extend(containerClasses)
+                    res.extend(self.buildContaimentDependenciesForClass(sourceClass))
                     return res
         
         return []
+        
 
-
-    def getContaimentDependenciesForClass(self):
+    def getContaimentDependenciesForClasses(self):
         '''
-        get all containment relations for a class
+        get all containment relations for the classes in the metamodel
         '''    
         
         allContainmentRels = []
@@ -92,6 +88,71 @@ class EcoreUtils(object):
             allContainmentRels.append((str(mmClass.attributes['name'].value), self.buildContaimentDependenciesForClass(mmClass,0)))
             
         return allContainmentRels
+
+
+    def buildInheritanceDependenciesForClass(self, mmClassNames):
+        '''
+        build a list of all parents of the given class
+        '''
+        inheritanceRel = {}
+        metamodelClasses = self.xmldoc.getElementsByTagName('eClassifiers')
+        
+        mmClassesToTreat = []
+        
+        for mmClass in metamodelClasses:
+            for mmClassName in mmClassNames:
+                if mmClassName == str(mmClass.attributes['name'].value):
+                    mmClassesToTreat.append(mmClass)
+                    break
+        
+        parentNames = []
+        
+        for mmClass in mmClassesToTreat:
+            superTypeNames = []
+            try:
+                superTypeNames = str(mmClass.attributes['eSuperTypes'].value)
+                superTypeNames = superTypeNames.replace(" ", "")
+                superTypeNames = superTypeNames[3:]
+                superTypeNames = superTypeNames.split('#//')
+            except Exception:
+                pass           
+            
+#             parentClass = None
+#             for mmClass2 in metamodelClasses:
+#                 if str(mmClass.attributes['name'].value) == superTypeName:
+#                     parentClass = mmClass2
+                    
+            parentNames.extend(superTypeNames)
+            
+            if parentNames != None:
+                parentNames.extend(self.buildInheritanceDependenciesForClass(parentNames))
+            
+        return list(set(parentNames))
+
+     
+    def getInheritanceRelationForClasses(self):
+        '''
+        build a dictionary where the key is the name of the metamodel class and the
+        value is the list of parents of that class
+        '''
+        inheritanceRel = {}
+        
+        metamodelClasses = self.xmldoc.getElementsByTagName('eClassifiers')
+        for mmClass in metamodelClasses:
+            superTypeNames = []
+            try:
+                superTypeNames = str(mmClass.attributes['eSuperTypes'].value)
+                superTypeNames = superTypeNames.replace(" ", "")
+                superTypeNames = superTypeNames[3:]
+                superTypeNames = superTypeNames.split('#//')
+            except Exception:
+                pass    
+            if superTypeNames != []: 
+                superTypeNames.extend(self.buildInheritanceDependenciesForClass(superTypeNames))
+                inheritanceRel[str(mmClass.attributes['name'].value)] = superTypeNames
+                    
+        
+        return inheritanceRel
                 
 
 if __name__ == '__main__':
@@ -101,4 +162,4 @@ if __name__ == '__main__':
 #    r2 = t2.getMetamodelContainmentLinks()
 #    print(r1)
 #    print(r2)    
-    print(str(t1.getContaimentDependenciesForClass()))
+    print(str(t1.getInheritanceRelationForClasses()))
