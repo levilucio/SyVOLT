@@ -43,6 +43,23 @@ class EcoreUtils(object):
         return containmentReferences
     
     
+    def addSuperTypeContainmentRels(self,containmentRels):
+        '''
+        add to the existing containment relations for a class the containment relations of it's supertypes
+        '''
+        inheritanceRels = self.getInheritanceRelationForClasses()
+        containmentRelsWithSuper = {}
+        
+        for mmClassName in inheritanceRels.keys():
+            contaimentRelsToAdd = []
+            for superType in inheritanceRels[mmClassName]:
+                contaimentRelsToAdd.append(containmentRels[superType])
+            containmentRelsWithSuper[mmClassName] = containmentRels[mmClassName].extend(contaimentRelsToAdd)
+        
+        return containmentRelsWithSuper
+             
+        
+    
     def buildContaimentDependenciesForClass(self, targetClass):
         '''
         auxiliary, build all containment relations for a class, recursively
@@ -50,29 +67,32 @@ class EcoreUtils(object):
         
         metamodelClasses = self.xmldoc.getElementsByTagName('eClassifiers')  
         
+        res = []
+        
         for sourceClass in metamodelClasses:
-            print("   Class: " + str(sourceClass.attributes['name'].value))
             rels = sourceClass.getElementsByTagName('eStructuralFeatures')
             containmentRels = []
             for rel in rels:
                 try:
-                    if rel.attributes.item(4).value == "true":
+                    if str(rel.attributes['containment'].value) == "true":
                         containmentRels.append(rel)
                 except Exception:
                     pass 
+                
             for cRel in containmentRels:
                 trgtClassName = str(cRel.attributes['eType'].value).split('#//', 1)[1]
-                print("   -------------------")
-                print("   Rel target: " + trgtClassName)
-                print("   Class target: " + str(targetClass.attributes['name'].value))
-                print("   -------------------")
+                            
+                print("--------------> " + str(str(cRel.attributes['name'].value)))
+                
                 if trgtClassName == str(targetClass.attributes['name'].value):
+                    
+                    print("Yes!")
+                    
                     #return [str(cRel.attributes['name'].value)].extend(self.buildContaimentDependenciesForClass(sourceClass))
-                    res = [str(cRel.attributes['name'].value)]
+                    res.extend([str(cRel.attributes['name'].value)])
                     res.extend(self.buildContaimentDependenciesForClass(sourceClass))
-                    return res
         
-        return []
+        return res
         
 
     def getContaimentDependenciesForClasses(self):
@@ -80,14 +100,30 @@ class EcoreUtils(object):
         get all containment relations for the classes in the metamodel
         '''    
         
-        allContainmentRels = []
+        allContainmentRels = {}
         metamodelClasses = self.xmldoc.getElementsByTagName('eClassifiers')
         
         for mmClass in metamodelClasses:
-            print("Going to treat: " + str(mmClass.attributes['name'].value))
-            allContainmentRels.append((str(mmClass.attributes['name'].value), self.buildContaimentDependenciesForClass(mmClass,0)))
+            allContainmentRels[str(mmClass.attributes['name'].value)] = self.buildContaimentDependenciesForClass(mmClass)
+
+        # now add to the existing containment relations for a class the containment relations of it's supertypes
+
+        inheritanceRels = self.getInheritanceRelationForClasses()
+        containmentRelsWithSuper = {}
+        
+        for mmClassName in allContainmentRels.keys():
+            containmentRelsToAdd = []
+            if mmClassName in inheritanceRels.keys():
+                for superTypeName in inheritanceRels[mmClassName]:
+                    if allContainmentRels[superTypeName]:
+                        containmentRelsToAdd.extend(allContainmentRels[superTypeName])
             
-        return allContainmentRels
+            res = allContainmentRels[mmClassName]
+            res.extend(containmentRelsToAdd)         
+            containmentRelsWithSuper[mmClassName] = list(set(res))
+        
+        return containmentRelsWithSuper
+
 
 
     def buildInheritanceDependenciesForClass(self, mmClassNames):
@@ -156,10 +192,10 @@ class EcoreUtils(object):
                 
 
 if __name__ == '__main__':
-    t1 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/Module.ecore")
-#    t2 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/Module.ecore")
+#    t1 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/C.ecore")
+    t1 = EcoreUtils("./eclipse_integration/examples/families_to_persons/metamodels/Community.ecore")
 #    r1 = t1.getMetamodelContainmentLinks()
 #    r2 = t2.getMetamodelContainmentLinks()
 #    print(r1)
 #    print(r2)    
-    print(str(t1.getInheritanceRelationForClasses()))
+    print(str(t1.getContaimentDependenciesForClasses()))
