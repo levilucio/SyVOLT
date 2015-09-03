@@ -102,7 +102,7 @@ class Prover():
     
         
                              
-        full_transformation = [[r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,]]#,[r12,r13,r14,r15,r16,r17,r18,r19,r20,r21,r22,r23,r24,r25,r26,r27,],[r28,r29,r30,r31,],[r32,r33,r34,r35,r36,r37,],[r38,r39,r40,r41,],[r42,r43,r44,r45,r46,r47,],[r48,],]
+        full_transformation = [[r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,],[r12,r13,r14,r15,r16,r17,r18,r19,r20,r21,r22,r23,r24,r25,r26,r27,],[r28,r29,r30,r31,],[r32,r33,r34,r35,r36,r37,],[r38,r39,r40,r41,],[r42,r43,r44,r45,r46,r47,],[r48,],]
         
         self.rules, self.transformation = pyramify.get_rules("/home/boakes/Projects/SyVOLT/eclipse_integration/backend/generated/transformation", full_transformation)
         
@@ -184,11 +184,12 @@ class Prover():
         self.atomic_contracts.append(("GlobalVarGetsCorrectFunctionAddressAtInit", c0))
 
 
+        #init the slicer anyways, to check for backward links not being satisfiable
+        slicer = Slicer(self.rules, self.transformation)
+
         if args.slice > 0:
             contract = self.atomic_contracts[args.slice - 1]
             print("Slicing for contract number " + str(args.slice) + " : " + contract[0])
-
-            slicer = Slicer(self.rules, self.transformation)
 
             print("Number rules before: " + str(len(self.rules)))
             self.rules, self.transformation = slicer.slice_transformation(contract)
@@ -198,8 +199,6 @@ class Prover():
         #     print("Layer:")
         #     for rule in layer:
         #         print(rule.name)
-
-        #raise Exception()
 
 		# generate path conditions
         pc_set = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)

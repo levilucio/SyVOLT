@@ -16,8 +16,8 @@ class Slicer():
         self.rules = rules
         self.transformation = transformation
 
-        for r in self.rules.values():
-            self.decompose_graph(r)
+        for k in sorted(self.rules.keys()):
+            self.decompose_graph(self.rules[k])
 
 
         if self.debug:
@@ -83,6 +83,15 @@ class Slicer():
         for dl in direct_links:
 
             neighbours = look_for_attached(dl, graph)
+
+            n0 = neighbours[0]
+            n0_neighbours = look_for_attached(n0, graph)
+            n0_neighbours_mm = [vs[n]["mm__"] for n in n0_neighbours]
+
+            #we don't care about direct links in the apply part
+            if 'apply_contains' in n0_neighbours_mm:
+                continue
+
             n0 = vs[neighbours[0]]["mm__"].replace("MT_pre__","")
             n1 = vs[neighbours[1]]["mm__"].replace("MT_pre__","")
             self.direct_links[graph.name].append((n0, n1))
@@ -102,9 +111,9 @@ class Slicer():
         self.match_elements[graph.name] = match_elements
         self.apply_elements[graph.name] = apply_elements
 
-        #print("Match contains: " + str(match_elements))
-        #print("Apply contains: " + str(apply_elements))
-
+        # print("Rule name: " + graph.name)
+        # print("Match contains: " + str(match_elements))
+        # print("Apply contains: " + str(apply_elements))
 
 
     def find_required_rules(self, graph, is_contract = False):
@@ -114,7 +123,6 @@ class Slicer():
         dls = self.direct_links[graph.name]
         bls = self.backward_links[graph.name]
 
-        found_dls = []
         found_bls = []
 
         #print("Contract DLs: " + str(dls))
@@ -194,15 +202,12 @@ class Slicer():
 
                 #print("Rule DLs: " + str(rule_dls))
 
-                added_rule = False
 
                 for dl in dls:
 
                     if dl in rule_dls:
                         required_rules.append(rule)
                         #print("Add rule: " + rule.name)
-                        added_rule = True
-                        found_dls.append(dl)
                         break
 
                     else:
@@ -217,16 +222,10 @@ class Slicer():
                                 b in supertypes and rb in supertypes[b]:
                                 required_rules.append(rule)
                                 #print("Add rule (supertypes): " + rule.name)
-                                added_rule = True
-                                found_dls.append(dl)
                                 break
 
-                if added_rule:
-                    continue
 
 
-
-                added_rule = False
 
                 for backward_link in bls:
                     a, m = backward_link
@@ -234,8 +233,8 @@ class Slicer():
                     if m in self.match_elements[rule.name] and \
                         a in self.apply_elements[rule.name]:
                         required_rules.append(rule)
-                        added_rule = True
                         found_bls.append(backward_link)
+
                         break
                     else:
 
@@ -245,12 +244,8 @@ class Slicer():
                             m in supertypes and supertypes[m] in self.match_elements[rule.name]:
                             required_rules.append(rule)
                             #print("Add rule (supertypes): " + rule.name)
-                            added_rule = True
                             found_bls.append(backward_link)
                             break
-
-                if added_rule:
-                    continue
 
                 # print("WARNING: HAVENT ADDED RULE YET")
                 # print("Rule: " + rule.name)
@@ -272,12 +267,9 @@ class Slicer():
                 #
                 #         #print("Add rule: " + rule.name + " with mms: " + str(rule_mms))
                 #         break
-        # if len(found_dls) < len(dls):
-        #     print("ERROR: Could not find all direct links for graph: " + graph.name)
-        #     print(dls)
-        #     print(found_dls)
-
-
+        if len(found_bls) < len(bls):
+            print("\nERROR: Could not find all backward links for graph: " + graph.name)
+            print("Missing backward links: " + str(["M: " + m + " -> A: " + a for a,m in bls if (a,m) not in found_bls]))
 
         return required_rules
 
