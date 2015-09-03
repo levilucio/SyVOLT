@@ -6,6 +6,8 @@ class Slicer():
 
     def __init__(self, rules, transformation):
 
+        self.debug = False
+
         self.backward_links = {}
         self.direct_links = {}
         self.match_elements = {}
@@ -16,6 +18,31 @@ class Slicer():
 
         for r in self.rules.values():
             self.decompose_graph(r)
+
+
+        if self.debug:
+
+            print("Supertype hierarchy: ")
+            supertypes = list(self.rules.values())[0]["superclasses_dict"]
+            defaults = ['MetaModelElement_S', 'MetaModelElement_T']
+            for k in sorted(supertypes.keys()):
+                v = [s for s in supertypes[k] if s not in defaults]
+                if v:
+                    print(k + " : " + str(v))
+
+
+
+            r_rules_dict = {}
+            for r in self.rules.values():
+                r_rules = self.find_required_rules(r)
+                r_rules = [r.name for r in r_rules]
+
+                r_rules_dict[r.name] = r_rules
+
+            for r in sorted(r_rules_dict.keys()):
+
+                print("Rule " + r + " depends on: ")
+                print(r_rules_dict[r])
 
 
     def decompose_graph(self, graph):
@@ -87,6 +114,9 @@ class Slicer():
         dls = self.direct_links[graph.name]
         bls = self.backward_links[graph.name]
 
+        found_dls = []
+        found_bls = []
+
         #print("Contract DLs: " + str(dls))
         #print("Contract Match Elements: " + str(self.match_elements[graph.name]))
         #print("Contract Apply Elements: " + str(self.apply_elements[graph.name]))
@@ -148,7 +178,7 @@ class Slicer():
 
         for layer in self.transformation:
 
-            if graph in layer:
+            if graph.name in [r.name for r in layer]:
                 break
 
             for rule in layer:
@@ -172,6 +202,7 @@ class Slicer():
                         required_rules.append(rule)
                         #print("Add rule: " + rule.name)
                         added_rule = True
+                        found_dls.append(dl)
                         break
 
                     else:
@@ -187,6 +218,7 @@ class Slicer():
                                 required_rules.append(rule)
                                 #print("Add rule (supertypes): " + rule.name)
                                 added_rule = True
+                                found_dls.append(dl)
                                 break
 
                 if added_rule:
@@ -203,6 +235,7 @@ class Slicer():
                         a in self.apply_elements[rule.name]:
                         required_rules.append(rule)
                         added_rule = True
+                        found_bls.append(backward_link)
                         break
                     else:
 
@@ -213,6 +246,7 @@ class Slicer():
                             required_rules.append(rule)
                             #print("Add rule (supertypes): " + rule.name)
                             added_rule = True
+                            found_bls.append(backward_link)
                             break
 
                 if added_rule:
@@ -238,6 +272,12 @@ class Slicer():
                 #
                 #         #print("Add rule: " + rule.name + " with mms: " + str(rule_mms))
                 #         break
+        # if len(found_dls) < len(dls):
+        #     print("ERROR: Could not find all direct links for graph: " + graph.name)
+        #     print(dls)
+        #     print(found_dls)
+
+
 
         return required_rules
 
@@ -251,8 +291,7 @@ class Slicer():
 
         self.decompose_graph(contract)
 
-        debug = False
-        if debug:
+        if self.debug:
             print("Direct links: " + str(self.direct_links))
 
             graph_to_dot(contract.name, contract)
@@ -264,7 +303,9 @@ class Slicer():
 
 
         rr_names = [rule.name for rule in required_rules]
-        #print("Required rules: " + str(rr_names))
+
+        if self.debug:
+            print("Required rules for contract: " + str(rr_names))
 
         for rr in required_rules:
 
