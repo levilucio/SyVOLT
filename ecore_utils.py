@@ -16,6 +16,7 @@ class EcoreUtils(object):
         Constructor
         '''
         self.xmldoc = minidom.parse(xmlfileName)
+        self.inheritanceRels = self.getInheritanceRelationForClasses()
     
     
     def getMetamodelClassNames(self):
@@ -92,7 +93,7 @@ class EcoreUtils(object):
         return res
         
 
-    def getContaimentDependenciesForClasses(self):
+    def getContaimentLinksForClasses(self):
         '''
         get all containment relations for the classes in the metamodel
         '''    
@@ -107,13 +108,12 @@ class EcoreUtils(object):
         
         #return allContainmentRels
 
-        inheritanceRels = self.getInheritanceRelationForClasses()
         containmentRelsWithSuper = {}
         
         for mmClassName in allContainmentRels.keys():
             containmentRelsToAdd = []
-            if mmClassName in inheritanceRels.keys():
-                for superTypeName in inheritanceRels[mmClassName]:
+            if mmClassName in self.inheritanceRels.keys():
+                for superTypeName in self.inheritanceRels[mmClassName]:
                     if superTypeName in allContainmentRels.keys():
                         for containmentLink in allContainmentRels[superTypeName]:
                             containmentRelsToAdd.append((containmentLink[0], containmentLink[1], mmClassName))
@@ -189,9 +189,76 @@ class EcoreUtils(object):
                     
         
         return inheritanceRel
+    
+    def inheritsFrom(self, subtype, supertype):
+        '''
+        quick and dirty method to check whether a class inherits from another
+        '''
+        if subtype == supertype: return True
+        
+        if subtype in self.inheritanceRels:
+            if supertype in self.inheritanceRels[subtype]:
+                return True
+            
+        return False
+        
                 
+    def getContainmentLinksForRule(self, rule):
+        '''
+        return all the containment relations built by a rule, in the form of a triplet (sourceClass, link, targetClass)
+        '''
+        metamodelClasses = self.xmldoc.getElementsByTagName('eClassifiers')  
+        
+        containmentRels = {}       
+        
+        containmentRelsInRule = []
+        
+        for mmClass in metamodelClasses:
+            rels = mmClass.getElementsByTagName('eStructuralFeatures')
+            for rel in rels:
+                try:
+                    if str(rel.attributes['containment'].value) == "true":
+                        relName = str(rel.attributes['name'].value)
+                        if relName not in containmentRels.keys():
+                            containmentRels[relName] = [(str(mmClass.attributes['name'].value),\
+                                                         str(rel.attributes['eType'].value).split('#//', 1)[1])]
+                        else:
+                            containmentRels[relName].append((str(mmClass.attributes['name'].value),\
+                                                             str(rel.attributes['eType'].value).split('#//', 1)[1]))
+                                                
+                except Exception:
+                    pass
+                
+        
+        for node in range(len(rule.vs)):
+            if rule.vs[node]["mm__"] == "directLink_T" and rule.vs[node]["attr1"] in containmentRels.keys():
+                # find the types of the source and the target elements of the containment in the rule
+                inputClassNode = rule.neighbors(rule.vs[node],2)
+                outputClassNode = rule.neighbors(rule.vs[node],1)
+                
+                inputClass = rule.vs[inputClassNode]["mm__"][0]
+                outputClass = rule.vs[outputClassNode]["mm__"][0]                
+                
+                containmentSrcTrgt = containmentRels[rule.vs[node]["attr1"]]                
+                
+                for cont in range(len(containmentSrcTrgt)):
+                    if self.inheritsFrom(inputClass, containmentSrcTrgt[cont][0]) and \
+                    self.inheritsFrom(outputClass, containmentSrcTrgt[cont][1]):
+                        
+                        containmentRelsInRule.append((containmentSrcTrgt[cont][0],\
+                                                      rule.vs[node]["attr1"],
+                                                      containmentSrcTrgt[cont][1]))
+                        
+                 
+        return containmentRelsInRule
+            
+    
+        
+
 
 if __name__ == '__main__':
+    from ATLTrans.HMotherRule import HMotherRule
+    rule = HMotherRule()
 #    t1 = EcoreUtils("./UMLRT2Kiltera_MM/metamodels/klt_new.ecore")
     t1 = EcoreUtils("./eclipse_integration/examples/families_to_persons/metamodels/Community.ecore")
 #    t1 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/Module.ecore")
@@ -199,4 +266,5 @@ if __name__ == '__main__':
 #    r2 = t2.getMetamodelContainmentLinks()
 #    print(r1)
 #    print(r2)    
-    print(str(t1.getContaimentDependenciesForClasses()))
+#    print(str(t1.getContaimentLinksForClasses()))
+    print (str(t1.getContainmentLinksForRule(rule)))

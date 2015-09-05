@@ -31,12 +31,12 @@ from util.slicer import Slicer
 
 # imports for properties' atomic contracts
 
-from mbeddr2C_MM.Contracts.HAssignmentInstance_IsolatedLHS import HAssignmentInstance_IsolatedLHS
-from mbeddr2C_MM.Contracts.HAssignmentInstance_ConnectedLHS import HAssignmentInstance_ConnectedLHS
-from mbeddr2C_MM.Contracts.HAssignmentInstance_CompleteLHS import HAssignmentInstance_CompleteLHS
-from mbeddr2C_MM.Contracts.HGlobalVarGetsCorrectFunctionAddressAtInit_IsolatedLHS import HGlobalVarGetsCorrectFunctionAddressAtInit_IsolatedLHS
-from mbeddr2C_MM.Contracts.HGlobalVarGetsCorrectFunctionAddressAtInit_ConnectedLHS import HGlobalVarGetsCorrectFunctionAddressAtInit_ConnectedLHS
-from mbeddr2C_MM.Contracts.HGlobalVarGetsCorrectFunctionAddressAtInit_CompleteLHS import HGlobalVarGetsCorrectFunctionAddressAtInit_CompleteLHS
+from mbeddr2C_MM.props.HAssignmentInstance_IsolatedLHS import HAssignmentInstance_IsolatedLHS
+from mbeddr2C_MM.props.HAssignmentInstance_ConnectedLHS import HAssignmentInstance_ConnectedLHS
+from mbeddr2C_MM.props.HAssignmentInstance_CompleteLHS import HAssignmentInstance_CompleteLHS
+from mbeddr2C_MM.props.HGlobalVarGetsCorrectFunctionAddressAtInit_IsolatedLHS import HGlobalVarGetsCorrectFunctionAddressAtInit_IsolatedLHS
+from mbeddr2C_MM.props.HGlobalVarGetsCorrectFunctionAddressAtInit_ConnectedLHS import HGlobalVarGetsCorrectFunctionAddressAtInit_ConnectedLHS
+from mbeddr2C_MM.props.HGlobalVarGetsCorrectFunctionAddressAtInit_CompleteLHS import HGlobalVarGetsCorrectFunctionAddressAtInit_CompleteLHS
 
 
 class Prover():
@@ -101,21 +101,20 @@ class Prover():
         r48 = 'Hlayer6rule0'
     
         
-                             
-        full_transformation = [[r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,],[r12,r13,r14,r15,r16,r17,r18,r19,r20,r21,r22,r23,r24,r25,r26,r27,],[r28,r29,r30,r31,],[r32,r33,r34,r35,r36,r37,],[r38,r39,r40,r41,],[r42,r43,r44,r45,r46,r47,],[r48,],]
+        full_transformation = [[r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11],[r12,r13,r14,r15,r16,r17,r18,r19,r20,r21,r22,r23,r24,r25,r26,r27],[r28,r29,r30,r31],[r32,r36,r35,r34,r33,r37],[r38,r39,r40,r41,],[r42,r43,r44,r45,r46,r47],[r48]]
         
-        self.rules, self.transformation = pyramify.get_rules("/home/boakes/Projects/SyVOLT/eclipse_integration/backend/generated/transformation", full_transformation)
+        self.rules, self.transformation = pyramify.get_rules("/home/levi/git/SyVOLT_optimized/mbeddr2C_MM/real_transformation", full_transformation)
         
         subclasses_dict, superclasses_dict = self.get_sub_and_super_classes()
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
-            pyramify.ramify_directory("/home/boakes/Projects/SyVOLT/eclipse_integration/backend/generated/transformation", self.transformation)   
+            pyramify.ramify_directory("/home/levi/git/SyVOLT_optimized/mbeddr2C_MM/real_transformation", self.transformation)   
 
                 
         pre_metamodel = ["MT_pre__S_MM", "MoTifRule"]
         post_metamodel = ["MT_post__T_MM", "MoTifRule"]
 
-        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict, "/home/boakes/Projects/SyVOLT")
+        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict, "/home/levi/git/SyVOLT_optimized/")
         
         # go through all the matchers, combinators and tracers to add polymorphism on all classes in an inheritance hierarchy
                                                                   
@@ -143,46 +142,45 @@ class Prover():
             for rule in layer:
                 rule["superclasses_dict"] = superclasses_dict
             
-		# load the contracts, and add polymorphism
+        # load the contracts, and add polymorphism
 
         if (args.draw_svg):
-        	graph_to_dot("property_AssignmentInstance_isolated", HAssignmentInstance_IsolatedLHS())
-        	graph_to_dot("property_AssignmentInstance_connected", HAssignmentInstance_ConnectedLHS())
-        	graph_to_dot("property_AssignmentInstance_complete", HAssignmentInstance_CompleteLHS())
-        	graph_to_dot("property_GlobalVarGetsCorrectFunctionAddressAtInit_isolated", HGlobalVarGetsCorrectFunctionAddressAtInit_IsolatedLHS())
-        	graph_to_dot("property_GlobalVarGetsCorrectFunctionAddressAtInit_connected", HGlobalVarGetsCorrectFunctionAddressAtInit_ConnectedLHS())
-        	graph_to_dot("property_GlobalVarGetsCorrectFunctionAddressAtInit_complete", HGlobalVarGetsCorrectFunctionAddressAtInit_CompleteLHS())
+            graph_to_dot("property_AssignmentInstance_isolated", HAssignmentInstance_IsolatedLHS())
+            graph_to_dot("property_AssignmentInstance_connected", HAssignmentInstance_ConnectedLHS())
+            graph_to_dot("property_AssignmentInstance_complete", HAssignmentInstance_CompleteLHS())
+            graph_to_dot("property_GlobalVarGetsCorrectFunctionAddressAtInit_isolated", HGlobalVarGetsCorrectFunctionAddressAtInit_IsolatedLHS())
+            graph_to_dot("property_GlobalVarGetsCorrectFunctionAddressAtInit_connected", HGlobalVarGetsCorrectFunctionAddressAtInit_ConnectedLHS())
+            graph_to_dot("property_GlobalVarGetsCorrectFunctionAddressAtInit_complete", HGlobalVarGetsCorrectFunctionAddressAtInit_CompleteLHS())
 
 
         self.atomic_contracts = []
-
-
+ 
+ 
         isolated = HAssignmentInstance_IsolatedLHS()
         connected = HAssignmentInstance_ConnectedLHS()
         complete = HAssignmentInstance_CompleteLHS()
-
+ 
         isolated["superclasses_dict"] = superclasses_dict
         connected["superclasses_dict"] = superclasses_dict
         complete["superclasses_dict"] = superclasses_dict
-
+ 
         c0 = AtomicStateProperty(isolated, connected, complete)
-
+ 
         self.atomic_contracts.append(("AssignmentInstance", c0))
-
-
-
+ 
+ 
+ 
         isolated = HGlobalVarGetsCorrectFunctionAddressAtInit_IsolatedLHS()
         connected = HGlobalVarGetsCorrectFunctionAddressAtInit_ConnectedLHS()
         complete = HGlobalVarGetsCorrectFunctionAddressAtInit_CompleteLHS()
-
+ 
         isolated["superclasses_dict"] = superclasses_dict
         connected["superclasses_dict"] = superclasses_dict
         complete["superclasses_dict"] = superclasses_dict
-
+ 
         c0 = AtomicStateProperty(isolated, connected, complete)
-
+ 
         self.atomic_contracts.append(("GlobalVarGetsCorrectFunctionAddressAtInit", c0))
-
 
         #init the slicer anyways, to check for backward links not being satisfiable
         slicer = Slicer(self.rules, self.transformation)
@@ -195,16 +193,18 @@ class Prover():
             self.rules, self.transformation = slicer.slice_transformation(contract)
             print("Number rules after: " + str(len(self.rules)))
 
-        # for layer in self.transformation:
-        #     print("Layer:")
-        #     for rule in layer:
-        #         print(rule.name)
+        for layer in self.transformation:
+            print("Layer:")
+            for rule in layer:
+                print(rule.name)
 
-		# generate path conditions
+        # generate path conditions
+        #raise Exception()
+
         pc_set = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
 
         ts0 = time.time()
-        pc_set.build_path_conditions()
+#        pc_set.build_path_conditions()
         ts1 = time.time()
 
         print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
@@ -212,29 +212,29 @@ class Prover():
 
         # print path conditions to screen
 
-        if pc_set.num_path_conditions < 300:
-            pc_set.print_path_conditions_screen()
-
-        # now actually prove these contracts
-
-
-        ts0 = time.time()
-
-        verifier = StateProperty()
-
-        for name, a_c in self.atomic_contracts:
-            result = verifier.verifyCompositeStateProperty(pc_set, a_c)
-            if len(result) == 0:
-            	print("\n")
-            	print("Contract " + name + " holds!")
-            else:
-            	print("\n")
-            	print("Contract " + name + " does not hold!")
-            	print(result)
-        
-        ts1 = time.time()
-        
-        print("\n\nTime to verify properties: " + str(ts1 - ts0) + " seconds.")
+#         if pc_set.num_path_conditions < 300:
+#             pc_set.print_path_conditions_screen()
+# 
+#         # now actually prove these contracts
+# 
+# 
+#         ts0 = time.time()
+# 
+#         verifier = StateProperty()
+# 
+#         for name, a_c in self.atomic_contracts:
+#             result = verifier.verifyCompositeStateProperty(pc_set, a_c)
+#             if len(result) == 0:
+#             	print("\n")
+#             	print("Contract " + name + " holds!")
+#             else:
+#             	print("\n")
+#             	print("Contract " + name + " does not hold!")
+#             	print(result)
+#         
+#         ts1 = time.time()
+#         
+#         print("\n\nTime to verify properties: " + str(ts1 - ts0) + " seconds.")
 
         
     def get_sub_and_super_classes(self):
