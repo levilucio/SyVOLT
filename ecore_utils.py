@@ -43,20 +43,20 @@ class EcoreUtils(object):
         return containmentReferences
     
     
-    def addSuperTypeContainmentRels(self,containmentRels):
-        '''
-        add to the existing containment relations for a class the containment relations of it's supertypes
-        '''
-        inheritanceRels = self.getInheritanceRelationForClasses()
-        containmentRelsWithSuper = {}
-        
-        for mmClassName in inheritanceRels.keys():
-            contaimentRelsToAdd = []
-            for superType in inheritanceRels[mmClassName]:
-                contaimentRelsToAdd.append(containmentRels[superType])
-            containmentRelsWithSuper[mmClassName] = containmentRels[mmClassName].extend(contaimentRelsToAdd)
-        
-        return containmentRelsWithSuper
+#     def addSuperTypeContainmentRels(self,containmentRels):
+#         '''
+#         add to the existing containment relations for a class the containment relations of it's supertypes
+#         '''
+#         inheritanceRels = self.getInheritanceRelationForClasses()
+#         containmentRelsWithSuper = {}
+#         
+#         for mmClassName in inheritanceRels.keys():
+#             contaimentRelsToAdd = []
+#             for superType in inheritanceRels[mmClassName]:
+#                 contaimentRelsToAdd.append(containmentRels[superType])
+#             containmentRelsWithSuper[mmClassName] = containmentRels[mmClassName].extend(contaimentRelsToAdd)
+#         
+#         return containmentRelsWithSuper
              
         
     
@@ -81,15 +81,12 @@ class EcoreUtils(object):
                 
             for cRel in containmentRels:
                 trgtClassName = str(cRel.attributes['eType'].value).split('#//', 1)[1]
-                            
-                print("--------------> " + str(str(cRel.attributes['name'].value)))
                 
+                srcClassName = str(sourceClass.attributes['name'].value)
                 if trgtClassName == str(targetClass.attributes['name'].value):
                     
-                    print("Yes!")
-                    
                     #return [str(cRel.attributes['name'].value)].extend(self.buildContaimentDependenciesForClass(sourceClass))
-                    res.extend([str(cRel.attributes['name'].value)])
+                    res.extend([(srcClassName, str(cRel.attributes['name'].value), trgtClassName)])
                     res.extend(self.buildContaimentDependenciesForClass(sourceClass))
         
         return res
@@ -107,6 +104,8 @@ class EcoreUtils(object):
             allContainmentRels[str(mmClass.attributes['name'].value)] = self.buildContaimentDependenciesForClass(mmClass)
 
         # now add to the existing containment relations for a class the containment relations of it's supertypes
+        
+        #return allContainmentRels
 
         inheritanceRels = self.getInheritanceRelationForClasses()
         containmentRelsWithSuper = {}
@@ -115,8 +114,9 @@ class EcoreUtils(object):
             containmentRelsToAdd = []
             if mmClassName in inheritanceRels.keys():
                 for superTypeName in inheritanceRels[mmClassName]:
-                    if allContainmentRels[superTypeName]:
-                        containmentRelsToAdd.extend(allContainmentRels[superTypeName])
+                    if superTypeName in allContainmentRels.keys():
+                        for containmentLink in allContainmentRels[superTypeName]:
+                            containmentRelsToAdd.append((containmentLink[0], containmentLink[1], mmClassName))
             
             res = allContainmentRels[mmClassName]
             res.extend(containmentRelsToAdd)         
@@ -192,8 +192,9 @@ class EcoreUtils(object):
                 
 
 if __name__ == '__main__':
-#    t1 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/C.ecore")
+#    t1 = EcoreUtils("./UMLRT2Kiltera_MM/metamodels/klt_new.ecore")
     t1 = EcoreUtils("./eclipse_integration/examples/families_to_persons/metamodels/Community.ecore")
+#    t1 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/Module.ecore")
 #    r1 = t1.getMetamodelContainmentLinks()
 #    r2 = t2.getMetamodelContainmentLinks()
 #    print(r1)
