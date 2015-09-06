@@ -202,6 +202,18 @@ class EcoreUtils(object):
             
         return False
         
+        
+    def getClassesBuiltByPathCondition(self, rule):
+        
+        classesInOuputMM = self.getMetamodelClassNames()  
+        classesBuiltByPC = []
+        
+        for node in range(len(rule.vs)):
+            if rule.vs[node]["mm__"] in classesInOuputMM:
+                classesBuiltByPC.append(rule.vs[node]["mm__"])
+                
+        return classesBuiltByPC
+        
                 
     def getContainmentLinksForRule(self, rule):
         '''
