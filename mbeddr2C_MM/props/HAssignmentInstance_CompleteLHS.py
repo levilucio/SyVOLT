@@ -1020,7 +1020,7 @@ return attr_value == "struct"
                 ])
         
                 # Add the attribute equations
-                self["equations"] = [((11,'name'),('concat',(('constant','text'),('constant','__instance')))), ((14,'name'),('concat',(('constant','text'),('constant','__ops')))), ((17,'name'),('concat',(('constant','text'),('constant','__cdata')))), ((18,'name'),('concat',(('constant','text'),('constant','__ops')))), ]
+                self["equations"] = [((11,'name'),('concat',(('wildcard'),('constant','__instance')))), ((14,'name'),('concat',(('wildcard'),('constant','__ops')))), ((17,'name'),('concat',(('wildcard'),('constant','__cdata')))), ((18,'name'),('concat',(('wildcard'),('constant','__ops')))), ]
         
         def eval_attr11(self, attr_value, this):
 

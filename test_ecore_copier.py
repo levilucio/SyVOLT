@@ -18,7 +18,7 @@ from PyRamify import PyRamify
 from core.himesis_utils import graph_to_dot
 
 
-from ecore_utils import EcoreUtils
+from util.ecore_utils import EcoreUtils
 from core.himesis_plus import buildPreListFromClassNames
 
 from util.test_script_utils import select_rules, slice_transformation

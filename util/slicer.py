@@ -285,11 +285,12 @@ class Slicer():
 
         if self.debug:
             print("Direct links: " + str(self.direct_links))
-
+            
             graph_to_dot(contract.name, contract)
             for layer in self.transformation:
                 for rule in layer:
                     graph_to_dot(rule.name, rule)
+
 
         required_rules = self.find_required_rules(contract, True)
 
