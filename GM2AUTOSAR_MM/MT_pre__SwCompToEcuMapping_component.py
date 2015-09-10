@@ -3,7 +3,7 @@ __MT_pre__SwCompToEcuMapping_component.py_______________________________________
 
 Automatically generated AToM3 syntactic object (DO NOT MODIFY DIRECTLY)
 Author: levi
-Modified: Sat Aug 24 20:17:20 2013
+Modified: Sun Aug  9 23:45:38 2015
 ______________________________________________________________________________________________
 """
 from ASGNode import *
@@ -27,24 +27,20 @@ class MT_pre__SwCompToEcuMapping_component(ASGNode, ATOM3Type):
       if(hasattr(self, '_setHierarchicalNode')):
         self._setHierarchicalNode(False)
       self.parent = parent
-      self.MT_pre__cardinality=ATOM3Text('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n', 80,15 )
-      self.MT_pre__classtype=ATOM3Text('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n', 80,15 )
-      self.MT_pre__name=ATOM3Text('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n', 80,15 )
+      self.MT_pre__attr1=ATOM3Text('\n#===============================================================================\n# This code is executed when evaluating if a node shall be matched by this rule.\n# You can access the value of the current node\'s attribute value by: attr_value.\n# You can access any attribute x of this node by: this[\'x\'].\n# If the constraint relies on attribute values from other nodes,\n# use the LHS/NAC constraint instead.\n# The given constraint must evaluate to a boolean expression.\n#===============================================================================\n\nreturn True\n', 80,15 )
       self.MT_label__=ATOM3String('', 20)
       self.MT_pivotOut__=ATOM3String('', 20)
       self.MT_pivotIn__=ATOM3String('', 20)
       self.MT_subtypeMatching__=ATOM3Boolean()
       self.MT_subtypeMatching__.setValue(('True', 0))
       self.MT_subtypeMatching__.config = 0
-      self.generatedAttributes = {'MT_pre__cardinality': ('ATOM3Text', ),
-                                  'MT_pre__classtype': ('ATOM3Text', ),
-                                  'MT_pre__name': ('ATOM3Text', ),
+      self.generatedAttributes = {'MT_pre__attr1': ('ATOM3Text', ),
                                   'MT_label__': ('ATOM3String', ),
                                   'MT_pivotOut__': ('ATOM3String', ),
                                   'MT_pivotIn__': ('ATOM3String', ),
                                   'MT_subtypeMatching__': ('ATOM3Boolean', )      }
-      self.realOrder = ['MT_pre__cardinality','MT_pre__classtype','MT_pre__name','MT_label__','MT_pivotOut__','MT_pivotIn__','MT_subtypeMatching__']
-      self.directEditing = [0,0,0,1,1,1,1]
+      self.realOrder = ['MT_pre__attr1','MT_label__','MT_pivotOut__','MT_pivotIn__','MT_subtypeMatching__']
+      self.directEditing = [0,1,1,1,1]
    def clone(self):
       cloneObject = MT_pre__SwCompToEcuMapping_component( self.parent )
       for atr in self.realOrder:

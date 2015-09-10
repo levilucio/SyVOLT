@@ -1,254 +1,479 @@
-
-
 from core.himesis import Himesis
-import cPickle as pickle
-from uuid import UUID
+import uuid
 
 class HTransition2QInstSIBLING(Himesis):
     def __init__(self):
         """
-        Creates the himesis graph representing the AToM3 model HTransition2QInstSIBLING.
+        Creates the himesis graph representing the DSLTrans rule Transition2QInstSIBLING.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(HTransition2QInstSIBLING, self).__init__(name='HTransition2QInstSIBLING', num_nodes=76, edges=[])
+        super(HTransition2QInstSIBLING, self).__init__(name='HTransition2QInstSIBLING', num_nodes=0, edges=[])
         
-        # Add the edges
-        self.add_edges([(6, 12), (12, 7), (6, 13), (13, 0), (0, 14), (14, 4), (5, 15), (15, 23), (5, 16), (16, 24), (5, 17), (17, 25), (5, 18), (18, 26), (49, 37), (37, 10), (50, 38), (38, 62), (51, 39), (39, 63), (52, 40), (40, 11), (53, 41), (41, 66), (54, 42), (42, 67), (5, 43), (43, 70), (23, 44), (44, 71), (24, 45), (45, 72), (25, 46), (46, 73), (26, 47), (47, 74), (5, 48), (48, 75), (22, 0), (0, 8), (2, 1), (1, 32), (1, 33), (1, 34), (1, 35), (1, 36), (10, 27), (27, 61), (10, 28), (28, 69), (11, 29), (29, 64), (11, 30), (30, 68), (11, 31), (31, 65), (3, 19), (19, 6), (3, 20), (20, 7), (3, 21), (21, 4), (3, 22), (8, 68), (4, 9), (9, 69), (3, 2), (49, 55), (50, 56), (51, 57), (52, 58), (53, 59), (54, 60), (32, 5), (33, 26), (34, 25), (35, 24), (36, 23), (55, 70), (56, 71), (57, 72), (58, 73), (59, 74), (60, 75)])
+        
         # Set the graph attributes
-        self["mm__"] = pickle.loads("""(lp1
-S'UMLRT2Kiltera_MM'
-p2
-a.""")
-        self["name"] = """Transition2QInstSIBLING"""
-        self["GUID__"] = UUID('683e6bb9-3bf7-499d-a529-b5766846cdc5')
+        self["mm__"] = ['HimesisMM']
         
-        # Set the node attributes
-        self.vs[0]["name"] = """vertex1"""
-        self.vs[0]["classtype"] = """Vertex"""
-        self.vs[0]["mm__"] = """Vertex"""
-        self.vs[0]["cardinality"] = """1"""
-        self.vs[0]["GUID__"] = UUID('bd66d3bb-3394-4305-a566-4b3fc934f28b')
+        self["name"] = """Transition2QInstSIBLING"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Transition2QInstSIBLING')
+        
+        # match model. We only support one match model
+        self.add_node()
+        self.vs[0]["mm__"] = """MatchModel"""
+        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Transition2QInstSIBLINGmatchmodel0')
+        
+        # apply model node
+        self.add_node()
         self.vs[1]["mm__"] = """ApplyModel"""
-        self.vs[1]["GUID__"] = UUID('aaab4956-9df4-4970-a0f2-4333c90a20d7')
+        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Transition2QInstSIBLINGapplymodel1')
+        
+        # paired with relation between match and apply models
+        self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["GUID__"] = UUID('ca088daa-04ef-4ad1-b7a7-ffa651959836')
-        self.vs[3]["mm__"] = """MatchModel"""
-        self.vs[3]["GUID__"] = UUID('7a80c272-1117-4288-aced-d1ef17bbb123')
-        self.vs[4]["name"] = """stateMachine1"""
-        self.vs[4]["classtype"] = """StateMachine"""
-        self.vs[4]["mm__"] = """StateMachine"""
-        self.vs[4]["cardinality"] = """1"""
-        self.vs[4]["GUID__"] = UUID('de02e21e-1bc9-434b-904d-bc78337f5fe3')
-        self.vs[5]["name"] = """inst1"""
-        self.vs[5]["classtype"] = """Inst"""
-        self.vs[5]["mm__"] = """Inst"""
+        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Transition2QInstSIBLINGpairedwith2')
+        self.vs[2]["rulename"] = """Transition2QInstSIBLING"""
+        
+        # match class Transition() node
+        self.add_node()
+        self.vs[3]["name"] = """"""
+        self.vs[3]["classtype"] = """Transition"""
+        self.vs[3]["mm__"] = """Transition"""
+        self.vs[3]["cardinality"] = """+"""
+        #self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match_contains node for class Transition()
+        self.add_node()
+        self.vs[4]["mm__"] = """match_contains"""
+        #self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains4')
+        # match class Vertex() node
+        self.add_node()
+        self.vs[5]["name"] = """"""
+        self.vs[5]["classtype"] = """Vertex"""
+        self.vs[5]["mm__"] = """Vertex"""
         self.vs[5]["cardinality"] = """1"""
-        self.vs[5]["GUID__"] = UUID('37de68c9-86fb-44bc-9070-2dd8984f24b5')
-        self.vs[6]["name"] = """transition1"""
-        self.vs[6]["classtype"] = """Transition"""
-        self.vs[6]["mm__"] = """Transition"""
-        self.vs[6]["cardinality"] = """+"""
-        self.vs[6]["GUID__"] = UUID('d1b91d18-5232-40dc-a9b8-cd9ec31338bf')
-        self.vs[7]["name"] = """sibling0_1"""
+        #self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match_contains node for class Vertex()
+        self.add_node()
+        self.vs[6]["mm__"] = """match_contains"""
+        #self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains6')
+        # match class SIBLING0() node
+        self.add_node()
+        self.vs[7]["name"] = """"""
         self.vs[7]["classtype"] = """SIBLING0"""
         self.vs[7]["mm__"] = """SIBLING0"""
         self.vs[7]["cardinality"] = """1"""
-        self.vs[7]["GUID__"] = UUID('2c471cbc-a7dd-42e5-8770-e4e761591fae')
-        self.vs[8]["mm__"] = """hasAttribute_S"""
-        self.vs[8]["GUID__"] = UUID('d606df10-1bae-4f99-9e9b-63e326148fbe')
-        self.vs[9]["mm__"] = """hasAttribute_S"""
-        self.vs[9]["GUID__"] = UUID('295d85f5-0ee5-44b1-8727-358feab2e8dd')
-        self.vs[10]["name"] = """concat1"""
-        self.vs[10]["mm__"] = """Concat"""
-        self.vs[10]["Type"] = """'String'"""
-        self.vs[10]["GUID__"] = UUID('49fa67c4-a4f2-4483-8746-3868fdb1bab0')
-        self.vs[11]["name"] = """concat2"""
-        self.vs[11]["mm__"] = """Concat"""
-        self.vs[11]["Type"] = """'String'"""
-        self.vs[11]["GUID__"] = UUID('9621328b-49c4-463e-9148-cd60937fda3e')
-        self.vs[12]["associationType"] = """type"""
-        self.vs[12]["mm__"] = """directLink_S"""
-        self.vs[12]["GUID__"] = UUID('930fefa6-f07f-4569-a62b-6d544c66f6e7')
-        self.vs[13]["associationType"] = """dest"""
-        self.vs[13]["mm__"] = """directLink_S"""
-        self.vs[13]["GUID__"] = UUID('b5fe03a0-3714-4640-9ed4-31e0aa19bdb0')
-        self.vs[14]["associationType"] = """owningStateMachine"""
-        self.vs[14]["mm__"] = """directLink_S"""
-        self.vs[14]["GUID__"] = UUID('b30b0dd6-a37b-4bcb-928c-e2288722fd05')
-        self.vs[15]["associationType"] = """channelNames"""
-        self.vs[15]["mm__"] = """directLink_T"""
-        self.vs[15]["GUID__"] = UUID('24fd0766-4a11-435c-9a0a-b30865bea066')
-        self.vs[16]["associationType"] = """channelNames"""
-        self.vs[16]["mm__"] = """directLink_T"""
-        self.vs[16]["GUID__"] = UUID('a40e0df7-b4a1-4731-874c-5a2b42160079')
-        self.vs[17]["associationType"] = """channelNames"""
-        self.vs[17]["mm__"] = """directLink_T"""
-        self.vs[17]["GUID__"] = UUID('832eb8c7-a961-48ef-a100-483462174819')
-        self.vs[18]["associationType"] = """channelNames"""
-        self.vs[18]["mm__"] = """directLink_T"""
-        self.vs[18]["GUID__"] = UUID('9ab57440-1eff-4afe-9602-4505fe5981b5')
-        self.vs[19]["mm__"] = """match_contains"""
-        self.vs[19]["GUID__"] = UUID('e728fc27-9e2c-4b41-8671-dc749c9e0060')
-        self.vs[20]["mm__"] = """match_contains"""
-        self.vs[20]["GUID__"] = UUID('524ecee6-3dac-47be-be29-5ce8c4c8199c')
-        self.vs[21]["mm__"] = """match_contains"""
-        self.vs[21]["GUID__"] = UUID('da625417-9542-4944-9383-ee54b5349ecf')
-        self.vs[22]["mm__"] = """match_contains"""
-        self.vs[22]["GUID__"] = UUID('f527c21b-5701-4fc0-9a89-309c98769246')
-        self.vs[23]["name"] = """name1"""
-        self.vs[23]["classtype"] = """Name"""
-        self.vs[23]["mm__"] = """Name"""
-        self.vs[23]["cardinality"] = """1"""
-        self.vs[23]["GUID__"] = UUID('a2b50007-adb5-40e5-b4f3-8a3840c2ffc6')
-        self.vs[24]["name"] = """name2"""
-        self.vs[24]["classtype"] = """Name"""
-        self.vs[24]["mm__"] = """Name"""
-        self.vs[24]["cardinality"] = """1"""
-        self.vs[24]["GUID__"] = UUID('bdd2885c-e192-4a9c-b186-8330ab76e6e7')
-        self.vs[25]["name"] = """name3"""
-        self.vs[25]["classtype"] = """Name"""
-        self.vs[25]["mm__"] = """Name"""
-        self.vs[25]["cardinality"] = """1"""
-        self.vs[25]["GUID__"] = UUID('c8ec0652-e6d7-4ec7-b1cf-9708c464873a')
-        self.vs[26]["name"] = """name4"""
-        self.vs[26]["classtype"] = """Name"""
-        self.vs[26]["mm__"] = """Name"""
-        self.vs[26]["cardinality"] = """1"""
-        self.vs[26]["GUID__"] = UUID('70c78787-745d-442b-8d25-4d69b1553d0b')
-        self.vs[27]["mm__"] = """hasArgs"""
-        self.vs[27]["GUID__"] = UUID('20f75d29-b8e4-45c7-99be-9e516a5d5c9d')
-        self.vs[28]["mm__"] = """hasArgs"""
-        self.vs[28]["GUID__"] = UUID('44c641da-df95-4752-a505-3ea63b45f14a')
-        self.vs[29]["mm__"] = """hasArgs"""
-        self.vs[29]["GUID__"] = UUID('3ec7da40-3b0d-49a6-909c-382af729e71d')
-        self.vs[30]["mm__"] = """hasArgs"""
-        self.vs[30]["GUID__"] = UUID('7564af8d-c514-4786-bc0e-aea5bd5fb227')
-        self.vs[31]["mm__"] = """hasArgs"""
-        self.vs[31]["GUID__"] = UUID('33d05993-c341-4e26-88bf-408ac2a65abf')
-        self.vs[32]["mm__"] = """apply_contains"""
-        self.vs[32]["GUID__"] = UUID('df8c6fe5-9627-4116-ad74-38873d4f9872')
-        self.vs[33]["mm__"] = """apply_contains"""
-        self.vs[33]["GUID__"] = UUID('91382946-4e38-474f-b6a5-b6de112da57c')
-        self.vs[34]["mm__"] = """apply_contains"""
-        self.vs[34]["GUID__"] = UUID('119eaf81-5676-4122-a11e-a60098954756')
-        self.vs[35]["mm__"] = """apply_contains"""
-        self.vs[35]["GUID__"] = UUID('c8a95155-477e-4d66-ad4b-5d9dba040175')
-        self.vs[36]["mm__"] = """apply_contains"""
-        self.vs[36]["GUID__"] = UUID('73a1f83c-5bee-4781-b749-e7dae0021b86')
-        self.vs[37]["mm__"] = """rightExpr"""
-        self.vs[37]["GUID__"] = UUID('04eefe3c-4708-42aa-ac60-3a2b5b6d93df')
-        self.vs[38]["mm__"] = """rightExpr"""
-        self.vs[38]["GUID__"] = UUID('0da8a4e6-855d-4a88-b5b8-301b22843790')
-        self.vs[39]["mm__"] = """rightExpr"""
-        self.vs[39]["GUID__"] = UUID('e118dca9-01c8-4874-b873-8bd3a6b309fe')
-        self.vs[40]["mm__"] = """rightExpr"""
-        self.vs[40]["GUID__"] = UUID('ed6155d3-7b32-4719-95b2-3b6c0d3aa7b7')
-        self.vs[41]["mm__"] = """rightExpr"""
-        self.vs[41]["GUID__"] = UUID('a720a24e-e13c-404e-b138-6337091b48a4')
-        self.vs[42]["mm__"] = """rightExpr"""
-        self.vs[42]["GUID__"] = UUID('21e84de6-e805-4014-93ba-56c723cd54c7')
-        self.vs[43]["mm__"] = """hasAttribute_T"""
-        self.vs[43]["GUID__"] = UUID('81f18938-9f0f-4943-b47b-8129499d1bec')
-        self.vs[44]["mm__"] = """hasAttribute_T"""
-        self.vs[44]["GUID__"] = UUID('a7a68b69-db37-4ecf-a1c0-f8ca430497ff')
-        self.vs[45]["mm__"] = """hasAttribute_T"""
-        self.vs[45]["GUID__"] = UUID('a495d38f-d03d-4598-9edc-6945421291a2')
-        self.vs[46]["mm__"] = """hasAttribute_T"""
-        self.vs[46]["GUID__"] = UUID('5c81f814-a73b-4167-90c8-6358af35496c')
+        #self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match_contains node for class SIBLING0()
+        self.add_node()
+        self.vs[8]["mm__"] = """match_contains"""
+        #self.vs[8]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains8')
+        # match class StateMachine() node
+        self.add_node()
+        self.vs[9]["name"] = """"""
+        self.vs[9]["classtype"] = """StateMachine"""
+        self.vs[9]["mm__"] = """StateMachine"""
+        self.vs[9]["cardinality"] = """1"""
+        #self.vs[9]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match_contains node for class StateMachine()
+        self.add_node()
+        self.vs[10]["mm__"] = """match_contains"""
+        #self.vs[10]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains10')
+        
+        
+        # apply class Inst() node
+        self.add_node()
+        self.vs[11]["name"] = """"""
+        self.vs[11]["classtype"] = """Inst"""
+        self.vs[11]["mm__"] = """Inst"""
+        self.vs[11]["cardinality"] = """1"""
+        #self.vs[11]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Inst()
+        self.add_node()
+        self.vs[12]["mm__"] = """apply_contains"""
+        #self.vs[12]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains12')
+        # apply class Name() node
+        self.add_node()
+        self.vs[13]["name"] = """"""
+        self.vs[13]["classtype"] = """Name"""
+        self.vs[13]["mm__"] = """Name"""
+        self.vs[13]["cardinality"] = """1"""
+        #self.vs[13]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Name()
+        self.add_node()
+        self.vs[14]["mm__"] = """apply_contains"""
+        #self.vs[14]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains14')
+        # apply class Name() node
+        self.add_node()
+        self.vs[15]["name"] = """"""
+        self.vs[15]["classtype"] = """Name"""
+        self.vs[15]["mm__"] = """Name"""
+        self.vs[15]["cardinality"] = """1"""
+        #self.vs[15]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Name()
+        self.add_node()
+        self.vs[16]["mm__"] = """apply_contains"""
+        #self.vs[16]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains16')
+        # apply class Name() node
+        self.add_node()
+        self.vs[17]["name"] = """"""
+        self.vs[17]["classtype"] = """Name"""
+        self.vs[17]["mm__"] = """Name"""
+        self.vs[17]["cardinality"] = """1"""
+        #self.vs[17]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Name()
+        self.add_node()
+        self.vs[18]["mm__"] = """apply_contains"""
+        #self.vs[18]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains18')
+        # apply class Name() node
+        self.add_node()
+        self.vs[19]["name"] = """"""
+        self.vs[19]["classtype"] = """Name"""
+        self.vs[19]["mm__"] = """Name"""
+        self.vs[19]["cardinality"] = """1"""
+        #self.vs[19]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Name()
+        self.add_node()
+        self.vs[20]["mm__"] = """apply_contains"""
+        #self.vs[20]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains20')
+        
+        
+        # match association Transition--dest-->Vertex node
+        self.add_node()
+        self.vs[21]["associationType"] = """dest"""
+        self.vs[21]["mm__"] = """directLink_S"""
+        #self.vs[21]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc21')
+        # match association Transition--type-->SIBLING0 node
+        self.add_node()
+        self.vs[22]["associationType"] = """type"""
+        self.vs[22]["mm__"] = """directLink_S"""
+        #self.vs[22]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc22')
+        # match association Vertex--owningStateMachine-->StateMachine node
+        self.add_node()
+        self.vs[23]["associationType"] = """owningStateMachine"""
+        self.vs[23]["mm__"] = """directLink_S"""
+        #self.vs[23]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc23')
+        
+        # apply association Inst--channelNames-->Name node
+        self.add_node()
+        self.vs[24]["associationType"] = """channelNames"""
+        self.vs[24]["mm__"] = """directLink_T"""
+        #self.vs[24]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc24')
+        # apply association Inst--channelNames-->Name node
+        self.add_node()
+        self.vs[25]["associationType"] = """channelNames"""
+        self.vs[25]["mm__"] = """directLink_T"""
+        #self.vs[25]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc25')
+        # apply association Inst--channelNames-->Name node
+        self.add_node()
+        self.vs[26]["associationType"] = """channelNames"""
+        self.vs[26]["mm__"] = """directLink_T"""
+        #self.vs[26]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc26')
+        # apply association Inst--channelNames-->Name node
+        self.add_node()
+        self.vs[27]["associationType"] = """channelNames"""
+        self.vs[27]["mm__"] = """directLink_T"""
+        #self.vs[27]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc27')
+        
+        
+        
+        # has match attribute name() node
+        self.add_node()
+        self.vs[28]["mm__"] = """hasAttribute_S"""
+        #self.vs[28]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # match attribute name() node
+        self.add_node()
+        self.vs[29]["name"] = """name"""
+        self.vs[29]["mm__"] = """Attribute"""
+        self.vs[29]["Type"] = """'String'"""
+        #self.vs[29]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # has match attribute name() node
+        self.add_node()
+        self.vs[30]["mm__"] = """hasAttribute_S"""
+        #self.vs[30]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # match attribute name() node
+        self.add_node()
+        self.vs[31]["name"] = """name"""
+        self.vs[31]["mm__"] = """Attribute"""
+        self.vs[31]["Type"] = """'String'"""
+        #self.vs[31]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        
+        
+        # has apply attribute name() node
+        self.add_node()
+        self.vs[32]["mm__"] = """hasAttribute_T"""
+        #self.vs[32]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute name() node
+        self.add_node()
+        self.vs[33]["name"] = """name"""
+        self.vs[33]["mm__"] = """Attribute"""
+        self.vs[33]["Type"] = """'String'"""
+        #self.vs[33]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation name() node
+        self.add_node()
+        self.vs[34]["name"] = """eq_"""
+        self.vs[34]["mm__"] = """Equation"""
+        #self.vs[34]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr name() node
+        self.add_node()
+        self.vs[35]["mm__"] = """leftExpr"""
+        #self.vs[35]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr name() node
+        self.add_node()
+        self.vs[36]["mm__"] = """rightExpr"""
+        #self.vs[36]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # attribute concat name() node
+        self.add_node()
+        self.vs[37]["name"] = """Concat37"""
+        self.vs[37]["mm__"] = """Concat"""
+        self.vs[37]["Type"] = """'String'"""
+        #self.vs[37]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Concat37')
+        # apply attribute concat has left args name() node
+        self.add_node()
+        self.vs[38]["mm__"] = """hasArgs"""
+        #self.vs[38]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ConcatHasLeftArgs38')
+        # apply attribute concat has right args name() node
+        self.add_node()
+        self.vs[39]["mm__"] = """hasArgs"""
+        #self.vs[39]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ConcatHasRightArgs39')
+        # apply attribute atom name() node
+        self.add_node()
+        self.vs[40]["name"] = """S"""
+        self.vs[40]["mm__"] = """Constant"""
+        self.vs[40]["Type"] = """'String'"""
+        #self.vs[40]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom40')
+        # has apply attribute literal() node
+        self.add_node()
+        self.vs[41]["mm__"] = """hasAttribute_T"""
+        #self.vs[41]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute literal() node
+        self.add_node()
+        self.vs[42]["name"] = """literal"""
+        self.vs[42]["mm__"] = """Attribute"""
+        self.vs[42]["Type"] = """'String'"""
+        #self.vs[42]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation literal() node
+        self.add_node()
+        self.vs[43]["name"] = """eq_"""
+        self.vs[43]["mm__"] = """Equation"""
+        #self.vs[43]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr literal() node
+        self.add_node()
+        self.vs[44]["mm__"] = """leftExpr"""
+        #self.vs[44]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr literal() node
+        self.add_node()
+        self.vs[45]["mm__"] = """rightExpr"""
+        #self.vs[45]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # apply attribute atom literal() node
+        self.add_node()
+        self.vs[46]["name"] = """exack"""
+        self.vs[46]["mm__"] = """Constant"""
+        self.vs[46]["Type"] = """'String'"""
+        #self.vs[46]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom46')
+        # has apply attribute literal() node
+        self.add_node()
         self.vs[47]["mm__"] = """hasAttribute_T"""
-        self.vs[47]["GUID__"] = UUID('95005727-9834-4eec-9cf3-1c0675722ce9')
-        self.vs[48]["mm__"] = """hasAttribute_T"""
-        self.vs[48]["GUID__"] = UUID('d186eee3-32ac-4ec2-8f6e-54001ca8d278')
-        self.vs[49]["name"] = """eq1"""
+        #self.vs[47]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute literal() node
+        self.add_node()
+        self.vs[48]["name"] = """literal"""
+        self.vs[48]["mm__"] = """Attribute"""
+        self.vs[48]["Type"] = """'String'"""
+        #self.vs[48]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation literal() node
+        self.add_node()
+        self.vs[49]["name"] = """eq_"""
         self.vs[49]["mm__"] = """Equation"""
-        self.vs[49]["GUID__"] = UUID('cca24c81-db1a-4dd9-b910-2a5b8bd7dc7d')
-        self.vs[50]["name"] = """eq2"""
-        self.vs[50]["mm__"] = """Equation"""
-        self.vs[50]["GUID__"] = UUID('18e721d6-f79b-4895-be53-0637cf0ff58d')
-        self.vs[51]["name"] = """eq3"""
-        self.vs[51]["mm__"] = """Equation"""
-        self.vs[51]["GUID__"] = UUID('5afe8bf3-e681-4cc9-887b-486520e63358')
-        self.vs[52]["name"] = """eq4"""
-        self.vs[52]["mm__"] = """Equation"""
-        self.vs[52]["GUID__"] = UUID('d816328b-b384-4e2d-a221-650a12798a38')
-        self.vs[53]["name"] = """eq5"""
-        self.vs[53]["mm__"] = """Equation"""
-        self.vs[53]["GUID__"] = UUID('9b8b4827-fc38-4f96-adc1-e7d60d4dc1b1')
-        self.vs[54]["name"] = """eq6"""
-        self.vs[54]["mm__"] = """Equation"""
-        self.vs[54]["GUID__"] = UUID('3570c1dc-0dca-4a9e-90db-d890bc6e1907')
-        self.vs[55]["mm__"] = """leftExpr"""
-        self.vs[55]["GUID__"] = UUID('496fa79f-c1ac-4445-9dd7-3a844a663f4f')
-        self.vs[56]["mm__"] = """leftExpr"""
-        self.vs[56]["GUID__"] = UUID('feed64ed-7477-4e20-b0a7-a789ff5cebb1')
-        self.vs[57]["mm__"] = """leftExpr"""
-        self.vs[57]["GUID__"] = UUID('5ca02ee3-fad4-493c-990f-b832ea5fc418')
-        self.vs[58]["mm__"] = """leftExpr"""
-        self.vs[58]["GUID__"] = UUID('ad0de741-cead-4a35-a9fc-6ff3f8f30e2c')
-        self.vs[59]["mm__"] = """leftExpr"""
-        self.vs[59]["GUID__"] = UUID('4349029e-1afa-4dc1-94d9-46eb7cc6d8af')
-        self.vs[60]["mm__"] = """leftExpr"""
-        self.vs[60]["GUID__"] = UUID('c3cf1625-8d73-4a85-be17-e60564de9cd4')
-        self.vs[61]["name"] = """S"""
-        self.vs[61]["mm__"] = """Constant"""
+        #self.vs[49]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr literal() node
+        self.add_node()
+        self.vs[50]["mm__"] = """leftExpr"""
+        #self.vs[50]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr literal() node
+        self.add_node()
+        self.vs[51]["mm__"] = """rightExpr"""
+        #self.vs[51]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # attribute concat literal() node
+        self.add_node()
+        self.vs[52]["name"] = """Concat52"""
+        self.vs[52]["mm__"] = """Concat"""
+        self.vs[52]["Type"] = """'String'"""
+        #self.vs[52]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Concat52')
+        # apply attribute concat has left args literal() node
+        self.add_node()
+        self.vs[53]["mm__"] = """hasArgs"""
+        #self.vs[53]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ConcatHasLeftArgs53')
+        # apply attribute concat has right args literal() node
+        self.add_node()
+        self.vs[54]["mm__"] = """hasArgs"""
+        #self.vs[54]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ConcatHasRightArgs54')
+        # apply attribute atom literal() node
+        self.add_node()
+        self.vs[55]["name"] = """A"""
+        self.vs[55]["mm__"] = """Constant"""
+        self.vs[55]["Type"] = """'String'"""
+        #self.vs[55]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom55')
+        # attribute concat literal() node
+        self.add_node()
+        self.vs[56]["name"] = """Concat56"""
+        self.vs[56]["mm__"] = """Concat"""
+        self.vs[56]["Type"] = """'String'"""
+        #self.vs[56]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Concat56')
+        # apply attribute concat has left args literal() node
+        self.add_node()
+        self.vs[57]["mm__"] = """hasArgs"""
+        #self.vs[57]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ConcatHasLeftArgs57')
+        # apply attribute concat has right args literal() node
+        self.add_node()
+        self.vs[58]["mm__"] = """hasArgs"""
+        #self.vs[58]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ConcatHasRightArgs58')
+        # apply attribute atom literal() node
+        self.add_node()
+        self.vs[59]["name"] = """A"""
+        self.vs[59]["mm__"] = """Constant"""
+        self.vs[59]["Type"] = """'String'"""
+        #self.vs[59]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom59')
+        # has apply attribute literal() node
+        self.add_node()
+        self.vs[60]["mm__"] = """hasAttribute_T"""
+        #self.vs[60]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute literal() node
+        self.add_node()
+        self.vs[61]["name"] = """literal"""
+        self.vs[61]["mm__"] = """Attribute"""
         self.vs[61]["Type"] = """'String'"""
-        self.vs[61]["GUID__"] = UUID('79f9f319-20e8-4f12-aea6-d60744f562cd')
-        self.vs[62]["name"] = """exit"""
-        self.vs[62]["mm__"] = """Constant"""
-        self.vs[62]["Type"] = """'String'"""
-        self.vs[62]["GUID__"] = UUID('69dd8495-5123-4bff-86f8-0d5d49d5e01e')
-        self.vs[63]["name"] = """exack"""
-        self.vs[63]["mm__"] = """Constant"""
-        self.vs[63]["Type"] = """'String'"""
-        self.vs[63]["GUID__"] = UUID('0bf42497-5a58-4268-add8-7af782483b44')
-        self.vs[64]["name"] = """xox"""
-        self.vs[64]["mm__"] = """Constant"""
-        self.vs[64]["Type"] = """'String'"""
-        self.vs[64]["GUID__"] = UUID('3df85ca1-6448-4a00-bc8d-82fc1fec9eda')
-        self.vs[65]["name"] = """xox"""
+        #self.vs[61]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation literal() node
+        self.add_node()
+        self.vs[62]["name"] = """eq_"""
+        self.vs[62]["mm__"] = """Equation"""
+        #self.vs[62]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr literal() node
+        self.add_node()
+        self.vs[63]["mm__"] = """leftExpr"""
+        #self.vs[63]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr literal() node
+        self.add_node()
+        self.vs[64]["mm__"] = """rightExpr"""
+        #self.vs[64]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # apply attribute atom literal() node
+        self.add_node()
+        self.vs[65]["name"] = """exit"""
         self.vs[65]["mm__"] = """Constant"""
         self.vs[65]["Type"] = """'String'"""
-        self.vs[65]["GUID__"] = UUID('a345aebe-7346-4986-a43c-c69f28ea2886')
-        self.vs[66]["name"] = """sh"""
-        self.vs[66]["mm__"] = """Constant"""
-        self.vs[66]["Type"] = """'String'"""
-        self.vs[66]["GUID__"] = UUID('7c12f0e9-5893-46c9-86b1-def9052b4c94')
-        self.vs[67]["name"] = """instfortrans"""
-        self.vs[67]["mm__"] = """Constant"""
+        #self.vs[65]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom65')
+        # has apply attribute literal() node
+        self.add_node()
+        self.vs[66]["mm__"] = """hasAttribute_T"""
+        #self.vs[66]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute literal() node
+        self.add_node()
+        self.vs[67]["name"] = """literal"""
+        self.vs[67]["mm__"] = """Attribute"""
         self.vs[67]["Type"] = """'String'"""
-        self.vs[67]["GUID__"] = UUID('a6fba92a-a853-4cfc-8b55-7a3e2c0f4858')
-        self.vs[68]["name"] = """name"""
-        self.vs[68]["mm__"] = """Attribute"""
-        self.vs[68]["Type"] = """'String'"""
-        self.vs[68]["GUID__"] = UUID('93330597-ef06-4f01-8efe-010e3aea746d')
-        self.vs[69]["name"] = """name"""
-        self.vs[69]["mm__"] = """Attribute"""
-        self.vs[69]["Type"] = """'String'"""
-        self.vs[69]["GUID__"] = UUID('a9075cbe-8c37-46c5-8b7f-ad864423d797')
-        self.vs[70]["name"] = """name"""
-        self.vs[70]["mm__"] = """Attribute"""
-        self.vs[70]["Type"] = """'String'"""
-        self.vs[70]["GUID__"] = UUID('f9528fbf-2de5-400c-a4dd-27cff1d00f7c')
-        self.vs[71]["name"] = """literal"""
-        self.vs[71]["mm__"] = """Attribute"""
+        #self.vs[67]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation literal() node
+        self.add_node()
+        self.vs[68]["name"] = """eq_"""
+        self.vs[68]["mm__"] = """Equation"""
+        #self.vs[68]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr literal() node
+        self.add_node()
+        self.vs[69]["mm__"] = """leftExpr"""
+        #self.vs[69]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr literal() node
+        self.add_node()
+        self.vs[70]["mm__"] = """rightExpr"""
+        #self.vs[70]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # apply attribute atom literal() node
+        self.add_node()
+        self.vs[71]["name"] = """sh"""
+        self.vs[71]["mm__"] = """Constant"""
         self.vs[71]["Type"] = """'String'"""
-        self.vs[71]["GUID__"] = UUID('7d538b12-bf4e-4bdb-8e6b-c33d88624822')
-        self.vs[72]["name"] = """literal"""
-        self.vs[72]["mm__"] = """Attribute"""
-        self.vs[72]["Type"] = """'String'"""
-        self.vs[72]["GUID__"] = UUID('2b5fd9a2-c621-49a7-9737-a9a96b1b3fff')
-        self.vs[73]["name"] = """literal"""
-        self.vs[73]["mm__"] = """Attribute"""
-        self.vs[73]["Type"] = """'String'"""
-        self.vs[73]["GUID__"] = UUID('3632b16d-3a12-4d9c-afcc-9f17783474b7')
-        self.vs[74]["name"] = """literal"""
-        self.vs[74]["mm__"] = """Attribute"""
-        self.vs[74]["Type"] = """'String'"""
-        self.vs[74]["GUID__"] = UUID('81aec45c-96d4-49a0-a4ae-b443cdc04a4b')
-        self.vs[75]["name"] = """pivot"""
-        self.vs[75]["mm__"] = """Attribute"""
-        self.vs[75]["Type"] = """'String'"""
-        self.vs[75]["GUID__"] = UUID('a4212f79-d5b1-457e-9102-6cdb1d0541af')
-
+        #self.vs[71]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom71')
+        
+        
+        # Add the edges
+        self.add_edges([
+                (0,4), # matchmodel -> match_contains
+                (4,3), # match_contains -> match_class Transition()
+                (0,6), # matchmodel -> match_contains
+                (6,5), # match_contains -> match_class Vertex()
+                (0,8), # matchmodel -> match_contains
+                (8,7), # match_contains -> match_class SIBLING0()
+                (0,10), # matchmodel -> match_contains
+                (10,9), # match_contains -> match_class StateMachine()
+                (1,12), # applymodel -> apply_contains
+                (12,11), # apply_contains -> apply_class Inst()
+                (1,14), # applymodel -> apply_contains
+                (14,13), # apply_contains -> apply_class Name()
+                (1,16), # applymodel -> apply_contains
+                (16,15), # apply_contains -> apply_class Name()
+                (1,18), # applymodel -> apply_contains
+                (18,17), # apply_contains -> apply_class Name()
+                (1,20), # applymodel -> apply_contains
+                (20,19), # apply_contains -> apply_class Name()
+                (3,21), # match_class Transition() -> association dest
+                (21,5), # association dest  -> match_class Vertex()
+                (3,22), # match_class Transition() -> association type
+                (22,7), # association type  -> match_class SIBLING0()
+                (5,23), # match_class Vertex() -> association owningStateMachine
+                (23,9), # association owningStateMachine  -> match_class StateMachine()
+                (11,24), # apply_class Inst() -> association channelNames
+                (24,17), # association channelNames  -> apply_class Name()
+                (11,25), # apply_class Inst() -> association channelNames
+                (25,13), # association channelNames  -> apply_class Name()
+                (11,26), # apply_class Inst() -> association channelNames
+                (26,15), # association channelNames  -> apply_class Name()
+                (11,27), # apply_class Inst() -> association channelNames
+                (27,19), # association channelNames  -> apply_class Name()
+                (5,28), # match_class Vertex() -> has_match_attribute name ()
+                (28,29), #  has_match_attribute name () -> match_attribute name ()
+                (9,30), # match_class StateMachine() -> has_match_attribute name ()
+                (30,31), #  has_match_attribute name () -> match_attribute name ()
+                (11,32), # apply_class Inst() -> has_apply_attribute name ()
+                (32,33), #  has_apply_attribute name () -> apply_attribute name ()
+                (34,35), #  equation of apply attribute name () -> left_expr
+                (35,33), #  left_expr -> apply_attribute name ()
+                (34,36), #  equation of apply attribute name () -> right_expr
+                (37,38), #  apply attribute concat name () -> left has_args
+                (38,40), #  left has_args -> term
+                (37,39), #  apply attribute concat name () -> right has_args
+                (39,31), #  right has_args -> term
+                (36,37), # right_expr --> term
+                (13,41), # apply_class Name() -> has_apply_attribute literal ()
+                (41,42), #  has_apply_attribute literal () -> apply_attribute literal ()
+                (43,44), #  equation of apply attribute literal () -> left_expr
+                (44,42), #  left_expr -> apply_attribute literal ()
+                (43,45), #  equation of apply attribute literal () -> right_expr
+                (45,46), # right_expr --> term
+                (15,47), # apply_class Name() -> has_apply_attribute literal ()
+                (47,48), #  has_apply_attribute literal () -> apply_attribute literal ()
+                (49,50), #  equation of apply attribute literal () -> left_expr
+                (50,48), #  left_expr -> apply_attribute literal ()
+                (49,51), #  equation of apply attribute literal () -> right_expr
+                (56,57), #  apply attribute concat literal () -> left has_args
+                (57,29), #  left has_args -> term
+                (56,58), #  apply attribute concat literal () -> right has_args
+                (58,59), #  right has_args -> term
+                (52,53), #  apply attribute concat literal () -> left has_args
+                (53,55), #  left has_args -> term
+                (52,54), #  apply attribute concat literal () -> right has_args
+                (54,56), #  right has_args -> term
+                (51,52), # right_expr --> term
+                (17,60), # apply_class Name() -> has_apply_attribute literal ()
+                (60,61), #  has_apply_attribute literal () -> apply_attribute literal ()
+                (62,63), #  equation of apply attribute literal () -> left_expr
+                (63,61), #  left_expr -> apply_attribute literal ()
+                (62,64), #  equation of apply attribute literal () -> right_expr
+                (64,65), # right_expr --> term
+                (19,66), # apply_class Name() -> has_apply_attribute literal ()
+                (66,67), #  has_apply_attribute literal () -> apply_attribute literal ()
+                (68,69), #  equation of apply attribute literal () -> left_expr
+                (69,67), #  left_expr -> apply_attribute literal ()
+                (68,70), #  equation of apply attribute literal () -> right_expr
+                (70,71), # right_expr --> term
+                (0,2), # matchmodel -> pairedwith
+                (2,1) # pairedwith -> applyModel
+        ])
+        

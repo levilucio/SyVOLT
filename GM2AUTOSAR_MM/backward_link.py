@@ -3,14 +3,13 @@ __backward_link.py_____________________________________________________
 
 Automatically generated AToM3 syntactic object (DO NOT MODIFY DIRECTLY)
 Author: levi
-Modified: Sat Aug 24 20:15:56 2013
+Modified: Sun Aug  9 23:43:00 2015
 _______________________________________________________________________
 """
 from ASGNode import *
 
 from ATOM3Type import *
 
-from ATOM3String import *
 from graph_backward_link import *
 class backward_link(ASGNode, ATOM3Type):
 
@@ -25,10 +24,9 @@ class backward_link(ASGNode, ATOM3Type):
       if(hasattr(self, '_setHierarchicalNode')):
         self._setHierarchicalNode(False)
       self.parent = parent
-      self.type=ATOM3String('ruleDef', 20)
-      self.generatedAttributes = {'type': ('ATOM3String', )      }
-      self.realOrder = ['type']
-      self.directEditing = [1]
+      self.generatedAttributes = {      }
+      self.realOrder = []
+      self.directEditing = []
    def clone(self):
       cloneObject = backward_link( self.parent )
       for atr in self.realOrder:

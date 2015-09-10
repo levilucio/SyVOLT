@@ -1,209 +1,103 @@
+
+
 from core.himesis import Himesis
-import cPickle as pickle
-import uuid
 
 class Hsysmapping_swMapping_SolveRef_PhysicalNode_Partition_SystemMapping_SwcToEcuMapping(Himesis):
     def __init__(self):
         """
-        Creates the himesis graph representing the DSLTrans rule sysmapping_swMapping_SolveRef_PhysicalNode_Partition_SystemMapping_SwcToEcuMapping.
+        Creates the himesis graph representing the AToM3 model Hsysmapping_swMapping_SolveRef_PhysicalNode_Partition_SystemMapping_SwcToEcuMapping.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(Hsysmapping_swMapping_SolveRef_PhysicalNode_Partition_SystemMapping_SwcToEcuMapping, self).__init__(name='Hsysmapping_swMapping_SolveRef_PhysicalNode_Partition_SystemMapping_SwcToEcuMapping', num_nodes=0, edges=[])
+        super(Hsysmapping_swMapping_SolveRef_PhysicalNode_Partition_SystemMapping_SwcToEcuMapping, self).__init__(name='Hsysmapping_swMapping_SolveRef_PhysicalNode_Partition_SystemMapping_SwcToEcuMapping', num_nodes=27, edges=[])
         
-        
+        # Add the edges
+        self.add_edges([[0, 9], [9, 3], [0, 10], [10, 4], [1, 11], [11, 5], [1, 12], [12, 6], [3, 7], [7, 4], [5, 8], [8, 6], [5, 13], [13, 3], [6, 14], [14, 4], [5, 15], [15, 16], [17, 18], [18, 16], [17, 19], [19, 20], [6, 21], [21, 22], [23, 24], [24, 22], [23, 25], [25, 26], [0, 2], [2, 1]])
         # Set the graph attributes
-        # TODO Levi, need some help here because I don't know where does 
-        # this value come from.
-        self["mm__"] = pickle.loads("""(lp1
-S'HimesisMM'
-p2
-a.""")
-        
+        self["mm__"] = ['HimesisMM']
         self["name"] = """sysmapping_swMapping_SolveRef_PhysicalNode_Partition_SystemMapping_SwcToEcuMapping"""
-        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'sysmapping_swMapping_SolveRef_PhysicalNode_Partition_SystemMapping_SwcToEcuMapping')
+        self["GUID__"] = 8192893704120951459
         
-        # match model. We only support one match model
-        self.add_node()
+        # Set the node attributes
         self.vs[0]["mm__"] = """MatchModel"""
-        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'sysmapping_swMapping_SolveRef_PhysicalNode_Partition_SystemMapping_SwcToEcuMappingmatchmodel0')
-        
-        # apply model node
-        self.add_node()
+        self.vs[0]["GUID__"] = 6977392703624477414
         self.vs[1]["mm__"] = """ApplyModel"""
-        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'sysmapping_swMapping_SolveRef_PhysicalNode_Partition_SystemMapping_SwcToEcuMappingapplymodel1')
-        
-        # paired with relation between match and apply models
-        self.add_node()
+        self.vs[1]["GUID__"] = 7828885443795326301
         self.vs[2]["mm__"] = """paired_with"""
-        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'sysmapping_swMapping_SolveRef_PhysicalNode_Partition_SystemMapping_SwcToEcuMappingpairedwith2')
-        
-    	# match class PhysicalNode() node
-    	self.add_node()
-    	self.vs[3]["name"] = """"""
+        self.vs[2]["GUID__"] = 2625176960646331792
+        self.vs[3]["name"] = """"""
         self.vs[3]["classtype"] = """PhysicalNode"""
         self.vs[3]["mm__"] = """PhysicalNode"""
         self.vs[3]["cardinality"] = """+"""
-        #self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# match_contains node for class PhysicalNode()
-        self.add_node()
-        self.vs[4]["mm__"] = """match_contains"""
-        #self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains4')
-    	# match class Partition() node
-    	self.add_node()
-    	self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """Partition"""
-        self.vs[5]["mm__"] = """Partition"""
-        self.vs[5]["cardinality"] = """+"""
-        #self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# match_contains node for class Partition()
-        self.add_node()
-        self.vs[6]["mm__"] = """match_contains"""
-        #self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains6')
-        
-        
-    	# apply class SystemMapping() node
-    	self.add_node()
-    	self.vs[7]["name"] = """"""
-        self.vs[7]["classtype"] = """SystemMapping"""
-        self.vs[7]["mm__"] = """SystemMapping"""
-        self.vs[7]["cardinality"] = """1"""
-        #self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply_contains node for class SystemMapping()
-        self.add_node()
-        self.vs[8]["mm__"] = """apply_contains"""
-        #self.vs[8]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains8')
-    	# apply class SwcToEcuMapping() node
-    	self.add_node()
-    	self.vs[9]["name"] = """"""
-        self.vs[9]["classtype"] = """SwcToEcuMapping"""
-        self.vs[9]["mm__"] = """SwcToEcuMapping"""
-        self.vs[9]["cardinality"] = """1"""
-        #self.vs[9]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply_contains node for class SwcToEcuMapping()
-        self.add_node()
-        self.vs[10]["mm__"] = """apply_contains"""
-        #self.vs[10]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains10')
-        
-        
-    	# match association PhysicalNode--partition-->Partition node
-    	self.add_node()
-    	self.vs[11]["associationType"] = """partition"""
-        self.vs[11]["mm__"] = """directLink_S"""
-        #self.vs[11]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc11')
-        
-    	# apply association SystemMapping--swMapping-->SwcToEcuMapping node
-    	self.add_node()
-    	self.vs[12]["associationType"] = """swMapping"""
-        self.vs[12]["mm__"] = """directLink_T"""
-        #self.vs[12]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc12')
-        
-    	# backward association PhysicalNode---->SystemMapping node
-    	self.add_node()
-    	self.vs[13]["type"] = """ruleDef"""
+        self.vs[3]["GUID__"] = 4650715886733937626
+        self.vs[4]["name"] = """"""
+        self.vs[4]["classtype"] = """Partition"""
+        self.vs[4]["mm__"] = """Partition"""
+        self.vs[4]["cardinality"] = """+"""
+        self.vs[4]["GUID__"] = 4839637421785076182
+        self.vs[5]["name"] = """"""
+        self.vs[5]["classtype"] = """SystemMapping"""
+        self.vs[5]["mm__"] = """SystemMapping"""
+        self.vs[5]["cardinality"] = """1"""
+        self.vs[5]["GUID__"] = 3478098931514129141
+        self.vs[6]["name"] = """"""
+        self.vs[6]["classtype"] = """SwcToEcuMapping"""
+        self.vs[6]["mm__"] = """SwcToEcuMapping"""
+        self.vs[6]["cardinality"] = """1"""
+        self.vs[6]["GUID__"] = 5483956647862923086
+        self.vs[7]["associationType"] = """partition"""
+        self.vs[7]["mm__"] = """directLink_S"""
+        self.vs[7]["GUID__"] = 1631901294562668908
+        self.vs[8]["associationType"] = """swMapping"""
+        self.vs[8]["mm__"] = """directLink_T"""
+        self.vs[8]["GUID__"] = 5267897680175772035
+        self.vs[9]["mm__"] = """match_contains"""
+        self.vs[9]["GUID__"] = 4054131902500580467
+        self.vs[10]["mm__"] = """match_contains"""
+        self.vs[10]["GUID__"] = 3124107003625621908
+        self.vs[11]["mm__"] = """apply_contains"""
+        self.vs[11]["GUID__"] = 9069573659422126953
+        self.vs[12]["mm__"] = """apply_contains"""
+        self.vs[12]["GUID__"] = 7332952996356521255
         self.vs[13]["mm__"] = """backward_link"""
-        #self.vs[13]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink13')
-    	# backward association Partition---->SwcToEcuMapping node
-    	self.add_node()
-    	self.vs[14]["type"] = """ruleDef"""
+        self.vs[13]["type"] = """ruleDef"""
+        self.vs[13]["GUID__"] = 2655768987390212019
         self.vs[14]["mm__"] = """backward_link"""
-        #self.vs[14]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink14')
-        
-        
-        
-        
-    	# has apply attribute ApplyAttribute() node
-    	self.add_node()
-    	self.vs[15]["mm__"] = """hasAttribute_T"""
-        #self.vs[15]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
-    	# apply attribute ApplyAttribute() node
-    	self.add_node()
-    	self.vs[16]["name"] = """ApplyAttribute"""
-        self.vs[16]["mm__"] = """Attribute"""
+        self.vs[14]["type"] = """ruleDef"""
+        self.vs[14]["GUID__"] = 5960159993670953561
+        self.vs[15]["mm__"] = """hasAttribute_T"""
+        self.vs[15]["GUID__"] = 1144879601067745074
+        self.vs[16]["name"] = """ApplyAttribute"""
         self.vs[16]["Type"] = """'String'"""
-        #self.vs[16]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply attribute equation ApplyAttribute() node
-    	self.add_node()
-    	self.vs[17]["name"] = """eq_"""
+        self.vs[16]["mm__"] = """Attribute"""
+        self.vs[16]["GUID__"] = 2103854269393252136
+        self.vs[17]["name"] = """eq_"""
         self.vs[17]["mm__"] = """Equation"""
-        #self.vs[17]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
-    	# apply attribute equation left expr ApplyAttribute() node
-    	self.add_node()
-    	self.vs[18]["mm__"] = """leftExpr"""
-        #self.vs[18]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
-    	# apply attribute equation right expr ApplyAttribute() node
-    	self.add_node()
-    	self.vs[19]["mm__"] = """rightExpr"""
-        #self.vs[19]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
-    	# apply attribute atom ApplyAttribute() node
-    	self.add_node()
-    	self.vs[20]["name"] = """solveRef"""
-        self.vs[20]["mm__"] = """Constant"""
+        self.vs[17]["GUID__"] = 7264479307091387740
+        self.vs[18]["mm__"] = """leftExpr"""
+        self.vs[18]["GUID__"] = 4863946828524105905
+        self.vs[19]["mm__"] = """rightExpr"""
+        self.vs[19]["GUID__"] = 1587694871810551326
+        self.vs[20]["name"] = """solveRef"""
         self.vs[20]["Type"] = """'String'"""
-        #self.vs[20]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom20')
-    	# has apply attribute ApplyAttribute() node
-    	self.add_node()
-    	self.vs[21]["mm__"] = """hasAttribute_T"""
-        #self.vs[21]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
-    	# apply attribute ApplyAttribute() node
-    	self.add_node()
-    	self.vs[22]["name"] = """ApplyAttribute"""
-        self.vs[22]["mm__"] = """Attribute"""
+        self.vs[20]["mm__"] = """Constant"""
+        self.vs[20]["GUID__"] = 2655494637118104140
+        self.vs[21]["mm__"] = """hasAttribute_T"""
+        self.vs[21]["GUID__"] = 7729633980811999078
+        self.vs[22]["name"] = """ApplyAttribute"""
         self.vs[22]["Type"] = """'String'"""
-        #self.vs[22]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply attribute equation ApplyAttribute() node
-    	self.add_node()
-    	self.vs[23]["name"] = """eq_"""
+        self.vs[22]["mm__"] = """Attribute"""
+        self.vs[22]["GUID__"] = 3779080394679039043
+        self.vs[23]["name"] = """eq_"""
         self.vs[23]["mm__"] = """Equation"""
-        #self.vs[23]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
-    	# apply attribute equation left expr ApplyAttribute() node
-    	self.add_node()
-    	self.vs[24]["mm__"] = """leftExpr"""
-        #self.vs[24]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
-    	# apply attribute equation right expr ApplyAttribute() node
-    	self.add_node()
-    	self.vs[25]["mm__"] = """rightExpr"""
-        #self.vs[25]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
-    	# apply attribute atom ApplyAttribute() node
-    	self.add_node()
-    	self.vs[26]["name"] = """solveRef"""
-        self.vs[26]["mm__"] = """Constant"""
+        self.vs[23]["GUID__"] = 7676894768217604924
+        self.vs[24]["mm__"] = """leftExpr"""
+        self.vs[24]["GUID__"] = 3852510855527722188
+        self.vs[25]["mm__"] = """rightExpr"""
+        self.vs[25]["GUID__"] = 1016823515176949975
+        self.vs[26]["name"] = """solveRef"""
         self.vs[26]["Type"] = """'String'"""
-        #self.vs[26]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom26')
-        
-        
-        # Add the edges
-        self.add_edges([
-    		(0,4), # matchmodel -> match_contains
-    		(4,3), # match_contains -> match_class PhysicalNode()
-    		(0,6), # matchmodel -> match_contains
-    		(6,5), # match_contains -> match_class Partition()
-    		(1,8), # applymodel -> apply_contains
-    		(8,7), # apply_contains -> apply_class SystemMapping()
-    		(1,10), # applymodel -> apply_contains
-    		(10,9), # apply_contains -> apply_class SwcToEcuMapping()
-    		(3,11), # match_class PhysicalNode() -> association partition
-    		(11,5), # association partition  -> match_class Partition()
-    		(7,12), # apply_class SystemMapping() -> association swMapping
-    		(12,9), # association swMapping  -> apply_class SwcToEcuMapping()
-    		(7,13), # apply_class SystemMapping() -> backward_association
-    		(13,3), #  backward_association -> apply_class PhysicalNode()
-    		(9,14), # apply_class SwcToEcuMapping() -> backward_association
-    		(14,5), #  backward_association -> apply_class Partition()
-    		(7,15), # apply_class SystemMapping() -> has_apply_attribute ApplyAttribute ()
-    		(15,16), #  has_apply_attribute ApplyAttribute () -> apply_attribute ApplyAttribute ()
-    		(17,18), #  equation of apply attribute ApplyAttribute () -> left_expr
-    		(18,16), #  left_expr -> apply_attribute ApplyAttribute ()
-    		(17,19), #  equation of apply attribute ApplyAttribute () -> right_expr
-    		(19,20), # right_expr --> term
-    		(9,21), # apply_class SwcToEcuMapping() -> has_apply_attribute ApplyAttribute ()
-    		(21,22), #  has_apply_attribute ApplyAttribute () -> apply_attribute ApplyAttribute ()
-    		(23,24), #  equation of apply attribute ApplyAttribute () -> left_expr
-    		(24,22), #  left_expr -> apply_attribute ApplyAttribute ()
-    		(23,25), #  equation of apply attribute ApplyAttribute () -> right_expr
-    		(25,26), # right_expr --> term
-        	(0,2), # matchmodel -> pairedwith
-        	(2,1) # pairedwith -> applyModel
-        ])
-        
+        self.vs[26]["mm__"] = """Constant"""
+        self.vs[26]["GUID__"] = 7274333601885029913
+

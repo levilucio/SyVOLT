@@ -1,8 +1,6 @@
 
 
 from core.himesis import Himesis, HimesisPostConditionPattern
-import cPickle as pickle
-from uuid import UUID
 
 class HBuildTraceabilityForRuleRHS(HimesisPostConditionPattern):
     def __init__(self):
@@ -17,12 +15,7 @@ class HBuildTraceabilityForRuleRHS(HimesisPostConditionPattern):
         # Add the edges
         self.add_edges([[4, 0], [0, 1], [2, 1], [3, 2], [6, 3], [5, 6]])
         # Set the graph attributes
-        self["mm__"] = pickle.loads("""(lp1
-S'MT_post__FamiliesToPersons_MM'
-p2
-aS'MoTifRule'
-p3
-a.""")
+        self["name"] = """"""
         self["MT_action__"] = """#===============================================================================
 # This code is executed after the rule has been applied.
 # You can access a node labelled n matched by this rule by: PostNode('n').
@@ -31,44 +24,18 @@ a.""")
 
 pass
 """
-        self["name"] = """"""
+        self["mm__"] = ['MT_post__T_MM', 'MoTifRule']
+        self["superclasses_dict"] = {'FunctionRefType': ['MetaModelElement_T'], 'NumericLiteral': ['MetaModelElement_T', 'MetaModelElement_S'], 'ExpressionStatement': ['MetaModelElement_T', 'MetaModelElement_S'], 'TestCaseRef': ['MetaModelElement_S'], 'PrimitiveType': ['MetaModelElement_T', 'MetaModelElement_S'], 'PortAdapterRefExpr': ['MetaModelElement_S'], 'ReturnStatement': ['MetaModelElement_T', 'MetaModelElement_S'], 'Statement': ['MetaModelElement_T', 'MetaModelElement_S'], 'AssemblyConnector': ['MetaModelElement_S'], 'CFunctionPointerStructMember': ['MetaModelElement_T'], 'PortAdapter': ['MetaModelElement_S'], 'ModuleContentSUDeclaration': ['MetaModelElement_T'], 'FunctionSignature': ['MetaModelElement_T', 'MetaModelElement_S'], 'StatementList': ['MetaModelElement_T', 'MetaModelElement_S'], 'BinaryComparisonExpression': ['MetaModelElement_T', 'MetaModelElement_S'], 'OperationTrigger': ['MetaModelElement_S'], 'SUType': ['MetaModelElement_T'], 'Int32Type': ['MetaModelElement_T', 'MetaModelElement_S'], 'InterfaceOperationCallExpr': ['MetaModelElement_S'], 'SUContent': ['MetaModelElement_T'], 'PointerType': ['MetaModelElement_T'], 'Operation': ['MetaModelElement_S'], 'GlobalVariableDeclaration': ['MetaModelElement_T'], 'PortRef': ['MetaModelElement_S'], 'StructDeclaration': ['MetaModelElement_T'], 'PortRefExpr': ['MetaModelElement_S'], 'Type': ['MetaModelElement_T', 'MetaModelElement_S'], 'StringType': ['MetaModelElement_T', 'MetaModelElement_S'], 'PointerExpr': ['MetaModelElement_T'], 'PlusExpression': ['MetaModelElement_S'], 'AbstractInstanceConfiguration': ['MetaModelElement_S'], 'Interface': ['MetaModelElement_S'], 'IType': ['MetaModelElement_T'], 'GreaterEqualsExpression': ['MetaModelElement_T', 'MetaModelElement_S'], 'ArgumentRef': ['MetaModelElement_S'], 'ITypeContainingType': ['MetaModelElement_T', 'MetaModelElement_S'], 'ITyped': ['MetaModelElement_T', 'MetaModelElement_S'], 'Argument': ['MetaModelElement_T', 'MetaModelElement_S'], 'FunctionCall': ['MetaModelElement_T'], 'SUDeclaration': ['MetaModelElement_T'], 'DerefExpr': ['MetaModelElement_T'], 'ExecuteTestExpression': ['MetaModelElement_S'], 'Member': ['MetaModelElement_T'], 'Literal': ['MetaModelElement_T', 'MetaModelElement_S'], 'IArgumentLike': ['MetaModelElement_T', 'MetaModelElement_S'], 'FunctionRefExpr': ['MetaModelElement_T'], 'AdapterInstancePortRef': ['MetaModelElement_S'], 'InstancePortRef': ['MetaModelElement_S'], 'ICanBeExecutedAsTest': ['MetaModelElement_S'], 'RequiredPort': ['MetaModelElement_S'], 'LocalVarRef': ['MetaModelElement_S'], 'CModule': ['MetaModelElement_T'], 'IModuleContent': ['MetaModelElement_T', 'MetaModelElement_S'], 'AssignmentExpr': ['MetaModelElement_T', 'MetaModelElement_S'], 'TypeWithDeclaration': ['MetaModelElement_T'], 'StructType': ['MetaModelElement_T'], 'AtomicComponent': ['MetaModelElement_S'], 'InstanceConfiguration': ['MetaModelElement_S'], 'NumberLiteral': ['MetaModelElement_T', 'MetaModelElement_S'], 'OperationParameter': ['MetaModelElement_S'], 'InstanceConfigContents': ['MetaModelElement_S'], 'GlobalVarRef': ['MetaModelElement_T'], 'BinaryExpression': ['MetaModelElement_T', 'MetaModelElement_S'], 'Expression': ['MetaModelElement_T', 'MetaModelElement_S'], 'LocalVariableDeclaration': ['MetaModelElement_T', 'MetaModelElement_S'], 'UnaryExpression': ['MetaModelElement_T', 'MetaModelElement_S'], 'VoidType': ['MetaModelElement_T', 'MetaModelElement_S'], 'WhileStatement': ['MetaModelElement_T', 'MetaModelElement_S'], 'StringLiteral': ['MetaModelElement_S'], 'ProvidedPort': ['MetaModelElement_S'], 'Prefix': ['MetaModelElement_T'], 'MbeddrModule': ['MetaModelElement_S'], 'ImplementationModule': ['MetaModelElement_T', 'MetaModelElement_S'], 'Executable': ['MetaModelElement_S'], 'CastExpression': ['MetaModelElement_T'], 'GenericDotExpression': ['MetaModelElement_T'], 'IGenericDotTarget': ['MetaModelElement_T'], 'ArrayType': ['MetaModelElement_T', 'MetaModelElement_S'], 'PrimitiveC99IntegralType': ['MetaModelElement_T', 'MetaModelElement_S'], 'IIdentifierNamedConcept': ['MetaModelElement_T', 'MetaModelElement_S'], 'PortAdapterOpCallExpr': ['MetaModelElement_S'], 'IVariableDeclaration': ['MetaModelElement_T', 'MetaModelElement_S'], 'Function': ['MetaModelElement_T', 'MetaModelElement_S'], 'IControlledNamedConcept': ['MetaModelElement_T', 'MetaModelElement_S'], 'FunctionPrototype': ['MetaModelElement_T'], 'Component': ['MetaModelElement_S'], 'TestCase': ['MetaModelElement_S'], 'RunnableTrigger': ['MetaModelElement_S'], 'BinaryArithmeticExpression': ['MetaModelElement_S'], 'ComponentInstance': ['MetaModelElement_S'], 'GenericMemberRef': ['MetaModelElement_T'], 'ICSInterfaceContents': ['MetaModelElement_S'], 'ReferenceExpr': ['MetaModelElement_T'], 'RequiredPortOpCallExpr': ['MetaModelElement_S'], 'BinaryOrderedComparisonExpression': ['MetaModelElement_T', 'MetaModelElement_S'], 'TypeDefType': ['MetaModelElement_T'], 'IComponentContent': ['MetaModelElement_S'], 'INamedConcept': ['MetaModelElement_T', 'MetaModelElement_S'], 'TypeDef': ['MetaModelElement_T'], 'IOperationTriggerLike': ['MetaModelElement_S'], 'InitializeConfiguration': ['MetaModelElement_S'], 'ClientServerInterface': ['MetaModelElement_S'], 'IModuleContentContainer': ['MetaModelElement_T', 'MetaModelElement_S'], 'IHasPrefixes': ['MetaModelElement_T'], 'Port': ['MetaModelElement_S'], 'IFunctionLike': ['MetaModelElement_T', 'MetaModelElement_S']}
+        self["equations"] = []
         self["GUID__"] = 7298637889829306927
         
         # Set the node attributes
         self.vs[0]["MT_label__"] = """5"""
         self.vs[0]["mm__"] = """MT_post__match_contains"""
         self.vs[0]["GUID__"] = 2129491675721903084
-        self.vs[1]["MT_post__cardinality"] = """
-#===============================================================================
-# You can access the value of the current node's attribute value by: attr_value.
-# If the current node shall be created you MUST initialize it here!
-# You can access a node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# Note that the attribute values are those before the match is rewritten.
-# The order in which this code is executed depends on the label value
-# of the encapsulating node.
-# The given action must return the new value of the attribute.
-#===============================================================================
-
-return attr_value
-"""
         self.vs[1]["MT_label__"] = """1"""
-        self.vs[1]["MT_post__name"] = """
-#===============================================================================
-# You can access the value of the current node's attribute value by: attr_value.
-# If the current node shall be created you MUST initialize it here!
-# You can access a node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# Note that the attribute values are those before the match is rewritten.
-# The order in which this code is executed depends on the label value
-# of the encapsulating node.
-# The given action must return the new value of the attribute.
-#===============================================================================
-
-return attr_value
-"""
         self.vs[1]["mm__"] = """MT_post__MetaModelElement_S"""
-        self.vs[1]["MT_post__classtype"] = """
+        self.vs[1]["MT_post__attr1"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
 # If the current node shall be created you MUST initialize it here!
@@ -86,37 +53,9 @@ return attr_value
         self.vs[2]["MT_label__"] = """10"""
         self.vs[2]["mm__"] = """MT_post__trace_link"""
         self.vs[2]["GUID__"] = 7158037091990660655
-        self.vs[3]["MT_post__cardinality"] = """
-#===============================================================================
-# You can access the value of the current node's attribute value by: attr_value.
-# If the current node shall be created you MUST initialize it here!
-# You can access a node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# Note that the attribute values are those before the match is rewritten.
-# The order in which this code is executed depends on the label value
-# of the encapsulating node.
-# The given action must return the new value of the attribute.
-#===============================================================================
-
-return attr_value
-"""
         self.vs[3]["MT_label__"] = """2"""
-        self.vs[3]["MT_post__name"] = """
-#===============================================================================
-# You can access the value of the current node's attribute value by: attr_value.
-# If the current node shall be created you MUST initialize it here!
-# You can access a node labelled n by: PreNode('n').
-# To access attribute x of node n, use: PreNode('n')['x'].
-# Note that the attribute values are those before the match is rewritten.
-# The order in which this code is executed depends on the label value
-# of the encapsulating node.
-# The given action must return the new value of the attribute.
-#===============================================================================
-
-return attr_value
-"""
         self.vs[3]["mm__"] = """MT_post__MetaModelElement_T"""
-        self.vs[3]["MT_post__classtype"] = """
+        self.vs[3]["MT_post__attr1"] = """
 #===============================================================================
 # You can access the value of the current node's attribute value by: attr_value.
 # If the current node shall be created you MUST initialize it here!
@@ -141,7 +80,10 @@ return attr_value
         self.vs[6]["mm__"] = """MT_post__apply_contains"""
         self.vs[6]["GUID__"] = 6622716255487794805
 
-        from HBuildTraceabilityForRuleLHS import HBuildTraceabilityForRuleLHS
+        try:
+            from .HBuildTraceabilityForRuleLHS import HBuildTraceabilityForRuleLHS
+        except Exception:
+            from HBuildTraceabilityForRuleLHS import HBuildTraceabilityForRuleLHS
         self.pre = HBuildTraceabilityForRuleLHS()
     
     def action(self, PostNode, graph):
@@ -167,6 +109,10 @@ return attr_value
         """
         graph = packet.graph
         
+        vs = graph.vs
+        
+        import numpy.random as nprnd
+        
         # Build a dictionary {label: node index} mapping each label of the pattern to a node in the graph to rewrite.
         # Because of the uniqueness property of labels in a rule, we can store all LHS labels
         # and subsequently add the labels corresponding to the nodes to be created.
@@ -179,19 +125,27 @@ return attr_value
         #===============================================================================
         # Create new nodes
         #===============================================================================
+        
+        node_num = graph.vcount()
+        
+        graph.add_vertices(1)
+        
         # trace_link10
-        new_node = graph.add_node()
-        labels['10'] = new_node
-        graph.vs[new_node][Himesis.Constants.META_MODEL] = 'trace_link'
+        labels['10'] = node_num
+        vs[node_num]["mm__"] = 'trace_link'
+        vs[node_num]['GUID__'] = nprnd.randint(9223372036854775806)
+        
+        node_num += 1
         
         #===============================================================================
         # Create new edges
         #===============================================================================
+        graph.add_edges([
         # trace_link10 -> MetaModelElement_S1
-        graph.add_edges([(labels['10'], labels['1'])])
+        (labels['10'], labels['1']),
         # MetaModelElement_T2 -> trace_link10
-        graph.add_edges([(labels['2'], labels['10'])])
-        
+        (labels['2'], labels['10']),
+        ])
         #===============================================================================
         # Set the output pivots
         #===============================================================================
@@ -201,7 +155,7 @@ return attr_value
         #===============================================================================
         try:
             self.action(lambda i: graph.vs[labels[i]], graph)
-        except Exception, e:
+        except Exception as e:
             raise Exception('An error has occurred while applying the post-action', e)
         #===============================================================================
         # Finally, delete nodes (this will automatically delete the adjacent edges)

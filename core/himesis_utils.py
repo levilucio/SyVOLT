@@ -16,11 +16,20 @@ import re
 import sys
 import os
 import uuid
-import cPickle as pickle
+from profiler import *
+
+#cross-compatibility
+try:
+    import cPickle as pickle
+except ImportError:
+    import pickle as pickle
+
 import igraph
 import time
 
 from copy import deepcopy
+
+from util.newsizeof import total_size
 
 
 #used to check if a constraint has been left as default
@@ -91,7 +100,7 @@ def graph_to_dot(name, g, verbosity = 0):
         
         if node_type in ['paired_with', 'MT_pre__paired_with', 'MT_post__paired_with']:
             try:
-                vattr += "\\n Rule Name = " + str(v['rulename'])
+                vattr += "\\n Rule = " + str(v['rulename'])
             except KeyError:
                 pass
             fillcolor="lightgray"
@@ -101,7 +110,7 @@ def graph_to_dot(name, g, verbosity = 0):
             
         elif node_type in ['match_contains', 'MT_pre__match_contains', 'MT_post__match_contains']:
             fillcolor="#F798A1"
-            vattr += "\\n" + str(v['GUID__'])
+            #vattr += "\\n" + str(v['GUID__'])
             
         elif node_type in ['ApplyModel', 'MT_pre__ApplyModel', 'MT_post__ApplyModel']:
             fillcolor="#FED017"  
@@ -149,14 +158,14 @@ def graph_to_dot(name, g, verbosity = 0):
             #vattr += '\\n'
             if node_type in ['directLink_S', 'directLink_T']:
                 try:
-                    vattr += "A_Type = " + str(v['associationType'])
+                    vattr += "\\naType = " + str(v['attr1'])
                 except Exception:
                     pass
 
             elif node_type in ['MT_pre__directLink_T', 'MT_pre__directLink_S']:
                 try:
-                    code_str = re.sub('"', '', v['MT_pre__associationType'])
-                    vattr += get_attribute("\\nA_Type = ", code_str)
+                    code_str = re.sub('"', '', v['MT_pre__attr1'])
+                    vattr += get_attribute("\\naType = ", code_str)
                 except KeyError:
                     pass
                 
@@ -165,7 +174,7 @@ def graph_to_dot(name, g, verbosity = 0):
         elif node_type in ['indirectLink_S', 'indirectLink_T', 'MT_pre__indirectLink_S', 'MT_pre__indirectLink_T', 'MT_post__indirectLink_S', 'MT_post__indirectLink_T']:
             fillcolor="lightgreen"
             try:
-                vattr += "\\n Classtype = " + str(v['associationType'])
+                vattr += "\\n Classtype = " + str(v['attr1'])
             except Exception:
                 pass
 
@@ -219,7 +228,15 @@ def graph_to_dot(name, g, verbosity = 0):
         
         vattr = ''
         
-        
+    try:
+        eqs = g["equations"]
+        eq_str = "Equations\\n"
+        for eq in eqs:
+            eq_str += str(eq) + "\\n"
+        graph.add_node(pydot.Node(eq_str, style="filled", fillcolor='lightblue'))
+
+    except KeyError:
+        print("No equations on " + g.name)
         
         
     for e in g.es:
@@ -284,13 +301,34 @@ def draw_graphs(title, g_dir):
             graph_to_dot(title +"_" + name, graph)
 
 
+def get_preds_and_succs(graph):
+    vcount = graph.vcount()
+    preds = [[0, []] for i in range(vcount)]
+    succs = [[0, []] for i in range(vcount)]
+
+    for e in graph.es:
+        source = e.source
+        target = e.target
+        preds[target][0] += 1
+        preds[target][1].append(source)
+
+        succs[source][0] += 1
+        succs[source][1].append(target)
+
+    return preds, succs
+
+
 import gzip
-import himesis as Himesis
+import hashlib
 
 
 def set_do_pickle(value):
     global do_pickle
     do_pickle = value
+
+def set_compression(value):
+    global compression
+    compression = value
 
 pickle_dir = "pickle/"
 
@@ -299,40 +337,107 @@ def shrink_graph(graph):
     value = graph.__reduce__()
 
     if do_pickle:
-        f = gzip.open(pickle_dir + graph.name, "wb")
+        file_name = hashlib.sha256(graph.name.encode("UTF-8")).hexdigest()
+
+        if compression == 0:
+            f = open(pickle_dir + file_name, "wb")
+        else:
+            f = gzip.open(pickle_dir + file_name, "wb", compresslevel=compression)
         pickle.dump(value, f)
         f.close()
-        return graph.name
+        return file_name
     else:
         return value
 
 
 #expand the graph from an array
+#@do_cprofile
 def expand_graph(small_value):
 
-
     if do_pickle:
-        f = gzip.open(pickle_dir + small_value, "rb")
+        if compression == 0:
+            f = open(pickle_dir + small_value, "rb")
+        else:
+            f = gzip.open(pickle_dir + small_value, "rb")
         small_value = pickle.load(f)
         f.close()
+    else:
+        small_value = deepcopy(small_value)
 
     #igraph_dict = small_value
 
     #constructor = igraph_dict[0]
+    #print(small_value)
     vcount, edgelist, is_directed, gattrs, vattrs, eattrs = small_value[1]
 
-    graph = igraph.Graph(n=vcount, edges=edgelist, directed=is_directed, graph_attrs=gattrs, vertex_attrs=vattrs, edge_attrs=eattrs)
-    graph.__dict__ = small_value[2]
+
+    do_old_expand = False
+    if do_old_expand:
+
+
+
+        graph = igraph.Graph(n=vcount, edges=edgelist, directed=is_directed, graph_attrs=gattrs, vertex_attrs=vattrs, edge_attrs=eattrs)
+        graph.name = small_value[0]
+
+        from .himesis import Himesis
+        graph.__class__ = Himesis
+
+    else:
+
+        from .himesis import Himesis
+        graph = Himesis.__new__(Himesis)
+        graph.__class__ = Himesis
+
+        igraph.GraphBase.__init__(graph, vcount, edgelist, is_directed)
+        # Set the graph attributes
+        for key, value in gattrs.items():
+            graph[key] = value
+
+
+        # Set the vertex attributes
+        vs = graph.vs
+        for key, value in vattrs.items():
+            vs[key] = value
+
+        graph.name = small_value[0]
+
+        #assume no edge attributes
 
 
     #graph.name = name
     #print(graph.name)
     #graph.is_compiled = is_compiled
 
-    graph.__class__ = Himesis.Himesis
+
 
     return graph
 
+def update_equation(part, node_mapping):
+    if part[0] == 'constant':
+        return part
+    elif part[0] == 'concat':
+
+        left = update_equation(part[1][0], node_mapping)
+        right = update_equation(part[1][1], node_mapping)
+        return ('concat', (left, right))
+    else:
+        try:
+            return (node_mapping[part[0]], part[1])
+        except KeyError:
+            print("Could not update equation")
+            print(part)
+            print(node_mapping)
+
+def update_equations(equations, node_mapping):
+    new_eqs = []
+    #print("Initial equations: " + str(equations))
+    for eq in equations:
+        LHS = update_equation(eq[0], node_mapping)
+        RHS = update_equation(eq[1], node_mapping)
+        new_eqs.append((LHS, RHS))
+
+    #print("After equations: " + str(new_eqs))
+    return new_eqs
 
 def disjoint_model_union(first, second):
     """
@@ -340,18 +445,22 @@ def disjoint_model_union(first, second):
     """
     
     if first.vcount() == 0:
-        return deepcopy(second)
+        return second.copy()
     
     if second.vcount() == 0:
-        return deepcopy(first)
+        return first.copy()
 
     nb_nodes_first = first.vcount()
-     
+
+    node_num_mapping = {}
+
     # first copy the nodes
     attrib_names = second.vs[0].attribute_names()
     for index_v in second.node_iter():
         new_node_index = first.add_node()
         new_node = first.vs[new_node_index]
+
+        node_num_mapping[index_v] = new_node_index
 
         for attrib in attrib_names:
 
@@ -373,6 +482,8 @@ def disjoint_model_union(first, second):
     for index_e in second.edge_iter():
         edges.append((nb_nodes_first + second.es[index_e].tuple[0],nb_nodes_first + second.es[index_e].tuple[1]))
     first.add_edges(edges)
+
+    first["equations"] += update_equations(deepcopy(second["equations"]), node_num_mapping)
 
     return first
 
@@ -459,15 +570,15 @@ def print_graph(graph):
     pretty print a Himesis graph
     """
     # first print the nodes
-    print 'Name: ' + graph.name
-    #print "MM: " + str(graph["mm__"])
+    print('Name: ' + graph.name)
+    #print("MM: " + str(graph["mm__"]))
 
     #try:
-    #    print "MT_constraint__" + str(graph["MT_constraint__"])
+    #    print("MT_constraint__" + str(graph["MT_constraint__"]))
     #except Exception:
     #    pass
 
-    print 'Nodes: '
+    print('Nodes: ')
     nodes = {}
     node_num_mapping = {}
 
@@ -480,10 +591,10 @@ def print_graph(graph):
 
     print("Num of nodes: " + str(len(nodes.keys())))
     for v in sorted(nodes.keys()):
-        print v
+        print(v)
 
     # then print the edges
-    print '\nEdges: '
+    print('\nEdges: ')
     print("Num of edges: " + str(len(graph.get_edgelist())))
     #for e in graph.get_edgelist():
     #    print("Edge: " + str(e))

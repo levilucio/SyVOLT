@@ -1,6 +1,6 @@
 
 from util.infinity import INFINITY
-from arule import ARule
+from .arule import ARule
 from t_core.resolver import Resolver
 
 

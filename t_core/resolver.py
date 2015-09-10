@@ -1,6 +1,6 @@
 
-from rule_primitive import RulePrimitive
-from messages import TransformationException
+from .rule_primitive import RulePrimitive
+from .messages import TransformationException
 
 
 class Resolver(RulePrimitive):

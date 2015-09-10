@@ -58,4 +58,18 @@ docs/_build/
 
 patterns/*.py
 ./property_prover_rules/**
+*.py.bak
+
+
+# Latex
+*.pptx#
+*.aux
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+
+*.bbl
+*.blg
 

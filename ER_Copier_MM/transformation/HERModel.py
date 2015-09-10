@@ -1,161 +1,79 @@
+
+
 from core.himesis import Himesis
-import cPickle as pickle
-import uuid
 
 class HERModel(Himesis):
     def __init__(self):
         """
-        Creates the himesis graph representing the DSLTrans rule ERModel.
+        Creates the himesis graph representing the AToM3 model HERModel.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(HERModel, self).__init__(name='HERModel', num_nodes=0, edges=[])
-        
-        
-        # Set the graph attributes
-        # TODO Levi, need some help here because I don't know where does 
-        # this value come from.
-        self["mm__"] = pickle.loads("""(lp1
-S'HimesisMM'
-p2
-a.""")
-        
-        self["name"] = """ERModel"""
-        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ERModel')
-        
-        # match model. We only support one match model
-        self.add_node()
-        self.vs[0]["mm__"] = """MatchModel"""
-        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ERModelmatchmodel0')
-        
-        # apply model node
-        self.add_node()
-        self.vs[1]["mm__"] = """ApplyModel"""
-        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ERModelapplymodel1')
-        
-        # paired with relation between match and apply models
-        self.add_node()
-        self.vs[2]["mm__"] = """paired_with"""
-        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ERModelpairedwith2')
-        
-    	# match class ERModel() node
-    	self.add_node()
-    	self.vs[3]["name"] = """"""
-        self.vs[3]["classtype"] = """ERModel"""
-        self.vs[3]["mm__"] = """ERModel"""
-        self.vs[3]["cardinality"] = """+"""
-        #self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# match_contains node for class ERModel()
-        self.add_node()
-        self.vs[4]["mm__"] = """match_contains"""
-        #self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains4')
-        
-        
-    	# apply class ERModel() node
-    	self.add_node()
-    	self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """ERModel"""
-        self.vs[5]["mm__"] = """ERModel"""
-        self.vs[5]["cardinality"] = """1"""
-        #self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply_contains node for class ERModel()
-        self.add_node()
-        self.vs[6]["mm__"] = """apply_contains"""
-        #self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains6')
-        
-        
-        
-        
-        
-        
-    	# has match attribute name() node
-    	self.add_node()
-    	self.vs[7]["mm__"] = """hasAttribute_S"""
-        #self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
-    	# match attribute name() node
-    	self.add_node()
-    	self.vs[8]["name"] = """name"""
-        self.vs[8]["mm__"] = """Attribute"""
-        self.vs[8]["Type"] = """'String'"""
-        #self.vs[8]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-        
-        
-    	# has apply attribute name() node
-    	self.add_node()
-    	self.vs[9]["mm__"] = """hasAttribute_T"""
-        #self.vs[9]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
-    	# apply attribute name() node
-    	self.add_node()
-    	self.vs[10]["name"] = """name"""
-        self.vs[10]["mm__"] = """Attribute"""
-        self.vs[10]["Type"] = """'String'"""
-        #self.vs[10]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply attribute equation name() node
-    	self.add_node()
-    	self.vs[11]["name"] = """eq_"""
-        self.vs[11]["mm__"] = """Equation"""
-        #self.vs[11]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
-    	# apply attribute equation left expr name() node
-    	self.add_node()
-    	self.vs[12]["mm__"] = """leftExpr"""
-        #self.vs[12]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
-    	# apply attribute equation right expr name() node
-    	self.add_node()
-    	self.vs[13]["mm__"] = """rightExpr"""
-        #self.vs[13]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
-    	# has apply attribute ApplyAttribute() node
-    	self.add_node()
-    	self.vs[14]["mm__"] = """hasAttribute_T"""
-        #self.vs[14]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
-    	# apply attribute ApplyAttribute() node
-    	self.add_node()
-    	self.vs[15]["name"] = """ApplyAttribute"""
-        self.vs[15]["mm__"] = """Attribute"""
-        self.vs[15]["Type"] = """'String'"""
-        #self.vs[15]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-    	# apply attribute equation ApplyAttribute() node
-    	self.add_node()
-    	self.vs[16]["name"] = """eq_"""
-        self.vs[16]["mm__"] = """Equation"""
-        #self.vs[16]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
-    	# apply attribute equation left expr ApplyAttribute() node
-    	self.add_node()
-    	self.vs[17]["mm__"] = """leftExpr"""
-        #self.vs[17]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
-    	# apply attribute equation right expr ApplyAttribute() node
-    	self.add_node()
-    	self.vs[18]["mm__"] = """rightExpr"""
-        #self.vs[18]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
-    	# apply attribute atom ApplyAttribute() node
-    	self.add_node()
-    	self.vs[19]["name"] = """solveRef"""
-        self.vs[19]["mm__"] = """Constant"""
-        self.vs[19]["Type"] = """'String'"""
-        #self.vs[19]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom19')
-        
+        super(HERModel, self).__init__(name='HERModel', num_nodes=20, edges=[])
         
         # Add the edges
-        self.add_edges([
-    		(0,4), # matchmodel -> match_contains
-    		(4,3), # match_contains -> match_class ERModel()
-    		(1,6), # applymodel -> apply_contains
-    		(6,5), # apply_contains -> apply_class ERModel()
-    		(3,7), # match_class ERModel() -> has_match_attribute name ()
-    		(7,8), #  has_match_attribute name () -> match_attribute name ()
-    		(5,9), # apply_class ERModel() -> has_apply_attribute name ()
-    		(9,10), #  has_apply_attribute name () -> apply_attribute name ()
-    		(11,12), #  equation of apply attribute name () -> left_expr
-    		(12,10), #  left_expr -> apply_attribute name ()
-    		(11,13), #  equation of apply attribute name () -> right_expr
-    		(13,8), # right_expr --> term
-    		(5,14), # apply_class ERModel() -> has_apply_attribute ApplyAttribute ()
-    		(14,15), #  has_apply_attribute ApplyAttribute () -> apply_attribute ApplyAttribute ()
-    		(16,17), #  equation of apply attribute ApplyAttribute () -> left_expr
-    		(17,15), #  left_expr -> apply_attribute ApplyAttribute ()
-    		(16,18), #  equation of apply attribute ApplyAttribute () -> right_expr
-    		(18,19), # right_expr --> term
-        	(0,2), # matchmodel -> pairedwith
-        	(2,1) # pairedwith -> applyModel
-        ])
+        self.add_edges([[0, 3], [3, 7], [1, 4], [4, 8], [7, 5], [5, 17], [8, 9], [9, 18], [10, 11], [11, 18], [10, 12], [12, 17], [8, 13], [13, 19], [14, 15], [15, 19], [14, 16], [16, 6], [0, 2], [2, 1]])
+        # Set the graph attributes
+        self["mm__"] = ['HimesisMM']
+        self["name"] = """ERModel"""
+        self["GUID__"] = 4171038043616414325
         
+        # Set the node attributes
+        self.vs[0]["mm__"] = """MatchModel"""
+        self.vs[0]["GUID__"] = 4512663400472351928
+        self.vs[1]["mm__"] = """ApplyModel"""
+        self.vs[1]["GUID__"] = 6244414176588088193
+        self.vs[2]["mm__"] = """paired_with"""
+        self.vs[2]["GUID__"] = 7000487000152932634
+        self.vs[3]["mm__"] = """match_contains"""
+        self.vs[3]["GUID__"] = 165365788856568210
+        self.vs[4]["mm__"] = """apply_contains"""
+        self.vs[4]["GUID__"] = 2154512863199825677
+        self.vs[5]["mm__"] = """hasAttribute_S"""
+        self.vs[5]["GUID__"] = 197712037214367933
+        self.vs[6]["name"] = """solveRef"""
+        self.vs[6]["mm__"] = """Constant"""
+        self.vs[6]["Type"] = """'String'"""
+        self.vs[6]["GUID__"] = 8492928095288938738
+        self.vs[7]["name"] = """"""
+        self.vs[7]["classtype"] = """ERModel"""
+        self.vs[7]["mm__"] = """ERModel"""
+        self.vs[7]["cardinality"] = """+"""
+        self.vs[7]["GUID__"] = 1650102309724733921
+        self.vs[8]["name"] = """"""
+        self.vs[8]["classtype"] = """ERModel"""
+        self.vs[8]["mm__"] = """ERModel"""
+        self.vs[8]["cardinality"] = """1"""
+        self.vs[8]["GUID__"] = 2896827362335233277
+        self.vs[9]["mm__"] = """hasAttribute_T"""
+        self.vs[9]["GUID__"] = 6224962757229049194
+        self.vs[10]["name"] = """eq_"""
+        self.vs[10]["mm__"] = """Equation"""
+        self.vs[10]["GUID__"] = 3359015630222095242
+        self.vs[11]["mm__"] = """leftExpr"""
+        self.vs[11]["GUID__"] = 4887102402598949145
+        self.vs[12]["mm__"] = """rightExpr"""
+        self.vs[12]["GUID__"] = 6671575401739768827
+        self.vs[13]["mm__"] = """hasAttribute_T"""
+        self.vs[13]["GUID__"] = 3412283339953997332
+        self.vs[14]["name"] = """eq_"""
+        self.vs[14]["mm__"] = """Equation"""
+        self.vs[14]["GUID__"] = 6185635365126398523
+        self.vs[15]["mm__"] = """leftExpr"""
+        self.vs[15]["GUID__"] = 2933419803779705957
+        self.vs[16]["mm__"] = """rightExpr"""
+        self.vs[16]["GUID__"] = 342747187405875960
+        self.vs[17]["name"] = """name"""
+        self.vs[17]["mm__"] = """Attribute"""
+        self.vs[17]["Type"] = """'String'"""
+        self.vs[17]["GUID__"] = 3303680429438829040
+        self.vs[18]["name"] = """name"""
+        self.vs[18]["mm__"] = """Attribute"""
+        self.vs[18]["Type"] = """'String'"""
+        self.vs[18]["GUID__"] = 5219894342221821178
+        self.vs[19]["name"] = """ApplyAttribute"""
+        self.vs[19]["mm__"] = """Attribute"""
+        self.vs[19]["Type"] = """'String'"""
+        self.vs[19]["GUID__"] = 8456501794368173136
+

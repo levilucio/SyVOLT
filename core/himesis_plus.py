@@ -9,26 +9,27 @@ def get_node_num(graph, node):
 
 #find the nodes with these mm names
 def find_nodes_with_mm(graph, mm_names):
-    nodes = []
-    for node in graph.vs:
-        if node["mm__"] in mm_names:
-            nodes.append(node)
-    return nodes
+    return [node for node in graph.vs if node["mm__"] in mm_names]
 
 #=========================
 #look for the nodes attached to the link_node
 def look_for_attached(link_node, graph):
     attached_node_nums = []
 
-    #find the index of the node
-    node_num = get_node_num(graph, link_node)
+    try:
+        node_num = int(link_node)
+    except TypeError:
+        #find the index of the node
+        node_num = link_node.index
 
     #check the edge list to see if there are attached edges
-    for edge in graph.get_edgelist():
-        if node_num == edge[0]:
-            attached_node_nums.append(edge[1])
-        elif node_num == edge[1]:
-            attached_node_nums.append(edge[0])
+    for edge in graph.es:
+        source = edge.source
+        target = edge.target
+        if node_num == source:
+            attached_node_nums.append(target)
+        elif node_num == target:
+            attached_node_nums.append(source)
 
     attached_node_nums.append(node_num)
     return attached_node_nums
@@ -51,37 +52,56 @@ def look_for_attached_of_attached(link_node, graph):
 #until a stop mm is reached
 #stop mm nodes will not be included in the returned array
 #while stop_and_include mms will
-def flood_find_nodes(start_node, graph, stop_mms = None, stop_and_include_mms = None):
+def flood_find_nodes(start_node, graph, stop_mms = None, stop_and_include_mms = None, filter_mms = None):
 
     return_nodes = []
+
+    mms = graph.vs["mm__"]
+
+    vcount = graph.vcount()
+
+    neighbours = [[] for i in range(vcount)]
+
+    for e in graph.es:
+        source = e.source
+        target = e.target
+        neighbours[source].append(target)
+        neighbours[target].append(source)
+
+    visited = [False] * vcount
 
     node_stack = [start_node]
     while len(node_stack) > 0:
         node = node_stack.pop()
 
+        visited[node] = True
+
+        #don't look at already-included nodes
+        #if node in return_nodes:
+        #    continue
+
         #include this node, but don't add neighbours to the stack
-        if stop_and_include_mms is not None and graph.vs[node]["mm__"] in stop_and_include_mms:
+        if stop_and_include_mms is not None and mms[node] in stop_and_include_mms:
             return_nodes.append(node)
             continue
 
         #don't add neighbours to the stack
-        if stop_mms is not None and graph.vs[node]["mm__"] in stop_mms:
+        if stop_mms is not None and mms[node] in stop_mms:
             continue
 
-        #don't look at already-included nodes
-        if node in return_nodes:
-            continue
-
-        return_nodes.append(node)
+        if not filter_mms or mms[node] in filter_mms:
+            return_nodes.append(node)
 
         #add neighbours to the stack
-        for edge in graph.get_edgelist():
-            if node == edge[0]:
-                node_stack.append(edge[1])
-            elif node == edge[1]:
-                node_stack.append(edge[0])
+        new_neighbours = [n for n in neighbours[node] if not visited[n]]
+        node_stack += new_neighbours
+        # for edge in graph.get_edgelist():
+        #     if node == edge[0]:
+        #         node_stack.append(edge[1])
+        #     elif node == edge[1]:
+        #         node_stack.append(edge[0])
 
-    return return_nodes
+    return set(return_nodes)
 
 
 #Very hacky way of making the graph a HimesisPreConditionPatternLHS
@@ -119,7 +139,7 @@ def makePreConditionPatternNAC(graph):
 
 
 def makePostConditionPattern(old_graph):
-    graph = copy.deepcopy(old_graph)
+    graph = old_graph.copy()
 
     # force the class to be different
     graph.__class__ = HimesisPostConditionPattern
@@ -148,7 +168,7 @@ def buildPreListFromClassNames(classNameList):
 
 #TODO: Use Himesis' copy operation to do this
 def copy_graph(graph2):
-    graph1 = copy.deepcopy(graph2)
+    graph1 = graph2.copy()
 
     try:
         graph1.nodes_label = copy.deepcopy(graph2.nodes_label)
@@ -168,7 +188,7 @@ def copy_graph(graph2):
     #graph1.import_name = copy.deepcopy(graph2.import_name)
 
     try:
-        graph1.NACs = copy.deepcopy(graph2.NACs)
+        graph1.NACs = [N.copy() for N in graph2.NACs]
     except AttributeError:
         pass
 

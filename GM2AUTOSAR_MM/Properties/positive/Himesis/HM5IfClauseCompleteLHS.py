@@ -1,8 +1,6 @@
 
 
 from core.himesis import Himesis, HimesisPreConditionPatternLHS
-import cPickle as pickle
-from uuid import UUID
 
 class HM5IfClauseCompleteLHS(HimesisPreConditionPatternLHS):
     def __init__(self):
@@ -17,12 +15,7 @@ class HM5IfClauseCompleteLHS(HimesisPreConditionPatternLHS):
         # Add the edges
         self.add_edges([])
         # Set the graph attributes
-        self["mm__"] = pickle.loads("""(lp1
-S'MT_pre__GM2AUTOSAR_MM'
-p2
-aS'MoTifRule'
-p3
-a.""")
+        self["mm__"] = ['MT_pre__GM2AUTOSAR_MM', 'MoTifRule']
         self["MT_constraint__"] = """#===============================================================================
 # This code is executed after the nodes in the LHS have been matched.
 # You can access a matched node labelled n by: PreNode('n').
@@ -35,29 +28,12 @@ a.""")
 return True
 """
         self["name"] = """"""
-        self["GUID__"] = UUID('bec70552-6e15-4217-8980-e2efa43286f8')
+        self["GUID__"] = 332413397767786338
         
         # Set the node attributes
         self.vs[0]["MT_pivotOut__"] = """element1"""
         self.vs[0]["MT_subtypeMatching__"] = False
         self.vs[0]["MT_pre__classtype"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
-        self.vs[0]["MT_label__"] = """1"""
-        self.vs[0]["MT_subtypes__"] = pickle.loads("""(lp1
-.""")
-        self.vs[0]["MT_dirty__"] = False
-        self.vs[0]["mm__"] = """MT_pre__System"""
-        self.vs[0]["MT_pre__cardinality"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
@@ -81,7 +57,23 @@ return True
 
 return True
 """
-        self.vs[0]["GUID__"] = UUID('6ef2095a-aa78-4387-84c6-ed3438d6e2b0')
+        self.vs[0]["MT_label__"] = """1"""
+        self.vs[0]["mm__"] = """MT_pre__System"""
+        self.vs[0]["MT_subtypes__"] = []
+        self.vs[0]["MT_dirty__"] = False
+        self.vs[0]["MT_pre__cardinality"] = """
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by: attr_value.
+# You can access any attribute x of this node by: this['x'].
+# If the constraint relies on attribute values from other nodes,
+# use the LHS/NAC constraint instead.
+# The given constraint must evaluate to a boolean expression.
+#===============================================================================
+
+return True
+"""
+        self.vs[0]["GUID__"] = 4651957413714850004
 
     def eval_classtype1(self, attr_value, this):
         
@@ -97,7 +89,7 @@ return True
         return True
 
 
-    def eval_cardinality1(self, attr_value, this):
+    def eval_name1(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.
@@ -111,7 +103,7 @@ return True
         return True
 
 
-    def eval_name1(self, attr_value, this):
+    def eval_cardinality1(self, attr_value, this):
         
         #===============================================================================
         # This code is executed when evaluating if a node shall be matched by this rule.

@@ -1,9 +1,14 @@
 
-from rule_primitive import RulePrimitive
-from messages import TransformationException
+from .rule_primitive import RulePrimitive
+from .messages import TransformationException
 from core.himesis import Himesis
+from core.himesis_utils import update_equations
+
+from solver.simple_attribute_equation_evaluator import is_consistent
 
 import traceback
+
+import re
 
 class Rewriter(RulePrimitive):
     '''
@@ -22,7 +27,9 @@ class Rewriter(RulePrimitive):
         s = s.split(' ')
         s.insert(1, '[%s]' % self.condition.name)
         return reduce(lambda x, y: x + ' ' + y, s)
-    
+
+
+
     def packet_in(self, packet, verbosity = 0):
         self.exception = None
         self.is_success = False
@@ -40,8 +47,51 @@ class Rewriter(RulePrimitive):
 
                 if verbosity > 0:
                     print("Rewriter mapping: " + str(mapping))
+
+                graph_eqs = packet.graph["equations"]
+                cond_eqs = self.condition["equations"]
+
+
+                if cond_eqs and graph_eqs != cond_eqs:
+
+                    #get dict from label to node num
+                    RHS_labels = {}
+                    for n in range(self.condition.vcount()):
+                        node = self.condition.vs[n]
+                        if node["MT_label__"] == '':
+                            continue
+                        RHS_labels[int(node["MT_label__"])] = n
+
+                    new_mapping = {}
+                    j=0
+                    vcount = packet.graph.vcount()
+
+                    #make sure to iterate in natural order
+                    for label in sorted(RHS_labels.keys()):
+
+                        #use mapping if possible
+                        if str(label) in mapping:
+                            new_mapping[label] = mapping[str(label)]
+
+                        #assume nodes will be added in this order
+                        #TODO: Handle deleted nodes
+                        else:
+                            new_mapping[label] = vcount + j
+                            j += 1
+
+
+                    new_cond_eqs = update_equations(cond_eqs, new_mapping)
+                    packet.graph["equations"] += new_cond_eqs
+
+                    if not is_consistent(packet.graph):
+                        if verbosity >= 2:
+                            print("Graph: " + packet.graph.name + " has inconsistent equations inside")
+                        self.is_success = False
+                        return packet
+
                 self.condition.execute(packet, mapping)     # Sets dirty nodes as well
-            except Exception, e:
+
+            except Exception as e:
 
                 tb = traceback.format_exc()
                 print("Rewriter Error: " + str(e))
@@ -64,3 +114,19 @@ class Rewriter(RulePrimitive):
             
             self.is_success = True
             return packet
+
+
+class Rewriter_Equation(Rewriter):
+
+    def __init__(self, condition):
+        super(Rewriter_Equation, self).__init__(condition)
+
+
+    def packet_in(self, packet, verbosity = 0):
+
+        packet = super(Rewriter_Equation, self).packet_in(packet, verbosity)
+
+        if self.is_success:
+            solver.combine_equations(packet.graph, self.condition)
+
+        return packet

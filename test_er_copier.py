@@ -18,7 +18,7 @@ from PyRamify import PyRamify
 from core.himesis_utils import graph_to_dot
 
 
-from ecore_utils import EcoreUtils
+from util.ecore_utils import EcoreUtils
 from core.himesis_plus import buildPreListFromClassNames
 
 # all runs are the same transformation, but with different metamodel elements
@@ -52,10 +52,9 @@ from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 class Test():
 
     def setUp(self, args):
-        pyramify = PyRamify(draw_svg=args.draw_svg)
+        pyramify = PyRamify(verbosity = args.verbosity, draw_svg = args.draw_svg)
 
-        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
-            pyramify.ramify_directory("ER_Copier_MM/transformation/")
+        self.rules = pyramify.get_rules("ER_Copier_MM/transformation/")
 
         #print("Rules: " + str(self.rules.keys()))
 
@@ -76,10 +75,7 @@ class Test():
                     return selected_transformation
 
     def test_correct_ecore_copier(self,args):
-
-        pyramify = PyRamify(verbosity = 2)
-
-
+        pyramify = PyRamify(verbosity = args.verbosity, draw_svg = args.draw_svg)
 
         a1 = self.rules['HAttribute']
 
@@ -137,9 +133,13 @@ class Test():
                 if v["mm__"] in set(subclass_info.keys()):
                     v["MT_subtypes__"] = subclass_info[v["mm__"]]
                     v["MT_subtypeMatching__"] = True
-                    print "Changed one: " + v["mm__"]
-                                                                  
-        
+                    print("Changed one: " + v["mm__"])
+
+        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns,
+         self.ruleCombinators] = \
+            pyramify.ramify_directory("ER_Copier_MM/transformation/", transformation)
+
+
         # add polymorphism for the matchers
         for matcher_key in self.matchRulePatterns.keys():
             change_subtype_matching(self.matchRulePatterns[matcher_key][0],subclasses_dict)
@@ -153,10 +153,10 @@ class Test():
         # add polymorphism for the tracers
         for tracer_key in self.ruleTraceCheckers.keys():
             if self.ruleTraceCheckers[tracer_key] != None:
-                change_subtype_matching(self.ruleTraceCheckers[tracer_key],subclasses_dict)      
-            
+                change_subtype_matching(self.ruleTraceCheckers[tracer_key],subclasses_dict)
 
-        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, 1, args)#
+
+        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, args)#
     
         ts0 = time.time()
         s.build_path_conditions()
@@ -176,49 +176,49 @@ class Test():
             print(num_pcs_s)
             #raise Exception(num_pcs_s)
   
-        # print("printing path conditions")
-        # #s.print_path_conditions_screen()
-        #
-        # # check for reachability of rules
-        #
-        # for layer in s.transformation:
-        #     for rule in layer:
-        #         StateProperty.checkRuleReachability(s.rule_names[rule.name], s)
-        #
-        #
-        # #s.print_path_conditions_file()
-        #
-        # prop1_atomic = AtomicStateProperty(HProperty1_isolatedLHS(), HProperty1_connectedLHS(),
-        #     HProperty1_completeLHS())
+        print("printing path conditions")
+        #s.print_path_conditions_screen()
+
+        # check for reachability of rules
+
+        for layer in s.transformation:
+            for rule in layer:
+                StateProperty.checkRuleReachability(s.rule_names[rule.name], s)
+
+
+        #s.print_path_conditions_file()
+
+        prop1_atomic = AtomicStateProperty(HProperty1_isolatedLHS(), HProperty1_connectedLHS(),
+            HProperty1_completeLHS())
         #
         # graph_to_dot("prop1_iso", HProperty1_isolatedLHS())
         # graph_to_dot("prop1_con", HProperty1_connectedLHS())
         # graph_to_dot("prop1_comp", HProperty1_completeLHS())
+
         #
-        # #
-        # # #atomic_properties = [["HDaughterMother_atomic", HDaughterMother_atomic]]
-        # atomic_properties = [["prop1", prop1_atomic]]
-        #
-        # for name, atomic_prop in atomic_properties:
-        #     ts0 = time.time()
-        #     finalresult = StateProperty.verifyCompositeStateProperty(s, atomic_prop)
-        #     ts1 = time.time()
-        #     if len(finalresult) == 0:
-        #         print("Atomic property: " + name + " holds\n")
-        #     else:
-        #         print("Atomic property: " + name + " does not hold\n")
-        #     print("Took " + str(ts1 - ts0) + " time to verify ")
+        # #atomic_properties = [["HDaughterMother_atomic", HDaughterMother_atomic]]
+        atomic_properties = [["prop1", prop1_atomic]]
+
+        for name, atomic_prop in atomic_properties:
+            ts0 = time.time()
+            finalresult = StateProperty.verifyCompositeStateProperty(s, atomic_prop)
+            ts1 = time.time()
+            if len(finalresult) == 0:
+                print("Atomic property: " + name + " holds\n")
+            else:
+                print("Atomic property: " + name + " does not hold\n")
+            print("Took " + str(ts1 - ts0) + " time to verify ")
 
 
 
 def _print_states(self,s):
         for state in s.symbStateSpace:
-            print "----------"
+            print("----------")
             if state == ():
-                print 'Empty'
+                print('Empty')
             else:
                 for s in state:
-                    print s.name
+                    print(s.name)
 
 
 if __name__ == "__main__":
@@ -246,6 +246,9 @@ if __name__ == "__main__":
 
     parser.add_argument('--num_rules', type = int, default = -1,
                         help = 'Number of rules in the transformation (default: -1)')
+    parser.add_argument('--verbosity', type = int, default = 0,
+                        help = 'Verbosity level (default: 0 - minimum output)')
+
     args = parser.parse_args()
 
 

@@ -1,278 +1,445 @@
-
-
 from core.himesis import Himesis
-import cPickle as pickle
-from uuid import UUID
+import uuid
 
 class HTransition2HListenBranch(Himesis):
     def __init__(self):
         """
-        Creates the himesis graph representing the AToM3 model HTransition2HListenBranch.
+        Creates the himesis graph representing the DSLTrans rule Transition2HListenBranch.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(HTransition2HListenBranch, self).__init__(name='HTransition2HListenBranch', num_nodes=82, edges=[])
+        super(HTransition2HListenBranch, self).__init__(name='HTransition2HListenBranch', num_nodes=0, edges=[])
         
-        # Add the edges
-        self.add_edges([(8, 31), (31, 0), (0, 32), (32, 6), (6, 33), (33, 13), (8, 34), (34, 3), (3, 35), (35, 10), (14, 36), (36, 8), (15, 37), (37, 17), (17, 38), (38, 9), (9, 39), (39, 4), (9, 40), (40, 16), (16, 41), (41, 18), (18, 42), (42, 7), (49, 43), (43, 26), (50, 44), (44, 75), (51, 45), (45, 27), (52, 46), (46, 28), (53, 47), (47, 29), (54, 48), (48, 30), (17, 21), (21, 77), (4, 22), (22, 78), (15, 23), (23, 79), (18, 24), (24, 80), (7, 25), (25, 81), (62, 0), (2, 1), (1, 68), (1, 69), (1, 70), (1, 71), (1, 72), (1, 73), (1, 74), (5, 61), (61, 8), (5, 62), (5, 63), (63, 6), (5, 64), (64, 13), (5, 65), (65, 14), (5, 66), (66, 3), (5, 67), (67, 10), (10, 11), (11, 75), (14, 12), (12, 76), (19, 14), (5, 2), (68, 15), (15, 19), (72, 16), (71, 4), (49, 55), (50, 56), (51, 57), (52, 58), (53, 59), (54, 60), (69, 17), (70, 9), (73, 18), (74, 7), (7, 20), (20, 8), (55, 76), (56, 77), (57, 78), (58, 79), (59, 80), (60, 81)])
+        
         # Set the graph attributes
-        self["mm__"] = pickle.loads("""(lp1
-S'UMLRT2Kiltera_MM'
-p2
-a.""")
-        self["name"] = """Transition2HListenBranch"""
-        self["GUID__"] = UUID('3ee24548-694e-4f76-8546-bf2ff2460e8f')
+        self["mm__"] = ['HimesisMM']
         
-        # Set the node attributes
-        self.vs[0]["name"] = """vertex1"""
-        self.vs[0]["classtype"] = """Vertex"""
-        self.vs[0]["mm__"] = """Vertex"""
-        self.vs[0]["cardinality"] = """+"""
-        self.vs[0]["GUID__"] = UUID('1bc4de9c-de3a-486d-82d9-dd21bdf6bc72')
+        self["name"] = """Transition2HListenBranch"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Transition2HListenBranch')
+        
+        # match model. We only support one match model
+        self.add_node()
+        self.vs[0]["mm__"] = """MatchModel"""
+        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Transition2HListenBranchmatchmodel0')
+        
+        # apply model node
+        self.add_node()
         self.vs[1]["mm__"] = """ApplyModel"""
-        self.vs[1]["GUID__"] = UUID('05827421-cce3-4589-bf40-648f2884d8cb')
+        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Transition2HListenBranchapplymodel1')
+        
+        # paired with relation between match and apply models
+        self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["GUID__"] = UUID('0a2dcd4f-31e5-4e74-88b8-eff660853532')
-        self.vs[3]["name"] = """triggerS1"""
-        self.vs[3]["classtype"] = """Trigger_S"""
-        self.vs[3]["mm__"] = """Trigger_S"""
-        self.vs[3]["cardinality"] = """1"""
-        self.vs[3]["GUID__"] = UUID('d85cfc8d-1557-40ac-bac8-79107f5d8fbd')
-        self.vs[4]["name"] = """triggerT1"""
-        self.vs[4]["classtype"] = """Trigger_T"""
-        self.vs[4]["mm__"] = """Trigger_T"""
-        self.vs[4]["cardinality"] = """1"""
-        self.vs[4]["GUID__"] = UUID('f5cdbf55-15c8-4acd-9f31-3c8334a92a7b')
-        self.vs[5]["mm__"] = """MatchModel"""
-        self.vs[5]["GUID__"] = UUID('737bff6d-3965-451c-aa2c-208a20339337')
-        self.vs[6]["name"] = """statemachine1"""
-        self.vs[6]["classtype"] = """StateMachine"""
-        self.vs[6]["mm__"] = """StateMachine"""
-        self.vs[6]["cardinality"] = """+"""
-        self.vs[6]["GUID__"] = UUID('1f1ebb9f-7485-4f56-b558-9de103a4ed0c')
-        self.vs[7]["name"] = """inst1"""
-        self.vs[7]["classtype"] = """Inst"""
-        self.vs[7]["mm__"] = """Inst"""
-        self.vs[7]["cardinality"] = """1"""
-        self.vs[7]["GUID__"] = UUID('954fcfd0-09ac-4e4f-bc33-45c59da61ff4')
-        self.vs[8]["name"] = """transition1"""
-        self.vs[8]["classtype"] = """Transition"""
-        self.vs[8]["mm__"] = """Transition"""
-        self.vs[8]["cardinality"] = """+"""
-        self.vs[8]["GUID__"] = UUID('f4deb6e0-2b23-4f15-99ce-ef8eaf8cf7d2')
-        self.vs[9]["name"] = """seq1"""
-        self.vs[9]["classtype"] = """Seq"""
-        self.vs[9]["mm__"] = """Seq"""
+        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Transition2HListenBranchpairedwith2')
+        self.vs[2]["rulename"] = """Transition2HListenBranch"""
+        
+        # match class Transition() node
+        self.add_node()
+        self.vs[3]["name"] = """"""
+        self.vs[3]["classtype"] = """Transition"""
+        self.vs[3]["mm__"] = """Transition"""
+        self.vs[3]["cardinality"] = """+"""
+        #self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match_contains node for class Transition()
+        self.add_node()
+        self.vs[4]["mm__"] = """match_contains"""
+        #self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains4')
+        # match class Vertex() node
+        self.add_node()
+        self.vs[5]["name"] = """"""
+        self.vs[5]["classtype"] = """Vertex"""
+        self.vs[5]["mm__"] = """Vertex"""
+        self.vs[5]["cardinality"] = """+"""
+        #self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match_contains node for class Vertex()
+        self.add_node()
+        self.vs[6]["mm__"] = """match_contains"""
+        #self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains6')
+        # match class StateMachine() node
+        self.add_node()
+        self.vs[7]["name"] = """"""
+        self.vs[7]["classtype"] = """StateMachine"""
+        self.vs[7]["mm__"] = """StateMachine"""
+        self.vs[7]["cardinality"] = """+"""
+        #self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match_contains node for class StateMachine()
+        self.add_node()
+        self.vs[8]["mm__"] = """match_contains"""
+        #self.vs[8]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains8')
+        # match class State() node
+        self.add_node()
+        self.vs[9]["name"] = """"""
+        self.vs[9]["classtype"] = """State"""
+        self.vs[9]["mm__"] = """State"""
         self.vs[9]["cardinality"] = """1"""
-        self.vs[9]["GUID__"] = UUID('2f794c95-01fb-408c-a55e-0637f72af4ed')
-        self.vs[10]["name"] = """signal1"""
-        self.vs[10]["classtype"] = """Signal"""
-        self.vs[10]["mm__"] = """Signal"""
-        self.vs[10]["cardinality"] = """1"""
-        self.vs[10]["GUID__"] = UUID('fe8bd3c4-7ace-4845-ab1f-161245ce1ad7')
-        self.vs[11]["mm__"] = """hasAttribute_S"""
-        self.vs[11]["GUID__"] = UUID('b12aa90b-85fd-4d12-ac0e-a7b0dee6ae97')
-        self.vs[12]["mm__"] = """hasAttribute_S"""
-        self.vs[12]["GUID__"] = UUID('e7883ef6-af77-48e8-bf04-91a2d2d89156')
-        self.vs[13]["name"] = """state1"""
-        self.vs[13]["classtype"] = """State"""
-        self.vs[13]["mm__"] = """State"""
+        #self.vs[9]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match_contains node for class State()
+        self.add_node()
+        self.vs[10]["mm__"] = """match_contains"""
+        #self.vs[10]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains10')
+        # match class Trigger() node
+        self.add_node()
+        self.vs[11]["name"] = """"""
+        self.vs[11]["classtype"] = """Trigger"""
+        self.vs[11]["mm__"] = """Trigger"""
+        self.vs[11]["cardinality"] = """1"""
+        #self.vs[11]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match_contains node for class Trigger()
+        self.add_node()
+        self.vs[12]["mm__"] = """match_contains"""
+        #self.vs[12]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains12')
+        # match class Signal() node
+        self.add_node()
+        self.vs[13]["name"] = """"""
+        self.vs[13]["classtype"] = """Signal"""
+        self.vs[13]["mm__"] = """Signal"""
         self.vs[13]["cardinality"] = """1"""
-        self.vs[13]["GUID__"] = UUID('8ca78a4d-7c7d-436f-bea7-ee34a5cea11b')
-        self.vs[14]["name"] = """state2"""
-        self.vs[14]["classtype"] = """State"""
-        self.vs[14]["mm__"] = """State"""
-        self.vs[14]["cardinality"] = """+"""
-        self.vs[14]["GUID__"] = UUID('beee3f1e-1274-4be8-b82a-edf8d0e9698a')
-        self.vs[15]["name"] = """listen1"""
-        self.vs[15]["classtype"] = """Listen"""
-        self.vs[15]["mm__"] = """Listen"""
-        self.vs[15]["cardinality"] = """1"""
-        self.vs[15]["GUID__"] = UUID('8d8f4ad8-77f4-45cd-9e63-338dcb70315a')
-        self.vs[16]["name"] = """listen2"""
-        self.vs[16]["classtype"] = """Listen"""
-        self.vs[16]["mm__"] = """Listen"""
-        self.vs[16]["cardinality"] = """1"""
-        self.vs[16]["GUID__"] = UUID('d4eceea8-4cd4-461e-9cf8-544ad927ddb0')
-        self.vs[17]["name"] = """listenbranch1"""
+        #self.vs[13]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match_contains node for class Signal()
+        self.add_node()
+        self.vs[14]["mm__"] = """match_contains"""
+        #self.vs[14]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains14')
+        # match class State() node
+        self.add_node()
+        self.vs[15]["name"] = """"""
+        self.vs[15]["classtype"] = """State"""
+        self.vs[15]["mm__"] = """State"""
+        self.vs[15]["cardinality"] = """+"""
+        #self.vs[15]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match_contains node for class State()
+        self.add_node()
+        self.vs[16]["mm__"] = """match_contains"""
+        #self.vs[16]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains16')
+        
+        
+        # apply class ListenBranch() node
+        self.add_node()
+        self.vs[17]["name"] = """"""
         self.vs[17]["classtype"] = """ListenBranch"""
         self.vs[17]["mm__"] = """ListenBranch"""
         self.vs[17]["cardinality"] = """1"""
-        self.vs[17]["GUID__"] = UUID('3f211e49-880b-408e-9629-9a55669ff566')
-        self.vs[18]["name"] = """listenbranch2"""
-        self.vs[18]["classtype"] = """ListenBranch"""
-        self.vs[18]["mm__"] = """ListenBranch"""
-        self.vs[18]["cardinality"] = """1"""
-        self.vs[18]["GUID__"] = UUID('caf043e2-c0b1-4045-a843-2a1361187201')
-        self.vs[19]["type"] = """ruleDef"""
-        self.vs[19]["mm__"] = """backward_link"""
-        self.vs[19]["GUID__"] = UUID('5e611ba7-5cd1-4109-a4c3-c39e0b1903a4')
-        self.vs[20]["type"] = """ruleDef"""
-        self.vs[20]["mm__"] = """backward_link"""
-        self.vs[20]["GUID__"] = UUID('03e1232b-5130-4ea1-a1b7-11e294d50ba0')
-        self.vs[21]["mm__"] = """hasAttribute_T"""
-        self.vs[21]["GUID__"] = UUID('45fa50f3-2d1b-477d-9763-240fc30a8513')
-        self.vs[22]["mm__"] = """hasAttribute_T"""
-        self.vs[22]["GUID__"] = UUID('5dba26d8-a6bc-47bc-98b4-cb9ee04d4ccf')
-        self.vs[23]["mm__"] = """hasAttribute_T"""
-        self.vs[23]["GUID__"] = UUID('6d33f8a8-5ca2-4671-a9f9-14d205b2c397')
-        self.vs[24]["mm__"] = """hasAttribute_T"""
-        self.vs[24]["GUID__"] = UUID('e6da46ff-fda0-469a-9d61-051d1682bc10')
-        self.vs[25]["mm__"] = """hasAttribute_T"""
-        self.vs[25]["GUID__"] = UUID('c0f765fc-4a6c-45fc-b4d2-ea96e7c7f80f')
-        self.vs[26]["name"] = """true"""
-        self.vs[26]["mm__"] = """Constant"""
-        self.vs[26]["Type"] = """'Bool'"""
-        self.vs[26]["GUID__"] = UUID('f3be4b58-cd32-48f7-a1b8-afb99cc827d9')
-        self.vs[27]["name"] = """exit_in"""
-        self.vs[27]["mm__"] = """Constant"""
-        self.vs[27]["Type"] = """'String'"""
-        self.vs[27]["GUID__"] = UUID('0732295e-c242-42c4-8749-2418e41bfa41')
-        self.vs[28]["name"] = """listenhproc"""
-        self.vs[28]["mm__"] = """Constant"""
-        self.vs[28]["Type"] = """'String'"""
-        self.vs[28]["GUID__"] = UUID('e1685fa8-4b0b-48e2-afb6-3238e147be32')
-        self.vs[29]["name"] = """exack_in"""
-        self.vs[29]["mm__"] = """Constant"""
-        self.vs[29]["Type"] = """'String'"""
-        self.vs[29]["GUID__"] = UUID('f6ca55c4-e358-4b8e-aa3c-03bb4ba6d324')
-        self.vs[30]["name"] = """instfortrans"""
-        self.vs[30]["mm__"] = """Constant"""
-        self.vs[30]["Type"] = """'String'"""
-        self.vs[30]["GUID__"] = UUID('bbe8fe42-8094-4be2-ae68-e1b60888e791')
+        #self.vs[17]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class ListenBranch()
+        self.add_node()
+        self.vs[18]["mm__"] = """apply_contains"""
+        #self.vs[18]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains18')
+        # apply class Seq() node
+        self.add_node()
+        self.vs[19]["name"] = """"""
+        self.vs[19]["classtype"] = """Seq"""
+        self.vs[19]["mm__"] = """Seq"""
+        self.vs[19]["cardinality"] = """1"""
+        #self.vs[19]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Seq()
+        self.add_node()
+        self.vs[20]["mm__"] = """apply_contains"""
+        #self.vs[20]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains20')
+        # apply class Trigger() node
+        self.add_node()
+        self.vs[21]["name"] = """"""
+        self.vs[21]["classtype"] = """Trigger"""
+        self.vs[21]["mm__"] = """Trigger"""
+        self.vs[21]["cardinality"] = """1"""
+        #self.vs[21]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Trigger()
+        self.add_node()
+        self.vs[22]["mm__"] = """apply_contains"""
+        #self.vs[22]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains22')
+        # apply class Listen() node
+        self.add_node()
+        self.vs[23]["name"] = """"""
+        self.vs[23]["classtype"] = """Listen"""
+        self.vs[23]["mm__"] = """Listen"""
+        self.vs[23]["cardinality"] = """1"""
+        #self.vs[23]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Listen()
+        self.add_node()
+        self.vs[24]["mm__"] = """apply_contains"""
+        #self.vs[24]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains24')
+        # apply class ListenBranch() node
+        self.add_node()
+        self.vs[25]["name"] = """"""
+        self.vs[25]["classtype"] = """ListenBranch"""
+        self.vs[25]["mm__"] = """ListenBranch"""
+        self.vs[25]["cardinality"] = """1"""
+        #self.vs[25]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class ListenBranch()
+        self.add_node()
+        self.vs[26]["mm__"] = """apply_contains"""
+        #self.vs[26]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains26')
+        # apply class Inst() node
+        self.add_node()
+        self.vs[27]["name"] = """"""
+        self.vs[27]["classtype"] = """Inst"""
+        self.vs[27]["mm__"] = """Inst"""
+        self.vs[27]["cardinality"] = """1"""
+        #self.vs[27]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Inst()
+        self.add_node()
+        self.vs[28]["mm__"] = """apply_contains"""
+        #self.vs[28]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains28')
+        # apply class Listen() node
+        self.add_node()
+        self.vs[29]["name"] = """"""
+        self.vs[29]["classtype"] = """Listen"""
+        self.vs[29]["mm__"] = """Listen"""
+        self.vs[29]["cardinality"] = """1"""
+        #self.vs[29]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply_contains node for class Listen()
+        self.add_node()
+        self.vs[30]["mm__"] = """apply_contains"""
+        #self.vs[30]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains30')
+        
+        
+        # match association Transition--src-->Vertex node
+        self.add_node()
         self.vs[31]["associationType"] = """src"""
         self.vs[31]["mm__"] = """directLink_S"""
-        self.vs[31]["GUID__"] = UUID('a8954290-23d8-455d-b2ca-fd073d375a52')
+        #self.vs[31]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc31')
+        # match association Vertex--owningStateMachine-->StateMachine node
+        self.add_node()
         self.vs[32]["associationType"] = """owningStateMachine"""
         self.vs[32]["mm__"] = """directLink_S"""
-        self.vs[32]["GUID__"] = UUID('4b32ef81-159d-4189-bdd4-060d7424b616')
+        #self.vs[32]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc32')
+        # match association StateMachine--states-->State node
+        self.add_node()
         self.vs[33]["associationType"] = """states"""
         self.vs[33]["mm__"] = """directLink_S"""
-        self.vs[33]["GUID__"] = UUID('00068c65-4bb0-4b06-aa51-4dfe2f0dde10')
+        #self.vs[33]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc33')
+        # match association Transition--triggers-->Trigger node
+        self.add_node()
         self.vs[34]["associationType"] = """triggers"""
         self.vs[34]["mm__"] = """directLink_S"""
-        self.vs[34]["GUID__"] = UUID('e431ba8e-8f8f-435e-b27e-ded08fcf66e2')
+        #self.vs[34]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc34')
+        # match association Trigger--signal-->Signal node
+        self.add_node()
         self.vs[35]["associationType"] = """signal"""
         self.vs[35]["mm__"] = """directLink_S"""
-        self.vs[35]["GUID__"] = UUID('ca8e9d75-98df-4eb0-a72b-09a472f9af43')
+        #self.vs[35]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc35')
+        # match association State--outgoingTransitions-->Transition node
+        self.add_node()
         self.vs[36]["associationType"] = """outgoingTransitions"""
         self.vs[36]["mm__"] = """directLink_S"""
-        self.vs[36]["GUID__"] = UUID('890d4c6b-fb00-4f15-a571-f3500c6130f6')
-        self.vs[37]["associationType"] = """branches"""
+        #self.vs[36]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc36')
+        
+        # apply association ListenBranch--p-->Seq node
+        self.add_node()
+        self.vs[37]["associationType"] = """p"""
         self.vs[37]["mm__"] = """directLink_T"""
-        self.vs[37]["GUID__"] = UUID('514e5bde-de47-4f3c-bf48-b2df05822c52')
+        #self.vs[37]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc37')
+        # apply association Seq--p-->Trigger node
+        self.add_node()
         self.vs[38]["associationType"] = """p"""
         self.vs[38]["mm__"] = """directLink_T"""
-        self.vs[38]["GUID__"] = UUID('214d42ee-24d5-4bc7-b890-277225c14226')
+        #self.vs[38]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc38')
+        # apply association Seq--p-->Listen node
+        self.add_node()
         self.vs[39]["associationType"] = """p"""
         self.vs[39]["mm__"] = """directLink_T"""
-        self.vs[39]["GUID__"] = UUID('866c9bef-5404-4c27-aa87-53ef7ebabe92')
-        self.vs[40]["associationType"] = """p"""
+        #self.vs[39]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc39')
+        # apply association Listen--branches-->ListenBranch node
+        self.add_node()
+        self.vs[40]["associationType"] = """branches"""
         self.vs[40]["mm__"] = """directLink_T"""
-        self.vs[40]["GUID__"] = UUID('05e2cb93-3e2c-4b04-9c87-4434f2fc5889')
-        self.vs[41]["associationType"] = """branches"""
+        #self.vs[40]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc40')
+        # apply association ListenBranch--p-->Inst node
+        self.add_node()
+        self.vs[41]["associationType"] = """p"""
         self.vs[41]["mm__"] = """directLink_T"""
-        self.vs[41]["GUID__"] = UUID('99ca667a-3bfe-4705-a3f5-0d3a5912f529')
-        self.vs[42]["associationType"] = """p"""
+        #self.vs[41]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc41')
+        # apply association Listen--branches-->ListenBranch node
+        self.add_node()
+        self.vs[42]["associationType"] = """branches"""
         self.vs[42]["mm__"] = """directLink_T"""
-        self.vs[42]["GUID__"] = UUID('6b5b9c1d-4469-4edb-ad04-9f5013895044')
-        self.vs[43]["mm__"] = """rightExpr"""
-        self.vs[43]["GUID__"] = UUID('a60ed65b-426b-41f1-ab04-b86f7493ed36')
-        self.vs[44]["mm__"] = """rightExpr"""
-        self.vs[44]["GUID__"] = UUID('0fbd7fe1-5341-4687-b3ac-1d33539aabd8')
-        self.vs[45]["mm__"] = """rightExpr"""
-        self.vs[45]["GUID__"] = UUID('b59080c5-0d13-4ff0-abbc-35fb614c9897')
-        self.vs[46]["mm__"] = """rightExpr"""
-        self.vs[46]["GUID__"] = UUID('9cddc545-baf2-441f-86cc-92ce630538c1')
-        self.vs[47]["mm__"] = """rightExpr"""
-        self.vs[47]["GUID__"] = UUID('082fc966-f2d8-492f-8bdd-1806ca85f07e')
-        self.vs[48]["mm__"] = """rightExpr"""
-        self.vs[48]["GUID__"] = UUID('1a2ad781-f113-4d01-85fe-21db2ba4f010')
-        self.vs[49]["name"] = """eq1"""
+        #self.vs[42]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc42')
+        
+        # backward association Transition---->Inst node
+        self.add_node()
+        self.vs[43]["type"] = """ruleDef"""
+        self.vs[43]["mm__"] = """backward_link"""
+        #self.vs[43]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink43')
+        # backward association State---->Listen node
+        self.add_node()
+        self.vs[44]["type"] = """ruleDef"""
+        self.vs[44]["mm__"] = """backward_link"""
+        #self.vs[44]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink44')
+        
+        
+        # has match attribute name() node
+        self.add_node()
+        self.vs[45]["mm__"] = """hasAttribute_S"""
+        #self.vs[45]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # match attribute name() node
+        self.add_node()
+        self.vs[46]["name"] = """name"""
+        self.vs[46]["mm__"] = """Attribute"""
+        self.vs[46]["Type"] = """'String'"""
+        #self.vs[46]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        
+        
+        # has apply attribute channel() node
+        self.add_node()
+        self.vs[47]["mm__"] = """hasAttribute_T"""
+        #self.vs[47]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute channel() node
+        self.add_node()
+        self.vs[48]["name"] = """channel"""
+        self.vs[48]["mm__"] = """Attribute"""
+        self.vs[48]["Type"] = """'String'"""
+        #self.vs[48]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation channel() node
+        self.add_node()
+        self.vs[49]["name"] = """eq_"""
         self.vs[49]["mm__"] = """Equation"""
-        self.vs[49]["GUID__"] = UUID('62ece347-7270-4b97-bbbf-04f9f9683e62')
-        self.vs[50]["name"] = """eq2"""
-        self.vs[50]["mm__"] = """Equation"""
-        self.vs[50]["GUID__"] = UUID('456b0404-c787-45de-a132-ca7f23f3aede')
-        self.vs[51]["name"] = """eq3"""
-        self.vs[51]["mm__"] = """Equation"""
-        self.vs[51]["GUID__"] = UUID('1cfd6829-2c33-4a1e-b70b-20a51bd58190')
-        self.vs[52]["name"] = """eq4"""
-        self.vs[52]["mm__"] = """Equation"""
-        self.vs[52]["GUID__"] = UUID('fa499fe6-6304-40f5-95a6-14f7b1fd9838')
-        self.vs[53]["name"] = """eq5"""
-        self.vs[53]["mm__"] = """Equation"""
-        self.vs[53]["GUID__"] = UUID('a5fd6086-37b1-4a4f-a658-3e42fb03dc8d')
-        self.vs[54]["name"] = """eq6"""
+        #self.vs[49]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr channel() node
+        self.add_node()
+        self.vs[50]["mm__"] = """leftExpr"""
+        #self.vs[50]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr channel() node
+        self.add_node()
+        self.vs[51]["mm__"] = """rightExpr"""
+        #self.vs[51]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # has apply attribute channel() node
+        self.add_node()
+        self.vs[52]["mm__"] = """hasAttribute_T"""
+        #self.vs[52]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute channel() node
+        self.add_node()
+        self.vs[53]["name"] = """channel"""
+        self.vs[53]["mm__"] = """Attribute"""
+        self.vs[53]["Type"] = """'String'"""
+        #self.vs[53]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation channel() node
+        self.add_node()
+        self.vs[54]["name"] = """eq_"""
         self.vs[54]["mm__"] = """Equation"""
-        self.vs[54]["GUID__"] = UUID('3c10e884-ea26-488c-9780-74eb4bdcf23d')
+        #self.vs[54]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr channel() node
+        self.add_node()
         self.vs[55]["mm__"] = """leftExpr"""
-        self.vs[55]["GUID__"] = UUID('c67cad5e-b368-4e80-bfd3-b4f97a61017b')
-        self.vs[56]["mm__"] = """leftExpr"""
-        self.vs[56]["GUID__"] = UUID('44f80750-ebac-4e0f-bd7f-0d7f8e252a84')
-        self.vs[57]["mm__"] = """leftExpr"""
-        self.vs[57]["GUID__"] = UUID('c0a3d18f-ae90-4690-af90-98138d39df02')
-        self.vs[58]["mm__"] = """leftExpr"""
-        self.vs[58]["GUID__"] = UUID('e434d8d5-2d88-4193-b904-0f3d19cf6cec')
-        self.vs[59]["mm__"] = """leftExpr"""
-        self.vs[59]["GUID__"] = UUID('5050b57f-e885-4bd7-81a2-f34be5d26df2')
-        self.vs[60]["mm__"] = """leftExpr"""
-        self.vs[60]["GUID__"] = UUID('0b492383-c127-4575-8faf-21b3d1c903af')
-        self.vs[61]["mm__"] = """match_contains"""
-        self.vs[61]["GUID__"] = UUID('c0be8196-770d-4f51-b25e-dab36e29cf4b')
-        self.vs[62]["mm__"] = """match_contains"""
-        self.vs[62]["GUID__"] = UUID('50a1a97f-0254-4dde-81f0-12b42a22ebd6')
-        self.vs[63]["mm__"] = """match_contains"""
-        self.vs[63]["GUID__"] = UUID('225ca59c-a6a0-4a88-8e6b-96574f3c98a8')
-        self.vs[64]["mm__"] = """match_contains"""
-        self.vs[64]["GUID__"] = UUID('7b5788b6-b606-48f8-9656-93e693995eda')
-        self.vs[65]["mm__"] = """match_contains"""
-        self.vs[65]["GUID__"] = UUID('2277dba2-189a-445f-b9c4-27b0f7c58e58')
-        self.vs[66]["mm__"] = """match_contains"""
-        self.vs[66]["GUID__"] = UUID('736e8e5f-3c98-4bb1-99bc-f844516e87dd')
-        self.vs[67]["mm__"] = """match_contains"""
-        self.vs[67]["GUID__"] = UUID('e3726be8-6d41-422d-902b-a305148e8779')
-        self.vs[68]["mm__"] = """apply_contains"""
-        self.vs[68]["GUID__"] = UUID('80159c74-8073-4fc9-93b8-df0f477c7835')
-        self.vs[69]["mm__"] = """apply_contains"""
-        self.vs[69]["GUID__"] = UUID('d48dece7-62c9-4db5-a422-ff81127bc28a')
-        self.vs[70]["mm__"] = """apply_contains"""
-        self.vs[70]["GUID__"] = UUID('8898c0ba-91c5-4040-a4d4-5bd0a578cf33')
-        self.vs[71]["mm__"] = """apply_contains"""
-        self.vs[71]["GUID__"] = UUID('f9755614-ad6b-4b95-b099-e1eda0c6e79e')
-        self.vs[72]["mm__"] = """apply_contains"""
-        self.vs[72]["GUID__"] = UUID('2f7515ba-9763-4069-99ae-90cfb0f7bea9')
-        self.vs[73]["mm__"] = """apply_contains"""
-        self.vs[73]["GUID__"] = UUID('b9313850-3fa3-4d09-ac61-bb329f2df6c6')
-        self.vs[74]["mm__"] = """apply_contains"""
-        self.vs[74]["GUID__"] = UUID('730df0e1-0188-49e0-ae8a-c19cd4adccbc')
-        self.vs[75]["name"] = """name"""
-        self.vs[75]["mm__"] = """Attribute"""
-        self.vs[75]["Type"] = """'String'"""
-        self.vs[75]["GUID__"] = UUID('9be4ace1-2323-41ba-aeed-4cf4ccf98179')
-        self.vs[76]["name"] = """isComposite"""
-        self.vs[76]["mm__"] = """Attribute"""
-        self.vs[76]["Type"] = """'Bool'"""
-        self.vs[76]["GUID__"] = UUID('32675aed-991a-449a-b2c4-f56f08b92b6d')
-        self.vs[77]["name"] = """channel"""
-        self.vs[77]["mm__"] = """Attribute"""
-        self.vs[77]["Type"] = """'String'"""
-        self.vs[77]["GUID__"] = UUID('2ec59199-b479-4bfc-b85f-e842658503da')
-        self.vs[78]["name"] = """channel"""
-        self.vs[78]["mm__"] = """Attribute"""
-        self.vs[78]["Type"] = """'String'"""
-        self.vs[78]["GUID__"] = UUID('68898411-f9f8-47fb-9757-a4a3e00bb1b6')
-        self.vs[79]["name"] = """pivot"""
-        self.vs[79]["mm__"] = """Attribute"""
-        self.vs[79]["Type"] = """'String'"""
-        self.vs[79]["GUID__"] = UUID('744d6f64-d812-4a5d-acdd-44d4b08aabde')
-        self.vs[80]["name"] = """channel"""
-        self.vs[80]["mm__"] = """Attribute"""
-        self.vs[80]["Type"] = """'String'"""
-        self.vs[80]["GUID__"] = UUID('9787b783-32f8-421f-a091-351de9db94ec')
-        self.vs[81]["name"] = """pivot"""
-        self.vs[81]["mm__"] = """Attribute"""
-        self.vs[81]["Type"] = """'String'"""
-        self.vs[81]["GUID__"] = UUID('490a35dc-6023-42ec-9c1c-837abce5b52f')
-
+        #self.vs[55]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr channel() node
+        self.add_node()
+        self.vs[56]["mm__"] = """rightExpr"""
+        #self.vs[56]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # apply attribute atom channel() node
+        self.add_node()
+        self.vs[57]["name"] = """exit_in"""
+        self.vs[57]["mm__"] = """Constant"""
+        self.vs[57]["Type"] = """'String'"""
+        #self.vs[57]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom57')
+        # has apply attribute channel() node
+        self.add_node()
+        self.vs[58]["mm__"] = """hasAttribute_T"""
+        #self.vs[58]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'has')
+        # apply attribute channel() node
+        self.add_node()
+        self.vs[59]["name"] = """channel"""
+        self.vs[59]["mm__"] = """Attribute"""
+        self.vs[59]["Type"] = """'String'"""
+        #self.vs[59]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # apply attribute equation channel() node
+        self.add_node()
+        self.vs[60]["name"] = """eq_"""
+        self.vs[60]["mm__"] = """Equation"""
+        #self.vs[60]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Equation')
+        # apply attribute equation left expr channel() node
+        self.add_node()
+        self.vs[61]["mm__"] = """leftExpr"""
+        #self.vs[61]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationLeftExpr')
+        # apply attribute equation right expr channel() node
+        self.add_node()
+        self.vs[62]["mm__"] = """rightExpr"""
+        #self.vs[62]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EquationRightExpr')
+        # apply attribute atom channel() node
+        self.add_node()
+        self.vs[63]["name"] = """exack_in"""
+        self.vs[63]["mm__"] = """Constant"""
+        self.vs[63]["Type"] = """'String'"""
+        #self.vs[63]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Atom63')
+        
+        
+        # Add the edges
+        self.add_edges([
+                (0,4), # matchmodel -> match_contains
+                (4,3), # match_contains -> match_class Transition()
+                (0,6), # matchmodel -> match_contains
+                (6,5), # match_contains -> match_class Vertex()
+                (0,8), # matchmodel -> match_contains
+                (8,7), # match_contains -> match_class StateMachine()
+                (0,10), # matchmodel -> match_contains
+                (10,9), # match_contains -> match_class State()
+                (0,12), # matchmodel -> match_contains
+                (12,11), # match_contains -> match_class Trigger()
+                (0,14), # matchmodel -> match_contains
+                (14,13), # match_contains -> match_class Signal()
+                (0,16), # matchmodel -> match_contains
+                (16,15), # match_contains -> match_class State()
+                (1,18), # applymodel -> apply_contains
+                (18,17), # apply_contains -> apply_class ListenBranch()
+                (1,20), # applymodel -> apply_contains
+                (20,19), # apply_contains -> apply_class Seq()
+                (1,22), # applymodel -> apply_contains
+                (22,21), # apply_contains -> apply_class Trigger()
+                (1,24), # applymodel -> apply_contains
+                (24,23), # apply_contains -> apply_class Listen()
+                (1,26), # applymodel -> apply_contains
+                (26,25), # apply_contains -> apply_class ListenBranch()
+                (1,28), # applymodel -> apply_contains
+                (28,27), # apply_contains -> apply_class Inst()
+                (1,30), # applymodel -> apply_contains
+                (30,29), # apply_contains -> apply_class Listen()
+                (3,31), # match_class Transition() -> association src
+                (31,5), # association src  -> match_class Vertex()
+                (5,32), # match_class Vertex() -> association owningStateMachine
+                (32,7), # association owningStateMachine  -> match_class StateMachine()
+                (7,33), # match_class StateMachine() -> association states
+                (33,9), # association states  -> match_class State()
+                (3,34), # match_class Transition() -> association triggers
+                (34,11), # association triggers  -> match_class Trigger()
+                (11,35), # match_class Trigger() -> association signal
+                (35,13), # association signal  -> match_class Signal()
+                (15,36), # match_class State() -> association outgoingTransitions
+                (36,3), # association outgoingTransitions  -> match_class Transition()
+                (17,37), # apply_class ListenBranch() -> association p
+                (37,19), # association p  -> apply_class Seq()
+                (19,38), # apply_class Seq() -> association p
+                (38,21), # association p  -> apply_class Trigger()
+                (19,39), # apply_class Seq() -> association p
+                (39,23), # association p  -> apply_class Listen()
+                (23,40), # apply_class Listen() -> association branches
+                (40,25), # association branches  -> apply_class ListenBranch()
+                (25,41), # apply_class ListenBranch() -> association p
+                (41,27), # association p  -> apply_class Inst()
+                (29,42), # apply_class Listen() -> association branches
+                (42,17), # association branches  -> apply_class ListenBranch()
+                (27,43), # apply_class Inst() -> backward_association
+                (43,3), #  backward_association -> apply_class Transition()
+                (29,44), # apply_class Listen() -> backward_association
+                (44,15), #  backward_association -> apply_class State()
+                (13,45), # match_class Signal() -> has_match_attribute name ()
+                (45,46), #  has_match_attribute name () -> match_attribute name ()
+                (17,47), # apply_class ListenBranch() -> has_apply_attribute channel ()
+                (47,48), #  has_apply_attribute channel () -> apply_attribute channel ()
+                (49,50), #  equation of apply attribute channel () -> left_expr
+                (50,48), #  left_expr -> apply_attribute channel ()
+                (49,51), #  equation of apply attribute channel () -> right_expr
+                (51,46), # right_expr --> term
+                (21,52), # apply_class Trigger() -> has_apply_attribute channel ()
+                (52,53), #  has_apply_attribute channel () -> apply_attribute channel ()
+                (54,55), #  equation of apply attribute channel () -> left_expr
+                (55,53), #  left_expr -> apply_attribute channel ()
+                (54,56), #  equation of apply attribute channel () -> right_expr
+                (56,57), # right_expr --> term
+                (25,58), # apply_class ListenBranch() -> has_apply_attribute channel ()
+                (58,59), #  has_apply_attribute channel () -> apply_attribute channel ()
+                (60,61), #  equation of apply attribute channel () -> left_expr
+                (61,59), #  left_expr -> apply_attribute channel ()
+                (60,62), #  equation of apply attribute channel () -> right_expr
+                (62,63), # right_expr --> term
+                (0,2), # matchmodel -> pairedwith
+                (2,1) # pairedwith -> applyModel
+        ])
+        

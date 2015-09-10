@@ -1,0 +1,289 @@
+[%
+var nodeIndex = 0;
+
+var matchModelIndex = 0;
+var applyModelIndex = 0;
+var pairedWithNodeIndex = 0;
+
+var matchClassNodeMap : new Map;
+var matchContainsClassNodeMap : new Map;
+
+var applyClassNodeMap : new Map;
+var applyContainsClassNodeMap : new Map;
+
+var matchAssociationNodeMap : new Map;
+
+var applyAssociationNodeMap : new Map;
+
+var backwardAssociationNodeMap: new Map;
+
+var equationsStr = "";
+
+%]
+from core.himesis import Himesis
+import uuid
+
+class H[%=rule.description%](Himesis):
+    def __init__(self):
+
+        [%
+        System.out.println("Rule: " + rule.description); 
+        %]    
+    
+        """
+        Creates the himesis graph representing the DSLTrans rule [%=rule.description%].
+        """
+        # Flag this instance as compiled now
+        self.is_compiled = True
+        
+        super(H[%=rule.description%], self).__init__(name='H[%=rule.description%]', num_nodes=0, edges=[])
+        
+        
+        # Set the graph attributes
+        self["mm__"] = ['HimesisMM']
+        
+        self["name"] = """[%=rule.description%]"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'[%=rule.description%]')
+        
+        # match model. We only support one match model
+        [%
+        matchModelIndex = nodeIndex;
+        %]
+        self.add_node()
+        self.vs[[%=nodeIndex%]]["mm__"] = """MatchModel"""
+        [%
+                nodeIndex = nodeIndex + 1;
+        %]
+        
+        # apply model node
+        [%
+        applyModelIndex = nodeIndex;
+        %]
+        self.add_node()
+        self.vs[[%=nodeIndex%]]["mm__"] = """ApplyModel"""
+        [%
+        nodeIndex = nodeIndex + 1;
+        %]
+        
+        # paired with relation between match and apply models
+        [%
+        pairedWithNodeIndex = nodeIndex;
+        %]
+        self.add_node()
+        self.vs[[%=nodeIndex%]]["mm__"] = """paired_with"""
+ [*-       self.vs[[%=nodeIndex%]]["rulename"] = """[%=rule.description%]""" *]
+        [%
+        nodeIndex = nodeIndex + 1;
+        %]
+        
+        [%
+                for(class in rule.match.first.class){
+                        matchClassNodeMap.put(class, nodeIndex);
+                        %]
+        # match class [%=class.className%]([%=class.id%]) node
+        self.add_node()
+[*-        self.vs[[%=nodeIndex%]]["name"] = """[%=class.id%]""" 
+        self.vs[[%=nodeIndex%]]["classtype"] = """[%=class.className%]"""*]
+        self.vs[[%=nodeIndex%]]["mm__"] = """[%=class.className%]""" 
+        self.vs[[%=nodeIndex%]]["attr1"] = """[%= getClassCardinality(class) %]""" 
+                [%
+                nodeIndex = nodeIndex + 1;
+                %]
+        # match_contains node for class [%=class.className%]([%=class.id%])
+                [%
+                matchContainsClassNodeMap.put(class, nodeIndex);
+                %]
+        self.add_node()
+        self.vs[[%=nodeIndex%]]["mm__"] = """match_contains"""
+                [%
+                nodeIndex = nodeIndex + 1;
+        }
+        %]
+        
+        
+        [%
+                for(class in rule.apply.class){
+                        applyClassNodeMap.put(class, nodeIndex);
+                        %]
+        # apply class [%=class.className%]([%=class.id%]) node
+        self.add_node()
+[*-        self.vs[[%=nodeIndex%]]["name"] = """[%=class.id%]""" 
+        self.vs[[%=nodeIndex%]]["classtype"] = """[%=class.className%]"""*]
+        self.vs[[%=nodeIndex%]]["mm__"] = """[%=class.className%]""" 
+        self.vs[[%=nodeIndex%]]["attr1"] = """1"""
+                [%
+                nodeIndex = nodeIndex + 1;
+                %]
+        # apply_contains node for class [%=class.className%]([%=class.id%])
+                [%
+                applyContainsClassNodeMap.put(class, nodeIndex);
+                %]
+        self.add_node()
+        self.vs[[%=nodeIndex%]]["mm__"] = """apply_contains"""
+                [%
+                nodeIndex = nodeIndex + 1;
+        }
+        %]
+        
+        
+        [%
+                for(association in rule.match.first.association){
+                        matchAssociationNodeMap.put(association, nodeIndex);
+                        %]
+        # match association [%=association.source.className%]--[%=association.associationName%]-->[%=association.target.className%] node
+        self.add_node()
+        self.vs[[%=nodeIndex%]]["attr1"] = """[%=association.associationName%]"""
+        self.vs[[%=nodeIndex%]]["mm__"] = """directLink_S"""
+                [%
+                nodeIndex = nodeIndex + 1;
+        }
+        %]
+        
+        [%
+                for(association in rule.apply.association){
+                        applyAssociationNodeMap.put(association, nodeIndex);
+                        %]
+        # apply association [%=association.source.className%]--[%=association.associationName%]-->[%=association.target.className%] node
+        self.add_node()
+        self.vs[[%=nodeIndex%]]["attr1"] = """[%=association.associationName%]"""
+        self.vs[[%=nodeIndex%]]["mm__"] = """directLink_T"""
+                [%
+                nodeIndex = nodeIndex + 1;
+        }
+        %]
+        
+        [%
+                for(backwardAssociation in rule.backwards){
+                        backwardAssociationNodeMap.put(backwardAssociation, nodeIndex);
+                        %]
+        # backward association [%=backwardAssociation.sourceClass.className%]---->[%=backwardAssociation.targetClass.className%] node
+        self.add_node()
+[*-        self.vs[[%=nodeIndex%]]["type"] = """ruleDef""" *]
+        self.vs[[%=nodeIndex%]]["mm__"] = """backward_link"""
+                [%
+                nodeIndex = nodeIndex + 1;
+        }
+        %]
+        
+        
+        [%
+                for(class in rule.match.first.class){
+                	for(matchAttribute in class.attribute){
+                    	if (matchAttribute.attributeValue <> null){
+                        	equationsStr = equationsStr + "((" + matchClassNodeMap.get(class) + ",'" + matchAttribute.attributeName + "'),";                                
+                            equationsStr = equationsStr + generateAttributeTermNodes(matchAttribute, matchAttribute.attributeValue, matchClassNodeMap, matchClassNodeMap, rule);    
+							equationsStr = equationsStr + "), ";   
+                        }
+                    }
+                }
+//        }
+        %]
+        
+        
+        [%
+                for(class in rule.apply.class){
+                        for(applyAttribute in class.attribute){
+                        
+                        		var attributeName = applyAttribute.attributeName;
+
+								// if we're dealing with a nameless attribute (for optimization), give it the keyword name "__ApplyAttribute"
+                        		if (applyAttribute.attributeName == "" or  applyAttribute.attributeName == null){
+                        			attributeName = "__ApplyAttribute";
+                        		}
+                        		
+                           		equationsStr = equationsStr + "((" +  applyClassNodeMap.get(class) + ",'" + attributeName + "'),";                                
+                                equationsStr = equationsStr + generateAttributeTermNodes(applyAttribute, applyAttribute.attributeValue, applyClassNodeMap, matchClassNodeMap, rule);    
+								equationsStr = equationsStr + "), ";   
+                        }
+                }
+        %]
+        
+        
+        # Add the edges
+        self.add_edges([
+                [%
+                for(class in rule.match.first.class){
+                %]
+                ([%= matchModelIndex%],[%= matchContainsClassNodeMap.get(class)%]), # matchmodel -> match_contains
+                ([%= matchContainsClassNodeMap.get(class)%],[%= matchClassNodeMap.get(class)%]), # match_contains -> match_class [%=class.className%]([%=class.id%])
+                [%
+                }
+
+                for(class in rule.apply.class){
+                %]
+                ([%= applyModelIndex%],[%= applyContainsClassNodeMap.get(class)%]), # applymodel -> apply_contains
+                ([%= applyContainsClassNodeMap.get(class)%],[%= applyClassNodeMap.get(class)%]), # apply_contains -> apply_class [%=class.className%]([%=class.id%])
+                [%
+                }
+
+                for(association in rule.match.first.association){
+                %]
+                ([%= matchClassNodeMap.get(association.source)%],[%= matchAssociationNodeMap.get(association)%]), # match_class [%=association.source.className%]([%=association.source.id%]) -> association [%=association.associationName%]
+                ([%= matchAssociationNodeMap.get(association) %],[%= matchClassNodeMap.get(association.target)%]), # association [%=association.associationName%]  -> match_class [%=association.target.className%]([%=association.target.id%])
+                [%
+                }
+
+                for(association in rule.apply.association){
+                %]
+                ([%= applyClassNodeMap.get(association.source)%],[%= applyAssociationNodeMap.get(association)%]), # apply_class [%=association.source.className%]([%=association.source.id%]) -> association [%=association.associationName%]
+                ([%= applyAssociationNodeMap.get(association) %],[%= applyClassNodeMap.get(association.target)%]), # association [%=association.associationName%]  -> apply_class [%=association.target.className%]([%=association.target.id%])
+                [%
+                }
+
+                for(backwardAssociation in rule.backwards){
+                %]
+                ([%= applyClassNodeMap.get(backwardAssociation.targetClass)%],[%= backwardAssociationNodeMap.get(backwardAssociation)%]), # apply_class [%=backwardAssociation.targetClass.className%]([%=backwardAssociation.targetClass.id%]) -> backward_association
+                ([%= backwardAssociationNodeMap.get(backwardAssociation) %],[%= matchClassNodeMap.get(backwardAssociation.sourceClass)%]), #  backward_association -> apply_class [%=backwardAssociation.sourceClass.className%]([%=backwardAssociation.sourceClass.id%])
+                [%
+                }
+				%]
+                ([%=matchModelIndex%],[%=pairedWithNodeIndex%]), # matchmodel -> pairedwith
+                ([%=pairedWithNodeIndex%],[%=applyModelIndex%]) # pairedwith -> applyModel				
+		])
+
+        # Add the attribute equations
+        self["equations"] = [[%=equationsStr%]]
+
+        
+[%
+operation getClassCardinality(class){
+        if (class.isKindOf(AnyMatchClass)){
+                return "+";
+        } else if (class.isKindOf(ExistsMatchClass)){
+                return "1";
+        } else {
+                throw "Only Any Match Class is supported!";
+        }
+}
+
+operation generateAttributeTermNodes(attribute, term, classNodeMap, matchClassNodeMap, rule) {
+		
+        var termStr = "";
+
+        if (term.isKindOf(Atom)){
+                termStr = termStr + "('constant','" + term.value + "')";
+                
+        } else if (term.isKindOf(Concat)){
+			termStr = "('concat',(";
+			// generate sub expressions' nodes
+        	termStr = termStr + generateAttributeTermNodes(attribute, term.leftTerm, classNodeMap, matchClassNodeMap, rule);
+        	termStr = termStr + ",";
+        	termStr = termStr + generateAttributeTermNodes(attribute, term.rightTerm, classNodeMap, matchClassNodeMap, rule);
+        	termStr = termStr + "))";
+        	
+        } else if (term.isKindOf(AttributeRef)){
+        	for(class in rule.match.first.class){
+        		for(attribute in class.attribute){
+        			if (attribute == term.attributeRef){    
+                		termStr = "(" + matchClassNodeMap.get(class) + ",'" + attribute.attributeName + "')";
+                	}
+                }
+           	}
+                
+        } else {
+                throw "Unsupported kind of term: " + term;
+        }
+
+        return termStr;
+}
+%]

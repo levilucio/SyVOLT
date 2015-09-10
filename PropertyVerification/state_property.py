@@ -4,7 +4,7 @@ Created on 2013-09-21
 @author: gehan
 '''
 from abc import ABCMeta, abstractmethod
-from property import Property
+from .property import Property
 import os
 #from atomic_state_property import AtomicStateProperty
 
@@ -19,6 +19,8 @@ from t_core.matcher import Matcher
 
 import time
 import PropertyVerification
+
+from profiler import *
 
 class StateProperty(Property):
     '''
@@ -42,6 +44,8 @@ class StateProperty(Property):
         #detail the status of the property
         self.status = self.NOT_CHECKED
 
+        self.disambig = Disambiguator(0)
+
     def SETverifResult (self, boolres):
         self.hasDefaultVerifResult= True
         self.verifResult=boolres
@@ -55,8 +59,7 @@ class StateProperty(Property):
     def resetVerifResultToFalse (self):
         self.verifResult=False
         self.hasDefaultVerifResult=False
-        
-    @abstractmethod 
+
     def verify (self, state, StateSpace=None):
         #I added a second parameter with a default value of none because 
         #   the only subclass of StateProperty that will need this second parameter is AtomicStateProperty
@@ -146,9 +149,8 @@ class StateProperty(Property):
         return nameList
 
 
-    
-    @staticmethod    
-    def verifyCompositeStateProperty(StateSpace, stateprop):
+    #@do_cprofile
+    def verifyCompositeStateProperty(self, StateSpace, stateprop):
         """
         Inputs: 
         1- StateSpace: the complete state space to be iterated
@@ -174,14 +176,13 @@ class StateProperty(Property):
 
         pcs_failed = []
 
+        self.disambig.set_property(stateprop)
+
         #ensure that the property's precondition matched at least one path condition
         #otherwise, there is an issue (different metamodels, ...)
         property_isolated_matched = False
-
-        StateSpace.pathConditionSet = StateSpace.get_all_path_conditions()
-        StateSpace.pathConditionSet=StateSpace.pathConditionSet[1:]
         
-        for state in StateSpace.pathConditionSet:
+        for state in StateSpace.get_path_conditions():
             if state is ():
                 continue
             
@@ -203,7 +204,7 @@ class StateProperty(Property):
 
             cacheIsolatedPatternMatches=[]
             for atomicStatePropIndex in range(len(AtomicStatePropsInStateProp)):
-                isolated = Matcher(AtomicStatePropsInStateProp[atomicStatePropIndex].Isolated)
+                isolated = AtomicStatePropsInStateProp[atomicStatePropIndex].isolated_matcher
                 s = Packet()
                 s.graph = deepcopy(merged_state)
 
@@ -215,7 +216,7 @@ class StateProperty(Property):
                     property_isolated_matched = True
                     if StateSpace.verbosity >= 1:
                         print('State ' + str(state_index) + ": " + state.name)
-                        print '    Isolated pattern matched'
+                        print('    Isolated pattern matched')
 
                     # find first how many matches of the isolated elements of the property (if any) were found
                     numberOfIsolatedMatches = len(s.match_sets[s.current].matches)
@@ -284,7 +285,7 @@ class StateProperty(Property):
                         AtomicStatePropsInStateProp[atomicStatePropIndex].verifiedStateCache.append((state,numberOfIsolatedMatches))
                         cacheIsolatedPatternMatches.append(True)
                     else:
-                        if StateSpace.verbosity >= 1: print '        Will not check state, property holds...'
+                        if StateSpace.verbosity >= 1: print('        Will not check state, property holds...')
                         cacheIsolatedPatternMatches.append(False)
                         AtomicStatePropsInStateProp[atomicStatePropIndex].SETverifResult(True)
                 else: # did not succeed in matching isolated
@@ -306,16 +307,16 @@ class StateProperty(Property):
                 ###new code -start
                 if len(StateProperty.parseStateName2RuleNames(state.name))>1:
                     if StateSpace.verbosity >= 1: t0 = time.time()
-                    disamb=Disambiguator(0)#(StateSpace.verbosity)
-                    disambiguated_states = disamb.disambiguate(state)
+                    #disamb=Disambiguator(0)#(StateSpace.verbosity)
+                    disambiguated_states = self.disambig.disambiguate(state)
                     #print("Disambiguated size: " + str(len(disambiguated_states)))
                     states_to_analyse.extend(disambiguated_states)
                     ###new code -end
                     if StateSpace.verbosity >= 1: t1 = time.time()
-                    if StateSpace.verbosity >= 1: print 'Time to collapse state: ' + str(t1-t0)
+                    if StateSpace.verbosity >= 1: print('Time to collapse state: ' + str(t1-t0))
                 else:
-                    if StateSpace.verbosity >= 1: print 'State contains only one rule; no collapse needed... '
-                if StateSpace.verbosity >= 1: print '    Number of states to analyse: ' + str(len(states_to_analyse))
+                    if StateSpace.verbosity >= 1: print('State contains only one rule; no collapse needed... ')
+                if StateSpace.verbosity >= 1: print('    Number of states to analyse: ' + str(len(states_to_analyse)))
 
 
 

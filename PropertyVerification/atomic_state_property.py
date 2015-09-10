@@ -3,7 +3,7 @@ Created on 2013-08-17
 
 @author: gehan
 '''
-from state_property import StateProperty
+from .state_property import StateProperty
 
 from t_core.messages import Packet
 from t_core.matcher import Matcher
@@ -35,6 +35,12 @@ class AtomicStateProperty(StateProperty):
         self.Isolated=isolated
         self.Connected=connected
         self.CompleteQuantified=completeQuantified
+
+        self.isolated_matcher = Matcher(isolated)
+        self.match = Matcher(connected)
+        self.total = Matcher(completeQuantified)
+
+
         self.resetVerifResultToFalse()
         self.verifiedStateCache = []
         self.propFalseForAtleastOneCollapsedState=False
@@ -92,29 +98,28 @@ class AtomicStateProperty(StateProperty):
                 StateSpace which contains inputstate: we will only be using StateSpace.verifiedStateCache and StateSpace.verbosity 
             """
 
-            match = Matcher(self.Connected)
-            total = Matcher(self.CompleteQuantified)
+
 
             found_counterexample = False
                              
             s = Packet()
             s.graph = inputstate         
-            match.packet_in(s)
+            self.match.packet_in(s)
                               
             # if the match was found, try to find the whole property
-            if match.is_success:
-                if verbosity >= 1: print '        Found Match! (Connected)'
+            if self.match.is_success:
+                if verbosity >= 1: print('        Found Match! (Connected)')
                 
                 #if verbosity >= 1: graph_to_dot("found_connected_" + s.graph.name, s.graph)
 
                 s = Packet()
                 s.graph = inputstate                   
-                total.packet_in(s)
-                if total.is_success:
+                self.total.packet_in(s)
+                if self.total.is_success:
                     self.status = self.COMPLETE_FOUND
                     #self.verifiedStateCache.append((inputstate,numberOfIsolatedMatches))
                     self.incrementNumberOfTimesFoundMatch()
-                    if verbosity >= 1: print '        Found Apply! (Complete)'
+                    if verbosity >= 1: print('        Found Apply! (Complete)')
                     self.set_matchesOfTotal(s.match_sets[s.current].matches)
                     #debug1 is a dictionary structure
                     #str(debug1['1']) ... u can find a function that returns all keys of a dictionary
@@ -124,7 +129,7 @@ class AtomicStateProperty(StateProperty):
                     self.status = self.NO_COMPLETE
 
                     #if verbosity >= 1: graph_to_dot(s.graph.name + "_not_complete", s.graph)
-                    if verbosity >= 1: print '        Could not find Apply! (Complete)'
+                    if verbosity >= 1: print('        Could not find Apply! (Complete)')
 
                     #self.counterexamples.append(s.graph)
 
@@ -134,11 +139,11 @@ class AtomicStateProperty(StateProperty):
             else:
                 self.status = self.NO_CONNECTED
                 if verbosity >= 1: print("Couldn't find connected: " + s.graph.name)
-                if verbosity >= 1:  print '        Could not find Match! (Connected)'
+                if verbosity >= 1:  print('        Could not find Match! (Connected)')
         
                 
             if verbosity >= 1:
-                print '\n'
+                print('\n')
             # if found_counterexample == True:
             #     if StateSpace.verbosity >= 1: print 'AtomicStateProp does not Hold for the current state!!!'
             #

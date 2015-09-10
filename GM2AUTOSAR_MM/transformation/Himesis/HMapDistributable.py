@@ -1,8 +1,6 @@
 
 
 from core.himesis import Himesis
-import cPickle as pickle
-from uuid import UUID
 
 class HMapDistributable(Himesis):
     def __init__(self):
@@ -15,64 +13,61 @@ class HMapDistributable(Himesis):
         super(HMapDistributable, self).__init__(name='HMapDistributable', num_nodes=16, edges=[])
         
         # Add the edges
-        self.add_edges([(5, 9), (9, 6), (6, 10), (10, 0), (4, 11), (11, 8), (4, 12), (12, 2), (15, 0), (7, 1), (1, 4), (3, 2), (8, 3), (13, 5), (14, 6), (7, 13), (7, 14), (7, 15)])
+        self.add_edges([[5, 9], [9, 6], [6, 10], [10, 0], [4, 11], [11, 8], [4, 12], [12, 2], [15, 0], [7, 1], [1, 4], [3, 2], [8, 3], [13, 5], [14, 6], [7, 13], [7, 14], [7, 15]])
         # Set the graph attributes
-        self["mm__"] = pickle.loads("""(lp1
-S'GM2AUTOSAR_MM'
-p2
-a.""")
+        self["mm__"] = ['GM2AUTOSAR_MM']
         self["name"] = """MapDistributable"""
-        self["GUID__"] = UUID('c135978b-9906-4777-b3e8-040271ee2641')
+        self["GUID__"] = 4088813473587741739
         
         # Set the node attributes
         self.vs[0]["name"] = """dist1"""
         self.vs[0]["classtype"] = """Distributable"""
         self.vs[0]["mm__"] = """Distributable"""
         self.vs[0]["cardinality"] = """+"""
-        self.vs[0]["GUID__"] = UUID('9ace6e52-49d0-4440-9943-1b36a97804a3')
+        self.vs[0]["GUID__"] = 323366918691558831
         self.vs[1]["mm__"] = """paired_with"""
-        self.vs[1]["GUID__"] = UUID('7bb06824-5d57-4598-8d68-1868a65318d0')
+        self.vs[1]["GUID__"] = 8946885519094067000
         self.vs[2]["name"] = """comp1"""
         self.vs[2]["classtype"] = """ComponentPrototype"""
         self.vs[2]["mm__"] = """ComponentPrototype"""
         self.vs[2]["cardinality"] = """1"""
-        self.vs[2]["GUID__"] = UUID('4c3b6a9d-b790-457e-9139-42c7218b11fb')
+        self.vs[2]["GUID__"] = 4766758106158606329
         self.vs[3]["associationType"] = """componentPrototype"""
         self.vs[3]["mm__"] = """directLink_T"""
-        self.vs[3]["GUID__"] = UUID('bef17871-daea-4ab8-8274-eed9cf184aaf')
+        self.vs[3]["GUID__"] = 9095811788322207131
         self.vs[4]["mm__"] = """ApplyModel"""
-        self.vs[4]["GUID__"] = UUID('431e545b-c0aa-4c17-98de-526e1cab1ff4')
+        self.vs[4]["GUID__"] = 2690799472485879894
         self.vs[5]["name"] = """ecu1"""
         self.vs[5]["classtype"] = """ECU"""
         self.vs[5]["mm__"] = """ECU"""
         self.vs[5]["cardinality"] = """1"""
-        self.vs[5]["GUID__"] = UUID('15ef96ac-20f7-43b3-8ca7-72e64fdf1acb')
+        self.vs[5]["GUID__"] = 7234414424121682329
         self.vs[6]["name"] = """vd1"""
         self.vs[6]["classtype"] = """VirtualDevice"""
         self.vs[6]["mm__"] = """VirtualDevice"""
         self.vs[6]["cardinality"] = """1"""
-        self.vs[6]["GUID__"] = UUID('2c123012-24f0-4b23-8391-e4a898a9dbec')
+        self.vs[6]["GUID__"] = 3736480196596533372
         self.vs[7]["mm__"] = """MatchModel"""
-        self.vs[7]["GUID__"] = UUID('19d3bec1-8294-4432-96f4-94fdad0d49a4')
+        self.vs[7]["GUID__"] = 9098274017854249582
         self.vs[8]["name"] = """sctemc1"""
         self.vs[8]["classtype"] = """SwCompToEcuMapping_component"""
         self.vs[8]["mm__"] = """SwCompToEcuMapping_component"""
         self.vs[8]["cardinality"] = """1"""
-        self.vs[8]["GUID__"] = UUID('e8d64118-35b8-42f7-875a-123136cd7a83')
+        self.vs[8]["GUID__"] = 3076827786974758511
         self.vs[9]["associationType"] = """virtualDevice"""
         self.vs[9]["mm__"] = """directLink_S"""
-        self.vs[9]["GUID__"] = UUID('aec63ce4-f95d-47c9-bd27-087fc8bd507a')
+        self.vs[9]["GUID__"] = 8664921369541242794
         self.vs[10]["associationType"] = """distributable"""
         self.vs[10]["mm__"] = """directLink_S"""
-        self.vs[10]["GUID__"] = UUID('0566b110-af56-4a30-b6a7-a114ae1201da')
+        self.vs[10]["GUID__"] = 5495065921484171932
         self.vs[11]["mm__"] = """apply_contains"""
-        self.vs[11]["GUID__"] = UUID('562ce050-a763-40bd-9ea4-136fbdd0e45a')
+        self.vs[11]["GUID__"] = 8599505507245221716
         self.vs[12]["mm__"] = """apply_contains"""
-        self.vs[12]["GUID__"] = UUID('a90ef605-7d8f-4fd9-b47d-7a179ba009aa')
+        self.vs[12]["GUID__"] = 6393231501703334170
         self.vs[13]["mm__"] = """match_contains"""
-        self.vs[13]["GUID__"] = UUID('9391bc3f-3efa-4390-847d-4fe5edef911b')
+        self.vs[13]["GUID__"] = 5963963149875453797
         self.vs[14]["mm__"] = """match_contains"""
-        self.vs[14]["GUID__"] = UUID('05c165b2-5653-4ede-80ef-ba86817cc976')
+        self.vs[14]["GUID__"] = 1726375435581392112
         self.vs[15]["mm__"] = """match_contains"""
-        self.vs[15]["GUID__"] = UUID('44d3d370-9321-4658-9bad-67ce26b08f21')
+        self.vs[15]["GUID__"] = 3385780651888584839
 

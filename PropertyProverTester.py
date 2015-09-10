@@ -9,7 +9,7 @@ from core.himesis_plus import *
 
 class PropertyProverTester:
 
-    def set_artifacts(self, transformation, ruleTraceCheckers, matchRulePatterns, ruleCombinators):
+    def set_artifacts(self, transformation, ruleTraceCheckers, matchRulePatterns, ruleCombinators, rule_names):
         self.transformation = transformation
         self.rules = {}
         for layer in transformation:
@@ -19,11 +19,12 @@ class PropertyProverTester:
         self.ruleTraceCheckers = ruleTraceCheckers
         self.matchRulePatterns = matchRulePatterns
         self.ruleCombinators = ruleCombinators
+        self.rule_names = rule_names
 
     def test_matchRulePatterns(self):
 
         for rule_name in self.rules.keys():
-            print("Testing match rule pattern for " + rule_name)
+            print("Testing match rule pattern for " + self.rule_names[rule_name])
 
             p = Packet()
             p.graph = copy_graph(self.rules[rule_name])
@@ -33,13 +34,13 @@ class PropertyProverTester:
             matcher.packet_in(p)
 
             if not matcher.is_success:
-                raise Exception("The matcher for " + rule_name + " did not match the rule")
+                raise Exception("The matcher for " + self.rule_names[rule_name] + " did not match the rule")
 
             rewriter = self.matchRulePatterns[rule_name][0]
             rewriter.packet_in(p)
 
             if not rewriter.is_success:
-                raise Exception("The rewriter for " + rule_name + " did not rewrite successfully")
+                raise Exception("The rewriter for " + self.rule_names[rule_name] + " did not rewrite successfully")
 
     def test_ruleTraceCheckers(self):
 
@@ -48,7 +49,7 @@ class PropertyProverTester:
             if not rule_name in self.ruleTraceCheckers.keys():
                 continue
 
-            print("Testing rule trace checkers for " + rule_name)
+            print("Testing rule trace checkers for " + self.rule_names[rule_name])
 
             p = Packet()
             p.graph = self.rules[rule_name]
@@ -61,15 +62,15 @@ class PropertyProverTester:
             matcher.packet_in(p)
 
             if not matcher.is_success:
-                raise Exception("The matcher for " + rule_name + " did not match the rule")
+                raise Exception("The matcher for " + self.rule_names[rule_name] + " did not match the rule")
 
     def test_ruleCombinators(self):
         for rule_name in self.rules.keys():
-            print("Testing rule combinators for " + rule_name)
+            print("Testing rule combinators for " + self.rule_names[rule_name])
 
             if self.ruleCombinators[rule_name] is None:
                 continue
-                
+
             #get the last matcher/rewriter combo
             #which should be the total matcher
             rc = self.ruleCombinators[rule_name][-1]
@@ -81,7 +82,7 @@ class PropertyProverTester:
             matcher.packet_in(p)
 
             if not matcher.is_success:
-                raise Exception("The matcher for " + rule_name + " did not match the rule")
+                raise Exception("The matcher for " + self.rule_names[rule_name] + " did not match the rule")
 
             rewriter = rc[1]
 
@@ -91,7 +92,7 @@ class PropertyProverTester:
             rewriter.packet_in(p)
 
             if not rewriter.is_success:
-                raise Exception("The rewriter for " + rule_name + " did not rewrite successfully")
+                raise Exception("The rewriter for " + self.rule_names[rule_name] + " did not rewrite successfully")
 
 
 

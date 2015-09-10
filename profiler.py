@@ -15,12 +15,23 @@ if global_profile_memory:
 
 #set up cProfile
 #and the do_cprofile wrapper
-import cProfile
+try:
+    import cProfile as pp
+except (ImportError, AttributeError):
+    import profile as pp
+
+
+
+try:
+
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
+
 import pstats
-import StringIO
 def do_cprofile(func):
     def profiled_func(*args, **kwargs):
-        profile = cProfile.Profile()
+        profile = pp.Profile()
         try:
             profile.enable()
             if global_profile_memory:
@@ -53,7 +64,7 @@ def do_cprofile(func):
 
 
 
-            s = StringIO.StringIO()
+            s = StringIO()
             sortby = 'time'
             ps = pstats.Stats(profile, stream = s).sort_stats(sortby)
             ps.print_stats()

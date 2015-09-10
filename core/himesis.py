@@ -1,11 +1,25 @@
-import uuid, os.path, copy, cPickle as pickle    # Pickle is used to save the attribute values as pickled strings
+import uuid, os.path, copy\
+
 import igraph as ig
-import util.misc as misc
-from epsilon_parser import EpsilonParser
-from util.misc import indent_text
+from functools import reduce
+
+try:
+    import util.misc as misc
+    from util.misc import indent_text
+except ImportError:
+    import util.misc3 as misc
+    from util.misc3 import indent_text
+
+
 import numpy.random as nprnd
 
-from himesis_utils import standardize_name, is_RAM_attribute, to_non_RAM_attribute
+from .himesis_utils import standardize_name, is_RAM_attribute, to_non_RAM_attribute
+
+#cross-compatibility
+try:
+    import cPickle as pickle
+except ImportError:
+    import pickle as pickle
 
 class HConstants:
     GUID = 'GUID__'
@@ -39,17 +53,18 @@ class Himesis(ig.Graph):
             @param num_nodes: the total number of nodes. If not known, you can add more vertices later
             @param edges: the list of edges where each edge is a tuple representing the ids of the source and target nodes
         """
-        ig.Graph.__init__(self, directed=True, n=num_nodes, edges=edges)
+
+        ig.GraphBase.__init__(self, n=num_nodes, edges=edges, directed=True)
         if not name:
             name = self.__class__.__name__
         self.name = standardize_name(name)
         
-        # Set universally unique identifiers for the graph and each node
-        if not hasattr(self, 'is_compiled'):
-            self.is_compiled = False    # this instance is not yet compiled
-            self['GUID__'] = nprnd.randint(9223372036854775806)
-            for n in self.node_iter():
-                self.vs[n]['GUID__'] = nprnd.randint(9223372036854775806)
+        # # Set universally unique identifiers for the graph and each node
+        # if not hasattr(self, 'is_compiled'):
+        #     self.is_compiled = False    # this instance is not yet compiled
+        #     self['GUID__'] = nprnd.randint(9223372036854775806)
+        #     for n in self.node_iter():
+        #         self.vs[n]['GUID__'] = nprnd.randint(9223372036854775806)
         # A fast lookup of the node's index by its guid
         # - disable this lookup to save memory
         #self.nodes_id = {}
@@ -66,7 +81,7 @@ class Himesis(ig.Graph):
 
 
     def __reduce__(self):
-        return ig.Graph.__reduce__(self)
+        return (self.name, ig.Graph.__reduce__(self)[1])
 
         #remove constructor
         #return (value[1], value[2])
@@ -89,7 +104,10 @@ class Himesis(ig.Graph):
 
         # cpy.init_params = copy.deepcopy(self.init_params)
         #cpy.import_name = copy.deepcopy(self.import_name)
-        cpy.is_compiled = self.is_compiled
+        try:
+            cpy.is_compiled = self.is_compiled
+        except AttributeError:
+            pass
         cpy.name = self.name
         return cpy
     
@@ -113,13 +131,13 @@ class Himesis(ig.Graph):
         """
             Iterates over the nodes in the graph, by index
         """
-        return xrange(self.vcount())
+        return range(self.vcount())
     
     def edge_iter(self):
         """
             Iterates over the edges in the graph, by index
         """
-        return xrange(self.ecount())
+        return range(self.ecount())
     
     def add_node(self):
         new_node = self.vcount()
@@ -127,30 +145,29 @@ class Himesis(ig.Graph):
 
         self.vs[new_node]['GUID__'] = nprnd.randint(9223372036854775806)
         #self.vs[new_node][Himesis.Constants.GUID] = random.randint(0, 9223372036854775806)
-        # self.nodes_id[id] = new_node
+
+        #self.nodes_id[id] = new_node
         return new_node
     
     def delete_nodes(self, nodes):
         self.delete_vertices(nodes)
         # Regenerate the lookup because node indices have changed
-        # self.nodes_id = dict([(self.vs[node][Himesis.Constants.GUID], node) for node in self.node_iter()])
+        #self.nodes_id = dict([(self.vs[node]["GUID__"], node) for node in range(self.vcount())])
     
     def get_node(self, id):
         """
             Retrieves the node instance with the specified label.
             @param label: The label of the node.
         """
-        for node in self.node_iter():
-            if id == self.vs[node]['GUID__']:
-                return node
+        # for node in range(self.vcount()):
+        #     if id == self.vs[node]['GUID__']:
+        #         return node
 
-        #if len(self.nodes_id) < self.vcount():
-        # nodes_id = dict([(self.vs[node][Himesis.Constants.GUID], node) for node in self.node_iter()])
-        # if id in nodes_id:
-        #     return nodes_id[id]
-        # else:
-        #TODO: This should be a TransformationLanguageSpecificException
-        raise Exception('No node was found with the given id: ' + str(id))
+        try:
+            return self.vs["GUID__"].index(id)
+        except ValueError:
+            #TODO: This should be a TransformationLanguageSpecificException
+            raise Exception('No node was found with the given id: ' + str(id))
     
     # def draw(self, visual_style={}, label=None, show_guid=False, show_id=False, debug=False, width=600, height=900):
     #     """
@@ -199,7 +216,13 @@ class Himesis(ig.Graph):
 %s
     '''
             file.write(s % indent_text(self.execute_doc + self.execute_body, 2))
-        
+
+
+    #for rule graphs, keep the equations the same
+    #matchers and rewriters need to change them
+    def _validate_equations(self, eqs):
+        return str(eqs)
+
     def __compile_attribute(self, access, value):
         """
         Dump the initialization of the attribute:
@@ -209,6 +232,15 @@ class Himesis(ig.Graph):
         @param access: the access to the attribute
         @param value: the value to set the attribute to
         """
+
+        #only exists in Python2
+        try:
+            if isinstance(value, unicode):
+                return '''
+        %s = """%s"""''' % (access, value)
+        except Exception:
+            pass
+
         if isinstance(value, str):
             return '''
         %s = """%s"""''' % (access, value)
@@ -221,11 +253,16 @@ class Himesis(ig.Graph):
         elif isinstance(value, Himesis):
             graphClass = value.name
             return '''
-        from %s import %s
+        from .%s import %s
         %s = %s()''' % (graphClass, graphClass, access, graphClass)
-        else:
+        elif isinstance(value, list) or isinstance(value, dict):
             return '''
-        %s = pickle.loads("""%s""")''' % (access, pickle.dumps(value))
+        %s = %s''' % (access, str(value))
+        else:
+            raise Exception("Value is not a base type")
+            #print("Pickling: " + str(type(value)) + " " + str(value))
+            #return '''
+        #%s = pickle.loads("""%s""")''' % (access, pickle.dumps(value))
     
     def compile(self, file_path, init_params = []):
         """
@@ -296,8 +333,6 @@ from core.himesis import Himesis''')
                                             map(lambda p: ', %s=%s' % (p, p),
                                                 init_params))
             file.write('''
-import cPickle as pickle
-from uuid import UUID
 
 class %s(%s):
     def __init__(self%s):
@@ -354,6 +389,11 @@ class %s(%s):
             file.write('''
         # Set the graph attributes''')
             for attr in self.attributes():
+                if attr == "equations":
+                    file.write('''
+        self["equations"] = ''' + self._validate_equations(self[attr]))
+                    continue
+
                 value = self[attr]
                 access = 'self["%s"]' % attr
                 file.write(self.__compile_attribute(access, value))
@@ -407,9 +447,15 @@ class HimesisPattern(Himesis):
         #if label in self.nodes_label:
         #    return self.nodes_label[label]
 
-        for i in xrange(self.vcount()):
-            if label == self.vs[i]['MT_label__']:
-                return i
+        try:
+            return self.vs['MT_label__'].index(label)
+        except ValueError:
+            #it's alright for some labels to not be here
+            pass
+
+        # for i in range(self.vcount()):
+        #     if label == self.vs[i]['MT_label__']:
+        #         return i
     
     def get_pivot_out(self, pivot):
         """
@@ -433,7 +479,31 @@ class HimesisPreConditionPattern(HimesisPattern):
         super(HimesisPreConditionPattern, self).__init__(name, num_nodes, edges)
         #self.import_name = 'HimesisPreConditionPattern'
         #self.nodes_pivot_in = {}
-    
+
+        self.superclasses_dict = {}
+
+    def _valid_token(self, token):
+
+        if token[0] == "constant":
+            return True
+        elif token[0] == "concat":
+            return self._valid_token(token[1][0]) and self._valid_token(token[1][1])
+        node_label = str(token[0])
+        return self.get_node_with_label(node_label) is not None
+
+    # for matchers, make sure that the equations refer to valid nodes
+    def _validate_equations(self, eqs):
+        new_eqs = []
+        #print("\nOld eqs: " + str(eqs))
+        for eq in eqs:
+            if self._valid_token(eq[0]) and self._valid_token(eq[1]):
+                new_eqs.append(eq)
+
+        #print("\nNew eqs: " + str(new_eqs))
+
+        return str(new_eqs)
+
+
     def get_pivot_in(self, pivot):
         """
             Retrieves the index of the pivot node
@@ -445,7 +515,7 @@ class HimesisPreConditionPattern(HimesisPattern):
         #     return self.nodes_pivot_in[pivot]
 
         if 'MT_pivotIn__' in self.vs.attribute_names():
-            for i in xrange(self.vcount()):
+            for i in range(self.vcount()):
                 if pivot == self.vs[i]['MT_pivotIn__']:
                     return i
     
@@ -483,12 +553,12 @@ class HimesisPreConditionPattern(HimesisPattern):
     def %s(self, attr_value, this):
 %s
 
-''' % (self.get_attr_constraint_name(v, attr), misc.indent_text(EpsilonParser().to_python(self.vs[v][attr]), 2)))
+''' % (self.get_attr_constraint_name(v, attr), misc.indent_text(self.vs[v][attr], 2)))
         
         # The constraint code
         code = 'return True'
         if Himesis.Constants.MT_CONSTRAINT in self.attributes() and self[Himesis.Constants.MT_CONSTRAINT]:
-            code = EpsilonParser().to_python(self[Himesis.Constants.MT_CONSTRAINT])
+            code = self[Himesis.Constants.MT_CONSTRAINT]
         file.write('''
     def constraint(self, PreNode, graph):
         """
@@ -523,7 +593,11 @@ class HimesisPreConditionPatternLHS(HimesisPreConditionPattern):
                 for NAC in self.NACs:
                     NAC_name = NAC.__class__.__name__
                     file.write("""
-        from %s import %s""" % (NAC_name, NAC_name))
+        try:
+            from .%s import %s
+        except Exception:
+            from %s import %s
+        """ % (NAC_name, NAC_name, NAC_name, NAC_name))
                 file.write('''
         self.NACs = %s
 ''' % str(map(lambda NAC: '%s(LHS=self)' % standardize_name(NAC.__class__.__name__),
@@ -532,8 +606,13 @@ class HimesisPreConditionPatternLHS(HimesisPreConditionPattern):
             else:
                 # self.NACs = ['NAC1', 'NAC2', ..., 'NACn']
                 for NAC_name in self.NACs:
+                    sname = standardize_name(NAC_name)
                     file.write("""
-        from %s import %s""" % (standardize_name(NAC_name), standardize_name(NAC_name)))
+        try:
+            from .%s import %s
+        except Exception:
+            from %s import %s
+        """ % (sname, sname, sname, sname))
                 file.write('''
         self.NACs = %s
 ''' % str(map(lambda NAC: '%s(LHS=self)' % standardize_name(NAC), self.NACs)).replace("'", ""))
@@ -567,7 +646,10 @@ class HimesisPreConditionPatternNAC(HimesisPreConditionPattern):
         file.write("""
         
         # Load the bridge between this NAC and its LHS
-        from %s import %s""" % (self.bridge.name, self.bridge.name))
+        try:
+            from .%s import %s
+        except Exception:
+            from %s import %s""" % (self.bridge.name, self.bridge.name, self.bridge.name, self.bridge.name))
         file.write('''
         self.bridge = %s()
 ''' % self.bridge.name)
@@ -633,7 +715,7 @@ class HimesisPreConditionPatternNAC(HimesisPreConditionPattern):
                             continue
                         # The attribute constraint code is the conjunction of the LHS constraint
                         # with the NAC constraint for this attribute
-                        s = '''from %s import %s
+                        s = '''from .%s import %s
 from %s import %s''' % (G1.name, G1.name, G2.name, G2.name)
                         if G1 == self:
                             s += ('''
@@ -732,15 +814,21 @@ class HimesisPostConditionPattern(HimesisPattern):
         if self.is_compiled:
             # self.pre is a Himesis graph
             file.write('''
-        from %s import %s
+        try:
+            from .%s import %s
+        except Exception:
+            from %s import %s
         self.pre = %s()
-    ''' % tuple([self.pre.__class__.__name__] * 3))
+    ''' % tuple([self.pre.__class__.__name__] * 5))
         else:
             # self.pre = "precondition name"
             file.write('''
-        from %s import %s
+        try:
+            from .%s import %s
+        except Exception:
+            from %s import %s
         self.pre = %s()
-    ''' % tuple([standardize_name(self.pre)] * 3))
+    ''' % tuple([standardize_name(self.pre)] * 5))
         
         # Attributes action code
         for v in self.node_iter():
@@ -755,12 +843,12 @@ class HimesisPostConditionPattern(HimesisPattern):
     def %s(self, attr_value, PreNode, graph):
 %s
 
-''' % (self.get_attr_action_name(v, attr), misc.indent_text(EpsilonParser().to_python(code), 2)))
+''' % (self.get_attr_action_name(v, attr), misc.indent_text(code, 2)))
         
         # The action code
         code = 'pass'
         if Himesis.Constants.MT_ACTION in self.attributes() and self[Himesis.Constants.MT_ACTION]:
-            code = EpsilonParser().to_python(self[Himesis.Constants.MT_ACTION])
+            code = self[Himesis.Constants.MT_ACTION]
         file.write('''
     def action(self, PostNode, graph):
         """
@@ -801,16 +889,13 @@ class HimesisPostConditionPattern(HimesisPattern):
                     if self.attribute_is_specified(attr):
                         old_value = 'None'
                         if has_old_values:
-                            old_value = "graph.vs[%s]['%s']" % (index, to_non_RAM_attribute(attrName))
+                            old_value = "vs[%s]['%s']" % (index, to_non_RAM_attribute(attrName))
                         #TODO: This should be a TransformationLanguageSpecificException
-                        transformationCode.append("""try:
-    graph.vs[%s]['%s'] = self.%s(%s, lambda i: graph.vs[match[i]], graph)
-except Exception, e:
-    raise Exception('An error has occurred while computing the value of the attribute \\'%s\\'', e)
+                        transformationCode.append("""vs[%s]['%s'] = self.%s(%s, lambda i: graph.vs[match[i]], graph)
 """ \
     % (index, to_non_RAM_attribute(attrName),
        self.get_attr_action_name(node, attrName),
-       old_value, attrName))
+       old_value))
             return ''.join(transformationCode)
         
         
@@ -826,6 +911,10 @@ except Exception, e:
         
         # Update attributes
         transformationCode = ["""graph = packet.graph
+
+vs = graph.vs
+
+import numpy.random as nprnd
 
 # Build a dictionary {label: node index} mapping each label of the pattern to a node in the graph to rewrite.
 # Because of the uniqueness property of labels in a rule, we can store all LHS labels
@@ -845,7 +934,7 @@ labels = match.copy()
 %s""" % (to_non_RAM_attribute(self.vs[rhsNode][Himesis.Constants.META_MODEL]), label, updateCode))
                 # Only set the dirty flag if there was a modification in the attributes
                 transformationCode.append("""
-graph.vs[labels['%s']][Himesis.Constants.MT_DIRTY] = True
+vs[labels['%s']][Himesis.Constants.MT_DIRTY] = True
 """ % label)
         
         # Create new nodes
@@ -853,19 +942,40 @@ graph.vs[labels['%s']][Himesis.Constants.MT_DIRTY] = True
 #===============================================================================
 # Create new nodes
 #===============================================================================
+
+node_num = graph.vcount()
 """)
+        num_nodes_to_add = 0
+        for label in RHS_labels:
+            if label not in LHS_labels:
+                num_nodes_to_add += 1
+
+        transformationCode.append("""
+graph.add_vertices(%s)
+
+""" % str(num_nodes_to_add))
+
         new_labels = []
         for label in RHS_labels:
             rhsNode = self.get_node_with_label(label)
             if label not in LHS_labels:
                 new_labels += [label]
-                className = to_non_RAM_attribute(self.vs[rhsNode][Himesis.Constants.META_MODEL])
+                className = to_non_RAM_attribute(self.vs[rhsNode]["mm__"])
                 transformationCode.append("""# %s%s
-new_node = graph.add_node()
-labels['%s'] = new_node
-graph.vs[new_node][Himesis.Constants.META_MODEL] = '%s'
+labels['%s'] = node_num
+vs[node_num]["mm__"] = '%s'
+vs[node_num]['GUID__'] = nprnd.randint(9223372036854775806)
 """ % (className, label, label, className))
-                transformationCode += set_attributes(rhsNode, 'new_node', has_old_values=False)
+                transformationCode += set_attributes(rhsNode, 'node_num', has_old_values = False)
+                transformationCode.append("""
+node_num += 1
+""")
+#                 transformationCode.append("""# %s%s
+# new_node = graph.add_node()
+# labels['%s'] = node_num
+# vs[node_num]["mm__"] = '%s'
+# """ % (className, label, label, className))
+#                 transformationCode += set_attributes(rhsNode, 'node_num', has_old_values=False)
         
         # Link the new nodes
         transformationCode.append("""
@@ -873,15 +983,24 @@ graph.vs[new_node][Himesis.Constants.META_MODEL] = '%s'
 # Create new edges
 #===============================================================================
 """)
+        transformationCode.append("""graph.add_edges([
+""")
+
+
         visited_edges = []
         for label in sorted(new_labels):
-            for edge in self.es.select(lambda e: (e.index not in visited_edges and
-                                                  (label == self.vs[e.source][Himesis.Constants.MT_LABEL]
-                                                   or label == self.vs[e.target][Himesis.Constants.MT_LABEL]))):
-                src_label = self.vs[edge.source][Himesis.Constants.MT_LABEL]
-                tar_label = self.vs[edge.target][Himesis.Constants.MT_LABEL]
+            for edge in self.es:
+                if edge.index in visited_edges:
+                    continue
+
+                src_label = self.vs[edge.source]["MT_label__"]
+                tar_label = self.vs[edge.target]["MT_label__"]
+
+                if not (label == src_label or label == tar_label):
+                    continue
+
                 transformationCode.append("""# %s%s -> %s%s
-graph.add_edges([(labels['%s'], labels['%s'])])
+(labels['%s'], labels['%s']),
 """ % (to_non_RAM_attribute(self.vs[edge.source][Himesis.Constants.META_MODEL]),
        src_label,
        to_non_RAM_attribute(self.vs[edge.target][Himesis.Constants.META_MODEL]),
@@ -889,6 +1008,8 @@ graph.add_edges([(labels['%s'], labels['%s'])])
        src_label,
        tar_label))
                 visited_edges.append(edge.index)
+
+        transformationCode.append("""])""")
         
         # Set the output pivots
         transformationCode.append("""
@@ -911,7 +1032,7 @@ packet.global_pivots['%s'] = graph.vs[labels['%s']][Himesis.Constants.GUID]
 #===============================================================================
 try:
     self.action(lambda i: graph.vs[labels[i]], graph)
-except Exception, e:
+except Exception as e:
     raise Exception('An error has occurred while applying the post-action', e)""")
         
         # Delete nodes (and edges)
@@ -925,11 +1046,15 @@ except Exception, e:
             if label not in RHS_labels:
                 labels_to_delete.append(label)
         if len(labels_to_delete) > 0:
-            transformationCode.append("""# %s
+
+
+            for lbl in labels_to_delete:
+                transformationCode.append("""# %s%s""" % (LHS_labels[lbl], lbl))
+                transformationCode.append("""
 graph.delete_nodes(%s)
-""" % (reduce(lambda l1,l2: l1 + ', ' + l2, map(lambda lbl: '%s%s' % (LHS_labels[lbl], lbl), labels_to_delete)),
-       str(map(lambda lbl: 'labels["%s"]' % lbl, labels_to_delete)).replace("'", "")))
-        
+""" % str('labels["%s"]' % lbl).replace("'", ""))
+
+
         # Save the code in the body of the execute method
         self.execute_body = ''.join(transformationCode)
 

@@ -1,8 +1,6 @@
 
 
 from core.himesis import Himesis, HimesisPreConditionPatternLHS
-import cPickle as pickle
-from uuid import UUID
 
 class HM2ThenClausePart1IsolatedConnectedLHS(HimesisPreConditionPatternLHS):
     def __init__(self):
@@ -17,10 +15,7 @@ class HM2ThenClausePart1IsolatedConnectedLHS(HimesisPreConditionPatternLHS):
         # Add the edges
         self.add_edges([])
         # Set the graph attributes
-        self["mm__"] = pickle.loads("""(lp1
-S'MoTifRule'
-p2
-a.""")
+        self["mm__"] = ['MoTifRule']
         self["MT_constraint__"] = """#===============================================================================
 # This code is executed after the nodes in the LHS have been matched.
 # You can access a matched node labelled n by: PreNode('n').
@@ -33,7 +28,7 @@ a.""")
 return True
 """
         self["name"] = """M2ThenClausePart1IsolatedConnected"""
-        self["GUID__"] = UUID('448a3c02-4185-4f22-9a49-ee6e8acb4fba')
+        self["GUID__"] = 3202866890126953544
         
         # Set the node attributes
 

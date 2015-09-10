@@ -15,6 +15,9 @@ from t_core.messages import Packet
 
 from PyRamify import PyRamify
 
+from util.test_script_utils import select_rules
+from util.slicer import Slicer
+
 from core.himesis_utils import graph_to_dot
 # all runs are the same transformation, but with different metamodel elements
 # the purpose is to do scalability testing with multiple configurations and multiple sets of rules
@@ -38,28 +41,28 @@ from PropertyVerification.PropertyVerifier import PropertyVerifier
 
 #positive
 
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HEmpty_IsolatedConnectedLHS import HEmpty_IsolatedConnectedLHS
+from PropertyVerification.HEmpty_IsolatedConnectedLHS import HEmpty_IsolatedConnectedLHS
 
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HFourMembers_IsolatedLHS import HFourMembers_IsolatedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HFourMembers_ConnectedLHS import HFourMembers_ConnectedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HFourMembers_CompleteLHS import HFourMembers_CompleteLHS
-
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HMotherFather_IsolatedLHS import HMotherFather_IsolatedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HMotherFather_ConnectedLHS import HMotherFather_ConnectedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HMotherFather_CompleteLHS import HMotherFather_CompleteLHS
-
-
+from ATLTrans.props.HfourMembers_IsolatedLHS import HfourMembers_IsolatedLHS
+from ATLTrans.props.HfourMembers_ConnectedLHS import HfourMembers_ConnectedLHS
+from ATLTrans.props.HfourMembers_CompleteLHS import HfourMembers_CompleteLHS
+ 
+from ATLTrans.props.HmotherFather_IsolatedLHS import HmotherFather_IsolatedLHS
+from ATLTrans.props.HmotherFather_ConnectedLHS import HmotherFather_ConnectedLHS
+from ATLTrans.props.HmotherFather_CompleteLHS import HmotherFather_CompleteLHS
+ 
+ 
 #negative
-from FamiliesToPersons_MM.Properties.Negative.Himesis.HDaughterMother_IsolatedLHS import HDaughterMother_IsolatedLHS
-from FamiliesToPersons_MM.Properties.Negative.Himesis.HDaughterMother_ConnectedLHS import HDaughterMother_ConnectedLHS
-from FamiliesToPersons_MM.Properties.Negative.Himesis.HDaughterMother_CompleteLHS import HDaughterMother_CompleteLHS
-
-
+from ATLTrans.props.HdaughterMother_IsolatedLHS import HdaughterMother_IsolatedLHS
+from ATLTrans.props.HdaughterMother_ConnectedLHS import HdaughterMother_ConnectedLHS
+from ATLTrans.props.HdaughterMother_CompleteLHS import HdaughterMother_CompleteLHS
+ 
+ 
 #implication
 from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson1_IsolatedLHS import HCommunityPerson1_IsolatedLHS
 from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson1_ConnectedLHS import HCommunityPerson1_ConnectedLHS
 from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson1_CompleteLHS import HCommunityPerson1_CompleteLHS
-
+ 
 from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson2_IsolatedLHS import HCommunityPerson2_IsolatedLHS
 from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson2_ConnectedLHS import HCommunityPerson2_ConnectedLHS
 from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson2_CompleteLHS import HCommunityPerson2_CompleteLHS
@@ -71,28 +74,124 @@ from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 class Test():
 
     def setUp(self, args):
-        pyramify = PyRamify(draw_svg=args.draw_svg)
 
-        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
-            pyramify.ramify_directory("ATLTrans/")
+        full_transformation = [
+            ['HRootRule'],
+            ['HMotherRule'],
+            ['HFatherRule'],
+            ['HSonRule'],
+            ['HDaughterRule'],
+            ['HUnionMotherRule'],
+            ['HUnionManRule'],
+            ['HUnionDaughterRule'],
+            ['HUnionSonRule']
+        ]
+        pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
 
-        #print("Rules: " + str(self.rules.keys()))
+        self.rules, self.transformation = pyramify.get_rules("ATLTrans/w_equations/", full_transformation)
 
 
-    def select_rules(self, full_transformation, num_rules):
-        selected_transformation = []
+        pre_metamodel = ["MT_pre__FamiliesToPersons_MM", "MoTifRule"]
+        post_metamodel = ["MT_post__FamiliesToPersons_MM", "MoTifRule"]
 
-        print("Selecting " + str(num_rules) + " rules")
+        subclasses_dict = {}
 
-        i = 1
-        for layer in range(len(full_transformation)):
-            selected_transformation.append([])
-            for rule in full_transformation[layer]:
-                selected_transformation[layer].append(rule)
-                i += 1
-                if i > num_rules:
-                    print("Returning: " + str(selected_transformation))
-                    return selected_transformation
+        subclasses_dict["MT_pre__MetaModelElement_S"] =  ["MT_pre__HouseholdRoot","MT_pre__Family", "MT_pre__Member"]
+
+        subclasses_dict["MT_pre__MetaModelElement_T"] = ["MT_pre__CommunityRoot","MT_pre__Person","MT_pre__Man", "MT_pre__Woman"]
+
+        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
+
+
+        #load the contracts
+
+
+
+        # keep a dictionary from each child to its parent
+        supertypes = {}
+
+        for supertype in subclasses_dict:
+            for subtype in subclasses_dict[supertype]:
+                subtype = subtype[8:]
+                try:
+                    supertypes[subtype].append(supertype[8:])
+                except KeyError:
+                    supertypes[subtype] = [supertype[8:]]
+
+
+        # also make sure the transformation has this information
+        for rule in self.rules.values():
+            rule["superclasses_dict"] = supertypes
+
+        for layer in self.transformation:
+            for rule in layer:
+                rule["superclasses_dict"] = supertypes
+
+        FourMembers = [HfourMembers_IsolatedLHS(), HfourMembers_ConnectedLHS(), HfourMembers_CompleteLHS()]
+        for fm in FourMembers:
+            fm["superclasses_dict"] = supertypes
+ 
+        HFourMembers_atomic = AtomicStateProperty(FourMembers[0], FourMembers[1], FourMembers[2])
+ 
+ 
+        HMotherFather = [HmotherFather_IsolatedLHS(), HmotherFather_ConnectedLHS(), HmotherFather_CompleteLHS()]
+        for c in HMotherFather:
+            c["superclasses_dict"] = supertypes
+ 
+        HMotherFather_atomic = AtomicStateProperty(HMotherFather[0], HMotherFather[1], HMotherFather[2])
+ 
+ 
+        DaughterMother = [HdaughterMother_IsolatedLHS(), HdaughterMother_ConnectedLHS(), HdaughterMother_CompleteLHS()]
+        for c in DaughterMother:
+            c["superclasses_dict"] = supertypes
+ 
+        HDaughterMother_atomic = AtomicStateProperty(DaughterMother[0], DaughterMother[1], DaughterMother[2])
+ 
+ 
+ 
+        # HCommunityPersonIfClause = AtomicStateProperty(HCommunityPerson1_IsolatedLHS(), HCommunityPerson1_ConnectedLHS(), HCommunityPerson1_CompleteLHS())
+        #
+        #
+        # HCommunityPersonThenClause = AndStateProperty(
+        #     AtomicStateProperty(HCommunityPerson1_IsolatedLHS(), HCommunityPerson1_ConnectedLHS(),
+        #         HCommunityPerson1_CompleteLHS()),
+        #     NotStateProperty(
+        #         AtomicStateProperty(HCommunityPerson2_IsolatedLHS(), HCommunityPerson2_ConnectedLHS(),
+        #             HCommunityPerson2_CompleteLHS())))
+ 
+        CommunityPerson1 = HCommunityPerson1_CompleteLHS()
+        CommunityPerson1["superclasses_dict"] = supertypes
+ 
+        CommunityPerson2 = HCommunityPerson2_CompleteLHS()
+        CommunityPerson2["superclasses_dict"] = supertypes
+
+        # HCommunityPersonIfClause = AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(),
+        #     CommunityPerson1)
+        #
+        # HCommunityPersonThenClause = NotStateProperty(
+        #         AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(),
+        #             CommunityPerson2))
+
+
+
+        #HCommunityPerson1 = AtomicStateProperty(HCommunityPerson1_IsolatedLHS(), HCommunityPerson1_ConnectedLHS(), HCommunityPerson1_CompleteLHS())
+
+        #atomic_properties = [["HDaughterMother_atomic", HDaughterMother_atomic]]
+        self.atomic_properties = [["HFourMembers_atomic", HFourMembers_atomic], ["HMotherFather_atomic", HMotherFather_atomic], ["HDaughterMother_atomic", HDaughterMother_atomic]]
+ 
+        self.if_then_properties = []#["HCommunityPerson", HCommunityPersonIfClause, HCommunityPersonThenClause]]
+ 
+        if args.slice > 0:
+            contract = self.atomic_properties[args.slice - 1]
+            print("Slicing for contract number " + str(args.slice) + " : " + contract[0])
+
+            slicer = Slicer(self.rules, self.transformation)
+
+            print("Number rules before: " + str(len(self.rules)))
+            self.rules, self.transformation = slicer.slice_transformation(contract)
+            print("Number rules after: " + str(len(self.rules)))
+
+            raise Exception()
 
     def test_correct_uml2kiltera(self,args):
 
@@ -110,24 +209,7 @@ class Test():
 #         b2 = self.rules['HBasicState2ProcDef']
 #         b3 = self.rules['HCompositeState2ProcDef']
 
-        pyramify = PyRamify(verbosity = 2)
-
-
-
-        a1 = self.rules['HRootRule']
-
-        b1 = self.rules['HMotherRule']
-        c1 = self.rules['HFatherRule']
-
-        d1 = self.rules['HSonRule']
-        e1 = self.rules['HDaughterRule']
-
-
-        f1 = self.rules['HUnionMotherRule']
-        g1 = self.rules['HUnionManRule']
-
-        h1 = self.rules['HUnionDaughterRule']
-        i1 = self.rules['HUnionSonRule']
+        pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
 
 
 
@@ -136,26 +218,16 @@ class Test():
         expected_num_pcs = 330
                 
         #TODO: Change this number if you are modifying the transformation at all
-        #if args.num_rules == -1:
-        transformation = [[a1], [b1], [c1], [d1], [e1], [f1], [g1], [h1], [i1]]
-        #else:
-        #    transformation = self.select_rules([[a1,a2], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
 
 
-        #transformation =[[a1], [ b3]]
-        #transformation =[[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
-        pre_metamodel = ["MT_pre__FamiliesToPersons_MM", "MoTifRule"]
-        post_metamodel = ["MT_post__FamiliesToPersons_MM", "MoTifRule"]
 
-        subclasses_dict = {}
+        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns,
+         self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
+            pyramify.ramify_directory("ATLTrans/w_equations/", self.transformation)
 
-        subclasses_dict["MT_pre__MetaModelElement_S"] =  ["MT_pre__HouseholdRoot","MT_pre__Family", "MT_pre__Member"]
 
-        subclasses_dict["MT_pre__MetaModelElement_T"] = ["MT_pre__CommunityRoot","MT_pre__Person","MT_pre__Man", "MT_pre__Woman"]
 
-        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
-
-        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, 1, args)#
+        s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)#
    
         ts0 = time.time()
         s.build_path_conditions()
@@ -177,125 +249,48 @@ class Test():
             #raise Exception(num_pcs_s)
  
         print("printing path conditions")
-        #s.print_path_conditions_screen()
+        s.print_path_conditions_screen()
 
-        s.print_path_conditions_file()
+        #s.print_path_conditions_file()
 
+        
         print("\nProperty proving:")
-
-        # s.verbosity = 0
-        #
-        #
-        # HFourMembers_atomic = AtomicStateProperty(HFourMembers_IsolatedLHS(), HFourMembers_ConnectedLHS(), HFourMembers_CompleteLHS())
-        #
-        #
-        # HMotherFather_atomic = AtomicStateProperty(HMotherFather_IsolatedLHS(), HMotherFather_ConnectedLHS(), HMotherFather_CompleteLHS())
-        #
-        #
-        # HDaughterMother_atomic = AtomicStateProperty(HDaughterMother_IsolatedLHS(), HDaughterMother_ConnectedLHS(), HDaughterMother_CompleteLHS())
-        #
-        #
-        #
-        # # HCommunityPersonIfClause = AtomicStateProperty(HCommunityPerson1_IsolatedLHS(), HCommunityPerson1_ConnectedLHS(), HCommunityPerson1_CompleteLHS())
-        # #
-        # #
-        # # HCommunityPersonThenClause = AndStateProperty(
-        # #     AtomicStateProperty(HCommunityPerson1_IsolatedLHS(), HCommunityPerson1_ConnectedLHS(),
-        # #         HCommunityPerson1_CompleteLHS()),
-        # #     NotStateProperty(
-        # #         AtomicStateProperty(HCommunityPerson2_IsolatedLHS(), HCommunityPerson2_ConnectedLHS(),
-        # #             HCommunityPerson2_CompleteLHS())))
-        #
-        #
-        # HCommunityPersonIfClause = AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(),
-        #     HCommunityPerson1_CompleteLHS())
-        #
-        # HCommunityPersonThenClause = NotStateProperty(
-        #         AtomicStateProperty(HEmpty_IsolatedConnectedLHS(), HEmpty_IsolatedConnectedLHS(),
-        #             HCommunityPerson2_CompleteLHS()))
-        #
-        #
-        #
-        # HCommunityPerson1 = AtomicStateProperty(HCommunityPerson1_IsolatedLHS(), HCommunityPerson1_ConnectedLHS(), HCommunityPerson1_CompleteLHS())
-        #
-        # #graph_to_dot("HCommunityPerson1_IsolatedLHS", HCommunityPerson1_IsolatedLHS())
-        #
-        #
-        # #graph_to_dot("HCommunityPerson1_ConnectedLHS", HCommunityPerson1_ConnectedLHS())
-        #
-        # #graph_to_dot("HCommunityPerson1_CompleteLHS", HCommunityPerson1_CompleteLHS())
-        #
-        #
-        # #graph_to_dot("HCommunityPerson1_CompleteLHS", HCommunityPerson1_CompleteLHS())
-        # #graph_to_dot("HCommunityPerson2_CompleteLHS", HCommunityPerson2_CompleteLHS())
-        #
-        # if args.draw_svg:
-        #     graph_to_dot("HDaughterMother_ConnectedLHS", HDaughterMother_ConnectedLHS())
-        #     graph_to_dot("HDaughterMother_CompleteLHS", HDaughterMother_CompleteLHS())
-        #
-        #     graph_to_dot("HMotherFather_IsolatedLHS", HMotherFather_IsolatedLHS())
-        #     graph_to_dot("HMotherFather_ConnectedLHS", HMotherFather_ConnectedLHS())
-        #     graph_to_dot("HMotherFather_CompleteLHS", HMotherFather_CompleteLHS())
-        #
-        #     #graph_to_dot("HMotherFather_CompleteLHS", HMotherFather_CompleteLHS())
-        #     #graph_to_dot("HDaughterMother_CompleteLHS", HDaughterMother_CompleteLHS())
-        #
-        #     #
-        #
-        #     #
-        #     # for state in s.get_path_conditions():
-        #     #     graph_to_dot(state.name, state)
-        #
-        # #atomic_properties = [["HDaughterMother_atomic", HDaughterMother_atomic]]
-        # atomic_properties = [["HFourMembers_atomic", HFourMembers_atomic], ["HMotherFather_atomic", HMotherFather_atomic], ["HDaughterMother_atomic", HDaughterMother_atomic]]
-        #
-        # if_then_properties = [["HCommunityPerson", HCommunityPersonIfClause, HCommunityPersonThenClause]]
-        #
-        #
-        # #s.verbosity = 2
-        #
-        #
-        # # finalresult = StateProperty.verifyCompositeStateProperty(s, HCommunityPerson1)
-        # # if finalresult:
-        # #     print("Atomic property: " +"HCommunityPerson1" + " holds")
-        # # else:
-        # #     print("Atomic property: " + "HCommunityPerson1" + " does not hold")
-        #
-        #
-        # for name, atomic_prop in atomic_properties:
-        #     finalresult = StateProperty.verifyCompositeStateProperty(s, atomic_prop)
-        #     if len(finalresult) == 0:
-        #         print("Atomic property: " + name + " holds\n")
-        #     else:
-        #         print("Atomic property: " + name + " does not hold\n")
-        #
-        # for name, i, t in if_then_properties:
-        #     finalresult = StateProperty.verifyCompositeStateProperty(s, ImplicationStateProperty(i, t))
-        #     if len(finalresult) == 0:
-        #         print("If-then property: " + name + " holds\n")
-        #     else:
-        #         print("If-then property: " + name + " does not hold\n")
-        #
-        # ts1 = time.time()
-        #
-        # prop_length = len(atomic_properties) + len(if_then_properties)
-        #
-        #
-        # print("\n\nTime to build the set of path conditions: " + str(pc_time))
-        #
-        # print("\n\nTime to verify " + str(prop_length) + " properties: " + str(ts1 - ts0))
-
-
-
-
-def _print_states(self,s):
-        for state in s.symbStateSpace:
-            print "----------"
-            if state == ():
-                print 'Empty'
+        
+        s.verbosity = 0
+        
+        verifier = StateProperty()
+        for name, atomic_prop in self.atomic_properties:
+            finalresult = verifier.verifyCompositeStateProperty(s, atomic_prop)
+            if len(finalresult) == 0:
+                print("Atomic property: " + name + " holds\n")
             else:
-                for s in state:
-                    print s.name
+                print("Atomic property: " + name + " does not hold\n")
+        
+        for name, i, t in self.if_then_properties:
+            finalresult = verifier.verifyCompositeStateProperty(s, ImplicationStateProperty(i, t))
+            if len(finalresult) == 0:
+                print("If-then property: " + name + " holds\n")
+            else:
+                print("If-then property: " + name + " does not hold\n")
+        
+        ts1 = time.time()
+        
+        prop_length = len(self.atomic_properties) + len(self.if_then_properties)
+        
+        
+        print("\n\nTime to build the set of path conditions: " + str(pc_time))
+        
+        print("\n\nTime to verify " + str(prop_length) + " properties: " + str(ts1 - ts0))
+
+
+def _print_states(self, s):
+    for state in s.symbStateSpace:
+        print("----------")
+        if state == ():
+            print('Empty')
+        else:
+            for s in state:
+                print(s.name)
 
 
 if __name__ == "__main__":
@@ -314,6 +309,15 @@ if __name__ == "__main__":
                         help = 'Option to skip the use of pickling')
     parser.set_defaults(do_pickle = True)
 
+    parser.add_argument('--compression', type = int, default = 6,
+                        help = 'Level of compression to use with pickling. Range: 0 (no compression) to 9 (high compression) (default: 6)')
+    parser.set_defaults(compression = 6)
+
+    parser.add_argument('--slice', type = int, default = 0,
+                        help = 'Index of contract to slice for. Range: 0 (no slicing) to #CONTRACTS (default: 0)')
+    parser.set_defaults(slice = 0)
+
+
     parser.add_argument('--no_svg', dest = 'draw_svg', action = 'store_false',
                         help = 'Flag to force svg files to not be drawn')
     parser.set_defaults(draw_svg = True)
@@ -323,6 +327,10 @@ if __name__ == "__main__":
 
     parser.add_argument('--num_rules', type = int, default = -1,
                         help = 'Number of rules in the transformation (default: -1)')
+
+    parser.add_argument('--verbosity', type = int, default = 0,
+                        help = 'Verbosity level (default: 0 - minimum output)')
+
     args = parser.parse_args()
 
 

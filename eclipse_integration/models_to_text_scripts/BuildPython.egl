@@ -16,7 +16,7 @@ import time
 from path_condition_generator import PathConditionGenerator
 from PyRamify import PyRamify
 
-from ecore_utils import EcoreUtils
+from util.ecore_utils import EcoreUtils
 from core.himesis_plus import buildPreListFromClassNames
 
 from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
@@ -34,6 +34,7 @@ from PropertyVerification.And import And 					#StateSpace Prop
 from PropertyVerification.Or import Or 						#StateSpace Prop
 
 from core.himesis_utils import graph_to_dot
+from util.test_script_utils import select_rules, slice_transformation
 
 # imports for properties' atomic contracts
 
@@ -50,13 +51,14 @@ class Prover():
 
     def do_proof(self,args):    
 
-        pyramify = PyRamify(draw_svg=args.draw_svg)
+        pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
         
-        self.rules = pyramify.get_rules("[%=absoluteBackendPath%]")
+        
+        
         
         [*- get all the rules from the files generated to disk *]
         [% for (r in Rule.all) { %]
-        r[%=ruleIndex%] = self.rules['H[%=r.Description%]']
+        r[%=ruleIndex%] = 'H[%=r.Description%]'
         [% ruleShortMap.put(r, ruleIndex);
         	ruleIndex = ruleIndex + 1;
            }
@@ -100,68 +102,48 @@ class Prover():
         	 }
 		} 
 		%]
-        transformation = [[%=transformationArrayStr%]]
+        full_transformation = [[%=transformationArrayStr%]]
+        
+        self.rules, self.transformation = pyramify.get_rules("[%=absoluteBackendPath%]", full_transformation)
+        
+        subclasses_dict, superclasses_dict = self.get_sub_and_super_classes()
 
-        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
-            pyramify.ramify_directory("[%=absoluteBackendPath%]", transformation)   
+        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
+            pyramify.ramify_directory("[%=absoluteBackendPath%]", self.transformation)   
 
         [*- Generate operations to deal with Polymorphism *]        
         pre_metamodel = ["MT_pre__S_MM", "MoTifRule"]
         post_metamodel = ["MT_post__T_MM", "MoTifRule"]
-        
-        subclasses_dict = {}     
-             
-        inMM = EcoreUtils("[%=inputMM%]")          
-        subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(inMM.getMetamodelClassNames())
-        
-        print subclasses_dict["MT_pre__MetaModelElement_S"]
-
-        outMM = EcoreUtils("[%=outputMM%]")  
-        subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(outMM.getMetamodelClassNames()) 
-        
-        print subclasses_dict["MT_pre__MetaModelElement_T"]
 
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict, "[%=dsltransInstallPath%]")
         
         # go through all the matchers, combinators and tracers to add polymorphism on all classes in an inheritance hierarchy
-        
-        def change_subtype_matching(match_rule, subclass_info):
-            for v in match_rule.condition.vs():
-                if v["mm__"] in set(subclass_info.keys()):
-                    v["MT_subtypes__"] = subclass_info[v["mm__"]]
-                    v["MT_subtypeMatching__"] = True
-                    print "Changed one: " + v["mm__"]
                                                                   
         
         # add polymorphism for the matchers
         for matcher_key in self.matchRulePatterns.keys():
-            change_subtype_matching(self.matchRulePatterns[matcher_key][0],subclasses_dict)
+            self.matchRulePatterns[matcher_key][0].condition["superclasses_dict"] = superclasses_dict
             
         # add polymorphism for the combinators
         for combs_key in self.ruleCombinators.keys():
             if self.ruleCombinators[combs_key] != None:
                 for combinator in self.ruleCombinators[combs_key]:
-                    change_subtype_matching(combinator[0],subclasses_dict)    
+                    combinator[0].condition["superclasses_dict"] = superclasses_dict
 
         # add polymorphism for the tracers
         for tracer_key in self.ruleTraceCheckers.keys():
             if self.ruleTraceCheckers[tracer_key] != None:
-                change_subtype_matching(self.ruleTraceCheckers[tracer_key],subclasses_dict)      
+                self.ruleTraceCheckers[tracer_key].condition["superclasses_dict"] = superclasses_dict    
             
-		# generate path conditions
-        pc_set = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, args)
-    
-        ts0 = time.time()
-        pc_set.build_path_conditions()
-        ts1 = time.time()
-             
-        print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
-        print("Number of path conditions: " + str(pc_set.num_path_conditions))
- 
-        # print path conditions to screen
-        pc_set.print_path_conditions_screen()
-        
-        # declare properties to prove
+        #also make sure the transformation has this information
+        for rule in self.rules.values():
+            rule["superclasses_dict"] = superclasses_dict
+
+        for layer in self.transformation:
+            for rule in layer:
+                rule["superclasses_dict"] = superclasses_dict
+            
+        # load the contracts, and add polymorphism
 
         if (args.draw_svg): 
         [%
@@ -171,28 +153,98 @@ class Prover():
         	graph_to_dot("property_[%=ac.Name%]_complete", H[%=ac.Name%]_CompleteLHS())
         [%}%]       
 
-        ts0 = time.time()
+        self.atomic_contracts = []
+        
         [%
 	    var atomicContractIndex = 0;
         for (ac in inputProperties!AtomicContract) { %]
         
-        c[%=atomicContractIndex%] = AtomicStateProperty(H[%=ac.Name%]_IsolatedLHS(), H[%=ac.Name%]_ConnectedLHS(), H[%=ac.Name%]_CompleteLHS())
-        result_c[%=atomicContractIndex%] = StateProperty.verifyCompositeStateProperty(pc_set, c[%=atomicContractIndex%])
-        if len(result_c[%=atomicContractIndex%]) == 0:
-        	print "\n"
-        	print "Contract [%=ac.Name%] holds!"
-        else:
-        	print "\n"
-        	print "Contract [%=ac.Name%] does not hold!"
-        	print  result_c[%=atomicContractIndex%]      
+        isolated = H[%=ac.Name%]_IsolatedLHS()
+        connected = H[%=ac.Name%]_ConnectedLHS()
+        complete = H[%=ac.Name%]_CompleteLHS()
+        
+        isolated["superclasses_dict"] = superclasses_dict 
+        connected["superclasses_dict"] = superclasses_dict 
+        complete["superclasses_dict"] = superclasses_dict 
+        
+        c[%=atomicContractIndex%] = AtomicStateProperty(isolated, connected, complete)
+        
+        self.atomic_contracts.append(("[%=ac.Name%]", c[%=atomicContractIndex%]))
+        
+          
         [%}%]
+        
+        if args.slice > 0:
+            print("Slicing for contract number " + str(args.slice))
+            contract = self.atomic_contracts[args.slice - 1]
+            self.rules, self.transformation = slice_transformation(self.rules, self.transformation, contract, args)
+            
+            
+		# generate path conditions
+        pc_set = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
+    
+        ts0 = time.time()
+        pc_set.build_path_conditions()
+        ts1 = time.time()
+             
+        print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
+        print("Number of path conditions: " + str(pc_set.num_path_conditions))
+ 
+        # print path conditions to screen
+        
+        if pc_set.num_path_conditions < 300:
+            pc_set.print_path_conditions_screen()
+        
+        # now actually prove these contracts
+        
+        
+        ts0 = time.time()
+        
+        verifier = StateProperty()
+        
+        for name, a_c in self.atomic_contracts:
+            result = verifier.verifyCompositeStateProperty(pc_set, a_c)
+            if len(result) == 0:
+            	print("\n")
+            	print("Contract " + name + " holds!")
+            else:
+            	print("\n")
+            	print("Contract " + name + " does not hold!")
+            	print(result)
         
         ts1 = time.time()
         
         print("\n\nTime to verify properties: " + str(ts1 - ts0) + " seconds.")
 
         
+    def get_sub_and_super_classes(self):
+            subclasses_dict = {}     
+            
+            inputMM = "[%=inputMM%]".split("/")[-1]
+            outputMM = "[%=outputMM%]".split("/")[-1]
+         
+            inMM = EcoreUtils(inputMM)          
+            subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(inMM.getMetamodelClassNames())
+            
+            print(subclasses_dict["MT_pre__MetaModelElement_S"])
 
+            outMM = EcoreUtils(outputMM)  
+            subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(outMM.getMetamodelClassNames()) 
+            
+            print(subclasses_dict["MT_pre__MetaModelElement_T"])
+
+            # keep a dictionary from each child to its parent
+            supertypes = {}
+
+            for supertype in subclasses_dict:
+                for subtype in subclasses_dict[supertype]:
+                    subtype = subtype[8:]
+                    try:
+                        supertypes[subtype].append(supertype[8:])
+                    except KeyError:
+                        supertypes[subtype] = [supertype[8:]]
+
+            return subclasses_dict, supertypes
 
 
 
@@ -212,6 +264,14 @@ if __name__ == "__main__":
     parser.add_argument('--skip_pickle', dest = 'do_pickle', action = 'store_false',
                         help = 'Option to skip the use of pickling')
     parser.set_defaults(do_pickle = True)
+    
+    parser.add_argument('--compression', type = int, default = 6,
+                        help = 'Level of compression to use with pickling. Range: 0 (no compression) to 9 (high compression) (default: 6)')
+    parser.set_defaults(compression = 6)
+    
+    parser.add_argument('--slice', type = int, default = 0,
+                        help = 'Index of contract to slice for. Range: 0 (no slicing) to #CONTRACTS (default: 0)')
+    parser.set_defaults(slice = 0)
     
     parser.add_argument('--no_svg', dest = 'draw_svg', action = 'store_false',
                         help = 'Flag to force svg files to not be drawn')

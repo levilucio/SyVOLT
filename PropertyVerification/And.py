@@ -3,7 +3,7 @@ Created on 2013-09-24
 
 @author: gehan
 '''
-from state_space_property import StateSpaceProperty
+from .state_space_property import StateSpaceProperty
 class And(StateSpaceProperty):
     '''
     classdocs

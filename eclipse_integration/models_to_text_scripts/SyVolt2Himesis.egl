@@ -2,7 +2,7 @@
   for (contract in AtomicContract.allInstances()){
   	
   	// generate complete LHS himesys graph
-  	var completeLHS : Template = TemplateFactory.load("AtomicContract2CompleteLHS.egl");
+  	var completeLHS : Template = TemplateFactory.load("AtomicContract2CompleteLHSEquations.egl");
   	completeLHS.populate("contract", contract);
   	completeLHS.generate("./generated/H" + contract.name + "_CompleteLHS.py");
   	

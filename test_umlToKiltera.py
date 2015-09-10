@@ -16,6 +16,9 @@ from t_core.messages import Packet
 from PyRamify import PyRamify
 
 from core.himesis_utils import graph_to_dot
+
+from util.test_script_utils import select_rules, slice_transformation
+
 # all runs are the same transformation, but with different metamodel elements
 # the purpose is to do scalability testing with multiple configurations and multiple sets of rules
 
@@ -30,117 +33,117 @@ from PropertyVerification.Not import Not #StateSpace Prop
 from PropertyVerification.Implication import Implication #StateSpace Prop
 from PropertyVerification.And import And #StateSpace Prop
 from PropertyVerification.Or import Or #StateSpace Prop
-from PropertyVerification.BACKUP_atomic_state_property import BKUPAtomicStateProperty
-#from lib2to3.fixer_util import p1
-
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2procdef_IsolatedLHS import HState2procdef_IsolatedLHS
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2procdef_CompleteLHS import HState2procdef_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrue_IsolatedLHS import HExitpoint2procdefparTrue_IsolatedLHS
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrue_ConnectedLHS import HExitpoint2procdefparTrue_ConnectedLHS
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrue_CompleteLHS import HExitpoint2procdefparTrue_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrueNOATTR_IsolatedLHS import HExitpoint2procdefparTrueNOATTR_IsolatedLHS
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrueNOATTR_ConnectedLHS import HExitpoint2procdefparTrueNOATTR_ConnectedLHS
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrueNOATTR_CompleteLHS import HExitpoint2procdefparTrueNOATTR_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.negative.Himesis.HState2funcdefNEG_CompleteLHS import HState2funcdefNEG_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2trans2exitptTrue_IsolatedLHS import HState2trans2exitptTrue_IsolatedLHS
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2trans2exitptTrue_ConnectedLHS import HState2trans2exitptTrue_ConnectedLHS
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2trans2exitptTrue_CompleteLHS import HState2trans2exitptTrue_CompleteLHS
-
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HTrans2instTRUE_IsolatedLHS import HTrans2instTRUE_IsolatedLHS
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HTrans2instTRUE_ConnectedLHS import HTrans2instTRUE_ConnectedLHS
-from UMLRT2Kiltera_MM.Properties.positive.Himesis.HTrans2instTRUE_CompleteLHS import HTrans2instTRUE_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.negative.Himesis.HPar2ProcsPart1_CompleteLHS import HPar2ProcsPart1_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.negative.Himesis.HPar2ProcsPart2_CompleteLHS import HPar2ProcsPart2_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.negative.Himesis.HPar2ProcsPart1_2_IsolatedLHS import HPar2ProcsPart1_2_IsolatedLHS
-
-##Multiplicity INvariants- Begin
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HEmpty_IsolatedConnectedLHS import HEmpty_IsolatedConnectedLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HTrigger01ExprPart1_CompleteLHS import HTrigger01ExprPart1_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HTrigger01ExprPart2_CompleteLHS import HTrigger01ExprPart2_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HTrigger01ExprPart3_CompleteLHS import HTrigger01ExprPart3_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HTrigger01ExprPart4_CompleteLHS import HTrigger01ExprPart4_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListen1orMoreListenBranchPart1_CompleteLHS import HListen1orMoreListenBranchPart1_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListen1orMoreListenBranchPart2_CompleteLHS import HListen1orMoreListenBranchPart2_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HNew1orMoreNamePart1_CompleteLHS import HNew1orMoreNamePart1_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HNew1orMoreNamePart2_CompleteLHS import HNew1orMoreNamePart2_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet1orMoreConditionBranchPart1_CompleteLHS import HConditionSet1orMoreConditionBranchPart1_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet1orMoreConditionBranchPart2_CompleteLHS import HConditionSet1orMoreConditionBranchPart2_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HLocalDef1orMoreDefPart1_CompleteLHS import HLocalDef1orMoreDefPart1_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HLocalDef1orMoreDefPart2_CompleteLHS import HLocalDef1orMoreDefPart2_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ExprPart1_CompleteLHS import HConditionBranch1ExprPart1_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ExprPart2_CompleteLHS import HConditionBranch1ExprPart2_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ExprPart3_CompleteLHS import HConditionBranch1ExprPart3_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch01PatternPart1_CompleteLHS import HListenBranch01PatternPart1_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch01PatternPart2_CompleteLHS import HListenBranch01PatternPart2_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch01PatternPart3_CompleteLHS import HListenBranch01PatternPart3_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch01PatternPart4_CompleteLHS import HListenBranch01PatternPart4_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet01ProcPart1_CompleteLHS import HConditionSet01ProcPart1_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet01ProcPart2_CompleteLHS import HConditionSet01ProcPart2_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet01ProcPart3_CompleteLHS import HConditionSet01ProcPart3_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet01ProcPart4_CompleteLHS import HConditionSet01ProcPart4_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HProcDef1ProcPart1_CompleteLHS import HProcDef1ProcPart1_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HProcDef1ProcPart2_CompleteLHS import HProcDef1ProcPart2_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HProcDef1ProcPart3_CompleteLHS import HProcDef1ProcPart3_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch1ProcPart1_CompleteLHS import HListenBranch1ProcPart1_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch1ProcPart2_CompleteLHS import HListenBranch1ProcPart2_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch1ProcPart3_CompleteLHS import HListenBranch1ProcPart3_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HNew1ProcPart1_CompleteLHS import HNew1ProcPart1_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HNew1ProcPart2_CompleteLHS import HNew1ProcPart2_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HNew1ProcPart3_CompleteLHS import HNew1ProcPart3_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HLocalDef1ProcPart1_CompleteLHS import HLocalDef1ProcPart1_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HLocalDef1ProcPart2_CompleteLHS import HLocalDef1ProcPart2_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HLocalDef1ProcPart3_CompleteLHS import HLocalDef1ProcPart3_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ProcPart1_CompleteLHS import HConditionBranch1ProcPart1_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ProcPart2_CompleteLHS import HConditionBranch1ProcPart2_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ProcPart3_CompleteLHS import HConditionBranch1ProcPart3_CompleteLHS
-##Multiplicity INvariants- End
-
-##SYntactic COntracts - Begin
-from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstStateSameNamePart1_2_IsolatedConnectedLHS import HInstStateSameNamePart1_2_IsolatedConnectedLHS
-from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstStateSameNamePart1_CompleteLHS import HInstStateSameNamePart1_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstStateSameNamePart2_CompleteLHS import HInstStateSameNamePart2_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstHProcDefHpart1_CompleteLHS import HInstHProcDefHpart1_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstHProcDefHpart2_CompleteLHS import HInstHProcDefHpart2_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstCProcDefCpart1_CompleteLHS import HInstCProcDefCpart1_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstCProcDefCpart2_CompleteLHS import HInstCProcDefCpart2_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstProcDefParamspart1_CompleteLHS import HInstProcDefParamspart1_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstProcDefParamspart2_CompleteLHS import HInstProcDefParamspart2_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstProcDefParamspart3_CompleteLHS import HInstProcDefParamspart3_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstProcDefParamspart4_CompleteLHS import HInstProcDefParamspart4_CompleteLHS
-##SYntactic COntracts - End
-
-##Pattern COntract - BEGIN
-from UMLRT2Kiltera_MM.Properties.Pattern.Himesis.HNestedStates2nestedProcDefs_IsolatedLHS import HNestedStates2nestedProcDefs_IsolatedLHS
-from UMLRT2Kiltera_MM.Properties.Pattern.Himesis.HNestedStates2nestedProcDefs_ConnectedLHS import HNestedStates2nestedProcDefs_ConnectedLHS
-from UMLRT2Kiltera_MM.Properties.Pattern.Himesis.HNestedStates2nestedProcDefs_CompleteLHS import HNestedStates2nestedProcDefs_CompleteLHS
+# from PropertyVerification.BACKUP_atomic_state_property import BKUPAtomicStateProperty
+# #from lib2to3.fixer_util import p1
+#
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2procdef_IsolatedLHS import HState2procdef_IsolatedLHS
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2procdef_CompleteLHS import HState2procdef_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrue_IsolatedLHS import HExitpoint2procdefparTrue_IsolatedLHS
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrue_ConnectedLHS import HExitpoint2procdefparTrue_ConnectedLHS
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrue_CompleteLHS import HExitpoint2procdefparTrue_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrueNOATTR_IsolatedLHS import HExitpoint2procdefparTrueNOATTR_IsolatedLHS
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrueNOATTR_ConnectedLHS import HExitpoint2procdefparTrueNOATTR_ConnectedLHS
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrueNOATTR_CompleteLHS import HExitpoint2procdefparTrueNOATTR_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.negative.Himesis.HState2funcdefNEG_CompleteLHS import HState2funcdefNEG_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2trans2exitptTrue_IsolatedLHS import HState2trans2exitptTrue_IsolatedLHS
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2trans2exitptTrue_ConnectedLHS import HState2trans2exitptTrue_ConnectedLHS
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2trans2exitptTrue_CompleteLHS import HState2trans2exitptTrue_CompleteLHS
+#
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HTrans2instTRUE_IsolatedLHS import HTrans2instTRUE_IsolatedLHS
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HTrans2instTRUE_ConnectedLHS import HTrans2instTRUE_ConnectedLHS
+# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HTrans2instTRUE_CompleteLHS import HTrans2instTRUE_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.negative.Himesis.HPar2ProcsPart1_CompleteLHS import HPar2ProcsPart1_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.negative.Himesis.HPar2ProcsPart2_CompleteLHS import HPar2ProcsPart2_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.negative.Himesis.HPar2ProcsPart1_2_IsolatedLHS import HPar2ProcsPart1_2_IsolatedLHS
+#
+# ##Multiplicity INvariants- Begin
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HEmpty_IsolatedConnectedLHS import HEmpty_IsolatedConnectedLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HTrigger01ExprPart1_CompleteLHS import HTrigger01ExprPart1_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HTrigger01ExprPart2_CompleteLHS import HTrigger01ExprPart2_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HTrigger01ExprPart3_CompleteLHS import HTrigger01ExprPart3_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HTrigger01ExprPart4_CompleteLHS import HTrigger01ExprPart4_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListen1orMoreListenBranchPart1_CompleteLHS import HListen1orMoreListenBranchPart1_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListen1orMoreListenBranchPart2_CompleteLHS import HListen1orMoreListenBranchPart2_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HNew1orMoreNamePart1_CompleteLHS import HNew1orMoreNamePart1_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HNew1orMoreNamePart2_CompleteLHS import HNew1orMoreNamePart2_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet1orMoreConditionBranchPart1_CompleteLHS import HConditionSet1orMoreConditionBranchPart1_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet1orMoreConditionBranchPart2_CompleteLHS import HConditionSet1orMoreConditionBranchPart2_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HLocalDef1orMoreDefPart1_CompleteLHS import HLocalDef1orMoreDefPart1_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HLocalDef1orMoreDefPart2_CompleteLHS import HLocalDef1orMoreDefPart2_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ExprPart1_CompleteLHS import HConditionBranch1ExprPart1_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ExprPart2_CompleteLHS import HConditionBranch1ExprPart2_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ExprPart3_CompleteLHS import HConditionBranch1ExprPart3_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch01PatternPart1_CompleteLHS import HListenBranch01PatternPart1_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch01PatternPart2_CompleteLHS import HListenBranch01PatternPart2_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch01PatternPart3_CompleteLHS import HListenBranch01PatternPart3_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch01PatternPart4_CompleteLHS import HListenBranch01PatternPart4_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet01ProcPart1_CompleteLHS import HConditionSet01ProcPart1_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet01ProcPart2_CompleteLHS import HConditionSet01ProcPart2_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet01ProcPart3_CompleteLHS import HConditionSet01ProcPart3_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet01ProcPart4_CompleteLHS import HConditionSet01ProcPart4_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HProcDef1ProcPart1_CompleteLHS import HProcDef1ProcPart1_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HProcDef1ProcPart2_CompleteLHS import HProcDef1ProcPart2_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HProcDef1ProcPart3_CompleteLHS import HProcDef1ProcPart3_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch1ProcPart1_CompleteLHS import HListenBranch1ProcPart1_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch1ProcPart2_CompleteLHS import HListenBranch1ProcPart2_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch1ProcPart3_CompleteLHS import HListenBranch1ProcPart3_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HNew1ProcPart1_CompleteLHS import HNew1ProcPart1_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HNew1ProcPart2_CompleteLHS import HNew1ProcPart2_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HNew1ProcPart3_CompleteLHS import HNew1ProcPart3_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HLocalDef1ProcPart1_CompleteLHS import HLocalDef1ProcPart1_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HLocalDef1ProcPart2_CompleteLHS import HLocalDef1ProcPart2_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HLocalDef1ProcPart3_CompleteLHS import HLocalDef1ProcPart3_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ProcPart1_CompleteLHS import HConditionBranch1ProcPart1_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ProcPart2_CompleteLHS import HConditionBranch1ProcPart2_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ProcPart3_CompleteLHS import HConditionBranch1ProcPart3_CompleteLHS
+# ##Multiplicity INvariants- End
+#
+# ##SYntactic COntracts - Begin
+# from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstStateSameNamePart1_2_IsolatedConnectedLHS import HInstStateSameNamePart1_2_IsolatedConnectedLHS
+# from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstStateSameNamePart1_CompleteLHS import HInstStateSameNamePart1_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstStateSameNamePart2_CompleteLHS import HInstStateSameNamePart2_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstHProcDefHpart1_CompleteLHS import HInstHProcDefHpart1_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstHProcDefHpart2_CompleteLHS import HInstHProcDefHpart2_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstCProcDefCpart1_CompleteLHS import HInstCProcDefCpart1_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstCProcDefCpart2_CompleteLHS import HInstCProcDefCpart2_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstProcDefParamspart1_CompleteLHS import HInstProcDefParamspart1_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstProcDefParamspart2_CompleteLHS import HInstProcDefParamspart2_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstProcDefParamspart3_CompleteLHS import HInstProcDefParamspart3_CompleteLHS
+# from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstProcDefParamspart4_CompleteLHS import HInstProcDefParamspart4_CompleteLHS
+# ##SYntactic COntracts - End
+#
+# ##Pattern COntract - BEGIN
+# from UMLRT2Kiltera_MM.Properties.Pattern.Himesis.HNestedStates2nestedProcDefs_IsolatedLHS import HNestedStates2nestedProcDefs_IsolatedLHS
+# from UMLRT2Kiltera_MM.Properties.Pattern.Himesis.HNestedStates2nestedProcDefs_ConnectedLHS import HNestedStates2nestedProcDefs_ConnectedLHS
+# from UMLRT2Kiltera_MM.Properties.Pattern.Himesis.HNestedStates2nestedProcDefs_CompleteLHS import HNestedStates2nestedProcDefs_CompleteLHS
 
 from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 ##Pattern COntract - END
 class Test():
 
     def setUp(self, args):
-        pyramify = PyRamify(draw_svg=args.draw_svg)
-
-        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
-            pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation/Himesis/")
-
-        #print("Rules: " + str(self.rules.keys()))
+        self.pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
 
 
-    def select_rules(self, full_transformation, num_rules):
-        selected_transformation = []
+        full_transformation = [
 
-        print("Selecting " + str(num_rules) + " rules")
+            ['HState2ProcDef'],
+            ['HBasicStateNoOutgoing2ProcDef', 'HBasicState2ProcDef', 'HCompositeState2ProcDef'],
+            ['HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans', 'HState2HProcDef', 'HState2CProcDef'],
+            ['HTransition2QInstSIBLING', 'HTransition2QInstOUT', 'HTransition2Inst'],
+            ['HTransition2ListenBranch','HConnectOutputsOfExitPoint2BProcDefTransition2QInst',
+             'HTransition2HListenBranch','HConnectOPState2CProcDefTransition2InstotherInTransitions'],
+            ['HMapHeirarchyOfStates2HeirarchyOfProcs']
+        ]
 
-        i = 1
-        for layer in range(len(full_transformation)):
-            selected_transformation.append([])
-            for rule in full_transformation[layer]:
-                selected_transformation[layer].append(rule)
-                i += 1
-                if i > num_rules:
-                    print("Returning: " + str(selected_transformation))
-                    return selected_transformation
+        #get the expected num from the args
+        #expected_num_pcs = args.num_pcs
+        expected_num_pcs = 330
+
+
+
+        self.rules, self.transformation = self.pyramify.get_rules("UMLRT2Kiltera_MM/transformation_eq_outside/", full_transformation)
+
 
     def test_correct_uml2kiltera(self,args):
 
@@ -153,46 +156,12 @@ class Test():
 #Layer5: Transition2ListenBranch
 #Layer6: MapHeirarchyOfStates2HeirarchyOfProcs
 
-#         a1 = self.rules['HState2ProcDef']
-#         b1 = self.rules['HBasicStateNoOutgoing2ProcDef']
-#         b2 = self.rules['HBasicState2ProcDef']
-#         b3 = self.rules['HCompositeState2ProcDef']
 
-        pyramify = PyRamify(verbosity = 2)
+        #pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
 
 
 
-        a1 = self.rules['HState2ProcDef']
-        a2 = self.rules['HState2ProcDefCopy']
-        b1 = self.rules['HBasicStateNoOutgoing2ProcDef']
-        b2 = self.rules['HBasicState2ProcDef']
-        b3 = self.rules['HCompositeState2ProcDef']
-        c1 = self.rules['HExitPoint2BProcDefxWhetherOrNotExitPtHasOutgoingTrans']
-        c2 = self.rules['HState2HProcDef']
-        c3 = self.rules['HState2CProcDef']
-        d1 = self.rules['HTransition2QInstSIBLING']
-        d2 = self.rules['HTransition2QInstOUT']
-        d3 = self.rules['HTransition2Inst']
-        e1 = self.rules['HTransition2ListenBranch']
-        e2 = self.rules['HConnectOutputsOfxExitPoint2BProcDefxTransition2QInst']
-        e3 = self.rules['HTransition2HListenBranch']
-        e4 = self.rules['HConnectOPxState2CProcDefxTransition2InstxOtherInTransitions']
-        f1 = self.rules['HMapHeirarchyOfStates2HeirarchyOfProcs']
 
-        #get the expected num from the args
-        #expected_num_pcs = args.num_pcs
-        expected_num_pcs = 330
-                
-        #TODO: Change this number if you are modifying the transformation at all
-        if args.num_rules == -1:
-                #transformation = [[a1], [b3], [c1, c2]]
-                transformation = [[a1, a2], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4]]#, [f1]]
-        else:
-                transformation = self.select_rules([[a1,a2], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]], args.num_rules)
-
-
-        #transformation =[[a1], [ b3]]
-        #transformation =[[a1], [b1,b2,b3], [c1,c2,c3], [d1,d2,d3], [e1,e2,e3,e4], [f1]]
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
         post_metamodel = ["MT_post__UMLRT2Kiltera_MM", "MoTifRule"]
 
@@ -204,40 +173,49 @@ class Test():
                             "MT_pre__SIBLING0", "MT_pre__InitialPoint", "MT_pre__PortConnector", "MT_pre__SignalType", "MT_pre__Transition",\
                             "MT_pre__EntryPoint", "MT_pre__CONJUGATE1", "MT_pre__Protocol", "MT_pre__StateMachine", "MT_pre__Model_S",\
                             "MT_pre__StateMachineElement", "MT_pre__Port", "MT_pre__TransitionType", "MT_pre__Capsule", "MT_pre__Trigger_S",\
-                            "MT_pre__State", "MT_pre__PLUGIN2", "MT_pre__Action", "MT_pre__CapsuleRole", "MT_pre__ExitPoint", "MT_pre__FIXED0"]
+                            "MT_pre__State", "MT_pre__PLUGIN2", "MT_pre__Action", "MT_pre__CapsuleRole", "MT_pre__ExitPoint", "MT_pre__FIXED0", "MT_pre__RootElement"]
 
         subclasses_dict["MT_pre__MetaModelElement_T"] = ["MT_pre__Name", "MT_pre__Module", "MT_pre__ConditionBranch", "MT_pre__Delay", "MT_pre__LocalDef",\
                               "MT_pre__Expr", "MT_pre__ConditionSet", "MT_pre__Proc", "MT_pre__MatchCase", "MT_pre__Match",\
                               "MT_pre__FuncDef", "MT_pre__Null", "MT_pre__Par", "MT_pre__Inst", "MT_pre__Listen", "MT_pre__Site",\
                               "MT_pre__New", "MT_pre__PythonRef", "MT_pre__Def", "MT_pre__Seq", "MT_pre__ParIndexed", "MT_pre__Condition",\
-                              "MT_pre__Print", "MT_pre__Pattern", "MT_pre__ListenBranch", "MT_pre__ProcDef", "MT_pre__Trigger_T","MT_pre__Model_T"]
+                              "MT_pre__Print", "MT_pre__Pattern", "MT_pre__ListenBranch", "MT_pre__ProcDef", "MT_pre__Trigger_T","MT_pre__Model_T", "MT_pre__RootElement"]
 
         subclasses_dict["MT_pre__StateMachine"] = ["MT_pre__State"]
    
-        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
+        self.pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
 
-        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, 1, args)#
-   
+
+#        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlappingRules] = \
+#            self.pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation_eq_outside", transformation)
+
+        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlappingRules, self.subsumption, self.loopingRuleSubsumption] = \
+            self.pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation_eq_outside/", self.transformation)
+
+        s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlappingRules, self.subsumption, self.loopingRuleSubsumption, args)#
+    
         ts0 = time.time()
         s.build_path_conditions()
         ts1 = time.time()
-            
+             
         print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
 #        print("Size of the set of path conditions: " + str(float(sys.getsizeof(s.pathConditionSet) / 1024)))
         print("Number of path conditions: " + str(s.num_path_conditions))
-
+        
+        s.check_rule_reachability()
+ 
         #check if the correct number of path conditions were produced
-        if not int(expected_num_pcs) == -1 and not int(expected_num_pcs) == s.num_path_conditions:
-
-            #TODO: Make this an exception
-            num_pcs_s = "The number of produced path conditions is incorrect.\n" + str(expected_num_pcs) + " were expected, but " + str(s.num_path_conditions) + " were produced."
-            print(num_pcs_s)
+        # if not int(expected_num_pcs) == -1 and not int(expected_num_pcs) == s.num_path_conditions:
+        #
+        #     #TODO: Make this an exception
+        #     num_pcs_s = "The number of produced path conditions is incorrect.\n" + str(expected_num_pcs) + " were expected, but " + str(s.num_path_conditions) + " were produced."
+        #     print(num_pcs_s)
             #raise Exception(num_pcs_s)
  
-        #print("printing path conditions")
-        #s.print_path_conditions_screen()
-#
-# #        s.print_path_conditions_file()
+#         print("printing path conditions")
+#         s.print_path_conditions_screen()
+
+#        s.print_path_conditions_file()
 #
 #         atprop=AtomicStateProperty(HState2procdef_IsolatedLHS(),HState2procdef_IsolatedLHS(), HState2procdef_CompleteLHS())
 #         exitpt2procdefparprop_withattr=AtomicStateProperty(HExitpoint2procdefparTrue_IsolatedLHS(),HExitpoint2procdefparTrue_ConnectedLHS(),HExitpoint2procdefparTrue_CompleteLHS())
@@ -408,76 +386,16 @@ class Test():
 #         print ('finalresult : ')
 #         print (finalresult)
          
-        #Experimenting with using framework1 and framework 2 together
-        #Not(StateProperty.verifyCompositeStateProperty(s, OrStateProperty(trivnegativeprop,trivnegativeprop))).verify()
-        #Or(   StateProperty.verifyCompositeStateProperty(s, OrStateProperty(P1atomic,P2atomic))   ,   StateProperty.verifyCompositeStateProperty(s, OrStateProperty(trivnegativeprop, trivnegativeprop))   ).verify()
-         
-        ###DUMMY EXPERIMENTATION: Verifying simple atomic formulae and propositional logic formulae
-        ###To verify AtomicProp only use the following two lines:
-        #AtomicProperty(HECUSysTrivialTrueIsolatedLHS(),HECUSysTrivialTrueConnectedLHS(), HECUSysTrivialTrueCompleteLHS()).verify(s)
-        #simpleProp=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        #simpleProp.verify(s)
-         
-        ###To verify NotProp, use the following lines
-        #atomicProperty=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        #NotProperty(atomicProperty).verify(s)
-         
-        ###To verify AndProp, use the following lines
-        #atomicProperty=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        #AndProperty(atomicProperty,atomicProperty).verify(s)
-         
-        ###To verify OrProp, use the following lines
-        #atomicProperty=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        #OrProperty(atomicProperty,atomicProperty).verify(s)
-         
-        ###To verify ImplicationProp, use the following lines
-        #atomicProperty=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        #ImplicationProperty(atomicProperty,atomicProperty).verify(s)
-         
-        ###To verify complex propositional logic formulae, use the following lines
-        #atomicProperty=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        #OrProperty(NotProperty(atomicProperty),atomicProperty).verify(s)
-         
-        #atomicProperty=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        #AndProperty(NotProperty(atomicProperty),atomicProperty).verify(s)
-         
-        #atomicProperty=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        #ImplicationProperty(NotProperty(atomicProperty),NotProperty(atomicProperty)).verify(s)
-         
-        ###To verify 2 properties in 1 complex propositional logic formulae, use the following lines
-        #atomicprop1=AtomicProperty(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
-        #atomicprop2=AtomicProperty(HECUSysTrivialTrueIsolatedLHS(),HECUSysTrivialTrueConnectedLHS(), HECUSysTrivialTrueCompleteLHS())
-        #OrProperty(NotProperty(atomicprop1),NotProperty(atomicprop2)).verify(s)
-        #ImplicationProperty(NotProperty(atomicprop1),atomicprop2).verify(s)
-         
-        #ORIGINAL CODE FROM LEVI 
-        #transformation = [[HMapDistributable(), HMapECU2FiveElements(), HMapVirtualDevice()],
-        #                  [HConnECU2VirtualDevice(), HConnVirtualDeviceToDistributable()],
-        #                  [HConnectPPortPrototype(), HConnectRPortPrototype()]]
-        #
-        #rulesIncludingBackLinks = [[],\
-        #                            [transformation[1][0], transformation[1][1]],\
-        #                            [transformation[2][0], transformation[2][1]]]
-        #
-        #s = PathConditionGenerator(transformation, rulesIncludingBackLinks, self.backwardPatterns, self.backwardPatterns2Rules,\
-        #self.overlapRulePatterns, self.multipleSameBackwardLinkRule, 1, False)
-        #s.build_path_conditions()
-        #
-        #self._print_states(s)
-        #print '\n'
-        #print 'Built ' + str(len(s.symbStateSpace)) + ' states.'
-        #
-        #s.verify_property(HECUVDDistIsolatedLHS(), HECUVDDistConnectedLHS(), HECUVDDistCompleteLHS())
 
 
     def _print_states(self,s):
         for state in s.symbStateSpace:
-            print "----------"
+            print("----------")
             if state == ():
-                print 'Empty'
+                print('Empty')
             else:
                 for s in state:
-                    print s.name
+                    print(s.name)
 
 
 if __name__ == "__main__":
@@ -496,6 +414,14 @@ if __name__ == "__main__":
                         help = 'Option to skip the use of pickling')
     parser.set_defaults(do_pickle = True)
 
+    parser.add_argument('--compression', type = int, default = 6,
+                        help = 'Level of compression to use with pickling. Range: 0 (no compression) to 9 (high compression) (default: 6)')
+    parser.set_defaults(compression = 6)
+
+    parser.add_argument('--slice', type = int, default = 0,
+                        help = 'Index of contract to slice for. Range: 0 (no slicing) to #CONTRACTS (default: 0)')
+    parser.set_defaults(slice = 0)
+
     parser.add_argument('--no_svg', dest = 'draw_svg', action = 'store_false',
                         help = 'Flag to force svg files to not be drawn')
     parser.set_defaults(draw_svg = True)
@@ -505,6 +431,10 @@ if __name__ == "__main__":
 
     parser.add_argument('--num_rules', type = int, default = -1,
                         help = 'Number of rules in the transformation (default: -1)')
+
+    parser.add_argument('--verbosity', type = int, default = 0,
+                        help = 'Verbosity level (default: 0 - minimum output)')
+    
     args = parser.parse_args()
 
 

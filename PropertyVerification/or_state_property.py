@@ -3,7 +3,7 @@ Created on 2013-09-10
 
 @author: gehan
 '''
-from state_property import StateProperty
+from .state_property import StateProperty
 
 class OrStateProperty(StateProperty):
     '''

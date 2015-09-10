@@ -1,7 +1,6 @@
 
 
 from core.himesis import Himesis
-import cPickle as pickle
 from uuid import UUID
 
 class HEmptyPathCondition(Himesis):
@@ -17,10 +16,10 @@ class HEmptyPathCondition(Himesis):
         # Add the edges
         self.add_edges([])
         # Set the graph attributes
-        self["mm__"] = pickle.loads("""(lp1
-.""")
+        self["mm__"] = []
         self["name"] = """EmptyPathCondition"""
         self["GUID__"] = UUID('680ca2cf-04c0-48ec-904a-be75541a077f')
+        self["equations"] = []
         
         # Set the node attributes
 

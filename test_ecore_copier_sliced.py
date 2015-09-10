@@ -18,7 +18,7 @@ from PyRamify import PyRamify
 from core.himesis_utils import graph_to_dot
 
 
-from ecore_utils import EcoreUtils
+from util.ecore_utils import EcoreUtils
 from core.himesis_plus import buildPreListFromClassNames
 
 # all runs are the same transformation, but with different metamodel elements
@@ -45,29 +45,16 @@ from PropertyVerification.PropertyVerifier import PropertyVerifier
 
 from FamiliesToPersons_MM.Properties.Positive.Himesis.HEmpty_IsolatedConnectedLHS import HEmpty_IsolatedConnectedLHS
 
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HFourMembers_IsolatedLHS import HFourMembers_IsolatedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HFourMembers_ConnectedLHS import HFourMembers_ConnectedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HFourMembers_CompleteLHS import HFourMembers_CompleteLHS
-
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HMotherFather_IsolatedLHS import HMotherFather_IsolatedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HMotherFather_ConnectedLHS import HMotherFather_ConnectedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HMotherFather_CompleteLHS import HMotherFather_CompleteLHS
-
+from ECore_Copier_MM.properties.positive.himesis.HProperty1_isolatedLHS import HProperty1_isolatedLHS
+from ECore_Copier_MM.properties.positive.himesis.HProperty1_connectedLHS import HProperty1_connectedLHS
+from ECore_Copier_MM.properties.positive.himesis.HProperty1_completeLHS import HProperty1_completeLHS
 
 #negative
-from FamiliesToPersons_MM.Properties.Negative.Himesis.HDaughterMother_IsolatedLHS import HDaughterMother_IsolatedLHS
-from FamiliesToPersons_MM.Properties.Negative.Himesis.HDaughterMother_ConnectedLHS import HDaughterMother_ConnectedLHS
-from FamiliesToPersons_MM.Properties.Negative.Himesis.HDaughterMother_CompleteLHS import HDaughterMother_CompleteLHS
+from ECore_Copier_MM.properties.positive.himesis.HProperty2_isolatedLHS import HProperty2_isolatedLHS
+from ECore_Copier_MM.properties.positive.himesis.HProperty2_connectedLHS import HProperty2_connectedLHS
+from ECore_Copier_MM.properties.positive.himesis.HProperty2_completeLHS import HProperty2_completeLHS
 
 
-#implication
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson1_IsolatedLHS import HCommunityPerson1_IsolatedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson1_ConnectedLHS import HCommunityPerson1_ConnectedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson1_CompleteLHS import HCommunityPerson1_CompleteLHS
-
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson2_IsolatedLHS import HCommunityPerson2_IsolatedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson2_ConnectedLHS import HCommunityPerson2_ConnectedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson2_CompleteLHS import HCommunityPerson2_CompleteLHS
 
 
 
@@ -76,10 +63,10 @@ from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 class Test():
 
     def setUp(self, args):
-        pyramify = PyRamify(draw_svg=args.draw_svg)
+        pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
+        self.rules = pyramify.get_rules("ECore_Copier_Large_MM/transformation/")
 
-        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators] = \
-            pyramify.ramify_directory("ECore_Copier_Large_MM/transformation/")
+
 
         #print("Rules: " + str(self.rules.keys()))
 
@@ -101,9 +88,9 @@ class Test():
 
     def test_correct_ecore_copier(self,args):
         
-        slice_for_prop1 = True
+        self.slice_for_prop1 = False
 
-        pyramify = PyRamify(verbosity = 2)
+        pyramify = PyRamify(verbosity = args.verbosity, draw_svg=args.draw_svg)
 
         a1 = self.rules['HEClass']
         a1_2 = self.rules['HEClass_Copy']
@@ -145,7 +132,7 @@ class Test():
         #TODO: Change this number if you are modifying the transformation at all
         #if args.num_rules == -1:
         
-        if slice_for_prop1:
+        if self.slice_for_prop1:
             transformation = [[a1], [a1_2], [b1], [b1_2], [c1], [d1], [e1], [f1], [g1], [h1], [i1], [j1], [k1], [l1], [m1]]
             #transformation = [[a1], [a1_2], [b1],  [g1]]
         else:
@@ -176,10 +163,14 @@ class Test():
         eu2 = EcoreUtils("ECore_Copier_Large_MM/Ecore.ecore")
         subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(eu2.getMetamodelClassNames())
 
-        print subclasses_dict
+        #print subclasses_dict
 
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
-         
+
+        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns,
+         self.ruleCombinators] = \
+            pyramify.ramify_directory("ECore_Copier_Large_MM/transformation/", transformation)
+
         def change_subtype_matching(match_rule, subclass_info, verbosity = 0):
             for v in match_rule.condition.vs():
                 if v["mm__"] in set(subclass_info.keys()):
@@ -206,7 +197,7 @@ class Test():
             if self.ruleTraceCheckers[tracer_key] != None:
                 change_subtype_matching(self.ruleTraceCheckers[tracer_key],subclasses_dict)    
  
-        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, 1, args)#
+        s = PathConditionGenerator(transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, args)#
     
         ts0 = time.time()
         s.build_path_conditions()
@@ -238,11 +229,11 @@ class Test():
 
         #s.print_path_conditions_file()
 
-        # print("\nProperty proving:")
-        #
-        # s.verbosity = 0
-        #
-        #
+        print("\nProperty proving:")
+
+        s.verbosity = 0
+
+
         # HFourMembers_atomic = AtomicStateProperty(HFourMembers_IsolatedLHS(), HFourMembers_ConnectedLHS(), HFourMembers_CompleteLHS())
         #
         #
@@ -273,7 +264,8 @@ class Test():
         #
         #
         #
-        # HCommunityPerson1 = AtomicStateProperty(HCommunityPerson1_IsolatedLHS(), HCommunityPerson1_ConnectedLHS(), HCommunityPerson1_CompleteLHS())
+        Atomic1 = AtomicStateProperty(HProperty1_isolatedLHS(), HProperty1_connectedLHS(), HProperty1_completeLHS())
+        Atomic2 = AtomicStateProperty(HProperty2_isolatedLHS(), HProperty2_connectedLHS(), HProperty2_completeLHS())
         #
         # #graph_to_dot("HCommunityPerson1_IsolatedLHS", HCommunityPerson1_IsolatedLHS())
         #
@@ -304,51 +296,54 @@ class Test():
         #     #     graph_to_dot(state.name, state)
         #
         # #atomic_properties = [["HDaughterMother_atomic", HDaughterMother_atomic]]
-        # atomic_properties = [["HFourMembers_atomic", HFourMembers_atomic], ["HMotherFather_atomic", HMotherFather_atomic], ["HDaughterMother_atomic", HDaughterMother_atomic]]
+        atomic_properties = []
+        if self.slice_for_prop1:
+            atomic_properties.append(["Property1", Atomic1])
+
+        else:
+            atomic_properties.append(["Property2", Atomic2])
         #
-        # if_then_properties = [["HCommunityPerson", HCommunityPersonIfClause, HCommunityPersonThenClause]]
+        if_then_properties = []#["HCommunityPerson", HCommunityPersonIfClause, HCommunityPersonThenClause]]
         #
         #
         # #s.verbosity = 2
-        #
-        #
-        # # finalresult = StateProperty.verifyCompositeStateProperty(s, HCommunityPerson1)
-        # # if finalresult:
-        # #     print("Atomic property: " +"HCommunityPerson1" + " holds")
-        # # else:
-        # #     print("Atomic property: " + "HCommunityPerson1" + " does not hold")
-        #
-        #
-        # for name, atomic_prop in atomic_properties:
-        #     finalresult = StateProperty.verifyCompositeStateProperty(s, atomic_prop)
-        #     if len(finalresult) == 0:
-        #         print("Atomic property: " + name + " holds\n")
-        #     else:
-        #         print("Atomic property: " + name + " does not hold\n")
-        #
-        # for name, i, t in if_then_properties:
-        #     finalresult = StateProperty.verifyCompositeStateProperty(s, ImplicationStateProperty(i, t))
-        #     if len(finalresult) == 0:
-        #         print("If-then property: " + name + " holds\n")
-        #     else:
-        #         print("If-then property: " + name + " does not hold\n")
-        #
-        # ts1 = time.time()
-        #
-        # prop_length = len(atomic_properties) + len(if_then_properties)
-        # print("\n\nTime to verify " + str(prop_length) + " properties: " + str(ts1 - ts0))
 
 
+        # finalresult = StateProperty.verifyCompositeStateProperty(s, HCommunityPerson1)
+        # if finalresult:
+        #     print("Atomic property: " +"HCommunityPerson1" + " holds")
+        # else:
+        #     print("Atomic property: " + "HCommunityPerson1" + " does not hold")
 
 
-def _print_states(self,s):
-        for state in s.symbStateSpace:
-            print "----------"
-            if state == ():
-                print 'Empty'
+        for name, atomic_prop in atomic_properties:
+            finalresult = StateProperty.verifyCompositeStateProperty(s, atomic_prop)
+            if len(finalresult) == 0:
+                print("Atomic property: " + name + " holds\n")
             else:
-                for s in state:
-                    print s.name
+                print("Atomic property: " + name + " does not hold\n")
+
+        for name, i, t in if_then_properties:
+            finalresult = StateProperty.verifyCompositeStateProperty(s, ImplicationStateProperty(i, t))
+            if len(finalresult) == 0:
+                print("If-then property: " + name + " holds\n")
+            else:
+                print("If-then property: " + name + " does not hold\n")
+
+        ts1 = time.time()
+
+        prop_length = len(atomic_properties) + len(if_then_properties)
+        print("\n\nTime to verify " + str(prop_length) + " properties: " + str(ts1 - ts0))
+
+
+def _print_states(self, s):
+    for state in s.symbStateSpace:
+        print("----------")
+        if state == ():
+            print('Empty')
+        else:
+            for s in state:
+                print(s.name)
 
 
 if __name__ == "__main__":
@@ -376,6 +371,11 @@ if __name__ == "__main__":
 
     parser.add_argument('--num_rules', type = int, default = -1,
                         help = 'Number of rules in the transformation (default: -1)')
+
+    parser.add_argument('--verbosity', type = int, default = 0,
+                        help = 'Verbosity level (default: 0 - minimum output)')
+
+
     args = parser.parse_args()
 
 

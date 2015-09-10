@@ -3,16 +3,19 @@ from copy import deepcopy
 from util.infinity import INFINITY
 from core.match_algo import HimesisMatcher
 from core.himesis import HConstants as HC
-from rule_primitive import RulePrimitive
-from messages import MatchSet, Match, TransformationException
+from .rule_primitive import RulePrimitive
+from .messages import MatchSet, Match, TransformationException
 
-from core.himesis_utils import print_graph, print_GUIDs
+from core.himesis_utils import print_graph, print_GUIDs, get_preds_and_succs
 import traceback
+
+from profiler import *
 
 class Matcher(RulePrimitive):
     '''
         Binds the source graph according to the pre-condition pattern.
     '''
+
     def __init__(self, condition, max=INFINITY):
         '''
             Binds the source graph according to the pre-condition pattern.
@@ -22,6 +25,20 @@ class Matcher(RulePrimitive):
         super(Matcher, self).__init__()
         self.max = max
         self.condition = condition
+
+        #igraph.IN = 2, igraph.OUT = 1
+        self.condition_pred, self.condition_succ = get_preds_and_succs(condition)
+        #self.condition_pred = [(len(tmp), tmp) for tmp in condition.get_adjlist(mode=2)]
+        #self.condition_succ = [(len(tmp), tmp) for tmp in condition.get_adjlist(mode=1)]
+
+
+        self.NAC_preds = {}
+        self.NAC_succs = {}
+        for NAC in self.condition.NACs:
+            self.NAC_preds[NAC.name], self.NAC_succs[NAC.name] = get_preds_and_succs(NAC)
+            #self.NAC_preds[NAC.name] = [(len(tmp), tmp) for tmp in NAC.get_adjlist(mode=2)]
+            #self.NAC_succs[NAC.name] = [(len(tmp), tmp) for tmp in NAC.get_adjlist(mode=1)]
+
 
         #0 = ignore errors, 1 = give warnings, 2 = give errors
         self.warning_level = 1
@@ -43,10 +60,21 @@ class Matcher(RulePrimitive):
         s.insert(1, '[%s]' % self.condition.name)
         s.append("\n" + str(self.condition) + "\n")
         return reduce(lambda x, y: '%s %s' % (x,y), s)
-    
-    def packet_in(self, packet, verbosity = 0):
+
+    #@do_cprofile
+    def packet_in(self, packet, verbosity = 0, preds=[], succs=[]):
         self.exception = None
         self.is_success = False
+
+        #cache the packet graph's neighbours
+        #igraph.IN = 2, igraph.OUT = 1
+        if preds or succs:
+            self.graph_pred = preds
+            self.graph_succ = succs
+        else:
+            self.graph_pred, self.graph_succ = get_preds_and_succs(packet.graph)
+            #self.graph_pred = [(len(tmp), tmp) for tmp in packet.graph.get_adjlist(mode=2)]
+            #self.graph_succ = [(len(tmp), tmp) for tmp in packet.graph.get_adjlist(mode=1)]
 
         if self.condition[HC.GUID] in packet.match_sets:
             matchSet = packet.match_sets[self.condition[HC.GUID]]
@@ -125,18 +153,10 @@ class Matcher(RulePrimitive):
     
     def _match(self, graph, pivots) :
         def getSourceNodeFromLabel(label, mapping, pattern_graph):
-            vs = pattern_graph.vs(MT_label__ = label)
-            if len(vs) == 0:
-                #TODO: This should be a TransformationLanguageSpecificException
-                raise Exception('Label %d does not exist in the pattern' % label)
-            elif len(vs) > 1:
-                #TODO: This should be a TransformationLanguageSpecificException
-                raise Exception('Duplicate label %d in the pattern' % label)
-            elif not vs[0].index in mapping:
-                #TODO: This should be a TransformationLanguageSpecificException
-                raise Exception('Node with label %d was not matched' % label)
-            else:
-                return graph.vs[mapping[vs[0].index]]
+
+            new_vs = pattern_graph.get_node_with_label(label)
+            return graph.vs[mapping[new_vs]]
+
         '''
             Matcher with pivots and (possibly) multiple NACs
             1. Verify that no unbound NAC has a match
@@ -150,8 +170,8 @@ class Matcher(RulePrimitive):
                  given the mapping found in 3.3.
         '''
         bound_NACs = []          # Keep track of which NACs to look for after the LHS matching
-        pred1 = {}              # To optimize the matcher, since otherwise matcher will compute the predecessors of the source graph many times
-        succ1 = {}              # To optimize the matcher, since otherwise matcher will compute the successors of the source graph many times
+        #pred1 = {}              # To optimize the matcher, since otherwise matcher will compute the predecessors of the source graph many times
+        #succ1 = {}              # To optimize the matcher, since otherwise matcher will compute the successors of the source graph many times
         
         # Cache the pivot nodes of the source graph
         pivots = deepcopy(pivots)
@@ -167,7 +187,10 @@ class Matcher(RulePrimitive):
             #===================================================================
             else:
                 # Look for a NAC match
-                nacMatcher = HimesisMatcher(source_graph=graph, pattern_graph=NAC)
+
+                nacMatcher = HimesisMatcher(source_graph=graph, pattern_graph=NAC,
+                                            pred1 = self.graph_pred, succ1 = self.graph_succ,
+                                            pred2 = self.NAC_preds[NAC.name], succ2 = self.NAC_succs[NAC.name])
                 # Convert the pivots
                 nac_pivots = pivots.to_mapping(graph, NAC)
                 try:
@@ -178,13 +201,16 @@ class Matcher(RulePrimitive):
                 except Exception as e: raise e
                 finally: nacMatcher.reset_recursion_limit()
                 # For further matching optimizations
-                pred1 = nacMatcher.pred1
-                succ1 = nacMatcher.succ1
+                #pred1 = nacMatcher.pred1
+                #succ1 = nacMatcher.succ1
         
         # Either there are no NACs, or there were only unbound NACs that do not match, so match the LHS now
-        bound_NACs.sort(key=lambda nac: nac.bridge.vcount(), reverse=True)
-        if not bound_NACs:
-            lhsMatcher = HimesisMatcher(source_graph=graph, pattern_graph=self.condition, pred1=pred1, succ1=succ1)
+        if bound_NACs:
+            bound_NACs.sort(key=lambda nac: nac.bridge.vcount(), reverse=True)
+        else:
+            lhsMatcher = HimesisMatcher(source_graph=graph, pattern_graph=self.condition,
+                                        pred1 = self.graph_pred, succ1 = self.graph_succ,
+                                        pred2 = self.condition_pred, succ2 = self.condition_succ)
             # Convert the pivots
             lhs_pivots = pivots.to_mapping(graph, self.condition)
             try:
@@ -206,7 +232,10 @@ class Matcher(RulePrimitive):
         #===================================================================
         
         # Continue the matching looking for the LHS now
-        lhsMatcher = HimesisMatcher(source_graph=graph, pattern_graph=self.condition, pred1=pred1, succ1=succ1)
+        lhsMatcher = HimesisMatcher(source_graph=graph, pattern_graph=self.condition,
+                                    pred1 = self.graph_pred, succ1 = self.graph_succ,
+                                    pred2 = self.condition_pred, succ2 = self.condition_succ)
+
         # Augment the bridge mapping with the pivot mappings
         lhs_pivots = pivots.to_mapping(graph, self.condition)
         
@@ -222,7 +251,10 @@ class Matcher(RulePrimitive):
                         bridgeMapping = match.to_mapping(graph, NAC)
 
                         # Now continue the matching looking for a match of the corresponding NAC
-                        nacMatcher = HimesisMatcher(source_graph=graph, pattern_graph=NAC, pred1=pred1, succ1=succ1)
+                        nacMatcher = HimesisMatcher(source_graph=graph, pattern_graph=NAC,
+                                                    pred1 = self.graph_pred, succ1 = self.graph_succ,
+                                                    pred2 = self.NAC_preds[NAC.name], succ2 = self.NAC_succs[NAC.name])
+
                         for nac_mapping in nacMatcher.match_iter(context=bridgeMapping):
                             if NAC.constraint(lambda i: getSourceNodeFromLabel(i, nac_mapping, NAC), graph):
                                 # An occurrence of the NAC is found: current mapping is not valid

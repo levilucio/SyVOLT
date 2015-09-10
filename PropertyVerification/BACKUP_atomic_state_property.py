@@ -3,7 +3,7 @@ Created on 2013-08-17
 
 @author: gehan
 '''
-from state_property import StateProperty
+from .state_property import StateProperty
 
 from t_core.messages import Packet
 from t_core.matcher import Matcher
@@ -82,9 +82,9 @@ class BKUPAtomicStateProperty(StateProperty):
                                        
                 if isolated.is_success:
                     if StateSpace.verbosity >= 1:
-                        print 'State ' + str(state_index)
-                        print StateSpace._pretty_print_state(state)
-                        print '    Found Property Elements'
+                        print('State ' + str(state_index))
+                        print(StateSpace._pretty_print_state(state))
+                        print('    Found Property Elements')
                         
                     # find first how many matches of the isolated elements of the property (if any) were found
                     numberOfIsolatedMatches = len(s.match_sets[s.current].matches)
@@ -120,9 +120,9 @@ class BKUPAtomicStateProperty(StateProperty):
                         if StateSpace.verbosity >= 1: t0 = time.time()                
                         states_to_analyse.extend(StateSpace.collapseFactory.collapse(state))
                         if StateSpace.verbosity >= 1: t1 = time.time()
-                        if StateSpace.verbosity >= 1: print 'Time to collapse state: ' + str(t1-t0)
+                        if StateSpace.verbosity >= 1: print('Time to collapse state: ' + str(t1-t0))
          
-                        if StateSpace.verbosity >= 1: print '    Number of states to analyse: ' + str(len(states_to_analyse))
+                        if StateSpace.verbosity >= 1: print('    Number of states to analyse: ' + str(len(states_to_analyse)))
                         
                         #if len(states_to_analyse) > self.maxdepth: self.maxdepth = len(states_to_analyse)
                         
@@ -136,43 +136,43 @@ class BKUPAtomicStateProperty(StateProperty):
                                 
                             match.packet_in(s)
         
-                            if StateSpace.verbosity >= 1: print '    Collapsed state ' + str(collapsed_state)                      
+                            if StateSpace.verbosity >= 1: print('    Collapsed state ' + str(collapsed_state) )
                             # if the match was found, try to find the whole property
                             if match.is_success:
-                                if StateSpace.verbosity >= 1: print '        Found Match!'
+                                if StateSpace.verbosity >= 1: print('        Found Match!')
                                 total.packet_in(s)
                                 if total.is_success:
-                                    if StateSpace.verbosity >= 1: print '        Found Apply!'
+                                    if StateSpace.verbosity >= 1: print('        Found Apply!')
                                 else:
-                                    if StateSpace.verbosity >= 1: print '        Could not find Apply!'
+                                    if StateSpace.verbosity >= 1: print('        Could not find Apply!')
                                     found_counterexample = True
                                     # match part of the property was found, but apply not, thus we found a counterexample
                                     break
                             else:
-                                if StateSpace.verbosity >= 1:  print '        Could not find Match!'
+                                if StateSpace.verbosity >= 1:  print('        Could not find Match!')
                                 
                     else:
-                        if StateSpace.verbosity >= 1: print '        Will not check state, property holds...'
+                        if StateSpace.verbosity >= 1: print('        Will not check state, property holds...')
                         #Question- if  smallerStateWithSameRulesExists=true means property holds ? how come? U only add to the cache the entry after isolated elements of the match pattern match, not after matching the whole property                 
                             
                 else:
                     if StateSpace.verbosity >= 1: 
-                        print 'State ' + str(state_index)
-                        print StateSpace._pretty_print_state(state)
-                        print '    Property Elements not found'            
+                        print('State ' + str(state_index))
+                        print(StateSpace._pretty_print_state(state))
+                        print('    Property Elements not found'    )
             
                 if found_counterexample == True:
                     break
                 state_index += 1
                 
         if StateSpace.verbosity >= 1: 
-            print '\n'
+            print('\n')
         if found_counterexample == True:
-            if StateSpace.verbosity >= 1: print 'AtomicStateProp does not Hold!!!'
+            if StateSpace.verbosity >= 1: print('AtomicStateProp does not Hold!!!')
 
         else:
             #question - if found_counterexample= false, couldnt it be property not provable as suggested in ur paper, i.e. match pattern was never found hence, u cant determine if property will hold or not
-            if StateSpace.verbosity >= 1: print 'AtomicStateProp Holds!!!'
+            if StateSpace.verbosity >= 1: print('AtomicStateProp Holds!!!')
         
         # cleanup the already verified state cache
         StateSpace.verifiedStateCache = [] 
