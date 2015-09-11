@@ -23,25 +23,28 @@ from core.himesis_utils import graph_to_dot
 # the purpose is to do scalability testing with multiple configurations and multiple sets of rules
 
 
-from PropertyVerification.state_property import StateProperty
-from PropertyVerification.atomic_state_property import AtomicStateProperty
-from PropertyVerification.and_state_property import AndStateProperty
-from PropertyVerification.or_state_property import OrStateProperty
-from PropertyVerification.not_state_property import NotStateProperty
-from PropertyVerification.implication_state_property import ImplicationStateProperty
-from PropertyVerification.Not import Not #StateSpace Prop
-from PropertyVerification.Implication import Implication #StateSpace Prop
-from PropertyVerification.And import And #StateSpace Prop
-from PropertyVerification.Or import Or #StateSpace Prop
-from PropertyVerification.BACKUP_atomic_state_property import BKUPAtomicStateProperty
+from PropertyVerification.v2.atomic_contract import AtomicContract
+from PropertyVerification.v2.ContractProver import ContractProver
+
+# from PropertyVerification.state_property import StateProperty
+# from PropertyVerification.atomic_state_property import AtomicStateProperty
+# from PropertyVerification.and_state_property import AndStateProperty
+# from PropertyVerification.or_state_property import OrStateProperty
+# from PropertyVerification.not_state_property import NotStateProperty
+# from PropertyVerification.implication_state_property import ImplicationStateProperty
+# from PropertyVerification.Not import Not #StateSpace Prop
+# from PropertyVerification.Implication import Implication #StateSpace Prop
+# from PropertyVerification.And import And #StateSpace Prop
+# from PropertyVerification.Or import Or #StateSpace Prop
+# from PropertyVerification.BACKUP_atomic_state_property import BKUPAtomicStateProperty
 #from lib2to3.fixer_util import p1
 
-from PropertyVerification.PropertyVerifier import PropertyVerifier
+#from PropertyVerification.PropertyVerifier import PropertyVerifier
 
 
 #positive
 
-from PropertyVerification.HEmpty_IsolatedConnectedLHS import HEmpty_IsolatedConnectedLHS
+#from PropertyVerification.HEmpty_IsolatedConnectedLHS import HEmpty_IsolatedConnectedLHS
 
 from ATLTrans.props.HfourMembers_IsolatedLHS import HfourMembers_IsolatedLHS
 from ATLTrans.props.HfourMembers_ConnectedLHS import HfourMembers_ConnectedLHS
@@ -131,21 +134,21 @@ class Test():
         for fm in FourMembers:
             fm["superclasses_dict"] = supertypes
  
-        HFourMembers_atomic = AtomicStateProperty(FourMembers[0], FourMembers[1], FourMembers[2])
+        HFourMembers_atomic = AtomicContract(FourMembers[0], FourMembers[1], FourMembers[2])
  
  
         HMotherFather = [HmotherFather_IsolatedLHS(), HmotherFather_ConnectedLHS(), HmotherFather_CompleteLHS()]
         for c in HMotherFather:
             c["superclasses_dict"] = supertypes
  
-        HMotherFather_atomic = AtomicStateProperty(HMotherFather[0], HMotherFather[1], HMotherFather[2])
+        HMotherFather_atomic = AtomicContract(HMotherFather[0], HMotherFather[1], HMotherFather[2])
  
  
         DaughterMother = [HdaughterMother_IsolatedLHS(), HdaughterMother_ConnectedLHS(), HdaughterMother_CompleteLHS()]
         for c in DaughterMother:
             c["superclasses_dict"] = supertypes
  
-        HDaughterMother_atomic = AtomicStateProperty(DaughterMother[0], DaughterMother[1], DaughterMother[2])
+        HDaughterMother_atomic = AtomicContract(DaughterMother[0], DaughterMother[1], DaughterMother[2])
  
  
  
@@ -177,12 +180,12 @@ class Test():
         #HCommunityPerson1 = AtomicStateProperty(HCommunityPerson1_IsolatedLHS(), HCommunityPerson1_ConnectedLHS(), HCommunityPerson1_CompleteLHS())
 
         #atomic_properties = [["HDaughterMother_atomic", HDaughterMother_atomic]]
-        self.atomic_properties = [["HFourMembers_atomic", HFourMembers_atomic], ["HMotherFather_atomic", HMotherFather_atomic], ["HDaughterMother_atomic", HDaughterMother_atomic]]
+        self.atomic_contracts = [["HFourMembers_atomic", HFourMembers_atomic], ["HMotherFather_atomic", HMotherFather_atomic], ["HDaughterMother_atomic", HDaughterMother_atomic]]
  
-        self.if_then_properties = []#["HCommunityPerson", HCommunityPersonIfClause, HCommunityPersonThenClause]]
+        self.if_then_contracts = []#["HCommunityPerson", HCommunityPersonIfClause, HCommunityPersonThenClause]]
  
         if args.slice > 0:
-            contract = self.atomic_properties[args.slice - 1]
+            contract = self.atomic_contracts[args.slice - 1]
             print("Slicing for contract number " + str(args.slice) + " : " + contract[0])
 
             slicer = Slicer(self.rules, self.transformation)
@@ -248,8 +251,8 @@ class Test():
             print(num_pcs_s)
             #raise Exception(num_pcs_s)
  
-        print("printing path conditions")
-        s.print_path_conditions_screen()
+        #print("printing path conditions")
+        #s.print_path_conditions_screen()
 
         #s.print_path_conditions_file()
 
@@ -258,24 +261,13 @@ class Test():
         
         s.verbosity = 0
         
-        verifier = StateProperty()
-        for name, atomic_prop in self.atomic_properties:
-            finalresult = verifier.verifyCompositeStateProperty(s, atomic_prop)
-            if len(finalresult) == 0:
-                print("Atomic property: " + name + " holds\n")
-            else:
-                print("Atomic property: " + name + " does not hold\n")
-        
-        for name, i, t in self.if_then_properties:
-            finalresult = verifier.verifyCompositeStateProperty(s, ImplicationStateProperty(i, t))
-            if len(finalresult) == 0:
-                print("If-then property: " + name + " holds\n")
-            else:
-                print("If-then property: " + name + " does not hold\n")
-        
+        contract_prover = ContractProver()
+
+        contract_prover.prove_contracts(s, self.atomic_contracts, self.if_then_contracts)
+
         ts1 = time.time()
         
-        prop_length = len(self.atomic_properties) + len(self.if_then_properties)
+        prop_length = len(self.atomic_contracts) + len(self.if_then_contracts)
         
         
         print("\n\nTime to build the set of path conditions: " + str(pc_time))

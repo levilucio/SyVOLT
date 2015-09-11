@@ -1,3 +1,5 @@
+from profiler import *
+
 from PropertyVerification.v2.disambiguate import Disambiguator
 
 class ContractProver():
@@ -5,15 +7,16 @@ class ContractProver():
     def __init__(self):
         self.disambig = Disambiguator(0)
 
-
+    #@do_cprofile
     def prove_contracts(self, pathCondGen, atomic_contracts, if_then_contracts):
 
         for pc in pathCondGen.get_path_conditions():
-            print(pc.name)
+            print("\nPC: " + pc.name)
 
             disambig_dict = {}
             for name, atomic_contract in atomic_contracts:
 
+                print("Checking contract: " + name)
                 result = atomic_contract.check_isolated(pc)
 
                 # the isolated part did not match
@@ -32,12 +35,13 @@ class ContractProver():
                     disambig_pcs = self.disambig.disambiguate(pc)
                     disambig_dict[str(contract_mms)] = disambig_pcs
 
-                print("Length disambig pcs: " + str(len(disambig_pcs)))
-                #
-                # for dpc in disambig_pcs:
-                #     result = atomic_contract.check(dpc)
-                #
-                #     print("Result: " + result)
-                #
-                #     if result == atomic_contract.NO_COMPLETE:
-                #         print("Atomic contract: " + name + " does not hold on " + pc.name + "\n")
+                #print("Length disambig pcs: " + str(len(disambig_pcs)))
+
+                for dpc in disambig_pcs:
+                    print("DPC: " + dpc.name)
+                    result = atomic_contract.check(dpc)
+
+                    #print("Result: " + str(result))
+
+                    if result == atomic_contract.NO_COMPLETE:
+                        print("Atomic contract: " + name + " does not hold on " + pc.name + "\n")

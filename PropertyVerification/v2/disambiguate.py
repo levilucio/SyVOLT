@@ -400,10 +400,6 @@ class Disambiguator():
 
         level += 1
 
-        #the mms that the pc was disambigged on
-        disambig_mms = []
-
-
         disambiguated_path_conditions = [path_condition]
 
         for mm in self.contract_mms:
@@ -495,6 +491,7 @@ class Disambiguator():
                     new_pc = self._collapse_step(to_merge, new_copy)
 
                     if new_pc:
+                        yield new_pc
                         new_pcs.append(new_pc)
 
 
@@ -533,4 +530,4 @@ class Disambiguator():
         #         disambiguated_path_conditions.extend(self.disambiguate(disamb_path_cond, level))
 
         #print("Disambiguation produced: " + str(len(disambiguated_path_conditions)) + " path conditions")
-        return disambiguated_path_conditions
+        #return disambiguated_path_conditions
