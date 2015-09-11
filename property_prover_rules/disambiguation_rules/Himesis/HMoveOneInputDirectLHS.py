@@ -28,7 +28,7 @@ return True
         self["GUID__"] = 9026040482256132464
         
         # Set the node attributes
-        self.vs[0]["MT_pre__associationType"] = """
+        self.vs[0]["MT_pre__attr1"] = """
 #===============================================================================
 # This code is executed when evaluating if a node shall be matched by this rule.
 # You can access the value of the current node's attribute value by: attr_value.
