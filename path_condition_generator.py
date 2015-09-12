@@ -60,7 +60,7 @@ class PathConditionGenerator(object):
     """
 
     #@do_cprofile
-    def __init__(self, transformation, ruleCombinators, ruleTraceCheckers, matchRulePatterns, overlappingRules, subsumption, loopingRuleSubsumption, args):
+    def __init__(self, transformation, targetMM, ruleCombinators, ruleTraceCheckers, matchRulePatterns, overlappingRules, subsumption, loopingRuleSubsumption, args):
 
         # the empty path condition
 
@@ -73,6 +73,7 @@ class PathConditionGenerator(object):
         set_compression(args.compression)
 
         self.transformation = transformation
+        self.targetMM = targetMM
         self.ruleCombinators = ruleCombinators
         self.ruleTraceCheckers = ruleTraceCheckers
         self.matchRulePatterns = matchRulePatterns
@@ -395,8 +396,8 @@ class PathConditionGenerator(object):
 
 
         manager = Manager()
-        cpu_count = multiprocessing.cpu_count()
-#        cpu_count = 1
+#        cpu_count = multiprocessing.cpu_count()
+        cpu_count = 1
         print("CPU Count: " + str(cpu_count))
 
 
@@ -425,9 +426,7 @@ class PathConditionGenerator(object):
 
             name_dict = {}
 
-            chunkSize = int(math.ceil(pathConSetLength / float(cpu_count)))
-
-
+            chunkSize = int(math.ceil(pathConSetLength / float(cpu_count)))                             
 
             print("Path Cond Set Size: " + str(pathConSetLength))
             print("Chunksize: " + str(chunkSize))
@@ -480,7 +479,11 @@ class PathConditionGenerator(object):
                     report_progress = False
 
                 #print("Chunk size: " + str(len(pc_chunks[i])))
-                new_worker = path_condition_generator_worker(self.verbosity, layer*1000+i, report_progress)
+                
+                
+                
+                new_worker = path_condition_generator_worker(self.transformation, self.targetMM, layer,\
+                                                             layer*1000+i, report_progress, self.verbosity)
                 new_worker.currentPathConditionSet = pc_chunks[i]#pc_queue
                 new_worker.attributeEquationEvaluator = self.attributeEquationEvaluator
 
@@ -491,8 +494,8 @@ class PathConditionGenerator(object):
                 new_worker.pc_dict = pc_dict
 
                 #new_worker.verbosity = self.verbosity
-                new_worker.layer = layer
-                new_worker.transformation = self.transformation
+                #new_worker.layer = layer
+                #new_worker.transformation = self.transformation
 
                 new_worker.rule_names = self.rule_names
 
