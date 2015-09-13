@@ -400,6 +400,8 @@ class Disambiguator():
 
         level += 1
 
+        yield path_condition
+
         disambiguated_path_conditions = [path_condition]
 
         for mm in self.contract_mms:

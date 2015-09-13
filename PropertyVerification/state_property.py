@@ -186,7 +186,7 @@ class StateProperty(Property):
             if state is ():
                 continue
 
-            print("PC: " + state.name)
+            #print("PC: " + state.name)
             
             stateRuleNames = StateProperty.break_down_pc_name(state.name)
 
@@ -287,7 +287,7 @@ class StateProperty(Property):
                         AtomicStatePropsInStateProp[atomicStatePropIndex].verifiedStateCache.append((state,numberOfIsolatedMatches))
                         cacheIsolatedPatternMatches.append(True)
                     else:
-                        print('        Will not check state, property holds...')
+                        #print('        Will not check state, property holds...')
                         cacheIsolatedPatternMatches.append(False)
                         AtomicStatePropsInStateProp[atomicStatePropIndex].SETverifResult(True)
                 else: # did not succeed in matching isolated
@@ -302,8 +302,8 @@ class StateProperty(Property):
             for foundIsolated in cacheIsolatedPatternMatches:
                 collapseFlag=collapseFlag or foundIsolated
 
-            print("Collapse Flag: " + str(collapseFlag))
-            print("cacheIsolatedPatternMatches: " + str(cacheIsolatedPatternMatches))
+            #print("Collapse Flag: " + str(collapseFlag))
+            #print("cacheIsolatedPatternMatches: " + str(cacheIsolatedPatternMatches))
             # ****
             if collapseFlag:
                 # build set of collapsed states to analyse
@@ -314,7 +314,7 @@ class StateProperty(Property):
                     if StateSpace.verbosity >= 1: t0 = time.time()
                     #disamb=Disambiguator(0)#(StateSpace.verbosity)
                     disambiguated_states = self.disambig.disambiguate(state)
-                    print("Disambiguated size: " + str(len(disambiguated_states)))
+                    #print("Disambiguated size: " + str(len(disambiguated_states)))
 
                     # for ds in disambiguated_states:
                     #     print("DS: " + ds.name)
