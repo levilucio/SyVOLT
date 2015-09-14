@@ -86,14 +86,14 @@ class path_condition_generator_worker(Process):
 
         for pathConditionIndex in range(pathConSetLength):
 
-            print(":::::::::::::::::::::::: Self Rules to Treat: " + str(self.rules_to_treat))
+            #print(":::::::::::::::::::::::: Self Rules to Treat: " + str(self.rules_to_treat))
 
             pc_name = self.currentPathConditionSet[pathConditionIndex]
 
             localRulesToTreat = deepcopy(self.rules_to_treat)
             localTreatedRules = self.getRuleNamesInPathCondition(pc_name)
             
-            print(":::::::::::::::::::::::: Treated Rules: " + str(localTreatedRules))
+            #print(":::::::::::::::::::::::: Treated Rules: " + str(localTreatedRules))
 
             if self.report_progress:
                 progress_bar.update_progress(pathConditionIndex)

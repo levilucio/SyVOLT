@@ -23,8 +23,8 @@ from core.himesis_utils import graph_to_dot
 # the purpose is to do scalability testing with multiple configurations and multiple sets of rules
 
 
-from PropertyVerification.v2.atomic_contract import AtomicContract
-from PropertyVerification.v2.ContractProver import ContractProver
+# from PropertyVerification.v2.atomic_contract import AtomicContract
+# from PropertyVerification.v2.ContractProver import ContractProver
 
 from PropertyVerification.state_property import StateProperty
 from PropertyVerification.atomic_state_property import AtomicStateProperty
@@ -151,14 +151,14 @@ class Test():
 
         self.use_new_contracts = True
 
-        if self.use_new_contracts:
-            HFourMembers_atomic = AtomicContract(FourMembers[0], FourMembers[1], FourMembers[2])
-            HMotherFather_atomic = AtomicContract(HMotherFather[0], HMotherFather[1], HMotherFather[2])
-            HDaughterMother_atomic = AtomicContract(DaughterMother[0], DaughterMother[1], DaughterMother[2])
-        else:
-            HFourMembers_atomic = AtomicStateProperty(FourMembers[0], FourMembers[1], FourMembers[2])
-            HMotherFather_atomic = AtomicStateProperty(HMotherFather[0], HMotherFather[1], HMotherFather[2])
-            HDaughterMother_atomic = AtomicStateProperty(DaughterMother[0], DaughterMother[1], DaughterMother[2])
+#         if self.use_new_contracts:
+#             HFourMembers_atomic = AtomicContract(FourMembers[0], FourMembers[1], FourMembers[2])
+#             HMotherFather_atomic = AtomicContract(HMotherFather[0], HMotherFather[1], HMotherFather[2])
+#             HDaughterMother_atomic = AtomicContract(DaughterMother[0], DaughterMother[1], DaughterMother[2])
+#         else:
+#             HFourMembers_atomic = AtomicStateProperty(FourMembers[0], FourMembers[1], FourMembers[2])
+#             HMotherFather_atomic = AtomicStateProperty(HMotherFather[0], HMotherFather[1], HMotherFather[2])
+#             HDaughterMother_atomic = AtomicStateProperty(DaughterMother[0], DaughterMother[1], DaughterMother[2])
  
  
  
@@ -190,21 +190,21 @@ class Test():
         #HCommunityPerson1 = AtomicStateProperty(HCommunityPerson1_IsolatedLHS(), HCommunityPerson1_ConnectedLHS(), HCommunityPerson1_CompleteLHS())
 
         #atomic_properties = [["HDaughterMother_atomic", HDaughterMother_atomic]]
-        self.atomic_contracts = [["HFourMembers_atomic", HFourMembers_atomic], ["HMotherFather_atomic", HMotherFather_atomic], ["HDaughterMother_atomic", HDaughterMother_atomic]]
- 
-        self.if_then_contracts = []#["HCommunityPerson", HCommunityPersonIfClause, HCommunityPersonThenClause]]
- 
-        if args.slice > 0:
-            contract = self.atomic_contracts[args.slice - 1]
-            print("Slicing for contract number " + str(args.slice) + " : " + contract[0])
-
-            slicer = Slicer(self.rules, self.transformation)
-
-            print("Number rules before: " + str(len(self.rules)))
-            self.rules, self.transformation = slicer.slice_transformation(contract)
-            print("Number rules after: " + str(len(self.rules)))
-
-            raise Exception()
+#         self.atomic_contracts = [["HFourMembers_atomic", HFourMembers_atomic], ["HMotherFather_atomic", HMotherFather_atomic], ["HDaughterMother_atomic", HDaughterMother_atomic]]
+#  
+#         self.if_then_contracts = []#["HCommunityPerson", HCommunityPersonIfClause, HCommunityPersonThenClause]]
+#  
+#         if args.slice > 0:
+#             contract = self.atomic_contracts[args.slice - 1]
+#             print("Slicing for contract number " + str(args.slice) + " : " + contract[0])
+# 
+#             slicer = Slicer(self.rules, self.transformation)
+# 
+#             print("Number rules before: " + str(len(self.rules)))
+#             self.rules, self.transformation = slicer.slice_transformation(contract)
+#             print("Number rules after: " + str(len(self.rules)))
+# 
+#             raise Exception()
 
     def test_correct_uml2kiltera(self,args):
 
@@ -240,7 +240,7 @@ class Test():
 
 
 
-        s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)#
+        s = PathConditionGenerator(self.transformation, "ATLTrans/metamodels/Community.ecore", self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)#
    
         ts0 = time.time()
         s.build_path_conditions()
@@ -262,38 +262,38 @@ class Test():
             #raise Exception(num_pcs_s)
  
         #print("printing path conditions")
-        #s.print_path_conditions_screen()
+        s.print_path_conditions_screen()
 
         #s.print_path_conditions_file()
 
         
-        print("\nProperty proving:")
-        
-        s.verbosity = 0
-
-        if self.use_new_contracts:
-            contract_prover = ContractProver()
-
-            contract_prover.prove_contracts(s, self.atomic_contracts, self.if_then_contracts)
-
-        else:
-            verifier = StateProperty()
-            for name, atomic_prop in self.atomic_contracts:
-                finalresult = verifier.verifyCompositeStateProperty(s, atomic_prop)
-                if len(finalresult) == 0:
-                    print("Atomic property: " + name + " holds\n")
-                else:
-                    print("Atomic property: " + name + " does not hold\n")
-
-
-        ts1 = time.time()
-        
-        prop_length = len(self.atomic_contracts) + len(self.if_then_contracts)
-        
-        
-        print("\n\nTime to build the set of path conditions: " + str(pc_time))
-        
-        print("\n\nTime to verify " + str(prop_length) + " properties: " + str(ts1 - ts0))
+#         print("\nProperty proving:")
+#         
+#         s.verbosity = 0
+# 
+#         if self.use_new_contracts:
+#             contract_prover = ContractProver()
+# 
+#             contract_prover.prove_contracts(s, self.atomic_contracts, self.if_then_contracts)
+# 
+#         else:
+#             verifier = StateProperty()
+#             for name, atomic_prop in self.atomic_contracts:
+#                 finalresult = verifier.verifyCompositeStateProperty(s, atomic_prop)
+#                 if len(finalresult) == 0:
+#                     print("Atomic property: " + name + " holds\n")
+#                 else:
+#                     print("Atomic property: " + name + " does not hold\n")
+# 
+# 
+#         ts1 = time.time()
+#         
+#         prop_length = len(self.atomic_contracts) + len(self.if_then_contracts)
+#         
+#         
+#         print("\n\nTime to build the set of path conditions: " + str(pc_time))
+#         
+#         print("\n\nTime to verify " + str(prop_length) + " properties: " + str(ts1 - ts0))
 
 
 def _print_states(self, s):
