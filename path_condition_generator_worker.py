@@ -41,17 +41,9 @@ class path_condition_generator_worker(Process):
 
         self.report_progress = report_progress
         
-        rules_to_treat = []    
-
-        for l in range(self.layer,len(self.transformation)):
-            for r in self.transformation[l]:
-                rules_to_treat.append(r.name)   
-                
-        print(":::::::::::::: Rules to treat: " + str(rules_to_treat)) 
-                    
-        self.rules_to_treat = rules_to_treat
-        
         self.prunner = Prunner(targetMM, self.transformation)
+        
+        self.prunning = False
         
         
     def getRuleNamesInPathCondition(self, pcName):
@@ -86,14 +78,7 @@ class path_condition_generator_worker(Process):
 
         for pathConditionIndex in range(pathConSetLength):
 
-            #print(":::::::::::::::::::::::: Self Rules to Treat: " + str(self.rules_to_treat))
-
             pc_name = self.currentPathConditionSet[pathConditionIndex]
-
-            localRulesToTreat = deepcopy(self.rules_to_treat)
-            localTreatedRules = self.getRuleNamesInPathCondition(pc_name)
-            
-            #print(":::::::::::::::::::::::: Treated Rules: " + str(localTreatedRules))
 
             if self.report_progress:
                 progress_bar.update_progress(pathConditionIndex)
@@ -204,38 +189,22 @@ class path_condition_generator_worker(Process):
                             # create a new path condition which is the result of combining the rule with the current path condition being examined
                             #newPathCond = deepcopy(cpc)
                             newPathCond = disjoint_model_union(cpc,rule)
-                            
-                            # change rules to treat for the prunner
-                            print("----------------- > Local Rules to Treat: " + str(localRulesToTreat))
-                            localRulesToTreat.append(rule_name)
-                            
-                            # test if the new path condition can still lead to to a path condition
-                            # where all the containment relations are respected by executing the remaining rules.
-                            # if not, the path condition is not kept.
-                            if self.prunner.isPathConditionStillFeasible(newPathCond, localTreatedRules, localRulesToTreat):
                                 
-                                # name the new path condition as the combination of the previous path condition and the rule    
-                                newPathCond.name = new_name
-        
-                                shrunk_newCond = shrink_graph(newPathCond)
-                                self.pc_dict[new_name] = shrunk_newCond
-                                new_pc_dict[new_name] = shrunk_newCond
-        
-                                if self.verbosity >= 2 : print("Created path condition with name: " + newPathCond.name)
-                                localPathConditionLayerAccumulator.append(new_name)
-        
-                                #print_graph(newPathCond)
-        
-                                # store the newly created path condition as a child
-                                childrenPathConditions.append(new_name)
-                                
-                                self.rules_to_treat
-                                
-                            else:
-                                
-                                print("Path Condition: " + new_name + " cannot be completed with all necessary containment associations")                                
-                            
-        
+                            # name the new path condition as the combination of the previous path condition and the rule    
+                            newPathCond.name = new_name
+    
+                            shrunk_newCond = shrink_graph(newPathCond)
+                            self.pc_dict[new_name] = shrunk_newCond
+                            new_pc_dict[new_name] = shrunk_newCond
+    
+                            if self.verbosity >= 2 : print("Created path condition with name: " + newPathCond.name)
+                            localPathConditionLayerAccumulator.append(new_name)
+    
+                            #print_graph(newPathCond)
+    
+                            # store the newly created path condition as a child
+                            childrenPathConditions.append(new_name)
+                                    
 
                     newPathConditionSet.extend(localPathConditionLayerAccumulator)
 
@@ -346,11 +315,6 @@ class path_condition_generator_worker(Process):
                                 p = i.packet_in(p)
 
                                 pathCondSubnum = 0
-                                
-                                # consider the rule is already treated for the prunner
-                                
-                                localRulesToTreat.remove(rule_name)
-                                localTreatedRules.append(rule_name)
 
                                 while i.is_success:
 
@@ -426,11 +390,7 @@ class path_condition_generator_worker(Process):
                                             if not rewriter.is_success:
                                                 if self.verbosity >= 2:
                                                     print("Path Condition: " + newPathCondName + " has inconsistent equations")
-                                                    
-                                            elif not self.prunner.isPathConditionStillFeasible(newPathCond, localTreatedRules, localRulesToTreat):
-                                                if self.verbosity >= 2:
-                                                    print("Path Condition: " + newPathCondName + " cannot be completed with all necessary containment associations")
-                                                        
+                                                                                                            
                                             else:
                                                 if isTotalCombinator:
     
@@ -572,47 +532,67 @@ class path_condition_generator_worker(Process):
                         newPathCond = p.graph
                         newPathCondName = cpc.name + "_" + rule_name  + "-OVER" + str(numOfOverlaps)
                         
-                        # move to the next rule to treat for the prunner
-                        if rule_name in localRulesToTreat:
-                            localRulesToTreat.remove(rule_name)
-                            localTreatedRules.append(rule_name)
-                            
-                        if self.prunner.isPathConditionStillFeasible(newPathCond, localTreatedRules, localRulesToTreat):
-                        
-                            # replace the original path condition by the result of overlapping the subsumed rule on it
-                      
-                            previousTotalPC = None                                                    
-                            writeOverPreviousTotalPC = False
-    
-                            for nameTotalPC in name_dict.keys():
-                                if name_dict[nameTotalPC] == cpc.name:
-                                    previousTotalPC = nameTotalPC
-                                    writeOverPreviousTotalPC = True
-                                    break
-                            
-                            if not writeOverPreviousTotalPC:
-                                name_dict[cpc.name] = newPathCondName
-                            else:
-                                name_dict[previousTotalPC] = newPathCondName                  
-    
-                            childrenPathConditions[pathConditionIndex] = newPathCondName
-                            
-                            newPathCond.name = newPathCondName
-                            shrunk_pc = shrink_graph(newPathCond)   
-                            self.pc_dict[newPathCondName] = shrunk_pc
-                            new_pc_dict[newPathCondName] = shrunk_pc
-                            
-                        else:
-                            
-                            print("Path Condition: " + newPathCondName + " cannot be completed with all necessary containment associations")
+                        # replace the original path condition by the result of overlapping the subsumed rule on it
+                  
+                        previousTotalPC = None                                                    
+                        writeOverPreviousTotalPC = False
 
+                        for nameTotalPC in name_dict.keys():
+                            if name_dict[nameTotalPC] == cpc.name:
+                                previousTotalPC = nameTotalPC
+                                writeOverPreviousTotalPC = True
+                                break
+                        
+                        if not writeOverPreviousTotalPC:
+                            name_dict[cpc.name] = newPathCondName
+                        else:
+                            name_dict[previousTotalPC] = newPathCondName                  
+
+                        childrenPathConditions[pathConditionIndex] = newPathCondName
+                        
+                        newPathCond.name = newPathCondName
+                        shrunk_pc = shrink_graph(newPathCond)   
+                        self.pc_dict[newPathCondName] = shrunk_pc
+                        new_pc_dict[newPathCondName] = shrunk_pc
+                            
 
         #print("newPathConditionSet: " + str(newPathConditionSet))
         #print("currentPathConditionSet: " + str(self.currentPathConditionSet))
 
-        print("Thread finished: Took " + str(time.time() - start_time) + " seconds")
 
         self.currentPathConditionSet.extend(newPathConditionSet)
+        
+        if self.prunning:
+        
+            rulesToTreat = []    
+
+            for l in range(self.layer+1,len(self.transformation)):
+                for r in self.transformation[l]:
+                    rulesToTreat.append(r.name)   
+            
+            for pathCondName in self.currentPathConditionSet:
+    
+                # test if the new path condition can still lead to to a path condition
+                # where all the containment relations are respected by executing the remaining rules.
+                # if not, the path condition is not kept.
+                treatedRules = self.getRuleNamesInPathCondition(pathCondName)
+                
+                pathConditionsToPrune = []
+                
+                if not self.prunner.isPathConditionStillFeasible(expand_graph(self.pc_dict[pathCondName]), treatedRules, rulesToTreat):
+                    pathConditionsToPrune.append(pathCondName)
+                    if self.verbosity >= 2:
+                        print("Path Condition: " + pathCondName + " cannot be completed with all necessary containment associations")                               
+    
+                # remove path conditions that have been prunned
+                for prunnedPCName in pathConditionsToPrune:
+                    del self.pc_dict[prunnedPCName]
+                    if prunnedPCName in name_dict.keys():
+                        del name_dict[prunnedPCName]
+                    
+                self.currentPathConditionSet = [pc for pc in self.currentPathConditionSet if pc not in pathConditionsToPrune]
+
+        print("Thread finished: Took " + str(time.time() - start_time) + " seconds")
         
         self.results_queue.put((self.currentPathConditionSet, new_pc_dict, name_dict))
 
