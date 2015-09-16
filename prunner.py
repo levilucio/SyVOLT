@@ -23,9 +23,13 @@ class Prunner(object):
         self.ruleContainmentLinks = {}
         for layer in transformation:
             for rule in layer:
-                self.ruleContainmentLinks[rule.name] = self.eu.getContainmentLinksForRuleOrPC(rule)
+                self.ruleContainmentLinks[rule.name] = self.eu.getBuiltContainmentLinks(rule)
 
-
+        self.ruleClasses = {}
+        for layer in transformation:
+            for rule in layer:
+                self.ruleClasses[rule.name] = self.eu.getBuiltClasses(rule)                
+        
 
     def getContainmentLinksBuiltByRuleSet(self, ruleNames):
         '''
@@ -38,43 +42,64 @@ class Prunner(object):
         return builtContainmentLinks
 
 
+    def getClassesLinksBuiltByRuleSet(self, ruleNames):
+        '''
+        get all the classes built by a set of rules
+        '''
+        builtClasses = []
+        for ruleName in ruleNames:
+            builtClasses.extend(self.ruleClasses[ruleName])
+            
+        return builtClasses
+
 
     def isPathConditionStillFeasible(self, pathCondition, treatedRules, rulesToTreat):
         '''
         decide whether a path condition can be removed from the path condition set because the
         containment requirements cannot be fulfilled
         '''
-        classesInPC = self.eu.getClassesBuiltByPathCondition(pathCondition)
+        classesInPC = self.eu.getBuiltClasses(pathCondition)
         
-        print("Classes in PC: " + str(classesInPC))
+        #print("Classes in PC: " + str(classesInPC))
         
         requiredContainmentInPC = []
         for classInPC in classesInPC:
             requiredContainmentInPC.extend(self.mmContainmentLinks[classInPC])
             
         requiredContainmentInPC = list(set(requiredContainmentInPC))
+        
+        requiredClassesInPC = []
+        for reqContRel in requiredContainmentInPC:
+            requiredClassesInPC.append(reqContRel[0])
+            requiredClassesInPC.append(reqContRel[2])
+        requiredClassesInPC = list(set(requiredClassesInPC))
             
-        print("Required containment in PC: " + str(requiredContainmentInPC))                     
+        #print("Required classes in PC: " + str(requiredClassesInPC))                     
         
         containmentInTreatedRules = self.getContainmentLinksBuiltByRuleSet(treatedRules)
+        classesInTreatedRules = self.getClassesLinksBuiltByRuleSet(treatedRules)
         
-        print("Containment in treated rules: " + str(containmentInTreatedRules))            
-        print("Treated rules: " + str(treatedRules)) 
+        #print("Classes in treated rules: " + str(classesInTreatedRules))            
+        #print("Treated rules: " + str(treatedRules)) 
                 
         containmentInRulesToTreat = self.getContainmentLinksBuiltByRuleSet(rulesToTreat)
+        classesInRulesToTreat = self.getClassesLinksBuiltByRuleSet(rulesToTreat)
         
-        print("Containment in rules to treat: " + str(containmentInRulesToTreat))  
-        print("Treated rules: " + str(rulesToTreat)) 
+        #print("Classes in rules to treat: " + str(classesInRulesToTreat))  
+        #print("Treated rules: " + str(rulesToTreat)) 
                 
         alreadyBuiltContainments = set(requiredContainmentInPC) - set(containmentInTreatedRules)
-        afterAllRulesApplied = set(alreadyBuiltContainments) - set(containmentInRulesToTreat)
+        containmentAfterAllRulesApplied = set(alreadyBuiltContainments) - set(containmentInRulesToTreat)
         
-        if afterAllRulesApplied == set():
+        alreadyBuiltClasses = set(requiredClassesInPC) - set(classesInTreatedRules)
+        classesAfterAllRulesApplied = set(alreadyBuiltClasses) - set(classesInRulesToTreat)        
+        
+        if containmentAfterAllRulesApplied == set() and classesAfterAllRulesApplied == set():
             return True
         else:
-            print("-----------------------------------------------------------------")
-            print("-----------------------------------------------------------------")
-            print("ICONSISTEST CONTINEMAME")       
+#             print("-----------------------------------------------------------------")
+#             print("-----------------------------------------------------------------")
+#             print("INCONSISTENT CONTAINMENT")       
             return False
         
         

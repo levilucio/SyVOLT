@@ -195,20 +195,27 @@ class EcoreUtils(object):
 
         
         
-    def getClassesBuiltByPathCondition(self, rule):
+    def getBuiltClasses(self, rule):
         
         classesInOuputMM = self.getMetamodelClassNames()  
         classesBuiltByPC = []
         
         for node in range(len(rule.vs)):
             if rule.vs[node]["mm__"] in classesInOuputMM:
-                classesBuiltByPC.append(rule.vs[node]["mm__"])
+                instanceIsProduced = True
+                inputClassNodes = rule.neighbors(rule.vs[node],1)
+                for inputClassNode in inputClassNodes:
+                    if rule.vs[inputClassNode]["mm__"] == "backward_link":
+                        instanceIsProduced = False
+                        break
+                if instanceIsProduced:  
+                    classesBuiltByPC.append(rule.vs[node]["mm__"])
                 
         return classesBuiltByPC
         
 
                 
-    def getContainmentLinksForRuleOrPC(self, rule):
+    def getBuiltContainmentLinks(self, rule):
         '''
         return all the containment relations in a rule or path condition, in the form of a
         triplet (sourceClass, link, targetClass)
@@ -276,5 +283,5 @@ if __name__ == '__main__':
 #    r2 = t2.getMetamodelContainmentLinks()
 #    print(r1)
 #    print(r2)    
-    print(str(t1.getContaimentLinksForClasses()))
-#    print (str(t1.getContainmentLinksForRuleOrPC(rule)))
+#    print(str(t1.getContaimentLinksForClasses()))
+    print (str(t1.getBuiltClasses(rule)))

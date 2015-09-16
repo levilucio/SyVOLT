@@ -396,8 +396,8 @@ class PathConditionGenerator(object):
 
 
         manager = Manager()
-#        cpu_count = multiprocessing.cpu_count()
-        cpu_count = 1
+        cpu_count = multiprocessing.cpu_count()
+#        cpu_count = 1
         print("CPU Count: " + str(cpu_count))
 
 
