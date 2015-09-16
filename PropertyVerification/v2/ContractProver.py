@@ -1,6 +1,7 @@
 from profiler import *
 
 from PropertyVerification.v2.disambiguate import Disambiguator
+from core.himesis_utils import graph_to_dot
 
 class ContractProver():
 
@@ -38,13 +39,22 @@ class ContractProver():
             contract_failed_pcs[contract_name] = []
 
 
-
         for pc in pathCondGen.get_path_conditions():
 
 
 
             if pc.name == "HEmptyPathCondition":
                 continue
+
+            if "HMotherRule" not in pc.name or "HDaughterRule" not in pc.name:
+                continue
+
+            if "HSonRule" in pc.name or "HFatherRule" in pc.name:
+                continue
+
+            graph_to_dot(pc.name, pc)
+
+            #print("PC name: " + pc.name)
 
             disambig_dict = {}
             for contract_name, atomic_contract in atomic_contracts:
@@ -66,14 +76,17 @@ class ContractProver():
 
 
                 result = atomic_contract.check(pc)
+
+                print("Result: " + result)
                 if result == atomic_contract.NO_COMPLETE:
                     print("Atomic contract: " + contract_name + " does not hold on " + pc.name + "\n")
                     if pc not in contract_failed_pcs[contract_name]:
                         contract_failed_pcs[contract_name].append(pc)
-                else:
-                    print("Atomic contract: " + contract_name + " does hold on " + pc.name + "\n")
+                # else:
+                #     print("Atomic contract: " + contract_name + " does hold on " + pc.name + "\n")
                     #contract_holds = True
                     #break
+
 
                 #rules = contract_rule_dict[contract_name]
                 # print("Is in contract_rule_dict: ")
