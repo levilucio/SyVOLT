@@ -156,6 +156,8 @@ class AtomicContract():
 
             pc_direct_links = self.pc_data[0]
 
+            found_match = False
+
             for pc_n0_n, pc_n1_n, pc_link_n in pc_direct_links:
 
                 #pc_n0 = pc.vs[pc_n0_n]["mm__"].replace("MT_pre__", "")
@@ -167,11 +169,28 @@ class AtomicContract():
                 nodes_match = True
 
                 nodes_match = nodes_match and self.match_nodes(pc, pc_n0_n, contract, n0_n)
-                nodes_match = nodes_match and self.match_nodes(pc, pc_n1_n, contract, n1_n)
-                nodes_match = nodes_match and self.match_nodes(pc, pc_link_n, contract, link_n)
-
                 if not nodes_match:
-                    print("Failure matching: ")
-                    return False
+                    print("Failure matching on " + pc.vs[pc_n0_n]["mm__"] + " vs " + contract.vs[n0_n]["mm__"])
+
+                nodes_match = nodes_match and self.match_nodes(pc, pc_n1_n, contract, n1_n)
+                if not nodes_match:
+                    print("Failure matching on " + pc.vs[pc_n1_n]["mm__"] + " vs " + contract.vs[n1_n]["mm__"])
+
+                nodes_match = nodes_match and self.match_nodes(pc, pc_link_n, contract, link_n)
+                # if not nodes_match:
+                #     print(pc.vs[pc_link_n]["attr1"])
+                #     print(contract.vs[link_n]["MT_pre__attr1"])
+                #     print("Failure matching on " + pc.vs[pc_link_n]["mm__"] + " vs " + contract.vs[link_n]["mm__"])
+                #
+                # if not nodes_match:
+                #     print("Failure matching: ")
+                #     return False
+
+                if nodes_match:
+                    found_match = True
+
+            if not found_match:
+                print("No matches found")
+                return False
 
         return True
