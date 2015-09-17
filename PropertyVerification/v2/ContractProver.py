@@ -46,13 +46,13 @@ class ContractProver():
             if pc.name == "HEmptyPathCondition":
                 continue
 
-            if "HMotherRule" not in pc.name or "HDaughterRule" not in pc.name:
-                continue
-
-            if "HSonRule" in pc.name or "HFatherRule" in pc.name:
-                continue
-
-            graph_to_dot(pc.name, pc)
+            # if "HMotherRule" not in pc.name or "HDaughterRule" not in pc.name:
+            #     continue
+            #
+            # if "HSonRule" in pc.name or "HFatherRule" in pc.name:
+            #     continue
+            #
+            # graph_to_dot(pc.name, pc)
 
             #print("PC name: " + pc.name)
 
