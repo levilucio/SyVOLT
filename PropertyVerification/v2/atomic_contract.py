@@ -104,6 +104,8 @@ class AtomicContract():
 
     def get_data(self, graph):
         directLinks = []
+        traceLinks = []
+
         mms = [mm.replace("MT_pre__", "") for mm in graph.vs["mm__"]]
 
         for i in range(len(graph.vs)):
@@ -120,71 +122,117 @@ class AtomicContract():
 
                 directLinks.append(dl)
                 #directLinks.append(neighbours)
+            elif "trace_link" in mm:
+                neighbours = look_for_attached(i, graph)
+
+                traceLinks.append(neighbours)
+
+                #Hack: Reverse the elements
+                tl = [neighbours[1], neighbours[0], neighbours[2]]
+                traceLinks.append(tl)
+
 
         #print("Contract directLinks: " + graph.name + str(directLinks))
 
-        return [directLinks]
+        return [directLinks, traceLinks]
 
     def match_nodes(self, pc, src_node, contract, patt_node):
-        # sourceMM = self.mm1[src_node]
-        # targetMM = self.mm2[patt_node]
-        # if sourceMM != targetMM:
-        #
-        #     if not self.src_has_supertype[src_node] or targetMM not in self.superclasses_dict[sourceMM]:
-        #         return False
+        sourceMM = pc.vs[src_node]["mm__"]
+        targetMM = contract.vs[patt_node]["mm__"][8:]
+
+        if sourceMM != targetMM:
+
+            #print("Source MM: " + sourceMM)
+            #print("Target MM: " + targetMM)
+
+            superclasses_dict = contract["superclasses_dict"]
+            #print("Superclasses: " + str(superclasses_dict))
+            
+            if not superclasses_dict[sourceMM] or targetMM not in superclasses_dict[sourceMM]:
+                return False
 
         return self.matcher.are_semantically_feasible(src_node, patt_node)
 
 
     def match(self, contract, contract_data, pc):
 
-        print("Contract data: " + str(contract_data))
-        print("PC data: " + str(self.pc_data))
+        #print("Contract data: " + str(contract_data))
+        #print("PC data: " + str(self.pc_data))
 
         self.matcher = HimesisMatcher(pc, contract)
 
+
+        b_links = contract_data[1]
+        pc_back_links = self.pc_data[1]
+
+        for n0_n, n1_n, link_n in b_links:
+
+            found_match = False
+
+            # print(contract.vs[n0_n]["mm__"])
+            # print(contract.vs[n1_n]["mm__"])
+            # print(contract.vs[link_n]["mm__"])
+
+            for pc_n0_n, pc_n1_n, pc_link_n in pc_back_links:
+
+                # print()
+                # print(pc.vs[pc_n0_n]["mm__"])
+                # print(pc.vs[pc_n1_n]["mm__"])
+                # print(pc.vs[pc_link_n]["mm__"])
+
+                nodes_match = True
+
+                nodes_match = nodes_match and self.match_nodes(pc, pc_n0_n, contract, n0_n)
+                # if nodes_match:
+                #     print("Success matching on " + pc.vs[pc_n0_n]["mm__"] + " vs " + contract.vs[n0_n]["mm__"])
+                # else:
+                #     print("Failure matching on " + pc.vs[pc_n0_n]["mm__"] + " vs " + contract.vs[n0_n]["mm__"])
+
+                nodes_match = nodes_match and self.match_nodes(pc, pc_n1_n, contract, n1_n)
+                # if nodes_match:
+                #     print("Success matching on " + pc.vs[pc_n1_n]["mm__"] + " vs " + contract.vs[n1_n]["mm__"])
+                # else:
+                #     print("Failure matching on " + pc.vs[pc_n1_n]["mm__"] + " vs " + contract.vs[n1_n]["mm__"])
+
+                nodes_match = nodes_match and self.match_nodes(pc, pc_link_n, contract, link_n)
+
+                # if nodes_match:
+                #     print("Success matching on " + pc.vs[pc_link_n]["mm__"] + " vs " + contract.vs[link_n]["mm__"])
+                # else:
+                #     print("Failure matching on " + pc.vs[pc_link_n]["mm__"] + " vs " + contract.vs[link_n]["mm__"])
+
+                if nodes_match:
+                    found_match = True
+
+            if not found_match:
+                print("No backward matches found")
+                return False
+
+
+
+
+
         d_links = contract_data[0]
+        pc_direct_links = self.pc_data[0]
         for n0_n, n1_n, link_n in d_links:
 
-            #n0 = contract.vs[n0_n]["mm__"].replace("MT_pre__", "")
-            # n1 = n1_n["mm__"].replace("MT_pre__", "")
-            # link = link_n["mm__"].replace("MT_pre__", "")
-
-            #print(n0)
-            #print(n1)
-            #print(link)
-
-            pc_direct_links = self.pc_data[0]
 
             found_match = False
 
             for pc_n0_n, pc_n1_n, pc_link_n in pc_direct_links:
 
-                #pc_n0 = pc.vs[pc_n0_n]["mm__"].replace("MT_pre__", "")
-                # pc_n1 = pc_n1_n["mm__"]
-                # pc_link = pc_link_n["mm__"]
-                #
-                #print(n0 + " vs " + pc_n0)
-
                 nodes_match = True
 
                 nodes_match = nodes_match and self.match_nodes(pc, pc_n0_n, contract, n0_n)
-                if not nodes_match:
-                    print("Failure matching on " + pc.vs[pc_n0_n]["mm__"] + " vs " + contract.vs[n0_n]["mm__"])
+                # if not nodes_match:
+                #     print("Failure matching on " + pc.vs[pc_n0_n]["mm__"] + " vs " + contract.vs[n0_n]["mm__"])
 
-                nodes_match = nodes_match and self.match_nodes(pc, pc_n1_n, contract, n1_n)
-                if not nodes_match:
-                    print("Failure matching on " + pc.vs[pc_n1_n]["mm__"] + " vs " + contract.vs[n1_n]["mm__"])
+                # nodes_match = nodes_match and self.match_nodes(pc, pc_n1_n, contract, n1_n)
+                # if not nodes_match:
+                #     print("Failure matching on " + pc.vs[pc_n1_n]["mm__"] + " vs " + contract.vs[n1_n]["mm__"])
 
                 nodes_match = nodes_match and self.match_nodes(pc, pc_link_n, contract, link_n)
-                # if not nodes_match:
-                #     print(pc.vs[pc_link_n]["attr1"])
-                #     print(contract.vs[link_n]["MT_pre__attr1"])
-                #     print("Failure matching on " + pc.vs[pc_link_n]["mm__"] + " vs " + contract.vs[link_n]["mm__"])
-                #
-                # if not nodes_match:
-                #     print("Failure matching: ")
-                #     return False
+
 
                 if nodes_match:
                     found_match = True
