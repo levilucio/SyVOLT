@@ -49,8 +49,11 @@ class Rewriter(RulePrimitive):
                     print("Rewriter mapping: " + str(mapping))
 
                 graph_eqs = packet.graph["equations"]
-                cond_eqs = self.condition["equations"]
 
+                try:
+                    cond_eqs = self.condition["equations"]
+                except KeyError:
+                    cond_eqs = []
 
                 if cond_eqs and graph_eqs != cond_eqs:
 

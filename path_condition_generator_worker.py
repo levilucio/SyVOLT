@@ -21,15 +21,18 @@ import numpy.random as nprnd
 from profiler import *
 from util.progress import ProgressBar
 
+from prunner import Prunner
+
 class path_condition_generator_worker(Process):
 
 
-    def __init__(self, verbosity, num, report_progress):
+    def __init__(self, transformation, targetMM, layer, num, report_progress, verbosity):
         super(path_condition_generator_worker, self).__init__()
+        self.transformation = transformation
+        self.layer = layer
         self.num = num
         self.currentPathConditionSet = None
         self.results_queue = None
-
         self.verbosity = verbosity
 
         #self.attributeEquationEvaluator = SimpleAttributeEquationEvaluator(verbosity)
@@ -37,6 +40,23 @@ class path_condition_generator_worker(Process):
         nprnd.seed(num)
 
         self.report_progress = report_progress
+        
+        self.prunner = Prunner(targetMM, self.transformation)
+        
+        self.prunning = False
+        
+        
+    def getRuleNamesInPathCondition(self, pcName):
+        ruleNames = []
+        for token in pcName.split("_"):
+            if token == 'HEmpty':
+                pass
+            else:
+                rulename = token.split("-")[0]
+                ruleNames.append(rulename) 
+        
+        return ruleNames
+        
 
     #@do_cprofile
     #@profile
@@ -57,7 +77,6 @@ class path_condition_generator_worker(Process):
             progress_bar = ProgressBar(pathConSetLength)
 
         for pathConditionIndex in range(pathConSetLength):
-        #while True:
 
             pc_name = self.currentPathConditionSet[pathConditionIndex]
 
@@ -155,6 +174,13 @@ class path_condition_generator_worker(Process):
     #                     if not (rule_name in self.overlappingRules.keys() or\
     #                             (rule_name in self.overlappingRules.keys() and subsumedRulesinPC)):
                             
+                        # can symbolically execute only if the path condition contains no rule that subsumes
+                        # the rule being executed or rule subsumed by the rule being executed.
+                        # in this way we guarantee that all rules in a partial order get executed
+                        # at least once (when the larger rules don't execute), and overlaps are
+                        # dealt with during the second phase - i.e. all rules that execute and subsume
+                        # others have to get their subsumed rules executed too.   
+                        
                         if not (subsumingRulesinPC or subsumedRulesinPC or ruleInLoopAndHasSubsumingParent):
 
                             cpc = expand_graph(self.pc_dict[child_pc_name])
@@ -163,9 +189,8 @@ class path_condition_generator_worker(Process):
                             # create a new path condition which is the result of combining the rule with the current path condition being examined
                             #newPathCond = deepcopy(cpc)
                             newPathCond = disjoint_model_union(cpc,rule)
-                            # name the new path condition as the combination of the previous path condition and the rule
-    
-    
+                                
+                            # name the new path condition as the combination of the previous path condition and the rule    
                             newPathCond.name = new_name
     
                             shrunk_newCond = shrink_graph(newPathCond)
@@ -179,6 +204,7 @@ class path_condition_generator_worker(Process):
     
                             # store the newly created path condition as a child
                             childrenPathConditions.append(new_name)
+                                    
 
                     newPathConditionSet.extend(localPathConditionLayerAccumulator)
 
@@ -363,8 +389,8 @@ class path_condition_generator_worker(Process):
                                             #if not is_consistent(newPathCond):
                                             if not rewriter.is_success:
                                                 if self.verbosity >= 2:
-                                                    print("Graph: " + newPathCondName + " has inconsistent equations")
-    
+                                                    print("Path Condition: " + newPathCondName + " has inconsistent equations")
+                                                                                                            
                                             else:
                                                 if isTotalCombinator:
     
@@ -502,13 +528,11 @@ class path_condition_generator_worker(Process):
                                     p.graph = beforeOverlappingPC                                    
                             #print("--------------------------------> Rewrite: " + str(combinatorRewriter.is_success))
                             p = i.next_in(p)
-                        
+                            
+                        newPathCond = p.graph
                         newPathCondName = cpc.name + "_" + rule_name  + "-OVER" + str(numOfOverlaps)
                         
-#                        print "-----------------------------------------> " + newPathCondName
-                            
                         # replace the original path condition by the result of overlapping the subsumed rule on it
-                        #del[self.pc_dict[childrenPathConditions[pathConditionIndex]]]
                   
                         previousTotalPC = None                                                    
                         writeOverPreviousTotalPC = False
@@ -526,18 +550,49 @@ class path_condition_generator_worker(Process):
 
                         childrenPathConditions[pathConditionIndex] = newPathCondName
                         
-                        p.graph.name = newPathCondName
-                        shrunk_pc = shrink_graph(p.graph)   
+                        newPathCond.name = newPathCondName
+                        shrunk_pc = shrink_graph(newPathCond)   
                         self.pc_dict[newPathCondName] = shrunk_pc
                         new_pc_dict[newPathCondName] = shrunk_pc
-
+                            
 
         #print("newPathConditionSet: " + str(newPathConditionSet))
         #print("currentPathConditionSet: " + str(self.currentPathConditionSet))
 
-        print("Thread finished: Took " + str(time.time() - start_time) + " seconds")
 
         self.currentPathConditionSet.extend(newPathConditionSet)
+        
+        if self.prunning:
+        
+            rulesToTreat = []    
+
+            for l in range(self.layer+1,len(self.transformation)):
+                for r in self.transformation[l]:
+                    rulesToTreat.append(r.name)   
+            
+            for pathCondName in self.currentPathConditionSet:
+    
+                # test if the new path condition can still lead to to a path condition
+                # where all the containment relations are respected by executing the remaining rules.
+                # if not, the path condition is not kept.
+                treatedRules = self.getRuleNamesInPathCondition(pathCondName)
+                
+                pathConditionsToPrune = []
+                
+                if not self.prunner.isPathConditionStillFeasible(expand_graph(self.pc_dict[pathCondName]), treatedRules, rulesToTreat):
+                    pathConditionsToPrune.append(pathCondName)
+                    if self.verbosity >= 2:
+                        print("Path Condition: " + pathCondName + " cannot be completed with all necessary containment associations")                               
+    
+                # remove path conditions that have been prunned
+                for prunnedPCName in pathConditionsToPrune:
+                    del self.pc_dict[prunnedPCName]
+                    if prunnedPCName in name_dict.keys():
+                        del name_dict[prunnedPCName]
+                    
+                self.currentPathConditionSet = [pc for pc in self.currentPathConditionSet if pc not in pathConditionsToPrune]
+
+        print("Thread finished: Took " + str(time.time() - start_time) + " seconds")
         
         self.results_queue.put((self.currentPathConditionSet, new_pc_dict, name_dict))
 

@@ -17,7 +17,7 @@ from PyRamify import PyRamify
 
 from core.himesis_utils import graph_to_dot
 
-from util.test_script_utils import select_rules, slice_transformation
+#from util.test_script_utils import select_rules, slice_transformation
 
 # all runs are the same transformation, but with different metamodel elements
 # the purpose is to do scalability testing with multiple configurations and multiple sets of rules
@@ -126,14 +126,14 @@ class Test():
 
 
         full_transformation = [
-
+            ['HMapRootElementRule'],
             ['HState2ProcDef'],
             ['HBasicStateNoOutgoing2ProcDef', 'HBasicState2ProcDef', 'HCompositeState2ProcDef'],
             ['HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans', 'HState2HProcDef', 'HState2CProcDef'],
             ['HTransition2QInstSIBLING', 'HTransition2QInstOUT', 'HTransition2Inst'],
             ['HTransition2ListenBranch','HConnectOutputsOfExitPoint2BProcDefTransition2QInst',
              'HTransition2HListenBranch','HConnectOPState2CProcDefTransition2InstotherInTransitions'],
-            ['HMapHeirarchyOfStates2HeirarchyOfProcs']
+            ['HMapHeirarchyOfStates2HeirarchyOfProcs', 'HRuleConnect2RootElement']
         ]
 
         #get the expected num from the args
@@ -192,7 +192,7 @@ class Test():
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlappingRules, self.subsumption, self.loopingRuleSubsumption] = \
             self.pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation_eq_outside/", self.transformation)
 
-        s = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlappingRules, self.subsumption, self.loopingRuleSubsumption, args)#
+        s = PathConditionGenerator(self.transformation, "UMLRT2Kiltera_MM/metamodels/klt_new.ecore", self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlappingRules, self.subsumption, self.loopingRuleSubsumption, args)#
     
         ts0 = time.time()
         s.build_path_conditions()
