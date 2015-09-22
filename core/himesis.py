@@ -102,6 +102,9 @@ class Himesis(ig.Graph):
             cpy.execute_parameters = copy.deepcopy(self.execute_parameters)
             cpy.execute_doc = copy.deepcopy(self.execute_doc)
 
+        if hasattr(self, "NACs"):
+            cpy.NACs = copy.deepcopy(self.NACs)
+
         # cpy.init_params = copy.deepcopy(self.init_params)
         #cpy.import_name = copy.deepcopy(self.import_name)
         try:
