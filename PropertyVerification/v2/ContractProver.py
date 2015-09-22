@@ -46,17 +46,13 @@ class ContractProver():
             if pc.name == "HEmptyPathCondition":
                 continue
 
-            # if "HMotherRule" not in pc.name or "HDaughterRule" not in pc.name:
+            # if not pc.name == "HEmptyPathCondition_HRootRule-0_HMotherRule-0_HFatherRule-0_HDaughterRule-0":
             #     continue
-            #
-            # if "HSonRule" in pc.name or "HFatherRule" in pc.name:
-            #     continue
-            #
-            # graph_to_dot(pc.name, pc)
+
+            #graph_to_dot(pc.name.replace("-", "_"), pc)
 
             #print("PC name: " + pc.name)
 
-            disambig_dict = {}
             for contract_name, atomic_contract in atomic_contracts:
 
 
@@ -71,11 +67,14 @@ class ContractProver():
                 # else:
                 #     print("ISOLATED")
 
+
+
                 print("\nPC: " + pc.name)
                 print("Checking contract: " + contract_name)
 
 
-                result = atomic_contract.check(pc)
+
+                result = atomic_contract.check(pc, verbosity=0)
 
                 print("Result: " + result)
                 if result == atomic_contract.NO_COMPLETE:
@@ -88,54 +87,6 @@ class ContractProver():
                     #break
 
 
-                #rules = contract_rule_dict[contract_name]
-                # print("Is in contract_rule_dict: ")
-                # for rule in rules:
-                #     print(rule)
-
-                # result = self.seen_pc_before(pc.name, rules)
-                #
-                # if result:
-                #     #print("Contract holds because rule set has been seen before")
-                #     continue
-
-                # #get the list of mms that will be disambigged on
-                # contract_mms = self.disambig.set_contract(atomic_contract)
-                #
-                # #check to see if we've already disambigged these for these mms
-                # if str(contract_mms) in disambig_dict:
-                #     disambig_pcs = disambig_dict[str(contract_mms)]
-                # else:
-                #     #do the disambigging
-                #     disambig_pcs = self.disambig.disambiguate(pc)
-                #     #disambig_pcs.append(pc)
-                #     disambig_dict[str(contract_mms)] = disambig_pcs
-                #
-                #
-                #
-                # #print("Length disambig pcs: " + str(len(dpcs)))
-                #
-                # contract_holds = False
-                #
-                # for dpc in disambig_pcs:
-                #     #print("DPC: " + dpc.name)
-                #     result = atomic_contract.check(dpc)
-                #
-                #     #print("Result: " + str(result))
-                #
-                #     if result == atomic_contract.NO_COMPLETE:
-                #         print("Atomic contract: " + contract_name + " does not hold on " + pc.name + "\n")
-                #         if pc not in contract_failed_pcs[contract_name]:
-                #             contract_failed_pcs[contract_name].append(pc)
-                #     else:
-                #         #print("Atomic contract: " + contract_name + " does hold on " + pc.name + "\n")
-                #         contract_holds = True
-                #         break
-                #
-                # if contract_holds:
-                #     rules = self.rule_name_set(pc.name)
-                #     if rules not in contract_rule_dict[contract_name]:
-                #         contract_rule_dict[contract_name].append(rules)
 
         print("")
         for contract_name, atomic_contract in atomic_contracts:
