@@ -66,7 +66,7 @@ class ContractProver():
                 # the isolated part did not match
                 # skip checking this contract on this pc
                 if result == atomic_contract.NO_ISOLATED:
-                    print("NO ISOLATED")
+                    #print("NO ISOLATED")
                     continue
                 # else:
                 #     print("ISOLATED")

@@ -127,10 +127,6 @@ class AtomicContract():
 
                 traceLinks.append(neighbours)
 
-                #Hack: Reverse the elements
-                tl = [neighbours[1], neighbours[0], neighbours[2]]
-                traceLinks.append(tl)
-
 
         #print("Contract directLinks: " + graph.name + str(directLinks))
 
@@ -180,15 +176,16 @@ class AtomicContract():
                 # print(pc.vs[pc_n1_n]["mm__"])
                 # print(pc.vs[pc_link_n]["mm__"])
 
-                nodes_match = True
+                #nodes_match = True
 
-                nodes_match = nodes_match and self.match_nodes(pc, pc_n0_n, contract, n0_n)
+                nodes_match = (self.match_nodes(pc, pc_n0_n, contract, n0_n) and self.match_nodes(pc, pc_n1_n, contract, n1_n))\
+                    or\
+                               (self.match_nodes(pc, pc_n1_n, contract, n0_n) and self.match_nodes(pc, pc_n0_n, contract, n1_n))
                 # if nodes_match:
                 #     print("Success matching on " + pc.vs[pc_n0_n]["mm__"] + " vs " + contract.vs[n0_n]["mm__"])
                 # else:
                 #     print("Failure matching on " + pc.vs[pc_n0_n]["mm__"] + " vs " + contract.vs[n0_n]["mm__"])
 
-                nodes_match = nodes_match and self.match_nodes(pc, pc_n1_n, contract, n1_n)
                 # if nodes_match:
                 #     print("Success matching on " + pc.vs[pc_n1_n]["mm__"] + " vs " + contract.vs[n1_n]["mm__"])
                 # else:
@@ -203,6 +200,9 @@ class AtomicContract():
 
                 if nodes_match:
                     found_match = True
+                    #pc_back_links.remove([pc_n0_n, pc_n1_n, pc_link_n])
+
+                    break
 
             if not found_match:
                 print("No backward matches found")
@@ -221,13 +221,14 @@ class AtomicContract():
 
             for pc_n0_n, pc_n1_n, pc_link_n in pc_direct_links:
 
-                nodes_match = True
 
-                nodes_match = nodes_match and self.match_nodes(pc, pc_n0_n, contract, n0_n)
+                nodes_match = (self.match_nodes(pc, pc_n0_n, contract, n0_n) and self.match_nodes(pc, pc_n1_n, contract, n1_n)) \
+                or \
+                              (self.match_nodes(pc, pc_n1_n, contract, n0_n) and self.match_nodes(pc, pc_n0_n, contract, n1_n))
+
                 # if not nodes_match:
                 #     print("Failure matching on " + pc.vs[pc_n0_n]["mm__"] + " vs " + contract.vs[n0_n]["mm__"])
 
-                # nodes_match = nodes_match and self.match_nodes(pc, pc_n1_n, contract, n1_n)
                 # if not nodes_match:
                 #     print("Failure matching on " + pc.vs[pc_n1_n]["mm__"] + " vs " + contract.vs[n1_n]["mm__"])
 
@@ -236,6 +237,8 @@ class AtomicContract():
 
                 if nodes_match:
                     found_match = True
+                    #pc_direct_links.remove([pc_n0_n, pc_n1_n, pc_link_n])
+                    break
 
             if not found_match:
                 print("No matches found")
