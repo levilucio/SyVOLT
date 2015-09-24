@@ -12,6 +12,7 @@ from core.himesis_plus import look_for_attached
 
 from core.match_algo import HimesisMatcher
 
+from copy import deepcopy
 
 class AtomicContract():
     '''
@@ -84,21 +85,23 @@ class AtomicContract():
         # return self.ISOLATED
 
 
-    def check(self, pc):
+    def check(self, pc, verbosity=0):
 
+        self.verbosity = verbosity
         self.pc_data = self.get_data(pc)
 
         if self.match(self.connected, self.connected_data, pc):
-            print("Connected")
+            pass
+            #print("Connected")
         else:
-            print("No connected")
+            #print("No connected")
             return self.NO_CONNECTED
 
         if self.match(self.complete, self.complete_data, pc):
-            print("Complete")
+            #print("Complete")
             return self.COMPLETE_FOUND
         else:
-            print("No complete")
+            #print("No complete")
             return self.NO_COMPLETE
 
 
@@ -126,10 +129,6 @@ class AtomicContract():
                 neighbours = look_for_attached(i, graph)
 
                 traceLinks.append(neighbours)
-
-                #Hack: Reverse the elements
-                tl = [neighbours[1], neighbours[0], neighbours[2]]
-                traceLinks.append(tl)
 
 
         #print("Contract directLinks: " + graph.name + str(directLinks))
@@ -163,15 +162,12 @@ class AtomicContract():
 
 
         b_links = contract_data[1]
-        pc_back_links = self.pc_data[1]
+        pc_back_links = deepcopy(self.pc_data[1])
 
         for n0_n, n1_n, link_n in b_links:
 
             found_match = False
 
-            # print(contract.vs[n0_n]["mm__"])
-            # print(contract.vs[n1_n]["mm__"])
-            # print(contract.vs[link_n]["mm__"])
 
             for pc_n0_n, pc_n1_n, pc_link_n in pc_back_links:
 
@@ -180,15 +176,16 @@ class AtomicContract():
                 # print(pc.vs[pc_n1_n]["mm__"])
                 # print(pc.vs[pc_link_n]["mm__"])
 
-                nodes_match = True
+                #nodes_match = True
 
-                nodes_match = nodes_match and self.match_nodes(pc, pc_n0_n, contract, n0_n)
+                nodes_match = (self.match_nodes(pc, pc_n0_n, contract, n0_n) and self.match_nodes(pc, pc_n1_n, contract, n1_n))\
+                    or\
+                               (self.match_nodes(pc, pc_n1_n, contract, n0_n) and self.match_nodes(pc, pc_n0_n, contract, n1_n))
                 # if nodes_match:
                 #     print("Success matching on " + pc.vs[pc_n0_n]["mm__"] + " vs " + contract.vs[n0_n]["mm__"])
                 # else:
                 #     print("Failure matching on " + pc.vs[pc_n0_n]["mm__"] + " vs " + contract.vs[n0_n]["mm__"])
 
-                nodes_match = nodes_match and self.match_nodes(pc, pc_n1_n, contract, n1_n)
                 # if nodes_match:
                 #     print("Success matching on " + pc.vs[pc_n1_n]["mm__"] + " vs " + contract.vs[n1_n]["mm__"])
                 # else:
@@ -203,9 +200,22 @@ class AtomicContract():
 
                 if nodes_match:
                     found_match = True
+                    pc_back_links.remove([pc_n0_n, pc_n1_n, pc_link_n])
+
+                    break
+
 
             if not found_match:
-                print("No backward matches found")
+
+                if self.verbosity > 1:
+                    print("No backward matches found")
+                    print("Couldn't find:")
+                    print(contract.vs[n0_n]["mm__"])
+                    print(contract.vs[n1_n]["mm__"])
+                    print(contract.vs[link_n]["mm__"])
+
+
+
                 return False
 
 
@@ -213,7 +223,7 @@ class AtomicContract():
 
 
         d_links = contract_data[0]
-        pc_direct_links = self.pc_data[0]
+        pc_direct_links = deepcopy(self.pc_data[0])
         for n0_n, n1_n, link_n in d_links:
 
 
@@ -221,13 +231,14 @@ class AtomicContract():
 
             for pc_n0_n, pc_n1_n, pc_link_n in pc_direct_links:
 
-                nodes_match = True
 
-                nodes_match = nodes_match and self.match_nodes(pc, pc_n0_n, contract, n0_n)
+                nodes_match = (self.match_nodes(pc, pc_n0_n, contract, n0_n) and self.match_nodes(pc, pc_n1_n, contract, n1_n)) \
+                or \
+                              (self.match_nodes(pc, pc_n1_n, contract, n0_n) and self.match_nodes(pc, pc_n0_n, contract, n1_n))
+
                 # if not nodes_match:
                 #     print("Failure matching on " + pc.vs[pc_n0_n]["mm__"] + " vs " + contract.vs[n0_n]["mm__"])
 
-                # nodes_match = nodes_match and self.match_nodes(pc, pc_n1_n, contract, n1_n)
                 # if not nodes_match:
                 #     print("Failure matching on " + pc.vs[pc_n1_n]["mm__"] + " vs " + contract.vs[n1_n]["mm__"])
 
@@ -236,9 +247,24 @@ class AtomicContract():
 
                 if nodes_match:
                     found_match = True
+                    pc_direct_links.remove([pc_n0_n, pc_n1_n, pc_link_n])
+                    break
+                else:
+                    if self.verbosity > 1:
+                        print("Not match on:")
+                        print(pc.vs[pc_n0_n]["mm__"])
+                        print(pc.vs[pc_n1_n]["mm__"])
+                        print(pc.vs[pc_link_n]["mm__"])
+                        print()
 
             if not found_match:
-                print("No matches found")
+                if self.verbosity > 1:
+                    print("No direct link matches found")
+                    print("Couldn't find:")
+                    print(contract.vs[n0_n]["mm__"])
+                    print(contract.vs[n1_n]["mm__"])
+                    print(contract.vs[link_n]["mm__"])
+                    print()
                 return False
 
         return True

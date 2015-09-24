@@ -3,6 +3,13 @@ from profiler import *
 from PropertyVerification.v2.disambiguate import Disambiguator
 from core.himesis_utils import graph_to_dot
 
+import multiprocessing
+from multiprocessing import Manager
+
+from PropertyVerification.v2.prover_worker import prover_worker
+
+import time
+
 class ContractProver():
 
     def __init__(self):
@@ -31,114 +38,49 @@ class ContractProver():
     #@do_cprofile
     def prove_contracts(self, pathCondGen, atomic_contracts, if_then_contracts):
 
-        #initialize a dict to hold the rules that a contract will hold on
-        contract_rule_dict = {}
+        print("Starting to prove contracts:")
+        start_time = time.time()
+
+
         contract_failed_pcs = {}
         for contract_name, atomic_contract in atomic_contracts:
-            contract_rule_dict[contract_name] = []
             contract_failed_pcs[contract_name] = []
 
+        manager = Manager()
+        cpu_count = multiprocessing.cpu_count()
+        print("CPU Count: " + str(cpu_count))
 
-        for pc in pathCondGen.get_path_conditions():
+        pc_queue = manager.Queue()
+        results_queue = manager.Queue()
 
+        workers = []
 
+        for i in range(cpu_count):
+            new_worker = prover_worker(i, pc_queue, results_queue, atomic_contracts, if_then_contracts)
+            new_worker.start()
+            workers.append(new_worker)
 
-            if pc.name == "HEmptyPathCondition":
-                continue
+        for pc, pc_name in pathCondGen.get_path_conditions(expand=False):
+            pc_queue.put([pc, pc_name])
 
-            # if "HMotherRule" not in pc.name or "HDaughterRule" not in pc.name:
-            #     continue
-            #
-            # if "HSonRule" in pc.name or "HFatherRule" in pc.name:
-            #     continue
-            #
-            # graph_to_dot(pc.name, pc)
+        for i in range(cpu_count):
+            pc_queue.put([None, "STOP"])
 
-            #print("PC name: " + pc.name)
+        for worker in workers:
+            worker.join()
 
-            disambig_dict = {}
-            for contract_name, atomic_contract in atomic_contracts:
+        for worker in workers:
+            r = results_queue.get()
 
+            for contract_name in r.keys():
+                contract_failed_pcs[contract_name] += r[contract_name]
 
-
-                result = atomic_contract.check_isolated(pc)
-
-                # the isolated part did not match
-                # skip checking this contract on this pc
-                if result == atomic_contract.NO_ISOLATED:
-                    print("NO ISOLATED")
-                    continue
-                # else:
-                #     print("ISOLATED")
-
-                print("\nPC: " + pc.name)
-                print("Checking contract: " + contract_name)
-
-
-                result = atomic_contract.check(pc)
-
-                print("Result: " + result)
-                if result == atomic_contract.NO_COMPLETE:
-                    print("Atomic contract: " + contract_name + " does not hold on " + pc.name + "\n")
-                    if pc not in contract_failed_pcs[contract_name]:
-                        contract_failed_pcs[contract_name].append(pc)
-                # else:
-                #     print("Atomic contract: " + contract_name + " does hold on " + pc.name + "\n")
-                    #contract_holds = True
-                    #break
-
-
-                #rules = contract_rule_dict[contract_name]
-                # print("Is in contract_rule_dict: ")
-                # for rule in rules:
-                #     print(rule)
-
-                # result = self.seen_pc_before(pc.name, rules)
-                #
-                # if result:
-                #     #print("Contract holds because rule set has been seen before")
-                #     continue
-
-                # #get the list of mms that will be disambigged on
-                # contract_mms = self.disambig.set_contract(atomic_contract)
-                #
-                # #check to see if we've already disambigged these for these mms
-                # if str(contract_mms) in disambig_dict:
-                #     disambig_pcs = disambig_dict[str(contract_mms)]
-                # else:
-                #     #do the disambigging
-                #     disambig_pcs = self.disambig.disambiguate(pc)
-                #     #disambig_pcs.append(pc)
-                #     disambig_dict[str(contract_mms)] = disambig_pcs
-                #
-                #
-                #
-                # #print("Length disambig pcs: " + str(len(dpcs)))
-                #
-                # contract_holds = False
-                #
-                # for dpc in disambig_pcs:
-                #     #print("DPC: " + dpc.name)
-                #     result = atomic_contract.check(dpc)
-                #
-                #     #print("Result: " + str(result))
-                #
-                #     if result == atomic_contract.NO_COMPLETE:
-                #         print("Atomic contract: " + contract_name + " does not hold on " + pc.name + "\n")
-                #         if pc not in contract_failed_pcs[contract_name]:
-                #             contract_failed_pcs[contract_name].append(pc)
-                #     else:
-                #         #print("Atomic contract: " + contract_name + " does hold on " + pc.name + "\n")
-                #         contract_holds = True
-                #         break
-                #
-                # if contract_holds:
-                #     rules = self.rule_name_set(pc.name)
-                #     if rules not in contract_rule_dict[contract_name]:
-                #         contract_rule_dict[contract_name].append(rules)
 
         print("")
         for contract_name, atomic_contract in atomic_contracts:
             print("\nFailed PCs for " + contract_name + ":")
-            for pc in contract_failed_pcs[contract_name]:
-                print(pc.name)
+            for pc_name in sorted(contract_failed_pcs[contract_name]):
+                print(pc_name)
+
+        proof_time = time.time() - start_time
+        print("Took " + str(proof_time) + " seconds to prove " + str(len(atomic_contracts)) + " contracts")
