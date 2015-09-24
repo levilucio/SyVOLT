@@ -531,13 +531,16 @@ def clean_graph(graph):
 
 #function to dynamically load a new class
 import importlib
+from time import sleep
 def load_class(full_class_string, args = None):
+    sleep(0.01)
     directory, module_name = os.path.split(full_class_string)
     module_name = os.path.splitext(module_name)[0]
 
     path = list(sys.path)
     sys.path.insert(0, directory)
 
+    succeed = True
     try:
         module = __import__(module_name)
         if args is None:
@@ -549,8 +552,16 @@ def load_class(full_class_string, args = None):
 
         loaded_module = {module_name : loaded_class}
 
+    except Exception as e:
+        print("Error: " + str(e))
+        succeed = False
+        loaded_module = None
     finally:
         sys.path[:] = path # restore
+
+    if not succeed:
+        raise Exception("Could not load module: " + full_class_string)
+
     return loaded_module
 
 
