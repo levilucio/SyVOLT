@@ -1,6 +1,6 @@
 from profiler import *
 
-from PropertyVerification.v2.disambiguate import Disambiguator
+#from PropertyVerification.v2.disambiguate import Disambiguator
 from core.himesis_utils import graph_to_dot
 
 import multiprocessing
@@ -13,7 +13,9 @@ import time
 class ContractProver():
 
     def __init__(self):
-        self.disambig = Disambiguator(0)
+        #self.disambig = Disambiguator(0)
+
+        self.verbosity = 2
 
     def rule_name_set(self, name):
         rule_split = [rule.split("-")[0] for rule in name.split("_")]
@@ -38,6 +40,8 @@ class ContractProver():
     #@do_cprofile
     def prove_contracts(self, pathCondGen, atomic_contracts, if_then_contracts):
 
+        self.verbosity = pathCondGen.verbosity
+
         print("Starting to prove contracts:")
         start_time = time.time()
 
@@ -56,7 +60,7 @@ class ContractProver():
         workers = []
 
         for i in range(cpu_count):
-            new_worker = prover_worker(i, pc_queue, results_queue, atomic_contracts, if_then_contracts)
+            new_worker = prover_worker(i, self.verbosity, pc_queue, results_queue, atomic_contracts, if_then_contracts)
             new_worker.start()
             workers.append(new_worker)
 

@@ -6,11 +6,12 @@ from copy import deepcopy
 
 
 class prover_worker(Process):
-    def __init__(self, id, pc_queue, results_queue, atomic_contracts, if_then_contracts):
+    def __init__(self, id, verbosity, pc_queue, results_queue, atomic_contracts, if_then_contracts):
         super(prover_worker, self).__init__()
         self.id = id
         self.pc_queue = pc_queue
         self.results_queue = results_queue
+        self.verbosity = verbosity
 
         self.atomic_contracts = deepcopy(atomic_contracts)
         self.if_then_contracts = deepcopy(if_then_contracts)
@@ -20,7 +21,6 @@ class prover_worker(Process):
             self.contract_failed_pcs[contract_name] = []
 
     def run(self):
-        print("Hello from " + str(self.id))
 
         while True:
 
@@ -48,16 +48,19 @@ class prover_worker(Process):
                     continue
 
 
+                if self.verbosity > 1:
+                    print("\nPC: " + pc.name)
+                    print("Checking contract: " + contract_name)
 
-                print("\nPC: " + pc.name)
-                print("Checking contract: " + contract_name)
+                result = atomic_contract.check(pc, verbosity = self.verbosity)
 
-                result = atomic_contract.check(pc, verbosity = 0)
+                if self.verbosity > 1:
+                    print("Result: " + result)
 
-                print("Result: " + result)
+
                 if result == atomic_contract.NO_COMPLETE:
-                    print("Atomic contract: " + contract_name + " does not hold on " + pc.name + "\n")
+                    if self.verbosity > 0:
+                        print("Atomic contract: " + contract_name + " does not hold on " + pc.name + "\n")
                     self.contract_failed_pcs[contract_name].append(pc_name)
 
-        print("Stopping thread " + str(self.id))
         self.results_queue.put(self.contract_failed_pcs)
