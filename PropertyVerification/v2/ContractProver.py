@@ -78,9 +78,26 @@ class ContractProver():
 
         print("")
         for contract_name, atomic_contract in atomic_contracts:
+            smallestCounterExamples = []
+            smallestCounterExampleSize = 0
             print("\nFailed PCs for " + contract_name + ":")
             for pc_name in sorted(contract_failed_pcs[contract_name]):
                 print(pc_name)
+
+                sizeCounter = len(pc_name.split("_"))
+                if smallestCounterExampleSize == 0:
+                    smallestCounterExamples.append(pc_name)
+                    smallestCounterExampleSize = sizeCounter
+                else:
+                    if sizeCounter < smallestCounterExampleSize:
+                        smallestCounterExamples = [pc_name]
+                        smallestCounterExampleSize = sizeCounter
+                    elif sizeCounter == smallestCounterExampleSize:
+                        smallestCounterExamples.append(pc_name)
+
+            print ('The smallest Path Conditions where the contract fails are:')
+            print(str(smallestCounterExamples))
+
 
         proof_time = time.time() - start_time
         print("Took " + str(proof_time) + " seconds to prove " + str(len(atomic_contracts)) + " contracts")
