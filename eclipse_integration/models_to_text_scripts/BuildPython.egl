@@ -21,20 +21,12 @@ from core.himesis_plus import buildPreListFromClassNames
 
 from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 
-from PropertyVerification.state_property import StateProperty
-from PropertyVerification.atomic_state_property import AtomicStateProperty
-from PropertyVerification.and_state_property import AndStateProperty
-from PropertyVerification.or_state_property import OrStateProperty
-from PropertyVerification.not_state_property import NotStateProperty
-from PropertyVerification.implication_state_property import ImplicationStateProperty
-
-from PropertyVerification.Not import Not 					#StateSpace Prop
-from PropertyVerification.Implication import Implication 	#StateSpace Prop
-from PropertyVerification.And import And 					#StateSpace Prop
-from PropertyVerification.Or import Or 						#StateSpace Prop
+from PropertyVerification.v2.atomic_contract import AtomicContract
+from PropertyVerification.v2.ContractProver import ContractProver
 
 from core.himesis_utils import graph_to_dot
-from util.test_script_utils import select_rules, slice_transformation
+from util.test_script_utils import select_rules
+from util.slicer import Slicer
 
 # imports for properties' atomic contracts
 
@@ -167,7 +159,7 @@ class Prover():
         connected["superclasses_dict"] = superclasses_dict 
         complete["superclasses_dict"] = superclasses_dict 
         
-        c[%=atomicContractIndex%] = AtomicStateProperty(isolated, connected, complete)
+        c[%=atomicContractIndex%] = AtomicContract(isolated, connected, complete)
         
         self.atomic_contracts.append(("[%=ac.Name%]", c[%=atomicContractIndex%]))
         
@@ -181,7 +173,7 @@ class Prover():
             
             
 		# generate path conditions
-        pc_set = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
+        pc_set = PathConditionGenerator(self.transformation, "[%=inputMM%]", self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
     
         ts0 = time.time()
         pc_set.build_path_conditions()
@@ -200,17 +192,9 @@ class Prover():
         
         ts0 = time.time()
         
-        verifier = StateProperty()
-        
-        for name, a_c in self.atomic_contracts:
-            result = verifier.verifyCompositeStateProperty(pc_set, a_c)
-            if len(result) == 0:
-            	print("\n")
-            	print("Contract " + name + " holds!")
-            else:
-            	print("\n")
-            	print("Contract " + name + " does not hold!")
-            	print(result)
+        contract_prover = ContractProver()
+
+        contract_prover.prove_contracts(pc_set, self.atomic_contracts, None)#self.if_then_contracts)
         
         ts1 = time.time()
         
