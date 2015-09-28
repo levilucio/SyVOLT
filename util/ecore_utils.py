@@ -5,6 +5,7 @@ Created on 2015-02-16
 '''
 
 from xml.dom import minidom
+from copy import deepcopy
 
 class EcoreUtils(object):
     '''
@@ -18,7 +19,52 @@ class EcoreUtils(object):
         '''
         self.xmldoc = minidom.parse(xmlfileName)
         self.inheritanceRels = self.getInheritanceRelationForClasses()
-
+        
+        metamodelClasses = self.xmldoc.getElementsByTagName('eClassifiers')  
+        self.mmClassContained = {}       
+        self.containmentRels = []
+        
+        # first get a dictionary with all the metamodel classes that have containment relations towards them.
+        # several containment relations can exist towards the same metamodel class. 
+        # also keep a list of all containment relations in the metamodel.
+        
+        for mmClass in metamodelClasses:
+            rels = mmClass.getElementsByTagName('eStructuralFeatures')
+            for rel in rels:
+                try:
+                    if str(rel.attributes['containment'].value) == "true":
+                        targetClassName = str(rel.attributes['eType'].value).split('#//', 1)[1]
+                        relName = str(rel.attributes['name'].value)
+                                                                 
+                        if targetClassName not in self.mmClassContained.keys():
+                            self.mmClassContained[targetClassName] = [relName]
+                        else:
+                            self.mmClassContained[targetClassName].append(relName)
+                            
+                        self.containmentRels.append(relName)
+                                                
+                except Exception:
+                    pass
+                
+        # treat all the remaining classes that have no containment links to them but that
+        # inherit from classes that do.
+        
+        mmClassNames = self.getMetamodelClassNames()
+        remainingContClasses = set(mmClassNames) - set(self.mmClassContained.keys())
+        
+        for remContClass in remainingContClasses:
+            parentClasses = self.inheritanceRels[remContClass]
+            containedParentClasses = set(parentClasses).intersection(set(self.mmClassContained.keys()))
+            for contParentClass in containedParentClasses:
+                if remContClass not in self.mmClassContained.keys():
+                    self.mmClassContained[remContClass] = deepcopy(self.mmClassContained[contParentClass])
+                else:
+                    self.mmClassContained[remContClass].append(self.mmClassContained[contParentClass])
+                
+            
+                
+#         print("---------------> self.mmClassContained: " + str(self.mmClassContained))
+#         print("---------------> self.containmentRels: " + str(self.containmentRels))
     
     
     def getMetamodelClassNames(self):
@@ -175,6 +221,8 @@ class EcoreUtils(object):
             if superTypeNames != []: 
                 superTypeNames.extend(self.buildInheritanceDependenciesForClass(superTypeNames))
                 inheritanceRel[str(mmClass.attributes['name'].value)] = superTypeNames
+            else:
+                inheritanceRel[str(mmClass.attributes['name'].value)] = []
                     
         
         return inheritanceRel
@@ -195,21 +243,21 @@ class EcoreUtils(object):
 
         
         
-    def getBuiltClasses(self, rule):
+    def getBuiltClasses(self, pathCond):
         
         classesInOuputMM = self.getMetamodelClassNames()  
         classesBuiltByPC = []
         
-        for node in range(len(rule.vs)):
-            if rule.vs[node]["mm__"] in classesInOuputMM:
+        for node in range(len(pathCond.vs)):
+            if pathCond.vs[node]["mm__"] in classesInOuputMM:
                 instanceIsProduced = True
-                inputClassNodes = rule.neighbors(rule.vs[node],1)
+                inputClassNodes = pathCond.neighbors(pathCond.vs[node],1)
                 for inputClassNode in inputClassNodes:
-                    if rule.vs[inputClassNode]["mm__"] == "backward_link":
+                    if pathCond.vs[inputClassNode]["mm__"] == "backward_link":
                         instanceIsProduced = False
                         break
                 if instanceIsProduced:  
-                    classesBuiltByPC.append(rule.vs[node]["mm__"])
+                    classesBuiltByPC.append(pathCond.vs[node]["mm__"])
                 
         return classesBuiltByPC
         
@@ -217,57 +265,57 @@ class EcoreUtils(object):
                 
     def getBuiltContainmentLinks(self, rule):
         '''
-        return all the containment relations in a rule or path condition, in the form of a
-        triplet (sourceClass, link, targetClass)
-        '''
-        metamodelClasses = self.xmldoc.getElementsByTagName('eClassifiers')  
+        return all the containment relations built by a rule, in the form of a
+        dictionary having as key the name of the target classes and as elements the name
+        of the containment relations. Only one instance of (targetClass, containmentRel) is kept.
+        '''    
         
-        containmentRels = {}       
+        containmentRelsInRule = {}
         
-        containmentRelsInRule = []
-        
-        # first get a dictionary with all the containment relations in the metamodel.
-        # several can exist with the same name. 
-        for mmClass in metamodelClasses:
-            rels = mmClass.getElementsByTagName('eStructuralFeatures')
-            for rel in rels:
-                try:
-                    if str(rel.attributes['containment'].value) == "true":
-                        relName = str(rel.attributes['name'].value)
-                        if relName not in containmentRels.keys():
-                            containmentRels[relName] = [(str(mmClass.attributes['name'].value),\
-                                                         str(rel.attributes['eType'].value).split('#//', 1)[1])]
-                        else:
-                            containmentRels[relName].append((str(mmClass.attributes['name'].value),\
-                                                             str(rel.attributes['eType'].value).split('#//', 1)[1]))
-                                                
-                except Exception:
-                    pass
-        
-        # now check which relations in the rule are built by which containment rela
+        # now check which relations in the rule are built by which containment relation
         
         for node in range(len(rule.vs)):
-            if rule.vs[node]["mm__"] == "directLink_T" and rule.vs[node]["attr1"] in containmentRels.keys():
+            if rule.vs[node]["mm__"] == "directLink_T" and rule.vs[node]["attr1"] in self.containmentRels:
                 # find the types of the source and the target elements of the containment in the rule
-                inputClassNode = rule.neighbors(rule.vs[node],2)
-                outputClassNode = rule.neighbors(rule.vs[node],1)
-                
-                inputClass = rule.vs[inputClassNode]["mm__"][0]
-                outputClass = rule.vs[outputClassNode]["mm__"][0]                
-                
-#                 containmentSrcTrgt = containmentRels[rule.vs[node]["attr1"]]                
-#                 
-#                 for cont in range(len(containmentSrcTrgt)):
-#                     if self.inheritsFrom(inputClass, containmentSrcTrgt[cont][0]) and \
-#                     self.inheritsFrom(outputClass, containmentSrcTrgt[cont][1]):
-#                         
-#                         containmentRelsInRule.append((containmentSrcTrgt[cont][0],\
-#                                                       rule.vs[node]["attr1"],
-#                                                       containmentSrcTrgt[cont][1]))
+                targetClassNode = rule.neighbors(rule.vs[node],1)                
+                targetClassName = rule.vs[targetClassNode]["mm__"][0]                
 
-                containmentRelsInRule.append((inputClass, rule.vs[node]["attr1"],outputClass))                        
+                if targetClassName not in containmentRelsInRule.keys():
+                    containmentRelsInRule[targetClassName] = rule.vs[node]["attr1"]                       
                  
-        return list(set(containmentRelsInRule))
+        return containmentRelsInRule
+
+
+
+    def getMissingContainmentLinks(self, pathCond):
+        '''
+        return all missing containment relations in a path condition, in the form of a
+        doctionary having as key the targetClass and as data the containmentLinks that 
+        can be used to build the missing containment link.
+        '''  
+        
+        missingContainmentLinks = {}
+        
+        for node in range(len(pathCond.vs)):
+            targetClassName = pathCond.vs[node]["mm__"]
+            if targetClassName in self.mmClassContained.keys() and targetClassName not in missingContainmentLinks.keys():
+                
+                # get all the containment relations into produced call instances, if an apply class
+                # of this type without containment links has not been found yet. Only one apply class
+                # of a given type without containment links is kept. 
+                inputRelNodes = pathCond.neighbors(pathCond.vs[node],2)
+                
+                inputRelNames = []
+                
+                for inputRelNode in inputRelNodes:
+                    if pathCond.vs[inputRelNode]["mm__"] == "directLink_T":
+                        inputRelNames.append(pathCond.vs[inputRelNode]["attr1"])
+                        
+                # check if any containment relation into the class already exists
+                if set(inputRelNames).intersection(set(self.containmentRels)) == set():
+                    missingContainmentLinks[targetClassName] = self.mmClassContained[targetClassName]                        
+                 
+        return missingContainmentLinks
             
     
         
@@ -275,7 +323,7 @@ class EcoreUtils(object):
 
 if __name__ == '__main__':
     from ATLTrans.HUnionMotherRule import HUnionMotherRule
-    rule = HUnionMotherRule()
+    pathCond = HUnionMotherRule()
 #    t1 = EcoreUtils("./UMLRT2Kiltera_MM/metamodels/klt_new.ecore")
     t1 = EcoreUtils("../eclipse_integration/examples/families_to_persons/metamodels/Community.ecore")
 #    t1 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/Module.ecore")
@@ -284,4 +332,4 @@ if __name__ == '__main__':
 #    print(r1)
 #    print(r2)    
 #    print(str(t1.getContaimentLinksForClasses()))
-    print (str(t1.getBuiltClasses(rule)))
+    print (str(t1.getBuiltClasses(pathCond)))
