@@ -23,21 +23,16 @@ class Prunner(object):
         self.ruleContainmentLinks = {}
         for layer in transformation:
             for rule in layer:
-                self.ruleContainmentLinks[rule.name] = self.eu.getBuiltContainmentLinks(rule)
-
-        self.ruleClasses = {}
-        for layer in transformation:
-            for rule in layer:
-                self.ruleClasses[rule.name] = self.eu.getBuiltClasses(rule)                
+                self.ruleContainmentLinks[rule.name] = self.eu.getBuiltContainmentLinks(rule)              
         
 
     def getContainmentLinksBuiltByRuleSet(self, ruleNames):
         '''
         get all the containment links built by a set of rules
         '''
-        builtContainmentLinks = []
+        builtContainmentLinks = {}
         for ruleName in ruleNames:
-            builtContainmentLinks.extend(self.ruleContainmentLinks[ruleName])
+            builtContainmentLinks.update(self.ruleContainmentLinks[ruleName])
             
         return builtContainmentLinks
 
@@ -53,53 +48,33 @@ class Prunner(object):
         return builtClasses
 
 
-    def isPathConditionStillFeasible(self, pathCondition, treatedRules, rulesToTreat):
+    def isPathConditionStillFeasible(self, pathCondition, rulesToTreat):
         '''
         decide whether a path condition can be removed from the path condition set because the
         containment requirements cannot be fulfilled
         '''
-        classesInPC = self.eu.getBuiltClasses(pathCondition)
+        missingContLinks = self.eu.getMissingContainmentLinks(pathCondition)
         
-        #print("Classes in PC: " + str(classesInPC))
-        
-        requiredContainmentInPC = []
-        for classInPC in classesInPC:
-            requiredContainmentInPC.extend(self.mmContainmentLinks[classInPC])
-            
-        requiredContainmentInPC = list(set(requiredContainmentInPC))
-        
-        requiredClassesInPC = []
-        for reqContRel in requiredContainmentInPC:
-            requiredClassesInPC.append(reqContRel[0])
-            requiredClassesInPC.append(reqContRel[2])
-        requiredClassesInPC = list(set(requiredClassesInPC))
-            
-        #print("Required classes in PC: " + str(requiredClassesInPC))                     
-        
-        containmentInTreatedRules = self.getContainmentLinksBuiltByRuleSet(treatedRules)
-        classesInTreatedRules = self.getClassesLinksBuiltByRuleSet(treatedRules)
-        
-        #print("Classes in treated rules: " + str(classesInTreatedRules))            
-        #print("Treated rules: " + str(treatedRules)) 
+#         print("Path condition: " + pathCondition.name)   
+#         print("Missing containment links: " + str(missingContLinks))                     
                 
-        containmentInRulesToTreat = self.getContainmentLinksBuiltByRuleSet(rulesToTreat)
-        classesInRulesToTreat = self.getClassesLinksBuiltByRuleSet(rulesToTreat)
+        contLinksInRulesToTreat = self.getContainmentLinksBuiltByRuleSet(rulesToTreat)
         
-        #print("Classes in rules to treat: " + str(classesInRulesToTreat))  
-        #print("Treated rules: " + str(rulesToTreat)) 
+#         print("Containment links in rules to treat: " + str(contLinksInRulesToTreat))   
+        
+        allMissingContLinksFound = True 
                 
-        alreadyBuiltContainments = set(requiredContainmentInPC) - set(containmentInTreatedRules)
-        containmentAfterAllRulesApplied = set(alreadyBuiltContainments) - set(containmentInRulesToTreat)
+        for className in missingContLinks.keys():
+            if className not in contLinksInRulesToTreat.keys():
+                allMissingContLinksFound = False
+                break
+            elif set(missingContLinks[className]).intersection(set([contLinksInRulesToTreat[className]])) == set():
+                allMissingContLinksFound = False
+                break
         
-        alreadyBuiltClasses = set(requiredClassesInPC) - set(classesInTreatedRules)
-        classesAfterAllRulesApplied = set(alreadyBuiltClasses) - set(classesInRulesToTreat)        
-        
-        if containmentAfterAllRulesApplied == set() and classesAfterAllRulesApplied == set():
+        if allMissingContLinksFound:
             return True
-        else:
-#             print("-----------------------------------------------------------------")
-#             print("-----------------------------------------------------------------")
-#             print("INCONSISTENT CONTAINMENT")       
+        else: 
             return False
         
         

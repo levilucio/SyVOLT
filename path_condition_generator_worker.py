@@ -43,7 +43,7 @@ class path_condition_generator_worker(Process):
         
         self.prunner = Prunner(targetMM, self.transformation)
         
-        self.prunning = False
+        self.prunning = True
         
         
     def getRuleNamesInPathCondition(self, pcName):
@@ -575,11 +575,11 @@ class path_condition_generator_worker(Process):
                 # test if the new path condition can still lead to to a path condition
                 # where all the containment relations are respected by executing the remaining rules.
                 # if not, the path condition is not kept.
-                treatedRules = self.getRuleNamesInPathCondition(pathCondName)
+                #treatedRules = self.getRuleNamesInPathCondition(pathCondName)
                 
                 pathConditionsToPrune = []
                 
-                if not self.prunner.isPathConditionStillFeasible(expand_graph(self.pc_dict[pathCondName]), treatedRules, rulesToTreat):
+                if not self.prunner.isPathConditionStillFeasible(expand_graph(self.pc_dict[pathCondName]), rulesToTreat):
                     pathConditionsToPrune.append(pathCondName)
                     if self.verbosity >= 2:
                         print("Path Condition: " + pathCondName + " cannot be completed with all necessary containment associations")                               
