@@ -21,20 +21,23 @@ class ContractProver():
         rule_split = [rule.split("-")[0] for rule in name.split("_")]
         return rule_split
 
-    def seen_pc_before(self, pc_name, rules):
-        pc_rules = self.rule_name_set(pc_name)
+    def find_smallest_pc(self, pc_names):
+        smallest = []
+        smallestSize = 0
 
-        #print("PC Rules: " + str(pc_rules))
+        for pc_name in pc_names:
+            sizeCounter = len(pc_name.split("_"))
+            if smallestSize == 0:
+                smallest.append(pc_name)
+                smallestSize = sizeCounter
+            else:
+                if sizeCounter < smallestSize:
+                    smallest = [pc_name]
+                    smallestSize = sizeCounter
+                elif sizeCounter == smallestSize:
+                    smallest.append(pc_name)
 
-        for r in rules:
-            #print(pc_rules)
-            #print(r)
-            result = set(r).issubset(pc_rules)
-            if result:
-                return True
-
-
-        return False
+        return smallest
 
 
     #@do_cprofile
@@ -108,28 +111,19 @@ class ContractProver():
 
         print("")
         for contract_name, atomic_contract in atomic_contracts:
-            smallestCounterExamples = []
-            smallestCounterExampleSize = 0
+
             print("\nSuccessful PCs for " + contract_name + ":")
             for pc_name in sorted(contract_succeeded_pcs[contract_name]):
                 print(pc_name)
+            print ('\nSmallest Path Conditions where the contract succeeded:')
+            print(str(self.find_smallest_pc(contract_succeeded_pcs[contract_name])))
+            print('\n')
+
             print("\nFailed PCs for " + contract_name + ":")
             for pc_name in sorted(contract_failed_pcs[contract_name]):
                 print(pc_name)
-
-                sizeCounter = len(pc_name.split("_"))
-                if smallestCounterExampleSize == 0:
-                    smallestCounterExamples.append(pc_name)
-                    smallestCounterExampleSize = sizeCounter
-                else:
-                    if sizeCounter < smallestCounterExampleSize:
-                        smallestCounterExamples = [pc_name]
-                        smallestCounterExampleSize = sizeCounter
-                    elif sizeCounter == smallestCounterExampleSize:
-                        smallestCounterExamples.append(pc_name)
-
-            print ('\nThe smallest Path Conditions where the contract fails are:')
-            print(str(smallestCounterExamples))
+            print ('\nSmallest Path Conditions where the contract fails:')
+            print(str(self.find_smallest_pc(contract_failed_pcs[contract_name])))
             print('\n')
 
 

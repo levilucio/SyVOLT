@@ -37,19 +37,6 @@ class prover_worker(Process):
 
             if pc.name == "HEmptyPathCondition":
                 continue
-
-
-            #if "HMotherRule" in pc.name and not "HUnionMotherRule" in pc.name:
-            #    continue
-
-            #if "HFatherRule" in pc.name and not "HUnionManRule" in pc.name:
-            #    continue
-
-            #if "HDaughterRule" in pc.name and not "HUnionDaughterRule" in pc.name:
-            #    continue
-
-            #if "HSonRule" in pc.name and not "HUnionSonRule" in pc.name:
-            #    continue
  
             for contract_name, atomic_contract in self.atomic_contracts:
                 result = atomic_contract.check_isolated(pc)
@@ -60,9 +47,6 @@ class prover_worker(Process):
                     # print("NO ISOLATED")
                     continue
 
-                #if "motherFather" in contract_name:
-                    #if not "UnionManRule" in pc.name or not "UnionMotherRule" in pc.name:
-                        #continue
 
                 if self.verbosity > 1:
                     print("\nPC: " + pc.name)
