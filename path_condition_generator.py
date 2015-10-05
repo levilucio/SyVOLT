@@ -577,15 +577,20 @@ class PathConditionGenerator(object):
             path_conditions.append(pc)
         return path_conditions
 
-    def get_path_conditions(self):
+    def get_path_conditions(self, expand=True):
 
         for pc_name in sorted(self.currentpathConditionSet):
             
             #print("-> " + pc_name)
+
+            pc = self.pc_dict[pc_name]
+
+            if expand:
+                pc = expand_graph()
             
-            pc = expand_graph(self.pc_dict[pc_name])
-            pc.name = self.expand_pc_name_with_multiple_applications(pc_name)
-            yield pc
+            pc_name = self.expand_pc_name_with_multiple_applications(pc_name)
+        
+            yield pc, pc_name
 
     #@do_cprofile
     def _buildTraceabilityLinks(self,layer):

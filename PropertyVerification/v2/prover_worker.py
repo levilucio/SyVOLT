@@ -17,8 +17,10 @@ class prover_worker(Process):
         self.if_then_contracts = deepcopy(if_then_contracts)
 
         self.contract_failed_pcs = {}
+        self.contract_succeeded_pcs = {}
         for contract_name, atomic_contract in atomic_contracts:
             self.contract_failed_pcs[contract_name] = []
+            self.contract_succeeded_pcs[contract_name] = []
 
     def run(self):
 
@@ -37,7 +39,18 @@ class prover_worker(Process):
                 continue
 
 
+            #if "HMotherRule" in pc.name and not "HUnionMotherRule" in pc.name:
+            #    continue
 
+            #if "HFatherRule" in pc.name and not "HUnionManRule" in pc.name:
+            #    continue
+
+            #if "HDaughterRule" in pc.name and not "HUnionDaughterRule" in pc.name:
+            #    continue
+
+            #if "HSonRule" in pc.name and not "HUnionSonRule" in pc.name:
+            #    continue
+ 
             for contract_name, atomic_contract in self.atomic_contracts:
                 result = atomic_contract.check_isolated(pc)
 
@@ -47,6 +60,9 @@ class prover_worker(Process):
                     # print("NO ISOLATED")
                     continue
 
+                #if "motherFather" in contract_name:
+                    #if not "UnionManRule" in pc.name or not "UnionMotherRule" in pc.name:
+                        #continue
 
                 if self.verbosity > 1:
                     print("\nPC: " + pc.name)
@@ -59,8 +75,10 @@ class prover_worker(Process):
 
 
                 if result == atomic_contract.NO_COMPLETE:
-                    if self.verbosity > 0:
-                        print("Atomic contract: " + contract_name + " does not hold on " + pc.name + "\n")
+                    #if self.verbosity > 0:
+                        #print("Atomic contract: " + contract_name + " does not hold on " + pc.name + "\n")
                     self.contract_failed_pcs[contract_name].append(pc_name)
+                if result == atomic_contract.COMPLETE_FOUND:
+                    self.contract_succeeded_pcs[contract_name].append(pc_name)
 
-        self.results_queue.put(self.contract_failed_pcs)
+        self.results_queue.put([self.contract_failed_pcs, self.contract_succeeded_pcs])

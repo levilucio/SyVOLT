@@ -42,13 +42,15 @@ class ContractProver():
 
         self.verbosity = pathCondGen.verbosity
 
-        print("Starting to prove contracts:")
+        print("\nStarting to prove contracts:")
         start_time = time.time()
 
 
         contract_failed_pcs = {}
+        contract_succeeded_pcs = {}
         for contract_name, atomic_contract in atomic_contracts:
             contract_failed_pcs[contract_name] = []
+            contract_succeeded_pcs[contract_name] = []
 
         manager = Manager()
         cpu_count = multiprocessing.cpu_count()
@@ -59,13 +61,35 @@ class ContractProver():
 
         workers = []
 
+        rules = []
+        rules_seen = []
+
+        for layer in pathCondGen.transformation:
+            for rule in layer:
+                
+                real_name = pathCondGen.rule_names[rule.name]
+                rules.append(real_name)
+
         for i in range(cpu_count):
             new_worker = prover_worker(i, self.verbosity, pc_queue, results_queue, atomic_contracts, if_then_contracts)
             new_worker.start()
             workers.append(new_worker)
 
         for pc, pc_name in pathCondGen.get_path_conditions(expand=False):
+            rules_in_pc = pc_name.split("_")
+
+            for rs in rules_in_pc:
+                rs_2 = rs.split("-")[0]
+                rules_seen.append(rs_2)
+                
             pc_queue.put([pc, pc_name])
+
+        rules_seen= list(set(rules_seen))
+        #print("Rules seen: " + str(rules_seen))
+        for rule in rules:
+            if rule not in rules_seen:
+                print("ERROR: Rule " + rule + " was not executed!")
+
 
         for i in range(cpu_count):
             pc_queue.put([None, "STOP"])
@@ -74,16 +98,21 @@ class ContractProver():
             worker.join()
 
         for worker in workers:
-            r = results_queue.get()
+            [fail, succeed] = results_queue.get()
 
-            for contract_name in r.keys():
-                contract_failed_pcs[contract_name] += r[contract_name]
+            for contract_name in fail.keys():
+                contract_failed_pcs[contract_name] += fail[contract_name]
+            for contract_name in succeed.keys():
+                contract_succeeded_pcs[contract_name] += succeed[contract_name]
 
 
         print("")
         for contract_name, atomic_contract in atomic_contracts:
             smallestCounterExamples = []
             smallestCounterExampleSize = 0
+            print("\nSuccessful PCs for " + contract_name + ":")
+            for pc_name in sorted(contract_succeeded_pcs[contract_name]):
+                print(pc_name)
             print("\nFailed PCs for " + contract_name + ":")
             for pc_name in sorted(contract_failed_pcs[contract_name]):
                 print(pc_name)
@@ -99,9 +128,10 @@ class ContractProver():
                     elif sizeCounter == smallestCounterExampleSize:
                         smallestCounterExamples.append(pc_name)
 
-            print ('The smallest Path Conditions where the contract fails are:')
+            print ('\nThe smallest Path Conditions where the contract fails are:')
             print(str(smallestCounterExamples))
+            print('\n')
 
 
         proof_time = time.time() - start_time
-        print("Took " + str(proof_time) + " seconds to prove " + str(len(atomic_contracts)) + " contracts")
+        print("Took " + str(proof_time) + " seconds to prove " + str(len(atomic_contracts)) + " contracts\n")
