@@ -15,10 +15,11 @@ class prover_worker(Process):
 
         self.atomic_contracts = deepcopy(atomic_contracts)
         self.if_then_contracts = deepcopy(if_then_contracts)
+        self.all_contracts = self.atomic_contracts + self.if_then_contracts
 
         self.contract_failed_pcs = {}
         self.contract_succeeded_pcs = {}
-        for contract_name, atomic_contract in atomic_contracts:
+        for contract_name, contract in self.all_contracts:
             self.contract_failed_pcs[contract_name] = []
             self.contract_succeeded_pcs[contract_name] = []
 
@@ -37,13 +38,16 @@ class prover_worker(Process):
 
             if pc.name == "HEmptyPathCondition":
                 continue
- 
-            for contract_name, atomic_contract in self.atomic_contracts:
-                result = atomic_contract.check_isolated(pc)
+
+            if pc.name != "HEmptyPathCondition_HRootRule-0_HSonRule-0_HUnionSonRule-P0":
+                continue
+
+            for contract_name, contract in self.all_contracts:
+                result = contract.check_isolated(pc)
 
                 # the isolated part did not match
                 # skip checking this contract on this pc
-                if result == atomic_contract.NO_ISOLATED:
+                if result == contract.NO_ISOLATED:
                     # print("NO ISOLATED")
                     continue
 
@@ -52,17 +56,17 @@ class prover_worker(Process):
                     print("\nPC: " + pc.name)
                     print("Checking contract: " + contract_name)
 
-                result = atomic_contract.check(pc, verbosity = self.verbosity)
+                result = contract.check(pc, verbosity = self.verbosity)
 
                 if self.verbosity > 1:
                     print("Result: " + result)
 
 
-                if result == atomic_contract.NO_COMPLETE:
+                if result == contract.NO_COMPLETE:
                     #if self.verbosity > 0:
                         #print("Atomic contract: " + contract_name + " does not hold on " + pc.name + "\n")
                     self.contract_failed_pcs[contract_name].append(pc_name)
-                if result == atomic_contract.COMPLETE_FOUND:
+                if result == contract.COMPLETE_FOUND:
                     self.contract_succeeded_pcs[contract_name].append(pc_name)
 
         self.results_queue.put([self.contract_failed_pcs, self.contract_succeeded_pcs])

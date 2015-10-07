@@ -14,6 +14,8 @@ class HCommunityPerson1_IsolatedLHS(HimesisPreConditionPatternLHS):
         
         # Add the edges
         self.add_edges([])
+        self["equations"] = []
+
         # Set the graph attributes
         self["mm__"] = ['MoTifRule']
         self["MT_constraint__"] = """#===============================================================================
