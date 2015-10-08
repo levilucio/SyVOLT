@@ -189,17 +189,11 @@ class Prover():
         
         # now actually prove these contracts
         
-        
-        ts0 = time.time()
-        
         contract_prover = ContractProver()
 
         contract_prover.prove_contracts(pc_set, self.atomic_contracts, None)#self.if_then_contracts)
-        
-        ts1 = time.time()
-        
-        print("\n\nTime to verify properties: " + str(ts1 - ts0) + " seconds.")
-
+        print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
+        print("Number of path conditions: " + str(pc_set.num_path_conditions))
         
     def get_sub_and_super_classes(self):
             subclasses_dict = {}     

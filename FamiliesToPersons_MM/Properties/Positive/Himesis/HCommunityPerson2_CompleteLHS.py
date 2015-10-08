@@ -34,126 +34,30 @@ return True
         
         # Set the node attributes
         self.vs[0]["MT_subtypeMatching__"] = False
-        self.vs[0]["MT_pre__classtype"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
         self.vs[0]["MT_label__"] = """1"""
         self.vs[0]["mm__"] = """MT_pre__CommunityRoot"""
         self.vs[0]["MT_subtypes__"] = []
-        self.vs[0]["MT_pre__name"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
         self.vs[0]["MT_dirty__"] = False
         self.vs[0]["GUID__"] = 4377689463318154053
         self.vs[1]["MT_subtypeMatching__"] = True
-        self.vs[1]["MT_pre__classtype"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
         self.vs[1]["MT_label__"] = """2"""
         self.vs[1]["mm__"] = """MT_pre__Person"""
         self.vs[1]["MT_subtypes__"] = ['MT_pre__Man', 'MT_pre__Woman']
-        self.vs[1]["MT_pre__name"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
         self.vs[1]["MT_dirty__"] = False
         self.vs[1]["GUID__"] = 3848934477262139697
         self.vs[2]["MT_subtypeMatching__"] = True
-        self.vs[2]["MT_pre__classtype"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
         self.vs[2]["MT_label__"] = """4"""
         self.vs[2]["mm__"] = """MT_pre__Person"""
         self.vs[2]["MT_subtypes__"] = ['MT_pre__Man', 'MT_pre__Woman']
-        self.vs[2]["MT_pre__name"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
         self.vs[2]["MT_dirty__"] = False
         self.vs[2]["GUID__"] = 2452608556256079194
         self.vs[3]["MT_subtypeMatching__"] = False
-        self.vs[3]["MT_pre__associationType"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
         self.vs[3]["MT_label__"] = """3"""
         self.vs[3]["mm__"] = """MT_pre__directLink_T"""
         self.vs[3]["MT_subtypes__"] = []
         self.vs[3]["MT_dirty__"] = False
         self.vs[3]["GUID__"] = 158508756087999363
         self.vs[4]["MT_subtypeMatching__"] = False
-        self.vs[4]["MT_pre__associationType"] = """
-#===============================================================================
-# This code is executed when evaluating if a node shall be matched by this rule.
-# You can access the value of the current node's attribute value by: attr_value.
-# You can access any attribute x of this node by: this['x'].
-# If the constraint relies on attribute values from other nodes,
-# use the LHS/NAC constraint instead.
-# The given constraint must evaluate to a boolean expression.
-#===============================================================================
-
-return True
-"""
         self.vs[4]["MT_label__"] = """5"""
         self.vs[4]["mm__"] = """MT_pre__directLink_T"""
         self.vs[4]["MT_subtypes__"] = []

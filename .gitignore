@@ -60,6 +60,7 @@ patterns/*.py
 ./property_prover_rules/**
 *.py.bak
 
+*.DS_Store
 
 # Latex
 *.pptx#

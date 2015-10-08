@@ -1,0 +1,66 @@
+<project>
+
+	<target name="main" depends="clean">
+		
+		<property name="absolute.backend.path" location="backend/generated/transformation"/>
+		<property name="dsltrans.install.path" location="/home/dcx/Projects/SyVOLT"/>
+		
+		<echo message= "${absolute.backend.path}"/>
+		<echo message= "${dsltrans.install.path}"/>
+		
+		<epsilon.emf.loadModel
+		      name="inputTransformation"
+		      read="true"
+		      store="false"
+		      metamodeluri="http://dsltrans/2.0"
+		      modelfile="examples/mbeddr/mbeddr2C.dsltrans"
+		    />
+		
+		<epsilon.emf.loadModel
+		      name="inputProperties"
+		      read="true"
+		      store="false"
+		      metamodeluri="http://syvolt/2.0"
+		      modelfile="examples/mbeddr/contract_simple_init.syvolt"
+		    />
+		
+		<epsilon.egl src="backend/DSLTrans2Himesis.egl">
+			<model ref="inputTransformation"/>
+		</epsilon.egl>
+		
+		<epsilon.egl src="backend/SyVolt2Himesis.egl">
+			<model ref="inputProperties"/>
+		</epsilon.egl>
+		
+		<epsilon.egl src="backend/GenerateTopLevelPython.egl">
+			<model ref="inputTransformation"/>
+			<model ref="inputProperties"/>
+			<parameter name="absoluteBackendPath" value="${absolute.backend.path}"/>
+			<parameter name="dsltransInstallPath" value="${dsltrans.install.path}"/>
+		</epsilon.egl>
+
+		<exec dir="backend/generated" executable="python">
+		    <arg line="toplevel.py --no_svg --skip_tests --verbosity=1"/>
+			<env key="PYTHONPATH" value="${dsltrans.install.path}:./backend/generated"/> 
+		</exec>
+		
+	</target>
+	
+    <target name="clean">
+		<delete quiet="false" failonerror="false">
+    		<fileset dir="./backend"/>
+		</delete>
+    	<mkdir dir="backend/generated"/>    
+    	<mkdir dir="backend/generated/dot"/>  
+    	<mkdir dir="backend/generated/patterns"/>  
+       	<mkdir dir="backend/generated/transformation"/>
+    	<mkdir dir="backend/generated/pickle"/>
+    	<copy todir="backend/generated">
+    	   <fileset dir="metamodels"/>
+    	</copy>
+    	<copy todir="backend">
+    	   <fileset dir="/home/dcx/Projects/SyVOLT/eclipse_integration/models_to_text_scripts"/>
+    	</copy>
+    </target>	
+	
+</project>

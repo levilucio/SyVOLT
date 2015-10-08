@@ -7,6 +7,8 @@ Created on 2013-08-17
 from t_core.messages import Packet
 from t_core.matcher import Matcher
 
+from PropertyVerification.v2.contract import Contract
+
 from core.himesis_utils import graph_to_dot
 from core.himesis_plus import look_for_attached
 
@@ -14,7 +16,7 @@ from core.match_algo import HimesisMatcher
 
 from copy import deepcopy
 
-class AtomicContract():
+class AtomicContract(Contract):
     '''
     classdocs
     '''
@@ -26,6 +28,8 @@ class AtomicContract():
 
         #StateProperty.__init__(self)
 
+        super(AtomicContract, self).__init__()
+
         self.isolated = isolated
         self.connected = connected
         self.complete = complete
@@ -34,18 +38,12 @@ class AtomicContract():
         self.connected_matcher = Matcher(connected)
         self.complete_matcher = Matcher(complete)
 
-        self.NOT_CHECKED = "Not checked"
-        self.NO_ISOLATED = "Isolated did not match"
-        self.ISOLATED = "Isolated did match"
 
-        self.NO_CONNECTED = "Connected did not match"
-        self.NO_COMPLETE = "Complete did not match"
-        self.COMPLETE_FOUND = "The complete property was found"
 
-        # detail the status of the property
-        self.status = self.NOT_CHECKED
-
-        self.contract_mms = [mm.replace("MT_pre__", "") for mm in self.complete.vs["mm__"]]
+        try:
+            self.contract_mms = [mm.replace("MT_pre__", "") for mm in self.complete.vs["mm__"]]
+        except KeyError:
+            self.contract_mms = []
 
         #graph_to_dot(self.complete.name, self.complete)
 
@@ -109,7 +107,7 @@ class AtomicContract():
         directLinks = []
         traceLinks = []
 
-        mms = [mm.replace("MT_pre__", "") for mm in graph.vs["mm__"]]
+        #mms = [mm.replace("MT_pre__", "") for mm in graph.vs["mm__"]]
 
         for i in range(len(graph.vs)):
             node = graph.vs[i]
@@ -139,12 +137,18 @@ class AtomicContract():
         sourceMM = pc.vs[src_node]["mm__"]
         targetMM = contract.vs[patt_node]["mm__"][8:]
 
+
+
+
+
         if sourceMM != targetMM:
 
-            #print("Source MM: " + sourceMM)
-            #print("Target MM: " + targetMM)
-
             superclasses_dict = contract["superclasses_dict"]
+            #print("Superclasses: " + str(superclasses_dict))
+
+            #print("Source MM: " + sourceMM + " " + str(src_node))
+            #print("Pattern MM: " + targetMM + " " + str(patt_node))
+
             #print("Superclasses: " + str(superclasses_dict))
             
             if not superclasses_dict[sourceMM] or targetMM not in superclasses_dict[sourceMM]:
@@ -232,10 +236,16 @@ class AtomicContract():
             for pc_n0_n, pc_n1_n, pc_link_n in pc_direct_links:
 
 
-                nodes_match = (self.match_nodes(pc, pc_n0_n, contract, n0_n) and self.match_nodes(pc, pc_n1_n, contract, n1_n)) \
-                or \
-                              (self.match_nodes(pc, pc_n1_n, contract, n0_n) and self.match_nodes(pc, pc_n0_n, contract, n1_n))
+                #print("Matching: " + contract.vs[n0_n]["mm__"])
+                #print("Matching: " + contract.vs[n1_n]["mm__"])
 
+                nodes_match_1 = self.match_nodes(pc, pc_n0_n, contract, n0_n)
+                nodes_match_2 = self.match_nodes(pc, pc_n1_n, contract, n1_n)
+
+                nodes_match_3 = self.match_nodes(pc, pc_n1_n, contract, n0_n)
+                nodes_match_4 = self.match_nodes(pc, pc_n0_n, contract, n1_n)
+
+                nodes_match = (nodes_match_1 and nodes_match_2) or (nodes_match_3 and nodes_match_4)
                 # if not nodes_match:
                 #     print("Failure matching on " + pc.vs[pc_n0_n]["mm__"] + " vs " + contract.vs[n0_n]["mm__"])
 
