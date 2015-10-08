@@ -11,7 +11,7 @@ class NotContract(Contract):
         return self.contract.check_isolated(pc)
 
     def check(self, pc, verbosity=0):
-        result = self.contract.check(pc)
+        result = self.contract.check(pc, verbosity)
 
         if verbosity > 1:
             print("NotContract: Result was " + result)
