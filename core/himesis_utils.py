@@ -255,8 +255,9 @@ def graph_to_dot(name, g, verbosity = 0):
 
     try:
         graph.write(dot_filename)
-    except Exception:
-        print("Graph name: " + name + " is too long")
+    except Exception as e:
+        print("Error in graph_to_dot: " + str(e))
+        raise e
 
     command = "dot -Tsvg " + dot_filename + " -o " + dot_filename.replace(".dot", ".svg")
     subprocess.call(command, shell=True)
