@@ -1,4 +1,4 @@
-class Contract:
+class Contract(object):
     def __init__(self):
 
         self.NOT_CHECKED = "Not checked"
