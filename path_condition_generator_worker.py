@@ -184,11 +184,17 @@ class path_condition_generator_worker(Process):
                         if not (subsumingRulesinPC or subsumedRulesinPC or ruleInLoopAndHasSubsumingParent):
 
                             cpc = expand_graph(self.pc_dict[child_pc_name])
+
+                            #take off the num of nodes in the name
+                            cpc.name = cpc.name.split(".")[0]
+
                             new_name = cpc.name + '_' + rule_name + "-0"
     
                             # create a new path condition which is the result of combining the rule with the current path condition being examined
                             #newPathCond = deepcopy(cpc)
                             newPathCond = disjoint_model_union(cpc,rule)
+
+                            new_name += "." + str(len(newPathCond.vs))
                                 
                             # name the new path condition as the combination of the previous path condition and the rule    
                             newPathCond.name = new_name
@@ -373,7 +379,7 @@ class path_condition_generator_worker(Process):
                                             # the total combinator is always the one at the end of the combinator list for the rule.
     
                                             # name the new path condition as the combination of the previous path condition and the rule
-                                            newPathCondName = cpc.name + "_" + rule.name
+                                            newPathCondName = cpc.name.split(".")[0] + "_" + rule.name
     
                                             p_copy = deepcopy(p)
                                             newPathCond = cpc.copy()
@@ -383,6 +389,7 @@ class path_condition_generator_worker(Process):
                                             p_copy = rewriter.packet_in(p_copy)
                                                                                               
                                             newPathCond = p_copy.graph
+
     
                                             # check if the equations on the attributes of the newly created path condition are satisfied
     
@@ -397,6 +404,8 @@ class path_condition_generator_worker(Process):
                                                     #print("Going to write a total: " + newPathCondName)
     
                                                     newPathCondName = newPathCondName +"-T" + str(pathCondSubnum)
+
+                                                    newPathCondName += "." + str(len(newPathCond.vs))
                                                     newPathCond.name = newPathCondName
                                                                                                         
                                                     # because the rule combines totally with a path condition in the accumulator we just copy it
@@ -426,6 +435,7 @@ class path_condition_generator_worker(Process):
                                                     #print("Going to write a partial: " + newPathCondName)
     
                                                     newPathCondName = newPathCondName +"-P" + str(pathCondSubnum)
+                                                    newPathCondName += "." + str(len(newPathCond.vs))
                                                     newPathCond.name = newPathCondName
                                                     
                                                     # we are dealing with a partial combination of the rule.
@@ -524,13 +534,14 @@ class path_condition_generator_worker(Process):
                             
                             if not combinatorRewriter.is_success:
                                 if self.verbosity >= 2:
-                                    print("Graph: " + newPathCondName + " has inconsistent equations")
+                                    print("Graph: " + p.graph.name + " has inconsistent equations")
                                     p.graph = beforeOverlappingPC                                    
                             #print("--------------------------------> Rewrite: " + str(combinatorRewriter.is_success))
                             p = i.next_in(p)
                             
                         newPathCond = p.graph
-                        newPathCondName = cpc.name + "_" + rule_name  + "-OVER" + str(numOfOverlaps)
+                        newPathCondName = cpc.name.split(".")[0] + "_" + rule_name  + "-OVER" + str(numOfOverlaps)
+                        newPathCondName += "." + str(len(newPathCond.vs))
                         
                         # replace the original path condition by the result of overlapping the subsumed rule on it
                   

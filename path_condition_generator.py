@@ -377,7 +377,7 @@ class PathConditionGenerator(object):
         from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 
         HEmptyPathCondition = clean_graph(HEmptyPathCondition())
-        HEmptyPathCondition.name = "HEmpty"
+        HEmptyPathCondition.name = "HEmpty.0"
 
         currentpathConditionSet = [HEmptyPathCondition.name]
 
@@ -439,8 +439,11 @@ class PathConditionGenerator(object):
                 pc_chunks = [[] for i in range(cpu_count)]
                 pc_count = [0] * cpu_count
 
-                for pc in currentpathConditionSet:
-                    weight = len(pc)
+                pc_with_weights = [[pc, int(pc.split(".")[1])] for pc in currentpathConditionSet]
+
+                pc_with_weights.sort(key=lambda x: x[1])
+
+                for pc, weight in pc_with_weights:
 
                     min_index = pc_count.index(min(pc_count))
 
@@ -622,6 +625,7 @@ class PathConditionGenerator(object):
 
     def expand_pc_name_with_multiple_applications(self, name):
         new_name = ""
+        name = name.split(".")[0]
         for token in name.split("_"):
             if "-" in token:
                 rulename = token.split("-")[0]
@@ -634,6 +638,7 @@ class PathConditionGenerator(object):
 
     def expand_pc_name(self, name):
         new_name = ""
+        name = name.split(".")[0]
         for token in name.split("_"):
             token = token.split("-")[0]
             new_name += self.rule_names[token] + "_"
