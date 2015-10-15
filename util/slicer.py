@@ -45,7 +45,7 @@ class Slicer():
                 print(r_rules_dict[r])
 
 
-    def decompose_graph(self, graph):
+    def decompose_graph(self, graph, verbosity = 0):
         #decompose graph into directLinks, backwardLinks, and isolated elements
 
 
@@ -96,7 +96,8 @@ class Slicer():
             n1 = vs[neighbours[1]]["mm__"].replace("MT_pre__","")
             self.direct_links[graph.name].append((n0, n1))
 
-        #print("Direct links: " + str(self.direct_links[graph.name]))
+        if verbosity > 1:
+            print("Direct links: " + str(self.direct_links[graph.name]))
 
         self.backward_links[graph.name] = []
         for bl in backward_links:
@@ -106,7 +107,8 @@ class Slicer():
             n1 = vs[neighbours[1]]["mm__"].replace("MT_pre__","")
             self.backward_links[graph.name].append((n0, n1))
 
-       # print("Backward links: " + str(self.backward_links[graph.name]))
+        if verbosity > 1:
+            print("Backward links: " + str(self.backward_links[graph.name]))
 
         self.match_elements[graph.name] = match_elements
         self.apply_elements[graph.name] = apply_elements
@@ -116,7 +118,7 @@ class Slicer():
         # print("Apply contains: " + str(apply_elements))
 
 
-    def find_required_rules(self, graph, is_contract = False):
+    def find_required_rules(self, graph, is_contract = False, verbosity = 0):
 
 
 
@@ -200,7 +202,12 @@ class Slicer():
 
                 rule_dls = self.direct_links[rule.name]
 
-                #print("Rule DLs: " + str(rule_dls))
+
+                if verbosity > 1:
+                    print("\n" + rule.name)
+                    print("Rule DLs: " + str(rule_dls))
+                    print("Match Elements: " + str(self.match_elements[rule.name]))
+                    print("Apply Elements: " + str(self.apply_elements[rule.name]))
 
 
                 for dl in dls:
@@ -277,14 +284,14 @@ class Slicer():
 
     def slice_transformation(self, contract):
 
-        contract = contract[1].CompleteQuantified
+        contract = contract[1].complete
 
         print("Slicing for: " + contract.name)
 
-        self.decompose_graph(contract)
+        self.decompose_graph(contract, verbosity=0)
 
         if self.debug:
-            print("Direct links: " + str(self.direct_links))
+            #print("Direct links: " + str(self.direct_links))
             
             graph_to_dot(contract.name, contract)
             for layer in self.transformation:
@@ -292,7 +299,7 @@ class Slicer():
                     graph_to_dot(rule.name, rule)
 
 
-        required_rules = self.find_required_rules(contract, True)
+        required_rules = self.find_required_rules(contract, True, verbosity=0)
 
 
         rr_names = [rule.name for rule in required_rules]
