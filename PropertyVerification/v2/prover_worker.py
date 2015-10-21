@@ -39,9 +39,6 @@ class prover_worker(Process):
             if pc.name == "HEmptyPathCondition":
                 continue
 
-            if pc.name != "HEmptyPathCondition_HRootRule-0_HSonRule-0_HUnionSonRule-P0":
-                continue
-
             for contract_name, contract in self.all_contracts:
                 result = contract.check_isolated(pc)
 
