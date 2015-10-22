@@ -577,6 +577,7 @@ class path_condition_generator_worker(Process):
         
             rulesToTreat = []    
 
+            # build the set of rules that remains to be executed
             for l in range(self.layer+1,len(self.transformation)):
                 for r in self.transformation[l]:
                     rulesToTreat.append(r.name)   

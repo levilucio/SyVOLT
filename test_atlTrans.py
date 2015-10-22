@@ -180,8 +180,8 @@ class Test():
         self.atomic_contracts = [["HDaughterMother_atomic", HDaughterMother_atomic], ["HFourMembers_atomic", HFourMembers_atomic],["HMotherFather_atomic", HMotherFather_atomic]]
 
 
-        self.atomic_contracts = []#self.atomic_contracts[2]]
-        self.if_then_contracts = [["HCommunityPerson", HCommunityPerson_IfThen]]
+        #self.atomic_contracts = [self.atomic_contracts[0]]
+        self.if_then_contracts = [] #[["HCommunityPerson", HCommunityPerson_IfThen]]
 
 #         if args.slice > 0:
 #             contract = self.atomic_contracts[args.slice - 1]
@@ -251,7 +251,7 @@ class Test():
             #raise Exception(num_pcs_s)
  
         #print("printing path conditions")
-        #s.print_path_conditions_screen()
+        s.print_path_conditions_screen()
 
         #s.print_path_conditions_file()
 
