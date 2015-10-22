@@ -116,7 +116,7 @@ class Slicer():
 
                 #matcher = None
 
-                if match_links(matcher, graph, self.direct_links[graph.name], rule, self.direct_links[rule.name], 2):
+                if match_links(matcher, graph, self.direct_links[graph.name], rule, self.direct_links[rule.name], 0):
                     required_rules.append(rule)
 
                 if match_links(matcher, graph, self.backward_links[graph.name], rule, self.backward_links[rule.name], 0):

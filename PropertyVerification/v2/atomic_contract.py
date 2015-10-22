@@ -16,6 +16,9 @@ from core.match_algo import HimesisMatcher
 
 from copy import deepcopy
 
+from util.decompose_graph import decompose_graph, match_links
+
+
 class AtomicContract(Contract):
     '''
     classdocs
@@ -47,9 +50,18 @@ class AtomicContract(Contract):
 
         #graph_to_dot(self.complete.name, self.complete)
 
+        self.connected_data = {}
+        self.connected_data["direct_links"], self.connected_data["backward_links"],\
+        self.connected_data["match_elements"], self.connected_data["isolated_match_elements"],\
+        self.connected_data["apply_elements"] = decompose_graph(self.connected)
 
-        self.connected_data = self.get_data(self.connected)
-        self.complete_data = self.get_data(self.complete)
+        self.complete_data = {}
+        self.complete_data["direct_links"], self.complete_data["backward_links"],\
+        self.complete_data["match_elements"], self.complete_data["isolated_match_elements"],\
+        self.complete_data["apply_elements"] = decompose_graph(self.complete)
+
+        #self.connected_data = self.get_data(self.connected)
+        #self.complete_data = self.get_data(self.complete)
 
         #print("Connected Data: " + str(self.connected_data))
         #print("Complete Data: " + str(self.complete_data))
@@ -86,7 +98,11 @@ class AtomicContract(Contract):
     def check(self, pc, verbosity=0):
 
         self.verbosity = verbosity
-        self.pc_data = self.get_data(pc)
+
+        self.pc_data = {}
+        self.pc_data["direct_links"], self.pc_data["backward_links"],\
+        self.pc_data["match_elements"], self.pc_data["isolated_match_elements"],\
+        self.pc_data["apply_elements"] = decompose_graph(pc)
 
         if self.match(self.connected, self.connected_data, pc):
             pass
@@ -103,178 +119,17 @@ class AtomicContract(Contract):
             return self.NO_COMPLETE
 
 
-    def get_data(self, graph):
-        directLinks = []
-        traceLinks = []
-
-        #mms = [mm.replace("MT_pre__", "") for mm in graph.vs["mm__"]]
-
-        for i in range(len(graph.vs)):
-            node = graph.vs[i]
-
-            mm = node["mm__"]
-
-            if "directLink" in mm:
-                neighbours = look_for_attached(i, graph)
-
-                dl = []
-                for n in neighbours:
-                    dl.append(n)
-
-                directLinks.append(dl)
-                #directLinks.append(neighbours)
-            elif "trace_link" in mm:
-                neighbours = look_for_attached(i, graph)
-
-                traceLinks.append(neighbours)
-
-
-        #print("Contract directLinks: " + graph.name + str(directLinks))
-
-        return [directLinks, traceLinks]
-
-    def match_nodes(self, pc, src_node, contract, patt_node):
-        sourceMM = pc.vs[src_node]["mm__"]
-        targetMM = contract.vs[patt_node]["mm__"][8:]
-
-
-
-
-
-        if sourceMM != targetMM:
-
-            superclasses_dict = contract["superclasses_dict"]
-            #print("Superclasses: " + str(superclasses_dict))
-
-            #print("Source MM: " + sourceMM + " " + str(src_node))
-            #print("Pattern MM: " + targetMM + " " + str(patt_node))
-
-            #print("Superclasses: " + str(superclasses_dict))
-            
-            if not superclasses_dict[sourceMM] or targetMM not in superclasses_dict[sourceMM]:
-                return False
-
-        return self.matcher.are_semantically_feasible(src_node, patt_node)
-
-
     def match(self, contract, contract_data, pc):
 
         #print("Contract data: " + str(contract_data))
         #print("PC data: " + str(self.pc_data))
 
-        self.matcher = HimesisMatcher(pc, contract)
+        matcher = HimesisMatcher(pc, contract)
 
+        if not match_links(matcher, contract, contract_data["direct_links"], pc, self.pc_data["direct_links"], verbosity=0, match_all = True):
+            return False
 
-        b_links = contract_data[1]
-        pc_back_links = deepcopy(self.pc_data[1])
-
-        for n0_n, n1_n, link_n in b_links:
-
-            found_match = False
-
-
-            for pc_n0_n, pc_n1_n, pc_link_n in pc_back_links:
-
-                # print()
-                # print(pc.vs[pc_n0_n]["mm__"])
-                # print(pc.vs[pc_n1_n]["mm__"])
-                # print(pc.vs[pc_link_n]["mm__"])
-
-                #nodes_match = True
-
-                nodes_match = (self.match_nodes(pc, pc_n0_n, contract, n0_n) and self.match_nodes(pc, pc_n1_n, contract, n1_n))\
-                    or\
-                               (self.match_nodes(pc, pc_n1_n, contract, n0_n) and self.match_nodes(pc, pc_n0_n, contract, n1_n))
-                # if nodes_match:
-                #     print("Success matching on " + pc.vs[pc_n0_n]["mm__"] + " vs " + contract.vs[n0_n]["mm__"])
-                # else:
-                #     print("Failure matching on " + pc.vs[pc_n0_n]["mm__"] + " vs " + contract.vs[n0_n]["mm__"])
-
-                # if nodes_match:
-                #     print("Success matching on " + pc.vs[pc_n1_n]["mm__"] + " vs " + contract.vs[n1_n]["mm__"])
-                # else:
-                #     print("Failure matching on " + pc.vs[pc_n1_n]["mm__"] + " vs " + contract.vs[n1_n]["mm__"])
-
-                nodes_match = nodes_match and self.match_nodes(pc, pc_link_n, contract, link_n)
-
-                # if nodes_match:
-                #     print("Success matching on " + pc.vs[pc_link_n]["mm__"] + " vs " + contract.vs[link_n]["mm__"])
-                # else:
-                #     print("Failure matching on " + pc.vs[pc_link_n]["mm__"] + " vs " + contract.vs[link_n]["mm__"])
-
-                if nodes_match:
-                    found_match = True
-                    pc_back_links.remove([pc_n0_n, pc_n1_n, pc_link_n])
-
-                    break
-
-
-            if not found_match:
-
-                if self.verbosity > 1:
-                    print("No backward matches found")
-                    print("Couldn't find:")
-                    print(contract.vs[n0_n]["mm__"])
-                    print(contract.vs[n1_n]["mm__"])
-                    print(contract.vs[link_n]["mm__"])
-
-
-
-                return False
-
-
-
-
-
-        d_links = contract_data[0]
-        pc_direct_links = deepcopy(self.pc_data[0])
-        for n0_n, n1_n, link_n in d_links:
-
-
-            found_match = False
-
-            for pc_n0_n, pc_n1_n, pc_link_n in pc_direct_links:
-
-
-                #print("Matching: " + contract.vs[n0_n]["mm__"])
-                #print("Matching: " + contract.vs[n1_n]["mm__"])
-
-                nodes_match_1 = self.match_nodes(pc, pc_n0_n, contract, n0_n)
-                nodes_match_2 = self.match_nodes(pc, pc_n1_n, contract, n1_n)
-
-                nodes_match_3 = self.match_nodes(pc, pc_n1_n, contract, n0_n)
-                nodes_match_4 = self.match_nodes(pc, pc_n0_n, contract, n1_n)
-
-                nodes_match = (nodes_match_1 and nodes_match_2) or (nodes_match_3 and nodes_match_4)
-                # if not nodes_match:
-                #     print("Failure matching on " + pc.vs[pc_n0_n]["mm__"] + " vs " + contract.vs[n0_n]["mm__"])
-
-                # if not nodes_match:
-                #     print("Failure matching on " + pc.vs[pc_n1_n]["mm__"] + " vs " + contract.vs[n1_n]["mm__"])
-
-                nodes_match = nodes_match and self.match_nodes(pc, pc_link_n, contract, link_n)
-
-
-                if nodes_match:
-                    found_match = True
-                    pc_direct_links.remove([pc_n0_n, pc_n1_n, pc_link_n])
-                    break
-                else:
-                    if self.verbosity > 1:
-                        print("Not match on:")
-                        print(pc.vs[pc_n0_n]["mm__"])
-                        print(pc.vs[pc_n1_n]["mm__"])
-                        print(pc.vs[pc_link_n]["mm__"])
-                        print()
-
-            if not found_match:
-                if self.verbosity > 1:
-                    print("No direct link matches found")
-                    print("Couldn't find:")
-                    print(contract.vs[n0_n]["mm__"])
-                    print(contract.vs[n1_n]["mm__"])
-                    print(contract.vs[link_n]["mm__"])
-                    print()
-                return False
+        if not match_links(matcher, contract, contract_data["backward_links"], pc, self.pc_data["backward_links"], verbosity=0, match_all = True):
+            return False
 
         return True

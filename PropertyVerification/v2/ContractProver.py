@@ -56,7 +56,7 @@ class ContractProver():
             contract_succeeded_pcs[contract_name] = []
 
         manager = Manager()
-        cpu_count = multiprocessing.cpu_count()
+        cpu_count = 1#multiprocessing.cpu_count()
         print("CPU Count: " + str(cpu_count))
 
         pc_queue = manager.Queue()
