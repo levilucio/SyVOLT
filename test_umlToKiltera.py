@@ -17,6 +17,9 @@ from PyRamify import PyRamify
 
 from core.himesis_utils import graph_to_dot
 
+from util.ecore_utils import EcoreUtils
+from core.himesis_plus import buildPreListFromClassNames
+
 #from util.test_script_utils import select_rules, slice_transformation
 
 # all runs are the same transformation, but with different metamodel elements
@@ -33,89 +36,7 @@ from PropertyVerification.Not import Not #StateSpace Prop
 from PropertyVerification.Implication import Implication #StateSpace Prop
 from PropertyVerification.And import And #StateSpace Prop
 from PropertyVerification.Or import Or #StateSpace Prop
-# from PropertyVerification.BACKUP_atomic_state_property import BKUPAtomicStateProperty
-# #from lib2to3.fixer_util import p1
-#
-# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2procdef_IsolatedLHS import HState2procdef_IsolatedLHS
-# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2procdef_CompleteLHS import HState2procdef_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrue_IsolatedLHS import HExitpoint2procdefparTrue_IsolatedLHS
-# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrue_ConnectedLHS import HExitpoint2procdefparTrue_ConnectedLHS
-# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrue_CompleteLHS import HExitpoint2procdefparTrue_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrueNOATTR_IsolatedLHS import HExitpoint2procdefparTrueNOATTR_IsolatedLHS
-# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrueNOATTR_ConnectedLHS import HExitpoint2procdefparTrueNOATTR_ConnectedLHS
-# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HExitpoint2procdefparTrueNOATTR_CompleteLHS import HExitpoint2procdefparTrueNOATTR_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.negative.Himesis.HState2funcdefNEG_CompleteLHS import HState2funcdefNEG_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2trans2exitptTrue_IsolatedLHS import HState2trans2exitptTrue_IsolatedLHS
-# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2trans2exitptTrue_ConnectedLHS import HState2trans2exitptTrue_ConnectedLHS
-# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HState2trans2exitptTrue_CompleteLHS import HState2trans2exitptTrue_CompleteLHS
-#
-# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HTrans2instTRUE_IsolatedLHS import HTrans2instTRUE_IsolatedLHS
-# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HTrans2instTRUE_ConnectedLHS import HTrans2instTRUE_ConnectedLHS
-# from UMLRT2Kiltera_MM.Properties.positive.Himesis.HTrans2instTRUE_CompleteLHS import HTrans2instTRUE_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.negative.Himesis.HPar2ProcsPart1_CompleteLHS import HPar2ProcsPart1_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.negative.Himesis.HPar2ProcsPart2_CompleteLHS import HPar2ProcsPart2_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.negative.Himesis.HPar2ProcsPart1_2_IsolatedLHS import HPar2ProcsPart1_2_IsolatedLHS
-#
-# ##Multiplicity INvariants- Begin
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HEmpty_IsolatedConnectedLHS import HEmpty_IsolatedConnectedLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HTrigger01ExprPart1_CompleteLHS import HTrigger01ExprPart1_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HTrigger01ExprPart2_CompleteLHS import HTrigger01ExprPart2_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HTrigger01ExprPart3_CompleteLHS import HTrigger01ExprPart3_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HTrigger01ExprPart4_CompleteLHS import HTrigger01ExprPart4_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListen1orMoreListenBranchPart1_CompleteLHS import HListen1orMoreListenBranchPart1_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListen1orMoreListenBranchPart2_CompleteLHS import HListen1orMoreListenBranchPart2_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HNew1orMoreNamePart1_CompleteLHS import HNew1orMoreNamePart1_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HNew1orMoreNamePart2_CompleteLHS import HNew1orMoreNamePart2_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet1orMoreConditionBranchPart1_CompleteLHS import HConditionSet1orMoreConditionBranchPart1_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet1orMoreConditionBranchPart2_CompleteLHS import HConditionSet1orMoreConditionBranchPart2_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HLocalDef1orMoreDefPart1_CompleteLHS import HLocalDef1orMoreDefPart1_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HLocalDef1orMoreDefPart2_CompleteLHS import HLocalDef1orMoreDefPart2_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ExprPart1_CompleteLHS import HConditionBranch1ExprPart1_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ExprPart2_CompleteLHS import HConditionBranch1ExprPart2_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ExprPart3_CompleteLHS import HConditionBranch1ExprPart3_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch01PatternPart1_CompleteLHS import HListenBranch01PatternPart1_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch01PatternPart2_CompleteLHS import HListenBranch01PatternPart2_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch01PatternPart3_CompleteLHS import HListenBranch01PatternPart3_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch01PatternPart4_CompleteLHS import HListenBranch01PatternPart4_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet01ProcPart1_CompleteLHS import HConditionSet01ProcPart1_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet01ProcPart2_CompleteLHS import HConditionSet01ProcPart2_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet01ProcPart3_CompleteLHS import HConditionSet01ProcPart3_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionSet01ProcPart4_CompleteLHS import HConditionSet01ProcPart4_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HProcDef1ProcPart1_CompleteLHS import HProcDef1ProcPart1_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HProcDef1ProcPart2_CompleteLHS import HProcDef1ProcPart2_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HProcDef1ProcPart3_CompleteLHS import HProcDef1ProcPart3_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch1ProcPart1_CompleteLHS import HListenBranch1ProcPart1_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch1ProcPart2_CompleteLHS import HListenBranch1ProcPart2_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HListenBranch1ProcPart3_CompleteLHS import HListenBranch1ProcPart3_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HNew1ProcPart1_CompleteLHS import HNew1ProcPart1_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HNew1ProcPart2_CompleteLHS import HNew1ProcPart2_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HNew1ProcPart3_CompleteLHS import HNew1ProcPart3_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HLocalDef1ProcPart1_CompleteLHS import HLocalDef1ProcPart1_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HLocalDef1ProcPart2_CompleteLHS import HLocalDef1ProcPart2_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HLocalDef1ProcPart3_CompleteLHS import HLocalDef1ProcPart3_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ProcPart1_CompleteLHS import HConditionBranch1ProcPart1_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ProcPart2_CompleteLHS import HConditionBranch1ProcPart2_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Multiplicity.Himesis.HConditionBranch1ProcPart3_CompleteLHS import HConditionBranch1ProcPart3_CompleteLHS
-# ##Multiplicity INvariants- End
-#
-# ##SYntactic COntracts - Begin
-# from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstStateSameNamePart1_2_IsolatedConnectedLHS import HInstStateSameNamePart1_2_IsolatedConnectedLHS
-# from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstStateSameNamePart1_CompleteLHS import HInstStateSameNamePart1_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstStateSameNamePart2_CompleteLHS import HInstStateSameNamePart2_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstHProcDefHpart1_CompleteLHS import HInstHProcDefHpart1_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstHProcDefHpart2_CompleteLHS import HInstHProcDefHpart2_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstCProcDefCpart1_CompleteLHS import HInstCProcDefCpart1_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstCProcDefCpart2_CompleteLHS import HInstCProcDefCpart2_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstProcDefParamspart1_CompleteLHS import HInstProcDefParamspart1_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstProcDefParamspart2_CompleteLHS import HInstProcDefParamspart2_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstProcDefParamspart3_CompleteLHS import HInstProcDefParamspart3_CompleteLHS
-# from UMLRT2Kiltera_MM.Properties.Syntactic.Himesis.HInstProcDefParamspart4_CompleteLHS import HInstProcDefParamspart4_CompleteLHS
-# ##SYntactic COntracts - End
-#
-# ##Pattern COntract - BEGIN
-# from UMLRT2Kiltera_MM.Properties.Pattern.Himesis.HNestedStates2nestedProcDefs_IsolatedLHS import HNestedStates2nestedProcDefs_IsolatedLHS
-# from UMLRT2Kiltera_MM.Properties.Pattern.Himesis.HNestedStates2nestedProcDefs_ConnectedLHS import HNestedStates2nestedProcDefs_ConnectedLHS
-# from UMLRT2Kiltera_MM.Properties.Pattern.Himesis.HNestedStates2nestedProcDefs_CompleteLHS import HNestedStates2nestedProcDefs_CompleteLHS
+
 
 from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 ##Pattern COntract - END
@@ -164,24 +85,14 @@ class Test():
 
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
         post_metamodel = ["MT_post__UMLRT2Kiltera_MM", "MoTifRule"]
-
-        subclasses_dict = {}
-
-        subclasses_dict["MT_pre__MetaModelElement_S"] =  ["MT_pre__OPTIONAL1,","MT_pre__PhysicalThread", "MT_pre__PortRef", "MT_pre__PackageContainer", "MT_pre__Thread", "MT_pre__OUT2", "MT_pre__BASE0",\
-                            "MT_pre__NamedElement", "MT_pre__Element", "MT_pre__OUT1", "MT_pre__Signal", "MT_pre__Package", "MT_pre__PortType",\
-                            "MT_pre__PortConnectorRef", "MT_pre__IN1", "MT_pre__IN0", "MT_pre__LogicalThread", "MT_pre__RoleType", "MT_pre__Vertex",\
-                            "MT_pre__SIBLING0", "MT_pre__InitialPoint", "MT_pre__PortConnector", "MT_pre__SignalType", "MT_pre__Transition",\
-                            "MT_pre__EntryPoint", "MT_pre__CONJUGATE1", "MT_pre__Protocol", "MT_pre__StateMachine", "MT_pre__Model_S",\
-                            "MT_pre__StateMachineElement", "MT_pre__Port", "MT_pre__TransitionType", "MT_pre__Capsule", "MT_pre__Trigger_S",\
-                            "MT_pre__State", "MT_pre__PLUGIN2", "MT_pre__Action", "MT_pre__CapsuleRole", "MT_pre__ExitPoint", "MT_pre__FIXED0", "MT_pre__RootElement"]
-
-        subclasses_dict["MT_pre__MetaModelElement_T"] = ["MT_pre__Name", "MT_pre__Module", "MT_pre__ConditionBranch", "MT_pre__Delay", "MT_pre__LocalDef",\
-                              "MT_pre__Expr", "MT_pre__ConditionSet", "MT_pre__Proc", "MT_pre__MatchCase", "MT_pre__Match",\
-                              "MT_pre__FuncDef", "MT_pre__Null", "MT_pre__Par", "MT_pre__Inst", "MT_pre__Listen", "MT_pre__Site",\
-                              "MT_pre__New", "MT_pre__PythonRef", "MT_pre__Def", "MT_pre__Seq", "MT_pre__ParIndexed", "MT_pre__Condition",\
-                              "MT_pre__Print", "MT_pre__Pattern", "MT_pre__ListenBranch", "MT_pre__ProcDef", "MT_pre__Trigger_T","MT_pre__Model_T", "MT_pre__RootElement"]
-
-        subclasses_dict["MT_pre__StateMachine"] = ["MT_pre__State"]
+        
+        subclasses_dict, superclasses_dict = self.get_sub_and_super_classes() 
+        
+        print("\n\n")
+        print("Superclasses dict: " + str(superclasses_dict))
+        print("\n")
+        print("Subclasses dict: " + str(subclasses_dict))
+        print("\n\n")
    
         self.pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
 
@@ -192,16 +103,39 @@ class Test():
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlappingRules, self.subsumption, self.loopingRuleSubsumption] = \
             self.pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation_eq_outside/", self.transformation)
 
+        # add polymorphism for the matchers
+        for matcher_key in self.matchRulePatterns.keys():
+            self.matchRulePatterns[matcher_key][0].condition["superclasses_dict"] = superclasses_dict
+            
+        # add polymorphism for the combinators
+        for combs_key in self.ruleCombinators.keys():
+            if self.ruleCombinators[combs_key] != None:
+                for combinator in self.ruleCombinators[combs_key]:
+                    combinator[0].condition["superclasses_dict"] = superclasses_dict
+
+        # add polymorphism for the tracers
+        for tracer_key in self.ruleTraceCheckers.keys():
+            if self.ruleTraceCheckers[tracer_key] != None:
+                self.ruleTraceCheckers[tracer_key].condition["superclasses_dict"] = superclasses_dict    
+            
+        #also make sure the transformation has this information
+        for rule in self.rules.values():
+            rule["superclasses_dict"] = superclasses_dict
+
+        for layer in self.transformation:
+            for rule in layer:
+                rule["superclasses_dict"] = superclasses_dict
+
         s = PathConditionGenerator(self.transformation, "UMLRT2Kiltera_MM/metamodels/klt_new.ecore", self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlappingRules, self.subsumption, self.loopingRuleSubsumption, args)#
-    
+     
         ts0 = time.time()
         s.build_path_conditions()
         ts1 = time.time()
-             
+              
         print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
 #        print("Size of the set of path conditions: " + str(float(sys.getsizeof(s.pathConditionSet) / 1024)))
         print("Number of path conditions: " + str(s.num_path_conditions))
-        
+         
         s.check_rule_reachability()
  
         #check if the correct number of path conditions were produced
@@ -385,7 +319,45 @@ class Test():
 #         #finalresult=StateProperty.verifyCompositeStateProperty(s, ImplicationStateProperty(S1IfClause,S1ThenClause))
 #         print ('finalresult : ')
 #         print (finalresult)
+
+
+    def get_sub_and_super_classes(self):
+            subclasses_dict = {}     
+            
+            inputMM = "UMLRT2Kiltera_MM/metamodels/rt_new.ecore"
+            outputMM = "UMLRT2Kiltera_MM/metamodels/klt_new.ecore"
          
+            inMM = EcoreUtils(inputMM)          
+            subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(inMM.getMetamodelClassNames())      
+            
+            inMMinheritanceTree = inMM.getSubClassInheritanceRelationForClasses()
+            
+            for className in inMMinheritanceTree:
+                subclasses_dict["MT_pre__" + className] = buildPreListFromClassNames(inMMinheritanceTree[className])
+            
+            outMM = EcoreUtils(outputMM)  
+            subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(outMM.getMetamodelClassNames())
+
+            outMMinheritanceTree = outMM.getSubClassInheritanceRelationForClasses()
+            for className in outMMinheritanceTree:
+                subclasses_dict["MT_pre__" + className] = buildPreListFromClassNames(outMMinheritanceTree[className])            
+            
+#             print("========================")
+#             print("Inheritance: " + str(subclasses_dict))
+#             print("========================")      
+
+            # keep a dictionary from each child to its parent
+            supertypes = {}
+
+            for supertype in subclasses_dict:
+                for subtype in subclasses_dict[supertype]:
+                    subtype = subtype[8:]
+                    try:
+                        supertypes[subtype].append(supertype[8:])
+                    except KeyError:
+                        supertypes[subtype] = [supertype[8:]]
+
+            return subclasses_dict, supertypes
 
 
     def _print_states(self,s):

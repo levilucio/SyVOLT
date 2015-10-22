@@ -18,7 +18,7 @@ class EcoreUtils(object):
         Constructor
         '''
         self.xmldoc = minidom.parse(xmlfileName)
-        self.inheritanceRels = self.getInheritanceRelationForClasses()
+        self.inheritanceRels = self.getSuperClassInheritanceRelationForClasses()
         
         metamodelClasses = self.xmldoc.getElementsByTagName('eClassifiers')  
         self.mmClassContained = {}       
@@ -201,7 +201,7 @@ class EcoreUtils(object):
 
 
      
-    def getInheritanceRelationForClasses(self):
+    def getSuperClassInheritanceRelationForClasses(self):
         '''
         build a dictionary where the key is the name of the metamodel class and the
         value is the list of parents of that class
@@ -223,9 +223,27 @@ class EcoreUtils(object):
                 inheritanceRel[str(mmClass.attributes['name'].value)] = superTypeNames
             else:
                 inheritanceRel[str(mmClass.attributes['name'].value)] = []
-                    
-        
+                        
         return inheritanceRel
+    
+    
+    def getSubClassInheritanceRelationForClasses(self):
+        '''
+        build a dictionary where the key is the name of the metamodel class and the
+        value is the list of children of that class
+        '''
+        subClasses = {}
+        
+        superClasses = self.getSuperClassInheritanceRelationForClasses()
+        
+        for childClassName in superClasses.keys():
+            for parentClassName in superClasses[childClassName]:
+                if parentClassName not in subClasses.keys():
+                    subClasses[parentClassName] = [childClassName]
+                else:
+                    subClasses[parentClassName].append(childClassName)
+                        
+        return subClasses
 
 
     
@@ -290,7 +308,7 @@ class EcoreUtils(object):
     def getMissingContainmentLinks(self, pathCond):
         '''
         return all missing containment relations in a path condition, in the form of a
-        doctionary having as key the targetClass and as data the containmentLinks that 
+        dictionary having as key the targetClass and as data the containmentLinks that 
         can be used to build the missing containment link.
         '''  
         

@@ -64,8 +64,8 @@
     <hasRule description="RuleConnect2RootElement">
       <match>
         <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="RootElement"/>
-        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="State"/>
-        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="state" source="//@source.3/@hasRule.0/@match.0/@class.0" target="//@source.3/@hasRule.0/@match.0/@class.1"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="TopLevelElement"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="contains" source="//@source.3/@hasRule.0/@match.0/@class.0" target="//@source.3/@hasRule.0/@match.0/@class.1"/>
       </match>
       <apply>
         <class packageName="klt" className="RootElement">
@@ -73,12 +73,8 @@
             <attributeValue xsi:type="dsltrans:Atom" value="root"/>
           </attribute>
         </class>
-        <class packageName="klt" className="ProcDef">
-          <attribute>
-            <attributeValue xsi:type="dsltrans:Atom" value="procdef"/>
-          </attribute>
-        </class>
-        <association associationName="procDef" source="//@source.3/@hasRule.0/@apply/@class.0" target="//@source.3/@hasRule.0/@apply/@class.1"/>
+        <class packageName="klt" className="TopLevelElement"/>
+        <association associationName="contains" source="//@source.3/@hasRule.0/@apply/@class.0" target="//@source.3/@hasRule.0/@apply/@class.1"/>
       </apply>
       <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.3/@hasRule.0/@apply/@class.0" sourceClass="//@source.3/@hasRule.0/@match.0/@class.0"/>
       <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.3/@hasRule.0/@apply/@class.1" sourceClass="//@source.3/@hasRule.0/@match.0/@class.1"/>

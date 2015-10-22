@@ -42,12 +42,12 @@ class HRuleConnect2RootElement(Himesis):
         # match_contains node for class RootElement()
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
-        # match class State() node
+        # match class TopLevelElement() node
         self.add_node()
 
-        self.vs[5]["mm__"] = """State""" 
+        self.vs[5]["mm__"] = """TopLevelElement""" 
         self.vs[5]["attr1"] = """+""" 
-        # match_contains node for class State()
+        # match_contains node for class TopLevelElement()
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
         
@@ -60,31 +60,31 @@ class HRuleConnect2RootElement(Himesis):
         # apply_contains node for class RootElement()
         self.add_node()
         self.vs[8]["mm__"] = """apply_contains"""
-        # apply class ProcDef() node
+        # apply class TopLevelElement() node
         self.add_node()
 
-        self.vs[9]["mm__"] = """ProcDef""" 
+        self.vs[9]["mm__"] = """TopLevelElement""" 
         self.vs[9]["attr1"] = """1"""
-        # apply_contains node for class ProcDef()
+        # apply_contains node for class TopLevelElement()
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
         
         
-        # match association RootElement--state-->State node
+        # match association RootElement--contains-->TopLevelElement node
         self.add_node()
-        self.vs[11]["attr1"] = """state"""
+        self.vs[11]["attr1"] = """contains"""
         self.vs[11]["mm__"] = """directLink_S"""
         
-        # apply association RootElement--procDef-->ProcDef node
+        # apply association RootElement--contains-->TopLevelElement node
         self.add_node()
-        self.vs[12]["attr1"] = """procDef"""
+        self.vs[12]["attr1"] = """contains"""
         self.vs[12]["mm__"] = """directLink_T"""
         
         # backward association RootElement---->RootElement node
         self.add_node()
 
         self.vs[13]["mm__"] = """backward_link"""
-        # backward association State---->ProcDef node
+        # backward association TopLevelElement---->TopLevelElement node
         self.add_node()
 
         self.vs[14]["mm__"] = """backward_link"""
@@ -99,24 +99,24 @@ class HRuleConnect2RootElement(Himesis):
                 (0,4), # matchmodel -> match_contains
                 (4,3), # match_contains -> match_class RootElement()
                 (0,6), # matchmodel -> match_contains
-                (6,5), # match_contains -> match_class State()
+                (6,5), # match_contains -> match_class TopLevelElement()
                 (1,8), # applymodel -> apply_contains
                 (8,7), # apply_contains -> apply_class RootElement()
                 (1,10), # applymodel -> apply_contains
-                (10,9), # apply_contains -> apply_class ProcDef()
-                (3,11), # match_class RootElement() -> association state
-                (11,5), # association state  -> match_class State()
-                (7,12), # apply_class RootElement() -> association procDef
-                (12,9), # association procDef  -> apply_class ProcDef()
+                (10,9), # apply_contains -> apply_class TopLevelElement()
+                (3,11), # match_class RootElement() -> association contains
+                (11,5), # association contains  -> match_class TopLevelElement()
+                (7,12), # apply_class RootElement() -> association contains
+                (12,9), # association contains  -> apply_class TopLevelElement()
                 (7,13), # apply_class RootElement() -> backward_association
                 (13,3), #  backward_association -> apply_class RootElement()
-                (9,14), # apply_class ProcDef() -> backward_association
-                (14,5), #  backward_association -> apply_class State()
+                (9,14), # apply_class TopLevelElement() -> backward_association
+                (14,5), #  backward_association -> apply_class TopLevelElement()
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])
 
         # Add the attribute equations
-        self["equations"] = [((7,'__ApplyAttribute'),('constant','root')), ((9,'__ApplyAttribute'),('constant','procdef')), ]
+        self["equations"] = [((7,'__ApplyAttribute'),('constant','root')), ]
 
         
