@@ -1,6 +1,6 @@
 
 from core.himesis_plus import look_for_attached
-
+from copy import deepcopy
 
 def decompose_graph(graph, verbosity = 0):
     #decompose graph into directLinks, backwardLinks, and isolated elements
@@ -147,6 +147,8 @@ def match_links(matcher, pattern, pattern_dls, graph, graph_dls, verbosity=0, ma
     #         link = "backward_link"
     #     print(graph.vs[graph_n0_n]["mm__"] + " - " + link + " - " + graph.vs[graph_n1_n]["mm__"])
 
+    # copy these links, as we might need to remove some
+    graph_dls = deepcopy(graph_dls)
 
     for patt0_n, patt1_n, patt_link_n in pattern_dls:
 
@@ -162,7 +164,8 @@ def match_links(matcher, pattern, pattern_dls, graph, graph_dls, verbosity=0, ma
 
         found_match = False
 
-        for graph_n0_n, graph_n1_n, graph_link_n in graph_dls:
+        graph_links = graph_dls
+        for graph_n0_n, graph_n1_n, graph_link_n in graph_links:
 
             if verbosity > 1:
                 print("\nChecking Graph " + graph.name + " nodes:")
@@ -174,9 +177,11 @@ def match_links(matcher, pattern, pattern_dls, graph, graph_dls, verbosity=0, ma
 
 
             nodes_match_1 = match_nodes(matcher, graph, graph_n0_n, pattern, patt0_n)
+
             nodes_match_2 = match_nodes(matcher, graph, graph_n1_n, pattern, patt1_n)
 
             nodes_match_3 = match_nodes(matcher, graph, graph_n1_n, pattern, patt0_n)
+
             nodes_match_4 = match_nodes(matcher, graph, graph_n0_n, pattern, patt1_n)
 
 
@@ -191,17 +196,22 @@ def match_links(matcher, pattern, pattern_dls, graph, graph_dls, verbosity=0, ma
             #     print("Failure matching on " + pc.vs[pc_n1_n]["mm__"] + " vs " + contract.vs[n1_n]["mm__"])
 
             if patt_link_n or graph_link_n:
-
                 nodes_match = nodes_match and match_nodes(matcher, graph, graph_link_n, pattern, patt_link_n)
+
 
             if nodes_match:
                 found_match = True
+
 
                 if verbosity > 1:
                     print("\nFound a link!")
 
                 if not match_all:
                     return True
+
+                #need to check the correct number of links
+                else:
+                    graph_dls.remove((graph_n0_n, graph_n1_n, graph_link_n))
 
 
 
