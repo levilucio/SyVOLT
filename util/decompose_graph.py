@@ -150,26 +150,27 @@ def match_links(matcher, pattern, pattern_dls, graph, graph_dls, verbosity=0, ma
 
     for patt0_n, patt1_n, patt_link_n in pattern_dls:
 
-        # print("\nChecking Pattern " + pattern.name + " nodes:")
-        # if patt_link_n:
-        #     link = pattern.vs[patt_link_n]["mm__"]
-        # else:
-        #     link = "backward_link"
-        #
-        # print(pattern.vs[patt0_n]["mm__"] + " - " + link + " - " + pattern.vs[patt1_n]["mm__"])
+        if verbosity > 1:
+            print("\nChecking Pattern " + pattern.name + " nodes:")
+            if patt_link_n:
+                link = pattern.vs[patt_link_n]["mm__"]
+            else:
+                link = "backward_link"
+
+            print(pattern.vs[patt0_n]["mm__"] + " - " + link + " - " + pattern.vs[patt1_n]["mm__"])
 
 
         found_match = False
 
         for graph_n0_n, graph_n1_n, graph_link_n in graph_dls:
 
-
-            # print("\nChecking Graph " + graph.name + " nodes:")
-            # if graph_link_n:
-            #     link = graph.vs[graph_link_n]["mm__"]
-            # else:
-            #     link = "backward_link"
-            # print(graph.vs[graph_n0_n]["mm__"] + " - " + link + " - " + graph.vs[graph_n1_n]["mm__"])
+            if verbosity > 1:
+                print("\nChecking Graph " + graph.name + " nodes:")
+                if graph_link_n:
+                    link = graph.vs[graph_link_n]["mm__"]
+                else:
+                    link = "backward_link"
+                print(graph.vs[graph_n0_n]["mm__"] + " - " + link + " - " + graph.vs[graph_n1_n]["mm__"])
 
 
             nodes_match_1 = match_nodes(matcher, graph, graph_n0_n, pattern, patt0_n)
@@ -195,23 +196,9 @@ def match_links(matcher, pattern, pattern_dls, graph, graph_dls, verbosity=0, ma
 
             if nodes_match:
                 found_match = True
-                #print("\nFound a link!")
 
-                # if patt_link_n:
-                #     link = pattern.vs[patt_link_n]["mm__"]
-                #
-                # else:
-                #     link = "backward_link"
-                #
-                # #print("Pattern link: " + pattern.vs[patt0_n]["mm__"] + " - " + link + " - " + pattern.vs[patt1_n]["mm__"])
-                #
-                # if graph_link_n:
-                #     link = graph.vs[graph_link_n]["mm__"]
-                #
-                # else:
-                #     link = "backward_link"
-                #print("Graph link: " + graph.vs[graph_n0_n]["mm__"] + " - " + link + " - " + graph.vs[graph_n1_n]["mm__"])
-
+                if verbosity > 1:
+                    print("\nFound a link!")
 
                 if not match_all:
                     return True
@@ -243,7 +230,10 @@ def match_links(matcher, pattern, pattern_dls, graph, graph_dls, verbosity=0, ma
         #             print(pattern.vs[patt_link_n]["mm__"])
         #         print()
         #     return False
-    return True
+
+    #return True if all are found successfully
+    #return False if we don't need all, and none were found
+    return match_all
 
 
 def match_nodes(matcher, graph, graph_node, pattern, patt_node):
