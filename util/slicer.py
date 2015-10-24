@@ -30,7 +30,7 @@ class Slicer():
             for rule in layer:
 
                 rule_name = rule.name
-                dls, bls, mes, imes, aes = decompose_graph(self.rules[rule_name], verbosity=0)
+                dls, bls, mes, imes, aes = decompose_graph(self.rules[rule_name], verbosity=0, ignore_apply_dls=True)
                 self.direct_links[rule_name] = dls
                 self.backward_links[rule_name] = bls
                 self.match_elements[rule_name] = mes
