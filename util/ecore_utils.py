@@ -59,7 +59,7 @@ class EcoreUtils(object):
                 if remContClass not in self.mmClassContained.keys():
                     self.mmClassContained[remContClass] = deepcopy(self.mmClassContained[contParentClass])
                 else:
-                    self.mmClassContained[remContClass].append(self.mmClassContained[contParentClass])
+                    self.mmClassContained[remContClass].extend(self.mmClassContained[contParentClass])
                 
             
                 
@@ -164,6 +164,7 @@ class EcoreUtils(object):
         '''
         build a list of all parents of the given class
         '''
+        
         inheritanceRel = {}
         metamodelClasses = self.xmldoc.getElementsByTagName('eClassifiers')
         
@@ -176,7 +177,7 @@ class EcoreUtils(object):
                     break
         
         parentNames = []
-        
+                
         for mmClass in mmClassesToTreat:
             superTypeNames = []
             try:
@@ -284,8 +285,8 @@ class EcoreUtils(object):
     def getBuiltContainmentLinks(self, rule):
         '''
         return all the containment relations built by a rule, in the form of a
-        dictionary having as key the name of the target classes and as elements the name
-        of the containment relations. Only one instance of (targetClass, containmentRel) is kept.
+        dictionary having as key the name of the target classes and as elements a list
+        with the containment relation(s).
         '''    
         
         containmentRelsInRule = {}
@@ -342,12 +343,12 @@ class EcoreUtils(object):
 if __name__ == '__main__':
     from ATLTrans.HUnionMotherRule import HUnionMotherRule
     pathCond = HUnionMotherRule()
-#    t1 = EcoreUtils("./UMLRT2Kiltera_MM/metamodels/klt_new.ecore")
-    t1 = EcoreUtils("../eclipse_integration/examples/families_to_persons/metamodels/Community.ecore")
+    t1 = EcoreUtils("../UMLRT2Kiltera_MM/metamodels/rt_new.ecore")
+#    t1 = EcoreUtils("../eclipse_integration/examples/families_to_persons/metamodels/Community.ecore")
 #    t1 = EcoreUtils("./mbeddr2C_MM/ecore_metamodels/Module.ecore")
 #    r1 = t1.getMetamodelContainmentLinks()
 #    r2 = t2.getMetamodelContainmentLinks()
 #    print(r1)
 #    print(r2)    
-#    print(str(t1.getContaimentLinksForClasses()))
-    print (str(t1.getBuiltClasses(pathCond)))
+    print(str(t1.buildInheritanceDependenciesForClass(["IN1"])))
+#    print (str(t1.mmClassContained))
