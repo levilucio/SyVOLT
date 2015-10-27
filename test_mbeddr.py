@@ -11,32 +11,28 @@ from PyRamify import PyRamify
 from util.ecore_utils import EcoreUtils
 from core.himesis_plus import buildPreListFromClassNames
 
-from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
+from PropertyVerification.v2.atomic_contract import AtomicContract
+from PropertyVerification.v2.ContractProver import ContractProver
 
-from PropertyVerification.state_property import StateProperty
-from PropertyVerification.atomic_state_property import AtomicStateProperty
-from PropertyVerification.and_state_property import AndStateProperty
-from PropertyVerification.or_state_property import OrStateProperty
-from PropertyVerification.not_state_property import NotStateProperty
-from PropertyVerification.implication_state_property import ImplicationStateProperty
-
-from PropertyVerification.Not import Not 					#StateSpace Prop
-from PropertyVerification.Implication import Implication 	#StateSpace Prop
-from PropertyVerification.And import And 					#StateSpace Prop
-from PropertyVerification.Or import Or 						#StateSpace Prop
+from PropertyVerification.v2.if_then_contract import IfThenContract
+from PropertyVerification.v2.prop_logic import NotContract, AndContract
 
 from core.himesis_utils import graph_to_dot
-from util.test_script_utils import select_rules
+from util.test_script_utils import select_rules, get_sub_and_super_classes
 from util.slicer import Slicer
 
 # imports for properties' atomic contracts
 
-from mbeddr2C_MM.props.HAssignmentInstance_IsolatedLHS import HAssignmentInstance_IsolatedLHS
-from mbeddr2C_MM.props.HAssignmentInstance_ConnectedLHS import HAssignmentInstance_ConnectedLHS
-from mbeddr2C_MM.props.HAssignmentInstance_CompleteLHS import HAssignmentInstance_CompleteLHS
-from mbeddr2C_MM.props.HGlobalVarGetsCorrectFunctionAddressAtInit_IsolatedLHS import HGlobalVarGetsCorrectFunctionAddressAtInit_IsolatedLHS
-from mbeddr2C_MM.props.HGlobalVarGetsCorrectFunctionAddressAtInit_ConnectedLHS import HGlobalVarGetsCorrectFunctionAddressAtInit_ConnectedLHS
-from mbeddr2C_MM.props.HGlobalVarGetsCorrectFunctionAddressAtInit_CompleteLHS import HGlobalVarGetsCorrectFunctionAddressAtInit_CompleteLHS
+# from mbeddr2C_MM.props.HAssignmentInstance_IsolatedLHS import HAssignmentInstance_IsolatedLHS
+# from mbeddr2C_MM.props.HAssignmentInstance_ConnectedLHS import HAssignmentInstance_ConnectedLHS
+# from mbeddr2C_MM.props.HAssignmentInstance_CompleteLHS import HAssignmentInstance_CompleteLHS
+# from mbeddr2C_MM.props.HGlobalVarGetsCorrectFunctionAddressAtInit_IsolatedLHS import HGlobalVarGetsCorrectFunctionAddressAtInit_IsolatedLHS
+# from mbeddr2C_MM.props.HGlobalVarGetsCorrectFunctionAddressAtInit_ConnectedLHS import HGlobalVarGetsCorrectFunctionAddressAtInit_ConnectedLHS
+# from mbeddr2C_MM.props.HGlobalVarGetsCorrectFunctionAddressAtInit_CompleteLHS import HGlobalVarGetsCorrectFunctionAddressAtInit_CompleteLHS
+
+from mbeddr2C_MM.props.HVerySimple_IsolatedLHS import HVerySimple_IsolatedLHS
+from mbeddr2C_MM.props.HVerySimple_ConnectedLHS import HVerySimple_ConnectedLHS
+from mbeddr2C_MM.props.HVerySimple_CompleteLHS import HVerySimple_CompleteLHS
 
 
 class Prover():
@@ -103,18 +99,20 @@ class Prover():
         
         full_transformation = [[r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11],[r12,r13,r14,r15,r16,r17,r18,r19,r20,r21,r22,r23,r24,r25,r26,r27],[r28,r29,r30,r31],[r32,r36,r35,r34,r33,r37],[r38,r39,r40,r41,],[r42,r43,r44,r45,r46,r47],[r48]]
         
-        self.rules, self.transformation = pyramify.get_rules("/home/levi/git/SyVOLT_optimized/mbeddr2C_MM/real_transformation", full_transformation)
-        
-        subclasses_dict, superclasses_dict = self.get_sub_and_super_classes()
+        self.rules, self.transformation = pyramify.get_rules("/home/boakes/Projects/SyVOLT/mbeddr2C_MM/real_transformation", full_transformation)
+
+        inputMM = "./mbeddr2C_MM/ecore_metamodels/Module.ecore"
+        outputMM = "./mbeddr2C_MM/ecore_metamodels/C.ecore"
+        subclasses_dict, superclasses_dict = get_sub_and_super_classes(inputMM, outputMM)
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
-            pyramify.ramify_directory("/home/levi/git/SyVOLT_optimized/mbeddr2C_MM/real_transformation", self.transformation)   
+            pyramify.ramify_directory("/home/boakes/Projects/SyVOLT/mbeddr2C_MM/real_transformation", self.transformation)
 
                 
         pre_metamodel = ["MT_pre__S_MM", "MoTifRule"]
         post_metamodel = ["MT_post__T_MM", "MoTifRule"]
 
-        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict, "/home/levi/git/SyVOLT_optimized/")
+        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict, "/home/boakes/Projects/SyVOLT/")
         
         # go through all the matchers, combinators and tracers to add polymorphism on all classes in an inheritance hierarchy
                                                                   
@@ -145,53 +143,41 @@ class Prover():
         # load the contracts, and add polymorphism
 
         if (args.draw_svg):
-            graph_to_dot("property_AssignmentInstance_isolated", HAssignmentInstance_IsolatedLHS())
-            graph_to_dot("property_AssignmentInstance_connected", HAssignmentInstance_ConnectedLHS())
-            graph_to_dot("property_AssignmentInstance_complete", HAssignmentInstance_CompleteLHS())
-            graph_to_dot("property_GlobalVarGetsCorrectFunctionAddressAtInit_isolated", HGlobalVarGetsCorrectFunctionAddressAtInit_IsolatedLHS())
-            graph_to_dot("property_GlobalVarGetsCorrectFunctionAddressAtInit_connected", HGlobalVarGetsCorrectFunctionAddressAtInit_ConnectedLHS())
-            graph_to_dot("property_GlobalVarGetsCorrectFunctionAddressAtInit_complete", HGlobalVarGetsCorrectFunctionAddressAtInit_CompleteLHS())
+            graph_to_dot("property_VerySimple_isolated", HVerySimple_IsolatedLHS())
+            graph_to_dot("property_VerySimple_connected", HVerySimple_ConnectedLHS())
+            graph_to_dot("property_VerySimple_complete", HVerySimple_CompleteLHS())
+            # graph_to_dot("property_GlobalVarGetsCorrectFunctionAddressAtInit_isolated", HGlobalVarGetsCorrectFunctionAddressAtInit_IsolatedLHS())
+            # graph_to_dot("property_GlobalVarGetsCorrectFunctionAddressAtInit_connected", HGlobalVarGetsCorrectFunctionAddressAtInit_ConnectedLHS())
+            # graph_to_dot("property_GlobalVarGetsCorrectFunctionAddressAtInit_complete", HGlobalVarGetsCorrectFunctionAddressAtInit_CompleteLHS())
 
 
         self.atomic_contracts = []
  
  
-        isolated = HAssignmentInstance_IsolatedLHS()
-        connected = HAssignmentInstance_ConnectedLHS()
-        complete = HAssignmentInstance_CompleteLHS()
+        isolated = HVerySimple_IsolatedLHS()
+        connected = HVerySimple_ConnectedLHS()
+        complete = HVerySimple_CompleteLHS()
  
         isolated["superclasses_dict"] = superclasses_dict
         connected["superclasses_dict"] = superclasses_dict
         complete["superclasses_dict"] = superclasses_dict
  
-        c0 = AtomicStateProperty(isolated, connected, complete)
+        c0 = AtomicContract(isolated, connected, complete)
  
-        self.atomic_contracts.append(("AssignmentInstance", c0))
- 
- 
- 
-        isolated = HGlobalVarGetsCorrectFunctionAddressAtInit_IsolatedLHS()
-        connected = HGlobalVarGetsCorrectFunctionAddressAtInit_ConnectedLHS()
-        complete = HGlobalVarGetsCorrectFunctionAddressAtInit_CompleteLHS()
- 
-        isolated["superclasses_dict"] = superclasses_dict
-        connected["superclasses_dict"] = superclasses_dict
-        complete["superclasses_dict"] = superclasses_dict
- 
-        c0 = AtomicStateProperty(isolated, connected, complete)
- 
-        self.atomic_contracts.append(("GlobalVarGetsCorrectFunctionAddressAtInit", c0))
-
-        #init the slicer anyways, to check for backward links not being satisfiable
-        slicer = Slicer(self.rules, self.transformation)
+        self.atomic_contracts.append(("VerySimple", c0))
 
         if args.slice > 0:
+            slicer = Slicer(self.rules, self.transformation)
+
             contract = self.atomic_contracts[args.slice - 1]
             print("Slicing for contract number " + str(args.slice) + " : " + contract[0])
 
             print("Number rules before: " + str(len(self.rules)))
             self.rules, self.transformation = slicer.slice_transformation(contract)
             print("Number rules after: " + str(len(self.rules)))
+
+            #raise Exception()
+
 
         for layer in self.transformation:
             print("Layer:")
@@ -201,10 +187,11 @@ class Prover():
         # generate path conditions
         #raise Exception()
 
-        pc_set = PathConditionGenerator(self.transformation, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
+        inputMM = "./mbeddr2C_MM/ecore_metamodels/Module.ecore"
+        pc_set = PathConditionGenerator(self.transformation, inputMM, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
 
         ts0 = time.time()
-#        pc_set.build_path_conditions()
+        pc_set.build_path_conditions()
         ts1 = time.time()
 
         print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
@@ -235,36 +222,6 @@ class Prover():
 #         ts1 = time.time()
 #         
 #         print("\n\nTime to verify properties: " + str(ts1 - ts0) + " seconds.")
-
-        
-    def get_sub_and_super_classes(self):
-            subclasses_dict = {}     
-            
-            inputMM = "./mbeddr2C_MM/ecore_metamodels/Module.ecore"
-            outputMM = "./mbeddr2C_MM/ecore_metamodels/C.ecore"
-         
-            inMM = EcoreUtils(inputMM)          
-            subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(inMM.getMetamodelClassNames())
-            
-            print(subclasses_dict["MT_pre__MetaModelElement_S"])
-
-            outMM = EcoreUtils(outputMM)  
-            subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(outMM.getMetamodelClassNames()) 
-            
-            print(subclasses_dict["MT_pre__MetaModelElement_T"])
-
-            # keep a dictionary from each child to its parent
-            supertypes = {}
-
-            for supertype in subclasses_dict:
-                for subtype in subclasses_dict[supertype]:
-                    subtype = subtype[8:]
-                    try:
-                        supertypes[subtype].append(supertype[8:])
-                    except KeyError:
-                        supertypes[subtype] = [supertype[8:]]
-
-            return subclasses_dict, supertypes
 
 
 
