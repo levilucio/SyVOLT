@@ -49,12 +49,12 @@ class Test():
         full_transformation = [
             ['HMapRootElementRule'],
             ['HState2ProcDef'],
-            ['HBasicStateNoOutgoing2ProcDef', 'HBasicState2ProcDef', 'HCompositeState2ProcDef'],
-            ['HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans', 'HState2HProcDef', 'HState2CProcDef'],
-            ['HTransition2QInstSIBLING', 'HTransition2QInstOUT', 'HTransition2Inst'],
-            ['HTransition2ListenBranch','HConnectOutputsOfExitPoint2BProcDefTransition2QInst',
-             'HTransition2HListenBranch','HConnectOPState2CProcDefTransition2InstotherInTransitions'],
-            ['HMapHeirarchyOfStates2HeirarchyOfProcs', 'HRuleConnect2RootElement']
+#            ['HBasicStateNoOutgoing2ProcDef', 'HBasicState2ProcDef', 'HCompositeState2ProcDef'],
+#            ['HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans', 'HState2HProcDef', 'HState2CProcDef'],
+#             ['HTransition2QInstSIBLING', 'HTransition2QInstOUT', 'HTransition2Inst'],
+#             ['HTransition2ListenBranch','HConnectOutputsOfExitPoint2BProcDefTransition2QInst',
+#              'HTransition2HListenBranch','HConnectOPState2CProcDefTransition2InstotherInTransitions'],    
+             ['HMapHeirarchyOfStates2HeirarchyOfProcs', 'HRuleConnect2RootElement']
         ]
 
         #get the expected num from the args
@@ -147,7 +147,7 @@ class Test():
             #raise Exception(num_pcs_s)
  
 #         print("printing path conditions")
-#         s.print_path_conditions_screen()
+        s.print_path_conditions_screen()
 
 #        s.print_path_conditions_file()
 #

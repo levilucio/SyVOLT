@@ -40,7 +40,12 @@ class Prunner(object):
         '''
         builtContainmentLinks = {}
         for ruleName in ruleNames:
-            builtContainmentLinks.update(self.ruleContainmentLinks[ruleName])
+            for className in self.ruleContainmentLinks[ruleName].keys():
+                if className in builtContainmentLinks:
+                    builtContainmentLinks[className].append(self.ruleContainmentLinks[ruleName][className])
+                    builtContainmentLinks[className] = list(set(builtContainmentLinks[className]))
+                else:
+                    builtContainmentLinks[className] = [self.ruleContainmentLinks[ruleName][className]]
             
         return builtContainmentLinks
 
@@ -69,6 +74,7 @@ class Prunner(object):
 
         missingContLinks = self.eu.getMissingContainmentLinks(pathCondition)
 
+
         if self.debug:
             print("Path condition: " + pathCondition.name)
             print("Missing containment links: " + str(missingContLinks))
@@ -80,6 +86,8 @@ class Prunner(object):
             for rule in rulesToTreat:
                 print(rule)
             print("Containment links in rules to treat: " + str(contLinksInRulesToTreat))
+
+
         
         allMissingContLinksFound = True 
                 
@@ -88,14 +96,34 @@ class Prunner(object):
                 allMissingContLinksFound = False
                 break
 
-            links = [link for link in missingContLinks[className] if link in missingContLinks[className]]
-            if not links:
-                allMissingContLinksFound = False
-                break
+
+
+            else:
+                foundInParent = False
+                # TODO: cache the parents
+                # check if at least on of the containment links necessary for the class can still
+                # be built by one of the remaining rules. It is possible that this will be done by
+                # done by a parent of the class in one of the rules.
+                parentClasses = self.eu.buildInheritanceDependenciesForClass([className])
+                parentClasses.append(className)
+                for parentClass in parentClasses:
+                    if parentClass in contLinksInRulesToTreat.keys():
+                        links = [link for link in missingContLinks[className] if link in contLinksInRulesToTreat[parentClass]]
+                        if links:
+                           foundInParent = True
+                           break
+                if not foundInParent:
+                    allMissingContLinksFound = False
+                    break
         
         if allMissingContLinksFound:
+
+            if self.debug:
+                print("... Pruner Returning True")
             return True
-        else: 
+        else:
+            if self.debug:
+                print("... Pruner Returning False")
             return False
         
         
