@@ -17,13 +17,21 @@ class Prunner(object):
         '''
         Constructor
         '''
+
+        self.debug = False
+
         self.eu = EcoreUtils(metamodel)
         self.mmContainmentLinks = self.eu.getContaimentLinksForClasses()
         
         self.ruleContainmentLinks = {}
         for layer in transformation:
             for rule in layer:
-                self.ruleContainmentLinks[rule.name] = self.eu.getBuiltContainmentLinks(rule)              
+                self.ruleContainmentLinks[rule.name] = self.eu.getBuiltContainmentLinks(rule)
+
+                if self.debug:
+                    print("Rule containment links: " + rule.name + " = " + str(self.ruleContainmentLinks[rule.name]))
+
+        #raise Exception()
         
 
     def getContainmentLinksBuiltByRuleSet(self, ruleNames):
@@ -53,14 +61,25 @@ class Prunner(object):
         decide whether a path condition can be removed from the path condition set because the
         containment requirements cannot be fulfilled
         '''
+
+
+        #if this is the last layer, then do not prune these path conditions
+        if not rulesToTreat:
+            return True
+
         missingContLinks = self.eu.getMissingContainmentLinks(pathCondition)
-        
-#         print("Path condition: " + pathCondition.name)   
-#         print("Missing containment links: " + str(missingContLinks))                     
+
+        if self.debug:
+            print("Path condition: " + pathCondition.name)
+            print("Missing containment links: " + str(missingContLinks))
                 
         contLinksInRulesToTreat = self.getContainmentLinksBuiltByRuleSet(rulesToTreat)
         
-#         print("Containment links in rules to treat: " + str(contLinksInRulesToTreat))   
+        if self.debug:
+            print("Rules to treat: ")
+            for rule in rulesToTreat:
+                print(rule)
+            print("Containment links in rules to treat: " + str(contLinksInRulesToTreat))
         
         allMissingContLinksFound = True 
                 
@@ -68,7 +87,9 @@ class Prunner(object):
             if className not in contLinksInRulesToTreat.keys():
                 allMissingContLinksFound = False
                 break
-            elif set(missingContLinks[className]).intersection(set([contLinksInRulesToTreat[className]])) == set():
+
+            links = [link for link in missingContLinks[className] if link in missingContLinks[className]]
+            if not links:
                 allMissingContLinksFound = False
                 break
         
