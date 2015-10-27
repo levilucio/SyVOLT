@@ -15,7 +15,7 @@ from t_core.messages import Packet
 
 from PyRamify import PyRamify
 
-from util.test_script_utils import select_rules
+from util.test_script_utils import select_rules, get_sub_and_super_classes
 from util.slicer import Slicer
 
 from core.himesis_utils import graph_to_dot
@@ -97,16 +97,13 @@ class Test():
         self.rules, self.transformation = pyramify.get_rules("ATLTrans/w_equations/", full_transformation)
 
 
+        inputMM = "ATLTrans/metamodels/Household.ecore"
+        outputMM = "ATLTrans/metamodels/Community.ecore"
+
+        subclasses_dict, superclasses_dict = get_sub_and_super_classes(inputMM, outputMM)
+
         pre_metamodel = ["MT_pre__FamiliesToPersons_MM", "MoTifRule"]
         post_metamodel = ["MT_post__FamiliesToPersons_MM", "MoTifRule"]
-
-        subclasses_dict = {}
-
-        subclasses_dict["MT_pre__MetaModelElement_S"] =  ["MT_pre__HouseholdRoot","MT_pre__Family", "MT_pre__Member"]
-
-        subclasses_dict["MT_pre__MetaModelElement_T"] = ["MT_pre__CommunityRoot","MT_pre__Person","MT_pre__Man", "MT_pre__Woman"]
-
-        subclasses_dict["MT_pre__Person"] = ["MT_pre__Woman", "MT_pre__Man"]
 
         pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
 
@@ -115,43 +112,31 @@ class Test():
 
 
 
-        # keep a dictionary from each child to its parent
-        supertypes = {}
-
-        for supertype in subclasses_dict:
-            for subtype in subclasses_dict[supertype]:
-                subtype = subtype[8:]
-                try:
-                    supertypes[subtype].append(supertype[8:])
-                except KeyError:
-                    supertypes[subtype] = [supertype[8:]]
-
-
         # also make sure the transformation has this information
         for rule in self.rules.values():
-            rule["superclasses_dict"] = supertypes
+            rule["superclasses_dict"] = superclasses_dict
 
         for layer in self.transformation:
             for rule in layer:
-                rule["superclasses_dict"] = supertypes
+                rule["superclasses_dict"] = superclasses_dict
 
         FourMembers = [HfourMembers_IsolatedLHS(), HfourMembers_ConnectedLHS(), HfourMembers_CompleteLHS()]
         for fm in FourMembers:
-            fm["superclasses_dict"] = supertypes
+            fm["superclasses_dict"] = superclasses_dict
  
 
  
  
         HMotherFather = [HmotherFather_IsolatedLHS(), HmotherFather_ConnectedLHS(), HmotherFather_CompleteLHS()]
         for c in HMotherFather:
-            c["superclasses_dict"] = supertypes
+            c["superclasses_dict"] = superclasses_dict
  
 
  
  
         DaughterMother = [HdaughterMother_IsolatedLHS(), HdaughterMother_ConnectedLHS(), HdaughterMother_CompleteLHS()]
         for c in DaughterMother:
-            c["superclasses_dict"] = supertypes
+            c["superclasses_dict"] = superclasses_dict
 
 
         HFourMembers_atomic = AtomicContract(FourMembers[0], FourMembers[1], FourMembers[2])
@@ -160,10 +145,10 @@ class Test():
 
 
         CommunityPerson1 = HCommunityPerson1_CompleteLHS()
-        CommunityPerson1["superclasses_dict"] = supertypes
+        CommunityPerson1["superclasses_dict"] = superclasses_dict
 
         CommunityPerson2 = HCommunityPerson2_CompleteLHS()
-        CommunityPerson2["superclasses_dict"] = supertypes
+        CommunityPerson2["superclasses_dict"] = superclasses_dict
 
         HCommunityPersonIfClause = AtomicContract(HCommunityPerson1_IsolatedLHS(), HCommunityPerson1_ConnectedLHS(), CommunityPerson1)
 
