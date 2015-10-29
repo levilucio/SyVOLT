@@ -18,7 +18,7 @@ class Prunner(object):
         Constructor
         '''
 
-        self.debug = False
+        self.debug = True
 
         self.eu = EcoreUtils(metamodel)
         self.mmContainmentLinks = self.eu.getContaimentLinksForClasses()
@@ -67,11 +67,6 @@ class Prunner(object):
         containment requirements cannot be fulfilled
         '''
 
-
-        #if this is the last layer, then do not prune these path conditions
-        if not rulesToTreat:
-            return True
-
         missingContLinks = self.eu.getMissingContainmentLinks(pathCondition)
 
 
@@ -89,14 +84,25 @@ class Prunner(object):
 
 
         
-        allMissingContLinksFound = True 
-                
+        allMissingContLinksFound = True
+        
+#         # gather all the parents for all the classes that have missing containment links
+#         # TODO: should be based on cached data
+#         classesWithParentsToTreat = []
+#         
+#         for className in missingContLinks.keys():
+#             classesWithParentsToTreat.extend(self.eu.buildInheritanceDependenciesForClass([className]))
+#         
+#         classesWithParentsToTreat = list(set(classesWithParentsToTreat))
+         
         for className in missingContLinks.keys():
-            if className not in contLinksInRulesToTreat.keys():
+
+            classPlusParents = self.eu.buildInheritanceDependenciesForClass([className])
+            classPlusParents.append(className) 
+                
+            if set(classPlusParents).intersection(set(contLinksInRulesToTreat.keys())) == set():
                 allMissingContLinksFound = False
                 break
-
-
 
             else:
                 foundInParent = False
@@ -106,12 +112,13 @@ class Prunner(object):
                 # done by a parent of the class in one of the rules.
                 parentClasses = self.eu.buildInheritanceDependenciesForClass([className])
                 parentClasses.append(className)
+                
                 for parentClass in parentClasses:
                     if parentClass in contLinksInRulesToTreat.keys():
                         links = [link for link in missingContLinks[className] if link in contLinksInRulesToTreat[parentClass]]
                         if links:
-                           foundInParent = True
-                           break
+                            foundInParent = True
+                            break
                 if not foundInParent:
                     allMissingContLinksFound = False
                     break

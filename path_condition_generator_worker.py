@@ -592,6 +592,7 @@ class path_condition_generator_worker(Process):
                 pathConditionsToPrune = []
                 
                 if not self.prunner.isPathConditionStillFeasible(expand_graph(self.pc_dict[pathCondName]), rulesToTreat):
+                    
                     pathConditionsToPrune.append(pathCondName)
                     if self.verbosity >= 2:
                         print("Path Condition: " + pathCondName + " cannot be completed with all necessary containment associations")                               
