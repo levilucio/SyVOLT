@@ -30,8 +30,8 @@ class Prunner(object):
 
                 if self.debug:
                     print("Rule containment links: " + rule.name + " = " + str(self.ruleContainmentLinks[rule.name]))
-
-        #raise Exception()
+                    
+        self.mmClassParents = self.eu.getSuperClassInheritanceRelationForClasses()
         
 
     def getContainmentLinksBuiltByRuleSet(self, ruleNames):
@@ -97,7 +97,7 @@ class Prunner(object):
          
         for className in missingContLinks.keys():
 
-            classPlusParents = self.eu.buildInheritanceDependenciesForClass([className])
+            classPlusParents = self.mmClassParents[className]
             classPlusParents.append(className) 
                 
             if set(classPlusParents).intersection(set(contLinksInRulesToTreat.keys())) == set():
@@ -110,7 +110,7 @@ class Prunner(object):
                 # check if at least on of the containment links necessary for the class can still
                 # be built by one of the remaining rules. It is possible that this will be done by
                 # done by a parent of the class in one of the rules.
-                parentClasses = self.eu.buildInheritanceDependenciesForClass([className])
+                parentClasses = self.mmClassParents[className]
                 parentClasses.append(className)
                 
                 for parentClass in parentClasses:

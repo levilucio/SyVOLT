@@ -60,11 +60,7 @@ class EcoreUtils(object):
                     self.mmClassContained[remContClass] = deepcopy(self.mmClassContained[contParentClass])
                 else:
                     self.mmClassContained[remContClass].extend(self.mmClassContained[contParentClass])
-                
-            
-                
-#         print("---------------> self.mmClassContained: " + str(self.mmClassContained))
-#         print("---------------> self.containmentRels: " + str(self.containmentRels))
+
     
     
     def getMetamodelClassNames(self):
@@ -329,7 +325,7 @@ class EcoreUtils(object):
                 for inputRelNode in inputRelNodes:
                     if pathCond.vs[inputRelNode]["mm__"] == "directLink_T":
                         inputRelNames.append(pathCond.vs[inputRelNode]["attr1"])
-                        
+
                 # check if any containment relation into the class already exists
                 if set(inputRelNames).intersection(set(self.containmentRels)) == set():
                     missingContainmentLinks[targetClassName] = self.mmClassContained[targetClassName]                        
@@ -350,5 +346,5 @@ if __name__ == '__main__':
 #    r2 = t2.getMetamodelContainmentLinks()
 #    print(r1)
 #    print(r2)    
-    print(str(t1.buildInheritanceDependenciesForClass(["IN1"])))
+#    print(str(t1.buildInheritanceDependenciesForClass(["IN1"])))
 #    print (str(t1.mmClassContained))
