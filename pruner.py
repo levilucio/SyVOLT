@@ -6,7 +6,7 @@ Created on Sep 6, 2015
 
 from util.ecore_utils import *
 
-class Prunner(object):
+class Pruner(object):
     '''
     checks whether a path condition can be removed from the set of path conditions being built
     based on the fact that missing containment relations cannot be built by the rules that are

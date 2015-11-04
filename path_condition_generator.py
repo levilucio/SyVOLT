@@ -36,6 +36,8 @@ import multiprocessing
 from multiprocessing import Manager, Queue
 from path_condition_generator_worker import *
 
+from pruner import Pruner
+
 from random import shuffle
 
 from profiler import *
@@ -79,7 +81,7 @@ class PathConditionGenerator(object):
         self.matchRulePatterns = matchRulePatterns
         self.overlappingRules = overlappingRules
         self.subsumption = subsumption
-        self.loopingRuleSubsumption = loopingRuleSubsumption
+        self.loopingRuleSubsumption = loopingRuleSubsumption 
         
         self.rulesRequiringDisambiguation = {}
 
@@ -91,6 +93,8 @@ class PathConditionGenerator(object):
 
         #with PyCallGraph(output=GraphvizOutput()):
         self._pre_process()
+        
+        self.prunner = Pruner(self.targetMM, self.transformation)
 
         self.debug()
 
@@ -483,9 +487,7 @@ class PathConditionGenerator(object):
 
                 #print("Chunk size: " + str(len(pc_chunks[i])))
                 
-                
-                
-                new_worker = path_condition_generator_worker(self.transformation, self.targetMM, layer,\
+                new_worker = path_condition_generator_worker(self.transformation, self.prunner, layer,\
                                                              layer*1000+i, report_progress, self.verbosity)
                 new_worker.currentPathConditionSet = pc_chunks[i]#pc_queue
                 new_worker.attributeEquationEvaluator = self.attributeEquationEvaluator

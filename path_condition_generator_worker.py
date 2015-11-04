@@ -21,12 +21,10 @@ import numpy.random as nprnd
 from profiler import *
 from util.progress import ProgressBar
 
-from prunner import Prunner
-
 class path_condition_generator_worker(Process):
 
 
-    def __init__(self, transformation, targetMM, layer, num, report_progress, verbosity):
+    def __init__(self, transformation, pruner, layer, num, report_progress, verbosity):
         super(path_condition_generator_worker, self).__init__()
         self.transformation = transformation
         self.layer = layer
@@ -41,9 +39,9 @@ class path_condition_generator_worker(Process):
 
         self.report_progress = report_progress
         
-        self.prunner = Prunner(targetMM, self.transformation)
+        self.pruner = pruner
         
-        self.prunning = True
+        self.pruning = True
         
         
     def getRuleNamesInPathCondition(self, pcName):
@@ -573,7 +571,7 @@ class path_condition_generator_worker(Process):
 
         self.currentPathConditionSet.extend(newPathConditionSet)
         
-        if self.prunning:
+        if self.pruning:
         
             rulesToTreat = []    
 
@@ -591,7 +589,7 @@ class path_condition_generator_worker(Process):
                 
                 pathConditionsToPrune = []
                 
-                if not self.prunner.isPathConditionStillFeasible(expand_graph(self.pc_dict[pathCondName]), rulesToTreat):
+                if not self.pruner.isPathConditionStillFeasible(expand_graph(self.pc_dict[pathCondName]), rulesToTreat):
                     
                     pathConditionsToPrune.append(pathCondName)
                     if self.verbosity >= 2:
