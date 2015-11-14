@@ -82,23 +82,33 @@ class Test():
     def setUp(self, args):
 
         full_transformation = [
-            ['HRootRule'],
-            ['HMotherRule',
-            'HFatherRule',
-            'HSonRule',
-            'HDaughterRule'],
-            ['HUnionMotherRule',
-            'HUnionManRule',
-            'HUnionDaughterRule',
-            'HUnionSonRule']
+            ['HCountry2Community'],
+            ['HFather2Man'],
+            ['HMother2Woman'],
+            ['HDaughter2Woman'],
+            ['HSon2Man'],
+            ['HCity2TownHall'],
+            ['HCityCompany2Association'],
+            ['HNeighborhood2District'],
+            ['HcopersonsSolveRefCountryFamilyParentCommunityMan'],
+            ['HcopersonsSolveRefCountryFamilyParentCommunityWoman'],
+            ['HcopersonsSolveRefCountryFamilyChildCommunityMan'],
+            ['HcotownHallsSolveRefCountryFamilyChildCommunityWoman'],
+            ['HcoassociationsSolveRefCountryCityCommunityTownHall'],
+            ['HtworkersSolveRefCompanyParentCityTownHallManWoman'],
+            ['HtdistrictsSolveRefCityNeighborhoodTownHallDistrict'],
+            ['HacommitteeSolveRefCompanyCityAssociationCommittee'],
+            ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityWomanMan'],
+            ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictSpecialFacilityWomanMan']
+
         ]
         pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
 
-        self.rules, self.transformation = pyramify.get_rules("ATLTrans/w_equations/", full_transformation)
+        self.rules, self.transformation = pyramify.get_rules("ExFamToPerson/transformation", full_transformation)
 
 
-        inputMM = "ATLTrans/metamodels/Household.ecore"
-        outputMM = "ATLTrans/metamodels/Community.ecore"
+        inputMM = "ExFamToPerson/Families_Extended.ecore"
+        outputMM = "ExFamToPerson/Persons_Extended.ecore"
 
         subclasses_dict, superclasses_dict = get_sub_and_super_classes(inputMM, outputMM)
 
@@ -168,17 +178,17 @@ class Test():
         #self.atomic_contracts = [self.atomic_contracts[0]]
         self.if_then_contracts = [] #[["HCommunityPerson", HCommunityPerson_IfThen]]
 
-        if args.slice > 0:
-            contract = self.atomic_contracts[args.slice - 1]
-            print("Slicing for contract number " + str(args.slice) + " : " + contract[0])
-
-            slicer = Slicer(self.rules, self.transformation)
-
-            print("Number rules before: " + str(len(self.rules)))
-            self.rules, self.transformation = slicer.slice_transformation(contract)
-            print("Number rules after: " + str(len(self.rules)))
-
-            raise Exception()
+#         if args.slice > 0:
+#             contract = self.atomic_contracts[args.slice - 1]
+#             print("Slicing for contract number " + str(args.slice) + " : " + contract[0])
+# 
+#             slicer = Slicer(self.rules, self.transformation)
+# 
+#             print("Number rules before: " + str(len(self.rules)))
+#             self.rules, self.transformation = slicer.slice_transformation(contract)
+#             print("Number rules after: " + str(len(self.rules)))
+# 
+#             raise Exception()
 
     def test_correct_uml2kiltera(self,args):
 
@@ -210,11 +220,11 @@ class Test():
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns,
          self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
-            pyramify.ramify_directory("ATLTrans/w_equations/", self.transformation)
+            pyramify.ramify_directory("ExFamToPerson/transformation/", self.transformation)
 
 
 
-        s = PathConditionGenerator(self.transformation, "ATLTrans/metamodels/Community.ecore", self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)#
+        s = PathConditionGenerator(self.transformation, "ExFamToPerson/Families_Extended.ecore", self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)#
    
         ts0 = time.time()
         s.build_path_conditions()

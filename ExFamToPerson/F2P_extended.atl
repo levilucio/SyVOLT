@@ -1,0 +1,113 @@
+-- @path Families=../input/Families_Extended.ecore
+-- @path Persons=../output/Persons_Extended.ecore
+
+module Families2Persons_Extended;
+create OUT : Persons from IN : Families;
+
+rule Country2Community {
+	from
+		s: Families!Country
+	to
+		t : Persons!Community (
+			persons <- s.families -> collect(f | f.fathers),
+			persons <- s.families->collect(f | f.mothers),
+			persons <- s.families->collect(f | f.sons),
+			persons <- s.families->collect(f | f.daughters),
+			townHalls <- s.cities,
+			associations <- s.cities->collect(c | c.companies -> collect(cmp|Tuple{ct=c,cm=cmp}))
+		)
+}
+
+			
+rule Father2Man {
+	from
+		s : Families!Parent (s.family.fathers.includes(s))
+	to
+		t : Persons!Man (
+			fullName <- s.firstName + s.family.lastName	
+		)
+}
+
+rule Mother2Woman {
+	from
+		s : Families!Parent (s.family.mothers.includes(s))
+	to
+		t : Persons!Woman (
+			fullName <- s.firstName + s.family.lastName
+		)
+}
+
+rule Daughter2Woman {
+	from
+		s : Families!Child (s.family.daughters.includes(s))
+	to
+		t : Persons!Woman (
+			fullName <- s.firstName + s.family.lastName	
+		)
+}
+
+rule Son2Man {
+	from
+		s : Families!Child (s.family.sons.includes(s))
+	to
+		t : Persons!Man (
+			fullName <- s.firstName + s.family.lastName
+		)
+}			
+			
+			
+rule City2TownHall{
+	from
+	  c : Families!City
+	to
+	  t : Persons!TownHall(
+	  	name <- c.name + ' TownHall',
+		workers <- c.companies -> collect(cmp | cmp.employees) -> flatten() -> select(em | em.livesIn = c),
+		committee <- cmt,
+		districts <- c.neighborhoods
+	  ),
+	  cmt : Persons!Committee(
+	  	name <- c.name + ' TownHall Committee'	
+	  )
+}
+
+
+rule CityCompany2Association{
+	from
+		ct : Families!City, cm : Families!Company (ct.companies.includes(cm))
+	to
+		a : Persons!Association(
+			name <- ct.name + cm.name	
+		)
+}
+
+rule Neighborhood2District{
+	from
+		n : Families!Neighborhood (Families!Family.allInstances() -> exists(f | f.registeredIn = n))
+	to
+		d : Persons!District(
+			name <- n.name,
+			facilities <- n.schools -> select(sch | sch.ordinary -> notEmpty()) -> collect(sch | thisModule.createOrdinaryFacility(sch)),
+			facilities <- n.schools -> select(sch | sch.special -> notEmpty()) -> collect(sch | thisModule.createSpecialFacility(sch))
+		)
+}
+
+lazy rule createOrdinaryFacility{
+	from
+		sch : Families!School
+	to
+		os : Persons!OrdinaryFacility(
+			name <- 'Ordinary Facility Service for school ' + sch.name,
+			members <- sch.students
+		)
+}
+
+lazy rule createSpecialFacility{
+	from
+		sch : Families!School
+	to
+		os : Persons!SpecialFacility(
+			name <- 'Special Facility Service for school ' + sch.name,
+			members <- sch.students
+		)
+}

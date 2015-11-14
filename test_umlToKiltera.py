@@ -20,7 +20,7 @@ from core.himesis_utils import graph_to_dot
 from util.ecore_utils import EcoreUtils
 from core.himesis_plus import buildPreListFromClassNames
 
-#from util.test_script_utils import select_rules, slice_transformation
+from util.test_script_utils import get_sub_and_super_classes#select_rules, slice_transformation
 
 # all runs are the same transformation, but with different metamodel elements
 # the purpose is to do scalability testing with multiple configurations and multiple sets of rules
@@ -49,12 +49,13 @@ class Test():
         full_transformation = [
             ['HMapRootElementRule'],
             ['HState2ProcDef'],
-            ['HBasicStateNoOutgoing2ProcDef', 'HBasicState2ProcDef', 'HCompositeState2ProcDef'],
-            ['HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans', 'HState2HProcDef', 'HState2CProcDef'],
-            ['HTransition2QInstSIBLING', 'HTransition2QInstOUT', 'HTransition2Inst'],
-            ['HTransition2ListenBranch','HConnectOutputsOfExitPoint2BProcDefTransition2QInst',
-             'HTransition2HListenBranch','HConnectOPState2CProcDefTransition2InstotherInTransitions'],
-            ['HMapHeirarchyOfStates2HeirarchyOfProcs', 'HRuleConnect2RootElement']
+#            ['HBasicStateNoOutgoing2ProcDef', 'HBasicState2ProcDef', 'HCompositeState2ProcDef'],
+#            ['HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans', 'HState2HProcDef', 'HState2CProcDef'],
+#             ['HTransition2QInstSIBLING', 'HTransition2QInstOUT', 'HTransition2Inst'],
+#             ['HTransition2ListenBranch','HConnectOutputsOfExitPoint2BProcDefTransition2QInst',
+#              'HTransition2HListenBranch','HConnectOPState2CProcDefTransition2InstotherInTransitions'],    
+#             ['HMapHeirarchyOfStates2HeirarchyOfProcs', 'HRuleConnect2RootElement']
+             ['HRuleConnect2RootElement']
         ]
 
         #get the expected num from the args
@@ -85,14 +86,13 @@ class Test():
 
         pre_metamodel = ["MT_pre__UMLRT2Kiltera_MM", "MoTifRule"]
         post_metamodel = ["MT_post__UMLRT2Kiltera_MM", "MoTifRule"]
+
+        inputMM = "UMLRT2Kiltera_MM/metamodels/rt_new.ecore"
+        outputMM = "UMLRT2Kiltera_MM/metamodels/klt_new.ecore"
+
+        subclasses_dict, superclasses_dict = get_sub_and_super_classes(inputMM, outputMM)
         
-        subclasses_dict, superclasses_dict = self.get_sub_and_super_classes() 
-        
-        print("\n\n")
-        print("Superclasses dict: " + str(superclasses_dict))
-        print("\n")
-        print("Subclasses dict: " + str(subclasses_dict))
-        print("\n\n")
+
    
         self.pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
 
@@ -147,7 +147,7 @@ class Test():
             #raise Exception(num_pcs_s)
  
 #         print("printing path conditions")
-#         s.print_path_conditions_screen()
+        s.print_path_conditions_screen()
 
 #        s.print_path_conditions_file()
 #
@@ -321,43 +321,7 @@ class Test():
 #         print (finalresult)
 
 
-    def get_sub_and_super_classes(self):
-            subclasses_dict = {}     
-            
-            inputMM = "UMLRT2Kiltera_MM/metamodels/rt_new.ecore"
-            outputMM = "UMLRT2Kiltera_MM/metamodels/klt_new.ecore"
-         
-            inMM = EcoreUtils(inputMM)          
-            subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(inMM.getMetamodelClassNames())      
-            
-            inMMinheritanceTree = inMM.getSubClassInheritanceRelationForClasses()
-            
-            for className in inMMinheritanceTree:
-                subclasses_dict["MT_pre__" + className] = buildPreListFromClassNames(inMMinheritanceTree[className])
-            
-            outMM = EcoreUtils(outputMM)  
-            subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(outMM.getMetamodelClassNames())
 
-            outMMinheritanceTree = outMM.getSubClassInheritanceRelationForClasses()
-            for className in outMMinheritanceTree:
-                subclasses_dict["MT_pre__" + className] = buildPreListFromClassNames(outMMinheritanceTree[className])            
-            
-#             print("========================")
-#             print("Inheritance: " + str(subclasses_dict))
-#             print("========================")      
-
-            # keep a dictionary from each child to its parent
-            supertypes = {}
-
-            for supertype in subclasses_dict:
-                for subtype in subclasses_dict[supertype]:
-                    subtype = subtype[8:]
-                    try:
-                        supertypes[subtype].append(supertype[8:])
-                    except KeyError:
-                        supertypes[subtype] = [supertype[8:]]
-
-            return subclasses_dict, supertypes
 
 
     def _print_states(self,s):

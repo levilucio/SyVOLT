@@ -25,7 +25,7 @@ from PropertyVerification.v2.atomic_contract import AtomicContract
 from PropertyVerification.v2.ContractProver import ContractProver
 
 from core.himesis_utils import graph_to_dot
-from util.test_script_utils import select_rules
+from util.test_script_utils import select_rules, get_sub_and_super_classes
 from util.slicer import Slicer
 
 # imports for properties' atomic contracts
@@ -98,7 +98,9 @@ class Prover():
         
         self.rules, self.transformation = pyramify.get_rules("[%=absoluteBackendPath%]", full_transformation)
         
-        subclasses_dict, superclasses_dict = self.get_sub_and_super_classes()
+        inputMM = "[%=inputMM%]".split("/")[-1]
+        outputMM = "[%=outputMM%]".split("/")[-1]
+        subclasses_dict, superclasses_dict = get_sub_and_super_classes(inputMM, outputMM)
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
             pyramify.ramify_directory("[%=absoluteBackendPath%]", self.transformation)   
@@ -194,36 +196,6 @@ class Prover():
         contract_prover.prove_contracts(pc_set, self.atomic_contracts, None)#self.if_then_contracts)
         print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
         print("Number of path conditions: " + str(pc_set.num_path_conditions))
-        
-    def get_sub_and_super_classes(self):
-            subclasses_dict = {}     
-            
-            inputMM = "[%=inputMM%]".split("/")[-1]
-            outputMM = "[%=outputMM%]".split("/")[-1]
-         
-            inMM = EcoreUtils(inputMM)          
-            subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(inMM.getMetamodelClassNames())
-            
-            print(subclasses_dict["MT_pre__MetaModelElement_S"])
-
-            outMM = EcoreUtils(outputMM)  
-            subclasses_dict["MT_pre__MetaModelElement_T"] = buildPreListFromClassNames(outMM.getMetamodelClassNames()) 
-            
-            print(subclasses_dict["MT_pre__MetaModelElement_T"])
-
-            # keep a dictionary from each child to its parent
-            supertypes = {}
-
-            for supertype in subclasses_dict:
-                for subtype in subclasses_dict[supertype]:
-                    subtype = subtype[8:]
-                    try:
-                        supertypes[subtype].append(supertype[8:])
-                    except KeyError:
-                        supertypes[subtype] = [supertype[8:]]
-
-            return subclasses_dict, supertypes
-
 
 
 if __name__ == "__main__":

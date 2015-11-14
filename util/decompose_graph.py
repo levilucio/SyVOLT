@@ -1,14 +1,16 @@
 
 from core.himesis_plus import look_for_attached
+from core.himesis_utils import graph_to_dot
+from copy import deepcopy
 
-
-def decompose_graph(graph, verbosity = 0):
+def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
     #decompose graph into directLinks, backwardLinks, and isolated elements
 
-    debug = False
+    debug = True
 
     if debug:
         print("\nDecomposing graph: " + graph.name)
+        graph_to_dot(graph.name, graph)
 
     direct_links = []
     backward_links = []
@@ -60,7 +62,7 @@ def decompose_graph(graph, verbosity = 0):
         n0_neighbours_mm = [vs[n]["mm__"] for n in n0_neighbours]
 
         #we don't care about direct links in the apply part
-        if 'apply_contains' in n0_neighbours_mm:
+        if ignore_apply_dls and 'apply_contains' in n0_neighbours_mm:
             continue
 
         n0 = neighbours[0]
@@ -68,7 +70,9 @@ def decompose_graph(graph, verbosity = 0):
         direct_links.append((n0, n1, dl))
 
     if debug:
-        print("Direct links: " + str(direct_links))
+        print("Direct links: ")
+        for n0, n1, nlink in direct_links:
+            print_link(graph, n0, n1, nlink)
 
     for bl in bls:
 
@@ -78,7 +82,9 @@ def decompose_graph(graph, verbosity = 0):
         backward_links.append((n0, n1, None))
 
     if debug:
-        print("Backward links: " + str(backward_links))
+        print("Backward links: ")
+        for n0, n1, nlink in backward_links:
+            print_link(graph, n0, n1, nlink)
 
 
     #see if there are any match elements which are not in a direct link
@@ -110,7 +116,6 @@ def decompose_graph(graph, verbosity = 0):
 
             if not found_link:
                 backward_links.append((me, ae, None))
-
 
     # if debug:
     #     print("\nRule name: " + graph.name)
@@ -147,35 +152,37 @@ def match_links(matcher, pattern, pattern_dls, graph, graph_dls, verbosity=0, ma
     #         link = "backward_link"
     #     print(graph.vs[graph_n0_n]["mm__"] + " - " + link + " - " + graph.vs[graph_n1_n]["mm__"])
 
+    # copy these links, as we might need to remove some
+    graph_dls = deepcopy(graph_dls)
 
     for patt0_n, patt1_n, patt_link_n in pattern_dls:
 
-        # print("\nChecking Pattern " + pattern.name + " nodes:")
-        # if patt_link_n:
-        #     link = pattern.vs[patt_link_n]["mm__"]
-        # else:
-        #     link = "backward_link"
-        #
-        # print(pattern.vs[patt0_n]["mm__"] + " - " + link + " - " + pattern.vs[patt1_n]["mm__"])
+        if verbosity > 1:
+            print("\nChecking Pattern " + pattern.name + " nodes:")
+            print_link(pattern, patt0_n, patt1_n, patt_link_n)
 
 
         found_match = False
 
+        print("\n===================\nGraph " + graph.name + " nodes:")
         for graph_n0_n, graph_n1_n, graph_link_n in graph_dls:
+            print_link(graph, graph_n0_n, graph_n1_n, graph_link_n)
+        print("\n===================\nGraph " + graph.name + " nodes:")
 
+        graph_links = graph_dls
+        for graph_n0_n, graph_n1_n, graph_link_n in graph_links:
 
-            # print("\nChecking Graph " + graph.name + " nodes:")
-            # if graph_link_n:
-            #     link = graph.vs[graph_link_n]["mm__"]
-            # else:
-            #     link = "backward_link"
-            # print(graph.vs[graph_n0_n]["mm__"] + " - " + link + " - " + graph.vs[graph_n1_n]["mm__"])
+            if verbosity > 1:
+                print("\nChecking Graph " + graph.name + " nodes:")
+                print_link(graph, graph_n0_n, graph_n1_n, graph_link_n)
 
 
             nodes_match_1 = match_nodes(matcher, graph, graph_n0_n, pattern, patt0_n)
+
             nodes_match_2 = match_nodes(matcher, graph, graph_n1_n, pattern, patt1_n)
 
             nodes_match_3 = match_nodes(matcher, graph, graph_n1_n, pattern, patt0_n)
+
             nodes_match_4 = match_nodes(matcher, graph, graph_n0_n, pattern, patt1_n)
 
 
@@ -190,35 +197,32 @@ def match_links(matcher, pattern, pattern_dls, graph, graph_dls, verbosity=0, ma
             #     print("Failure matching on " + pc.vs[pc_n1_n]["mm__"] + " vs " + contract.vs[n1_n]["mm__"])
 
             if patt_link_n or graph_link_n:
-
                 nodes_match = nodes_match and match_nodes(matcher, graph, graph_link_n, pattern, patt_link_n)
+
 
             if nodes_match:
                 found_match = True
-                #print("\nFound a link!")
 
-                # if patt_link_n:
-                #     link = pattern.vs[patt_link_n]["mm__"]
-                #
-                # else:
-                #     link = "backward_link"
-                #
-                # #print("Pattern link: " + pattern.vs[patt0_n]["mm__"] + " - " + link + " - " + pattern.vs[patt1_n]["mm__"])
-                #
-                # if graph_link_n:
-                #     link = graph.vs[graph_link_n]["mm__"]
-                #
-                # else:
-                #     link = "backward_link"
-                #print("Graph link: " + graph.vs[graph_n0_n]["mm__"] + " - " + link + " - " + graph.vs[graph_n1_n]["mm__"])
 
+                if verbosity > 1:
+                    print("\nFound the pattern link: ")
+                    print_link(pattern, patt0_n, patt1_n, patt_link_n)
 
                 if not match_all:
                     return True
 
+                #need to check the correct number of links
+                else:
+                    graph_links.remove((graph_n0_n, graph_n1_n, graph_link_n))
+                    break
+
 
 
         if not found_match and match_all:
+
+            if verbosity > 1:
+                print("Could not find pattern link: ")
+                print_link(pattern, patt0_n, patt1_n, patt_link_n)
             return False
 
                 #pc_direct_links.remove([pc_n0_n, pc_n1_n, pc_link_n])
@@ -243,7 +247,10 @@ def match_links(matcher, pattern, pattern_dls, graph, graph_dls, verbosity=0, ma
         #             print(pattern.vs[patt_link_n]["mm__"])
         #         print()
         #     return False
-    return True
+
+    #return True if all are found successfully
+    #return False if we don't need all, and none were found
+    return match_all
 
 
 def match_nodes(matcher, graph, graph_node, pattern, patt_node):
@@ -294,3 +301,10 @@ def match_nodes(matcher, graph, graph_node, pattern, patt_node):
     #are_feasible = matcher.are_semantically_feasible(graph_node, patt_node)
     #print("Are feasible: " + str(are_feasible))
     return False
+
+def print_link(graph, n0, n1, nlink):
+    if nlink:
+        link = graph.vs[nlink]["mm__"].replace("MT_pre__", "")
+    else:
+        link = "backward_link"
+    print(graph.vs[n0]["mm__"].replace("MT_pre__", "") + " - " + link + " - " + graph.vs[n1]["mm__"].replace("MT_pre__", ""))

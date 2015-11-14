@@ -30,7 +30,7 @@ class Slicer():
             for rule in layer:
 
                 rule_name = rule.name
-                dls, bls, mes, imes, aes = decompose_graph(self.rules[rule_name], verbosity=0)
+                dls, bls, mes, imes, aes = decompose_graph(self.rules[rule_name], verbosity=0, ignore_apply_dls=True)
                 self.direct_links[rule_name] = dls
                 self.backward_links[rule_name] = bls
                 self.match_elements[rule_name] = mes
@@ -58,6 +58,9 @@ class Slicer():
 
         for layer in transformation:
             for rule in layer:
+
+                #if "UnionMother" not in rule.name:
+                #    continue
 
                 r_rules = self.find_required_rules(rule)
                 r_rules = sorted([r.name for r in r_rules])
@@ -97,6 +100,9 @@ class Slicer():
                 if rule in required_rules:
                     continue
 
+                #if not "FatherRule" in rule.name:
+                #    continue
+
                 # rule_dls = self.direct_links[rule.name]
                 #
                 # if verbosity > 1:
@@ -116,10 +122,10 @@ class Slicer():
 
                 #matcher = None
 
-                if match_links(matcher, graph, self.direct_links[graph.name], rule, self.direct_links[rule.name], 0):
+                if match_links(matcher, graph, self.direct_links[graph.name], rule, self.direct_links[rule.name], verbosity=0):
                     required_rules.append(rule)
 
-                if match_links(matcher, graph, self.backward_links[graph.name], rule, self.backward_links[rule.name], 0):
+                if match_links(matcher, graph, self.backward_links[graph.name], rule, self.backward_links[rule.name], verbosity=0):
                     required_rules.append(rule)
 
                 # for dl in dls:
