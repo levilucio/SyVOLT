@@ -83,14 +83,14 @@ class Test():
 
         full_transformation = [
             ['HRootRule'],
-            ['HMotherRule'],
-            ['HFatherRule'],
-            ['HSonRule'],
-            ['HDaughterRule'],
-            ['HUnionMotherRule'],
-            ['HUnionManRule'],
-            ['HUnionDaughterRule'],
-            ['HUnionSonRule']
+            ['HMotherRule',
+            'HFatherRule',
+            'HSonRule',
+            'HDaughterRule'],
+            ['HUnionMotherRule',
+            'HUnionManRule',
+            'HUnionDaughterRule',
+            'HUnionSonRule']
         ]
         pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
 
@@ -183,17 +183,17 @@ class Test():
         #self.atomic_contracts = [self.atomic_contracts[0]]
         self.if_then_contracts = [] #[["HCommunityPerson", HCommunityPerson_IfThen]]
 
-#         if args.slice > 0:
-#             contract = self.atomic_contracts[args.slice - 1]
-#             print("Slicing for contract number " + str(args.slice) + " : " + contract[0])
-# 
-#             slicer = Slicer(self.rules, self.transformation)
-# 
-#             print("Number rules before: " + str(len(self.rules)))
-#             self.rules, self.transformation = slicer.slice_transformation(contract)
-#             print("Number rules after: " + str(len(self.rules)))
-# 
-#             raise Exception()
+        if args.slice > 0:
+            contract = self.atomic_contracts[args.slice - 1]
+            print("Slicing for contract number " + str(args.slice) + " : " + contract[0])
+
+            slicer = Slicer(self.rules, self.transformation)
+
+            print("Number rules before: " + str(len(self.rules)))
+            self.rules, self.transformation = slicer.slice_transformation(contract)
+            print("Number rules after: " + str(len(self.rules)))
+
+            raise Exception()
 
     def test_correct_uml2kiltera(self,args):
 
