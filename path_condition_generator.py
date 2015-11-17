@@ -400,9 +400,13 @@ class PathConditionGenerator(object):
 
 
         manager = Manager()
-        cpu_count = multiprocessing.cpu_count()
-#        cpu_count = 1
-        print("CPU Count: " + str(cpu_count))
+
+        if not self.do_parallel:
+            print("Restricting to one thread")
+            cpu_count = 1
+        else:
+            cpu_count = multiprocessing.cpu_count()
+            print("CPU Count: " + str(cpu_count))
 
 
         pc_dict = {}#manager.dict()
