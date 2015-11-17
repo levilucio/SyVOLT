@@ -591,7 +591,7 @@ class PathConditionGenerator(object):
             pc = self.pc_dict[pc_name]
 
             if expand:
-                pc = expand_graph()
+                pc = expand_graph(pc)
             
             pc_name = self.expand_pc_name_with_multiple_applications(pc_name)
         
@@ -660,15 +660,14 @@ class PathConditionGenerator(object):
 
 
     def print_path_conditions_file(self):
-        print("Printing path conditions:")
-        for pathCondName in self.currentpathConditionSet:
-            name = pathCondName.translate(None, '-')
+        print("Drawing path conditions:")
+        for pathCond, name in self.get_path_conditions():
             try:
                 
-                graph_to_dot(name, expand_graph(self.pc_dict[pathCondName]))
+                graph_to_dot(name, pathCond)
                 #i=i+1
             except IOError:
-                print("Graph name is too long: " + pathCondName)
+                print("Graph name is too long: " + name)
                 
     def check_rule_reachability(self):
         print("Checking Reachability: ")
