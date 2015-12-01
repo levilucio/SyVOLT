@@ -56,7 +56,7 @@ class ContractProver():
             contract_succeeded_pcs[contract_name] = []
 
         manager = Manager()
-        cpu_count = 1#multiprocessing.cpu_count()
+        cpu_count = multiprocessing.cpu_count()
         print("CPU Count: " + str(cpu_count))
 
         pc_queue = manager.Queue()
@@ -88,7 +88,7 @@ class ContractProver():
             pc_queue.put([pc, pc_name])
 
         rules_seen= list(set(rules_seen))
-        #print("Rules seen: " + str(rules_seen))
+        print("Rules seen: " + str(rules_seen))
         for rule in rules:
             if rule not in rules_seen:
                 print("ERROR: Rule " + rule + " was not executed!")

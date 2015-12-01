@@ -126,10 +126,10 @@ class AtomicContract(Contract):
 
         matcher = HimesisMatcher(pc, contract)
 
-        if not match_links(matcher, contract, contract_data["direct_links"], pc, self.pc_data["direct_links"], verbosity=0, match_all = True):
+        if not match_links(matcher, contract, contract_data["direct_links"], pc, self.pc_data["direct_links"], verbosity=self.verbosity, match_all = True):
             return False
 
-        if not match_links(matcher, contract, contract_data["backward_links"], pc, self.pc_data["backward_links"], verbosity=0, match_all = True):
+        if not match_links(matcher, contract, contract_data["backward_links"], pc, self.pc_data["backward_links"], verbosity=self.verbosity, match_all = True):
             return False
 
         return True
