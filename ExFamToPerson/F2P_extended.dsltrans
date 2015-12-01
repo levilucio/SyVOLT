@@ -214,9 +214,9 @@
       </apply>
     </hasRule>
   </source>
-  <source xsi:type="dsltrans:Sequential" name="tpersonsSolveRef" previousSource="//@source.8">
+  <source xsi:type="dsltrans:Sequential" name="copersonsSolveRef" previousSource="//@source.8">
     <metaModelId metaModelURI="Persons.ecore" metaModelName="Persons"/>
-    <hasRule description="tpersonsSolveRefCountryFamilyParentCommunityMan">
+    <hasRule description="copersonsSolveRefCountryFamilyParentCommunityMan">
       <match>
         <class xsi:type="dsltrans:AnyMatchClass" className="Country" packageName="families"/>
         <class xsi:type="dsltrans:AnyMatchClass" className="Family" packageName="families"/>
@@ -241,9 +241,9 @@
       <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.9/@hasRule.0/@apply/@class.1" sourceClass="//@source.9/@hasRule.0/@match.0/@class.2"/>
     </hasRule>
   </source>
-  <source xsi:type="dsltrans:Sequential" name="tpersonsSolveRef" previousSource="//@source.9">
+  <source xsi:type="dsltrans:Sequential" name="copersonsSolveRef" previousSource="//@source.9">
     <metaModelId metaModelURI="Persons.ecore" metaModelName="Persons"/>
-    <hasRule description="tpersonsSolveRefCountryFamilyParentCommunityWoman">
+    <hasRule description="copersonsSolveRefCountryFamilyParentCommunityWoman">
       <match>
         <class xsi:type="dsltrans:AnyMatchClass" className="Country" packageName="families"/>
         <class xsi:type="dsltrans:AnyMatchClass" className="Family" packageName="families"/>
@@ -268,9 +268,9 @@
       <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.10/@hasRule.0/@apply/@class.1" sourceClass="//@source.10/@hasRule.0/@match.0/@class.2"/>
     </hasRule>
   </source>
-  <source xsi:type="dsltrans:Sequential" name="tpersonsSolveRef" previousSource="//@source.10">
+  <source xsi:type="dsltrans:Sequential" name="copersonsSolveRef" previousSource="//@source.10">
     <metaModelId metaModelURI="Persons.ecore" metaModelName="Persons"/>
-    <hasRule description="tpersonsSolveRefCountryFamilyChildCommunityMan">
+    <hasRule description="copersonsSolveRefCountryFamilyChildCommunityMan">
       <match>
         <class xsi:type="dsltrans:AnyMatchClass" className="Country" packageName="families"/>
         <class xsi:type="dsltrans:AnyMatchClass" className="Family" packageName="families"/>
@@ -295,9 +295,9 @@
       <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.11/@hasRule.0/@apply/@class.1" sourceClass="//@source.11/@hasRule.0/@match.0/@class.2"/>
     </hasRule>
   </source>
-  <source xsi:type="dsltrans:Sequential" name="tpersonsSolveRef" previousSource="//@source.11">
+  <source xsi:type="dsltrans:Sequential" name="cotownHallsSolveRef" previousSource="//@source.11">
     <metaModelId metaModelURI="Persons.ecore" metaModelName="Persons"/>
-    <hasRule description="tpersonsSolveRefCountryFamilyChildCommunityWoman">
+    <hasRule description="cotownHallsSolveRefCountryFamilyChildCommunityWoman">
       <match>
         <class xsi:type="dsltrans:AnyMatchClass" className="Country" packageName="families"/>
         <class xsi:type="dsltrans:AnyMatchClass" className="Family" packageName="families"/>
@@ -322,9 +322,9 @@
       <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.12/@hasRule.0/@apply/@class.1" sourceClass="//@source.12/@hasRule.0/@match.0/@class.2"/>
     </hasRule>
   </source>
-  <source xsi:type="dsltrans:Sequential" name="ttownHallsSolveRef" previousSource="//@source.12">
+  <source xsi:type="dsltrans:Sequential" name="coassociationsSolveRef" previousSource="//@source.12">
     <metaModelId metaModelURI="Persons.ecore" metaModelName="Persons"/>
-    <hasRule description="ttownHallsSolveRefCountryCityCommunityTownHall">
+    <hasRule description="coassociationsSolveRefCountryCityCommunityTownHall">
       <match>
         <class xsi:type="dsltrans:AnyMatchClass" className="Country" packageName="families"/>
         <class xsi:type="dsltrans:AnyMatchClass" className="City" packageName="families"/>
@@ -347,45 +347,16 @@
       <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.13/@hasRule.0/@apply/@class.1" sourceClass="//@source.13/@hasRule.0/@match.0/@class.1"/>
     </hasRule>
   </source>
-  <source xsi:type="dsltrans:Sequential" name="tassociationsSolveRef" previousSource="//@source.13">
+  <source xsi:type="dsltrans:Sequential" name="tworkersSolveRef" previousSource="//@source.13">
     <metaModelId metaModelURI="Persons.ecore" metaModelName="Persons"/>
-    <hasRule description="tassociationsSolveRefCountryCityCompanyCommunityAssociation">
-      <match>
-        <class xsi:type="dsltrans:AnyMatchClass" className="Country" packageName="families"/>
-        <class xsi:type="dsltrans:AnyMatchClass" className="City" packageName="families"/>
-        <class xsi:type="dsltrans:AnyMatchClass" className="Company" packageName="families"/>
-        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="cities" source="//@source.14/@hasRule.0/@match.0/@class.0" target="//@source.14/@hasRule.0/@match.0/@class.1"/>
-        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="companies" source="//@source.14/@hasRule.0/@match.0/@class.0" target="//@source.14/@hasRule.0/@match.0/@class.2"/>
-        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="companies" source="//@source.14/@hasRule.0/@match.0/@class.1" target="//@source.14/@hasRule.0/@match.0/@class.2"/>
-      </match>
-      <apply>
-        <class className="Community" packageName="persons">
-          <attribute attributeName="ApplyAttribute">
-            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
-          </attribute>
-        </class>
-        <class className="Association" packageName="persons">
-          <attribute attributeName="ApplyAttribute">
-            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
-          </attribute>
-        </class>
-        <association associationName="associations" source="//@source.14/@hasRule.0/@apply/@class.0" target="//@source.14/@hasRule.0/@apply/@class.1"/>
-      </apply>
-      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.14/@hasRule.0/@apply/@class.0" sourceClass="//@source.14/@hasRule.0/@match.0/@class.0"/>
-      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.14/@hasRule.0/@apply/@class.1" sourceClass="//@source.14/@hasRule.0/@match.0/@class.1"/>
-      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.14/@hasRule.0/@apply/@class.1" sourceClass="//@source.14/@hasRule.0/@match.0/@class.2"/>
-    </hasRule>
-  </source>
-  <source xsi:type="dsltrans:Sequential" name="tworkersSolveRef" previousSource="//@source.14">
-    <metaModelId metaModelURI="Persons.ecore" metaModelName="Persons"/>
-    <hasRule description="tworkersSolveRefCompanyParentCityTownHallManWoman">
+    <hasRule description="tworkersSolveRefCompanyParentCityTownHallPerson">
       <match>
         <class xsi:type="dsltrans:AnyMatchClass" className="Company" packageName="families"/>
         <class xsi:type="dsltrans:AnyMatchClass" className="Parent" packageName="families"/>
         <class xsi:type="dsltrans:AnyMatchClass" className="City" packageName="families"/>
-        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="employees" source="//@source.15/@hasRule.0/@match.0/@class.0" target="//@source.15/@hasRule.0/@match.0/@class.1"/>
-        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="livesIn" source="//@source.15/@hasRule.0/@match.0/@class.1" target="//@source.15/@hasRule.0/@match.0/@class.2"/>
-        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="companies" source="//@source.15/@hasRule.0/@match.0/@class.2" target="//@source.15/@hasRule.0/@match.0/@class.0"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="employees" source="//@source.14/@hasRule.0/@match.0/@class.0" target="//@source.14/@hasRule.0/@match.0/@class.1"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="livesIn" source="//@source.14/@hasRule.0/@match.0/@class.1" target="//@source.14/@hasRule.0/@match.0/@class.2"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="companies" source="//@source.14/@hasRule.0/@match.0/@class.2" target="//@source.14/@hasRule.0/@match.0/@class.0"/>
       </match>
       <apply>
         <class className="TownHall" packageName="persons">
@@ -393,31 +364,24 @@
             <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
           </attribute>
         </class>
-        <class className="Man" packageName="persons">
+        <class className="Person" packageName="persons">
           <attribute attributeName="ApplyAttribute">
             <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
           </attribute>
         </class>
-        <class className="Woman" packageName="persons">
-          <attribute attributeName="ApplyAttribute">
-            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
-          </attribute>
-        </class>
-        <association associationName="workers" source="//@source.15/@hasRule.0/@apply/@class.0" target="//@source.15/@hasRule.0/@apply/@class.1"/>
-        <association associationName="workers" source="//@source.15/@hasRule.0/@apply/@class.0" target="//@source.15/@hasRule.0/@apply/@class.2"/>
+        <association associationName="workers" source="//@source.14/@hasRule.0/@apply/@class.0" target="//@source.14/@hasRule.0/@apply/@class.1"/>
       </apply>
-      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.15/@hasRule.0/@apply/@class.1" sourceClass="//@source.15/@hasRule.0/@match.0/@class.1"/>
-      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.15/@hasRule.0/@apply/@class.2" sourceClass="//@source.15/@hasRule.0/@match.0/@class.1"/>
-      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.15/@hasRule.0/@apply/@class.0" sourceClass="//@source.15/@hasRule.0/@match.0/@class.2"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.14/@hasRule.0/@apply/@class.1" sourceClass="//@source.14/@hasRule.0/@match.0/@class.1"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.14/@hasRule.0/@apply/@class.0" sourceClass="//@source.14/@hasRule.0/@match.0/@class.2"/>
     </hasRule>
   </source>
-  <source xsi:type="dsltrans:Sequential" name="tdistrictsSolveRef" previousSource="//@source.15">
+  <source xsi:type="dsltrans:Sequential" name="tdistrictsSolveRef" previousSource="//@source.14">
     <metaModelId metaModelURI="Persons.ecore" metaModelName="Persons"/>
     <hasRule description="tdistrictsSolveRefCityNeighborhoodTownHallDistrict">
       <match>
         <class xsi:type="dsltrans:AnyMatchClass" className="City" packageName="families"/>
         <class xsi:type="dsltrans:AnyMatchClass" className="Neighborhood" packageName="families"/>
-        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="neighborhoods" source="//@source.16/@hasRule.0/@match.0/@class.0" target="//@source.16/@hasRule.0/@match.0/@class.1"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="neighborhoods" source="//@source.15/@hasRule.0/@match.0/@class.0" target="//@source.15/@hasRule.0/@match.0/@class.1"/>
       </match>
       <apply>
         <class className="TownHall" packageName="persons">
@@ -430,15 +394,41 @@
             <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
           </attribute>
         </class>
-        <association associationName="districts" source="//@source.16/@hasRule.0/@apply/@class.0" target="//@source.16/@hasRule.0/@apply/@class.1"/>
+        <association associationName="districts" source="//@source.15/@hasRule.0/@apply/@class.0" target="//@source.15/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.15/@hasRule.0/@apply/@class.0" sourceClass="//@source.15/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.15/@hasRule.0/@apply/@class.1" sourceClass="//@source.15/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="acommitteeSolveRef" previousSource="//@source.15">
+    <metaModelId metaModelURI="Persons.ecore" metaModelName="Persons"/>
+    <hasRule description="acommitteeSolveRefCompanyCityAssociationCommittee">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" className="Company" packageName="families"/>
+        <class xsi:type="dsltrans:AnyMatchClass" className="City" packageName="families"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="isIn" source="//@source.16/@hasRule.0/@match.0/@class.0" target="//@source.16/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class className="Association" packageName="persons">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class className="Committee" packageName="persons">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="committee" source="//@source.16/@hasRule.0/@apply/@class.0" target="//@source.16/@hasRule.0/@apply/@class.1"/>
       </apply>
       <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.16/@hasRule.0/@apply/@class.0" sourceClass="//@source.16/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.16/@hasRule.0/@apply/@class.0" sourceClass="//@source.16/@hasRule.0/@match.0/@class.1"/>
       <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.16/@hasRule.0/@apply/@class.1" sourceClass="//@source.16/@hasRule.0/@match.0/@class.1"/>
     </hasRule>
   </source>
   <source xsi:type="dsltrans:Sequential" name="dfacilitiesSolveRef" previousSource="//@source.16">
     <metaModelId metaModelURI="Persons.ecore" metaModelName="Persons"/>
-    <hasRule description="dfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityWomanMan">
+    <hasRule description="dfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityPerson">
       <match>
         <class xsi:type="dsltrans:AnyMatchClass" className="Neighborhood" packageName="families"/>
         <class xsi:type="dsltrans:AnyMatchClass" className="School" packageName="families">
@@ -464,28 +454,20 @@
             </attributeValue>
           </attribute>
         </class>
-        <class className="Woman" packageName="persons">
-          <attribute attributeName="ApplyAttribute">
-            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
-          </attribute>
-        </class>
-        <class className="Man" packageName="persons">
+        <class className="Person" packageName="persons">
           <attribute attributeName="ApplyAttribute">
             <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
           </attribute>
         </class>
         <association associationName="facilities" source="//@source.17/@hasRule.0/@apply/@class.0" target="//@source.17/@hasRule.0/@apply/@class.1"/>
         <association associationName="members" source="//@source.17/@hasRule.0/@apply/@class.1" target="//@source.17/@hasRule.0/@apply/@class.2"/>
-        <association associationName="members" source="//@source.17/@hasRule.0/@apply/@class.1" target="//@source.17/@hasRule.0/@apply/@class.3"/>
       </apply>
       <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.17/@hasRule.0/@apply/@class.0" sourceClass="//@source.17/@hasRule.0/@match.0/@class.0"/>
-      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.17/@hasRule.0/@apply/@class.2" sourceClass="//@source.17/@hasRule.0/@match.0/@class.3"/>
-      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.17/@hasRule.0/@apply/@class.3" sourceClass="//@source.17/@hasRule.0/@match.0/@class.3"/>
     </hasRule>
   </source>
   <source xsi:type="dsltrans:Sequential" name="dfacilitiesSolveRef" previousSource="//@source.17">
     <metaModelId metaModelURI="Persons.ecore" metaModelName="Persons"/>
-    <hasRule description="dfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictSpecialFacilityWomanMan">
+    <hasRule description="dfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictSpecialFacilityPerson">
       <match>
         <class xsi:type="dsltrans:AnyMatchClass" className="Neighborhood" packageName="families"/>
         <class xsi:type="dsltrans:AnyMatchClass" className="School" packageName="families">
@@ -511,23 +493,15 @@
             </attributeValue>
           </attribute>
         </class>
-        <class className="Woman" packageName="persons">
-          <attribute attributeName="ApplyAttribute">
-            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
-          </attribute>
-        </class>
-        <class className="Man" packageName="persons">
+        <class className="Person" packageName="persons">
           <attribute attributeName="ApplyAttribute">
             <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
           </attribute>
         </class>
         <association associationName="facilities" source="//@source.18/@hasRule.0/@apply/@class.0" target="//@source.18/@hasRule.0/@apply/@class.1"/>
         <association associationName="members" source="//@source.18/@hasRule.0/@apply/@class.1" target="//@source.18/@hasRule.0/@apply/@class.2"/>
-        <association associationName="members" source="//@source.18/@hasRule.0/@apply/@class.1" target="//@source.18/@hasRule.0/@apply/@class.3"/>
       </apply>
       <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.18/@hasRule.0/@apply/@class.0" sourceClass="//@source.18/@hasRule.0/@match.0/@class.0"/>
-      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.18/@hasRule.0/@apply/@class.2" sourceClass="//@source.18/@hasRule.0/@match.0/@class.3"/>
-      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.18/@hasRule.0/@apply/@class.3" sourceClass="//@source.18/@hasRule.0/@match.0/@class.3"/>
     </hasRule>
   </source>
 </dsltrans:TransformationModel>

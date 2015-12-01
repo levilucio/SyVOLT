@@ -1,25 +1,25 @@
 from core.himesis import Himesis
 import uuid
 
-class HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityWomanMan(Himesis):
+class HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityPerson(Himesis):
     def __init__(self):
 
     
     
         """
-        Creates the himesis graph representing the DSLTrans rule dfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityWomanMan.
+        Creates the himesis graph representing the DSLTrans rule dfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityPerson.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityWomanMan, self).__init__(name='HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityWomanMan', num_nodes=0, edges=[])
+        super(HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityPerson, self).__init__(name='HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityPerson', num_nodes=0, edges=[])
         
         
         # Set the graph attributes
         self["mm__"] = ['HimesisMM']
         
-        self["name"] = """dfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityWomanMan"""
-        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'dfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityWomanMan')
+        self["name"] = """dfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityPerson"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'dfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityPerson')
         
         # match model. We only support one match model
         self.add_node()
@@ -84,62 +84,42 @@ class HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacility
         # apply_contains node for class OrdinaryFacility()
         self.add_node()
         self.vs[14]["mm__"] = """apply_contains"""
-        # apply class Woman() node
+        # apply class Person() node
         self.add_node()
 
-        self.vs[15]["mm__"] = """Woman""" 
+        self.vs[15]["mm__"] = """Person""" 
         self.vs[15]["attr1"] = """1"""
-        # apply_contains node for class Woman()
+        # apply_contains node for class Person()
         self.add_node()
         self.vs[16]["mm__"] = """apply_contains"""
-        # apply class Man() node
-        self.add_node()
-
-        self.vs[17]["mm__"] = """Man""" 
-        self.vs[17]["attr1"] = """1"""
-        # apply_contains node for class Man()
-        self.add_node()
-        self.vs[18]["mm__"] = """apply_contains"""
         
         
         # match association Neighborhood--schools-->School node
         self.add_node()
-        self.vs[19]["attr1"] = """schools"""
-        self.vs[19]["mm__"] = """directLink_S"""
+        self.vs[17]["attr1"] = """schools"""
+        self.vs[17]["mm__"] = """directLink_S"""
         # match association School--ordinary-->Service node
         self.add_node()
-        self.vs[20]["attr1"] = """ordinary"""
-        self.vs[20]["mm__"] = """directLink_S"""
+        self.vs[18]["attr1"] = """ordinary"""
+        self.vs[18]["mm__"] = """directLink_S"""
         # match association School--students-->Child node
         self.add_node()
-        self.vs[21]["attr1"] = """students"""
-        self.vs[21]["mm__"] = """directLink_S"""
+        self.vs[19]["attr1"] = """students"""
+        self.vs[19]["mm__"] = """directLink_S"""
         
         # apply association District--facilities-->OrdinaryFacility node
         self.add_node()
-        self.vs[22]["attr1"] = """facilities"""
-        self.vs[22]["mm__"] = """directLink_T"""
-        # apply association OrdinaryFacility--members-->Woman node
+        self.vs[20]["attr1"] = """facilities"""
+        self.vs[20]["mm__"] = """directLink_T"""
+        # apply association OrdinaryFacility--members-->Person node
         self.add_node()
-        self.vs[23]["attr1"] = """members"""
-        self.vs[23]["mm__"] = """directLink_T"""
-        # apply association OrdinaryFacility--members-->Man node
-        self.add_node()
-        self.vs[24]["attr1"] = """members"""
-        self.vs[24]["mm__"] = """directLink_T"""
+        self.vs[21]["attr1"] = """members"""
+        self.vs[21]["mm__"] = """directLink_T"""
         
         # backward association Neighborhood---->District node
         self.add_node()
 
-        self.vs[25]["mm__"] = """backward_link"""
-        # backward association Child---->Woman node
-        self.add_node()
-
-        self.vs[26]["mm__"] = """backward_link"""
-        # backward association Child---->Man node
-        self.add_node()
-
-        self.vs[27]["mm__"] = """backward_link"""
+        self.vs[22]["mm__"] = """backward_link"""
         
         
         
@@ -161,32 +141,24 @@ class HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacility
                 (1,14), # applymodel -> apply_contains
                 (14,13), # apply_contains -> apply_class OrdinaryFacility()
                 (1,16), # applymodel -> apply_contains
-                (16,15), # apply_contains -> apply_class Woman()
-                (1,18), # applymodel -> apply_contains
-                (18,17), # apply_contains -> apply_class Man()
-                (3,19), # match_class Neighborhood() -> association schools
-                (19,5), # association schools  -> match_class School()
-                (5,20), # match_class School() -> association ordinary
-                (20,7), # association ordinary  -> match_class Service()
-                (5,21), # match_class School() -> association students
-                (21,9), # association students  -> match_class Child()
-                (11,22), # apply_class District() -> association facilities
-                (22,13), # association facilities  -> apply_class OrdinaryFacility()
-                (13,23), # apply_class OrdinaryFacility() -> association members
-                (23,15), # association members  -> apply_class Woman()
-                (13,24), # apply_class OrdinaryFacility() -> association members
-                (24,17), # association members  -> apply_class Man()
-                (11,25), # apply_class District() -> backward_association
-                (25,3), #  backward_association -> apply_class Neighborhood()
-                (15,26), # apply_class Woman() -> backward_association
-                (26,9), #  backward_association -> apply_class Child()
-                (17,27), # apply_class Man() -> backward_association
-                (27,9), #  backward_association -> apply_class Child()
+                (16,15), # apply_contains -> apply_class Person()
+                (3,17), # match_class Neighborhood() -> association schools
+                (17,5), # association schools  -> match_class School()
+                (5,18), # match_class School() -> association ordinary
+                (18,7), # association ordinary  -> match_class Service()
+                (5,19), # match_class School() -> association students
+                (19,9), # association students  -> match_class Child()
+                (11,20), # apply_class District() -> association facilities
+                (20,13), # association facilities  -> apply_class OrdinaryFacility()
+                (13,21), # apply_class OrdinaryFacility() -> association members
+                (21,15), # association members  -> apply_class Person()
+                (11,22), # apply_class District() -> backward_association
+                (22,3), #  backward_association -> apply_class Neighborhood()
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])
 
         # Add the attribute equations
-        self["equations"] = [((11,'ApplyAttribute'),('constant','solveRef')), ((13,'name'),('concat',(('constant','Ordinary Facility Service for school '),(5,'name')))), ((15,'ApplyAttribute'),('constant','solveRef')), ((17,'ApplyAttribute'),('constant','solveRef')), ]
+        self["equations"] = [((11,'ApplyAttribute'),('constant','solveRef')), ((13,'name'),('concat',(('constant','Ordinary Facility Service for school '),(5,'name')))), ((15,'ApplyAttribute'),('constant','solveRef')), ]
 
         
