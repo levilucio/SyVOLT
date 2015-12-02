@@ -95,11 +95,11 @@ class Test():
             ['HcopersonsSolveRefCountryFamilyChildCommunityMan'],
             ['HcotownHallsSolveRefCountryFamilyChildCommunityWoman'],
             ['HcoassociationsSolveRefCountryCityCommunityTownHall'],
-            ['HtworkersSolveRefCompanyParentCityTownHallManWoman'],
+            ['HtworkersSolveRefCompanyParentCityTownHallPerson'],
             ['HtdistrictsSolveRefCityNeighborhoodTownHallDistrict'],
             ['HacommitteeSolveRefCompanyCityAssociationCommittee'],
-            ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityWomanMan'],
-            ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictSpecialFacilityWomanMan']
+            ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityPerson'],
+            ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictSpecialFacilityPerson']
 
         ]
         pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
@@ -246,18 +246,18 @@ class Test():
             #raise Exception(num_pcs_s)
  
         #print("printing path conditions")
-        s.print_path_conditions_screen()
+        #s.print_path_conditions_screen()
 
         #s.print_path_conditions_file()
 
         
-        print("\nContract proving:")
-  
-        s.verbosity = 0
-  
-        contract_prover = ContractProver()
-  
-        contract_prover.prove_contracts(s, self.atomic_contracts, self.if_then_contracts)
+#         print("\nContract proving:")
+#   
+#         s.verbosity = 0
+#   
+#         contract_prover = ContractProver()
+#   
+#         contract_prover.prove_contracts(s, self.atomic_contracts, self.if_then_contracts)
 
 
 def _print_states(self, s):
