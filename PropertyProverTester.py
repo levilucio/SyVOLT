@@ -23,7 +23,7 @@ class PropertyProverTester:
 
     def test_matchRulePatterns(self):
 
-        for rule_name in self.rules.keys():
+        for rule_name in sorted(self.rules.keys()):
             print("Testing match rule pattern for " + self.rule_names[rule_name])
 
             p = Packet()
@@ -44,7 +44,7 @@ class PropertyProverTester:
 
     def test_ruleTraceCheckers(self):
 
-        for rule_name in self.rules.keys():
+        for rule_name in sorted(self.rules.keys()):
 
             if not rule_name in self.ruleTraceCheckers.keys():
                 continue
@@ -65,7 +65,7 @@ class PropertyProverTester:
                 raise Exception("The matcher for " + self.rule_names[rule_name] + " did not match the rule")
 
     def test_ruleCombinators(self):
-        for rule_name in self.rules.keys():
+        for rule_name in sorted(self.rules.keys()):
             print("Testing rule combinators for " + self.rule_names[rule_name])
 
             if self.ruleCombinators[rule_name] is None:
