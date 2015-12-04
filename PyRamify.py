@@ -1431,7 +1431,7 @@ class PyRamify:
     def get_subsuming_rules(self, rule):
         foundParent = False
         subsuming_rules = []
-        for ruleKey in self.ruleSubsumption.keys():
+        for ruleKey in sorted(self.ruleSubsumption.keys()):
             if rule in set(self.ruleSubsumption[ruleKey]):
                 # check for loops when two rules subsume each other
                 if rule not in set(subsuming_rules):
@@ -1447,7 +1447,7 @@ class PyRamify:
     # calculate the partial order induced by rule match subsumption for all rules in the transformation.
     def calculate_rule_subsumption(self, matchRulePatterns):
              
-        rulepairs = list(permutations(self.rules.keys(),2))
+        rulepairs = list(permutations(sorted(self.rules.keys()),2))
         
         # keep only the pairs which correspond to subsumption relations (second element subsumes the first)
         
@@ -1744,9 +1744,9 @@ class PyRamify:
                     cleanLoopingRuleSubsumption.append(loopDict[layer])
             
 
-        print("Rules that need overlap treatment: " + str(rulesNeedingOverlapTreatment))            
-        print("Subsumption order between rules for all layers: " + str(self.ruleSubsumption))
-        print("Rules fully overlapping with each other: " + str(cleanLoopingRuleSubsumption))           
+        #print("Rules that need overlap treatment: " + str(rulesNeedingOverlapTreatment))
+        #print("Subsumption order between rules for all layers: " + str(self.ruleSubsumption))
+        #print("Rules fully overlapping with each other: " + str(cleanLoopingRuleSubsumption))
 
         print("\n")
         print("Finished PyRamify")
