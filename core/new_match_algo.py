@@ -1,0 +1,173 @@
+
+from util.decompose_graph import decompose_graph, match_nodes
+
+from core.match_algo import HimesisMatcher
+
+class NewHimesisMatcher(object):
+    def __init__(self, source_graph, pattern_graph, pred1 = {}, succ1 = {}, pred2 = {}, succ2 = {}):
+        self.debug = True
+        self.source_graph = source_graph
+        self.pattern_graph = pattern_graph
+
+        self.source_data = {}
+        self.source_data["direct_links"], self.source_data["backward_links"], \
+        self.source_data["match_elements"], self.source_data["isolated_match_elements"], \
+        self.source_data["apply_elements"] = decompose_graph(source_graph)
+
+        self.pattern_data = {}
+        self.pattern_data["direct_links"], self.pattern_data["backward_links"], \
+        self.pattern_data["match_elements"], self.pattern_data["isolated_match_elements"], \
+        self.pattern_data["apply_elements"] = decompose_graph(pattern_graph)
+
+        self.oldMatcher = HimesisMatcher(source_graph, pattern_graph, pred1, succ1, pred2, succ2)
+
+    def has_match(self, context = {}):
+        try:
+            self.match_iter(context).next()
+            return True
+        except StopIteration:
+            return False
+
+    def match_iter(self, context = {}):
+
+        old_matches = [x for x in self.oldMatcher.match_iter()]
+        new_matches = [x for x in self._match()]
+
+        print("Old matches: " + str(old_matches))
+        print("New matches: " + str(new_matches))
+
+        if len(old_matches) != len(new_matches):
+            print("Matchers give different results")
+            import sys
+            sys.exit()
+
+        for mapping in self._match():
+            yield mapping
+
+    def reset_recursion_limit(self):
+        pass
+
+
+    def _match(self):
+
+        potential_matches = {}
+
+        print("\nMatching pattern: " + self.pattern_graph.name)
+        print("on Source Graph " + self.source_graph.name)
+
+        links = [
+            [self.pattern_data["direct_links"], self.source_data["direct_links"]],
+            [self.pattern_data["backward_links"], self.source_data["backward_links"]],
+        ]
+
+        for patt_links, source_links in links:
+
+            print("Patt Link: " + str(patt_links))
+            print("Source Link: " + str(source_links))
+
+            for patt_link in patt_links:
+                print("Patt link: " + str(patt_link))
+                (patt0_n, patt1_n, patt_link_n) = patt_link
+
+                found_match = False
+
+                if self.debug:
+                    print("\n===================Checking Pattern " + self.pattern_graph.name + " nodes:")
+                    self.print_link(self.pattern_graph, patt0_n, patt1_n, patt_link_n)
+
+
+                    print("\nSource Graph " + self.source_graph.name + " nodes:")
+                    # for graph_n0_n, graph_n1_n, graph_link_n in self.source_data["direct_links"]:
+                    #     self.print_link(self.source_graph, graph_n0_n, graph_n1_n, graph_link_n)
+                    # print("\n===================\n")#End Source Graph " + self.source_graph.name + " nodes:")
+
+                for source_link in source_links:
+                    graph_n0_n, graph_n1_n, graph_link_n = source_link
+
+                    if self.debug:
+                        print("\nChecking Graph " + self.source_graph.name + " nodes:")
+                        self.print_link(self.source_graph, graph_n0_n, graph_n1_n, graph_link_n)
+
+                    nodes_match_1 = match_nodes(None, self.source_graph, graph_n0_n, self.pattern_graph, patt0_n)
+
+                    nodes_match_2 = match_nodes(None, self.source_graph, graph_n1_n, self.pattern_graph, patt1_n)
+
+                    nodes_match_3 = match_nodes(None, self.source_graph, graph_n1_n, self.pattern_graph, patt0_n)
+
+                    nodes_match_4 = match_nodes(None, self.source_graph, graph_n0_n, self.pattern_graph, patt1_n)
+
+                    nodes_match_link = True
+
+                    if patt_link_n and graph_link_n:
+                        nodes_match_link = match_nodes(None, self.source_graph, graph_link_n, self.pattern_graph, patt_link_n)
+
+                    nodes_match = ((nodes_match_1 and nodes_match_2) or (nodes_match_3 and nodes_match_4)) and nodes_match_link
+
+                    if self.debug:
+                        #print("Nodes match link: " + str(nodes_match_link))
+                        print("Links matched: " + str(nodes_match))
+
+                    if nodes_match:
+
+                        found_match = True
+                        pattern_link = (patt0_n, patt1_n, patt_link_n)
+                        source_link = (graph_n0_n, graph_n1_n, graph_link_n)
+
+                        try:
+                            reversed_link = (source_link[1], source_link[0], source_link[2])
+                            if reversed_link not in potential_matches[pattern_link]:
+                                potential_matches[pattern_link].append(source_link)
+                        except KeyError:
+                            potential_matches[pattern_link] = [source_link]
+
+
+                if not found_match:
+                    return [{}]
+
+        print("Potential matches:")
+        print(potential_matches)
+
+        match_set = self.create_match_set(potential_matches)
+
+        print("Match set:")
+        print(match_set)
+        yield match_set
+
+    def create_match_set(self, potential_matches):
+
+        match_set = {}
+        for k, v in potential_matches.items():
+            p0, p1, p_link = k
+            s0, s1, s_link = v[0]
+
+            if p0 not in match_set.keys():
+                match_set[p0] = s0
+
+            if p1 not in match_set.keys():
+                match_set[p1] = s1
+
+            if p_link and p_link not in match_set.keys():
+                match_set[p_link] = s_link
+
+        return match_set
+
+    # def recurVersion(a, word = ''):
+    #     if len(a) is 0:
+    #         print word
+    #         return
+    #     for i in a[0]:
+    #         recurVersion(a[1:], word + i)
+    #
+    # a = [['a', 'b', 'c'], ['d', 'e', 'h'], ['z', 'y', 'x']]
+
+    def print_link(self, graph, n0, n1, nlink):
+        if nlink:
+            link = graph.vs[nlink]["mm__"].replace("MT_pre__", "")
+            try:
+                link += " (" + str(graph.vs[nlink]["MT_pre__attr1"]) + ") "
+                link = link.replace("\n", "").replace("return True", "").replace("return False", "")
+            except KeyError:
+                link += " (" + str(graph.vs[nlink]["attr1"]) + ") "
+        else:
+            link = "backward_link"
+        print(graph.vs[n0]["mm__"].replace("MT_pre__", "") + " - " + link + " - " + graph.vs[n1]["mm__"].replace("MT_pre__", ""))

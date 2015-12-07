@@ -79,7 +79,7 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
         neighbours = look_for_attached(bl, graph)
         n0 = neighbours[0]
         n1 = neighbours[1]
-        backward_links.append((n0, n1, None))
+        backward_links.append((n0, n1, bl))
 
     if debug:
         print("Backward links: ")
@@ -196,7 +196,7 @@ def match_links(matcher, pattern, pattern_dls, graph, graph_dls, verbosity=0, ma
             # if not nodes_match:
             #     print("Failure matching on " + pc.vs[pc_n1_n]["mm__"] + " vs " + contract.vs[n1_n]["mm__"])
 
-            if patt_link_n or graph_link_n:
+            if patt_link_n and graph_link_n:
                 nodes_match = nodes_match and match_nodes(matcher, graph, graph_link_n, pattern, patt_link_n)
 
 
@@ -254,11 +254,11 @@ def match_links(matcher, pattern, pattern_dls, graph, graph_dls, verbosity=0, ma
 
 
 def match_nodes(matcher, graph, graph_node, pattern, patt_node):
+
+    #print("Match nodes: graph_node " + str(graph_node))
+    #print("Match nodes: patt_node " + str(patt_node))
     sourceMM = graph.vs[graph_node]["mm__"].replace("MT_pre__", "")
     targetMM = pattern.vs[patt_node]["mm__"].replace("MT_pre__", "")
-
-
-
 
     if sourceMM != targetMM:
 
@@ -269,38 +269,38 @@ def match_nodes(matcher, graph, graph_node, pattern, patt_node):
 
         #print("Superclasses: " + str(superclasses_dict))
 
-        if not superclasses_dict[sourceMM] or targetMM not in superclasses_dict[sourceMM]:
+        if sourceMM not in superclasses_dict or not superclasses_dict[sourceMM] or targetMM not in superclasses_dict[sourceMM]:
             return False
 
     # print("Source MM: " + sourceMM)
     # print("Target MM: " + targetMM)
 
-    graph_attrib = graph.vs[graph_node]["attr1"]
+    # graph_attrib = graph.vs[graph_node]["attr1"]
+    #
+    # try:
+    #     pattern_attrib = pattern.vs[patt_node]["attr1"]
+    # except KeyError:
+    #     pattern_attrib = pattern.vs[patt_node]["MT_pre__attr1"]
+    #
+    #
+    # #return graph.vs[graph_node]["attr1"]
+    #
+    # if graph_attrib == pattern_attrib:
+    #     #print(graph_attrib)
+    #     #print(pattern_attrib)
+    #     return True
+    #
+    # if "return True" in pattern_attrib:
+    #     return True
+    #
+    # if graph_attrib in pattern_attrib:
+    #     #print(graph_attrib)
+    #     #print(pattern_attrib)
+    #     return True
 
-    try:
-        pattern_attrib = pattern.vs[patt_node]["attr1"]
-    except KeyError:
-        pattern_attrib = pattern.vs[patt_node]["MT_pre__attr1"]
-
-
-    #return graph.vs[graph_node]["attr1"]
-
-    if graph_attrib == pattern_attrib:
-        #print(graph_attrib)
-        #print(pattern_attrib)
-        return True
-
-    if "return True" in pattern_attrib:
-        return True
-
-    if graph_attrib in pattern_attrib:
-        #print(graph_attrib)
-        #print(pattern_attrib)
-        return True
-
-    #are_feasible = matcher.are_semantically_feasible(graph_node, patt_node)
+    are_feasible = are_semantically_feasible(graph, graph_node, pattern, patt_node)
     #print("Are feasible: " + str(are_feasible))
-    return False
+    return are_feasible
 
 def print_link(graph, n0, n1, nlink):
     if nlink:
@@ -308,3 +308,110 @@ def print_link(graph, n0, n1, nlink):
     else:
         link = "backward_link"
     print(graph.vs[n0]["mm__"].replace("MT_pre__", "") + " - " + link + " - " + graph.vs[n1]["mm__"].replace("MT_pre__", ""))
+
+
+def are_semantically_feasible(graph, src_node_num, pattern, patt_node_num):
+    """
+        Determines whether the two nodes are syntactically feasible,
+        i.e., it ensures that adding this candidate pair does not make it impossible to find a total mapping.
+        @param src_node: The candidate from the source graph.
+        @param patt_node: The candidate from the pattern graph.
+        @return: True if they are semantically feasible, False otherwise.
+    """
+    # =======================================================================
+    # This feasibility check looks at the data stored in the pair of candidates.
+    # It verifies that all attribute constraints are satisfied.
+    # =======================================================================
+
+    src_node = graph.vs[src_node_num]
+    patt_node = pattern.vs[patt_node_num]
+
+    # print("\n")
+    # print("Src node: " + str(src_node_num))
+    # print("Src constant: " + str(self.src_eqs_constant))
+    # print("Patt node: " + str(patt_node_num))
+    # print("Patt constant: " + str(self.patt_eqs_constant))
+
+    # src_equations = []
+    # if src_node_num in self.src_eqs_constant:
+    #     src_equations = self.src_eqs_constant[src_node_num]
+    #
+    # if patt_node_num in self.patt_eqs_constant:
+    #     patt_equations = self.patt_eqs_constant[patt_node_num]
+    #
+    #     # print("Source Eq: " + str(src_equation))
+    #     # print("Pattern Eq: " + str(patt_equations))
+    #
+    #     for patt_eq in patt_equations:
+    #         patt_attr = patt_eq[0]
+    #         patt_value = patt_eq[1]
+    #
+    #         found = False
+    #         for (src_attr, src_value) in src_equations:
+    #             if patt_attr == src_attr:
+    #                 if patt_value == src_value:
+    #                     found = True
+    #                     break
+    #                 else:
+    #                     # print("Equations do not match")
+    #                     return False
+    #
+    #         if found:
+    #             continue
+    #
+    #         try:
+    #             if src_node[patt_attr] != patt_value:
+    #                 # print("Couldn't find value, found " + str(src_node[patt_attr]))
+    #                 # print("Patt eq: " + str(patt_eq))
+    #                 return False
+    #         except KeyError:
+    #             # print("Couldn't find " + patt_attr + " on node " + src_node["mm__"])
+    #             # the attribute does not exist on the node
+    #             return False
+
+    # Check for attributes value/constraint
+    for attr in patt_node.attribute_names():
+        # Attribute constraints are stored as attributes in the pattern node.
+        # The attribute must be prefixed by a specific keyword
+        if not attr.startswith("MT_pre__"):
+            continue
+        # If the attribute does not "in theory" exist
+        # because igraph actually stores all attribute names in all nodes.
+        elif not patt_node[attr]:
+            continue
+
+        attr_name = attr[8:]
+
+        # methName = self.G2.get_attr_constraint_name(patt_node.index, attr)
+        methName = 'eval_%s%s' % (attr_name, patt_node['MT_label__'])
+        #
+        # print("Attr name: " + attr_name)
+        # print("Meth name: " + methName)
+        # print("Patt node label: " + patt_node["MT_label__"])
+
+        checkConstraint = getattr(pattern, methName, None)
+
+        # print("Result: " + str(checkConstraint(src_node[attr_name], src_node)))
+        # The following assumes that every attribute constraint is defined on the pattern graph
+        # (and not on the pattern node itself)
+        # if callable(checkConstraint):
+        try:
+            # This is equivalent to: if not eval_attrLbl(attr_value, currNode)
+            if not checkConstraint(src_node[attr_name], src_node):
+                return False
+        except Exception as e:
+            # TODO: This should be a TransformationLanguageSpecificException
+            print("Source graph: " + graph.name)
+            print("Pattern graph: " + pattern.name)
+            for n in graph.vs:
+                try:
+                    print("Type: " + n["type"])
+                    print("MM: " + n["mm__"])
+                except KeyError:
+                    pass
+            raise Exception("An error has occurred while checking the constraint of the attribute '" + attr_name + "'"
+                            + " in node '" + src_node["mm__"] + "' in graph: '" + graph.name + "'", e)
+            # assume the method is callable
+            # else:
+            #    raise Exception('The method %s was not found in the pattern graph' % methName)
+    return True

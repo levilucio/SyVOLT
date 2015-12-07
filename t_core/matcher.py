@@ -1,7 +1,8 @@
 
 from copy import deepcopy
 from util.infinity import INFINITY
-from core.match_algo import HimesisMatcher
+from core.match_algo import HimesisMatcher as OldHimesisMatcher
+from core.new_match_algo import NewHimesisMatcher
 from core.himesis import HConstants as HC
 from .rule_primitive import RulePrimitive
 from .messages import MatchSet, Match, TransformationException
@@ -16,7 +17,7 @@ class Matcher(RulePrimitive):
         Binds the source graph according to the pre-condition pattern.
     '''
 
-    def __init__(self, condition, max=INFINITY):
+    def __init__(self, condition, disambig_matching = False, max=INFINITY):
         '''
             Binds the source graph according to the pre-condition pattern.
             @param condition: The pre-condition pattern.
@@ -26,16 +27,29 @@ class Matcher(RulePrimitive):
         self.max = max
         self.condition = condition
 
-        #igraph.IN = 2, igraph.OUT = 1
-        self.condition_pred, self.condition_succ = get_preds_and_succs(condition)
-        #self.condition_pred = [(len(tmp), tmp) for tmp in condition.get_adjlist(mode=2)]
-        #self.condition_succ = [(len(tmp), tmp) for tmp in condition.get_adjlist(mode=1)]
+        if disambig_matching:
+            self.HimesisMatcher = NewHimesisMatcher
+            self.condition_pred = {}
+            self.condition_succ = {}
+
+        else:
+            self.HimesisMatcher = OldHimesisMatcher
+
+            #igraph.IN = 2, igraph.OUT = 1
+            self.condition_pred, self.condition_succ = get_preds_and_succs(condition)
+            #self.condition_pred = [(len(tmp), tmp) for tmp in condition.get_adjlist(mode=2)]
+            #self.condition_succ = [(len(tmp), tmp) for tmp in condition.get_adjlist(mode=1)]
 
 
         self.NAC_preds = {}
         self.NAC_succs = {}
         for NAC in self.condition.NACs:
-            self.NAC_preds[NAC.name], self.NAC_succs[NAC.name] = get_preds_and_succs(NAC)
+
+            if disambig_matching:
+                self.NAC_preds[NAC.name] = {}
+                self.NAC_succs[NAC.name] = {}
+            else:
+                self.NAC_preds[NAC.name], self.NAC_succs[NAC.name] = get_preds_and_succs(NAC)
             #self.NAC_preds[NAC.name] = [(len(tmp), tmp) for tmp in NAC.get_adjlist(mode=2)]
             #self.NAC_succs[NAC.name] = [(len(tmp), tmp) for tmp in NAC.get_adjlist(mode=1)]
 
@@ -188,7 +202,7 @@ class Matcher(RulePrimitive):
             else:
                 # Look for a NAC match
 
-                nacMatcher = HimesisMatcher(source_graph=graph, pattern_graph=NAC,
+                nacMatcher = self.HimesisMatcher(source_graph=graph, pattern_graph=NAC,
                                             pred1 = self.graph_pred, succ1 = self.graph_succ,
                                             pred2 = self.NAC_preds[NAC.name], succ2 = self.NAC_succs[NAC.name])
                 # Convert the pivots
@@ -208,7 +222,7 @@ class Matcher(RulePrimitive):
         if bound_NACs:
             bound_NACs.sort(key=lambda nac: nac.bridge.vcount(), reverse=True)
         else:
-            lhsMatcher = HimesisMatcher(source_graph=graph, pattern_graph=self.condition,
+            lhsMatcher = self.HimesisMatcher(source_graph=graph, pattern_graph=self.condition,
                                         pred1 = self.graph_pred, succ1 = self.graph_succ,
                                         pred2 = self.condition_pred, succ2 = self.condition_succ)
             # Convert the pivots
@@ -232,7 +246,7 @@ class Matcher(RulePrimitive):
         #===================================================================
         
         # Continue the matching looking for the LHS now
-        lhsMatcher = HimesisMatcher(source_graph=graph, pattern_graph=self.condition,
+        lhsMatcher = self.HimesisMatcher(source_graph=graph, pattern_graph=self.condition,
                                     pred1 = self.graph_pred, succ1 = self.graph_succ,
                                     pred2 = self.condition_pred, succ2 = self.condition_succ)
 
@@ -251,7 +265,7 @@ class Matcher(RulePrimitive):
                         bridgeMapping = match.to_mapping(graph, NAC)
 
                         # Now continue the matching looking for a match of the corresponding NAC
-                        nacMatcher = HimesisMatcher(source_graph=graph, pattern_graph=NAC,
+                        nacMatcher = self.HimesisMatcher(source_graph=graph, pattern_graph=NAC,
                                                     pred1 = self.graph_pred, succ1 = self.graph_succ,
                                                     pred2 = self.NAC_preds[NAC.name], succ2 = self.NAC_succs[NAC.name])
 
