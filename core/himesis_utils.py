@@ -73,7 +73,7 @@ def graph_to_dot(name, g, verbosity = 0):
     #print("Name: " + name)
 
 
-    if g == None:
+    if g is None:
         print("graph_to_dot Error: Empty graph")
         return 
         
@@ -248,22 +248,13 @@ def graph_to_dot(name, g, verbosity = 0):
 
     name = name[-240:]
 
-
-    dot_filename = './dot/' + name + '.dot'
-
-
-
     try:
-        graph.write(dot_filename)
+        svg_filename = './dot/' + name + '.svg'
+        graph.write_svg(svg_filename, prog = 'dot')
+
     except Exception as e:
         print("Error in graph_to_dot: " + str(e))
         raise e
-
-    command = "dot -Tsvg " + dot_filename + " -o " + dot_filename.replace(".dot", ".svg")
-    subprocess.call(command, shell=True)
-
-    command = "rm " + dot_filename
-    subprocess.call(command, shell=True)
 
 
 def draw_graphs(title, g_dir):
