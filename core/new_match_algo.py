@@ -3,6 +3,8 @@ from util.decompose_graph import decompose_graph, match_nodes
 
 from core.match_algo import HimesisMatcher
 
+from core.himesis_utils import graph_to_dot
+
 class NewHimesisMatcher(object):
     def __init__(self, source_graph, pattern_graph, pred1 = {}, succ1 = {}, pred2 = {}, succ2 = {}):
         self.debug = True
@@ -36,8 +38,13 @@ class NewHimesisMatcher(object):
         print("Old matches: " + str(old_matches))
         print("New matches: " + str(new_matches))
 
-        if len(old_matches) != len(new_matches):
+        #if len(old_matches) != len(new_matches):
+        if old_matches != new_matches:
             print("Matchers give different results")
+
+            graph_to_dot("source", self.source_graph)
+            graph_to_dot("pattern", self.pattern_graph)
+
             import sys
             sys.exit()
 
@@ -113,24 +120,28 @@ class NewHimesisMatcher(object):
                         pattern_link = (patt0_n, patt1_n, patt_link_n)
                         source_link = (graph_n0_n, graph_n1_n, graph_link_n)
 
+                        #matched on the reversed versions
+                        if nodes_match_3 or nodes_match_4:
+                            source_link = (source_link[1], source_link[0], source_link[2])
+
                         try:
-                            reversed_link = (source_link[1], source_link[0], source_link[2])
-                            if reversed_link not in potential_matches[pattern_link]:
-                                potential_matches[pattern_link].append(source_link)
+                            #if reversed_link not in potential_matches[pattern_link]:
+                            potential_matches[pattern_link].append(source_link)
                         except KeyError:
                             potential_matches[pattern_link] = [source_link]
 
 
                 if not found_match:
-                    return [{}]
+                    return
+
 
         print("Potential matches:")
         print(potential_matches)
 
         match_set = self.create_match_set(potential_matches)
 
-        print("Match set:")
-        print(match_set)
+        #print("Match set:")
+        #print(match_set)
         yield match_set
 
     def create_match_set(self, potential_matches):
@@ -140,15 +151,16 @@ class NewHimesisMatcher(object):
             p0, p1, p_link = k
             s0, s1, s_link = v[0]
 
-            if p0 not in match_set.keys():
-                match_set[p0] = s0
+            for p, s in [(p0, s0), (p1, s1), (p_link, s_link)]:
 
-            if p1 not in match_set.keys():
-                match_set[p1] = s1
+                #p_label = self.pattern_graph.vs[p]["MT_label__"]
 
-            if p_link and p_link not in match_set.keys():
-                match_set[p_link] = s_link
+                try:
+                    s_label = self.source_graph.vs[s]["MT_label__"]
+                except KeyError:
+                    s_label = s
 
+                match_set[p] = s_label
         return match_set
 
     # def recurVersion(a, word = ''):
