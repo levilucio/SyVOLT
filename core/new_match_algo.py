@@ -41,6 +41,7 @@ class NewHimesisMatcher(object):
         #if len(old_matches) != len(new_matches):
         if old_matches != new_matches:
             print("Matchers give different results")
+            print(self.source_graph.name + " vs " + self.pattern_graph.name)
 
             graph_to_dot("source", self.source_graph)
             graph_to_dot("pattern", self.pattern_graph)
@@ -107,6 +108,8 @@ class NewHimesisMatcher(object):
 
                     if patt_link_n and graph_link_n:
                         nodes_match_link = match_nodes(None, self.source_graph, graph_link_n, self.pattern_graph, patt_link_n)
+                    else:
+                        nodes_match_link = False
 
                     nodes_match = ((nodes_match_1 and nodes_match_2) or (nodes_match_3 and nodes_match_4)) and nodes_match_link
 
@@ -136,7 +139,8 @@ class NewHimesisMatcher(object):
 
 
         print("Potential matches:")
-        print(potential_matches)
+        for k in potential_matches.keys():
+            print(str(k) + " : " + str(potential_matches[k]))
 
         match_set = self.create_match_set(potential_matches)
 
@@ -155,10 +159,10 @@ class NewHimesisMatcher(object):
 
                 #p_label = self.pattern_graph.vs[p]["MT_label__"]
 
-                try:
-                    s_label = self.source_graph.vs[s]["MT_label__"]
-                except KeyError:
-                    s_label = s
+                #try:
+                #    s_label = self.source_graph.vs[s]["MT_label__"]
+                #except KeyError:
+                s_label = s
 
                 match_set[p] = s_label
         return match_set
