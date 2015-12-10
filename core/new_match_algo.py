@@ -5,6 +5,8 @@ from core.match_algo import HimesisMatcher
 
 from core.himesis_utils import graph_to_dot
 
+from itertools import product
+
 class NewHimesisMatcher(object):
     def __init__(self, source_graph, pattern_graph, pred1 = {}, succ1 = {}, pred2 = {}, succ2 = {}):
         self.debug = True
@@ -39,7 +41,7 @@ class NewHimesisMatcher(object):
         print("New matches: " + str(new_matches))
 
         #if len(old_matches) != len(new_matches):
-        if old_matches != new_matches:
+        if old_matches != [{}] and old_matches != new_matches:
             print("Matchers give different results")
             print(self.source_graph.name + " vs " + self.pattern_graph.name)
 
@@ -58,7 +60,7 @@ class NewHimesisMatcher(object):
 
     def _match(self):
 
-        potential_matches = {}
+        link_matches = {}
 
         print("\nMatching pattern: " + self.pattern_graph.name)
         print("on Source Graph " + self.source_graph.name)
@@ -129,31 +131,44 @@ class NewHimesisMatcher(object):
 
                         try:
                             #if reversed_link not in potential_matches[pattern_link]:
-                            potential_matches[pattern_link].append(source_link)
+                            link_matches[pattern_link].append(source_link)
                         except KeyError:
-                            potential_matches[pattern_link] = [source_link]
+                            link_matches[pattern_link] = [source_link]
 
 
                 if not found_match:
                     return
 
+        if len(link_matches) == 0:
+            yield {}
+            return
 
-        print("Potential matches:")
-        for k in potential_matches.keys():
-            print(str(k) + " : " + str(potential_matches[k]))
+        print("Link matches:")
+        for k in link_matches.keys():
+            print(str(k) + " : " + str(link_matches[k]))
 
-        match_set = self.create_match_set(potential_matches)
+        combinations = [[(key, value) for (key, value) in zip(link_matches, values)] for values in
+                        product(*link_matches.values())]
 
-        #print("Match set:")
-        #print(match_set)
-        yield match_set
+        for pm in combinations:
 
-    def create_match_set(self, potential_matches):
+            match_set = self.create_match_set(pm)
 
+
+
+            if match_set:
+                # print("Match set:")
+                # print(match_set)
+                yield match_set
+
+
+    def create_match_set(self, pm):
         match_set = {}
-        for k, v in potential_matches.items():
+        for pair in pm:
+            (k, v) = pair
+
             p0, p1, p_link = k
-            s0, s1, s_link = v[0]
+            s0, s1, s_link = v
 
             for p, s in [(p0, s0), (p1, s1), (p_link, s_link)]:
 
@@ -162,19 +177,13 @@ class NewHimesisMatcher(object):
                 #try:
                 #    s_label = self.source_graph.vs[s]["MT_label__"]
                 #except KeyError:
-                s_label = s
 
-                match_set[p] = s_label
+                if p in match_set.keys() and match_set[p] != s:
+                    #there is already a binding, so ignore this matching possibility
+                    return {}
+
+                match_set[p] = s
         return match_set
-
-    # def recurVersion(a, word = ''):
-    #     if len(a) is 0:
-    #         print word
-    #         return
-    #     for i in a[0]:
-    #         recurVersion(a[1:], word + i)
-    #
-    # a = [['a', 'b', 'c'], ['d', 'e', 'h'], ['z', 'y', 'x']]
 
     def print_link(self, graph, n0, n1, nlink):
         if nlink:
