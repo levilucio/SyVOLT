@@ -9,7 +9,7 @@ from itertools import product
 
 class NewHimesisMatcher(object):
     def __init__(self, source_graph, pattern_graph, pred1 = {}, succ1 = {}, pred2 = {}, succ2 = {}):
-        self.debug = True
+        self.debug = False
         self.source_graph = source_graph
         self.pattern_graph = pattern_graph
 
@@ -37,8 +37,9 @@ class NewHimesisMatcher(object):
         old_matches = [x for x in self.oldMatcher.match_iter()]
         new_matches = [x for x in self._match()]
 
-        print("Old matches: " + str(old_matches))
-        print("New matches: " + str(new_matches))
+        if self.debug:
+            print("Old matches: " + str(old_matches))
+            print("New matches: " + str(new_matches))
 
         #if len(old_matches) != len(new_matches):
         if old_matches != [{}] and old_matches != new_matches:
@@ -62,8 +63,9 @@ class NewHimesisMatcher(object):
 
         link_matches = {}
 
-        print("\nMatching pattern: " + self.pattern_graph.name)
-        print("on Source Graph " + self.source_graph.name)
+        if self.debug:
+            print("\nMatching pattern: " + self.pattern_graph.name)
+            print("on Source Graph " + self.source_graph.name)
 
         links = [
             [self.pattern_data["direct_links"], self.source_data["direct_links"]],
@@ -71,12 +73,13 @@ class NewHimesisMatcher(object):
         ]
 
         for patt_links, source_links in links:
-
-            print("Patt Link: " + str(patt_links))
-            print("Source Link: " + str(source_links))
+            if self.debug:
+                print("Patt Link: " + str(patt_links))
+                print("Source Link: " + str(source_links))
 
             for patt_link in patt_links:
-                print("Patt link: " + str(patt_link))
+                if self.debug:
+                    print("Patt link: " + str(patt_link))
                 (patt0_n, patt1_n, patt_link_n) = patt_link
 
                 found_match = False
@@ -143,9 +146,10 @@ class NewHimesisMatcher(object):
             yield {}
             return
 
-        print("Link matches:")
-        for k in link_matches.keys():
-            print(str(k) + " : " + str(link_matches[k]))
+        if self.debug:
+            print("Link matches:")
+            for k in link_matches.keys():
+                print(str(k) + " : " + str(link_matches[k]))
 
         combinations = [[(key, value) for (key, value) in zip(link_matches, values)] for values in
                         product(*link_matches.values())]
