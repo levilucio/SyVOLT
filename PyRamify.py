@@ -570,7 +570,7 @@ class PyRamify:
             graph_to_dot(new_name, backward_pattern)
 
         #create the Matcher
-        matcher = Matcher(backward_pattern)
+        matcher = Matcher(backward_pattern, disambig_matching = True)
 
         #append the new backward pattern and name mapping
         bwPatterns.append(matcher)
@@ -1055,7 +1055,7 @@ class PyRamify:
                 backward_pattern.NACs = [NAC_graph]
 
             #create the Matcher
-            matcher = Matcher(backward_pattern)
+            matcher = Matcher(backward_pattern, disambig_matching = True)
  
  
             #TODO: Make rewriter code simpler, and same as match pattern rewriter
@@ -1390,7 +1390,7 @@ class PyRamify:
 
         #graph_to_dot("the_rewriter_graph_after" + rewriter.name, rewriter)
 
-        matcher = Matcher(match_graph)
+        matcher = Matcher(match_graph, disambig_matching = False)
 
         return {name : [matcher, Rewriter(rewriter)]}
 

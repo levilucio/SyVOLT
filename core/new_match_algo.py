@@ -34,23 +34,24 @@ class NewHimesisMatcher(object):
 
     def match_iter(self, context = {}):
 
+        #self.debug = ("HEmpty_L0R0-0_L1R0-0.24" in self.source_graph.name)
+
         old_matches = [x for x in self.oldMatcher.match_iter()]
         new_matches = [x for x in self._match()]
+
 
         if self.debug:
             print("Old matches: " + str(old_matches))
             print("New matches: " + str(new_matches))
 
         #if len(old_matches) != len(new_matches):
-        if old_matches != [{}] and old_matches != new_matches:
+        if old_matches != new_matches:
             print("Matchers give different results")
             print(self.source_graph.name + " vs " + self.pattern_graph.name)
 
-            graph_to_dot("source", self.source_graph)
-            graph_to_dot("pattern", self.pattern_graph)
+            #graph_to_dot("source", self.source_graph)
+            #graph_to_dot("pattern", self.pattern_graph)
 
-            import sys
-            sys.exit()
 
         for mapping in self._match():
             yield mapping
@@ -155,18 +156,19 @@ class NewHimesisMatcher(object):
                         product(*link_matches.values())]
 
         for pm in combinations:
+            match_set = self.create_match_set(pm, combinations)
 
-            match_set = self.create_match_set(pm)
-
-
+            if self.debug:
+                print("Match set:")
+                print(match_set)
 
             if match_set:
-                # print("Match set:")
-                # print(match_set)
+
+
                 yield match_set
 
 
-    def create_match_set(self, pm):
+    def create_match_set(self, pm, combinations):
         match_set = {}
         for pair in pm:
             (k, v) = pair
@@ -183,10 +185,29 @@ class NewHimesisMatcher(object):
                 #except KeyError:
 
                 if p in match_set.keys() and match_set[p] != s:
-                    #there is already a binding, so ignore this matching possibility
-                    return {}
+
+                    if len(combinations) > 1:
+                        #there is already a binding, so ignore this matching possibility
+                        return {}
+                    else:
+                        #this matching would fail unless we allow this
+                        #so this is where disambiguation is needed
+                        pass
+                        #
+                        # print("Already a binding")
+                        # print(pm)
+                        # graph_to_dot("source", self.source_graph)
+                        # graph_to_dot("pattern", self.pattern_graph)
+
+                        # import sys
+                        # sys.exit()
 
                 match_set[p] = s
+
+        if self.debug:
+            print("Match set:")
+            print(pm)
+            print(match_set)
         return match_set
 
     def print_link(self, graph, n0, n1, nlink):
