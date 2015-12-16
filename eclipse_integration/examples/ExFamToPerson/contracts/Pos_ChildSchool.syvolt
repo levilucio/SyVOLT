@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syvolt:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:syvolt="http://syvolt/2.0">
+  <hasProperty name="Pos_ChildSchool">
+    <match>
+      <class xsi:type="syvolt:AnyMatchClass" className="Child"/>
+      <class xsi:type="syvolt:AnyMatchClass" className="School"/>
+      <class xsi:type="syvolt:AnyMatchClass" className="Service"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="goesTo" source="//@hasProperty.0/@match.0/@class.0" target="//@hasProperty.0/@match.0/@class.1"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="special" source="//@hasProperty.0/@match.0/@class.1" target="//@hasProperty.0/@match.0/@class.2"/>
+    </match>
+    <apply>
+      <class className="Person"/>
+      <class className="SpecialFacility"/>
+      <association associationName="members" source="//@hasProperty.0/@apply/@class.0" target="//@hasProperty.0/@apply/@class.1"/>
+    </apply>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.0" sourceClass="//@hasProperty.0/@match.0/@class.0"/>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.1" sourceClass="//@hasProperty.0/@match.0/@class.1"/>
+  </hasProperty>
+</syvolt:TransformationModel>
