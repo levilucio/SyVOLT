@@ -21,7 +21,7 @@
         <styles xmi:type="notation:LineStyle" xmi:id="_UtO2U6O2EeW3fdyWju5yew"/>
         <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_UtO2VKO2EeW3fdyWju5yew"/>
         <element xmi:type="syvolt:PreCondition" href="Pos_TownHallComm.syvolt#//@hasProperty.0/@match.0"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UtO2VaO2EeW3fdyWju5yew" x="16" y="7" width="97" height="93"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UtO2VaO2EeW3fdyWju5yew" x="16" y="7" width="301" height="93"/>
       </children>
     </children>
     <children xmi:type="notation:BasicCompartment" xmi:id="_LVUEsqO2EeW3fdyWju5yew" type="7028">
@@ -53,7 +53,7 @@
         <styles xmi:type="notation:LineStyle" xmi:id="_UD8ow6O2EeW3fdyWju5yew"/>
         <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_UD8oxKO2EeW3fdyWju5yew"/>
         <element xmi:type="syvolt:PostCondition" href="Pos_TownHallComm.syvolt#//@hasProperty.0/@apply"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UD8oxaO2EeW3fdyWju5yew" x="18" y="2" width="299" height="96"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UD8oxaO2EeW3fdyWju5yew" x="18" y="2" width="299" height="76"/>
       </children>
     </children>
     <styles xmi:type="notation:DescriptionStyle" xmi:id="_LVTdoaO2EeW3fdyWju5yew"/>
@@ -61,7 +61,7 @@
     <styles xmi:type="notation:LineStyle" xmi:id="_LVTdo6O2EeW3fdyWju5yew"/>
     <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_LVTdpKO2EeW3fdyWju5yew"/>
     <element xmi:type="syvolt:AtomicContract" href="Pos_TownHallComm.syvolt#//@hasProperty.0"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_LVTdpaO2EeW3fdyWju5yew" x="34" y="116" width="351" height="293"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_LVTdpaO2EeW3fdyWju5yew" x="48" y="36" width="351" height="241"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_KvIOcaO2EeW3fdyWju5yew"/>
   <element xmi:type="syvolt:TransformationModel" href="Pos_TownHallComm.syvolt#/"/>

@@ -61,7 +61,7 @@
     <styles xmi:type="notation:LineStyle" xmi:id="_5GE_A6OzEeW3fdyWju5yew"/>
     <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_5GE_BKOzEeW3fdyWju5yew"/>
     <element xmi:type="syvolt:AtomicContract" href="Neg_CityCompany.syvolt#//@hasProperty.0"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_5GE_BaOzEeW3fdyWju5yew" x="24" y="96" width="313" height="277"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_5GE_BaOzEeW3fdyWju5yew" x="168" y="24" width="313" height="277"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_4EkesaOzEeW3fdyWju5yew"/>
   <element xmi:type="syvolt:TransformationModel" href="Neg_CityCompany.syvolt#/"/>

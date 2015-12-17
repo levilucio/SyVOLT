@@ -50,7 +50,7 @@
     <styles xmi:type="notation:LineStyle" xmi:id="_v-2B06PAEeWgsb_fT6AV4Q"/>
     <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_v-2B1KPAEeWgsb_fT6AV4Q"/>
     <element xmi:type="syvolt:AtomicContract" href="Neg_CountryCity.syvolt#//@hasProperty.0"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_v-2B1aPAEeWgsb_fT6AV4Q" width="277"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_v-2B1aPAEeWgsb_fT6AV4Q" x="108" y="48" width="277"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_v-SoMaPAEeWgsb_fT6AV4Q"/>
   <element xmi:type="syvolt:TransformationModel" href="Neg_CountryCity.syvolt#/"/>

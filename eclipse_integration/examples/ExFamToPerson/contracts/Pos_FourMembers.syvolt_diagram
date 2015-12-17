@@ -61,7 +61,7 @@
         <styles xmi:type="notation:LineStyle" xmi:id="_GtM506OlEeW3fdyWju5yew"/>
         <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_GtM51KOlEeW3fdyWju5yew"/>
         <element xmi:type="syvolt:PreCondition" href="Pos_FourMembers.syvolt#//@hasProperty.0/@match.0"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GtM51aOlEeW3fdyWju5yew" x="26" y="-32" width="361" height="160"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GtM51aOlEeW3fdyWju5yew" x="26" y="4" width="361" height="160"/>
       </children>
     </children>
     <children xmi:type="notation:BasicCompartment" xmi:id="_BfDWwqOhEeW3fdyWju5yew" type="7028">
@@ -131,7 +131,7 @@
     <styles xmi:type="notation:LineStyle" xmi:id="_BfCIo6OhEeW3fdyWju5yew"/>
     <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_BfCIpKOhEeW3fdyWju5yew"/>
     <element xmi:type="syvolt:AtomicContract" href="Pos_FourMembers.syvolt#//@hasProperty.0"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_BfCIpaOhEeW3fdyWju5yew" x="24" y="12" width="421" height="421"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_BfCIpaOhEeW3fdyWju5yew" x="60" y="24" width="421" height="457"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_9UnWoaOgEeW3fdyWju5yew"/>
   <element xmi:type="syvolt:TransformationModel" href="Pos_FourMembers.syvolt#/"/>

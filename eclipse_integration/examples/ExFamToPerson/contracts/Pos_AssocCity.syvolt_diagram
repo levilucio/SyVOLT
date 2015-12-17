@@ -13,7 +13,7 @@
             <styles xmi:type="notation:LineStyle" xmi:id="_EM3T86O5EeW3fdyWju5yew"/>
             <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_EM3T9KO5EeW3fdyWju5yew"/>
             <element xmi:type="syvolt:AnyMatchClass" href="Pos_AssocCity.syvolt#//@hasProperty.0/@match.0/@class.0"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_EM3T9aO5EeW3fdyWju5yew" x="126" y="22"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_EM3T9aO5EeW3fdyWju5yew" x="122" y="15"/>
           </children>
         </children>
         <styles xmi:type="notation:DescriptionStyle" xmi:id="_0dssYaO4EeW3fdyWju5yew"/>
@@ -21,7 +21,7 @@
         <styles xmi:type="notation:LineStyle" xmi:id="_0dssY6O4EeW3fdyWju5yew"/>
         <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_0dssZKO4EeW3fdyWju5yew"/>
         <element xmi:type="syvolt:PreCondition" href="Pos_AssocCity.syvolt#//@hasProperty.0/@match.0"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0dssZaO4EeW3fdyWju5yew" x="8" y="33" width="337" height="107"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0dssZaO4EeW3fdyWju5yew" x="20" y="8" width="337" height="85"/>
       </children>
     </children>
     <children xmi:type="notation:BasicCompartment" xmi:id="_zJUTYqO4EeW3fdyWju5yew" type="7028">
@@ -81,7 +81,7 @@
     <styles xmi:type="notation:LineStyle" xmi:id="_zJTsU6O4EeW3fdyWju5yew"/>
     <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_zJTsVKO4EeW3fdyWju5yew"/>
     <element xmi:type="syvolt:AtomicContract" href="Pos_AssocCity.syvolt#//@hasProperty.0"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_zJTsVaO4EeW3fdyWju5yew" x="42" y="78" width="427" height="427"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_zJTsVaO4EeW3fdyWju5yew" x="42" y="78" width="403" height="355"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_x5VSMKO4EeW3fdyWju5yew"/>
   <element xmi:type="syvolt:TransformationModel" href="Pos_AssocCity.syvolt#/"/>

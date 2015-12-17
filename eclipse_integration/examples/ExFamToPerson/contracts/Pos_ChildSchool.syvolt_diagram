@@ -81,7 +81,7 @@
     <styles xmi:type="notation:LineStyle" xmi:id="_k5elA6PCEeWgsb_fT6AV4Q"/>
     <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_k5elBKPCEeWgsb_fT6AV4Q"/>
     <element xmi:type="syvolt:AtomicContract" href="Pos_ChildSchool.syvolt#//@hasProperty.0"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_k5elBaPCEeWgsb_fT6AV4Q"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_k5elBaPCEeWgsb_fT6AV4Q" x="48" y="48"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_k4QdAaPCEeWgsb_fT6AV4Q"/>
   <element xmi:type="syvolt:TransformationModel" href="Pos_ChildSchool.syvolt#/"/>
