@@ -120,6 +120,10 @@ class HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacility
         self.add_node()
 
         self.vs[22]["mm__"] = """backward_link"""
+        # backward association Child---->Person node
+        self.add_node()
+
+        self.vs[23]["mm__"] = """backward_link"""
         
         
         
@@ -154,11 +158,13 @@ class HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacility
                 (21,15), # association members  -> apply_class Person()
                 (11,22), # apply_class District() -> backward_association
                 (22,3), #  backward_association -> apply_class Neighborhood()
+                (15,23), # apply_class Person() -> backward_association
+                (23,9), #  backward_association -> apply_class Child()
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])
 
         # Add the attribute equations
-        self["equations"] = [((11,'ApplyAttribute'),('constant','solveRef')), ((13,'name'),('concat',(('constant','Ordinary Facility Service for school '),(5,'name')))), ((15,'ApplyAttribute'),('constant','solveRef')), ]
+        self["equations"] = [((11,'ApplyAttribute'),('constant','solveRef')), ((13,'name'),('concat',(('constant','Ordinary Facility Service for school '),(5,'name')))), ((13,'ApplyAttribute'),('constant','solveRef')), ((15,'ApplyAttribute'),('constant','solveRef')), ]
 
         
