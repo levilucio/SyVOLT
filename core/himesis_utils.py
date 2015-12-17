@@ -230,7 +230,7 @@ def graph_to_dot(name, g, verbosity = 0):
         
     try:
         eqs = g["equations"]
-        eq_str = "Equations\\n"
+        eq_str = g.name + "\\nEquations\\n"
         for eq in eqs:
             eq_str += str(eq) + "\\n"
         graph.add_node(pydot.Node(eq_str, style="filled", fillcolor='lightblue'))
@@ -555,6 +555,28 @@ def load_class(full_class_string, args = None):
         raise Exception("Could not load module: " + full_class_string)
 
     return loaded_module
+
+def load_directory(directory):
+    class_dict = {}
+
+    try:
+        files = os.listdir(directory)
+    except OSError:
+        print("Warning: " + directory + " does not exist")
+        files = []
+
+    for f in sorted(files):
+
+        if not f.endswith(".py"):
+            continue
+
+        file_name = directory + "/" + f
+
+        c = load_class(file_name)
+
+        class_dict.update(c)
+
+    return class_dict
 
 
 def print_file(file_name):
