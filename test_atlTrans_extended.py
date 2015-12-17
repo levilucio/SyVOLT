@@ -18,7 +18,8 @@ from PyRamify import PyRamify
 from util.test_script_utils import select_rules, get_sub_and_super_classes
 from util.slicer import Slicer
 
-from core.himesis_utils import graph_to_dot
+from core.himesis_utils import graph_to_dot, load_directory
+
 # all runs are the same transformation, but with different metamodel elements
 # the purpose is to do scalability testing with multiple configurations and multiple sets of rules
 
@@ -29,77 +30,36 @@ from PropertyVerification.v2.ContractProver import ContractProver
 from PropertyVerification.v2.if_then_contract import IfThenContract
 from PropertyVerification.v2.prop_logic import NotContract, AndContract
 
-# from PropertyVerification.state_property import StateProperty
-# from PropertyVerification.atomic_state_property import AtomicStateProperty
-# from PropertyVerification.and_state_property import AndStateProperty
-# from PropertyVerification.or_state_property import OrStateProperty
-# from PropertyVerification.not_state_property import NotStateProperty
-# from PropertyVerification.implication_state_property import ImplicationStateProperty
-# from PropertyVerification.Not import Not #StateSpace Prop
-# from PropertyVerification.Implication import Implication #StateSpace Prop
-# from PropertyVerification.And import And #StateSpace Prop
-# from PropertyVerification.Or import Or #StateSpace Prop
-# from PropertyVerification.BACKUP_atomic_state_property import BKUPAtomicStateProperty
-# from PropertyVerification.PropertyVerifier import PropertyVerifier
-#from lib2to3.fixer_util import p1
 
-
-
-#positive
-
-#from PropertyVerification.HEmpty_IsolatedConnectedLHS import HEmpty_IsolatedConnectedLHS
-
-from ATLTrans.props.HfourMembers_IsolatedLHS import HfourMembers_IsolatedLHS
-from ATLTrans.props.HfourMembers_ConnectedLHS import HfourMembers_ConnectedLHS
-from ATLTrans.props.HfourMembers_CompleteLHS import HfourMembers_CompleteLHS
- 
-from ATLTrans.props.HmotherFather_IsolatedLHS import HmotherFather_IsolatedLHS
-from ATLTrans.props.HmotherFather_ConnectedLHS import HmotherFather_ConnectedLHS
-from ATLTrans.props.HmotherFather_CompleteLHS import HmotherFather_CompleteLHS
- 
- 
-#negative
-from ATLTrans.props.HdaughterMother_IsolatedLHS import HdaughterMother_IsolatedLHS
-from ATLTrans.props.HdaughterMother_ConnectedLHS import HdaughterMother_ConnectedLHS
-from ATLTrans.props.HdaughterMother_CompleteLHS import HdaughterMother_CompleteLHS
- 
- 
-#implication
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson1_IsolatedLHS import HCommunityPerson1_IsolatedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson1_ConnectedLHS import HCommunityPerson1_ConnectedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson1_CompleteLHS import HCommunityPerson1_CompleteLHS
- 
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson2_IsolatedLHS import HCommunityPerson2_IsolatedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson2_ConnectedLHS import HCommunityPerson2_ConnectedLHS
-from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson2_CompleteLHS import HCommunityPerson2_CompleteLHS
+#contracts
 
 
 
 from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 ##Pattern COntract - END
-class Test():
+class Test:
 
     def setUp(self, args):
 
         full_transformation = [
-            ['HCountry2Community'],
-            ['HFather2Man'],
-            ['HMother2Woman'],
-            ['HDaughter2Woman'],
-            ['HSon2Man'],
+            #['HCountry2Community'],
+            # ['HFather2Man'],
+            # ['HMother2Woman'],
+            # ['HDaughter2Woman'],
+            # ['HSon2Man'],
             ['HCity2TownHall'],
             ['HCityCompany2Association'],
-            ['HNeighborhood2District'],
-            ['HcopersonsSolveRefCountryFamilyParentCommunityMan'],
-            ['HcopersonsSolveRefCountryFamilyParentCommunityWoman'],
-            ['HcopersonsSolveRefCountryFamilyChildCommunityMan'],
-            ['HcotownHallsSolveRefCountryFamilyChildCommunityWoman'],
-            ['HcoassociationsSolveRefCountryCityCommunityTownHall'],
-            ['HtworkersSolveRefCompanyParentCityTownHallPerson'],
-            ['HtdistrictsSolveRefCityNeighborhoodTownHallDistrict'],
+            #['HNeighborhood2District'],
+            # ['HcopersonsSolveRefCountryFamilyParentCommunityMan'],
+            # ['HcopersonsSolveRefCountryFamilyParentCommunityWoman'],
+            # ['HcopersonsSolveRefCountryFamilyChildCommunityMan'],
+            # ['HcotownHallsSolveRefCountryFamilyChildCommunityWoman'],
+            # ['HcoassociationsSolveRefCountryCityCommunityTownHall'],
+            # ['HtworkersSolveRefCompanyParentCityTownHallPerson'],
+            # ['HtdistrictsSolveRefCityNeighborhoodTownHallDistrict'],
             ['HacommitteeSolveRefCompanyCityAssociationCommittee'],
-            ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityPerson'],
-            ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictSpecialFacilityPerson']
+            # ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityPerson'],
+            # ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictSpecialFacilityPerson']
 
         ]
         pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
@@ -130,59 +90,50 @@ class Test():
             for rule in layer:
                 rule["superclasses_dict"] = superclasses_dict
 
-        FourMembers = [HfourMembers_IsolatedLHS(), HfourMembers_ConnectedLHS(), HfourMembers_CompleteLHS()]
-        for fm in FourMembers:
-            fm["superclasses_dict"] = superclasses_dict
- 
+        contracts = load_directory("ExFamToPerson/contracts")
 
- 
- 
-        HMotherFather = [HmotherFather_IsolatedLHS(), HmotherFather_ConnectedLHS(), HmotherFather_CompleteLHS()]
-        for c in HMotherFather:
-            c["superclasses_dict"] = superclasses_dict
- 
+        contracts_to_load = [
+            "Neg_CityCompany",
+            "Neg_CountryCity",
+            "Neg_SchoolOrdFac",
+            "Pos_AssocCity",
+            "Pos_ChildSchool",
+            "Pos_DaughterMother",
+            "Pos_FourMembers",
+            "Pos_MotherFather",
+            "Pos_ParentCompany",
+            "Pos_TownHallComm"
+        ]
 
- 
- 
-        DaughterMother = [HdaughterMother_IsolatedLHS(), HdaughterMother_ConnectedLHS(), HdaughterMother_CompleteLHS()]
-        for c in DaughterMother:
-            c["superclasses_dict"] = superclasses_dict
+        self.atomic_contracts = []
 
+        print("Contracts:")
+        for c in contracts:
+            print(c)
 
-        HFourMembers_atomic = AtomicContract(FourMembers[0], FourMembers[1], FourMembers[2])
-        HMotherFather_atomic = AtomicContract(HMotherFather[0], HMotherFather[1], HMotherFather[2])
-        HDaughterMother_atomic = AtomicContract(DaughterMother[0], DaughterMother[1], DaughterMother[2])
+        for contract_name in contracts_to_load:
 
+            h_contract_name = "H" + contract_name
 
-        CommunityPerson1 = HCommunityPerson1_CompleteLHS()
-        CommunityPerson1["superclasses_dict"] = superclasses_dict
+            iso = contracts[h_contract_name + "_IsolatedLHS"]
+            iso["superclasses_dict"] = superclasses_dict
 
-        CommunityPerson2 = HCommunityPerson2_CompleteLHS()
-        CommunityPerson2["superclasses_dict"] = superclasses_dict
+            connected = contracts[h_contract_name + "_ConnectedLHS"]
+            connected["superclasses_dict"] = superclasses_dict
 
-        HCommunityPersonIfClause = AtomicContract(HCommunityPerson1_IsolatedLHS(), HCommunityPerson1_ConnectedLHS(), CommunityPerson1)
+            complete = contracts[h_contract_name + "_CompleteLHS"]
+            complete["superclasses_dict"] = superclasses_dict
 
-        HCommunityPersonThenClause1 = AtomicContract(HCommunityPerson1_IsolatedLHS(), HCommunityPerson1_ConnectedLHS(),
-                                                  CommunityPerson1)
-
-        HCommunityPersonThenClause = AndContract(HCommunityPersonThenClause1,
-                                     NotContract(
-            AtomicContract(HCommunityPerson2_IsolatedLHS(), HCommunityPerson2_ConnectedLHS(), CommunityPerson2)))
- 
-        HCommunityPerson_IfThen = IfThenContract(HCommunityPersonIfClause, HCommunityPersonThenClause)
-
-        #atomic_properties = [["HDaughterMother_atomic", HDaughterMother_atomic]]
-        self.atomic_contracts = [["HDaughterMother_atomic", HDaughterMother_atomic], ["HFourMembers_atomic", HFourMembers_atomic],["HMotherFather_atomic", HMotherFather_atomic]]
+            self.atomic_contracts.append([contract_name, AtomicContract(iso, connected, complete)])
 
 
-        #self.atomic_contracts = [self.atomic_contracts[0]]
-        self.if_then_contracts = [] #[["HCommunityPerson", HCommunityPerson_IfThen]]
+        slicer = Slicer(self.rules, self.transformation)
 
 #         if args.slice > 0:
 #             contract = self.atomic_contracts[args.slice - 1]
 #             print("Slicing for contract number " + str(args.slice) + " : " + contract[0])
 # 
-#             slicer = Slicer(self.rules, self.transformation)
+
 # 
 #             print("Number rules before: " + str(len(self.rules)))
 #             self.rules, self.transformation = slicer.slice_transformation(contract)
@@ -190,7 +141,7 @@ class Test():
 # 
 #             raise Exception()
 
-    def test_correct_uml2kiltera(self,args):
+    def test_correct(self,args):
 
 #'HMapHeirarchyOfStates2HeirarchyOfProcs':  'HTransition2QInstSIBLING': < 'HState2HProcDef': 'HCompositeState2ProcDef':  'HTransition2ListenBranch':  'HExitPoint2BProcDef_WhetherOrNotExitPtHasOutgoingTrans':  'HBasicStateNoOutgoing2ProcDef':  'HBasicState2ProcDef': , 'HState2ProcDef'
 
@@ -251,13 +202,13 @@ class Test():
         #s.print_path_conditions_file()
 
         
-#         print("\nContract proving:")
-#   
-#         s.verbosity = 0
-#   
-#         contract_prover = ContractProver()
-#   
-#         contract_prover.prove_contracts(s, self.atomic_contracts, self.if_then_contracts)
+        print("\nContract proving:")
+
+        s.verbosity = 0
+
+        contract_prover = ContractProver()
+
+        contract_prover.prove_contracts(s, self.atomic_contracts, [])#self.if_then_contracts)
 
 
 def _print_states(self, s):
@@ -311,8 +262,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
 
-    uml2kiltera = Test()
-    uml2kiltera.setUp(args)
-    uml2kiltera.test_correct_uml2kiltera(args)
+    exFam = Test()
+    exFam.setUp(args)
+    exFam.test_correct(args)
 
     
