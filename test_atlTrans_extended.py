@@ -42,24 +42,25 @@ class Test:
     def setUp(self, args):
 
         full_transformation = [
-            #['HCountry2Community'],
-            # ['HFather2Man'],
-            # ['HMother2Woman'],
-            # ['HDaughter2Woman'],
-            # ['HSon2Man'],
+            ['HCountry2Community'],
+            ['HFather2Man'],
+            ['HMother2Woman'],
+            ['HDaughter2Woman'],
+            ['HSon2Man'],
             ['HCity2TownHall'],
             ['HCityCompany2Association'],
-            #['HNeighborhood2District'],
-            # ['HcopersonsSolveRefCountryFamilyParentCommunityMan'],
-            # ['HcopersonsSolveRefCountryFamilyParentCommunityWoman'],
-            # ['HcopersonsSolveRefCountryFamilyChildCommunityMan'],
-            # ['HcotownHallsSolveRefCountryFamilyChildCommunityWoman'],
-            # ['HcoassociationsSolveRefCountryCityCommunityTownHall'],
-            # ['HtworkersSolveRefCompanyParentCityTownHallPerson'],
-            # ['HtdistrictsSolveRefCityNeighborhoodTownHallDistrict'],
+            ['HNeighborhood2District'],
+            ['HcopersonsSolveRefCountryFamilyParentCommunityMan'],
+            ['HcopersonsSolveRefCountryFamilyParentCommunityWoman'],
+            ['HcopersonsSolveRefCountryFamilyChildCommunityMan'],
+            ['HcopersonsSolveRefCountryFamilyChildCommunityWoman'],
+            ['HcotownHallsSolveRefCountryCityCommunityTownHall'],
+            ['HcoassociationsSolveRefCountryCityCompanyCommunityAssociation'],
+            ['HtworkersSolveRefCompanyParentCityTownHallPerson'],
+            ['HtdistrictsSolveRefCityNeighborhoodTownHallDistrict'],
             ['HacommitteeSolveRefCompanyCityAssociationCommittee'],
-            # ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityPerson'],
-            # ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictSpecialFacilityPerson']
+            ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityPerson'],
+            ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictSpecialFacilityPerson']
 
         ]
         pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
@@ -175,40 +176,38 @@ class Test:
 
 
 
-        s = PathConditionGenerator(self.transformation, "ExFamToPerson/Families_Extended.ecore", self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)#
+        s = PathConditionGenerator(self.transformation, "ExFamToPerson/Persons_Extended.ecore", self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)#
    
         ts0 = time.time()
         s.build_path_conditions()
         ts1 = time.time()
-
-        print(s.num_path_conditions)
 
         pc_time = ts1 - ts0
         print("\n\nTime to build the set of path conditions: " + str(pc_time))
 #        print("Size of the set of path conditions: " + str(float(sys.getsizeof(s.pathConditionSet) / 1024)))
         print("Number of path conditions: " + str(s.num_path_conditions))
 
-        #check if the correct number of path conditions were produced
-        if not int(expected_num_pcs) == -1 and not int(expected_num_pcs) == s.num_path_conditions:
-
-            #TODO: Make this an exception
-            num_pcs_s = "The number of produced path conditions is incorrect.\n" + str(expected_num_pcs) + " were expected, but " + str(s.num_path_conditions) + " were produced."
-            print(num_pcs_s)
-            #raise Exception(num_pcs_s)
- 
-        #print("printing path conditions")
-        #s.print_path_conditions_screen()
-
-        #s.print_path_conditions_file()
-
-        
-        print("\nContract proving:")
-
-        s.verbosity = 0
-
-        contract_prover = ContractProver()
-
-        contract_prover.prove_contracts(s, self.atomic_contracts, [])#self.if_then_contracts)
+#         #check if the correct number of path conditions were produced
+#         if not int(expected_num_pcs) == -1 and not int(expected_num_pcs) == s.num_path_conditions:
+# 
+#             #TODO: Make this an exception
+#             num_pcs_s = "The number of produced path conditions is incorrect.\n" + str(expected_num_pcs) + " were expected, but " + str(s.num_path_conditions) + " were produced."
+#             print(num_pcs_s)
+#             #raise Exception(num_pcs_s)
+#  
+#         #print("printing path conditions")
+        s.print_path_conditions_screen()
+# 
+#         #s.print_path_conditions_file()
+# 
+#         
+#         print("\nContract proving:")
+# 
+#         s.verbosity = 0
+# 
+#         contract_prover = ContractProver()
+# 
+#         contract_prover.prove_contracts(s, self.atomic_contracts, [])#self.if_then_contracts)
 
 
 def _print_states(self, s):
