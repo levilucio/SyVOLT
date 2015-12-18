@@ -21,7 +21,7 @@
 		      read="true"
 		      store="false"
 		      metamodeluri="http://syvolt/2.0"
-		      modelfile="examples/mbeddr/contract_simple_init.syvolt"
+		      modelfile="examples/mbeddr/contract_simpler.syvolt"
 		    />
 		
 		<epsilon.egl src="backend/DSLTrans2Himesis.egl">

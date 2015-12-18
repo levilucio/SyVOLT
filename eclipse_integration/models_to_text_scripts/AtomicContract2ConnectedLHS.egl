@@ -200,4 +200,49 @@ return attr_value == "[%=association.associationName%]"
 
                 return True
         
-        
+[%
+
+operation getClassCardinality(class){
+        if (class.isKindOf(AnyMatchClass)){
+                return "+";
+        } else if (class.isKindOf(ExistsMatchClass)){
+                return "1";
+        } else {
+                throw "Only Any Match Class is supported!";
+        }
+}
+
+operation generateAttributeTermNodes(attribute, term, classNodeMap, matchClassNodeMap, rule) {
+		
+        var termStr = "";
+
+        if (term.isKindOf(Atom)){
+                termStr = termStr + "('constant','" + term.value + "')";
+                
+        } 
+        else if (term.isKindOf(Wildcard)){
+                termStr = termStr + "('wildcard)";
+                
+        }
+        else if (term.isKindOf(Concat)){
+			termStr = "('concat',(";
+			// generate sub expressions' nodes
+        	termStr = termStr + generateAttributeTermNodes(attribute, term.leftTerm, classNodeMap, matchClassNodeMap, rule);
+        	termStr = termStr + ",";
+        	termStr = termStr + generateAttributeTermNodes(attribute, term.rightTerm, classNodeMap, matchClassNodeMap, rule);
+        	termStr = termStr + "))";
+        	
+        } else if (term.isKindOf(AttributeRef)){
+        	for(class in rule.match.first.class){
+        		for(attribute in class.attribute){
+        			if (attribute == term.attributeRef){    
+                		termStr = "(" + matchClassNodeMap.get(class) + ",'" + attribute.attributeName + "')";
+                	}
+                }
+           	}
+                
+        } 
+
+        return termStr;
+}
+%]

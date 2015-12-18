@@ -53,9 +53,8 @@ class Test:
             ['HcopersonsSolveRefCountryFamilyParentCommunityMan'],
             ['HcopersonsSolveRefCountryFamilyParentCommunityWoman'],
             ['HcopersonsSolveRefCountryFamilyChildCommunityMan'],
-            ['HcopersonsSolveRefCountryFamilyChildCommunityWoman'],
-            ['HcotownHallsSolveRefCountryCityCommunityTownHall'],
-            ['HcoassociationsSolveRefCountryCityCompanyCommunityAssociation'],
+            ['HcotownHallsSolveRefCountryFamilyChildCommunityWoman'],
+            ['HcoassociationsSolveRefCountryCityCommunityTownHall'],
             ['HtworkersSolveRefCompanyParentCityTownHallPerson'],
             ['HtdistrictsSolveRefCityNeighborhoodTownHallDistrict'],
             ['HacommitteeSolveRefCompanyCityAssociationCommittee'],
@@ -130,17 +129,17 @@ class Test:
 
         slicer = Slicer(self.rules, self.transformation)
 
-#         if args.slice > 0:
-#             contract = self.atomic_contracts[args.slice - 1]
-#             print("Slicing for contract number " + str(args.slice) + " : " + contract[0])
-# 
+        if args.slice > 0:
+            contract = self.atomic_contracts[args.slice - 1]
+            print("Slicing for contract number " + str(args.slice) + " : " + contract[0])
 
-# 
-#             print("Number rules before: " + str(len(self.rules)))
-#             self.rules, self.transformation = slicer.slice_transformation(contract)
-#             print("Number rules after: " + str(len(self.rules)))
-# 
-#             raise Exception()
+
+
+            print("Number rules before: " + str(len(self.rules)))
+            self.rules, self.transformation = slicer.slice_transformation(contract)
+            print("Number rules after: " + str(len(self.rules)))
+
+            raise Exception()
 
     def test_correct(self,args):
 

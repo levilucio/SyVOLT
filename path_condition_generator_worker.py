@@ -41,7 +41,7 @@ class path_condition_generator_worker(Process):
         
         self.pruner = pruner
         
-        self.pruning = True
+        self.pruning = False
         
         
     def getRuleNamesInPathCondition(self, pcName):

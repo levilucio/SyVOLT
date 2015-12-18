@@ -6,7 +6,9 @@ from copy import deepcopy
 def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
     #decompose graph into directLinks, backwardLinks, and isolated elements
 
-    debug = True
+    debug = False
+
+    #debug = graph.name == "HUnionMotherRule_rule_combinator_matcher_1"
 
     if debug:
         print("\nDecomposing graph: " + graph.name)

@@ -418,7 +418,12 @@ operation generateAttributeTermNodes(attribute, term, classNodeMap, matchClassNo
 
         if (term.isKindOf(Atom)){
                 termStr = termStr + "('constant','" + term.value + "')";
+          
+        }
+        else if (term.isKindOf(Wildcard)){
+                termStr = termStr + "('wildcard')";
                 
+              
         } else if (term.isKindOf(Concat)){
 			termStr = "('concat',(";
 			// generate sub expressions' nodes
@@ -436,9 +441,7 @@ operation generateAttributeTermNodes(attribute, term, classNodeMap, matchClassNo
                 }
            	}
                 
-        } else {
-                throw "Unsupported kind of term: " + term;
-        }
+        } 
 
         return termStr;
 }

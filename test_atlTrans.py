@@ -52,23 +52,23 @@ from PropertyVerification.v2.prop_logic import NotContract, AndContract
 from ATLTrans.props.HfourMembers_IsolatedLHS import HfourMembers_IsolatedLHS
 from ATLTrans.props.HfourMembers_ConnectedLHS import HfourMembers_ConnectedLHS
 from ATLTrans.props.HfourMembers_CompleteLHS import HfourMembers_CompleteLHS
- 
+
 from ATLTrans.props.HmotherFather_IsolatedLHS import HmotherFather_IsolatedLHS
 from ATLTrans.props.HmotherFather_ConnectedLHS import HmotherFather_ConnectedLHS
 from ATLTrans.props.HmotherFather_CompleteLHS import HmotherFather_CompleteLHS
- 
- 
+
+
 #negative
 from ATLTrans.props.HdaughterMother_IsolatedLHS import HdaughterMother_IsolatedLHS
 from ATLTrans.props.HdaughterMother_ConnectedLHS import HdaughterMother_ConnectedLHS
 from ATLTrans.props.HdaughterMother_CompleteLHS import HdaughterMother_CompleteLHS
- 
- 
+
+
 #implication
 from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson1_IsolatedLHS import HCommunityPerson1_IsolatedLHS
 from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson1_ConnectedLHS import HCommunityPerson1_ConnectedLHS
 from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson1_CompleteLHS import HCommunityPerson1_CompleteLHS
- 
+
 from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson2_IsolatedLHS import HCommunityPerson2_IsolatedLHS
 from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson2_ConnectedLHS import HCommunityPerson2_ConnectedLHS
 from FamiliesToPersons_MM.Properties.Positive.Himesis.HCommunityPerson2_CompleteLHS import HCommunityPerson2_CompleteLHS
@@ -178,7 +178,6 @@ class Test():
             self.rules, self.transformation = slicer.slice_transformation(contract)
             print("Number rules after: " + str(len(self.rules)))
 
-            raise Exception()
 
     def test_correct_uml2kiltera(self,args):
 
@@ -215,7 +214,7 @@ class Test():
 
 
         s = PathConditionGenerator(self.transformation, "ATLTrans/metamodels/Community.ecore", self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)#
-   
+
         ts0 = time.time()
         s.build_path_conditions()
         ts1 = time.time()
@@ -236,7 +235,9 @@ class Test():
             #raise Exception(num_pcs_s)
  
         #print("printing path conditions")
-        s.print_path_conditions_screen()
+        #s.print_path_conditions_screen()
+
+        raise Exception()
 
         #s.print_path_conditions_file()
 

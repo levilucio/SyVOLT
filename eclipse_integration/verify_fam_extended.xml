@@ -3,7 +3,7 @@
 	<target name="main" depends="clean">
 		
 		<property name="absolute.backend.path" location="backend/generated/transformation"/>
-		<property name="dsltrans.install.path" location="/home/boakes/Projects/SyVOLT"/>
+		<property name="dsltrans.install.path" location="/home/dcx/Projects/SyVOLT"/>
 		
 		<echo message= "${absolute.backend.path}"/>
 		<echo message= "${dsltrans.install.path}"/>
@@ -13,16 +13,20 @@
 		      read="true"
 		      store="false"
 		      metamodeluri="http://dsltrans/2.0"
-		      modelfile="examples/families_to_persons_extended/F2P_extended.dsltrans"
+		      modelfile="examples/ExFamToPerson/F2P_extended.dsltrans"
 		    />
 		
+		
+		
 		<epsilon.emf.loadModel
-		      name="inputProperties"
-		      read="true"
-		      store="false"
-		      metamodeluri="http://syvolt/2.0"
-		      modelfile="examples/families_to_persons/motherFather2.syvolt"
-		    />
+				      name="inputProperties"
+				      read="true"
+				      store="false"
+				      metamodeluri="http://syvolt/2.0"
+				      modelfile="examples/ExFamToPerson/contracts/Pos_TownHallComm.syvolt"
+				    />
+		
+
 		
 		<epsilon.egl src="backend/DSLTrans2Himesis.egl">
 			<model ref="inputTransformation"/>
@@ -39,11 +43,12 @@
 			<parameter name="dsltransInstallPath" value="${dsltrans.install.path}"/>
 		</epsilon.egl>
 
+		<!--
 		<exec dir="backend/generated" executable="python">
-		    <arg line="toplevel.py --skip_tests --no_svg --verbosity=1"/>
+		    <arg line="toplevel.py -skip_tests -no_svg -verbosity=1"/>
 			<env key="PYTHONPATH" value="${dsltrans.install.path}:./backend/generated"/> 
 		</exec>
-		
+		-->
 	</target>
 	
     <target name="clean">
@@ -60,7 +65,7 @@
     	   <fileset dir="metamodels"/>
     	</copy>
     	<copy todir="backend">
-    	   <fileset dir="/home/boakes/Projects/SyVOLT/eclipse_integration/models_to_text_scripts"/>
+    	   <fileset dir="/home/dcx/Projects/SyVOLT/eclipse_integration/models_to_text_scripts"/>
     	</copy>
     </target>	
 	
