@@ -166,10 +166,11 @@ def match_links(matcher, pattern, pattern_dls, graph, graph_dls, verbosity=0, ma
 
         found_match = False
 
-        print("\n===================\nGraph " + graph.name + " nodes:")
-        for graph_n0_n, graph_n1_n, graph_link_n in graph_dls:
-            print_link(graph, graph_n0_n, graph_n1_n, graph_link_n)
-        print("\n===================\nGraph " + graph.name + " nodes:")
+        if verbosity > 1:
+            print("\n===================\nGraph " + graph.name + " nodes:")
+            for graph_n0_n, graph_n1_n, graph_link_n in graph_dls:
+                print_link(graph, graph_n0_n, graph_n1_n, graph_link_n)
+            print("\n===================\nGraph " + graph.name + " nodes:")
 
         graph_links = graph_dls
         for graph_n0_n, graph_n1_n, graph_link_n in graph_links:
