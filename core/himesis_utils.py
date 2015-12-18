@@ -552,7 +552,10 @@ def load_class(full_class_string, args = None):
         sys.path[:] = path # restore
 
     if not succeed:
-        raise Exception("Could not load module: " + full_class_string)
+        from os import path
+        print("File: " + full_class_string)
+        print("Exists: " + str(path.isfile(full_class_string)))
+        raise Exception("Could not load module: " + module_name)
 
     return loaded_module
 
