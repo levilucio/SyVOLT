@@ -10,6 +10,8 @@ from itertools import product
 class NewHimesisMatcher(object):
     def __init__(self, source_graph, pattern_graph, pred1 = {}, succ1 = {}, pred2 = {}, succ2 = {}):
         self.debug = False
+        self.compare_to_old = False
+
         self.source_graph = source_graph
         self.pattern_graph = pattern_graph
 
@@ -33,24 +35,35 @@ class NewHimesisMatcher(object):
             return False
 
     def match_iter(self, context = {}):
+        # print(self.pattern_graph.name + " vs " + self.source_graph.name)
+        # if "Hlayer3rule0" in self.pattern_graph.name\
+        #         and "L3R0" in self.source_graph.name:
+        #     self.debug = True
+        #     self.compare_to_old = True
+        #     graph_to_dot("z_source2_" + self.source_graph.name, self.source_graph)
+        #     graph_to_dot("z_pattern2_" + self.pattern_graph.name, self.pattern_graph)
+        # else:
+        #    self.debug = False
+        #    self.compare_to_old = False
 
-        #self.debug = ("HEmpty_L0R0-0_L1R0-0.24" in self.source_graph.name)
 
-        old_matches = [x for x in self.oldMatcher.match_iter()]
-        new_matches = [x for x in self._match()]
+        if self.compare_to_old:
+            #self.debug = ("HEmpty_L0R0-0_L1R0-0.24" in self.source_graph.name)
+
+            old_matches = [x for x in self.oldMatcher.match_iter()]
+            new_matches = [x for x in self._match()]
 
 
-        if self.debug:
-            print("Old matches: " + str(old_matches))
-            print("New matches: " + str(new_matches))
+            if self.debug:
+                print("Old matches: " + str(old_matches))
+                print("New matches: " + str(new_matches))
 
-        #if len(old_matches) != len(new_matches):
-        if old_matches != new_matches:
-            print("Matchers give different results")
-            print(self.source_graph.name + " vs " + self.pattern_graph.name)
+            #if len(old_matches) != len(new_matches):
+            if old_matches != new_matches:
+                print("Matchers give different results")
+                print(self.source_graph.name + " vs " + self.pattern_graph.name)
 
-            #graph_to_dot("source", self.source_graph)
-            #graph_to_dot("pattern", self.pattern_graph)
+                #
 
 
         for mapping in self._match():
@@ -102,17 +115,16 @@ class NewHimesisMatcher(object):
                         print("\nChecking Graph " + self.source_graph.name + " nodes:")
                         self.print_link(self.source_graph, graph_n0_n, graph_n1_n, graph_link_n)
 
-                    nodes_match_1 = match_nodes(None, self.source_graph, graph_n0_n, self.pattern_graph, patt0_n)
+                    nodes_match_1 = match_nodes(None, self.source_graph, graph_n0_n, self.pattern_graph, patt0_n, self.debug)
 
-                    nodes_match_2 = match_nodes(None, self.source_graph, graph_n1_n, self.pattern_graph, patt1_n)
+                    nodes_match_2 = match_nodes(None, self.source_graph, graph_n1_n, self.pattern_graph, patt1_n, self.debug)
 
-                    nodes_match_3 = match_nodes(None, self.source_graph, graph_n1_n, self.pattern_graph, patt0_n)
+                    nodes_match_3 = match_nodes(None, self.source_graph, graph_n1_n, self.pattern_graph, patt0_n, self.debug)
 
-                    nodes_match_4 = match_nodes(None, self.source_graph, graph_n0_n, self.pattern_graph, patt1_n)
+                    nodes_match_4 = match_nodes(None, self.source_graph, graph_n0_n, self.pattern_graph, patt1_n, self.debug)
 
-                    nodes_match_link = True
 
-                    if patt_link_n and graph_link_n:
+                    if patt_link_n is not None and graph_link_n is not None:
                         nodes_match_link = match_nodes(None, self.source_graph, graph_link_n, self.pattern_graph, patt_link_n)
                     else:
                         nodes_match_link = False
@@ -211,7 +223,7 @@ class NewHimesisMatcher(object):
         return match_set
 
     def print_link(self, graph, n0, n1, nlink):
-        if nlink:
+        if nlink is not None:
             link = graph.vs[nlink]["mm__"].replace("MT_pre__", "")
             try:
                 link += " (" + str(graph.vs[nlink]["MT_pre__attr1"]) + ") "
