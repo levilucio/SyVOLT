@@ -738,6 +738,7 @@ class PyRamify:
         name = list(rule.keys())[0]
         graph = list(rule.values())[0]
 
+
         label = 0
         for i in range(len(graph.vs)):
             graph.vs[i]["MT_label__"] = str(label)
@@ -1055,6 +1056,7 @@ class PyRamify:
                 backward_pattern.NACs = [NAC_graph]
 
             #create the Matcher
+
             matcher = Matcher(backward_pattern, disambig_matching = True)
  
  
@@ -1811,21 +1813,8 @@ class PyRamify:
 
     #change the proper prover matchers and rewriters to
     #refer to the correct metamodel
-    def changePropertyProverMetamodel(self, pre_metamodel, post_metamodel, subclasses_dict, dsltransInstallDir = "."):
+    def changePropertyProverMetamodel(self, pre_metamodel, post_metamodel, subclasses_dict, supertypes, dsltransInstallDir = "."):
         print("Starting to change property prover metamodel")
-
-        # keep a dictionary from each child to its parent
-        supertypes = {}
-
-
-        for supertype in subclasses_dict:
-            for subtype in subclasses_dict[supertype]:
-                subtype = subtype[8:]
-
-                try:
-                    supertypes[subtype].append(supertype[8:])
-                except KeyError:
-                    supertypes[subtype] = [supertype[8:]]
 
 
         property_prover_rules_dir = dsltransInstallDir + "/property_prover_rules/"
@@ -1892,6 +1881,33 @@ class PyRamify:
                 graph.compile(rule_dir)
 
         print("Finished changing property prover metamodel\n")
+
+    def set_supertypes(self, superclasses_dict, rules, ruleTraceCheckers, matchRulePatterns, ruleCombinators):
+
+        print("Changing superclasses for rules and rule matchers")
+
+        #print(superclasses_dict)
+
+        for rule in rules.values():
+            rule["superclasses_dict"] = superclasses_dict
+
+        for ruleTraceChecker in ruleTraceCheckers.values():
+
+            if ruleTraceChecker:
+                ruleTraceChecker.condition["superclasses_dict"] = superclasses_dict
+
+
+        for mrp in matchRulePatterns.values():
+            matcher = mrp[0]
+
+            matcher.condition["superclasses_dict"] = superclasses_dict
+
+        for rc in ruleCombinators.values():
+
+            for pair in rc:
+                matcher = pair[0]
+
+                matcher.condition["superclasses_dict"] = superclasses_dict
 
 if __name__ == "__main__":
      #No default action

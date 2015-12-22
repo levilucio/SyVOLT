@@ -109,12 +109,19 @@ class ContractProver():
                 contract_succeeded_pcs[contract_name] += succeed[contract_name]
 
 
+        num_contracts_to_print = 20
+
         print("")
         for contract_name, atomic_contract in atomic_contracts + if_then_contracts:
 
+
             print("\nSuccessful PCs for " + contract_name + ":")
-            for pc_name in sorted(contract_succeeded_pcs[contract_name]):
-                print(pc_name)
+            if len(contract_succeeded_pcs[contract_name]) < num_contracts_to_print:
+                for pc_name in sorted(contract_succeeded_pcs[contract_name]):
+                    print(pc_name)
+            else:
+                print("More than " + str(num_contracts_to_print) + " contracts")
+
             print ('\nSmallest Path Conditions where the contract succeeded:')
             smallest_pc_set = self.find_smallest_pc(contract_succeeded_pcs[contract_name])
             for pc_name in smallest_pc_set:
@@ -122,8 +129,12 @@ class ContractProver():
             print('\n')
 
             print("\nFailed PCs for " + contract_name + ":")
-            for pc_name in sorted(contract_failed_pcs[contract_name]):
-                print(pc_name)
+            if len(contract_failed_pcs[contract_name]) < num_contracts_to_print:
+                for pc_name in sorted(contract_failed_pcs[contract_name]):
+                    print(pc_name)
+            else:
+                print("More than " + str(num_contracts_to_print) + " contracts")
+
             print ('\nSmallest Path Conditions where the contract fails:')
             smallest_pc_set = self.find_smallest_pc(contract_failed_pcs[contract_name])
             for pc_name in smallest_pc_set:

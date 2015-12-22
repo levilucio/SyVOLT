@@ -52,9 +52,14 @@ class Test:
             ['HNeighborhood2District'],
             ['HcopersonsSolveRefCountryFamilyParentCommunityMan'],
             ['HcopersonsSolveRefCountryFamilyParentCommunityWoman'],
+
             ['HcopersonsSolveRefCountryFamilyChildCommunityMan'],
-            ['HcotownHallsSolveRefCountryFamilyChildCommunityWoman'],
-            ['HcoassociationsSolveRefCountryCityCommunityTownHall'],
+            ['HcopersonsSolveRefCountryFamilyChildCommunityWoman'],
+
+            ['HcotownHallsSolveRefCountryCityCommunityTownHall'],
+
+            ['HcoassociationsSolveRefCountryCityCompanyCommunityAssociation'],
+
             ['HtworkersSolveRefCompanyParentCityTownHallPerson'],
             ['HtdistrictsSolveRefCityNeighborhoodTownHallDistrict'],
             ['HacommitteeSolveRefCompanyCityAssociationCommittee'],
@@ -70,25 +75,27 @@ class Test:
         inputMM = "ExFamToPerson/Families_Extended.ecore"
         outputMM = "ExFamToPerson/Persons_Extended.ecore"
 
-        subclasses_dict, superclasses_dict = get_sub_and_super_classes(inputMM, outputMM)
+        self.subclasses_dict, self.superclasses_dict = get_sub_and_super_classes(inputMM, outputMM)
 
         pre_metamodel = ["MT_pre__FamiliesToPersons_MM", "MoTifRule"]
         post_metamodel = ["MT_post__FamiliesToPersons_MM", "MoTifRule"]
 
-        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
+        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, self.subclasses_dict, self.superclasses_dict)
 
 
-        #load the contracts
+        #load the contractsp
+
+
 
 
 
         # also make sure the transformation has this information
         for rule in self.rules.values():
-            rule["superclasses_dict"] = superclasses_dict
+            rule["superclasses_dict"] = self.superclasses_dict
 
         for layer in self.transformation:
             for rule in layer:
-                rule["superclasses_dict"] = superclasses_dict
+                rule["superclasses_dict"] = self.superclasses_dict
 
         contracts = load_directory("ExFamToPerson/contracts")
 
@@ -116,13 +123,16 @@ class Test:
             h_contract_name = "H" + contract_name
 
             iso = contracts[h_contract_name + "_IsolatedLHS"]
-            iso["superclasses_dict"] = superclasses_dict
+            iso["superclasses_dict"] = self.superclasses_dict
 
             connected = contracts[h_contract_name + "_ConnectedLHS"]
-            connected["superclasses_dict"] = superclasses_dict
+            connected["superclasses_dict"] = self.superclasses_dict
 
             complete = contracts[h_contract_name + "_CompleteLHS"]
-            complete["superclasses_dict"] = superclasses_dict
+            complete["superclasses_dict"] = self.superclasses_dict
+
+            if args.draw_svg:
+                graph_to_dot("contract_" + complete.name, complete)
 
             self.atomic_contracts.append([contract_name, AtomicContract(iso, connected, complete)])
 
@@ -133,13 +143,12 @@ class Test:
             contract = self.atomic_contracts[args.slice - 1]
             print("Slicing for contract number " + str(args.slice) + " : " + contract[0])
 
-
+            self.atomic_contracts = [contract]
 
             print("Number rules before: " + str(len(self.rules)))
             self.rules, self.transformation = slicer.slice_transformation(contract)
             print("Number rules after: " + str(len(self.rules)))
 
-            raise Exception()
 
     def test_correct(self,args):
 
@@ -173,7 +182,9 @@ class Test:
          self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
             pyramify.ramify_directory("ExFamToPerson/transformation/", self.transformation)
 
+        pyramify.set_supertypes(self.superclasses_dict, self.rules, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators)
 
+        #raise Exception()
 
         s = PathConditionGenerator(self.transformation, "ExFamToPerson/Persons_Extended.ecore", self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)#
    
@@ -195,18 +206,20 @@ class Test:
 #             #raise Exception(num_pcs_s)
 #  
 #         #print("printing path conditions")
-        s.print_path_conditions_screen()
+       # s.print_path_conditions_screen()
 # 
 #         #s.print_path_conditions_file()
 # 
-#         
-#         print("\nContract proving:")
-# 
-#         s.verbosity = 0
-# 
-#         contract_prover = ContractProver()
-# 
-#         contract_prover.prove_contracts(s, self.atomic_contracts, [])#self.if_then_contracts)
+#
+        #raise Exception()
+
+        print("\nContract proving:")
+
+        s.verbosity = 0
+
+        contract_prover = ContractProver()
+
+        contract_prover.prove_contracts(s, self.atomic_contracts, [])#self.if_then_contracts)
 
 
 def _print_states(self, s):
