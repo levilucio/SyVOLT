@@ -256,17 +256,26 @@ def match_links(matcher, pattern, pattern_dls, graph, graph_dls, verbosity=0, ma
     return match_all
 
 
-def match_nodes(matcher, graph, graph_node, pattern, patt_node):
+def match_nodes(matcher, graph, graph_node, pattern, patt_node, debug = False):
 
     #print("Match nodes: graph_node " + str(graph_node))
     #print("Match nodes: patt_node " + str(patt_node))
     sourceMM = graph.vs[graph_node]["mm__"].replace("MT_pre__", "")
     targetMM = pattern.vs[patt_node]["mm__"].replace("MT_pre__", "")
 
+
+
     if sourceMM != targetMM:
+        # is this a hack?
+        if targetMM == "trace_link" and sourceMM == "backward_link":
+            return True
 
         superclasses_dict = pattern["superclasses_dict"]
-        #print("Superclasses: " + str(superclasses_dict))
+
+        #if debug:
+        #    print("Superclasses: " + str(superclasses_dict))
+
+
 
 
 
