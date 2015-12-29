@@ -8,7 +8,7 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
 
     debug = False
 
-    #debug = graph.name == "HUnionMotherRule_rule_combinator_matcher_1"
+    #debug = "Hlayer0rule0_rule_combinator_matcher" in graph.name
 
     if debug:
         print("\nDecomposing graph: " + graph.name)
@@ -20,6 +20,7 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
     isolated_match_elements = []
     apply_elements = []
 
+    non_isolated_elements = []
 
     dls = []
     bls = []
@@ -42,17 +43,28 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
             bls.append(i)
         else:
             if mm in ["MatchModel", "ApplyModel", "paired_with"]:
+                non_isolated_elements.append(i)
                 continue
 
             neighbours = look_for_attached(i, graph)
+            # print("Neighbours")
+            # print(neighbours)
+
+            #not attached to anything
+            if len(neighbours) == 1:
+                continue
+
+
+            for n in neighbours:
+                non_isolated_elements.append(n)
+
             for n in neighbours[:1]:
                 n_mm = mms[n]
+
                 if n_mm == "match_contains":
                     match_elements.append(v)
-                    break
                 elif n_mm == "apply_contains":
                     apply_elements.append(v)
-                    break
 
 
     for dl in dls:
@@ -71,6 +83,10 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
         n1 = neighbours[1]
         direct_links.append((n0, n1, dl))
 
+        non_isolated_elements.append(n0)
+        non_isolated_elements.append(n1)
+        non_isolated_elements.append(dl)
+
     if debug:
         print("Direct links: ")
         for n0, n1, nlink in direct_links:
@@ -83,25 +99,20 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
         n1 = neighbours[1]
         backward_links.append((n0, n1, bl))
 
+        non_isolated_elements.append(n0)
+        non_isolated_elements.append(n1)
+        non_isolated_elements.append(bl)
+
     if debug:
         print("Backward links: ")
         for n0, n1, nlink in backward_links:
             print_link(graph, n0, n1, nlink)
 
 
-    #see if there are any match elements which are not in a direct link
-    for mm in match_elements:
-        #print("Match element: " + mm)
-        found = False
-        for (n1, n2, n_link) in direct_links:
-            mm1 = mms[n1]
-            mm2 = mms[n2]
-            #print("MM2: " + mm2)
-            if mm == mm1 or mm == mm2:
-                found = True
-
-        if not found:
-            isolated_match_elements.append(mm)
+    #find the non-isolated elements
+    for i in range(len(vs)):
+        if i not in non_isolated_elements:
+            isolated_match_elements.append(i)
 
 
     for me in match_elements:
