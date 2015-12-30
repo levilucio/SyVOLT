@@ -105,7 +105,7 @@ class Test():
         pre_metamodel = ["MT_pre__FamiliesToPersons_MM", "MoTifRule"]
         post_metamodel = ["MT_post__FamiliesToPersons_MM", "MoTifRule"]
 
-        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict)
+        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict, superclasses_dict)
 
 
         #load the contracts
