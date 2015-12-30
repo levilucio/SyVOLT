@@ -2,7 +2,9 @@
 from core.himesis_plus import look_for_attached
 from core.himesis_utils import graph_to_dot
 from copy import deepcopy
+from profiler import *
 
+#@do_cprofile
 def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
     #decompose graph into directLinks, backwardLinks, and isolated elements
 
@@ -136,7 +138,8 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
     #     print("Isolated match elements: " + str(isolated_match_elements))
     #     print("Apply contains: " + str(apply_elements))
 
-    return direct_links, backward_links, match_elements, isolated_match_elements, apply_elements
+    data = {"direct_links" : direct_links, "backward_links" : backward_links, "match_elements" : match_elements, "isolated_match_elements" : isolated_match_elements, "apply_elements" : apply_elements}
+    return data
 
 
 def match_links(matcher, pattern, pattern_dls, graph, graph_dls, verbosity=0, match_all = False):
@@ -277,6 +280,12 @@ def match_nodes(matcher, graph, graph_node, pattern, patt_node, debug = False):
 
 
     if sourceMM != targetMM:
+
+        # if debug:
+        #     print("Source: " + sourceMM)
+        #     print("Target: " + targetMM)
+
+
         # is this a hack?
         if targetMM == "trace_link" and sourceMM == "backward_link":
             return True

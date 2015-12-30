@@ -6,29 +6,38 @@ from core.match_algo import HimesisMatcher
 from core.himesis_utils import graph_to_dot
 
 from itertools import product
+import time
+
+from profiler import *
 
 class NewHimesisMatcher(object):
     def __init__(self, source_graph, pattern_graph, pred1 = {}, succ1 = {}, pred2 = {}, succ2 = {}):
         self.debug = False
         self.compare_to_old = False
 
-        self.pred1 = pred1
-        self.pred2 = pred2
+        source_data = pred1
+        patt_data = pred2
+
+        if source_data:
+            self.source_data = source_data
+        else:
+            self.source_data = decompose_graph(source_graph)
+
+
+        if patt_data:
+            self.pattern_data = patt_data
+        else:
+            self.pattern_data = decompose_graph(pattern_graph)
+
         self.succ1 = succ1
         self.succ2 = succ2
 
         self.source_graph = source_graph
         self.pattern_graph = pattern_graph
 
-        self.source_data = {}
-        self.source_data["direct_links"], self.source_data["backward_links"], \
-        self.source_data["match_elements"], self.source_data["isolated_match_elements"], \
-        self.source_data["apply_elements"] = decompose_graph(source_graph)
 
-        self.pattern_data = {}
-        self.pattern_data["direct_links"], self.pattern_data["backward_links"], \
-        self.pattern_data["match_elements"], self.pattern_data["isolated_match_elements"], \
-        self.pattern_data["apply_elements"] = decompose_graph(pattern_graph)
+
+
 
         self.oldMatcher = None
 
@@ -39,6 +48,7 @@ class NewHimesisMatcher(object):
         except StopIteration:
             return False
 
+    #@do_cprofile
     def match_iter(self, context = {}):
         # print(self.pattern_graph.name + " vs " + self.source_graph.name)
         # if "Hlayer1rule0" in self.pattern_graph.name\
@@ -53,12 +63,18 @@ class NewHimesisMatcher(object):
 
 
         if self.compare_to_old:
+
+            #old_time = time.time()
             self.oldMatcher = HimesisMatcher(self.source_graph, self.pattern_graph, self.pred1, self.succ1, self.pred2, self.succ2)
-            #self.debug = ("HEmpty_L0R0-0_L1R0-0.24" in self.source_graph.name)
-
             old_matches = [x for x in self.oldMatcher.match_iter()]
-            new_matches = [x for x in self._match()]
+            #old_time = time.time() - old_time
 
+            #new_time = time.time()
+            new_matches = [x for x in self._match()]
+            #new_time = time.time() - new_time
+
+            #print("Old time: " + str(old_time) + " seconds")
+            #print("New time " + str(new_time) + " seconds")
 
             if self.debug:
                 print("Old matches: " + str(old_matches))

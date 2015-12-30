@@ -30,12 +30,12 @@ class Slicer():
             for rule in layer:
 
                 rule_name = rule.name
-                dls, bls, mes, imes, aes = decompose_graph(self.rules[rule_name], verbosity=0, ignore_apply_dls=True)
-                self.direct_links[rule_name] = dls
-                self.backward_links[rule_name] = bls
-                self.match_elements[rule_name] = mes
-                self.isolated_match_elements[rule_name] = imes
-                self.apply_elements[rule_name] = aes
+                data = decompose_graph(self.rules[rule_name], verbosity=0, ignore_apply_dls=True)
+                self.direct_links[rule_name] = data["direct_links"]
+                self.backward_links[rule_name] = data["backward_links"]
+                self.match_elements[rule_name] = data["match_elements"]
+                self.isolated_match_elements[rule_name] = data["isolated_match_elements"]
+                self.apply_elements[rule_name] = data["apply_elements"]
 
 
                 #if self.debug:
@@ -230,13 +230,12 @@ class Slicer():
 
         print("Slicing for: " + contract_name)
 
-
-        dls, bls, mes, imes, aes = decompose_graph(contract, verbosity=0)
-        self.direct_links[contract_name] = dls
-        self.backward_links[contract_name] = bls
-        self.match_elements[contract_name] = mes
-        self.isolated_match_elements[contract_name] = imes
-        self.apply_elements[contract_name] = aes
+        data = decompose_graph(self.rules[rule_name], verbosity = 0)
+        self.direct_links[contract_name] = data["direct_links"]
+        self.backward_links[contract_name] = data["backward_links"]
+        self.match_elements[contract_name] = data["match_elements"]
+        self.isolated_match_elements[contract_name] = data["isolated_match_elements"]
+        self.apply_elements[contract_name] = data["apply_elements"]
 
 
         if self.debug:

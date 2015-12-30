@@ -12,6 +12,8 @@ import traceback
 
 from profiler import *
 
+from util.decompose_graph import decompose_graph
+
 class Matcher(RulePrimitive):
     '''
         Binds the source graph according to the pre-condition pattern.
@@ -27,9 +29,11 @@ class Matcher(RulePrimitive):
         self.max = max
         self.condition = condition
 
+        self.disambig_matching = disambig_matching
+
         if disambig_matching:
             self.HimesisMatcher = NewHimesisMatcher
-            self.condition_pred = {}
+            self.condition_pred = decompose_graph(condition)
             self.condition_succ = {}
 
         else:
@@ -46,7 +50,7 @@ class Matcher(RulePrimitive):
         for NAC in self.condition.NACs:
 
             if disambig_matching:
-                self.NAC_preds[NAC.name] = {}
+                self.NAC_preds[NAC.name] = decompose_graph(NAC)
                 self.NAC_succs[NAC.name] = {}
             else:
                 self.NAC_preds[NAC.name], self.NAC_succs[NAC.name] = get_preds_and_succs(NAC)
@@ -82,13 +86,20 @@ class Matcher(RulePrimitive):
 
         #cache the packet graph's neighbours
         #igraph.IN = 2, igraph.OUT = 1
-        if preds or succs:
-            self.graph_pred = preds
-            self.graph_succ = succs
+
+
+        if self.disambig_matching:
+            self.graph_pred = decompose_graph(packet.graph)
+            self.graph_succ = {}
         else:
-            self.graph_pred, self.graph_succ = get_preds_and_succs(packet.graph)
-            #self.graph_pred = [(len(tmp), tmp) for tmp in packet.graph.get_adjlist(mode=2)]
-            #self.graph_succ = [(len(tmp), tmp) for tmp in packet.graph.get_adjlist(mode=1)]
+
+            if preds or succs:
+                self.graph_pred = preds
+                self.graph_succ = succs
+            else:
+                self.graph_pred, self.graph_succ = get_preds_and_succs(packet.graph)
+        #self.graph_pred = [(len(tmp), tmp) for tmp in packet.graph.get_adjlist(mode=2)]
+        #self.graph_succ = [(len(tmp), tmp) for tmp in packet.graph.get_adjlist(mode=1)]
 
         if self.condition[HC.GUID] in packet.match_sets:
             matchSet = packet.match_sets[self.condition[HC.GUID]]
