@@ -12,9 +12,10 @@ def find_nodes_with_mm(graph, mm_names):
     return [node for node in graph.vs if node["mm__"] in mm_names]
 
 #=========================
+
 #look for the nodes attached to the link_node
 def look_for_attached(link_node, graph):
-    attached_node_nums = []
+    #attached_node_nums = []
 
     try:
         node_num = int(link_node)
@@ -23,13 +24,15 @@ def look_for_attached(link_node, graph):
         node_num = link_node.index
 
     #check the edge list to see if there are attached edges
-    for edge in graph.es:
-        source = edge.source
-        target = edge.target
-        if node_num == source:
-            attached_node_nums.append(target)
-        elif node_num == target:
-            attached_node_nums.append(source)
+    attached_node_nums = [x for x in [edge.source if edge.target == node_num else edge.target if edge.source == node_num else None for edge in graph.es] if x is not None]
+
+    # for edge in graph.es:
+    #     source = edge.source
+    #     target = edge.target
+    #     if node_num == source:
+    #         attached_node_nums.append(target)
+    #     elif node_num == target:
+    #         attached_node_nums.append(source)
 
     attached_node_nums.append(node_num)
     return attached_node_nums
