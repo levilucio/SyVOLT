@@ -12,6 +12,11 @@ class NewHimesisMatcher(object):
         self.debug = False
         self.compare_to_old = False
 
+        self.pred1 = pred1
+        self.pred2 = pred2
+        self.succ1 = succ1
+        self.succ2 = succ2
+
         self.source_graph = source_graph
         self.pattern_graph = pattern_graph
 
@@ -25,7 +30,7 @@ class NewHimesisMatcher(object):
         self.pattern_data["match_elements"], self.pattern_data["isolated_match_elements"], \
         self.pattern_data["apply_elements"] = decompose_graph(pattern_graph)
 
-        self.oldMatcher = HimesisMatcher(source_graph, pattern_graph, pred1, succ1, pred2, succ2)
+        self.oldMatcher = None
 
     def has_match(self, context = {}):
         try:
@@ -36,18 +41,19 @@ class NewHimesisMatcher(object):
 
     def match_iter(self, context = {}):
         # print(self.pattern_graph.name + " vs " + self.source_graph.name)
-        # if "Hlayer3rule0" in self.pattern_graph.name\
-        #         and "L3R0" in self.source_graph.name:
+        # if "Hlayer1rule0" in self.pattern_graph.name\
+        #         and "L1R0" in self.source_graph.name:
         #     self.debug = True
         #     self.compare_to_old = True
-        #     graph_to_dot("z_source2_" + self.source_graph.name, self.source_graph)
-        #     graph_to_dot("z_pattern2_" + self.pattern_graph.name, self.pattern_graph)
+        #     graph_to_dot("z_source_" + self.source_graph.name, self.source_graph)
+        #     graph_to_dot("z_pattern_" + self.pattern_graph.name, self.pattern_graph)
         # else:
         #    self.debug = False
         #    self.compare_to_old = False
 
 
         if self.compare_to_old:
+            self.oldMatcher = HimesisMatcher(self.source_graph, self.pattern_graph, self.pred1, self.succ1, self.pred2, self.succ2)
             #self.debug = ("HEmpty_L0R0-0_L1R0-0.24" in self.source_graph.name)
 
             old_matches = [x for x in self.oldMatcher.match_iter()]
@@ -58,12 +64,13 @@ class NewHimesisMatcher(object):
                 print("Old matches: " + str(old_matches))
                 print("New matches: " + str(new_matches))
 
+
             #if len(old_matches) != len(new_matches):
             if old_matches != new_matches:
                 print("Matchers give different results")
                 print(self.source_graph.name + " vs " + self.pattern_graph.name)
 
-                #
+
 
 
         for mapping in self._match():
@@ -80,6 +87,23 @@ class NewHimesisMatcher(object):
         if self.debug:
             print("\nMatching pattern: " + self.pattern_graph.name)
             print("on Source Graph " + self.source_graph.name)
+
+        for iso_match_element in self.pattern_data["isolated_match_elements"]:
+
+            #print("Matching iso element: " + str(iso_match_element))
+            for node in range(len(self.source_graph.vs)):
+
+                #print("Matching on: " + str(node))
+
+                nodes_match = match_nodes(None, self.source_graph, node, self.pattern_graph, iso_match_element, self.debug)
+                if nodes_match:
+                    iso_link = (iso_match_element, None, None)
+                    node_link = (node, None, None)
+
+                    try:
+                        link_matches[iso_link].append(node_link)
+                    except KeyError:
+                        link_matches[iso_link] = [node_link]
 
         links = [
             [self.pattern_data["direct_links"], self.source_data["direct_links"]],
@@ -141,19 +165,28 @@ class NewHimesisMatcher(object):
                         pattern_link = (patt0_n, patt1_n, patt_link_n)
                         source_link = (graph_n0_n, graph_n1_n, graph_link_n)
 
+                        #original version matched
+                        if nodes_match_1 and nodes_match_2:
+                            try:
+                                link_matches[pattern_link].append(source_link)
+                            except KeyError:
+                                link_matches[pattern_link] = [source_link]
+
                         #matched on the reversed versions
-                        if nodes_match_3 or nodes_match_4:
+                        if nodes_match_3 and nodes_match_4:
                             source_link = (source_link[1], source_link[0], source_link[2])
 
-                        try:
-                            #if reversed_link not in potential_matches[pattern_link]:
-                            link_matches[pattern_link].append(source_link)
-                        except KeyError:
-                            link_matches[pattern_link] = [source_link]
+                            try:
+                                link_matches[pattern_link].append(source_link)
+                            except KeyError:
+                                link_matches[pattern_link] = [source_link]
 
 
-                if not found_match:
+                if not found_match and len(self.pattern_data["isolated_match_elements"]) == 0:
                     return
+
+
+
 
         if len(link_matches) == 0:
             yield {}
@@ -168,6 +201,9 @@ class NewHimesisMatcher(object):
                         product(*link_matches.values())]
 
         for pm in combinations:
+            if self.debug:
+                print("Potential match:")
+                print(pm)
             match_set = self.create_match_set(pm, combinations)
 
             if self.debug:
@@ -190,15 +226,23 @@ class NewHimesisMatcher(object):
 
             for p, s in [(p0, s0), (p1, s1), (p_link, s_link)]:
 
+                if p is None or s is None:
+                    continue
+
                 #p_label = self.pattern_graph.vs[p]["MT_label__"]
 
                 #try:
                 #    s_label = self.source_graph.vs[s]["MT_label__"]
                 #except KeyError:
 
+                if self.debug:
+                    print("Setting " + str(p) + " to " + str(s))
                 if p in match_set.keys() and match_set[p] != s:
-
+                    if self.debug:
+                        print("Already binding")
+                        print(str(p) + " : " + str(match_set[p]))
                     if len(combinations) > 1:
+
                         #there is already a binding, so ignore this matching possibility
                         return {}
                     else:
