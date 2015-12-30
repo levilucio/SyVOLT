@@ -29,59 +29,64 @@ except ImportError:
     from io import StringIO
 
 import pstats
-def do_cprofile(func):
-    def profiled_func(*args, **kwargs):
-        profile = pp.Profile()
-        try:
-            profile.enable()
+from random import randint
+
+class Profiler:
+
+    def __init__(self, freq = 0):
+        self.profiler = pp.Profile()
+        self.freq = freq
+
+    def __call__(self, f, *args, **kwargs):
+        def profiled_func(*args, **kwargs):
+            self.profiler.enable()
             if global_profile_memory:
                 global_hp.setref()
 
-            result = func(*args, **kwargs)
-            profile.disable()
+            result = f(*args, **kwargs)
+            function_name = str(f.__name__)
+            self.profiler.disable()
+
+            if randint(0, self.freq) == 0:
+                self.print_profiler(function_name)
             return result
-        finally:
 
+        return profiled_func
 
-            print("\nFunction: " + str(func.__name__))
+    def print_profiler(self, function_name):
+        print("\nFunction: " + function_name)
 
-            if global_profile_memory:
-                h = global_hp.heap()
-                print("\nMemory usage:")
-                print(h)
+        if global_profile_memory:
+            h = global_hp.heap()
+            print("\nMemory usage:")
+            print(h)
 
-                print("\nBy id:")
-                print(h.byid)
-                print(h.byvia)
-                print(h.byrcs)
-                print(h.referents)
+            print("\nBy id:")
+            print(h.byid)
+            print(h.byvia)
+            print(h.byrcs)
+            print(h.referents)
 
-                print("\nreferents[0]:")
-                print(h.referents[0].byid)
-                print(h.referents[0].byvia)
-                print(h.referents[0].byrcs)
-                print(h.referents[0].referents)
+            print("\nreferents[0]:")
+            print(h.referents[0].byid)
+            print(h.referents[0].byvia)
+            print(h.referents[0].byrcs)
+            print(h.referents[0].referents)
 
+        s = StringIO()
+        sortby = 'time'
+        ps = pstats.Stats(self.profiler, stream = s).sort_stats(sortby)
+        ps.print_stats()
 
+        print("Time usage:")
+        time_table = str(s.getvalue()).split("\n")
+        for i in range(25):
+            if i >= len(time_table):
+                break
 
-            s = StringIO()
-            sortby = 'time'
-            ps = pstats.Stats(profile, stream = s).sort_stats(sortby)
-            ps.print_stats()
+            if time_table[i].strip() == "":
+                continue
 
-            print("Time usage:")
-            time_table = str(s.getvalue()).split("\n")
-            for i in range(25):
-                if i >= len(time_table):
-                    break
+            print(time_table[i])
 
-                if time_table[i].strip() == "":
-                    continue
-
-                print(time_table[i])
-
-
-
-
-            print("")
-    return profiled_func
+        print("")
