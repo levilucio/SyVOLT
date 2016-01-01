@@ -33,28 +33,37 @@ from random import randint
 
 class Profiler:
 
-    def __init__(self, freq = 0):
-        self.profiler = pp.Profile()
-        self.freq = freq
+    profiler = None
+    function_name = ""
+    f = None
 
-    def __call__(self, f, *args, **kwargs):
-        def profiled_func(*args, **kwargs):
-            self.profiler.enable()
-            if global_profile_memory:
-                global_hp.setref()
+    @classmethod
+    def get_profiler(cls):
+        return profiler
 
-            result = f(*args, **kwargs)
-            function_name = str(f.__name__)
-            self.profiler.disable()
+    def __init__(self, f):
+        Profiler.profiler = pp.Profile()
+        Profiler.f = f
 
-            if randint(0, self.freq) == 0:
-                self.print_profiler(function_name)
-            return result
+    def __call__(self, *args, **kwargs):
+        #def profiled_func(*args, **kwargs):
+        Profiler.profiler.enable()
+        if global_profile_memory:
+            global_hp.setref()
 
-        return profiled_func
+        result = Profiler.f(*args, **kwargs)
+        Profiler.function_name = str(Profiler.f.__name__)
+        Profiler.profiler.disable()
 
-    def print_profiler(self, function_name):
-        print("\nFunction: " + function_name)
+        # if randint(0, self.freq) == 0:
+        #     self.print_profiler(function_name)
+        return result
+
+        #return profiled_func
+
+    @classmethod
+    def print_profiler(self):
+        print("\nFunction: " + Profiler.function_name)
 
         if global_profile_memory:
             h = global_hp.heap()
@@ -75,7 +84,7 @@ class Profiler:
 
         s = StringIO()
         sortby = 'time'
-        ps = pstats.Stats(self.profiler, stream = s).sort_stats(sortby)
+        ps = pstats.Stats(Profiler.profiler, stream = s).sort_stats(sortby)
         ps.print_stats()
 
         print("Time usage:")
