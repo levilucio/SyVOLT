@@ -1,10 +1,11 @@
 
-from core.himesis_plus import look_for_attached
+from core.himesis_plus import look_for_attached, get_all_attached
 from core.himesis_utils import graph_to_dot
 from copy import deepcopy
 from profiler import *
 
 #@do_cprofile
+#@Profiler
 def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
     #decompose graph into directLinks, backwardLinks, and isolated elements
 
@@ -27,6 +28,7 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
     dls = []
     bls = []
 
+    attached = get_all_attached(graph)
 
     vs = graph.vs
     try:
@@ -48,7 +50,7 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
                 non_isolated_elements.append(i)
                 continue
 
-            neighbours = look_for_attached(i, graph)
+            neighbours = attached[i]
             # print("Neighbours")
             # print(neighbours)
 
@@ -71,11 +73,11 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
 
     for dl in dls:
 
-        neighbours = look_for_attached(dl, graph)
+        neighbours = attached[dl]
 
         n_link = neighbours[0]
-        n0_neighbours = look_for_attached(n_link, graph)
-        n0_neighbours_mm = [vs[n]["mm__"] for n in n0_neighbours]
+        n0_neighbours = attached[n_link]
+        n0_neighbours_mm = [mms[n] for n in n0_neighbours]
 
         #we don't care about direct links in the apply part
         if ignore_apply_dls and 'apply_contains' in n0_neighbours_mm:
@@ -96,7 +98,7 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
 
     for bl in bls:
 
-        neighbours = look_for_attached(bl, graph)
+        neighbours = attached[bl]
         n0 = neighbours[0]
         n1 = neighbours[1]
         backward_links.append((n0, n1, bl))
@@ -112,7 +114,7 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
 
 
     #find the non-isolated elements
-    for i in range(len(vs)):
+    for i in range(len(mms)):
         if i not in non_isolated_elements:
             isolated_match_elements.append(i)
 
