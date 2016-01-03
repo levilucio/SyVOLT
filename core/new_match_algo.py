@@ -35,7 +35,15 @@ class NewHimesisMatcher(object):
         self.source_graph = source_graph
         self.pattern_graph = pattern_graph
 
+        try:
+            self.source_mms = [mm.replace("MT_pre__", "") for mm in source_graph.vs["mm__"]]
+        except KeyError:
+            self.source_mms = []
 
+        try:
+            self.pattern_mms = [mm.replace("MT_pre__", "") for mm in pattern_graph.vs["mm__"]]
+        except KeyError:
+            self.pattern_mms = []
 
 
 
@@ -298,11 +306,12 @@ class NewHimesisMatcher(object):
 
     #==============================================================
 
+    #@Profiler2
     def match_nodes(self, graph_node, patt_node):
         # print("Match nodes: graph_node " + str(graph_node))
         # print("Match nodes: patt_node " + str(patt_node))
-        sourceMM = self.source_graph.vs[graph_node]["mm__"].replace("MT_pre__", "")
-        targetMM = self.pattern_graph.vs[patt_node]["mm__"].replace("MT_pre__", "")
+        sourceMM = self.source_mms[graph_node]
+        targetMM = self.pattern_mms[patt_node]
 
         if sourceMM != targetMM:
             # if debug:
