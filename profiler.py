@@ -31,7 +31,7 @@ except ImportError:
 import pstats
 from random import randint
 
-class Profiler:
+class Profiler(object):
 
     profiler = None
     function_name = ""
@@ -39,14 +39,14 @@ class Profiler:
 
     @classmethod
     def get_profiler(cls):
-        return profiler
+        return Profiler.profiler
 
     def __init__(self, f):
         Profiler.profiler = pp.Profile()
         Profiler.f = f
 
-    def __call__(self, *args, **kwargs):
-        #def profiled_func(*args, **kwargs):
+    def func(self, *args, **kwargs):
+
         Profiler.profiler.enable()
         if global_profile_memory:
             global_hp.setref()
@@ -59,10 +59,13 @@ class Profiler:
         #     self.print_profiler(function_name)
         return result
 
-        #return profiled_func
 
     @classmethod
     def print_profiler(self):
+
+        if Profiler.function_name == "":
+            return
+        
         print("\nFunction: " + Profiler.function_name)
 
         if global_profile_memory:
@@ -99,3 +102,15 @@ class Profiler:
             print(time_table[i])
 
         print("")
+
+
+class Profiler1(Profiler):
+
+    def __call__(self, *args, **kwargs):
+        result = super(Profiler1, self).func(*args, **kwargs)
+        return result
+
+class Profiler2(Profiler):
+
+    def __call__(self, *args, **kwargs):
+        return super(Profiler2, self).func
