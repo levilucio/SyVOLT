@@ -50,15 +50,9 @@ class AtomicContract(Contract):
 
         #graph_to_dot(self.complete.name, self.complete)
 
-        self.connected_data = {}
-        self.connected_data["direct_links"], self.connected_data["backward_links"],\
-        self.connected_data["match_elements"], self.connected_data["isolated_match_elements"],\
-        self.connected_data["apply_elements"] = decompose_graph(self.connected)
+        self.connected_data = decompose_graph(self.connected)
 
-        self.complete_data = {}
-        self.complete_data["direct_links"], self.complete_data["backward_links"],\
-        self.complete_data["match_elements"], self.complete_data["isolated_match_elements"],\
-        self.complete_data["apply_elements"] = decompose_graph(self.complete)
+        self.complete_data = decompose_graph(self.complete)
 
         #self.connected_data = self.get_data(self.connected)
         #self.complete_data = self.get_data(self.complete)
@@ -99,10 +93,7 @@ class AtomicContract(Contract):
 
         self.verbosity = verbosity
 
-        self.pc_data = {}
-        self.pc_data["direct_links"], self.pc_data["backward_links"],\
-        self.pc_data["match_elements"], self.pc_data["isolated_match_elements"],\
-        self.pc_data["apply_elements"] = decompose_graph(pc)
+        self.pc_data = decompose_graph(pc)
 
         if self.match(self.connected, self.connected_data, pc):
             pass
