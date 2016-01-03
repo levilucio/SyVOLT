@@ -45,6 +45,8 @@ class NewHimesisMatcher(object):
         except KeyError:
             self.pattern_mms = []
 
+        self.pattern_attribs = [[attrib for attrib in node.attribute_names() if attrib.startswith("MT_pre__")] for node in self.pattern_graph.vs]
+
 
 
         self.oldMatcher = None
@@ -428,14 +430,14 @@ class NewHimesisMatcher(object):
         #             return False
 
         # Check for attributes value/constraint
-        for attr in patt_node.attribute_names():
+        for attr in self.pattern_attribs[patt_node_num]:
             # Attribute constraints are stored as attributes in the pattern node.
             # The attribute must be prefixed by a specific keyword
-            if not attr.startswith("MT_pre__"):
-                continue
+            #if not attr.startswith("MT_pre__"):
+            #    continue
             # If the attribute does not "in theory" exist
             # because igraph actually stores all attribute names in all nodes.
-            elif not patt_node[attr]:
+            if not patt_node[attr]:
                 continue
 
             attr_name = attr[8:]
