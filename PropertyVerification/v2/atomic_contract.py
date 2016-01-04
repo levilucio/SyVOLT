@@ -38,8 +38,8 @@ class AtomicContract(Contract):
         self.complete = complete
 
         self.isolated_matcher = Matcher(isolated)
-        self.connected_matcher = Matcher(connected)
-        self.complete_matcher = Matcher(complete)
+        self.connected_matcher = Matcher(connected, disambig_matching = True)
+        self.complete_matcher = Matcher(complete, disambig_matching = True)
 
 
 
@@ -50,9 +50,9 @@ class AtomicContract(Contract):
 
         #graph_to_dot(self.complete.name, self.complete)
 
-        self.connected_data = decompose_graph(self.connected)
+        #self.connected_data = decompose_graph(self.connected)
 
-        self.complete_data = decompose_graph(self.complete)
+        #self.complete_data = decompose_graph(self.complete)
 
         #self.connected_data = self.get_data(self.connected)
         #self.complete_data = self.get_data(self.complete)
@@ -93,34 +93,51 @@ class AtomicContract(Contract):
 
         self.verbosity = verbosity
 
-        self.pc_data = decompose_graph(pc)
+        #self.pc_data = decompose_graph(pc)
 
-        if self.match(self.connected, self.connected_data, pc):
-            pass
-            #print("Connected")
-        else:
-            #print("No connected")
+        # if self.match(self.connected, self.connected_data, pc):
+        #     pass
+        #     #print("Connected")
+        # else:
+        #     #print("No connected")
+        #     return self.NO_CONNECTED
+        #
+        # if self.match(self.complete, self.complete_data, pc):
+        #     #print("Complete")
+        #     return self.COMPLETE_FOUND
+        # else:
+        #     #print("No complete")
+        #     return self.NO_COMPLETE
+
+        p = Packet()
+        p.graph = pc
+
+        self.connected_matcher.packet_in(p)
+
+        if not self.connected_matcher.is_success:
             return self.NO_CONNECTED
 
-        if self.match(self.complete, self.complete_data, pc):
-            #print("Complete")
+        p = Packet()
+        p.graph = pc
+
+        self.complete_matcher.packet_in(p)
+
+        if self.complete_matcher.is_success:
             return self.COMPLETE_FOUND
         else:
-            #print("No complete")
             return self.NO_COMPLETE
 
-
-    def match(self, contract, contract_data, pc):
-
-        #print("Contract data: " + str(contract_data))
-        #print("PC data: " + str(self.pc_data))
-
-        matcher = HimesisMatcher(pc, contract)
-
-        if not match_links(matcher, contract, contract_data["direct_links"], pc, self.pc_data["direct_links"], verbosity=self.verbosity, match_all = True):
-            return False
-
-        if not match_links(matcher, contract, contract_data["backward_links"], pc, self.pc_data["backward_links"], verbosity=self.verbosity, match_all = True):
-            return False
-
-        return True
+    # def match(self, contract, contract_data, pc):
+    #
+    #     #print("Contract data: " + str(contract_data))
+    #     #print("PC data: " + str(self.pc_data))
+    #
+    #     matcher = HimesisMatcher(pc, contract, disambig_matching = True)
+    #
+    #     if not match_links(matcher, contract, contract_data["direct_links"], pc, self.pc_data["direct_links"], verbosity=self.verbosity, match_all = True):
+    #         return False
+    #
+    #     if not match_links(matcher, contract, contract_data["backward_links"], pc, self.pc_data["backward_links"], verbosity=self.verbosity, match_all = True):
+    #         return False
+    #
+    #     return True

@@ -230,7 +230,7 @@ class Slicer():
 
         print("Slicing for: " + contract_name)
 
-        data = decompose_graph(self.rules[rule_name], verbosity = 0)
+        data = decompose_graph(contract, verbosity = 0)
         self.direct_links[contract_name] = data["direct_links"]
         self.backward_links[contract_name] = data["backward_links"]
         self.match_elements[contract_name] = data["match_elements"]

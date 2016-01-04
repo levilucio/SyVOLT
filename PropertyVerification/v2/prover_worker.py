@@ -25,6 +25,8 @@ class prover_worker(Process):
 
     def run(self):
 
+        print("Starting contract prover worker")
+
         while True:
 
             pc, pc_name = self.pc_queue.get()
