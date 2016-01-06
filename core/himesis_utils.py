@@ -244,9 +244,18 @@ def graph_to_dot(name, g, verbosity = 0):
 
 
     if len(name) > 100:
-        name = name.replace("_", "")
+        replace_tokens = [["HEmptyPathCondition", ""],
+                          ["_", ""],["a", ""],["e", ""],["i", ""],
+                          ["o", ""],["u", ""],["y", ""],["-", ""],
+                          ["0", ""], ["1", ""], ["2", ""]]
 
-    name = name[-240:]
+        for rt, rp in replace_tokens:
+            #if len(name) < 240:
+            #    break
+
+            name = name.replace(rt, rp)
+
+    name = name[:240]
 
     try:
         svg_filename = './dot/' + name + '.svg'
@@ -554,6 +563,10 @@ def load_class(full_class_string, args = None):
     if not succeed:
         from os import path
         print("File: " + full_class_string)
+
+        #for f in os.listdir(directory):
+        #    print(f)
+
         print("Exists: " + str(path.isfile(full_class_string)))
         raise Exception("Could not load module: " + module_name)
 
