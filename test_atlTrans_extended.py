@@ -146,7 +146,7 @@ class Test:
             self.atomic_contracts = [contract]
 
             print("Number rules before: " + str(len(self.rules)))
-            self.rules, self.transformation = slicer.slice_transformation(contract)
+            self.new_rules, self.new_transformation = slicer.slice_transformation(contract)
             print("Number rules after: " + str(len(self.rules)))
 
 
@@ -182,7 +182,7 @@ class Test:
          self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
             pyramify.ramify_directory("ExFamToPerson/transformation/", self.transformation)
 
-        pyramify.set_supertypes(self.superclasses_dict, self.rules, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators)
+        pyramify.set_supertypes(self.superclasses_dict, self.rules, self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators)
 
         #raise Exception()
 
