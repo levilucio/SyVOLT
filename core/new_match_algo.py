@@ -116,6 +116,7 @@ class NewHimesisMatcher(object):
 
         for iso_match_element in self.pattern_data["isolated_match_elements"]:
 
+            matched_element = False
             #print("Matching iso element: " + str(iso_match_element))
             for node in range(len(self.source_graph.vs)):
 
@@ -125,12 +126,16 @@ class NewHimesisMatcher(object):
                 if nodes_match:
                     iso_link = (iso_match_element, None, None)
                     node_link = (node, None, None)
+                    matched_element = True
 
                     try:
                         link_matches[iso_link].append(node_link)
                     except KeyError:
                         link_matches[iso_link] = [node_link]
 
+            if not matched_element:
+                return
+            
         links = [
             [self.pattern_data["direct_links"], self.source_data["direct_links"]],
             [self.pattern_data["backward_links"], self.source_data["backward_links"]],
