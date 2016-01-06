@@ -18,6 +18,9 @@ class NewHimesisMatcher(object):
         source_data = pred1
         patt_data = pred2
 
+        self.pred1 = pred1
+        self.pred2 = pred2
+
         if source_data:
             self.source_data = source_data
         else:
@@ -61,8 +64,22 @@ class NewHimesisMatcher(object):
 
     def match_iter(self, context = {}):
         # print(self.pattern_graph.name + " vs " + self.source_graph.name)
-        # if "Hlayer1rule0" in self.pattern_graph.name\
-        #         and "L1R0" in self.source_graph.name:
+
+
+        # try:
+        #     mms = self.source_graph.vs["mm__"]
+        # except KeyError:
+        #     mms = []
+        #
+        # try:
+        #     attr1 = self.source_graph.vs["attr1"]
+        # except KeyError:
+        #     attr1 = []
+
+        # if "DaughterMother" in self.pattern_graph.name:# and "mothers" in attr1:
+        #
+        #
+        #     #print("Source: " + self.source_graph.name)
         #     self.debug = True
         #     self.compare_to_old = True
         #     graph_to_dot("z_source_" + self.source_graph.name, self.source_graph)
@@ -135,7 +152,7 @@ class NewHimesisMatcher(object):
 
             if not matched_element:
                 return
-            
+
         links = [
             [self.pattern_data["direct_links"], self.source_data["direct_links"]],
             [self.pattern_data["backward_links"], self.source_data["backward_links"]],
@@ -170,6 +187,16 @@ class NewHimesisMatcher(object):
                         print("\nChecking Graph " + self.source_graph.name + " nodes:")
                         self.print_link(self.source_graph, graph_n0_n, graph_n1_n, graph_link_n)
 
+                    if patt_link_n is not None and graph_link_n is not None:
+                        nodes_match_link = self.match_nodes(graph_link_n, patt_link_n)
+                    else:
+                        nodes_match_link = False
+
+                    if not nodes_match_link:
+                        if self.debug:
+                            print("Link doesn't match")
+                        continue
+
                     nodes_match_1 = self.match_nodes(graph_n0_n, patt0_n)
 
                     nodes_match_2 = self.match_nodes(graph_n1_n, patt1_n)
@@ -179,10 +206,7 @@ class NewHimesisMatcher(object):
                     nodes_match_4 = self.match_nodes(graph_n0_n, patt1_n)
 
 
-                    if patt_link_n is not None and graph_link_n is not None:
-                        nodes_match_link = self.match_nodes(graph_link_n, patt_link_n)
-                    else:
-                        nodes_match_link = False
+
 
                     nodes_match = ((nodes_match_1 and nodes_match_2) or (nodes_match_3 and nodes_match_4)) and nodes_match_link
 
@@ -321,7 +345,7 @@ class NewHimesisMatcher(object):
         targetMM = self.pattern_mms[patt_node]
 
         if sourceMM != targetMM:
-            # if debug:
+            # if self.debug:
             #     print("Source: " + sourceMM)
             #     print("Target: " + targetMM)
 
@@ -372,7 +396,8 @@ class NewHimesisMatcher(object):
         #     return True
 
         are_feasible = self.are_semantically_feasible(graph_node, patt_node)
-        # print("Are feasible: " + str(are_feasible))
+        if self.debug:
+            print("Are feasible: " + str(are_feasible))
         return are_feasible
 
     def are_semantically_feasible(self, src_node_num, patt_node_num):
@@ -463,6 +488,12 @@ class NewHimesisMatcher(object):
             try:
                 # This is equivalent to: if not eval_attrLbl(attr_value, currNode)
                 if not checkConstraint(src_node[attr_name], src_node):
+
+                    if self.debug:
+                        print("Constraint failed: " + attr_name)
+                        print(src_node[attr_name])
+                        print(patt_node["MT_pre__" + attr_name])
+                        print(methName)
                     return False
             except Exception as e:
                 # TODO: This should be a TransformationLanguageSpecificException
