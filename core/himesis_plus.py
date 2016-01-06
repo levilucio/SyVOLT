@@ -2,7 +2,7 @@ from core.himesis import *
 
 #get the postion of this node in the Himesis graph
 def get_node_num(graph, node):
-    for i in range(len(graph.vs)):
+    for i in range(graph.vcount()):
         if graph.vs[i]["GUID__"] == node["GUID__"]:
             return i
     raise Exception("The node " + node["mm__"] + " was not found in this graph")
@@ -12,6 +12,18 @@ def find_nodes_with_mm(graph, mm_names):
     return [node for node in graph.vs if node["mm__"] in mm_names]
 
 #=========================
+def get_all_attached(graph):
+
+    attached = [[] for x in range(graph.vcount())]
+
+    for edge in graph.es:
+        attached[edge.source].append(edge.target)
+        attached[edge.target].append(edge.source)
+
+    for i in range(len(attached)):
+        attached[i].append(i)
+
+    return attached
 
 #look for the nodes attached to the link_node
 def look_for_attached(link_node, graph):
