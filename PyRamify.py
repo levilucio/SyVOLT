@@ -1882,7 +1882,7 @@ class PyRamify:
 
         print("Finished changing property prover metamodel\n")
 
-    def set_supertypes(self, superclasses_dict, rules, ruleTraceCheckers, matchRulePatterns, ruleCombinators):
+    def set_supertypes(self, superclasses_dict, rules, transformation, ruleTraceCheckers, matchRulePatterns, ruleCombinators):
 
         print("Changing superclasses for rules and rule matchers")
 
@@ -1890,6 +1890,10 @@ class PyRamify:
 
         for rule in rules.values():
             rule["superclasses_dict"] = superclasses_dict
+
+        for layer in transformation:
+            for rule in layer:
+                rule["superclasses_dict"] = superclasses_dict
 
         for ruleTraceChecker in ruleTraceCheckers.values():
 
