@@ -162,7 +162,7 @@ class Prover():
             self.rules, self.transformation = slicer.slice_transformation(contract)
             print("Number rules after: " + str(len(self.rules)))
 
-            #raise Exception()
+            #raise Exception()        
 
 
         for layer in self.transformation:
@@ -175,7 +175,7 @@ class Prover():
 
 
         inputMM = "./mbeddr2C_MM/ecore_metamodels/Module.ecore"
-        pc_set = PathConditionGenerator(self.transformation, inputMM, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
+        pc_set = PathConditionGenerator(self.transformation, outputMM, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
 
         ts0 = time.time()
         pc_set.build_path_conditions()
