@@ -74,24 +74,28 @@ class HacommitteeSolveRefCompanyCityAssociationCommittee(Himesis):
         self.add_node()
         self.vs[11]["attr1"] = """isIn"""
         self.vs[11]["mm__"] = """directLink_S"""
+        # match association City--companies-->Company node
+        self.add_node()
+        self.vs[12]["attr1"] = """companies"""
+        self.vs[12]["mm__"] = """directLink_S"""
         
         # apply association Association--committee-->Committee node
         self.add_node()
-        self.vs[12]["attr1"] = """committee"""
-        self.vs[12]["mm__"] = """directLink_T"""
+        self.vs[13]["attr1"] = """committee"""
+        self.vs[13]["mm__"] = """directLink_T"""
         
         # backward association Company---->Association node
         self.add_node()
 
-        self.vs[13]["mm__"] = """backward_link"""
+        self.vs[14]["mm__"] = """backward_link"""
         # backward association City---->Association node
         self.add_node()
 
-        self.vs[14]["mm__"] = """backward_link"""
+        self.vs[15]["mm__"] = """backward_link"""
         # backward association City---->Committee node
         self.add_node()
 
-        self.vs[15]["mm__"] = """backward_link"""
+        self.vs[16]["mm__"] = """backward_link"""
         
         
         
@@ -110,14 +114,16 @@ class HacommitteeSolveRefCompanyCityAssociationCommittee(Himesis):
                 (10,9), # apply_contains -> apply_class Committee()
                 (3,11), # match_class Company() -> association isIn
                 (11,5), # association isIn  -> match_class City()
-                (7,12), # apply_class Association() -> association committee
-                (12,9), # association committee  -> apply_class Committee()
-                (7,13), # apply_class Association() -> backward_association
-                (13,3), #  backward_association -> apply_class Company()
+                (5,12), # match_class City() -> association companies
+                (12,3), # association companies  -> match_class Company()
+                (7,13), # apply_class Association() -> association committee
+                (13,9), # association committee  -> apply_class Committee()
                 (7,14), # apply_class Association() -> backward_association
-                (14,5), #  backward_association -> apply_class City()
-                (9,15), # apply_class Committee() -> backward_association
+                (14,3), #  backward_association -> apply_class Company()
+                (7,15), # apply_class Association() -> backward_association
                 (15,5), #  backward_association -> apply_class City()
+                (9,16), # apply_class Committee() -> backward_association
+                (16,5), #  backward_association -> apply_class City()
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])

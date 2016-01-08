@@ -106,24 +106,28 @@ class HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacility
         self.add_node()
         self.vs[19]["attr1"] = """students"""
         self.vs[19]["mm__"] = """directLink_S"""
+        # match association Child--goesTo-->School node
+        self.add_node()
+        self.vs[20]["attr1"] = """goesTo"""
+        self.vs[20]["mm__"] = """directLink_S"""
         
         # apply association District--facilities-->OrdinaryFacility node
         self.add_node()
-        self.vs[20]["attr1"] = """facilities"""
-        self.vs[20]["mm__"] = """directLink_T"""
+        self.vs[21]["attr1"] = """facilities"""
+        self.vs[21]["mm__"] = """directLink_T"""
         # apply association OrdinaryFacility--members-->Person node
         self.add_node()
-        self.vs[21]["attr1"] = """members"""
-        self.vs[21]["mm__"] = """directLink_T"""
+        self.vs[22]["attr1"] = """members"""
+        self.vs[22]["mm__"] = """directLink_T"""
         
         # backward association Neighborhood---->District node
         self.add_node()
 
-        self.vs[22]["mm__"] = """backward_link"""
+        self.vs[23]["mm__"] = """backward_link"""
         # backward association Child---->Person node
         self.add_node()
 
-        self.vs[23]["mm__"] = """backward_link"""
+        self.vs[24]["mm__"] = """backward_link"""
         
         
         
@@ -152,14 +156,16 @@ class HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacility
                 (18,7), # association ordinary  -> match_class Service()
                 (5,19), # match_class School() -> association students
                 (19,9), # association students  -> match_class Child()
-                (11,20), # apply_class District() -> association facilities
-                (20,13), # association facilities  -> apply_class OrdinaryFacility()
-                (13,21), # apply_class OrdinaryFacility() -> association members
-                (21,15), # association members  -> apply_class Person()
-                (11,22), # apply_class District() -> backward_association
-                (22,3), #  backward_association -> apply_class Neighborhood()
-                (15,23), # apply_class Person() -> backward_association
-                (23,9), #  backward_association -> apply_class Child()
+                (9,20), # match_class Child() -> association goesTo
+                (20,5), # association goesTo  -> match_class School()
+                (11,21), # apply_class District() -> association facilities
+                (21,13), # association facilities  -> apply_class OrdinaryFacility()
+                (13,22), # apply_class OrdinaryFacility() -> association members
+                (22,15), # association members  -> apply_class Person()
+                (11,23), # apply_class District() -> backward_association
+                (23,3), #  backward_association -> apply_class Neighborhood()
+                (15,24), # apply_class Person() -> backward_association
+                (24,9), #  backward_association -> apply_class Child()
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])

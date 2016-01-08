@@ -90,20 +90,24 @@ class HtworkersSolveRefCompanyParentCityTownHallPerson(Himesis):
         self.add_node()
         self.vs[15]["attr1"] = """companies"""
         self.vs[15]["mm__"] = """directLink_S"""
+        # match association Company--isIn-->City node
+        self.add_node()
+        self.vs[16]["attr1"] = """isIn"""
+        self.vs[16]["mm__"] = """directLink_S"""
         
         # apply association TownHall--workers-->Person node
         self.add_node()
-        self.vs[16]["attr1"] = """workers"""
-        self.vs[16]["mm__"] = """directLink_T"""
+        self.vs[17]["attr1"] = """workers"""
+        self.vs[17]["mm__"] = """directLink_T"""
         
         # backward association Parent---->Person node
         self.add_node()
 
-        self.vs[17]["mm__"] = """backward_link"""
+        self.vs[18]["mm__"] = """backward_link"""
         # backward association City---->TownHall node
         self.add_node()
 
-        self.vs[18]["mm__"] = """backward_link"""
+        self.vs[19]["mm__"] = """backward_link"""
         
         
         
@@ -128,12 +132,14 @@ class HtworkersSolveRefCompanyParentCityTownHallPerson(Himesis):
                 (14,7), # association livesIn  -> match_class City()
                 (7,15), # match_class City() -> association companies
                 (15,3), # association companies  -> match_class Company()
-                (9,16), # apply_class TownHall() -> association workers
-                (16,11), # association workers  -> apply_class Person()
-                (11,17), # apply_class Person() -> backward_association
-                (17,5), #  backward_association -> apply_class Parent()
-                (9,18), # apply_class TownHall() -> backward_association
-                (18,7), #  backward_association -> apply_class City()
+                (3,16), # match_class Company() -> association isIn
+                (16,7), # association isIn  -> match_class City()
+                (9,17), # apply_class TownHall() -> association workers
+                (17,11), # association workers  -> apply_class Person()
+                (11,18), # apply_class Person() -> backward_association
+                (18,5), #  backward_association -> apply_class Parent()
+                (9,19), # apply_class TownHall() -> backward_association
+                (19,7), #  backward_association -> apply_class City()
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])

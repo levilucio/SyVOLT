@@ -90,24 +90,28 @@ class HcoassociationsSolveRefCountryCityCompanyCommunityAssociation(Himesis):
         self.add_node()
         self.vs[15]["attr1"] = """companies"""
         self.vs[15]["mm__"] = """directLink_S"""
+        # match association Company--isIn-->City node
+        self.add_node()
+        self.vs[16]["attr1"] = """isIn"""
+        self.vs[16]["mm__"] = """directLink_S"""
         
         # apply association Community--associations-->Association node
         self.add_node()
-        self.vs[16]["attr1"] = """associations"""
-        self.vs[16]["mm__"] = """directLink_T"""
+        self.vs[17]["attr1"] = """associations"""
+        self.vs[17]["mm__"] = """directLink_T"""
         
         # backward association Country---->Community node
         self.add_node()
 
-        self.vs[17]["mm__"] = """backward_link"""
+        self.vs[18]["mm__"] = """backward_link"""
         # backward association City---->Association node
         self.add_node()
 
-        self.vs[18]["mm__"] = """backward_link"""
+        self.vs[19]["mm__"] = """backward_link"""
         # backward association Company---->Association node
         self.add_node()
 
-        self.vs[19]["mm__"] = """backward_link"""
+        self.vs[20]["mm__"] = """backward_link"""
         
         
         
@@ -132,14 +136,16 @@ class HcoassociationsSolveRefCountryCityCompanyCommunityAssociation(Himesis):
                 (14,7), # association companies  -> match_class Company()
                 (5,15), # match_class City() -> association companies
                 (15,7), # association companies  -> match_class Company()
-                (9,16), # apply_class Community() -> association associations
-                (16,11), # association associations  -> apply_class Association()
-                (9,17), # apply_class Community() -> backward_association
-                (17,3), #  backward_association -> apply_class Country()
-                (11,18), # apply_class Association() -> backward_association
-                (18,5), #  backward_association -> apply_class City()
+                (7,16), # match_class Company() -> association isIn
+                (16,5), # association isIn  -> match_class City()
+                (9,17), # apply_class Community() -> association associations
+                (17,11), # association associations  -> apply_class Association()
+                (9,18), # apply_class Community() -> backward_association
+                (18,3), #  backward_association -> apply_class Country()
                 (11,19), # apply_class Association() -> backward_association
-                (19,7), #  backward_association -> apply_class Company()
+                (19,5), #  backward_association -> apply_class City()
+                (11,20), # apply_class Association() -> backward_association
+                (20,7), #  backward_association -> apply_class Company()
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])

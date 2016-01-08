@@ -66,6 +66,10 @@ class HCityCompany2Association(Himesis):
         self.add_node()
         self.vs[9]["attr1"] = """companies"""
         self.vs[9]["mm__"] = """directLink_S"""
+        # match association Company--isIn-->City node
+        self.add_node()
+        self.vs[10]["attr1"] = """isIn"""
+        self.vs[10]["mm__"] = """directLink_S"""
         
         
         
@@ -84,6 +88,8 @@ class HCityCompany2Association(Himesis):
                 (8,7), # apply_contains -> apply_class Association()
                 (3,9), # match_class City() -> association companies
                 (9,5), # association companies  -> match_class Company()
+                (5,10), # match_class Company() -> association isIn
+                (10,3), # association isIn  -> match_class City()
                 (0,2), # matchmodel -> pairedwith
                 (2,1) # pairedwith -> applyModel				
 		])
