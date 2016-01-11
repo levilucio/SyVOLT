@@ -76,7 +76,7 @@ class NewHimesisMatcher(object):
         # except KeyError:
         #     attr1 = []
 
-        # if "DaughterMother" in self.pattern_graph.name:# and "mothers" in attr1:
+        # if "motherFather_Complete" in self.pattern_graph.name:# and "mother" in attr1 and "daughter" in attr1:
         #
         #
         #     #print("Source: " + self.source_graph.name)
@@ -252,14 +252,40 @@ class NewHimesisMatcher(object):
             for k in link_matches.keys():
                 print(str(k) + " : " + str(link_matches[k]))
 
+
+        #HACK:
+        #for family transformation, directLinks are being doubled between families and members
+        #remove these
+        #Alg: remove duplicate matches where the first two nodes match
+
+        for k in link_matches.keys():
+            new_v = []
+
+            v = link_matches[k]
+
+            for original_v in v:
+
+                count = 0
+                for check_v in v:
+
+                    if original_v[0] == check_v[0] and original_v[1] == check_v[1]:
+                        count += 1
+                if count == 1 or len(new_v) == 0:
+                    new_v.append(original_v)
+
+            link_matches[k] = new_v
+
+
         combinations = [[(key, value) for (key, value) in zip(link_matches, values)] for values in
                         product(*link_matches.values())]
 
+        ms_w_disambig = []
+        ms_wo_disambig = []
         for pm in combinations:
             if self.debug:
                 print("Potential match:")
                 print(pm)
-            match_set = self.create_match_set(pm, combinations)
+            match_set, needed_disambig = self.create_match_set(pm, combinations)
 
             if self.debug:
                 print("Match set:")
@@ -267,12 +293,25 @@ class NewHimesisMatcher(object):
 
             if match_set:
 
+                if needed_disambig:
+                    ms_w_disambig.append(match_set)
+                else:
+                    ms_wo_disambig.append(match_set)
 
-                yield match_set
+        if len(ms_wo_disambig) == 0:
+            for ms in ms_w_disambig:
+                yield ms
+        else:
+
+            for ms in ms_wo_disambig:
+                yield ms
 
 
     def create_match_set(self, pm, combinations):
         match_set = {}
+
+        needed_disambig = False
+
         for pair in pm:
             (k, v) = pair
 
@@ -296,22 +335,24 @@ class NewHimesisMatcher(object):
                     if self.debug:
                         print("Already binding")
                         print(str(p) + " : " + str(match_set[p]))
-                    if len(combinations) > 1:
 
-                        #there is already a binding, so ignore this matching possibility
-                        return {}
-                    else:
-                        #this matching would fail unless we allow this
-                        #so this is where disambiguation is needed
-                        pass
-                        #
-                        # print("Already a binding")
-                        # print(pm)
-                        # graph_to_dot("source", self.source_graph)
-                        # graph_to_dot("pattern", self.pattern_graph)
-
-                        # import sys
-                        # sys.exit()
+                    needed_disambig = True
+                    # if len(combinations) > 1:
+                    #
+                    #     #there is already a binding, so ignore this matching possibility
+                    #     return {}
+                    # else:
+                    #     #this matching would fail unless we allow this
+                    #     #so this is where disambiguation is needed
+                    #     pass
+                    #     #
+                    #     # print("Already a binding")
+                    #     # print(pm)
+                    #     # graph_to_dot("source", self.source_graph)
+                    #     # graph_to_dot("pattern", self.pattern_graph)
+                    #
+                    #     # import sys
+                    #     # sys.exit()
 
                 match_set[p] = s
 
@@ -319,7 +360,7 @@ class NewHimesisMatcher(object):
             print("Match set:")
             print(pm)
             print(match_set)
-        return match_set
+        return match_set, needed_disambig
 
     def print_link(self, graph, n0, n1, nlink):
         if nlink is not None:
@@ -489,11 +530,11 @@ class NewHimesisMatcher(object):
                 # This is equivalent to: if not eval_attrLbl(attr_value, currNode)
                 if not checkConstraint(src_node[attr_name], src_node):
 
-                    if self.debug:
-                        print("Constraint failed: " + attr_name)
-                        print(src_node[attr_name])
-                        print(patt_node["MT_pre__" + attr_name])
-                        print(methName)
+                    # if self.debug:
+                    #     print("Constraint failed: " + attr_name)
+                    #     print(src_node[attr_name])
+                    #     print(patt_node["MT_pre__" + attr_name])
+                    #     print(methName)
                     return False
             except Exception as e:
                 # TODO: This should be a TransformationLanguageSpecificException
