@@ -1,7 +1,7 @@
 from profiler import *
 
 #from PropertyVerification.v2.disambiguate import Disambiguator
-from core.himesis_utils import graph_to_dot
+from core.himesis_utils import graph_to_dot, expand_graph
 
 import multiprocessing
 from multiprocessing import Manager
@@ -123,9 +123,10 @@ class ContractProver():
                 print("More than " + str(num_contracts_to_print) + " contracts")
 
             print ('\nSmallest Path Conditions where the contract succeeded:')
-            smallest_pc_set = self.find_smallest_pc(contract_succeeded_pcs[contract_name])
-            for pc_name in smallest_pc_set:
+            success_smallest_pc_set = self.find_smallest_pc(contract_succeeded_pcs[contract_name])
+            for pc_name in success_smallest_pc_set:
                 print(pc_name)
+
             print('\n')
 
             print("\nFailed PCs for " + contract_name + ":")
@@ -136,10 +137,18 @@ class ContractProver():
                 print("More than " + str(num_contracts_to_print) + " contracts")
 
             print ('\nSmallest Path Conditions where the contract fails:')
-            smallest_pc_set = self.find_smallest_pc(contract_failed_pcs[contract_name])
-            for pc_name in smallest_pc_set:
+            failed_smallest_pc_set = self.find_smallest_pc(contract_failed_pcs[contract_name])
+            for pc_name in failed_smallest_pc_set:
                 print(pc_name)
             print('\n')
+
+            for pc, pc_name in pathCondGen.get_path_conditions(expand = False):
+                if pc_name in success_smallest_pc_set:
+                    pc = expand_graph(pc)
+                    graph_to_dot(contract_name + "_success_" + pc_name, pc)
+                elif pc_name in failed_smallest_pc_set:
+                    pc = expand_graph(pc)
+                    graph_to_dot(contract_name + "_failed_" + pc_name, pc)
 
 
         proof_time = time.time() - start_time
