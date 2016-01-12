@@ -24,7 +24,7 @@ from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 from PropertyVerification.v2.atomic_contract import AtomicContract
 from PropertyVerification.v2.ContractProver import ContractProver
 
-from core.himesis_utils import graph_to_dot
+from core.himesis_utils import graph_to_dot, load_directory
 from util.test_script_utils import select_rules, get_sub_and_super_classes
 from util.slicer import Slicer
 
@@ -109,45 +109,26 @@ class Prover():
         pre_metamodel = ["MT_pre__S_MM", "MoTifRule"]
         post_metamodel = ["MT_post__T_MM", "MoTifRule"]
 
-        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict, "[%=dsltransInstallPath%]")
+        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict, superclasses_dict, dsltransInstallDir = "[%=dsltransInstallPath%]")
         
         # go through all the matchers, combinators and tracers to add polymorphism on all classes in an inheritance hierarchy
                                                                   
         
-        # add polymorphism for the matchers
-        for matcher_key in self.matchRulePatterns.keys():
-            self.matchRulePatterns[matcher_key][0].condition["superclasses_dict"] = superclasses_dict
-            
-        # add polymorphism for the combinators
-        for combs_key in self.ruleCombinators.keys():
-            if self.ruleCombinators[combs_key] != None:
-                for combinator in self.ruleCombinators[combs_key]:
-                    combinator[0].condition["superclasses_dict"] = superclasses_dict
+        pyramify.set_supertypes(superclasses_dict, self.rules, self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators)
 
-        # add polymorphism for the tracers
-        for tracer_key in self.ruleTraceCheckers.keys():
-            if self.ruleTraceCheckers[tracer_key] != None:
-                self.ruleTraceCheckers[tracer_key].condition["superclasses_dict"] = superclasses_dict    
-            
-        #also make sure the transformation has this information
-        for rule in self.rules.values():
-            rule["superclasses_dict"] = superclasses_dict
-
-        for layer in self.transformation:
-            for rule in layer:
-                rule["superclasses_dict"] = superclasses_dict
             
         # load the contracts, and add polymorphism
 
         if (args.draw_svg): 
         [%
         for (ac in inputProperties!AtomicContract) { %]
-        	graph_to_dot("property_[%=ac.Name%]_isolated", H[%=ac.Name%]_IsolatedLHS())
-        	graph_to_dot("property_[%=ac.Name%]_connected", H[%=ac.Name%]_ConnectedLHS())
-        	graph_to_dot("property_[%=ac.Name%]_complete", H[%=ac.Name%]_CompleteLHS())
+                graph_to_dot("property_[%=ac.Name%]_isolated", H[%=ac.Name%]_IsolatedLHS())
+                graph_to_dot("property_[%=ac.Name%]_connected", H[%=ac.Name%]_ConnectedLHS())
+                graph_to_dot("property_[%=ac.Name%]_complete", H[%=ac.Name%]_CompleteLHS())
         [%}%]       
 
         self.atomic_contracts = []
+        self.if_then_contracts = []
         
         [%
 	    var atomicContractIndex = 0;
@@ -171,10 +152,10 @@ class Prover():
         if args.slice > 0:
             print("Slicing for contract number " + str(args.slice))
             contract = self.atomic_contracts[args.slice - 1]
-            self.rules, self.transformation = slice_transformation(self.rules, self.transformation, contract, args)
+            self.new_rules, self.new_transformation = slice_transformation(self.rules, self.transformation, contract, args)
             
             
-		# generate path conditions
+        # generate path conditions
         pc_set = PathConditionGenerator(self.transformation, "[%=outputMM%]", self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
     
         ts0 = time.time()
@@ -193,7 +174,7 @@ class Prover():
         
         contract_prover = ContractProver()
 
-        contract_prover.prove_contracts(pc_set, self.atomic_contracts, None)#self.if_then_contracts)
+        contract_prover.prove_contracts(pc_set, self.atomic_contracts, self.if_then_contracts)
         print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
         print("Number of path conditions: " + str(pc_set.num_path_conditions))
 
