@@ -14,7 +14,7 @@
 		      read="true"
 		      store="false"
 		      metamodeluri="http://dsltrans/2.0"
-		      modelfile="examples/testData_ER_Copier/ERCopier_out.dsltrans"
+		      modelfile="examples/testData_ERCopier/ERCopier_out.dsltrans"
 		    />
 		
 		
@@ -24,7 +24,7 @@
 				      read="true"
 				      store="false"
 				      metamodeluri="http://syvolt/2.0"
-				      modelfile="examples/testData_EC/EC_prop1.syvolt"
+				      modelfile="examples/testData_ERCopier/ERCopierProp.syvolt"
 				    />
 		
 

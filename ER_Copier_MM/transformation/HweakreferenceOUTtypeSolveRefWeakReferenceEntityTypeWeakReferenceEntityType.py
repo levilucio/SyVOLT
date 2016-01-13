@@ -1,103 +1,122 @@
-
-
 from core.himesis import Himesis
+import uuid
 
 class HweakreferenceOUTtypeSolveRefWeakReferenceEntityTypeWeakReferenceEntityType(Himesis):
     def __init__(self):
+
+    
+    
         """
-        Creates the himesis graph representing the AToM3 model HweakreferenceOUTtypeSolveRefWeakReferenceEntityTypeWeakReferenceEntityType.
+        Creates the himesis graph representing the DSLTrans rule weakreferenceOUTtypeSolveRefWeakReferenceEntityTypeWeakReferenceEntityType.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(HweakreferenceOUTtypeSolveRefWeakReferenceEntityTypeWeakReferenceEntityType, self).__init__(name='HweakreferenceOUTtypeSolveRefWeakReferenceEntityTypeWeakReferenceEntityType', num_nodes=27, edges=[])
+        super(HweakreferenceOUTtypeSolveRefWeakReferenceEntityTypeWeakReferenceEntityType, self).__init__(name='HweakreferenceOUTtypeSolveRefWeakReferenceEntityTypeWeakReferenceEntityType', num_nodes=0, edges=[])
         
-        # Add the edges
-        self.add_edges([[0, 6], [6, 5], [0, 8], [8, 7], [1, 10], [10, 9], [1, 12], [12, 11], [5, 3], [3, 7], [9, 4], [4, 11], [9, 13], [13, 5], [11, 14], [14, 7], [9, 15], [15, 16], [17, 18], [18, 16], [17, 19], [19, 20], [11, 21], [21, 22], [23, 24], [24, 22], [23, 25], [25, 26], [0, 2], [2, 1]])
+        
         # Set the graph attributes
         self["mm__"] = ['HimesisMM']
-        self["name"] = """weakreferenceOUTtypeSolveRefWeakReferenceEntityTypeWeakReferenceEntityType"""
-        self["GUID__"] = 4080453491471262519
         
-        # Set the node attributes
+        self["name"] = """weakreferenceOUTtypeSolveRefWeakReferenceEntityTypeWeakReferenceEntityType"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'weakreferenceOUTtypeSolveRefWeakReferenceEntityTypeWeakReferenceEntityType')
+        
+        # match model. We only support one match model
+        self.add_node()
         self.vs[0]["mm__"] = """MatchModel"""
-        self.vs[0]["GUID__"] = 1920764381032731211
+        
+        # apply model node
+        self.add_node()
         self.vs[1]["mm__"] = """ApplyModel"""
-        self.vs[1]["GUID__"] = 1738116829153478450
+        
+        # paired with relation between match and apply models
+        self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        self.vs[2]["GUID__"] = 8764283346188768474
-        self.vs[3]["associationType"] = """type"""
-        self.vs[3]["mm__"] = """directLink_S"""
-        self.vs[3]["GUID__"] = 459337344017669956
-        self.vs[4]["associationType"] = """type"""
-        self.vs[4]["mm__"] = """directLink_T"""
-        self.vs[4]["GUID__"] = 4457309244742973905
-        self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """WeakReference"""
-        self.vs[5]["mm__"] = """WeakReference"""
-        self.vs[5]["cardinality"] = """+"""
-        self.vs[5]["GUID__"] = 8045308626894474589
-        self.vs[6]["mm__"] = """match_contains"""
-        self.vs[6]["GUID__"] = 1502135050595060619
-        self.vs[7]["name"] = """"""
-        self.vs[7]["classtype"] = """EntityType"""
-        self.vs[7]["mm__"] = """EntityType"""
-        self.vs[7]["cardinality"] = """+"""
-        self.vs[7]["GUID__"] = 6152427641992171396
-        self.vs[8]["mm__"] = """match_contains"""
-        self.vs[8]["GUID__"] = 5867178161493068235
-        self.vs[9]["name"] = """"""
-        self.vs[9]["classtype"] = """WeakReference"""
-        self.vs[9]["mm__"] = """WeakReference"""
-        self.vs[9]["cardinality"] = """1"""
-        self.vs[9]["GUID__"] = 2974519260001712235
-        self.vs[10]["mm__"] = """apply_contains"""
-        self.vs[10]["GUID__"] = 4001591776002825381
-        self.vs[11]["name"] = """"""
-        self.vs[11]["classtype"] = """EntityType"""
-        self.vs[11]["mm__"] = """EntityType"""
-        self.vs[11]["cardinality"] = """1"""
-        self.vs[11]["GUID__"] = 8443976599609408032
-        self.vs[12]["mm__"] = """apply_contains"""
-        self.vs[12]["GUID__"] = 8074149749932353564
-        self.vs[13]["mm__"] = """backward_link"""
-        self.vs[13]["type"] = """ruleDef"""
-        self.vs[13]["GUID__"] = 90349976101623652
-        self.vs[14]["mm__"] = """backward_link"""
-        self.vs[14]["type"] = """ruleDef"""
-        self.vs[14]["GUID__"] = 7308485745369035206
-        self.vs[15]["mm__"] = """hasAttribute_T"""
-        self.vs[15]["GUID__"] = 7715931013022774826
-        self.vs[16]["name"] = """ApplyAttribute"""
-        self.vs[16]["Type"] = """'String'"""
-        self.vs[16]["mm__"] = """Attribute"""
-        self.vs[16]["GUID__"] = 6269528846505367385
-        self.vs[17]["name"] = """eq_"""
-        self.vs[17]["mm__"] = """Equation"""
-        self.vs[17]["GUID__"] = 2542479745240735243
-        self.vs[18]["mm__"] = """leftExpr"""
-        self.vs[18]["GUID__"] = 7579668999813767891
-        self.vs[19]["mm__"] = """rightExpr"""
-        self.vs[19]["GUID__"] = 2630780284389837988
-        self.vs[20]["name"] = """solveRef"""
-        self.vs[20]["Type"] = """'String'"""
-        self.vs[20]["mm__"] = """Constant"""
-        self.vs[20]["GUID__"] = 6574816033302756807
-        self.vs[21]["mm__"] = """hasAttribute_T"""
-        self.vs[21]["GUID__"] = 1823830582434114181
-        self.vs[22]["name"] = """ApplyAttribute"""
-        self.vs[22]["Type"] = """'String'"""
-        self.vs[22]["mm__"] = """Attribute"""
-        self.vs[22]["GUID__"] = 5697967559823154891
-        self.vs[23]["name"] = """eq_"""
-        self.vs[23]["mm__"] = """Equation"""
-        self.vs[23]["GUID__"] = 2407615657324689520
-        self.vs[24]["mm__"] = """leftExpr"""
-        self.vs[24]["GUID__"] = 8056754885868894455
-        self.vs[25]["mm__"] = """rightExpr"""
-        self.vs[25]["GUID__"] = 7736749965857131921
-        self.vs[26]["name"] = """solveRef"""
-        self.vs[26]["Type"] = """'String'"""
-        self.vs[26]["mm__"] = """Constant"""
-        self.vs[26]["GUID__"] = 9163383259287040656
+ 
+        
+        # match class WeakReference() node
+        self.add_node()
 
+        self.vs[3]["mm__"] = """WeakReference""" 
+        self.vs[3]["attr1"] = """+""" 
+        # match_contains node for class WeakReference()
+        self.add_node()
+        self.vs[4]["mm__"] = """match_contains"""
+        # match class EntityType() node
+        self.add_node()
+
+        self.vs[5]["mm__"] = """EntityType""" 
+        self.vs[5]["attr1"] = """+""" 
+        # match_contains node for class EntityType()
+        self.add_node()
+        self.vs[6]["mm__"] = """match_contains"""
+        
+        
+        # apply class WeakReference() node
+        self.add_node()
+
+        self.vs[7]["mm__"] = """WeakReference""" 
+        self.vs[7]["attr1"] = """1"""
+        # apply_contains node for class WeakReference()
+        self.add_node()
+        self.vs[8]["mm__"] = """apply_contains"""
+        # apply class EntityType() node
+        self.add_node()
+
+        self.vs[9]["mm__"] = """EntityType""" 
+        self.vs[9]["attr1"] = """1"""
+        # apply_contains node for class EntityType()
+        self.add_node()
+        self.vs[10]["mm__"] = """apply_contains"""
+        
+        
+        # match association WeakReference--type-->EntityType node
+        self.add_node()
+        self.vs[11]["attr1"] = """type"""
+        self.vs[11]["mm__"] = """directLink_S"""
+        
+        # apply association WeakReference--type-->EntityType node
+        self.add_node()
+        self.vs[12]["attr1"] = """type"""
+        self.vs[12]["mm__"] = """directLink_T"""
+        
+        # backward association WeakReference---->WeakReference node
+        self.add_node()
+
+        self.vs[13]["mm__"] = """backward_link"""
+        # backward association EntityType---->EntityType node
+        self.add_node()
+
+        self.vs[14]["mm__"] = """backward_link"""
+        
+        
+        
+        
+        
+        
+        # Add the edges
+        self.add_edges([
+                (0,4), # matchmodel -> match_contains
+                (4,3), # match_contains -> match_class WeakReference()
+                (0,6), # matchmodel -> match_contains
+                (6,5), # match_contains -> match_class EntityType()
+                (1,8), # applymodel -> apply_contains
+                (8,7), # apply_contains -> apply_class WeakReference()
+                (1,10), # applymodel -> apply_contains
+                (10,9), # apply_contains -> apply_class EntityType()
+                (3,11), # match_class WeakReference() -> association type
+                (11,5), # association type  -> match_class EntityType()
+                (7,12), # apply_class WeakReference() -> association type
+                (12,9), # association type  -> apply_class EntityType()
+                (7,13), # apply_class WeakReference() -> backward_association
+                (13,3), #  backward_association -> apply_class WeakReference()
+                (9,14), # apply_class EntityType() -> backward_association
+                (14,5), #  backward_association -> apply_class EntityType()
+                (0,2), # matchmodel -> pairedwith
+                (2,1) # pairedwith -> applyModel				
+		])
+
+        # Add the attribute equations
+        self["equations"] = [((7,'ApplyAttribute'),('constant','solveRef')), ((9,'ApplyAttribute'),('constant','solveRef')), ]
+
+        

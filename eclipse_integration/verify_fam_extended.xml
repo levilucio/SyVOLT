@@ -8,6 +8,7 @@
 		<echo message= "${absolute.backend.path}"/>
 		<echo message= "${dsltrans.install.path}"/>
 		
+		<echo message= "Loading model"/>
 		<epsilon.emf.loadModel
 		      name="inputTransformation"
 		      read="true"
@@ -17,7 +18,7 @@
 		    />
 		
 		
-		
+		<echo message= "Loading contracts"/>
 		<epsilon.emf.loadModel
 				      name="inputProperties"
 				      read="true"
@@ -27,15 +28,17 @@
 				    />
 		
 
-		
+		<echo message= "Creating transformation"/>
 		<epsilon.egl src="backend/DSLTrans2Himesis.egl">
 			<model ref="inputTransformation"/>
 		</epsilon.egl>
 		
+		<echo message= "Creating contracts"/>
 		<epsilon.egl src="backend/SyVolt2Himesis.egl">
 			<model ref="inputProperties"/>
 		</epsilon.egl>
 		
+		<echo message= "Creating top-level script"/>
 		<epsilon.egl src="backend/GenerateTopLevelPython.egl">
 			<model ref="inputTransformation"/>
 			<model ref="inputProperties"/>
@@ -43,6 +46,7 @@
 			<parameter name="dsltransInstallPath" value="${dsltrans.install.path}"/>
 		</epsilon.egl>
 
+		<echo message= "Running script"/>
 		<!--
 		<exec dir="backend/generated" executable="python">
 		    <arg line="toplevel.py -skip_tests -no_svg -verbosity=1"/>
