@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ruletypesmm:Trafo xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ruletypesmm="http://ruletypesmm/1.0" name="ERCopier">
+  <rules name="ERModel">
+    <inTypes>src_ERModel</inTypes>
+    <outTypes>trg_ERModel</outTypes>
+    <allNavigationPaths>src_ERModel</allNavigationPaths>
+    <allNavigationPaths>trg_ERModel</allNavigationPaths>
+    <allNavigationPaths>src_ERModel.name</allNavigationPaths>
+    <allNavigationPaths>src_ERModel.entities</allNavigationPaths>
+    <allNavigationPaths>trg_ERModel.name</allNavigationPaths>
+    <allNavigationPaths>trg_ERModel.entities</allNavigationPaths>
+    <bindingFeatures>trg_ERModel.name</bindingFeatures>
+    <bindingFeatures>trg_ERModel.entities</bindingFeatures>
+    <allFootPrints>src_ERModel</allFootPrints>
+    <allFootPrints>trg_ERModel</allFootPrints>
+    <allFootPrints>src_ERModel.entities</allFootPrints>
+    <allFootPrints>src_EntityType</allFootPrints>
+    <allFootPrints>trg_ERModel.name</allFootPrints>
+    <allFootPrints>trg_ERModel.entities</allFootPrints>
+    <allFootPrints>trg_EntityType</allFootPrints>
+    <outFeatures>src_ERModel.name</outFeatures>
+    <outFeatures>src_ERModel.entities</outFeatures>
+  </rules>
+  <rules name="EntityType">
+    <inTypes>src_EntityType</inTypes>
+    <outTypes>trg_EntityType</outTypes>
+    <allNavigationPaths>src_EntityType</allNavigationPaths>
+    <allNavigationPaths>trg_EntityType</allNavigationPaths>
+    <allNavigationPaths>src_EntityType.name</allNavigationPaths>
+    <allNavigationPaths>src_EntityType.features</allNavigationPaths>
+    <allNavigationPaths>trg_EntityType.name</allNavigationPaths>
+    <allNavigationPaths>trg_EntityType.features</allNavigationPaths>
+    <bindingFeatures>trg_EntityType.name</bindingFeatures>
+    <bindingFeatures>trg_EntityType.features</bindingFeatures>
+    <allFootPrints>src_EntityType</allFootPrints>
+    <allFootPrints>trg_EntityType</allFootPrints>
+    <allFootPrints>src_EntityType.features</allFootPrints>
+    <allFootPrints>src_Feature</allFootPrints>
+    <allFootPrints>trg_EntityType.name</allFootPrints>
+    <allFootPrints>trg_EntityType.features</allFootPrints>
+    <allFootPrints>trg_Feature</allFootPrints>
+    <outFeatures>src_EntityType.name</outFeatures>
+    <outFeatures>src_EntityType.features</outFeatures>
+  </rules>
+  <rules name="Attribute">
+    <inTypes>src_Attribute</inTypes>
+    <outTypes>trg_Attribute</outTypes>
+    <allNavigationPaths>src_Attribute</allNavigationPaths>
+    <allNavigationPaths>trg_Attribute</allNavigationPaths>
+    <allNavigationPaths>src_Attribute.name</allNavigationPaths>
+    <allNavigationPaths>src_Attribute.type</allNavigationPaths>
+    <allNavigationPaths>trg_Attribute.name</allNavigationPaths>
+    <allNavigationPaths>trg_Attribute.type</allNavigationPaths>
+    <bindingFeatures>trg_Attribute.name</bindingFeatures>
+    <bindingFeatures>trg_Attribute.type</bindingFeatures>
+    <allFootPrints>src_Attribute</allFootPrints>
+    <allFootPrints>trg_Attribute</allFootPrints>
+    <allFootPrints>src_Attribute.name</allFootPrints>
+    <allFootPrints>src_Attribute.type</allFootPrints>
+    <allFootPrints>trg_Attribute.name</allFootPrints>
+    <allFootPrints>trg_Attribute.type</allFootPrints>
+    <outFeatures>src_Attribute.name</outFeatures>
+    <outFeatures>src_Attribute.type</outFeatures>
+  </rules>
+  <rules name="WeakReference">
+    <inTypes>src_WeakReference</inTypes>
+    <outTypes>trg_WeakReference</outTypes>
+    <allNavigationPaths>src_WeakReference</allNavigationPaths>
+    <allNavigationPaths>trg_WeakReference</allNavigationPaths>
+    <allNavigationPaths>src_WeakReference.name</allNavigationPaths>
+    <allNavigationPaths>src_WeakReference.type</allNavigationPaths>
+    <allNavigationPaths>trg_WeakReference.name</allNavigationPaths>
+    <allNavigationPaths>trg_WeakReference.type</allNavigationPaths>
+    <bindingFeatures>trg_WeakReference.name</bindingFeatures>
+    <bindingFeatures>trg_WeakReference.type</bindingFeatures>
+    <allFootPrints>src_WeakReference</allFootPrints>
+    <allFootPrints>trg_WeakReference</allFootPrints>
+    <allFootPrints>trg_WeakReference.name</allFootPrints>
+    <allFootPrints>trg_WeakReference.type</allFootPrints>
+    <allFootPrints>trg_EntityType</allFootPrints>
+    <outFeatures>src_WeakReference.name</outFeatures>
+    <outFeatures>src_WeakReference.type</outFeatures>
+  </rules>
+  <rules name="StrongReference">
+    <inTypes>src_StrongReference</inTypes>
+    <outTypes>trg_StrongReference</outTypes>
+    <allNavigationPaths>src_StrongReference</allNavigationPaths>
+    <allNavigationPaths>trg_StrongReference</allNavigationPaths>
+    <allNavigationPaths>src_StrongReference.name</allNavigationPaths>
+    <allNavigationPaths>src_StrongReference.type</allNavigationPaths>
+    <allNavigationPaths>trg_StrongReference.name</allNavigationPaths>
+    <allNavigationPaths>trg_StrongReference.type</allNavigationPaths>
+    <bindingFeatures>trg_StrongReference.name</bindingFeatures>
+    <bindingFeatures>trg_StrongReference.type</bindingFeatures>
+    <allFootPrints>src_StrongReference</allFootPrints>
+    <allFootPrints>trg_StrongReference</allFootPrints>
+    <allFootPrints>trg_StrongReference.name</allFootPrints>
+    <allFootPrints>trg_StrongReference.type</allFootPrints>
+    <allFootPrints>trg_EntityType</allFootPrints>
+    <outFeatures>src_StrongReference.name</outFeatures>
+    <outFeatures>src_StrongReference.type</outFeatures>
+  </rules>
+  <mms inputMM="ER"/>
+  <mms outputMM="ER"/>
+</ruletypesmm:Trafo>

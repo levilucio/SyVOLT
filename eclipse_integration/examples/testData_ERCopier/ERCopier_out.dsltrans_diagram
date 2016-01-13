@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:dsltrans="http://dsltrans/2.0" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmi:id="_3-asUPKLEeSKKo4H5HaWKA" type="Dsltrans" measurementUnit="Pixel">
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_3-asUfKLEeSKKo4H5HaWKA"/>
+  <element xmi:type="dsltrans:TransformationModel" href="ERCopier_out.dsltrans#/"/>
+</notation:Diagram>

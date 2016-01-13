@@ -1,0 +1,1679 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<dsltrans:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dsltrans="http://dsltrans/2.0">
+  <source xsi:type="dsltrans:FilePort" name="maininput" filePathURI="IN">
+    <metaModelId metaModelName="ER"/>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="EAttribute_CreationRule" previousSource="//@source.0">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="EAttribute">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EAttribute">
+          <attribute attributeName="name"/>
+          <attribute attributeName="ordered"/>
+          <attribute attributeName="unique"/>
+          <attribute attributeName="lowerBound"/>
+          <attribute attributeName="upperBound"/>
+          <attribute attributeName="changeable"/>
+          <attribute attributeName="volatile"/>
+          <attribute attributeName="transient"/>
+          <attribute attributeName="defaultValueLiteral"/>
+          <attribute attributeName="unsettable"/>
+          <attribute attributeName="derived"/>
+          <attribute attributeName="iD"/>
+        </class>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EAttribute">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.1/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+          </attribute>
+          <attribute attributeName="ordered">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.1/@hasRule.0/@match.0/@class.0/@attribute.1"/>
+          </attribute>
+          <attribute attributeName="unique">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.1/@hasRule.0/@match.0/@class.0/@attribute.2"/>
+          </attribute>
+          <attribute attributeName="lowerBound">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.1/@hasRule.0/@match.0/@class.0/@attribute.3"/>
+          </attribute>
+          <attribute attributeName="upperBound">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.1/@hasRule.0/@match.0/@class.0/@attribute.4"/>
+          </attribute>
+          <attribute attributeName="changeable">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.1/@hasRule.0/@match.0/@class.0/@attribute.5"/>
+          </attribute>
+          <attribute attributeName="volatile">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.1/@hasRule.0/@match.0/@class.0/@attribute.6"/>
+          </attribute>
+          <attribute attributeName="transient">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.1/@hasRule.0/@match.0/@class.0/@attribute.7"/>
+          </attribute>
+          <attribute attributeName="defaultValueLiteral">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.1/@hasRule.0/@match.0/@class.0/@attribute.8"/>
+          </attribute>
+          <attribute attributeName="unsettable">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.1/@hasRule.0/@match.0/@class.0/@attribute.9"/>
+          </attribute>
+          <attribute attributeName="derived">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.1/@hasRule.0/@match.0/@class.0/@attribute.10"/>
+          </attribute>
+          <attribute attributeName="iD">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.1/@hasRule.0/@match.0/@class.0/@attribute.11"/>
+          </attribute>
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="EAnnotation_CreationRule" previousSource="//@source.1">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="EAnnotation">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EAnnotation">
+          <attribute attributeName="source"/>
+        </class>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EAnnotation">
+          <attribute attributeName="source">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.2/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+          </attribute>
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="EClass_CreationRule" previousSource="//@source.2">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="EClass">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EClass">
+          <attribute attributeName="name"/>
+          <attribute attributeName="instanceClassName"/>
+          <attribute attributeName="instanceTypeName"/>
+          <attribute attributeName="abstract"/>
+          <attribute attributeName="interface"/>
+        </class>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EClass">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.3/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+          </attribute>
+          <attribute attributeName="instanceClassName">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.3/@hasRule.0/@match.0/@class.0/@attribute.1"/>
+          </attribute>
+          <attribute attributeName="instanceTypeName">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.3/@hasRule.0/@match.0/@class.0/@attribute.2"/>
+          </attribute>
+          <attribute attributeName="abstract">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.3/@hasRule.0/@match.0/@class.0/@attribute.3"/>
+          </attribute>
+          <attribute attributeName="interface">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.3/@hasRule.0/@match.0/@class.0/@attribute.4"/>
+          </attribute>
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="EDataType_CreationRule" previousSource="//@source.3">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="EDataType">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EDataType">
+          <attribute attributeName="name"/>
+          <attribute attributeName="instanceClassName"/>
+          <attribute attributeName="instanceTypeName"/>
+          <attribute attributeName="serializable"/>
+        </class>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EDataType">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.4/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+          </attribute>
+          <attribute attributeName="instanceClassName">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.4/@hasRule.0/@match.0/@class.0/@attribute.1"/>
+          </attribute>
+          <attribute attributeName="instanceTypeName">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.4/@hasRule.0/@match.0/@class.0/@attribute.2"/>
+          </attribute>
+          <attribute attributeName="serializable">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.4/@hasRule.0/@match.0/@class.0/@attribute.3"/>
+          </attribute>
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="EEnum_CreationRule" previousSource="//@source.4">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="EEnum">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EEnum">
+          <attribute attributeName="name"/>
+          <attribute attributeName="instanceClassName"/>
+          <attribute attributeName="instanceTypeName"/>
+          <attribute attributeName="serializable"/>
+        </class>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EEnum">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.5/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+          </attribute>
+          <attribute attributeName="instanceClassName">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.5/@hasRule.0/@match.0/@class.0/@attribute.1"/>
+          </attribute>
+          <attribute attributeName="instanceTypeName">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.5/@hasRule.0/@match.0/@class.0/@attribute.2"/>
+          </attribute>
+          <attribute attributeName="serializable">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.5/@hasRule.0/@match.0/@class.0/@attribute.3"/>
+          </attribute>
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="EEnumLiteral_CreationRule" previousSource="//@source.5">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="EEnumLiteral">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EEnumLiteral">
+          <attribute attributeName="name"/>
+          <attribute attributeName="value"/>
+          <attribute attributeName="instance"/>
+          <attribute attributeName="literal"/>
+        </class>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EEnumLiteral">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.6/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+          </attribute>
+          <attribute attributeName="value">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.6/@hasRule.0/@match.0/@class.0/@attribute.1"/>
+          </attribute>
+          <attribute attributeName="instance">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.6/@hasRule.0/@match.0/@class.0/@attribute.2"/>
+          </attribute>
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.6/@hasRule.0/@match.0/@class.0/@attribute.3"/>
+          </attribute>
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="EFactory_CreationRule" previousSource="//@source.6">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="EFactory">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EFactory"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EFactory">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="EObject_CreationRule" previousSource="//@source.7">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="EObject">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EObject"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EObject">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="EOperation_CreationRule" previousSource="//@source.8">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="EOperation">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EOperation">
+          <attribute attributeName="name"/>
+          <attribute attributeName="ordered"/>
+          <attribute attributeName="unique"/>
+          <attribute attributeName="lowerBound"/>
+          <attribute attributeName="upperBound"/>
+        </class>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EOperation">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.9/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+          </attribute>
+          <attribute attributeName="ordered">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.9/@hasRule.0/@match.0/@class.0/@attribute.1"/>
+          </attribute>
+          <attribute attributeName="unique">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.9/@hasRule.0/@match.0/@class.0/@attribute.2"/>
+          </attribute>
+          <attribute attributeName="lowerBound">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.9/@hasRule.0/@match.0/@class.0/@attribute.3"/>
+          </attribute>
+          <attribute attributeName="upperBound">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.9/@hasRule.0/@match.0/@class.0/@attribute.4"/>
+          </attribute>
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="EPackage_CreationRule" previousSource="//@source.9">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="EPackage">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EPackage">
+          <attribute attributeName="name"/>
+          <attribute attributeName="nsURI"/>
+          <attribute attributeName="nsPrefix"/>
+        </class>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EPackage">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.10/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+          </attribute>
+          <attribute attributeName="nsURI">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.10/@hasRule.0/@match.0/@class.0/@attribute.1"/>
+          </attribute>
+          <attribute attributeName="nsPrefix">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.10/@hasRule.0/@match.0/@class.0/@attribute.2"/>
+          </attribute>
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="EParameter_CreationRule" previousSource="//@source.10">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="EParameter">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EParameter">
+          <attribute attributeName="name"/>
+          <attribute attributeName="ordered"/>
+          <attribute attributeName="unique"/>
+          <attribute attributeName="lowerBound"/>
+          <attribute attributeName="upperBound"/>
+        </class>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EParameter">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.11/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+          </attribute>
+          <attribute attributeName="ordered">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.11/@hasRule.0/@match.0/@class.0/@attribute.1"/>
+          </attribute>
+          <attribute attributeName="unique">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.11/@hasRule.0/@match.0/@class.0/@attribute.2"/>
+          </attribute>
+          <attribute attributeName="lowerBound">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.11/@hasRule.0/@match.0/@class.0/@attribute.3"/>
+          </attribute>
+          <attribute attributeName="upperBound">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.11/@hasRule.0/@match.0/@class.0/@attribute.4"/>
+          </attribute>
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="EReference_CreationRule" previousSource="//@source.11">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="EReference">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EReference">
+          <attribute attributeName="name"/>
+          <attribute attributeName="ordered"/>
+          <attribute attributeName="unique"/>
+          <attribute attributeName="lowerBound"/>
+          <attribute attributeName="upperBound"/>
+          <attribute attributeName="changeable"/>
+          <attribute attributeName="volatile"/>
+          <attribute attributeName="transient"/>
+          <attribute attributeName="defaultValueLiteral"/>
+          <attribute attributeName="unsettable"/>
+          <attribute attributeName="derived"/>
+          <attribute attributeName="containment"/>
+          <attribute attributeName="resolveProxies"/>
+        </class>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EReference">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.12/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+          </attribute>
+          <attribute attributeName="ordered">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.12/@hasRule.0/@match.0/@class.0/@attribute.1"/>
+          </attribute>
+          <attribute attributeName="unique">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.12/@hasRule.0/@match.0/@class.0/@attribute.2"/>
+          </attribute>
+          <attribute attributeName="lowerBound">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.12/@hasRule.0/@match.0/@class.0/@attribute.3"/>
+          </attribute>
+          <attribute attributeName="upperBound">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.12/@hasRule.0/@match.0/@class.0/@attribute.4"/>
+          </attribute>
+          <attribute attributeName="changeable">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.12/@hasRule.0/@match.0/@class.0/@attribute.5"/>
+          </attribute>
+          <attribute attributeName="volatile">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.12/@hasRule.0/@match.0/@class.0/@attribute.6"/>
+          </attribute>
+          <attribute attributeName="transient">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.12/@hasRule.0/@match.0/@class.0/@attribute.7"/>
+          </attribute>
+          <attribute attributeName="defaultValueLiteral">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.12/@hasRule.0/@match.0/@class.0/@attribute.8"/>
+          </attribute>
+          <attribute attributeName="unsettable">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.12/@hasRule.0/@match.0/@class.0/@attribute.9"/>
+          </attribute>
+          <attribute attributeName="derived">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.12/@hasRule.0/@match.0/@class.0/@attribute.10"/>
+          </attribute>
+          <attribute attributeName="containment">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.12/@hasRule.0/@match.0/@class.0/@attribute.11"/>
+          </attribute>
+          <attribute attributeName="resolveProxies">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.12/@hasRule.0/@match.0/@class.0/@attribute.12"/>
+          </attribute>
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="EStringToStringMapEntry_CreationRule" previousSource="//@source.12">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="EStringToStringMapEntry">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EStringToStringMapEntry">
+          <attribute attributeName="key"/>
+          <attribute attributeName="value"/>
+        </class>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EStringToStringMapEntry">
+          <attribute attributeName="key">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.13/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+          </attribute>
+          <attribute attributeName="value">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.13/@hasRule.0/@match.0/@class.0/@attribute.1"/>
+          </attribute>
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="EGenericType_CreationRule" previousSource="//@source.13">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="EGenericType">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EGenericType"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EGenericType">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="ETypeParameter_CreationRule" previousSource="//@source.14">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="ETypeParameter">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="ETypeParameter">
+          <attribute attributeName="name"/>
+        </class>
+      </match>
+      <apply>
+        <class packageName="ecore" className="ETypeParameter">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.15/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+          </attribute>
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eattribute_OUTeAnnotationsSolveRef" previousSource="//@source.15">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eattributeOUTeAnnotationsSolveRefEAttributeEAnnotationEAttributeEAnnotation">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EAttribute"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EAnnotation"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eAnnotations" source="//@source.16/@hasRule.0/@match.0/@class.0" target="//@source.16/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EAttribute">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EAnnotation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eAnnotations" source="//@source.16/@hasRule.0/@apply/@class.0" target="//@source.16/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.16/@hasRule.0/@apply/@class.0" sourceClass="//@source.16/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.16/@hasRule.0/@apply/@class.1" sourceClass="//@source.16/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eattribute_OUTeTypeSolveRef" previousSource="//@source.16">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eattributeOUTeTypeSolveRefEAttributeEClassifierEAttributeEClassifier">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EAttribute"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EClassifier"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eType" source="//@source.17/@hasRule.0/@match.0/@class.0" target="//@source.17/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EAttribute">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EClassifier">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eType" source="//@source.17/@hasRule.0/@apply/@class.0" target="//@source.17/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.17/@hasRule.0/@apply/@class.0" sourceClass="//@source.17/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.17/@hasRule.0/@apply/@class.1" sourceClass="//@source.17/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eattribute_OUTeGenericTypeSolveRef" previousSource="//@source.17">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eattributeOUTeGenericTypeSolveRefEAttributeEGenericTypeEAttributeEGenericType">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EAttribute"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EGenericType"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eGenericType" source="//@source.18/@hasRule.0/@match.0/@class.0" target="//@source.18/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EAttribute">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EGenericType">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eGenericType" source="//@source.18/@hasRule.0/@apply/@class.0" target="//@source.18/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.18/@hasRule.0/@apply/@class.0" sourceClass="//@source.18/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.18/@hasRule.0/@apply/@class.1" sourceClass="//@source.18/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eannotation_OUTeAnnotationsSolveRef" previousSource="//@source.18">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eannotationOUTeAnnotationsSolveRefEAnnotationEAnnotationEAnnotationEAnnotation">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EAnnotation"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EAnnotation"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eAnnotations" source="//@source.19/@hasRule.0/@match.0/@class.0" target="//@source.19/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EAnnotation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EAnnotation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eAnnotations" source="//@source.19/@hasRule.0/@apply/@class.0" target="//@source.19/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.19/@hasRule.0/@apply/@class.0" sourceClass="//@source.19/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.19/@hasRule.0/@apply/@class.1" sourceClass="//@source.19/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eannotation_OUTdetailsSolveRef" previousSource="//@source.19">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eannotationOUTdetailsSolveRefEAnnotationEStringToStringMapEntryEAnnotationEStringToStringMapEntry">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EAnnotation"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EStringToStringMapEntry"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="details" source="//@source.20/@hasRule.0/@match.0/@class.0" target="//@source.20/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EAnnotation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EStringToStringMapEntry">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="details" source="//@source.20/@hasRule.0/@apply/@class.0" target="//@source.20/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.20/@hasRule.0/@apply/@class.0" sourceClass="//@source.20/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.20/@hasRule.0/@apply/@class.1" sourceClass="//@source.20/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eannotation_OUTeModelElementSolveRef" previousSource="//@source.20">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eannotationOUTeModelElementSolveRefEAnnotationEModelElementEAnnotationEModelElement">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EAnnotation"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EModelElement"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eModelElement" source="//@source.21/@hasRule.0/@match.0/@class.0" target="//@source.21/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EAnnotation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EModelElement">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eModelElement" source="//@source.21/@hasRule.0/@apply/@class.0" target="//@source.21/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.21/@hasRule.0/@apply/@class.0" sourceClass="//@source.21/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.21/@hasRule.0/@apply/@class.1" sourceClass="//@source.21/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eannotation_OUTcontentsSolveRef" previousSource="//@source.21">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eannotationOUTcontentsSolveRefEAnnotationEObjectEAnnotationEObject">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EAnnotation"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EObject"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="contents" source="//@source.22/@hasRule.0/@match.0/@class.0" target="//@source.22/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EAnnotation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EObject">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="contents" source="//@source.22/@hasRule.0/@apply/@class.0" target="//@source.22/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.22/@hasRule.0/@apply/@class.0" sourceClass="//@source.22/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.22/@hasRule.0/@apply/@class.1" sourceClass="//@source.22/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eannotation_OUTreferencesSolveRef" previousSource="//@source.22">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eannotationOUTreferencesSolveRefEAnnotationEObjectEAnnotationEObject">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EAnnotation"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EObject"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="references" source="//@source.23/@hasRule.0/@match.0/@class.0" target="//@source.23/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EAnnotation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EObject">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="references" source="//@source.23/@hasRule.0/@apply/@class.0" target="//@source.23/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.23/@hasRule.0/@apply/@class.0" sourceClass="//@source.23/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.23/@hasRule.0/@apply/@class.1" sourceClass="//@source.23/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eclass_OUTeAnnotationsSolveRef" previousSource="//@source.23">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eclassOUTeAnnotationsSolveRefEClassEAnnotationEClassEAnnotation">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EClass"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EAnnotation"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eAnnotations" source="//@source.24/@hasRule.0/@match.0/@class.0" target="//@source.24/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EClass">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EAnnotation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eAnnotations" source="//@source.24/@hasRule.0/@apply/@class.0" target="//@source.24/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.24/@hasRule.0/@apply/@class.0" sourceClass="//@source.24/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.24/@hasRule.0/@apply/@class.1" sourceClass="//@source.24/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eclass_OUTeTypeParametersSolveRef" previousSource="//@source.24">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eclassOUTeTypeParametersSolveRefEClassETypeParameterEClassETypeParameter">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EClass"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="ETypeParameter"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eTypeParameters" source="//@source.25/@hasRule.0/@match.0/@class.0" target="//@source.25/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EClass">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="ETypeParameter">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eTypeParameters" source="//@source.25/@hasRule.0/@apply/@class.0" target="//@source.25/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.25/@hasRule.0/@apply/@class.0" sourceClass="//@source.25/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.25/@hasRule.0/@apply/@class.1" sourceClass="//@source.25/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eclass_OUTeSuperTypesSolveRef" previousSource="//@source.25">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eclassOUTeSuperTypesSolveRefEClassEClassEClassEClass">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EClass"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EClass"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eSuperTypes" source="//@source.26/@hasRule.0/@match.0/@class.0" target="//@source.26/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EClass">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EClass">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eSuperTypes" source="//@source.26/@hasRule.0/@apply/@class.0" target="//@source.26/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.26/@hasRule.0/@apply/@class.0" sourceClass="//@source.26/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.26/@hasRule.0/@apply/@class.1" sourceClass="//@source.26/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eclass_OUTeOperationsSolveRef" previousSource="//@source.26">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eclassOUTeOperationsSolveRefEClassEOperationEClassEOperation">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EClass"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EOperation"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eOperations" source="//@source.27/@hasRule.0/@match.0/@class.0" target="//@source.27/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EClass">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EOperation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eOperations" source="//@source.27/@hasRule.0/@apply/@class.0" target="//@source.27/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.27/@hasRule.0/@apply/@class.0" sourceClass="//@source.27/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.27/@hasRule.0/@apply/@class.1" sourceClass="//@source.27/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eclass_OUTeStructuralFeaturesSolveRef" previousSource="//@source.27">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eclassOUTeStructuralFeaturesSolveRefEClassEStructuralFeatureEClassEStructuralFeature">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EClass"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EStructuralFeature"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eStructuralFeatures" source="//@source.28/@hasRule.0/@match.0/@class.0" target="//@source.28/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EClass">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EStructuralFeature">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eStructuralFeatures" source="//@source.28/@hasRule.0/@apply/@class.0" target="//@source.28/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.28/@hasRule.0/@apply/@class.0" sourceClass="//@source.28/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.28/@hasRule.0/@apply/@class.1" sourceClass="//@source.28/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eclass_OUTeGenericSuperTypesSolveRef" previousSource="//@source.28">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eclassOUTeGenericSuperTypesSolveRefEClassEGenericTypeEClassEGenericType">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EClass"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EGenericType"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eGenericSuperTypes" source="//@source.29/@hasRule.0/@match.0/@class.0" target="//@source.29/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EClass">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EGenericType">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eGenericSuperTypes" source="//@source.29/@hasRule.0/@apply/@class.0" target="//@source.29/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.29/@hasRule.0/@apply/@class.0" sourceClass="//@source.29/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.29/@hasRule.0/@apply/@class.1" sourceClass="//@source.29/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="edatatype_OUTeAnnotationsSolveRef" previousSource="//@source.29">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="edatatypeOUTeAnnotationsSolveRefEDataTypeEAnnotationEDataTypeEAnnotation">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EDataType"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EAnnotation"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eAnnotations" source="//@source.30/@hasRule.0/@match.0/@class.0" target="//@source.30/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EDataType">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EAnnotation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eAnnotations" source="//@source.30/@hasRule.0/@apply/@class.0" target="//@source.30/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.30/@hasRule.0/@apply/@class.0" sourceClass="//@source.30/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.30/@hasRule.0/@apply/@class.1" sourceClass="//@source.30/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="edatatype_OUTeTypeParametersSolveRef" previousSource="//@source.30">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="edatatypeOUTeTypeParametersSolveRefEDataTypeETypeParameterEDataTypeETypeParameter">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EDataType"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="ETypeParameter"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eTypeParameters" source="//@source.31/@hasRule.0/@match.0/@class.0" target="//@source.31/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EDataType">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="ETypeParameter">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eTypeParameters" source="//@source.31/@hasRule.0/@apply/@class.0" target="//@source.31/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.31/@hasRule.0/@apply/@class.0" sourceClass="//@source.31/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.31/@hasRule.0/@apply/@class.1" sourceClass="//@source.31/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eenum_OUTeAnnotationsSolveRef" previousSource="//@source.31">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eenumOUTeAnnotationsSolveRefEEnumEAnnotationEEnumEAnnotation">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EEnum"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EAnnotation"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eAnnotations" source="//@source.32/@hasRule.0/@match.0/@class.0" target="//@source.32/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EEnum">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EAnnotation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eAnnotations" source="//@source.32/@hasRule.0/@apply/@class.0" target="//@source.32/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.32/@hasRule.0/@apply/@class.0" sourceClass="//@source.32/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.32/@hasRule.0/@apply/@class.1" sourceClass="//@source.32/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eenum_OUTeTypeParametersSolveRef" previousSource="//@source.32">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eenumOUTeTypeParametersSolveRefEEnumETypeParameterEEnumETypeParameter">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EEnum"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="ETypeParameter"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eTypeParameters" source="//@source.33/@hasRule.0/@match.0/@class.0" target="//@source.33/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EEnum">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="ETypeParameter">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eTypeParameters" source="//@source.33/@hasRule.0/@apply/@class.0" target="//@source.33/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.33/@hasRule.0/@apply/@class.0" sourceClass="//@source.33/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.33/@hasRule.0/@apply/@class.1" sourceClass="//@source.33/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eenum_OUTeLiteralsSolveRef" previousSource="//@source.33">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eenumOUTeLiteralsSolveRefEEnumEEnumLiteralEEnumEEnumLiteral">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EEnum"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EEnumLiteral"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eLiterals" source="//@source.34/@hasRule.0/@match.0/@class.0" target="//@source.34/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EEnum">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EEnumLiteral">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eLiterals" source="//@source.34/@hasRule.0/@apply/@class.0" target="//@source.34/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.34/@hasRule.0/@apply/@class.0" sourceClass="//@source.34/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.34/@hasRule.0/@apply/@class.1" sourceClass="//@source.34/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eenumliteral_OUTeAnnotationsSolveRef" previousSource="//@source.34">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eenumliteralOUTeAnnotationsSolveRefEEnumLiteralEAnnotationEEnumLiteralEAnnotation">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EEnumLiteral"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EAnnotation"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eAnnotations" source="//@source.35/@hasRule.0/@match.0/@class.0" target="//@source.35/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EEnumLiteral">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EAnnotation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eAnnotations" source="//@source.35/@hasRule.0/@apply/@class.0" target="//@source.35/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.35/@hasRule.0/@apply/@class.0" sourceClass="//@source.35/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.35/@hasRule.0/@apply/@class.1" sourceClass="//@source.35/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="efactory_OUTeAnnotationsSolveRef" previousSource="//@source.35">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="efactoryOUTeAnnotationsSolveRefEFactoryEAnnotationEFactoryEAnnotation">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EFactory"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EAnnotation"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eAnnotations" source="//@source.36/@hasRule.0/@match.0/@class.0" target="//@source.36/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EFactory">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EAnnotation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eAnnotations" source="//@source.36/@hasRule.0/@apply/@class.0" target="//@source.36/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.36/@hasRule.0/@apply/@class.0" sourceClass="//@source.36/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.36/@hasRule.0/@apply/@class.1" sourceClass="//@source.36/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="efactory_OUTePackageSolveRef" previousSource="//@source.36">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="efactoryOUTePackageSolveRefEFactoryEPackageEFactoryEPackage">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EFactory"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EPackage"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="ePackage" source="//@source.37/@hasRule.0/@match.0/@class.0" target="//@source.37/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EFactory">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EPackage">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="ePackage" source="//@source.37/@hasRule.0/@apply/@class.0" target="//@source.37/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.37/@hasRule.0/@apply/@class.0" sourceClass="//@source.37/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.37/@hasRule.0/@apply/@class.1" sourceClass="//@source.37/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eoperation_OUTeAnnotationsSolveRef" previousSource="//@source.37">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eoperationOUTeAnnotationsSolveRefEOperationEAnnotationEOperationEAnnotation">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EOperation"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EAnnotation"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eAnnotations" source="//@source.38/@hasRule.0/@match.0/@class.0" target="//@source.38/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EOperation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EAnnotation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eAnnotations" source="//@source.38/@hasRule.0/@apply/@class.0" target="//@source.38/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.38/@hasRule.0/@apply/@class.0" sourceClass="//@source.38/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.38/@hasRule.0/@apply/@class.1" sourceClass="//@source.38/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eoperation_OUTeTypeSolveRef" previousSource="//@source.38">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eoperationOUTeTypeSolveRefEOperationEClassifierEOperationEClassifier">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EOperation"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EClassifier"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eType" source="//@source.39/@hasRule.0/@match.0/@class.0" target="//@source.39/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EOperation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EClassifier">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eType" source="//@source.39/@hasRule.0/@apply/@class.0" target="//@source.39/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.39/@hasRule.0/@apply/@class.0" sourceClass="//@source.39/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.39/@hasRule.0/@apply/@class.1" sourceClass="//@source.39/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eoperation_OUTeGenericTypeSolveRef" previousSource="//@source.39">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eoperationOUTeGenericTypeSolveRefEOperationEGenericTypeEOperationEGenericType">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EOperation"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EGenericType"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eGenericType" source="//@source.40/@hasRule.0/@match.0/@class.0" target="//@source.40/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EOperation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EGenericType">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eGenericType" source="//@source.40/@hasRule.0/@apply/@class.0" target="//@source.40/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.40/@hasRule.0/@apply/@class.0" sourceClass="//@source.40/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.40/@hasRule.0/@apply/@class.1" sourceClass="//@source.40/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eoperation_OUTeTypeParametersSolveRef" previousSource="//@source.40">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eoperationOUTeTypeParametersSolveRefEOperationETypeParameterEOperationETypeParameter">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EOperation"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="ETypeParameter"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eTypeParameters" source="//@source.41/@hasRule.0/@match.0/@class.0" target="//@source.41/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EOperation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="ETypeParameter">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eTypeParameters" source="//@source.41/@hasRule.0/@apply/@class.0" target="//@source.41/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.41/@hasRule.0/@apply/@class.0" sourceClass="//@source.41/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.41/@hasRule.0/@apply/@class.1" sourceClass="//@source.41/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eoperation_OUTeParametersSolveRef" previousSource="//@source.41">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eoperationOUTeParametersSolveRefEOperationEParameterEOperationEParameter">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EOperation"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EParameter"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eParameters" source="//@source.42/@hasRule.0/@match.0/@class.0" target="//@source.42/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EOperation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EParameter">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eParameters" source="//@source.42/@hasRule.0/@apply/@class.0" target="//@source.42/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.42/@hasRule.0/@apply/@class.0" sourceClass="//@source.42/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.42/@hasRule.0/@apply/@class.1" sourceClass="//@source.42/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eoperation_OUTeExceptionsSolveRef" previousSource="//@source.42">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eoperationOUTeExceptionsSolveRefEOperationEClassifierEOperationEClassifier">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EOperation"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EClassifier"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eExceptions" source="//@source.43/@hasRule.0/@match.0/@class.0" target="//@source.43/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EOperation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EClassifier">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eExceptions" source="//@source.43/@hasRule.0/@apply/@class.0" target="//@source.43/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.43/@hasRule.0/@apply/@class.0" sourceClass="//@source.43/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.43/@hasRule.0/@apply/@class.1" sourceClass="//@source.43/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eoperation_OUTeGenericExceptionsSolveRef" previousSource="//@source.43">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eoperationOUTeGenericExceptionsSolveRefEOperationEGenericTypeEOperationEGenericType">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EOperation"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EGenericType"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eGenericExceptions" source="//@source.44/@hasRule.0/@match.0/@class.0" target="//@source.44/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EOperation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EGenericType">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eGenericExceptions" source="//@source.44/@hasRule.0/@apply/@class.0" target="//@source.44/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.44/@hasRule.0/@apply/@class.0" sourceClass="//@source.44/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.44/@hasRule.0/@apply/@class.1" sourceClass="//@source.44/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="epackage_OUTeAnnotationsSolveRef" previousSource="//@source.44">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="epackageOUTeAnnotationsSolveRefEPackageEAnnotationEPackageEAnnotation">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EPackage"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EAnnotation"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eAnnotations" source="//@source.45/@hasRule.0/@match.0/@class.0" target="//@source.45/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EPackage">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EAnnotation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eAnnotations" source="//@source.45/@hasRule.0/@apply/@class.0" target="//@source.45/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.45/@hasRule.0/@apply/@class.0" sourceClass="//@source.45/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.45/@hasRule.0/@apply/@class.1" sourceClass="//@source.45/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="epackage_OUTeFactoryInstanceSolveRef" previousSource="//@source.45">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="epackageOUTeFactoryInstanceSolveRefEPackageEFactoryEPackageEFactory">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EPackage"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EFactory"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eFactoryInstance" source="//@source.46/@hasRule.0/@match.0/@class.0" target="//@source.46/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EPackage">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EFactory">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eFactoryInstance" source="//@source.46/@hasRule.0/@apply/@class.0" target="//@source.46/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.46/@hasRule.0/@apply/@class.0" sourceClass="//@source.46/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.46/@hasRule.0/@apply/@class.1" sourceClass="//@source.46/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="epackage_OUTeClassifiersSolveRef" previousSource="//@source.46">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="epackageOUTeClassifiersSolveRefEPackageEClassifierEPackageEClassifier">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EPackage"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EClassifier"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eClassifiers" source="//@source.47/@hasRule.0/@match.0/@class.0" target="//@source.47/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EPackage">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EClassifier">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eClassifiers" source="//@source.47/@hasRule.0/@apply/@class.0" target="//@source.47/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.47/@hasRule.0/@apply/@class.0" sourceClass="//@source.47/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.47/@hasRule.0/@apply/@class.1" sourceClass="//@source.47/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="epackage_OUTeSubpackagesSolveRef" previousSource="//@source.47">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="epackageOUTeSubpackagesSolveRefEPackageEPackageEPackageEPackage">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EPackage"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EPackage"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eSubpackages" source="//@source.48/@hasRule.0/@match.0/@class.0" target="//@source.48/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EPackage">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EPackage">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eSubpackages" source="//@source.48/@hasRule.0/@apply/@class.0" target="//@source.48/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.48/@hasRule.0/@apply/@class.0" sourceClass="//@source.48/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.48/@hasRule.0/@apply/@class.1" sourceClass="//@source.48/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eparameter_OUTeAnnotationsSolveRef" previousSource="//@source.48">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eparameterOUTeAnnotationsSolveRefEParameterEAnnotationEParameterEAnnotation">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EParameter"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EAnnotation"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eAnnotations" source="//@source.49/@hasRule.0/@match.0/@class.0" target="//@source.49/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EParameter">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EAnnotation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eAnnotations" source="//@source.49/@hasRule.0/@apply/@class.0" target="//@source.49/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.49/@hasRule.0/@apply/@class.0" sourceClass="//@source.49/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.49/@hasRule.0/@apply/@class.1" sourceClass="//@source.49/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eparameter_OUTeTypeSolveRef" previousSource="//@source.49">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eparameterOUTeTypeSolveRefEParameterEClassifierEParameterEClassifier">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EParameter"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EClassifier"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eType" source="//@source.50/@hasRule.0/@match.0/@class.0" target="//@source.50/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EParameter">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EClassifier">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eType" source="//@source.50/@hasRule.0/@apply/@class.0" target="//@source.50/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.50/@hasRule.0/@apply/@class.0" sourceClass="//@source.50/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.50/@hasRule.0/@apply/@class.1" sourceClass="//@source.50/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="eparameter_OUTeGenericTypeSolveRef" previousSource="//@source.50">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="eparameterOUTeGenericTypeSolveRefEParameterEGenericTypeEParameterEGenericType">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EParameter"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EGenericType"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eGenericType" source="//@source.51/@hasRule.0/@match.0/@class.0" target="//@source.51/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EParameter">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EGenericType">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eGenericType" source="//@source.51/@hasRule.0/@apply/@class.0" target="//@source.51/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.51/@hasRule.0/@apply/@class.0" sourceClass="//@source.51/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.51/@hasRule.0/@apply/@class.1" sourceClass="//@source.51/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="ereference_OUTeAnnotationsSolveRef" previousSource="//@source.51">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="ereferenceOUTeAnnotationsSolveRefEReferenceEAnnotationEReferenceEAnnotation">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EReference"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EAnnotation"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eAnnotations" source="//@source.52/@hasRule.0/@match.0/@class.0" target="//@source.52/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EReference">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EAnnotation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eAnnotations" source="//@source.52/@hasRule.0/@apply/@class.0" target="//@source.52/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.52/@hasRule.0/@apply/@class.0" sourceClass="//@source.52/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.52/@hasRule.0/@apply/@class.1" sourceClass="//@source.52/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="ereference_OUTeTypeSolveRef" previousSource="//@source.52">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="ereferenceOUTeTypeSolveRefEReferenceEClassifierEReferenceEClassifier">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EReference"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EClassifier"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eType" source="//@source.53/@hasRule.0/@match.0/@class.0" target="//@source.53/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EReference">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EClassifier">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eType" source="//@source.53/@hasRule.0/@apply/@class.0" target="//@source.53/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.53/@hasRule.0/@apply/@class.0" sourceClass="//@source.53/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.53/@hasRule.0/@apply/@class.1" sourceClass="//@source.53/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="ereference_OUTeGenericTypeSolveRef" previousSource="//@source.53">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="ereferenceOUTeGenericTypeSolveRefEReferenceEGenericTypeEReferenceEGenericType">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EReference"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EGenericType"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eGenericType" source="//@source.54/@hasRule.0/@match.0/@class.0" target="//@source.54/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EReference">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EGenericType">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eGenericType" source="//@source.54/@hasRule.0/@apply/@class.0" target="//@source.54/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.54/@hasRule.0/@apply/@class.0" sourceClass="//@source.54/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.54/@hasRule.0/@apply/@class.1" sourceClass="//@source.54/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="ereference_OUTeOppositeSolveRef" previousSource="//@source.54">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="ereferenceOUTeOppositeSolveRefEReferenceEReferenceEReferenceEReference">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EReference"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EReference"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eOpposite" source="//@source.55/@hasRule.0/@match.0/@class.0" target="//@source.55/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EReference">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EReference">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eOpposite" source="//@source.55/@hasRule.0/@apply/@class.0" target="//@source.55/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.55/@hasRule.0/@apply/@class.0" sourceClass="//@source.55/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.55/@hasRule.0/@apply/@class.1" sourceClass="//@source.55/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="ereference_OUTeKeysSolveRef" previousSource="//@source.55">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="ereferenceOUTeKeysSolveRefEReferenceEAttributeEReferenceEAttribute">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EReference"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EAttribute"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eKeys" source="//@source.56/@hasRule.0/@match.0/@class.0" target="//@source.56/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EReference">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EAttribute">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eKeys" source="//@source.56/@hasRule.0/@apply/@class.0" target="//@source.56/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.56/@hasRule.0/@apply/@class.0" sourceClass="//@source.56/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.56/@hasRule.0/@apply/@class.1" sourceClass="//@source.56/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="egenerictype_OUTeUpperBoundSolveRef" previousSource="//@source.56">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="egenerictypeOUTeUpperBoundSolveRefEGenericTypeEGenericTypeEGenericTypeEGenericType">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EGenericType"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EGenericType"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eUpperBound" source="//@source.57/@hasRule.0/@match.0/@class.0" target="//@source.57/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EGenericType">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EGenericType">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eUpperBound" source="//@source.57/@hasRule.0/@apply/@class.0" target="//@source.57/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.57/@hasRule.0/@apply/@class.0" sourceClass="//@source.57/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.57/@hasRule.0/@apply/@class.1" sourceClass="//@source.57/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="egenerictype_OUTeTypeArgumentsSolveRef" previousSource="//@source.57">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="egenerictypeOUTeTypeArgumentsSolveRefEGenericTypeEGenericTypeEGenericTypeEGenericType">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EGenericType"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EGenericType"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eTypeArguments" source="//@source.58/@hasRule.0/@match.0/@class.0" target="//@source.58/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EGenericType">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EGenericType">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eTypeArguments" source="//@source.58/@hasRule.0/@apply/@class.0" target="//@source.58/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.58/@hasRule.0/@apply/@class.0" sourceClass="//@source.58/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.58/@hasRule.0/@apply/@class.1" sourceClass="//@source.58/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="egenerictype_OUTeLowerBoundSolveRef" previousSource="//@source.58">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="egenerictypeOUTeLowerBoundSolveRefEGenericTypeEGenericTypeEGenericTypeEGenericType">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EGenericType"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EGenericType"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eLowerBound" source="//@source.59/@hasRule.0/@match.0/@class.0" target="//@source.59/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EGenericType">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EGenericType">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eLowerBound" source="//@source.59/@hasRule.0/@apply/@class.0" target="//@source.59/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.59/@hasRule.0/@apply/@class.0" sourceClass="//@source.59/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.59/@hasRule.0/@apply/@class.1" sourceClass="//@source.59/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="egenerictype_OUTeTypeParameterSolveRef" previousSource="//@source.59">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="egenerictypeOUTeTypeParameterSolveRefEGenericTypeETypeParameterEGenericTypeETypeParameter">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EGenericType"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="ETypeParameter"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eTypeParameter" source="//@source.60/@hasRule.0/@match.0/@class.0" target="//@source.60/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EGenericType">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="ETypeParameter">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eTypeParameter" source="//@source.60/@hasRule.0/@apply/@class.0" target="//@source.60/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.60/@hasRule.0/@apply/@class.0" sourceClass="//@source.60/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.60/@hasRule.0/@apply/@class.1" sourceClass="//@source.60/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="egenerictype_OUTeClassifierSolveRef" previousSource="//@source.60">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="egenerictypeOUTeClassifierSolveRefEGenericTypeEClassifierEGenericTypeEClassifier">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EGenericType"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EClassifier"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eClassifier" source="//@source.61/@hasRule.0/@match.0/@class.0" target="//@source.61/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="EGenericType">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EClassifier">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eClassifier" source="//@source.61/@hasRule.0/@apply/@class.0" target="//@source.61/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.61/@hasRule.0/@apply/@class.0" sourceClass="//@source.61/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.61/@hasRule.0/@apply/@class.1" sourceClass="//@source.61/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="etypeparameter_OUTeAnnotationsSolveRef" previousSource="//@source.61">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="etypeparameterOUTeAnnotationsSolveRefETypeParameterEAnnotationETypeParameterEAnnotation">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="ETypeParameter"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EAnnotation"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eAnnotations" source="//@source.62/@hasRule.0/@match.0/@class.0" target="//@source.62/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="ETypeParameter">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EAnnotation">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eAnnotations" source="//@source.62/@hasRule.0/@apply/@class.0" target="//@source.62/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.62/@hasRule.0/@apply/@class.0" sourceClass="//@source.62/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.62/@hasRule.0/@apply/@class.1" sourceClass="//@source.62/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="etypeparameter_OUTeBoundsSolveRef" previousSource="//@source.62">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="etypeparameterOUTeBoundsSolveRefETypeParameterEGenericTypeETypeParameterEGenericType">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="ETypeParameter"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="ecore" className="EGenericType"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="eBounds" source="//@source.63/@hasRule.0/@match.0/@class.0" target="//@source.63/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="ecore" className="ETypeParameter">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="ecore" className="EGenericType">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="eBounds" source="//@source.63/@hasRule.0/@apply/@class.0" target="//@source.63/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.63/@hasRule.0/@apply/@class.0" sourceClass="//@source.63/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.63/@hasRule.0/@apply/@class.1" sourceClass="//@source.63/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+</dsltrans:TransformationModel>

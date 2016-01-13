@@ -1,0 +1,228 @@
+module ERCopier;
+create OUT : Copy from IN : ER;
+
+rule EAttribute {
+ from
+  eattribute_IN : ER!EAttribute
+ to
+  eattribute_OUT : ER!EAttribute (
+   eAnnotations <- eattribute_IN.eAnnotations,
+   name <- eattribute_IN.name,
+   ordered <- eattribute_IN.ordered,
+   unique <- eattribute_IN.unique,
+   lowerBound <- eattribute_IN.lowerBound,
+   upperBound <- eattribute_IN.upperBound,
+   eType <- eattribute_IN.eType,
+   eGenericType <- eattribute_IN.eGenericType,
+   changeable <- eattribute_IN.changeable,
+   volatile <- eattribute_IN.volatile,
+   transient <- eattribute_IN.transient,
+   defaultValueLiteral <- eattribute_IN.defaultValueLiteral,
+   unsettable <- eattribute_IN.unsettable,
+   derived <- eattribute_IN.derived,
+   iD <- eattribute_IN.iD
+  )
+}
+
+rule EAnnotation {
+ from
+  eannotation_IN : ER!EAnnotation
+ to
+  eannotation_OUT : ER!EAnnotation (
+   eAnnotations <- eannotation_IN.eAnnotations,
+   source <- eannotation_IN.source,
+   details <- eannotation_IN.details,
+   eModelElement <- eannotation_IN.eModelElement,
+   contents <- eannotation_IN.contents,
+   references <- eannotation_IN.references
+  )
+}
+
+rule EClass {
+ from
+  eclass_IN : ER!EClass
+ to
+  eclass_OUT : ER!EClass (
+   eAnnotations <- eclass_IN.eAnnotations,
+   name <- eclass_IN.name,
+   instanceClassName <- eclass_IN.instanceClassName,
+   instanceTypeName <- eclass_IN.instanceTypeName,
+   eTypeParameters <- eclass_IN.eTypeParameters,
+   abstract <- eclass_IN.abstract,
+   interface <- eclass_IN.interface,
+   eSuperTypes <- eclass_IN.eSuperTypes,
+   eOperations <- eclass_IN.eOperations,
+   eStructuralFeatures <- eclass_IN.eStructuralFeatures,
+   eGenericSuperTypes <- eclass_IN.eGenericSuperTypes
+  )
+}
+
+rule EDataType {
+ from
+  edatatype_IN : ER!EDataType
+ to
+  edatatype_OUT : ER!EDataType (
+   eAnnotations <- edatatype_IN.eAnnotations,
+   name <- edatatype_IN.name,
+   instanceClassName <- edatatype_IN.instanceClassName,
+   instanceTypeName <- edatatype_IN.instanceTypeName,
+   eTypeParameters <- edatatype_IN.eTypeParameters,
+   serializable <- edatatype_IN.serializable
+  )
+}
+
+rule EEnum {
+ from
+  eenum_IN : ER!EEnum
+ to
+  eenum_OUT : ER!EEnum (
+   eAnnotations <- eenum_IN.eAnnotations,
+   name <- eenum_IN.name,
+   instanceClassName <- eenum_IN.instanceClassName,
+   instanceTypeName <- eenum_IN.instanceTypeName,
+   eTypeParameters <- eenum_IN.eTypeParameters,
+   serializable <- eenum_IN.serializable,
+   eLiterals <- eenum_IN.eLiterals
+  )
+}
+
+rule EEnumLiteral {
+ from
+  eenumliteral_IN : ER!EEnumLiteral
+ to
+  eenumliteral_OUT : ER!EEnumLiteral (
+   eAnnotations <- eenumliteral_IN.eAnnotations,
+   name <- eenumliteral_IN.name,
+   value <- eenumliteral_IN.value,
+   instance <- eenumliteral_IN.instance,
+   literal <- eenumliteral_IN.literal
+  )
+}
+
+rule EFactory {
+ from
+  efactory_IN : ER!EFactory
+ to
+  efactory_OUT : ER!EFactory (
+   eAnnotations <- efactory_IN.eAnnotations,
+   ePackage <- efactory_IN.ePackage
+  )
+}
+
+rule EObject {
+ from
+  eobject_IN : ER!EObject
+ to
+  eobject_OUT : ER!EObject
+}
+
+rule EOperation {
+ from
+  eoperation_IN : ER!EOperation
+ to
+  eoperation_OUT : ER!EOperation (
+   eAnnotations <- eoperation_IN.eAnnotations,
+   name <- eoperation_IN.name,
+   ordered <- eoperation_IN.ordered,
+   unique <- eoperation_IN.unique,
+   lowerBound <- eoperation_IN.lowerBound,
+   upperBound <- eoperation_IN.upperBound,
+   eType <- eoperation_IN.eType,
+   eGenericType <- eoperation_IN.eGenericType,
+   eTypeParameters <- eoperation_IN.eTypeParameters,
+   eParameters <- eoperation_IN.eParameters,
+   eExceptions <- eoperation_IN.eExceptions,
+   eGenericExceptions <- eoperation_IN.eGenericExceptions
+  )
+}
+
+rule EPackage {
+ from
+  epackage_IN : ER!EPackage
+ to
+  epackage_OUT : ER!EPackage (
+   eAnnotations <- epackage_IN.eAnnotations,
+   name <- epackage_IN.name,
+   nsURI <- epackage_IN.nsURI,
+   nsPrefix <- epackage_IN.nsPrefix,
+   eFactoryInstance <- epackage_IN.eFactoryInstance,
+   eClassifiers <- epackage_IN.eClassifiers,
+   eSubpackages <- epackage_IN.eSubpackages
+  )
+}
+
+rule EParameter {
+ from
+  eparameter_IN : ER!EParameter
+ to
+  eparameter_OUT : ER!EParameter (
+   eAnnotations <- eparameter_IN.eAnnotations,
+   name <- eparameter_IN.name,
+   ordered <- eparameter_IN.ordered,
+   unique <- eparameter_IN.unique,
+   lowerBound <- eparameter_IN.lowerBound,
+   upperBound <- eparameter_IN.upperBound,
+   eType <- eparameter_IN.eType,
+   eGenericType <- eparameter_IN.eGenericType
+  )
+}
+
+rule EReference {
+ from
+  ereference_IN : ER!EReference
+ to
+  ereference_OUT : ER!EReference (
+   eAnnotations <- ereference_IN.eAnnotations,
+   name <- ereference_IN.name,
+   ordered <- ereference_IN.ordered,
+   unique <- ereference_IN.unique,
+   lowerBound <- ereference_IN.lowerBound,
+   upperBound <- ereference_IN.upperBound,
+   eType <- ereference_IN.eType,
+   eGenericType <- ereference_IN.eGenericType,
+   changeable <- ereference_IN.changeable,
+   volatile <- ereference_IN.volatile,
+   transient <- ereference_IN.transient,
+   defaultValueLiteral <- ereference_IN.defaultValueLiteral,
+   unsettable <- ereference_IN.unsettable,
+   derived <- ereference_IN.derived,
+   containment <- ereference_IN.containment,
+   resolveProxies <- ereference_IN.resolveProxies,
+   eOpposite <- ereference_IN.eOpposite,
+   eKeys <- ereference_IN.eKeys
+  )
+}
+
+rule EStringToStringMapEntry {
+ from
+  estringtostringmapentry_IN : ER!EStringToStringMapEntry
+ to
+  estringtostringmapentry_OUT : ER!EStringToStringMapEntry (
+   key <- estringtostringmapentry_IN.key,
+   value <- estringtostringmapentry_IN.value
+  )
+}
+
+rule EGenericType {
+ from
+  egenerictype_IN : ER!EGenericType
+ to
+  egenerictype_OUT : ER!EGenericType (
+   eUpperBound <- egenerictype_IN.eUpperBound,
+   eTypeArguments <- egenerictype_IN.eTypeArguments,
+   eLowerBound <- egenerictype_IN.eLowerBound,
+   eTypeParameter <- egenerictype_IN.eTypeParameter,
+   eClassifier <- egenerictype_IN.eClassifier
+  )
+}
+
+rule ETypeParameter {
+ from
+  etypeparameter_IN : ER!ETypeParameter
+ to
+  etypeparameter_OUT : ER!ETypeParameter (
+   eAnnotations <- etypeparameter_IN.eAnnotations,
+   name <- etypeparameter_IN.name,
+   eBounds <- etypeparameter_IN.eBounds
+  )
+}

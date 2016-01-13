@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atl="http://www.eclipse.org/gmt/2005/ATL" xmlns:ocl="http://www.eclipse.org/gmt/2005/OCL">
+  <atl:Module name="ERCopier">
+    <inModels name="IN" metamodel="/1"/>
+    <outModels name="OUT" metamodel="/10"/>
+    <elements xsi:type="atl:MatchedRule" name="ERModel">
+      <outPattern>
+        <elements xsi:type="atl:SimpleOutPatternElement" id="ermodel_OUT" varName="ermodel_OUT">
+          <type xsi:type="ocl:OclModelElement" name="ERModel" model="/1"/>
+          <bindings propertyName="name">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" name="name">
+              <source xsi:type="ocl:VariableExp" referredVariable="/0/@elements.0/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings propertyName="entities">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" name="entities">
+              <source xsi:type="ocl:VariableExp" referredVariable="/0/@elements.0/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern>
+        <elements xsi:type="atl:SimpleInPatternElement" id="ermodel_IN" varName="ermodel_IN" variableExp="/0/@elements.0/@outPattern/@elements.0/@bindings.0/@value/@source /0/@elements.0/@outPattern/@elements.0/@bindings.1/@value/@source">
+          <type xsi:type="ocl:OclModelElement" name="ERModel" model="/1"/>
+        </elements>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:MatchedRule" name="EntityType">
+      <outPattern>
+        <elements xsi:type="atl:SimpleOutPatternElement" id="entitytype_OUT" varName="entitytype_OUT">
+          <type xsi:type="ocl:OclModelElement" name="EntityType" model="/1"/>
+          <bindings propertyName="name">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" name="name">
+              <source xsi:type="ocl:VariableExp" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings propertyName="features">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" name="features">
+              <source xsi:type="ocl:VariableExp" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern>
+        <elements xsi:type="atl:SimpleInPatternElement" id="entitytype_IN" varName="entitytype_IN" variableExp="/0/@elements.1/@outPattern/@elements.0/@bindings.0/@value/@source /0/@elements.1/@outPattern/@elements.0/@bindings.1/@value/@source">
+          <type xsi:type="ocl:OclModelElement" name="EntityType" model="/1"/>
+        </elements>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:MatchedRule" name="Attribute">
+      <outPattern>
+        <elements xsi:type="atl:SimpleOutPatternElement" id="attribute_OUT" varName="attribute_OUT">
+          <type xsi:type="ocl:OclModelElement" name="Attribute" model="/1"/>
+          <bindings propertyName="name">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" name="name">
+              <source xsi:type="ocl:VariableExp" referredVariable="/0/@elements.2/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings propertyName="type">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" name="type">
+              <source xsi:type="ocl:VariableExp" referredVariable="/0/@elements.2/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern>
+        <elements xsi:type="atl:SimpleInPatternElement" id="attribute_IN" varName="attribute_IN" variableExp="/0/@elements.2/@outPattern/@elements.0/@bindings.0/@value/@source /0/@elements.2/@outPattern/@elements.0/@bindings.1/@value/@source">
+          <type xsi:type="ocl:OclModelElement" name="Attribute" model="/1"/>
+        </elements>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:MatchedRule" name="WeakReference">
+      <outPattern>
+        <elements xsi:type="atl:SimpleOutPatternElement" id="weakreference_OUT" varName="weakreference_OUT">
+          <type xsi:type="ocl:OclModelElement" name="WeakReference" model="/1"/>
+          <bindings propertyName="name">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" name="name">
+              <source xsi:type="ocl:VariableExp" referredVariable="/0/@elements.3/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings propertyName="type">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" name="type">
+              <source xsi:type="ocl:VariableExp" referredVariable="/0/@elements.3/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern>
+        <elements xsi:type="atl:SimpleInPatternElement" id="weakreference_IN" varName="weakreference_IN" variableExp="/0/@elements.3/@outPattern/@elements.0/@bindings.0/@value/@source /0/@elements.3/@outPattern/@elements.0/@bindings.1/@value/@source">
+          <type xsi:type="ocl:OclModelElement" name="WeakReference" model="/1"/>
+        </elements>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:MatchedRule" name="StrongReference">
+      <outPattern>
+        <elements xsi:type="atl:SimpleOutPatternElement" id="strongreference_OUT" varName="strongreference_OUT">
+          <type xsi:type="ocl:OclModelElement" name="StrongReference" model="/1"/>
+          <bindings propertyName="name">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" name="name">
+              <source xsi:type="ocl:VariableExp" referredVariable="/0/@elements.4/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings propertyName="type">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" name="type">
+              <source xsi:type="ocl:VariableExp" referredVariable="/0/@elements.4/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern>
+        <elements xsi:type="atl:SimpleInPatternElement" id="strongreference_IN" varName="strongreference_IN" variableExp="/0/@elements.4/@outPattern/@elements.0/@bindings.0/@value/@source /0/@elements.4/@outPattern/@elements.0/@bindings.1/@value/@source">
+          <type xsi:type="ocl:OclModelElement" name="StrongReference" model="/1"/>
+        </elements>
+      </inPattern>
+    </elements>
+  </atl:Module>
+  <ocl:OclModel name="ER" elements="/0/@elements.0/@inPattern/@elements.0/@type /0/@elements.0/@outPattern/@elements.0/@type /0/@elements.1/@inPattern/@elements.0/@type /0/@elements.1/@outPattern/@elements.0/@type /0/@elements.2/@inPattern/@elements.0/@type /0/@elements.2/@outPattern/@elements.0/@type /0/@elements.3/@inPattern/@elements.0/@type /0/@elements.3/@outPattern/@elements.0/@type /0/@elements.4/@inPattern/@elements.0/@type /0/@elements.4/@outPattern/@elements.0/@type" model="/0/@inModels.0"/>
+  <ocl:OclModelElement name="ERModel" model="/10"/>
+  <ocl:OclModelElement name="EntityType" model="/10"/>
+  <ocl:OclModelElement name="Feature" model="/10"/>
+  <ocl:OclModelElement name="Attribute" model="/10"/>
+  <ocl:OclModelElement name="WeakReference" model="/10"/>
+  <ocl:OclModelElement name="StrongReference" model="/10"/>
+  <ocl:OclModelElement name="NamedElement" model="/10"/>
+  <ocl:OclModelElement name="Reference" model="/10"/>
+  <ocl:OclModel name="Copy" elements="/2 /3 /4 /5 /6 /7 /8 /9" model="/0/@outModels.0"/>
+</xmi:XMI>

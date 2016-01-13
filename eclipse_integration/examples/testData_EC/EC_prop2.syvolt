@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syvolt:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:syvolt="http://syvolt/2.0">
+  <hasProperty name="EC_prop2">
+    <match>
+      <class xsi:type="syvolt:AnyMatchClass" className="EClass">
+        <attribute attributeName="name"/>
+      </class>
+      <class xsi:type="syvolt:AnyMatchClass" className="EStructuralFeature"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="eStructuralFeatures" source="//@hasProperty.0/@match.0/@class.0" target="//@hasProperty.0/@match.0/@class.1"/>
+    </match>
+    <apply>
+      <class className="EClass">
+        <attribute attributeName="name">
+          <attributeValue xsi:type="syvolt:AttributeRef" attributeRef="//@hasProperty.0/@match.0/@class.0/@attribute.0"/>
+        </attribute>
+      </class>
+      <class className="EStructuralFeature"/>
+      <association associationName="eStructuralFeatures" source="//@hasProperty.0/@apply/@class.0" target="//@hasProperty.0/@apply/@class.1"/>
+    </apply>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.1" sourceClass="//@hasProperty.0/@match.0/@class.1"/>
+  </hasProperty>
+</syvolt:TransformationModel>

@@ -1,0 +1,52 @@
+module ERCopier;
+create OUT : Copy from IN : ER;
+
+rule ERModel {
+ from
+  ermodel_IN : ER!ERModel
+ to
+  ermodel_OUT : ER!ERModel (
+   name <- ermodel_IN.name,
+   entities <- ermodel_IN.entities
+  )
+}
+
+rule EntityType {
+ from
+  entitytype_IN : ER!EntityType
+ to
+  entitytype_OUT : ER!EntityType (
+   name <- entitytype_IN.name,
+   features <- entitytype_IN.features
+  )
+}
+
+rule Attribute {
+ from
+  attribute_IN : ER!Attribute
+ to
+  attribute_OUT : ER!Attribute (
+   name <- attribute_IN.name,
+   type <- attribute_IN.type
+  )
+}
+
+rule WeakReference {
+ from
+  weakreference_IN : ER!WeakReference
+ to
+  weakreference_OUT : ER!WeakReference (
+   name <- weakreference_IN.name,
+   type <- weakreference_IN.type
+  )
+}
+
+rule StrongReference {
+ from
+  strongreference_IN : ER!StrongReference
+ to
+  strongreference_OUT : ER!StrongReference (
+   name <- strongreference_IN.name,
+   type <- strongreference_IN.type
+  )
+}

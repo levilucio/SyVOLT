@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:syvolt="http://syvolt/2.0" xmi:id="_PZ1KcPWYEeSL9M4wCyIOqQ" type="Syvolt" name="prop2.syvolt_diagram" measurementUnit="Pixel">
+  <children xmi:type="notation:Shape" xmi:id="_W597EPWYEeSL9M4wCyIOqQ" type="2004" fontName=".Helvetica Neue DeskInterface">
+    <children xmi:type="notation:DecorationNode" xmi:id="_W5-iIPWYEeSL9M4wCyIOqQ" type="5019"/>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_W5-iIfWYEeSL9M4wCyIOqQ" type="7027">
+      <children xmi:type="notation:Shape" xmi:id="_lo-GIPWYEeSL9M4wCyIOqQ" type="3037" fontName=".Helvetica Neue DeskInterface">
+        <children xmi:type="notation:BasicCompartment" xmi:id="_lo-GI_WYEeSL9M4wCyIOqQ" type="7029">
+          <children xmi:type="notation:Node" xmi:id="_ohvDAPWYEeSL9M4wCyIOqQ" type="3031">
+            <children xmi:type="notation:DecorationNode" xmi:id="_ohvqEPWYEeSL9M4wCyIOqQ" type="5014"/>
+            <children xmi:type="notation:BasicCompartment" xmi:id="_ohvqEfWYEeSL9M4wCyIOqQ" type="7019">
+              <children xmi:type="notation:Shape" xmi:id="_66XnMPWYEeSL9M4wCyIOqQ" type="3004" fontName=".Helvetica Neue DeskInterface">
+                <children xmi:type="notation:DecorationNode" xmi:id="_66XnM_WYEeSL9M4wCyIOqQ" type="5003"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_66XnNPWYEeSL9M4wCyIOqQ" type="7006"/>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_66XnMfWYEeSL9M4wCyIOqQ"/>
+                <element xmi:type="syvolt:MatchAttribute" href="default2.syvolt#//@hasProperty.0/@match.0/@class.0/@attribute.0"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_66XnMvWYEeSL9M4wCyIOqQ" x="6" y="2"/>
+              </children>
+            </children>
+            <styles xmi:type="notation:DescriptionStyle" xmi:id="_ohvDAfWYEeSL9M4wCyIOqQ"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_ohvDAvWYEeSL9M4wCyIOqQ" fontName=".Helvetica Neue DeskInterface"/>
+            <styles xmi:type="notation:FillStyle" xmi:id="_ohvDA_WYEeSL9M4wCyIOqQ"/>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_ohvDBPWYEeSL9M4wCyIOqQ"/>
+            <element xmi:type="syvolt:AnyMatchClass" href="default2.syvolt#//@hasProperty.0/@match.0/@class.0"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ohvDBfWYEeSL9M4wCyIOqQ" x="10" y="7"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_px_xAPWYEeSL9M4wCyIOqQ" type="3031">
+            <children xmi:type="notation:DecorationNode" xmi:id="_px_xBvWYEeSL9M4wCyIOqQ" type="5014"/>
+            <children xmi:type="notation:BasicCompartment" xmi:id="_pyAYEPWYEeSL9M4wCyIOqQ" type="7019"/>
+            <styles xmi:type="notation:DescriptionStyle" xmi:id="_px_xAfWYEeSL9M4wCyIOqQ"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_px_xAvWYEeSL9M4wCyIOqQ" fontName=".Helvetica Neue DeskInterface"/>
+            <styles xmi:type="notation:FillStyle" xmi:id="_px_xA_WYEeSL9M4wCyIOqQ"/>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_px_xBPWYEeSL9M4wCyIOqQ"/>
+            <element xmi:type="syvolt:AnyMatchClass" href="default2.syvolt#//@hasProperty.0/@match.0/@class.1"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_px_xBfWYEeSL9M4wCyIOqQ" x="148" y="29"/>
+          </children>
+        </children>
+        <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_lo-GIfWYEeSL9M4wCyIOqQ"/>
+        <element xmi:type="syvolt:PreCondition" href="default2.syvolt#//@hasProperty.0/@match.0"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_lo-GIvWYEeSL9M4wCyIOqQ" x="4" y="12" width="295"/>
+      </children>
+    </children>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_W5_JMPWYEeSL9M4wCyIOqQ" type="7028">
+      <children xmi:type="notation:Node" xmi:id="_mE3_APWYEeSL9M4wCyIOqQ" type="3038">
+        <children xmi:type="notation:BasicCompartment" xmi:id="_mE3_BvWYEeSL9M4wCyIOqQ" type="7030">
+          <children xmi:type="notation:Shape" xmi:id="_zCXJIPWYEeSL9M4wCyIOqQ" type="3034" fontName=".Helvetica Neue DeskInterface">
+            <children xmi:type="notation:DecorationNode" xmi:id="_zCXJI_WYEeSL9M4wCyIOqQ" type="5016"/>
+            <children xmi:type="notation:BasicCompartment" xmi:id="_zCXwMPWYEeSL9M4wCyIOqQ" type="7022">
+              <children xmi:type="notation:Shape" xmi:id="_BD80kPWZEeSL9M4wCyIOqQ" type="3011" fontName=".Helvetica Neue DeskInterface">
+                <children xmi:type="notation:DecorationNode" xmi:id="_BD80k_WZEeSL9M4wCyIOqQ" type="5010"/>
+                <children xmi:type="notation:BasicCompartment" xmi:id="_BD80lPWZEeSL9M4wCyIOqQ" type="7011">
+                  <children xmi:type="notation:Shape" xmi:id="_OxGhEPWZEeSL9M4wCyIOqQ" type="3014" fontName=".Helvetica Neue DeskInterface">
+                    <element xmi:type="syvolt:AttributeRef" href="default2.syvolt#//@hasProperty.0/@apply/@class.0/@attribute.0/@attributeValue"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_OxGhEfWZEeSL9M4wCyIOqQ" x="3" y="6"/>
+                  </children>
+                </children>
+                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_BD80kfWZEeSL9M4wCyIOqQ"/>
+                <element xmi:type="syvolt:ApplyAttribute" href="default2.syvolt#//@hasProperty.0/@apply/@class.0/@attribute.0"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_BD80kvWZEeSL9M4wCyIOqQ" x="1" y="1"/>
+              </children>
+            </children>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_zCXJIfWYEeSL9M4wCyIOqQ"/>
+            <element xmi:type="syvolt:ApplyClass" href="default2.syvolt#//@hasProperty.0/@apply/@class.0"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_zCXJIvWYEeSL9M4wCyIOqQ" x="6" y="5"/>
+          </children>
+          <children xmi:type="notation:Shape" xmi:id="_1FYJwPWYEeSL9M4wCyIOqQ" type="3034" fontName=".Helvetica Neue DeskInterface">
+            <children xmi:type="notation:DecorationNode" xmi:id="_1FYJw_WYEeSL9M4wCyIOqQ" type="5016"/>
+            <children xmi:type="notation:BasicCompartment" xmi:id="_1FYJxPWYEeSL9M4wCyIOqQ" type="7022"/>
+            <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_1FYJwfWYEeSL9M4wCyIOqQ"/>
+            <element xmi:type="syvolt:ApplyClass" href="default2.syvolt#//@hasProperty.0/@apply/@class.1"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1FYJwvWYEeSL9M4wCyIOqQ" x="146" y="53"/>
+          </children>
+        </children>
+        <styles xmi:type="notation:DescriptionStyle" xmi:id="_mE3_AfWYEeSL9M4wCyIOqQ"/>
+        <styles xmi:type="notation:FontStyle" xmi:id="_mE3_AvWYEeSL9M4wCyIOqQ" fontName=".Helvetica Neue DeskInterface"/>
+        <styles xmi:type="notation:LineStyle" xmi:id="_mE3_A_WYEeSL9M4wCyIOqQ"/>
+        <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_mE3_BPWYEeSL9M4wCyIOqQ"/>
+        <element xmi:type="syvolt:PostCondition" href="default2.syvolt#//@hasProperty.0/@apply"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_mE3_BfWYEeSL9M4wCyIOqQ" x="6" y="9" width="293" height="165"/>
+      </children>
+    </children>
+    <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_W597EfWYEeSL9M4wCyIOqQ"/>
+    <element xmi:type="syvolt:AtomicContract" href="default2.syvolt#//@hasProperty.0"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_W597EvWYEeSL9M4wCyIOqQ" x="220" y="148" width="325" height="381"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_PZ1KcfWYEeSL9M4wCyIOqQ"/>
+  <element xmi:type="syvolt:TransformationModel" href="default2.syvolt#/"/>
+  <edges xmi:type="notation:Connector" xmi:id="_XbPmsPWZEeSL9M4wCyIOqQ" type="4009" source="_OxGhEPWZEeSL9M4wCyIOqQ" target="_66XnMPWYEeSL9M4wCyIOqQ">
+    <children xmi:type="notation:DecorationNode" xmi:id="_XbQNwPWZEeSL9M4wCyIOqQ" type="6006">
+      <styles xmi:type="notation:DescriptionStyle" xmi:id="_XbQNwfWZEeSL9M4wCyIOqQ"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_XbQNwvWZEeSL9M4wCyIOqQ" y="40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_XbPmsfWZEeSL9M4wCyIOqQ" fontName=".Helvetica Neue DeskInterface"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_XbPmsvWZEeSL9M4wCyIOqQ" points="[5, -17, 0, 151]$[1, -160, -4, 8]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_XbSC8PWZEeSL9M4wCyIOqQ" id="(0.475,0.025)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_XbSqAPWZEeSL9M4wCyIOqQ" id="(0.5185185185185185,0.9772727272727273)"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_aEAYsPWZEeSL9M4wCyIOqQ" type="4013" source="_px_xAPWYEeSL9M4wCyIOqQ" target="_1FYJwPWYEeSL9M4wCyIOqQ">
+    <styles xmi:type="notation:FontStyle" xmi:id="_aEAYsfWZEeSL9M4wCyIOqQ" fontName=".Helvetica Neue DeskInterface"/>
+    <element xmi:type="syvolt:Trace" href="default2.syvolt#//@hasProperty.0/@backwards.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_aEAYsvWZEeSL9M4wCyIOqQ" points="[-6, 22, 0, -135]$[-7, 154, -1, -3]"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_aEC08PWZEeSL9M4wCyIOqQ" id="(0.44642857142857145,0.06818181818181818)"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_cQA9QPWZEeSL9M4wCyIOqQ" type="4003" source="_ohvDAPWYEeSL9M4wCyIOqQ" target="_px_xAPWYEeSL9M4wCyIOqQ">
+    <children xmi:type="notation:DecorationNode" xmi:id="_cQBkUPWZEeSL9M4wCyIOqQ" type="6002">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_cQBkUfWZEeSL9M4wCyIOqQ" x="17" y="-40"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_cQA9QfWZEeSL9M4wCyIOqQ" fontName=".Helvetica Neue DeskInterface"/>
+    <element xmi:type="syvolt:PositiveMatchAssociation" href="default2.syvolt#//@hasProperty.0/@match.0/@association.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_cQA9QvWZEeSL9M4wCyIOqQ" points="[40, 8, -64, -13]$[97, 20, -7, -1]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cQEAkPWZEeSL9M4wCyIOqQ" id="(0.9753086419753086,0.550561797752809)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cQEAkfWZEeSL9M4wCyIOqQ" id="(0.0625,0.4772727272727273)"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_kUcGsPWZEeSL9M4wCyIOqQ" type="4005" source="_zCXJIPWYEeSL9M4wCyIOqQ" target="_1FYJwPWYEeSL9M4wCyIOqQ">
+    <children xmi:type="notation:DecorationNode" xmi:id="_kUctwPWZEeSL9M4wCyIOqQ" type="6004">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_kUctwfWZEeSL9M4wCyIOqQ" x="20" y="47"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_kUcGsfWZEeSL9M4wCyIOqQ" fontName=".Helvetica Neue DeskInterface"/>
+    <element xmi:type="syvolt:ApplyAssociation" href="default2.syvolt#//@hasProperty.0/@apply/@association.0"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_kUcGsvWZEeSL9M4wCyIOqQ" points="[22, 15, -59, -41]$[76, 54, -5, -2]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_kUei8PWZEeSL9M4wCyIOqQ" id="(0.9651162790697675,0.44360902255639095)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_kUfKAPWZEeSL9M4wCyIOqQ" id="(0.044642857142857144,0.22727272727272727)"/>
+  </edges>
+</notation:Diagram>

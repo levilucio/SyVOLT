@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syvolt:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:syvolt="http://syvolt/2.0">
+  <hasProperty name="Prop1">
+    <match>
+      <class xsi:type="syvolt:AnyMatchClass" className="EClass">
+        <attribute attributeName="name"/>
+      </class>
+      <class xsi:type="syvolt:AnyMatchClass" className="EReference"/>
+      <class xsi:type="syvolt:AnyMatchClass" className="EReference"/>
+      <class xsi:type="syvolt:AnyMatchClass" className="EClass">
+        <attribute attributeName="name"/>
+      </class>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="eStructuralFeatures" source="//@hasProperty.0/@match.0/@class.0" target="//@hasProperty.0/@match.0/@class.1"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="eType" source="//@hasProperty.0/@match.0/@class.1" target="//@hasProperty.0/@match.0/@class.3"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="eStructuralFeatures" source="//@hasProperty.0/@match.0/@class.3" target="//@hasProperty.0/@match.0/@class.2"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="eType" source="//@hasProperty.0/@match.0/@class.2" target="//@hasProperty.0/@match.0/@class.0"/>
+    </match>
+    <apply>
+      <class className="EClass">
+        <attribute attributeName="name">
+          <attributeValue xsi:type="syvolt:AttributeRef" attributeRef="//@hasProperty.0/@match.0/@class.0/@attribute.0"/>
+        </attribute>
+      </class>
+      <class className="EReference"/>
+      <class className="EClass">
+        <attribute attributeName="name">
+          <attributeValue xsi:type="syvolt:AttributeRef" attributeRef="//@hasProperty.0/@match.0/@class.3/@attribute.0"/>
+        </attribute>
+      </class>
+      <class className="EReference"/>
+      <association associationName="eStructuralFeatures" source="//@hasProperty.0/@apply/@class.2" target="//@hasProperty.0/@apply/@class.3"/>
+      <association associationName="eType" source="//@hasProperty.0/@apply/@class.3" target="//@hasProperty.0/@apply/@class.0"/>
+      <association associationName="eStructuralFeatures" source="//@hasProperty.0/@apply/@class.0" target="//@hasProperty.0/@apply/@class.1"/>
+      <association associationName="eType" source="//@hasProperty.0/@apply/@class.1" target="//@hasProperty.0/@apply/@class.2"/>
+    </apply>
+  </hasProperty>
+</syvolt:TransformationModel>

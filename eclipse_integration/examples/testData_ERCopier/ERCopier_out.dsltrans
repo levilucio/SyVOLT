@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<dsltrans:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dsltrans="http://dsltrans/2.0">
+  <source xsi:type="dsltrans:FilePort" name="maininput" filePathURI="IN">
+    <metaModelId metaModelName="ER"/>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="ERModel_CreationRule" previousSource="//@source.0">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="ERModel">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" className="ERModel" packageName="ER">
+          <attribute attributeName="name"/>
+        </class>
+      </match>
+      <apply>
+        <class className="ERModel" packageName="ER">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.1/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+          </attribute>
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="EntityType_CreationRule" previousSource="//@source.1">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="EntityType">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" className="EntityType" packageName="ER">
+          <attribute attributeName="name"/>
+        </class>
+      </match>
+      <apply>
+        <class className="EntityType" packageName="ER">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.2/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+          </attribute>
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="Attribute_CreationRule" previousSource="//@source.2">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="Attribute">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" className="Attribute" packageName="ER">
+          <attribute attributeName="name"/>
+          <attribute attributeName="type"/>
+        </class>
+      </match>
+      <apply>
+        <class className="Attribute" packageName="ER">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.3/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+          </attribute>
+          <attribute attributeName="type">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.3/@hasRule.0/@match.0/@class.0/@attribute.1"/>
+          </attribute>
+        </class>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="WeakReference_CreationRule" previousSource="//@source.3">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="WeakReference">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" className="WeakReference" packageName="ER">
+          <attribute attributeName="name"/>
+        </class>
+      </match>
+      <apply>
+        <class className="WeakReference" packageName="ER">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.4/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+          </attribute>
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="StrongReference_CreationRule" previousSource="//@source.4">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="StrongReference">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" className="StrongReference" packageName="ER">
+          <attribute attributeName="name"/>
+        </class>
+      </match>
+      <apply>
+        <class className="StrongReference" packageName="ER">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.5/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+          </attribute>
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="ermodel_OUTentitiesSolveRef" previousSource="//@source.5">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="ermodelOUTentitiesSolveRefERModelEntityTypeERModelEntityType">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" className="ERModel" packageName="ER"/>
+        <class xsi:type="dsltrans:AnyMatchClass" className="EntityType" packageName="ER"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="entities" source="//@source.6/@hasRule.0/@match.0/@class.0" target="//@source.6/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class className="ERModel" packageName="ER">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class className="EntityType" packageName="ER">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="entities" source="//@source.6/@hasRule.0/@apply/@class.0" target="//@source.6/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.6/@hasRule.0/@apply/@class.0" sourceClass="//@source.6/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.6/@hasRule.0/@apply/@class.1" sourceClass="//@source.6/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="entitytype_OUTfeaturesSolveRef" previousSource="//@source.6">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="entitytypeOUTfeaturesSolveRefEntityTypeFeatureEntityTypeFeature">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" className="EntityType" packageName="ER"/>
+        <class xsi:type="dsltrans:AnyMatchClass" className="Feature" packageName="ER"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="features" source="//@source.7/@hasRule.0/@match.0/@class.0" target="//@source.7/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class className="EntityType" packageName="ER">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class className="Feature" packageName="ER">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="features" source="//@source.7/@hasRule.0/@apply/@class.0" target="//@source.7/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.7/@hasRule.0/@apply/@class.0" sourceClass="//@source.7/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.7/@hasRule.0/@apply/@class.1" sourceClass="//@source.7/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="weakreference_OUTtypeSolveRef" previousSource="//@source.7">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="weakreferenceOUTtypeSolveRefWeakReferenceEntityTypeWeakReferenceEntityType">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" className="WeakReference" packageName="ER"/>
+        <class xsi:type="dsltrans:AnyMatchClass" className="EntityType" packageName="ER"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="type" source="//@source.8/@hasRule.0/@match.0/@class.0" target="//@source.8/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class className="WeakReference" packageName="ER">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class className="EntityType" packageName="ER">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="type" source="//@source.8/@hasRule.0/@apply/@class.0" target="//@source.8/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.8/@hasRule.0/@apply/@class.0" sourceClass="//@source.8/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.8/@hasRule.0/@apply/@class.1" sourceClass="//@source.8/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="strongreference_OUTtypeSolveRef" previousSource="//@source.8">
+    <metaModelId metaModelURI="Copy.ecore" metaModelName="Copy"/>
+    <hasRule description="strongreferenceOUTtypeSolveRefStrongReferenceEntityTypeStrongReferenceEntityType">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" className="StrongReference" packageName="ER"/>
+        <class xsi:type="dsltrans:AnyMatchClass" className="EntityType" packageName="ER"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="type" source="//@source.9/@hasRule.0/@match.0/@class.0" target="//@source.9/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class className="StrongReference" packageName="ER">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class className="EntityType" packageName="ER">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="type" source="//@source.9/@hasRule.0/@apply/@class.0" target="//@source.9/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.9/@hasRule.0/@apply/@class.0" sourceClass="//@source.9/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.9/@hasRule.0/@apply/@class.1" sourceClass="//@source.9/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+</dsltrans:TransformationModel>

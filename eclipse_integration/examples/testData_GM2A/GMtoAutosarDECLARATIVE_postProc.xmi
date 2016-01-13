@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atl="http://www.eclipse.org/gmt/2005/ATL" xmlns:ocl="http://www.eclipse.org/gmt/2005/OCL">
+  <atl:Module location="1:1-94:2" name="INDtoAutosarDECLARATIVE_postProc">
+    <inModels location="5:29-5:39" name="IN" metamodel="/2"/>
+    <outModels location="5:8-5:23" name="OUT" metamodel="/1"/>
+    <elements xsi:type="atl:MatchedRule" location="9:1-18:2" name="createComponent">
+      <commentsBefore>--Matched Rule: Matches any Module in the industrial model</commentsBefore>
+      <commentsBefore>--into a SwCompToEcuMapping_component that references a Component Prototype</commentsBefore>
+      <commentsAfter>-- matched rule: matches any PhysicalNode element (and all its attributes/references) </commentsAfter>
+      <commentsAfter>-- in a industrial model into a System template/PhysicalNode Extract (and all its attributes/references)</commentsAfter>
+      <commentsAfter>-- in its equivalent autosar model</commentsAfter>
+      <outPattern location="11:2-17:4">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="12:2-14:4" varName="mapComp">
+          <type xsi:type="ocl:OclModelElement" location="12:11-12:49" name="SwCompToEcuMapping_component" model="/1"/>
+          <bindings location="13:3-13:34" propertyName="componentPrototype">
+            <value xsi:type="ocl:SetExp" location="13:25-13:34">
+              <elements xsi:type="ocl:VariableExp" location="13:29-13:33" referredVariable="/0/@elements.0/@outPattern/@elements.1"/>
+            </value>
+          </bindings>
+        </elements>
+        <elements xsi:type="atl:SimpleOutPatternElement" location="15:2-17:4" varName="comp" variableExp="/0/@elements.0/@outPattern/@elements.0/@bindings.0/@value/@elements.0">
+          <type xsi:type="ocl:OclModelElement" location="15:8-15:36" name="ComponentPrototype" model="/1"/>
+          <bindings location="16:3-16:21" propertyName="shortName">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="16:15-16:21" name="name">
+              <source xsi:type="ocl:VariableExp" location="16:15-16:16" referredVariable="/0/@elements.0/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="10:2-10:21">
+        <elements xsi:type="atl:SimpleInPatternElement" location="10:7-10:21" varName="m" variableExp="/0/@elements.0/@outPattern/@elements.1/@bindings.0/@value/@source">
+          <type xsi:type="ocl:OclModelElement" location="10:9-10:21" name="Module" model="/2"/>
+        </elements>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:MatchedRule" location="24:1-49:2" name="initSysTemp">
+      <commentsBefore>-- matched rule: matches any PhysicalNode element (and all its attributes/references) </commentsBefore>
+      <commentsBefore>-- in a industrial model into a System template/PhysicalNode Extract (and all its attributes/references)</commentsBefore>
+      <commentsBefore>-- in its equivalent autosar model</commentsBefore>
+      <commentsAfter>--LAZY RULE: creates a single PPortPrototype from an Scheduler</commentsAfter>
+      <commentsAfter>-- Uses the 'Name' of the Scheduler to generate the 'shortName'</commentsAfter>
+      <commentsAfter>--     of the PPortPrototype... </commentsAfter>
+      <outPattern location="26:2-48:3">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="27:2-30:3" varName="sysmapping" variableExp="/0/@elements.1/@outPattern/@elements.1/@bindings.1/@value">
+          <type xsi:type="ocl:OclModelElement" location="27:14-27:37" name="SystemMapping" model="/1"/>
+          <bindings location="28:3-28:44" propertyName="shortName">
+            <value xsi:type="ocl:OperatorCallExp" location="28:15-28:44" operationName="+">
+              <source xsi:type="ocl:StringExp" location="28:15-28:28" stringSymbol="SysMapping_"/>
+              <arguments xsi:type="ocl:NavigationOrAttributeCallExp" location="28:31-28:44" name="name">
+                <source xsi:type="ocl:VariableExp" location="28:31-28:39" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+              </arguments>
+            </value>
+          </bindings>
+          <bindings location="29:3-29:88" propertyName="swMapping">
+            <value xsi:type="ocl:IteratorExp" location="29:15-29:88" name="collect">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="29:15-29:33" name="partition">
+                <source xsi:type="ocl:VariableExp" location="29:15-29:23" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+              </source>
+              <body xsi:type="ocl:OperationCallExp" location="29:48-29:87" operationName="resolveTemp">
+                <source xsi:type="ocl:VariableExp" location="29:48-29:58" referredVariable="/3"/>
+                <arguments xsi:type="ocl:VariableExp" location="29:71-29:75" referredVariable="/0/@elements.1/@outPattern/@elements.0/@bindings.1/@value/@iterators.0"/>
+                <arguments xsi:type="ocl:StringExp" location="29:77-29:86" stringSymbol="mapping"/>
+              </body>
+              <iterators location="29:43-29:47" varName="part" variableExp="/0/@elements.1/@outPattern/@elements.0/@bindings.1/@value/@body/@arguments.0"/>
+            </value>
+          </bindings>
+        </elements>
+        <elements xsi:type="atl:SimpleOutPatternElement" location="31:2-35:3" varName="sys">
+          <type xsi:type="ocl:OclModelElement" location="31:7-31:23" name="System" model="/1"/>
+          <bindings location="32:3-32:44" propertyName="shortName">
+            <value xsi:type="ocl:OperatorCallExp" location="32:14-32:44" operationName="+">
+              <source xsi:type="ocl:StringExp" location="32:14-32:28" stringSymbol="SysTemplate_"/>
+              <arguments xsi:type="ocl:NavigationOrAttributeCallExp" location="32:31-32:44" name="name">
+                <source xsi:type="ocl:VariableExp" location="32:31-32:39" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+              </arguments>
+            </value>
+          </bindings>
+          <bindings location="33:3-33:23" propertyName="mapping">
+            <value xsi:type="ocl:VariableExp" location="33:13-33:23" referredVariable="/0/@elements.1/@outPattern/@elements.0"/>
+          </bindings>
+          <bindings location="34:3-34:33" propertyName="softwareComposition">
+            <value xsi:type="ocl:VariableExp" location="34:25-34:33" referredVariable="/0/@elements.1/@outPattern/@elements.2"/>
+          </bindings>
+        </elements>
+        <elements xsi:type="atl:SimpleOutPatternElement" location="36:2-39:3" varName="swCompos" variableExp="/0/@elements.1/@outPattern/@elements.1/@bindings.2/@value">
+          <type xsi:type="ocl:OclModelElement" location="36:12-36:41" name="SoftwareComposition" model="/1"/>
+          <bindings location="37:3-37:52" propertyName="shortName">
+            <value xsi:type="ocl:OperatorCallExp" location="37:14-37:52" operationName="+">
+              <source xsi:type="ocl:StringExp" location="37:14-37:36" stringSymbol="SoftwareComposition_"/>
+              <arguments xsi:type="ocl:NavigationOrAttributeCallExp" location="37:39-37:52" name="name">
+                <source xsi:type="ocl:VariableExp" location="37:39-37:47" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+              </arguments>
+            </value>
+          </bindings>
+          <bindings location="38:3-38:35" propertyName="softwareComposition">
+            <value xsi:type="ocl:VariableExp" location="38:25-38:35" referredVariable="/0/@elements.1/@outPattern/@elements.3"/>
+          </bindings>
+        </elements>
+        <elements xsi:type="atl:SimpleOutPatternElement" location="40:2-45:3" varName="compostype" variableExp="/0/@elements.1/@outPattern/@elements.2/@bindings.1/@value">
+          <type xsi:type="ocl:OclModelElement" location="40:13-40:38" name="CompositionType" model="/1"/>
+          <bindings location="41:3-41:50" propertyName="shortName">
+            <value xsi:type="ocl:OperatorCallExp" location="41:16-41:50" operationName="+">
+              <source xsi:type="ocl:StringExp" location="41:16-41:34" stringSymbol="CompositionType_"/>
+              <arguments xsi:type="ocl:NavigationOrAttributeCallExp" location="41:37-41:50" name="name">
+                <source xsi:type="ocl:VariableExp" location="41:37-41:45" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+              </arguments>
+            </value>
+          </bindings>
+          <bindings location="42:3-42:118" propertyName="component">
+            <value xsi:type="ocl:IteratorExp" location="42:16-42:118" name="collect">
+              <source xsi:type="ocl:CollectionOperationCallExp" location="42:16-42:72" operationName="flatten">
+                <source xsi:type="ocl:IteratorExp" location="42:16-42:61" name="collect">
+                  <source xsi:type="ocl:NavigationOrAttributeCallExp" location="42:16-42:34" name="partition">
+                    <source xsi:type="ocl:VariableExp" location="42:16-42:24" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+                  </source>
+                  <body xsi:type="ocl:NavigationOrAttributeCallExp" location="42:49-42:60" name="module">
+                    <source xsi:type="ocl:VariableExp" location="42:49-42:53" referredVariable="/0/@elements.1/@outPattern/@elements.3/@bindings.1/@value/@source/@source/@iterators.0"/>
+                  </body>
+                  <iterators location="42:44-42:48" varName="part" variableExp="/0/@elements.1/@outPattern/@elements.3/@bindings.1/@value/@source/@source/@body/@source"/>
+                </source>
+              </source>
+              <body xsi:type="ocl:OperationCallExp" location="42:84-42:117" operationName="resolveTemp">
+                <source xsi:type="ocl:VariableExp" location="42:84-42:94" referredVariable="/4"/>
+                <arguments xsi:type="ocl:VariableExp" location="42:107-42:108" referredVariable="/0/@elements.1/@outPattern/@elements.3/@bindings.1/@value/@iterators.0"/>
+                <arguments xsi:type="ocl:StringExp" location="42:110-42:116" stringSymbol="comp"/>
+              </body>
+              <iterators location="42:82-42:83" varName="d" variableExp="/0/@elements.1/@outPattern/@elements.3/@bindings.1/@value/@body/@arguments.0"/>
+            </value>
+          </bindings>
+          <bindings location="43:3-43:176" propertyName="port">
+            <value xsi:type="ocl:IteratorExp" location="43:11-43:176" name="collect">
+              <source xsi:type="ocl:IteratorExp" location="43:11-43:138" name="select">
+                <source xsi:type="ocl:CollectionOperationCallExp" location="43:11-43:104" operationName="flatten">
+                  <source xsi:type="ocl:IteratorExp" location="43:11-43:93" name="collect">
+                    <source xsi:type="ocl:CollectionOperationCallExp" location="43:11-43:69" operationName="flatten">
+                      <source xsi:type="ocl:IteratorExp" location="43:11-43:58" name="collect">
+                        <source xsi:type="ocl:NavigationOrAttributeCallExp" location="43:11-43:29" name="partition">
+                          <source xsi:type="ocl:VariableExp" location="43:11-43:19" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+                        </source>
+                        <body xsi:type="ocl:NavigationOrAttributeCallExp" location="43:46-43:57" name="module">
+                          <source xsi:type="ocl:VariableExp" location="43:46-43:50" referredVariable="/0/@elements.1/@outPattern/@elements.3/@bindings.2/@value/@source/@source/@source/@source/@source/@iterators.0"/>
+                        </body>
+                        <iterators location="43:39-43:43" varName="part" variableExp="/0/@elements.1/@outPattern/@elements.3/@bindings.2/@value/@source/@source/@source/@source/@source/@body/@source"/>
+                      </source>
+                    </source>
+                    <body xsi:type="ocl:NavigationOrAttributeCallExp" location="43:81-43:92" name="scheduler">
+                      <source xsi:type="ocl:VariableExp" location="43:81-43:82" referredVariable="/0/@elements.1/@outPattern/@elements.3/@bindings.2/@value/@source/@source/@source/@iterators.0"/>
+                    </body>
+                    <iterators location="43:79-43:80" varName="d" variableExp="/0/@elements.1/@outPattern/@elements.3/@bindings.2/@value/@source/@source/@source/@body/@source"/>
+                  </source>
+                </source>
+                <body xsi:type="ocl:CollectionOperationCallExp" location="43:115-43:137" operationName="notEmpty">
+                  <source xsi:type="ocl:NavigationOrAttributeCallExp" location="43:115-43:125" name="required">
+                    <source xsi:type="ocl:VariableExp" location="43:115-43:116" referredVariable="/0/@elements.1/@outPattern/@elements.3/@bindings.2/@value/@source/@iterators.0"/>
+                  </source>
+                </body>
+                <iterators location="43:113-43:114" varName="e" variableExp="/0/@elements.1/@outPattern/@elements.3/@bindings.2/@value/@source/@body/@source/@source"/>
+              </source>
+              <body xsi:type="ocl:OperationCallExp" location="43:150-43:175" operationName="createRPort">
+                <source xsi:type="ocl:VariableExp" location="43:150-43:160" referredVariable="/5"/>
+                <arguments xsi:type="ocl:VariableExp" location="43:173-43:174" referredVariable="/0/@elements.1/@outPattern/@elements.3/@bindings.2/@value/@iterators.0"/>
+              </body>
+              <iterators location="43:148-43:149" varName="e" variableExp="/0/@elements.1/@outPattern/@elements.3/@bindings.2/@value/@body/@arguments.0"/>
+            </value>
+          </bindings>
+          <bindings location="44:3-44:176" propertyName="port">
+            <value xsi:type="ocl:IteratorExp" location="44:11-44:176" name="collect">
+              <source xsi:type="ocl:IteratorExp" location="44:11-44:138" name="select">
+                <source xsi:type="ocl:CollectionOperationCallExp" location="44:11-44:104" operationName="flatten">
+                  <source xsi:type="ocl:IteratorExp" location="44:11-44:93" name="collect">
+                    <source xsi:type="ocl:CollectionOperationCallExp" location="44:11-44:69" operationName="flatten">
+                      <source xsi:type="ocl:IteratorExp" location="44:11-44:58" name="collect">
+                        <source xsi:type="ocl:NavigationOrAttributeCallExp" location="44:11-44:29" name="partition">
+                          <source xsi:type="ocl:VariableExp" location="44:11-44:19" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+                        </source>
+                        <body xsi:type="ocl:NavigationOrAttributeCallExp" location="44:46-44:57" name="module">
+                          <source xsi:type="ocl:VariableExp" location="44:46-44:50" referredVariable="/0/@elements.1/@outPattern/@elements.3/@bindings.3/@value/@source/@source/@source/@source/@source/@iterators.0"/>
+                        </body>
+                        <iterators location="44:39-44:43" varName="part" variableExp="/0/@elements.1/@outPattern/@elements.3/@bindings.3/@value/@source/@source/@source/@source/@source/@body/@source"/>
+                      </source>
+                    </source>
+                    <body xsi:type="ocl:NavigationOrAttributeCallExp" location="44:81-44:92" name="scheduler">
+                      <source xsi:type="ocl:VariableExp" location="44:81-44:82" referredVariable="/0/@elements.1/@outPattern/@elements.3/@bindings.3/@value/@source/@source/@source/@iterators.0"/>
+                    </body>
+                    <iterators location="44:79-44:80" varName="d" variableExp="/0/@elements.1/@outPattern/@elements.3/@bindings.3/@value/@source/@source/@source/@body/@source"/>
+                  </source>
+                </source>
+                <body xsi:type="ocl:CollectionOperationCallExp" location="44:115-44:137" operationName="notEmpty">
+                  <source xsi:type="ocl:NavigationOrAttributeCallExp" location="44:115-44:125" name="provided">
+                    <source xsi:type="ocl:VariableExp" location="44:115-44:116" referredVariable="/0/@elements.1/@outPattern/@elements.3/@bindings.3/@value/@source/@iterators.0"/>
+                  </source>
+                </body>
+                <iterators location="44:113-44:114" varName="e" variableExp="/0/@elements.1/@outPattern/@elements.3/@bindings.3/@value/@source/@body/@source/@source"/>
+              </source>
+              <body xsi:type="ocl:OperationCallExp" location="44:150-44:175" operationName="createPPort">
+                <source xsi:type="ocl:VariableExp" location="44:150-44:160" referredVariable="/6"/>
+                <arguments xsi:type="ocl:VariableExp" location="44:173-44:174" referredVariable="/0/@elements.1/@outPattern/@elements.3/@bindings.3/@value/@iterators.0"/>
+              </body>
+              <iterators location="44:148-44:149" varName="e" variableExp="/0/@elements.1/@outPattern/@elements.3/@bindings.3/@value/@body/@arguments.0"/>
+            </value>
+          </bindings>
+        </elements>
+        <elements xsi:type="atl:SimpleOutPatternElement" location="46:2-48:3" varName="EcuInst">
+          <type xsi:type="ocl:OclModelElement" location="46:11-46:32" name="EcuInstance" model="/1"/>
+          <bindings location="47:3-47:42" propertyName="shortName">
+            <value xsi:type="ocl:OperatorCallExp" location="47:14-47:42" operationName="+">
+              <source xsi:type="ocl:StringExp" location="47:14-47:28" stringSymbol="EcuInstance_"/>
+              <arguments xsi:type="ocl:NavigationOrAttributeCallExp" location="47:29-47:42" name="name">
+                <source xsi:type="ocl:VariableExp" location="47:29-47:37" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+              </arguments>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="25:2-25:95">
+        <elements xsi:type="atl:SimpleInPatternElement" location="25:7-25:35" varName="physNode" variableExp="/0/@elements.1/@inPattern/@filter/@source/@source /0/@elements.1/@outPattern/@elements.0/@bindings.0/@value/@arguments.0/@source /0/@elements.1/@outPattern/@elements.0/@bindings.1/@value/@source/@source /0/@elements.1/@outPattern/@elements.1/@bindings.0/@value/@arguments.0/@source /0/@elements.1/@outPattern/@elements.2/@bindings.0/@value/@arguments.0/@source /0/@elements.1/@outPattern/@elements.3/@bindings.0/@value/@arguments.0/@source /0/@elements.1/@outPattern/@elements.3/@bindings.1/@value/@source/@source/@source/@source /0/@elements.1/@outPattern/@elements.3/@bindings.2/@value/@source/@source/@source/@source/@source/@source/@source /0/@elements.1/@outPattern/@elements.3/@bindings.3/@value/@source/@source/@source/@source/@source/@source/@source /0/@elements.1/@outPattern/@elements.4/@bindings.0/@value/@arguments.0/@source">
+          <type xsi:type="ocl:OclModelElement" location="25:17-25:35" name="PhysicalNode" model="/2"/>
+        </elements>
+        <filter xsi:type="ocl:IteratorExp" location="25:38-25:94" name="exists">
+          <source xsi:type="ocl:NavigationOrAttributeCallExp" location="25:38-25:56" name="partition">
+            <source xsi:type="ocl:VariableExp" location="25:38-25:46" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+          </source>
+          <body xsi:type="ocl:CollectionOperationCallExp" location="25:70-25:93" operationName="notEmpty">
+            <source xsi:type="ocl:NavigationOrAttributeCallExp" location="25:70-25:81" name="module">
+              <source xsi:type="ocl:VariableExp" location="25:70-25:74" referredVariable="/0/@elements.1/@inPattern/@filter/@iterators.0"/>
+            </source>
+          </body>
+          <iterators location="25:65-25:69" varName="part" variableExp="/0/@elements.1/@inPattern/@filter/@body/@source/@source"/>
+        </filter>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:LazyMatchedRule" location="55:1-62:3" name="createPPort">
+      <commentsBefore>--LAZY RULE: creates a single PPortPrototype from an Scheduler</commentsBefore>
+      <commentsBefore>-- Uses the 'Name' of the Scheduler to generate the 'shortName'</commentsBefore>
+      <commentsBefore>--     of the PPortPrototype... </commentsBefore>
+      <commentsAfter>--LAZY RULE: creates a single RPortPrototype from an Scheduler </commentsAfter>
+      <commentsAfter>--Uses the 'Name' of the Scheduler to generate the 'shortName'</commentsAfter>
+      <commentsAfter>--     of the RPortPrototype... </commentsAfter>
+      <outPattern location="58:4-61:4">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="59:6-61:4" varName="newPport">
+          <type xsi:type="ocl:OclModelElement" location="59:15-59:39" name="PPortPrototype" model="/1"/>
+          <bindings location="60:7-60:37" propertyName="shortName">
+            <value xsi:type="ocl:OperatorCallExp" location="60:20-60:37" operationName="+">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="60:20-60:30" name="name">
+                <source xsi:type="ocl:VariableExp" location="60:20-60:25" referredVariable="/0/@elements.2/@inPattern/@elements.0"/>
+              </source>
+              <arguments xsi:type="ocl:StringExp" location="60:31-60:37" stringSymbol="PROV"/>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="56:4-57:28">
+        <elements xsi:type="atl:SimpleInPatternElement" location="57:6-57:28" varName="sched" variableExp="/0/@elements.2/@outPattern/@elements.0/@bindings.0/@value/@source/@source">
+          <type xsi:type="ocl:OclModelElement" location="57:13-57:28" name="Scheduler" model="/2"/>
+        </elements>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:LazyMatchedRule" location="68:1-75:3" name="createRPort">
+      <commentsBefore>--LAZY RULE: creates a single RPortPrototype from an Scheduler </commentsBefore>
+      <commentsBefore>--Uses the 'Name' of the Scheduler to generate the 'shortName'</commentsBefore>
+      <commentsBefore>--     of the RPortPrototype... </commentsBefore>
+      <commentsAfter>-- Matched Rule : maps a Partition to a Swc2EcuMapping </commentsAfter>
+      <commentsAfter>-- -- uses the 'shortName' of the Partition to produce the 'shortName' of the Swc2EcuMapping</commentsAfter>
+      <commentsAfter>-- -- Sets the 'component' reference using the generateComponents function</commentsAfter>
+      <commentsAfter>-- -- Sets the ecuInstance using resolveTemp on the physNode encapsulating the current Partition being mapped</commentsAfter>
+      <outPattern location="71:4-74:4">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="72:6-74:4" varName="newRport">
+          <type xsi:type="ocl:OclModelElement" location="72:15-72:39" name="RPortPrototype" model="/1"/>
+          <bindings location="73:7-73:36" propertyName="shortName">
+            <value xsi:type="ocl:OperatorCallExp" location="73:20-73:36" operationName="+">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="73:20-73:30" name="name">
+                <source xsi:type="ocl:VariableExp" location="73:20-73:25" referredVariable="/0/@elements.3/@inPattern/@elements.0"/>
+              </source>
+              <arguments xsi:type="ocl:StringExp" location="73:31-73:36" stringSymbol="REQ"/>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="69:4-70:28">
+        <elements xsi:type="atl:SimpleInPatternElement" location="70:6-70:28" varName="sched" variableExp="/0/@elements.3/@outPattern/@elements.0/@bindings.0/@value/@source/@source">
+          <type xsi:type="ocl:OclModelElement" location="70:13-70:28" name="Scheduler" model="/2"/>
+        </elements>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:MatchedRule" location="82:1-94:2" name="initSingleSwc2EcuMapping">
+      <commentsBefore>-- Matched Rule : maps a Partition to a Swc2EcuMapping </commentsBefore>
+      <commentsBefore>-- -- uses the 'shortName' of the Partition to produce the 'shortName' of the Swc2EcuMapping</commentsBefore>
+      <commentsBefore>-- -- Sets the 'component' reference using the generateComponents function</commentsBefore>
+      <commentsBefore>-- -- Sets the ecuInstance using resolveTemp on the physNode encapsulating the current Partition being mapped</commentsBefore>
+      <outPattern location="85:4-93:4">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="87:6-93:4" varName="mapping">
+          <commentsBefore>-- why did fabian use a different type to map the next step? resolved -> should work</commentsBefore>
+          <type xsi:type="ocl:OclModelElement" location="87:14-87:39" name="SwcToEcuMapping" model="/1"/>
+          <bindings location="88:7-88:47" propertyName="shortName">
+            <value xsi:type="ocl:OperatorCallExp" location="88:20-88:47" operationName="+">
+              <source xsi:type="ocl:StringExp" location="88:20-88:37" stringSymbol="Swc2EcuMapping_"/>
+              <arguments xsi:type="ocl:NavigationOrAttributeCallExp" location="88:38-88:47" name="name">
+                <source xsi:type="ocl:VariableExp" location="88:38-88:42" referredVariable="/0/@elements.4/@inPattern/@elements.0"/>
+              </arguments>
+            </value>
+          </bindings>
+          <bindings location="91:3-91:78" propertyName="component">
+            <commentsBefore>--was part.ShortName</commentsBefore>
+            <commentsBefore>-- why does this next one not work for Fabian</commentsBefore>
+            <value xsi:type="ocl:IteratorExp" location="91:16-91:78" name="collect">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="91:16-91:27" name="module">
+                <source xsi:type="ocl:VariableExp" location="91:16-91:20" referredVariable="/0/@elements.4/@inPattern/@elements.0"/>
+              </source>
+              <body xsi:type="ocl:OperationCallExp" location="91:41-91:77" operationName="resolveTemp">
+                <source xsi:type="ocl:VariableExp" location="91:41-91:51" referredVariable="/7"/>
+                <arguments xsi:type="ocl:VariableExp" location="91:64-91:65" referredVariable="/0/@elements.4/@outPattern/@elements.0/@bindings.1/@value/@iterators.0"/>
+                <arguments xsi:type="ocl:StringExp" location="91:67-91:76" stringSymbol="mapComp"/>
+              </body>
+              <iterators location="91:39-91:40" varName="d" variableExp="/0/@elements.4/@outPattern/@elements.0/@bindings.1/@value/@body/@arguments.0"/>
+            </value>
+          </bindings>
+          <bindings location="92:3-92:137" propertyName="ecuInstance">
+            <value xsi:type="ocl:OperationCallExp" location="92:18-92:137" operationName="resolveTemp">
+              <source xsi:type="ocl:VariableExp" location="92:18-92:28" referredVariable="/8"/>
+              <arguments xsi:type="ocl:CollectionOperationCallExp" location="92:41-92:126" operationName="first">
+                <source xsi:type="ocl:IteratorExp" location="92:42-92:116" name="select">
+                  <source xsi:type="ocl:OperationCallExp" location="92:42-92:75" operationName="allInstances">
+                    <source xsi:type="ocl:OclModelElement" location="92:42-92:60" name="PhysicalNode" model="/2"/>
+                  </source>
+                  <body xsi:type="ocl:CollectionOperationCallExp" location="92:87-92:115" operationName="includes">
+                    <source xsi:type="ocl:NavigationOrAttributeCallExp" location="92:87-92:99" name="partition">
+                      <source xsi:type="ocl:VariableExp" location="92:87-92:89" referredVariable="/0/@elements.4/@outPattern/@elements.0/@bindings.2/@value/@arguments.0/@source/@iterators.0"/>
+                    </source>
+                    <arguments xsi:type="ocl:VariableExp" location="92:110-92:114" referredVariable="/0/@elements.4/@inPattern/@elements.0"/>
+                  </body>
+                  <iterators location="92:84-92:86" varName="pn" variableExp="/0/@elements.4/@outPattern/@elements.0/@bindings.2/@value/@arguments.0/@source/@body/@source/@source"/>
+                </source>
+              </arguments>
+              <arguments xsi:type="ocl:StringExp" location="92:127-92:136" stringSymbol="EcuInst"/>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="83:4-84:142">
+        <elements xsi:type="atl:SimpleInPatternElement" location="84:6-84:26" varName="part" variableExp="/0/@elements.4/@inPattern/@filter/@source/@body/@arguments.0 /0/@elements.4/@inPattern/@filter/@arguments.0/@source/@source /0/@elements.4/@outPattern/@elements.0/@bindings.0/@value/@arguments.0/@source /0/@elements.4/@outPattern/@elements.0/@bindings.1/@value/@source/@source /0/@elements.4/@outPattern/@elements.0/@bindings.2/@value/@arguments.0/@source/@body/@arguments.0">
+          <type xsi:type="ocl:OclModelElement" location="84:11-84:26" name="Partition" model="/2"/>
+        </elements>
+        <filter xsi:type="ocl:OperatorCallExp" location="84:28-84:141" operationName="and">
+          <source xsi:type="ocl:IteratorExp" location="84:29-84:112" name="one">
+            <source xsi:type="ocl:OperationCallExp" location="84:29-84:62" operationName="allInstances">
+              <source xsi:type="ocl:OclModelElement" location="84:29-84:47" name="PhysicalNode" model="/2"/>
+            </source>
+            <body xsi:type="ocl:CollectionOperationCallExp" location="84:77-84:111" operationName="includes">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="84:77-84:95" name="partition">
+                <source xsi:type="ocl:VariableExp" location="84:77-84:85" referredVariable="/0/@elements.4/@inPattern/@filter/@source/@iterators.0"/>
+              </source>
+              <arguments xsi:type="ocl:VariableExp" location="84:106-84:110" referredVariable="/0/@elements.4/@inPattern/@elements.0"/>
+            </body>
+            <iterators location="84:68-84:76" varName="physNode" variableExp="/0/@elements.4/@inPattern/@filter/@source/@body/@source/@source"/>
+          </source>
+          <arguments xsi:type="ocl:CollectionOperationCallExp" location="84:117-84:140" operationName="notEmpty">
+            <source xsi:type="ocl:NavigationOrAttributeCallExp" location="84:117-84:128" name="module">
+              <source xsi:type="ocl:VariableExp" location="84:117-84:121" referredVariable="/0/@elements.4/@inPattern/@elements.0"/>
+            </source>
+          </arguments>
+        </filter>
+      </inPattern>
+    </elements>
+  </atl:Module>
+  <ocl:OclModel location="5:14-5:23" name="autosarMM" elements="/0/@elements.0/@outPattern/@elements.0/@type /0/@elements.0/@outPattern/@elements.1/@type /0/@elements.1/@outPattern/@elements.0/@type /0/@elements.1/@outPattern/@elements.1/@type /0/@elements.1/@outPattern/@elements.2/@type /0/@elements.1/@outPattern/@elements.3/@type /0/@elements.1/@outPattern/@elements.4/@type /0/@elements.2/@outPattern/@elements.0/@type /0/@elements.3/@outPattern/@elements.0/@type /0/@elements.4/@outPattern/@elements.0/@type" model="/0/@outModels.0"/>
+  <ocl:OclModel location="5:34-5:39" name="indMM" elements="/0/@elements.0/@inPattern/@elements.0/@type /0/@elements.1/@inPattern/@elements.0/@type /0/@elements.2/@inPattern/@elements.0/@type /0/@elements.3/@inPattern/@elements.0/@type /0/@elements.4/@inPattern/@elements.0/@type /0/@elements.4/@inPattern/@filter/@source/@source/@source /0/@elements.4/@outPattern/@elements.0/@bindings.2/@value/@arguments.0/@source/@source/@source" model="/0/@inModels.0"/>
+  <ocl:VariableDeclaration location="29:48-29:58" varName="thisModule" variableExp="/0/@elements.1/@outPattern/@elements.0/@bindings.1/@value/@body/@source"/>
+  <ocl:VariableDeclaration location="42:84-42:94" varName="thisModule" variableExp="/0/@elements.1/@outPattern/@elements.3/@bindings.1/@value/@body/@source"/>
+  <ocl:VariableDeclaration location="43:150-43:160" varName="thisModule" variableExp="/0/@elements.1/@outPattern/@elements.3/@bindings.2/@value/@body/@source"/>
+  <ocl:VariableDeclaration location="44:150-44:160" varName="thisModule" variableExp="/0/@elements.1/@outPattern/@elements.3/@bindings.3/@value/@body/@source"/>
+  <ocl:VariableDeclaration location="91:41-91:51" varName="thisModule" variableExp="/0/@elements.4/@outPattern/@elements.0/@bindings.1/@value/@body/@source"/>
+  <ocl:VariableDeclaration location="92:18-92:28" varName="thisModule" variableExp="/0/@elements.4/@outPattern/@elements.0/@bindings.2/@value/@source"/>
+</xmi:XMI>

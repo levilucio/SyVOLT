@@ -1,0 +1,156 @@
+module Ecore_copier;
+create OUT : Copy from IN : Ecore;
+
+rule EAttribute {
+ from
+  eattribute_ : Ecore!EAttribute
+ to
+  eattribute_left : Ecore!EAttribute (
+   name <- eattribute_.name,
+   ordered <- eattribute_.ordered,
+   unique <- eattribute_.unique,
+   lowerBound <- eattribute_.lowerBound,
+   upperBound <- eattribute_.upperBound,
+   eType <- eattribute_.eType,
+   changeable <- eattribute_.changeable,
+   volatile <- eattribute_.volatile,
+   transient <- eattribute_.transient,
+   defaultValueLiteral <- eattribute_.defaultValueLiteral,
+   unsettable <- eattribute_.unsettable,
+   derived <- eattribute_.derived,
+   iD <- eattribute_.iD
+  )
+}
+
+rule EClass {
+ from
+  eclass_ : Ecore!EClass
+ to
+  eclass_left : Ecore!EClass (
+   name <- eclass_.name,
+   instanceClassName <- eclass_.instanceClassName,
+   abstract <- eclass_.abstract,
+   interface <- eclass_.interface,
+   eSuperTypes <- eclass_.eSuperTypes,
+   eOperations <- eclass_.eOperations,
+   eStructuralFeatures <- eclass_.eStructuralFeatures
+  )
+}
+
+rule EDataType {
+ from
+  edatatype_ : Ecore!EDataType
+ to
+  edatatype_left : Ecore!EDataType (
+   name <- edatatype_.name,
+   instanceClassName <- edatatype_.instanceClassName,
+   serializable <- edatatype_.serializable
+  )
+}
+
+rule EEnum {
+ from
+  eenum_ : Ecore!EEnum
+ to
+  eenum_left : Ecore!EEnum (
+   name <- eenum_.name,
+   instanceClassName <- eenum_.instanceClassName,
+   serializable <- eenum_.serializable,
+   eLiterals <- eenum_.eLiterals
+  )
+}
+
+rule EEnumLiteral {
+ from
+  eenumliteral_ : Ecore!EEnumLiteral
+ to
+  eenumliteral_left : Ecore!EEnumLiteral (
+   name <- eenumliteral_.name,
+   value <- eenumliteral_.value,
+   instance <- eenumliteral_.instance
+  )
+}
+
+rule EFactory {
+ from
+  efactory_ : Ecore!EFactory
+ to
+  efactory_left : Ecore!EFactory (
+   ePackage <- efactory_.ePackage
+  )
+}
+
+rule EOperation {
+ from
+  eoperation_ : Ecore!EOperation
+ to
+  eoperation_left : Ecore!EOperation (
+   name <- eoperation_.name,
+   ordered <- eoperation_.ordered,
+   unique <- eoperation_.unique,
+   lowerBound <- eoperation_.lowerBound,
+   upperBound <- eoperation_.upperBound,
+   eType <- eoperation_.eType,
+   eParameters <- eoperation_.eParameters
+  )
+}
+
+rule EPackage {
+ from
+  epackage_ : Ecore!EPackage
+ to
+  epackage_left : Ecore!EPackage (
+   name <- epackage_.name,
+   nsURI <- epackage_.nsURI,
+   nsPrefix <- epackage_.nsPrefix,
+   eFactoryInstance <- epackage_.eFactoryInstance,
+   eSubpackages <- epackage_.eSubpackages
+  )
+}
+
+rule EParameter {
+ from
+  eparameter_ : Ecore!EParameter
+ to
+  eparameter_left : Ecore!EParameter (
+   name <- eparameter_.name,
+   ordered <- eparameter_.ordered,
+   unique <- eparameter_.unique,
+   lowerBound <- eparameter_.lowerBound,
+   upperBound <- eparameter_.upperBound,
+   eType <- eparameter_.eType
+  )
+}
+
+rule EReference {
+ from
+  ereference_ : Ecore!EReference
+ to
+  ereference_left : Ecore!EReference (
+   name <- ereference_.name,
+   ordered <- ereference_.ordered,
+   unique <- ereference_.unique,
+   lowerBound <- ereference_.lowerBound,
+   upperBound <- ereference_.upperBound,
+   eType <- ereference_.eType,
+   changeable <- ereference_.changeable,
+   volatile <- ereference_.volatile,
+   transient <- ereference_.transient,
+   defaultValueLiteral <- ereference_.defaultValueLiteral,
+   unsettable <- ereference_.unsettable,
+   derived <- ereference_.derived,
+   containment <- ereference_.containment,
+   resolveProxies <- ereference_.resolveProxies,
+   eOpposite <- ereference_.eOpposite
+  )
+}
+
+rule EStringToStringMapEntry {
+ from
+  estringtostringmapentry_ : Ecore!EStringToStringMapEntry
+ to
+  estringtostringmapentry_left : Ecore!EStringToStringMapEntry (
+   key <- estringtostringmapentry_.key,
+   value <- estringtostringmapentry_.value
+  )
+}
