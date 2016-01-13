@@ -70,16 +70,16 @@ class Prover():
     
         
                              
-        full_transformation = [[r0,],[r1],[r2,],[r3,],[r4,],[r5,],[r6,],[r7,],[r8,],[r9,],[r10,],[r11,],[r12,],[r13,],[r14,],[r15,],[r16,],[r17,],[r18,],[r19,],[r20,],[r21,],[r22,],[r23,],]
+        full_transformation = [[r0,],[r1,r1_1],[r2,],[r3,],[r4,],[r5,],[r6,],[r7,],[r8,],[r9,r9_1],[r10,],[r11,],[r12,],[r13,],[r14,],[r15,],[r16,],[r17,],[r18,],[r19,],[r20,],[r21,],[r22,],[r23,],]
         
-        self.rules, self.transformation = pyramify.get_rules("/home/dcx/Projects/SyVOLT/ECore_Copier_MM/transformation", full_transformation)
+        self.rules, self.transformation = pyramify.get_rules("ECore_Copier_MM/transformation", full_transformation)
         
-        inputMM = "/home/dcx/Projects/SyVOLT/ECore_Copier_MM/Ecore.ecore"
-        outputMM = "/home/dcx/Projects/SyVOLT/ECore_Copier_MM/Copy.ecore"
+        inputMM = "ECore_Copier_MM/Ecore.ecore"
+        outputMM = "ECore_Copier_MM/Copy.ecore"
         subclasses_dict, superclasses_dict = get_sub_and_super_classes(inputMM, outputMM)
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
-            pyramify.ramify_directory("/home/dcx/Projects/SyVOLT/ECore_Copier_MM/transformation", self.transformation)
+            pyramify.ramify_directory("ECore_Copier_MM/transformation", self.transformation)
 
                 
         pre_metamodel = ["MT_pre__S_MM", "MoTifRule"]
@@ -131,7 +131,7 @@ class Prover():
             
             
         # generate path conditions
-        pc_set = PathConditionGenerator(self.transformation, "Copy.ecore", self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
+        pc_set = PathConditionGenerator(self.transformation, "ECore_Copier_MM/Copy.ecore", self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
     
         ts0 = time.time()
         pc_set.build_path_conditions()
