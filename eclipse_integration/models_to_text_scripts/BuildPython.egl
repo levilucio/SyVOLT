@@ -101,8 +101,8 @@ class Prover():
         self.rules, self.transformation = pyramify.get_rules(absoluteBackendPath, full_transformation)
         
         
-        inputMM = "[%=inputMM%]".split("/")[-1]
-        outputMM = "[%=outputMM%]".split("/")[-1]
+        inputMM = "[%=inputMM%]"
+        outputMM = "[%=outputMM%]"
         
         subclasses_dict, superclasses_dict = get_sub_and_super_classes(inputMM, outputMM)
 
@@ -160,7 +160,7 @@ class Prover():
             
             
         # generate path conditions
-        pc_set = PathConditionGenerator(self.transformation, "[%=outputMM%]", self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
+        pc_set = PathConditionGenerator(self.transformation, outputMM, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
     
         ts0 = time.time()
         pc_set.build_path_conditions()
