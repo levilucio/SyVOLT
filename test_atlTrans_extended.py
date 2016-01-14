@@ -47,8 +47,7 @@ class Test:
             ['HMother2Woman'],
             ['HDaughter2Woman'],
             ['HSon2Man'],
-            ['HCity2TownHall'],
-            ['HCityCompany2Association'],
+            ['HCity2TownHall', 'HCityCompany2Association'],
             ['HNeighborhood2District'],
             ['HcopersonsSolveRefCountryFamilyParentCommunityMan'],
             ['HcopersonsSolveRefCountryFamilyParentCommunityWoman'],
@@ -173,30 +172,30 @@ class Test:
         #get the expected num from the args
         #expected_num_pcs = args.num_pcs
         expected_num_pcs = 330
-                
+                 
         #TODO: Change this number if you are modifying the transformation at all
-
-
-
+ 
+ 
+ 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns,
          self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
             pyramify.ramify_directory("ExFamToPerson/transformation/", self.transformation)
-
+ 
         pyramify.set_supertypes(self.superclasses_dict, self.rules, self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators)
-
+ 
         #raise Exception()
-
+ 
         s = PathConditionGenerator(self.transformation, "ExFamToPerson/Persons_Extended.ecore", self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)#
-   
+    
         ts0 = time.time()
         s.build_path_conditions()
         ts1 = time.time()
-
+ 
         pc_time = ts1 - ts0
         print("\n\nTime to build the set of path conditions: " + str(pc_time))
 #        print("Size of the set of path conditions: " + str(float(sys.getsizeof(s.pathConditionSet) / 1024)))
         print("Number of path conditions: " + str(s.num_path_conditions))
-
+ 
 #         #check if the correct number of path conditions were produced
 #         if not int(expected_num_pcs) == -1 and not int(expected_num_pcs) == s.num_path_conditions:
 # 
@@ -205,10 +204,13 @@ class Test:
 #             print(num_pcs_s)
 #             #raise Exception(num_pcs_s)
 #  
-#         #print("printing path conditions")
-       # s.print_path_conditions_screen()
+        print("printing path conditions")
+        s.print_path_conditions_screen()
 # 
-#         #s.print_path_conditions_file()
+#        s.print_path_conditions_file()
+# # 
+# #
+#         #raise Exception()
 # 
 #
         #raise Exception()
