@@ -3,6 +3,9 @@ import uuid
 
 class HConnectOutputsOfExitPoint2BProcDefTransition2QInst(Himesis):
     def __init__(self):
+
+    
+    
         """
         Creates the himesis graph representing the DSLTrans rule ConnectOutputsOfExitPoint2BProcDefTransition2QInst.
         """
@@ -21,89 +24,70 @@ class HConnectOutputsOfExitPoint2BProcDefTransition2QInst(Himesis):
         # match model. We only support one match model
         self.add_node()
         self.vs[0]["mm__"] = """MatchModel"""
-        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ConnectOutputsOfExitPoint2BProcDefTransition2QInstmatchmodel0')
         
         # apply model node
         self.add_node()
         self.vs[1]["mm__"] = """ApplyModel"""
-        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ConnectOutputsOfExitPoint2BProcDefTransition2QInstapplymodel1')
         
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'ConnectOutputsOfExitPoint2BProcDefTransition2QInstpairedwith2')
-        self.vs[2]["rulename"] = """ConnectOutputsOfExitPoint2BProcDefTransition2QInst"""
+ 
         
         # match class ExitPoint() node
         self.add_node()
-        self.vs[3]["name"] = """"""
-        self.vs[3]["classtype"] = """ExitPoint"""
-        self.vs[3]["mm__"] = """ExitPoint"""
-        self.vs[3]["cardinality"] = """+"""
-        #self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+
+        self.vs[3]["mm__"] = """ExitPoint""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class ExitPoint()
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
-        #self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains4')
         # match class Transition() node
         self.add_node()
-        self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """Transition"""
-        self.vs[5]["mm__"] = """Transition"""
-        self.vs[5]["cardinality"] = """1"""
-        #self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+
+        self.vs[5]["mm__"] = """Transition""" 
+        self.vs[5]["attr1"] = """1""" 
         # match_contains node for class Transition()
         self.add_node()
         self.vs[6]["mm__"] = """match_contains"""
-        #self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains6')
         
         
         # apply class Par() node
         self.add_node()
-        self.vs[7]["name"] = """"""
-        self.vs[7]["classtype"] = """Par"""
-        self.vs[7]["mm__"] = """Par"""
-        self.vs[7]["cardinality"] = """1"""
-        #self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+
+        self.vs[7]["mm__"] = """Par""" 
+        self.vs[7]["attr1"] = """1"""
         # apply_contains node for class Par()
         self.add_node()
         self.vs[8]["mm__"] = """apply_contains"""
-        #self.vs[8]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains8')
         # apply class Inst() node
         self.add_node()
-        self.vs[9]["name"] = """"""
-        self.vs[9]["classtype"] = """Inst"""
-        self.vs[9]["mm__"] = """Inst"""
-        self.vs[9]["cardinality"] = """1"""
-        #self.vs[9]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+
+        self.vs[9]["mm__"] = """Inst""" 
+        self.vs[9]["attr1"] = """1"""
         # apply_contains node for class Inst()
         self.add_node()
         self.vs[10]["mm__"] = """apply_contains"""
-        #self.vs[10]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains10')
         
         
         # match association ExitPoint--outgoingTransitions-->Transition node
         self.add_node()
-        self.vs[11]["associationType"] = """outgoingTransitions"""
+        self.vs[11]["attr1"] = """outgoingTransitions"""
         self.vs[11]["mm__"] = """directLink_S"""
-        #self.vs[11]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc11')
         
         # apply association Par--p-->Inst node
         self.add_node()
-        self.vs[12]["associationType"] = """p"""
+        self.vs[12]["attr1"] = """p"""
         self.vs[12]["mm__"] = """directLink_T"""
-        #self.vs[12]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc12')
         
         # backward association ExitPoint---->Par node
         self.add_node()
-        self.vs[13]["type"] = """ruleDef"""
+
         self.vs[13]["mm__"] = """backward_link"""
-        #self.vs[13]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink13')
         # backward association Transition---->Inst node
         self.add_node()
-        self.vs[14]["type"] = """ruleDef"""
+
         self.vs[14]["mm__"] = """backward_link"""
-        #self.vs[14]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink14')
         
         
         
@@ -129,6 +113,10 @@ class HConnectOutputsOfExitPoint2BProcDefTransition2QInst(Himesis):
                 (9,14), # apply_class Inst() -> backward_association
                 (14,5), #  backward_association -> apply_class Transition()
                 (0,2), # matchmodel -> pairedwith
-                (2,1) # pairedwith -> applyModel
-        ])
+                (2,1) # pairedwith -> applyModel				
+		])
+
+        # Add the attribute equations
+        self["equations"] = [((7,'ApplyAttribute'),('constant','solveRef')), ((9,'ApplyAttribute'),('constant','solveRef')), ]
+
         

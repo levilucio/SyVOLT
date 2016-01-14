@@ -3,6 +3,9 @@ import uuid
 
 class HMapRootElementRule(Himesis):
     def __init__(self):
+
+    
+    
         """
         Creates the himesis graph representing the DSLTrans rule MapRootElementRule.
         """
@@ -21,43 +24,34 @@ class HMapRootElementRule(Himesis):
         # match model. We only support one match model
         self.add_node()
         self.vs[0]["mm__"] = """MatchModel"""
-        #self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'MapRootElementRulematchmodel0')
         
         # apply model node
         self.add_node()
         self.vs[1]["mm__"] = """ApplyModel"""
-        #self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'MapRootElementRuleapplymodel1')
         
         # paired with relation between match and apply models
         self.add_node()
         self.vs[2]["mm__"] = """paired_with"""
-        #self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'MapRootElementRulepairedwith2')
-        self.vs[2]["rulename"] = """MapRootElementRule"""
+ 
         
         # match class RootElement() node
         self.add_node()
-        self.vs[3]["name"] = """"""
-        self.vs[3]["classtype"] = """RootElement"""
-        self.vs[3]["mm__"] = """RootElement"""
-        self.vs[3]["cardinality"] = """+"""
-        #self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+
+        self.vs[3]["mm__"] = """RootElement""" 
+        self.vs[3]["attr1"] = """+""" 
         # match_contains node for class RootElement()
         self.add_node()
         self.vs[4]["mm__"] = """match_contains"""
-        #self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'matchcontains4')
         
         
         # apply class RootElement() node
         self.add_node()
-        self.vs[5]["name"] = """"""
-        self.vs[5]["classtype"] = """RootElement"""
-        self.vs[5]["mm__"] = """RootElement"""
-        self.vs[5]["cardinality"] = """1"""
-        #self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+
+        self.vs[5]["mm__"] = """RootElement""" 
+        self.vs[5]["attr1"] = """1"""
         # apply_contains node for class RootElement()
         self.add_node()
         self.vs[6]["mm__"] = """apply_contains"""
-        #self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'applycontains6')
         
         
         
@@ -75,6 +69,10 @@ class HMapRootElementRule(Himesis):
                 (1,6), # applymodel -> apply_contains
                 (6,5), # apply_contains -> apply_class RootElement()
                 (0,2), # matchmodel -> pairedwith
-                (2,1) # pairedwith -> applyModel
-        ])
+                (2,1) # pairedwith -> applyModel				
+		])
+
+        # Add the attribute equations
+        self["equations"] = [((5,'ApplyAttribute'),('constant','solveRef')), ]
+
         
