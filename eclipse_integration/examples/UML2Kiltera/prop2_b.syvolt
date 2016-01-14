@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syvolt:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:syvolt="http://syvolt/2.0">
+  <hasProperty name="prop2_b">
+    <match/>
+    <apply>
+      <class className="Inst">
+        <attribute attributeName="name">
+          <attributeValue xsi:type="syvolt:Atom" value="Handler"/>
+        </attribute>
+      </class>
+      <class className="ProcDef">
+        <attribute attributeName="name">
+          <attributeValue xsi:type="syvolt:Atom" value="Handler"/>
+        </attribute>
+      </class>
+    </apply>
+  </hasProperty>
+</syvolt:TransformationModel>

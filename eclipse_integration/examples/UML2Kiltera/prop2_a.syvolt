@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syvolt:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:syvolt="http://syvolt/2.0">
+  <hasProperty name="prop2_a">
+    <match/>
+    <apply>
+      <class className="Inst">
+        <attribute attributeName="name">
+          <attributeValue xsi:type="syvolt:Atom" value="Handler"/>
+        </attribute>
+      </class>
+    </apply>
+  </hasProperty>
+  <specification value="prop2_a implies prop2_b and Inst in prop2_a is the same as in prop2_b"/>
+</syvolt:TransformationModel>
