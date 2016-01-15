@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syvolt:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:syvolt="http://syvolt/2.0">
+  <hasProperty name="P1">
+    <match>
+      <class xsi:type="syvolt:AnyMatchClass" className="PhysicalNode">
+        <attribute attributeName="cardinality">
+          <attributeValue xsi:type="syvolt:Atom" value="+"/>
+        </attribute>
+      </class>
+      <class xsi:type="syvolt:AnyMatchClass" className="Partition">
+        <attribute attributeName="cardinality">
+          <attributeValue xsi:type="syvolt:Atom" value="+"/>
+        </attribute>
+      </class>
+      <class xsi:type="syvolt:AnyMatchClass" className="Module">
+        <attribute attributeName="cardinality">
+          <attributeValue xsi:type="syvolt:Atom" value="+"/>
+        </attribute>
+      </class>
+      <class xsi:type="syvolt:AnyMatchClass" className="Scheduler">
+        <attribute attributeName="cardinality">
+          <attributeValue xsi:type="syvolt:Atom" value="+"/>
+        </attribute>
+      </class>
+      <class xsi:type="syvolt:AnyMatchClass" className="Service">
+        <attribute attributeName="cardinality">
+          <attributeValue xsi:type="syvolt:Atom" value="1"/>
+        </attribute>
+      </class>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="virtualDevice" source="//@hasProperty.0/@match.0/@class.0" target="//@hasProperty.0/@match.0/@class.1"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="distributable" source="//@hasProperty.0/@match.0/@class.1" target="//@hasProperty.0/@match.0/@class.2"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="execFrame" source="//@hasProperty.0/@match.0/@class.2" target="//@hasProperty.0/@match.0/@class.3"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="provided" source="//@hasProperty.0/@match.0/@class.3" target="//@hasProperty.0/@match.0/@class.4"/>
+    </match>
+    <apply>
+      <class className="CompositionType">
+        <attribute attributeName="cardinality">
+          <attributeValue xsi:type="syvolt:Atom" value="+"/>
+        </attribute>
+      </class>
+      <class className="PPortPrototype">
+        <attribute attributeName="cardinality">
+          <attributeValue xsi:type="syvolt:Atom" value="+"/>
+        </attribute>
+      </class>
+      <association associationName="port" source="//@hasProperty.0/@apply/@class.0" target="//@hasProperty.0/@apply/@class.1"/>
+    </apply>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.0" sourceClass="//@hasProperty.0/@match.0/@class.0"/>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.1" sourceClass="//@hasProperty.0/@match.0/@class.3"/>
+  </hasProperty>
+</syvolt:TransformationModel>
