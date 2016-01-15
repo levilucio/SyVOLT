@@ -47,6 +47,7 @@ class Prover():
 
         r0 = 'HMapRootElementRule'
         r1 = 'HState2ProcDef'
+        r1_copy = 'HState2ProcDef_copy'
         r2 = 'HBasicState2ProcDef'
         r3 = 'HBasicStateNoOutgoing2ProcDef'
         r4 = 'HCompositeState2ProcDef'
@@ -65,16 +66,16 @@ class Prover():
 
 
 
-        full_transformation = [[r0,],[r1,],[r2,],[r3,],[r4,],[r5,],[r6,],[r7,],[r8,],[r9,],[r10,],[r11,],[r12,],[r13,],[r14,],[r15,],[r16,],]
+        full_transformation = [[r0,],[r1,r1_copy],[r2,],[r3,],[r4,],[r5,],[r6,],[r7,],[r8,],[r9,],[r10,],[r11,],[r12,],[r13,],[r14,],[r15,],[r16,],]
 
-        self.rules, self.transformation = pyramify.get_rules("eclipse_integration/backend/generated/transformation", full_transformation)
+        self.rules, self.transformation = pyramify.get_rules("UMLRT2Kiltera_MM/transformation/Himesis/", full_transformation)
 
         inputMM = "UMLRT2Kiltera_MM/metamodels/rt_new.ecore"
         outputMM = "UMLRT2Kiltera_MM/metamodels/klt_new.ecore"
         subclasses_dict, superclasses_dict = get_sub_and_super_classes(inputMM, outputMM)
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
-            pyramify.ramify_directory("eclipse_integration/backend/generated/transformation", self.transformation)
+            pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation/Himesis/", self.transformation)
 
 
         pre_metamodel = ["MT_pre__S_MM", "MoTifRule"]
@@ -128,9 +129,9 @@ class Prover():
         connected["superclasses_dict"] = superclasses_dict
         complete["superclasses_dict"] = superclasses_dict
 
-        c0 = AtomicContract(isolated, connected, complete)
+        c1 = AtomicContract(isolated, connected, complete)
 
-        self.atomic_contracts.append(("AC2", c0))
+        self.atomic_contracts.append(("AC2", c1))
 
         isolated = Hprop2_b_IsolatedLHS()
         connected = Hprop2_b_ConnectedLHS()
@@ -140,9 +141,9 @@ class Prover():
         connected["superclasses_dict"] = superclasses_dict
         complete["superclasses_dict"] = superclasses_dict
 
-        c0 = AtomicContract(isolated, connected, complete)
+        c2 = AtomicContract(isolated, connected, complete)
 
-        self.atomic_contracts.append(("AC3", c0))
+        self.atomic_contracts.append(("AC3", c2))
 
 
 
