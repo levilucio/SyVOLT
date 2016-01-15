@@ -231,18 +231,21 @@ class PathConditionGenerator(object):
             
         self.rule_names = {"HEmpty":"HEmptyPathCondition"}
         # keep the original names around 
-        self.rule_originalnames = {"HEmpty":"HEmptyPathCondition"}
-        # change rules names to be shorter   
+        self.shortened_rule_names = {"HEmptyPathCondition":"HEmpty"}
+        # change rules names to be shorter
+
         for layer in range(len(self.transformation)):
             i = 0
             subsumedRulesInLayer = []
             subsumingRulesInLayer = []
+
             for rule in self.transformation[layer]:
  
                 new_name = "L" + str(layer) + "R" + str(i)
                                          
                 i += 1
                 self.rule_names[new_name] = rule.name
+                self.shortened_rule_names[rule.name] = new_name
    
                 self.ruleCombinators[new_name] = self.ruleCombinators[rule.name]
                 del self.ruleCombinators[rule.name]
@@ -265,29 +268,21 @@ class PathConditionGenerator(object):
                     subsumingRulesInLayer.append(new_name)
                    
                 rule.name = new_name
-                
+
             # now that the layer renaming is complete, change the names of the subsuming rules for rules that need overlap treatment
 
             for subsumedRule in subsumedRulesInLayer:
                 for subsumingRuleIndex in range(len(self.overlappingRules[subsumedRule])):
                     ruleName = self.overlappingRules[subsumedRule][subsumingRuleIndex]
-                    newRuleName = None
-                    for newRuleNameIter in self.rule_names.keys():
-                        if ruleName == self.rule_names[newRuleNameIter]:
-                            newRuleName = newRuleNameIter
-                            break
-                    self.overlappingRules[subsumedRule][subsumingRuleIndex] = newRuleName
+                    short_rule_name = self.shortened_rule_names[ruleName]
+                    self.overlappingRules[subsumedRule][subsumingRuleIndex] = short_rule_name
             
             # remove this when layer is ordered        
             for subsumedRule in subsumingRulesInLayer:
                 for subsumingRuleIndex in range(len(self.subsumption[subsumedRule])):
                     ruleName = self.subsumption[subsumedRule][subsumingRuleIndex]
-                    newRuleName = None
-                    for newRuleNameIter in self.rule_names.keys():
-                        if ruleName == self.rule_names[newRuleNameIter]:
-                            newRuleName = newRuleNameIter
-                            break
-                    self.subsumption[subsumedRule][subsumingRuleIndex] = newRuleName
+                    short_rule_name = self.shortened_rule_names[ruleName]
+                    self.subsumption[subsumedRule][subsumingRuleIndex] = short_rule_name
 
                     
         # change the names of the rules in a subsumption loop
