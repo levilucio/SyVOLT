@@ -298,13 +298,9 @@ class NewHimesisMatcher(object):
                 else:
                     ms_wo_disambig.append(match_set)
 
-        if len(ms_wo_disambig) == 0:
-            for ms in ms_w_disambig:
-                yield ms
-        else:
-
-            for ms in ms_wo_disambig:
-                yield ms
+        
+        for ms in ms_wo_disambig + ms_w_disambig:
+            yield ms
 
 
     def create_match_set(self, pm, combinations):
@@ -540,9 +536,9 @@ class NewHimesisMatcher(object):
                 # TODO: This should be a TransformationLanguageSpecificException
                 print("Source graph: " + self.source_graph.name)
                 print("Pattern graph: " + self.pattern_graph.name)
-                for n in graph.vs:
+                for n in self.source_graph.vs:
                     try:
-                        print("Type: " + n["type"])
+                        print("Type: " + str(n["type"]))
                         print("MM: " + n["mm__"])
                     except KeyError:
                         pass
