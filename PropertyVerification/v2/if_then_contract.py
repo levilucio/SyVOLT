@@ -31,3 +31,7 @@ class IfThenContract(Contract):
             print("Result for then contract: " + then_result)
 
         return then_result
+
+    def draw(self):
+        self.if_contract.draw()
+        self.then_contract.draw()

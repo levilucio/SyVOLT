@@ -2,6 +2,11 @@ from core.himesis_utils import graph_to_dot
 from util.ecore_utils import EcoreUtils
 from core.himesis_plus import buildPreListFromClassNames
 
+from PropertyVerification.v2.atomic_contract import AtomicContract
+from PropertyVerification.v2.if_then_contract import IfThenContract
+from PropertyVerification.v2.prop_logic import *
+
+
 def select_rules(full_transformation, num_rules):
     selected_transformation = []
 
@@ -73,3 +78,46 @@ def get_sub_and_super_classes(inputMM, outputMM):
 
 
     return subclasses_dict, superclasses_dict
+
+def load_contracts(contracts, superclasses_dict, atomic_names, simple_if_then_names, prop_if_then_names, draw_svg):
+
+    atomic_contracts = []
+    for contract_name in atomic_names:
+        atomic_contract = load_contract(contract_name, contracts, superclasses_dict)
+        atomic_contracts.append([contract_name, atomic_contract])
+        if draw_svg:
+            graph_to_dot("contract_" + atomic_contract.complete.name, atomic_contract.complete)
+
+    if_then_contracts = []
+    for contract_name_if, contract_name_then in simple_if_then_names:
+        if_contract = load_contract(contract_name_if, contracts, superclasses_dict)
+        then_contract = load_contract(contract_name_then, contracts, superclasses_dict)
+        if_then_contract = IfThenContract(if_contract, then_contract)
+        if_then_contracts.append([contract_name_if, if_then_contract])
+
+        if draw_svg:
+            graph_to_dot("contract_" + if_contract.complete.name, if_contract.complete)
+            graph_to_dot("contract_" + then_contract.complete.name, then_contract.complete)
+
+    #for contract_name_if, prop_equation in prop_if_then_names:
+    return atomic_contracts, if_then_contracts
+
+
+def load_contract(contract_name, contracts, superclasses_dict):
+    h_contract_name = "H" + contract_name
+
+    iso = contracts[h_contract_name + "_IsolatedLHS"]
+    iso["superclasses_dict"] = superclasses_dict
+
+    connected = contracts[h_contract_name + "_ConnectedLHS"]
+    connected["superclasses_dict"] = superclasses_dict
+
+    complete = contracts[h_contract_name + "_CompleteLHS"]
+    complete["superclasses_dict"] = superclasses_dict
+
+
+
+    atomic = AtomicContract(iso, connected, complete)
+    return atomic
+
+    

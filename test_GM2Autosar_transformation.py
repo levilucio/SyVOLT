@@ -17,14 +17,9 @@ from PropertyVerification.v2.atomic_contract import AtomicContract
 from PropertyVerification.v2.ContractProver import ContractProver
 
 from core.himesis_utils import graph_to_dot, load_directory
-from util.test_script_utils import select_rules, get_sub_and_super_classes
+from util.test_script_utils import select_rules, get_sub_and_super_classes, load_contracts
 from util.slicer import Slicer
 
-# imports for properties' atomic contracts
-
-from GM2AUTOSAR_MM.Properties.from_eclipse.HP1_IsolatedLHS import HP1_IsolatedLHS
-from GM2AUTOSAR_MM.Properties.from_eclipse.HP1_ConnectedLHS import HP1_ConnectedLHS
-from GM2AUTOSAR_MM.Properties.from_eclipse.HP1_CompleteLHS import HP1_CompleteLHS
 
 class Prover():
 
@@ -46,7 +41,7 @@ class Prover():
 
 
                              
-        full_transformation = [[r0,],[r1,],[r2,],[r3,],[r4,],[r5,],[r6,],[r7,],[r8,],]
+        full_transformation = [[r0,],[r1,r2,],[r3,],[r4,],[r5,],[r6,],[r7,],[r8,],]
         
         self.rules, self.transformation = pyramify.get_rules("GM2AUTOSAR_MM/transformation_from_ATL/", full_transformation)
         
@@ -57,6 +52,9 @@ class Prover():
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
             pyramify.ramify_directory("GM2AUTOSAR_MM/transformation_from_ATL/", self.transformation)
 
+        for layer in self.transformation:
+            for r in layer:
+                graph_to_dot("rule_" + r.name, r)
                 
         pre_metamodel = ["MT_pre__S_MM", "MoTifRule"]
         post_metamodel = ["MT_post__T_MM", "MoTifRule"]
@@ -68,24 +66,27 @@ class Prover():
         
         pyramify.set_supertypes(superclasses_dict, self.rules, self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators)
 
-            
-        # load the contracts, and add polymorphism
 
-        self.atomic_contracts = []
-        self.if_then_contracts = []
+        # load the contracts
 
-        isolated = HP1_IsolatedLHS()
-        connected = HP1_ConnectedLHS()
-        complete = HP1_CompleteLHS()
-        
-        isolated["superclasses_dict"] = superclasses_dict 
-        connected["superclasses_dict"] = superclasses_dict 
-        complete["superclasses_dict"] = superclasses_dict 
-        
-        c0 = AtomicContract(isolated, connected, complete)
-        
-        self.atomic_contracts.append(("Prop1", c0))
-          
+        contracts = load_directory("GM2AUTOSAR_MM/Properties/from_eclipse/")
+
+        atomic_contracts = [
+            #"P1",
+            #"P2",
+        ]
+        if_then_contracts = [
+            #["S1_if", "S1_then"],
+            #["M1_if", "M1_then"],
+            #["M3_if", "M3_then"],
+        ]
+        prop_if_then_contracts = [
+
+        ]
+
+        self.atomic_contracts, self.if_then_contracts = load_contracts(contracts, superclasses_dict,
+                                                                       atomic_contracts, if_then_contracts, prop_if_then_contracts,
+                                                                       args.draw_svg)
         
         if args.slice > 0:
             print("Slicing for contract number " + str(args.slice))

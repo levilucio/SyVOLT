@@ -37,7 +37,7 @@ class AtomicContract(Contract):
         self.connected = connected
         self.complete = complete
 
-        self.isolated_matcher = Matcher(isolated)
+        self.isolated_matcher = Matcher(isolated, disambig_matching = True)
         self.connected_matcher = Matcher(connected, disambig_matching = True)
         self.complete_matcher = Matcher(complete, disambig_matching = True)
 
@@ -59,6 +59,12 @@ class AtomicContract(Contract):
 
         #print("Connected Data: " + str(self.connected_data))
         #print("Complete Data: " + str(self.complete_data))
+
+    def draw(self):
+        contract_name = self.isolated.name.replace("_Isolated", "")
+        graph_to_dot("contract_isolated_" + contract_name, self.isolated)
+        graph_to_dot("contract_connected_" + contract_name, self.connected)
+        graph_to_dot("contract_complete_" + contract_name, self.complete)
 
 
     def check_isolated(self, pc):
