@@ -1,15 +1,15 @@
 from core.himesis import Himesis, HimesisPreConditionPatternLHS
 import uuid
 
-class HP1_ConnectedLHS(HimesisPreConditionPatternLHS):
+class HP2_ConnectedLHS(HimesisPreConditionPatternLHS):
         def __init__(self):
                 """
-                Creates the himesis graph representing the AToM3 model HP1_ConnectedLHS.
+                Creates the himesis graph representing the AToM3 model HP2_ConnectedLHS.
                 """
                 # Flag this instance as compiled now
                 self.is_compiled = True
         
-                super(HP1_ConnectedLHS, self).__init__(name='HP1_ConnectedLHS', num_nodes=0, edges=[])
+                super(HP2_ConnectedLHS, self).__init__(name='HP2_ConnectedLHS', num_nodes=0, edges=[])
         
                 # Set the graph attributes
                 self["mm__"] = ['MT_pre__FamiliesToPersonsMM', 'MoTifRule']
@@ -25,7 +25,7 @@ class HP1_ConnectedLHS(HimesisPreConditionPatternLHS):
 return True
 """
                 self["name"] = """"""
-                self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'P1')
+                self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'P2')
         
                 # Set the node attributes
         

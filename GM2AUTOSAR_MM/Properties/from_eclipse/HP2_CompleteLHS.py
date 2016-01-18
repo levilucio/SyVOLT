@@ -1,15 +1,15 @@
 from core.himesis import Himesis, HimesisPreConditionPatternLHS
 import uuid
 
-class HP1_CompleteLHS(HimesisPreConditionPatternLHS):
+class HP2_CompleteLHS(HimesisPreConditionPatternLHS):
         def __init__(self):
                 """
-                Creates the himesis graph representing the AToM3 model HP1_CompleteLHS.
+                Creates the himesis graph representing the AToM3 model HP2_CompleteLHS.
                 """
                 # Flag this instance as compiled now
                 self.is_compiled = True
 
-                super(HP1_CompleteLHS, self).__init__(name='HP1_CompleteLHS', num_nodes=0, edges=[])
+                super(HP2_CompleteLHS, self).__init__(name='HP2_CompleteLHS', num_nodes=0, edges=[])
 
                 # Set the graph attributes
                 self["mm__"] = []
@@ -26,7 +26,7 @@ class HP1_CompleteLHS(HimesisPreConditionPatternLHS):
 return True
 """
                 self["name"] = """"""
-                self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'P1')
+                self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'P2')
         
                 # Nodes that represent match classes
                 # match class PhysicalNode() node
@@ -142,7 +142,7 @@ return True
                 self.vs[5]["MT_dirty__"] = False
                 self.vs[5]["mm__"] = """MT_pre__CompositionType"""
                 self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-        # match class PPortPrototype() node
+        # match class RPortPrototype() node
                 self.add_node()
                 self.vs[6]["MT_subtypeMatching__"] = False
                 self.vs[6]["MT_pre__attr1"] = """
@@ -160,7 +160,7 @@ return True
                 self.vs[6]["MT_label__"] = """7"""
                 self.vs[6]["MT_subtypes__"] = []
                 self.vs[6]["MT_dirty__"] = False
-                self.vs[6]["mm__"] = """MT_pre__PPortPrototype"""
+                self.vs[6]["mm__"] = """MT_pre__RPortPrototype"""
                 self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
         
                 
@@ -248,7 +248,7 @@ return attr_value == "provided"
         
         
         # Nodes that represent the apply associations of the property.
-        # apply association CompositionType--port-->PPortPrototype node
+        # apply association CompositionType--port-->RPortPrototype node
                 self.add_node()
                 self.vs[11]["MT_subtypeMatching__"] = False
                 self.vs[11]["MT_pre__attr1"] = """
@@ -278,7 +278,7 @@ return attr_value == "port"
                 self.vs[12]["MT_dirty__"] = False
                 self.vs[12]["mm__"] = """MT_pre__trace_link"""
                 self.vs[12]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink12')
-                # backward association Scheduler---->PPortPrototype node
+                # backward association Scheduler---->RPortPrototype node
                 self.add_node()
                 self.vs[13]["MT_subtypeMatching__"] = False
                 self.vs[13]["MT_label__"] = """14"""
@@ -297,10 +297,10 @@ return attr_value == "port"
                 self.add_edges([
                 (5,12), # apply_class CompositionType() -> backward_association
                 (12,0), #  backward_association -> apply_class PhysicalNode()
-                (6,13), # apply_class PPortPrototype() -> backward_association
+                (6,13), # apply_class RPortPrototype() -> backward_association
                 (13,3), #  backward_association -> apply_class Scheduler()
                 (5,11), # apply_class CompositionType() -> association port
-                (11,6), # association port  -> apply_class PPortPrototype()
+                (11,6), # association port  -> apply_class RPortPrototype()
                 (0,7), # match_class PhysicalNode() -> association partition
                 (7,1), # association partition  -> match_class Partition()
                 (1,8), # match_class Partition() -> association module

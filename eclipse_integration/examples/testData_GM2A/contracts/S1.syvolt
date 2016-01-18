@@ -22,4 +22,24 @@
       <association associationName="componentPrototype" source="//@hasProperty.0/@apply/@class.4" target="//@hasProperty.0/@apply/@class.3"/>
     </apply>
   </hasProperty>
+  <hasProperty name="S1_then">
+    <match/>
+    <apply>
+      <class className="System">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="SYSTEM"/>
+        </attribute>
+      </class>
+      <class className="SoftwareComposition"/>
+      <class className="CompositionType"/>
+      <class className="ComponentPrototype">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="COMPONENTPROTOTYPE"/>
+        </attribute>
+      </class>
+      <association associationName="softwareComposition" source="//@hasProperty.1/@apply/@class.0" target="//@hasProperty.1/@apply/@class.1"/>
+      <association associationName="softwareComposition" source="//@hasProperty.1/@apply/@class.1" target="//@hasProperty.1/@apply/@class.2"/>
+      <association associationName="component" source="//@hasProperty.1/@apply/@class.2" target="//@hasProperty.1/@apply/@class.3"/>
+    </apply>
+  </hasProperty>
 </syvolt:TransformationModel>
