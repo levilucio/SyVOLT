@@ -15,7 +15,7 @@
           <attributeValue xsi:type="syvolt:Atom" value="COMPONENTPROTOTYPE"/>
         </attribute>
       </class>
-      <class className="SwcToEcuMapping_component"/>
+      <class className="SwCompToEcuMapping_component"/>
       <association associationName="mapping" source="//@hasProperty.0/@apply/@class.0" target="//@hasProperty.0/@apply/@class.1"/>
       <association associationName="swMapping" source="//@hasProperty.0/@apply/@class.1" target="//@hasProperty.0/@apply/@class.2"/>
       <association associationName="component" source="//@hasProperty.0/@apply/@class.2" target="//@hasProperty.0/@apply/@class.4"/>

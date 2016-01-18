@@ -112,7 +112,7 @@ return True
                 self.vs[3]["MT_dirty__"] = False
                 self.vs[3]["mm__"] = """MT_pre__ComponentPrototype"""
                 self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-        # match class SwcToEcuMapping_component() node
+        # match class SwCompToEcuMapping_component() node
                 self.add_node()
                 self.vs[4]["MT_subtypeMatching__"] = False
                 self.vs[4]["MT_pre__attr1"] = """
@@ -130,7 +130,7 @@ return True
                 self.vs[4]["MT_label__"] = """5"""
                 self.vs[4]["MT_subtypes__"] = []
                 self.vs[4]["MT_dirty__"] = False
-                self.vs[4]["mm__"] = """MT_pre__SwcToEcuMapping_component"""
+                self.vs[4]["mm__"] = """MT_pre__SwCompToEcuMapping_component"""
                 self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
         
                 
@@ -178,7 +178,7 @@ return attr_value == "swMapping"
                 self.vs[6]["MT_dirty__"] = False
                 self.vs[6]["mm__"] = """MT_pre__directLink_T"""
                 self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc6')
-        # apply association SwcToEcuMapping--component-->SwcToEcuMapping_component node
+        # apply association SwcToEcuMapping--component-->SwCompToEcuMapping_component node
                 self.add_node()
                 self.vs[7]["MT_subtypeMatching__"] = False
                 self.vs[7]["MT_pre__attr1"] = """
@@ -198,7 +198,7 @@ return attr_value == "component"
                 self.vs[7]["MT_dirty__"] = False
                 self.vs[7]["mm__"] = """MT_pre__directLink_T"""
                 self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc7')
-        # apply association SwcToEcuMapping_component--componentPrototype-->ComponentPrototype node
+        # apply association SwCompToEcuMapping_component--componentPrototype-->ComponentPrototype node
                 self.add_node()
                 self.vs[8]["MT_subtypeMatching__"] = False
                 self.vs[8]["MT_pre__attr1"] = """
@@ -234,8 +234,8 @@ return attr_value == "componentPrototype"
                 (1,6), # apply_class SystemMapping() -> association swMapping
                 (6,2), # association swMapping  -> apply_class SwcToEcuMapping()
                 (2,7), # apply_class SwcToEcuMapping() -> association component
-                (7,4), # association component  -> apply_class SwcToEcuMapping_component()
-                (4,8), # apply_class SwcToEcuMapping_component() -> association componentPrototype
+                (7,4), # association component  -> apply_class SwCompToEcuMapping_component()
+                (4,8), # apply_class SwCompToEcuMapping_component() -> association componentPrototype
                 (8,3), # association componentPrototype  -> apply_class ComponentPrototype()
                 ])
         
