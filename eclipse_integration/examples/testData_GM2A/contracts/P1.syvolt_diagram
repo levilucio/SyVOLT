@@ -7,21 +7,7 @@
         <children xmi:type="notation:BasicCompartment" xmi:id="_EfaFRrtOEeWl3fD8v47XsA" type="7029">
           <children xmi:type="notation:Node" xmi:id="_HYZroLtOEeWl3fD8v47XsA" type="3031">
             <children xmi:type="notation:DecorationNode" xmi:id="_HYZrprtOEeWl3fD8v47XsA" type="5014"/>
-            <children xmi:type="notation:BasicCompartment" xmi:id="_HYaSsLtOEeWl3fD8v47XsA" type="7019">
-              <children xmi:type="notation:Shape" xmi:id="_P22CILtPEeWl3fD8v47XsA" type="3004" fontName="Liberation Sans">
-                <children xmi:type="notation:DecorationNode" xmi:id="_P22CI7tPEeWl3fD8v47XsA" type="5003"/>
-                <children xmi:type="notation:BasicCompartment" xmi:id="_P22CJLtPEeWl3fD8v47XsA" type="7006">
-                  <children xmi:type="notation:Shape" xmi:id="_S_q0QLtPEeWl3fD8v47XsA" type="3005" fontName="Liberation Sans">
-                    <children xmi:type="notation:DecorationNode" xmi:id="_S_q0QrtPEeWl3fD8v47XsA" type="5001"/>
-                    <element xmi:type="syvolt:Atom" href="P1.syvolt#//@hasProperty.0/@match.0/@class.0/@attribute.0/@attributeValue"/>
-                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_S_q0QbtPEeWl3fD8v47XsA" x="16" y="2"/>
-                  </children>
-                </children>
-                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_P22CIbtPEeWl3fD8v47XsA"/>
-                <element xmi:type="syvolt:MatchAttribute" href="P1.syvolt#//@hasProperty.0/@match.0/@class.0/@attribute.0"/>
-                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_P22CIrtPEeWl3fD8v47XsA" x="8" y="4"/>
-              </children>
-            </children>
+            <children xmi:type="notation:BasicCompartment" xmi:id="_HYaSsLtOEeWl3fD8v47XsA" type="7019"/>
             <styles xmi:type="notation:DescriptionStyle" xmi:id="_HYZrobtOEeWl3fD8v47XsA"/>
             <styles xmi:type="notation:FontStyle" xmi:id="_HYZrortOEeWl3fD8v47XsA" fontName="Liberation Sans"/>
             <styles xmi:type="notation:LineStyle" xmi:id="_HYZro7tOEeWl3fD8v47XsA"/>
@@ -31,21 +17,7 @@
           </children>
           <children xmi:type="notation:Node" xmi:id="_KUzLULtOEeWl3fD8v47XsA" type="3031">
             <children xmi:type="notation:DecorationNode" xmi:id="_KUzyZbtOEeWl3fD8v47XsA" type="5014"/>
-            <children xmi:type="notation:BasicCompartment" xmi:id="_KUzyZrtOEeWl3fD8v47XsA" type="7019">
-              <children xmi:type="notation:Shape" xmi:id="_c0UlMLtPEeWl3fD8v47XsA" type="3004" fontName="Liberation Sans">
-                <children xmi:type="notation:DecorationNode" xmi:id="_c0UlM7tPEeWl3fD8v47XsA" type="5003"/>
-                <children xmi:type="notation:BasicCompartment" xmi:id="_c0UlNLtPEeWl3fD8v47XsA" type="7006">
-                  <children xmi:type="notation:Shape" xmi:id="_hsqNILtPEeWl3fD8v47XsA" type="3005" fontName="Liberation Sans">
-                    <children xmi:type="notation:DecorationNode" xmi:id="_hsq0MLtPEeWl3fD8v47XsA" type="5001"/>
-                    <element xmi:type="syvolt:Atom" href="P1.syvolt#//@hasProperty.0/@match.0/@class.1/@attribute.0/@attributeValue"/>
-                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_hsqNIbtPEeWl3fD8v47XsA" x="7" y="-1"/>
-                  </children>
-                </children>
-                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_c0UlMbtPEeWl3fD8v47XsA"/>
-                <element xmi:type="syvolt:MatchAttribute" href="P1.syvolt#//@hasProperty.0/@match.0/@class.1/@attribute.0"/>
-                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_c0UlMrtPEeWl3fD8v47XsA" x="8" y="-3"/>
-              </children>
-            </children>
+            <children xmi:type="notation:BasicCompartment" xmi:id="_KUzyZrtOEeWl3fD8v47XsA" type="7019"/>
             <styles xmi:type="notation:DescriptionStyle" xmi:id="_KUzyYLtOEeWl3fD8v47XsA"/>
             <styles xmi:type="notation:FontStyle" xmi:id="_KUzyYbtOEeWl3fD8v47XsA" fontName="Liberation Sans"/>
             <styles xmi:type="notation:LineStyle" xmi:id="_KUzyYrtOEeWl3fD8v47XsA"/>
@@ -55,21 +27,7 @@
           </children>
           <children xmi:type="notation:Node" xmi:id="_N3cysLtOEeWl3fD8v47XsA" type="3031">
             <children xmi:type="notation:DecorationNode" xmi:id="_N3cytrtOEeWl3fD8v47XsA" type="5014"/>
-            <children xmi:type="notation:BasicCompartment" xmi:id="_N3cyt7tOEeWl3fD8v47XsA" type="7019">
-              <children xmi:type="notation:Shape" xmi:id="_dqXcYLtPEeWl3fD8v47XsA" type="3004" fontName="Liberation Sans">
-                <children xmi:type="notation:DecorationNode" xmi:id="_dqXcY7tPEeWl3fD8v47XsA" type="5003"/>
-                <children xmi:type="notation:BasicCompartment" xmi:id="_dqXcZLtPEeWl3fD8v47XsA" type="7006">
-                  <children xmi:type="notation:Shape" xmi:id="_ibfpELtPEeWl3fD8v47XsA" type="3005" fontName="Liberation Sans">
-                    <children xmi:type="notation:DecorationNode" xmi:id="_ibfpErtPEeWl3fD8v47XsA" type="5001"/>
-                    <element xmi:type="syvolt:Atom" href="P1.syvolt#//@hasProperty.0/@match.0/@class.2/@attribute.0/@attributeValue"/>
-                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ibfpEbtPEeWl3fD8v47XsA" x="11" y="2"/>
-                  </children>
-                </children>
-                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_dqXcYbtPEeWl3fD8v47XsA"/>
-                <element xmi:type="syvolt:MatchAttribute" href="P1.syvolt#//@hasProperty.0/@match.0/@class.2/@attribute.0"/>
-                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dqXcYrtPEeWl3fD8v47XsA" x="3" y="2"/>
-              </children>
-            </children>
+            <children xmi:type="notation:BasicCompartment" xmi:id="_N3cyt7tOEeWl3fD8v47XsA" type="7019"/>
             <styles xmi:type="notation:DescriptionStyle" xmi:id="_N3cysbtOEeWl3fD8v47XsA"/>
             <styles xmi:type="notation:FontStyle" xmi:id="_N3cysrtOEeWl3fD8v47XsA" fontName="Liberation Sans"/>
             <styles xmi:type="notation:LineStyle" xmi:id="_N3cys7tOEeWl3fD8v47XsA"/>
@@ -79,21 +37,7 @@
           </children>
           <children xmi:type="notation:Node" xmi:id="_PDdS0LtOEeWl3fD8v47XsA" type="3031">
             <children xmi:type="notation:DecorationNode" xmi:id="_PDdS1rtOEeWl3fD8v47XsA" type="5014"/>
-            <children xmi:type="notation:BasicCompartment" xmi:id="_PDdS17tOEeWl3fD8v47XsA" type="7019">
-              <children xmi:type="notation:Shape" xmi:id="_edWYgLtPEeWl3fD8v47XsA" type="3004" fontName="Liberation Sans">
-                <children xmi:type="notation:DecorationNode" xmi:id="_edWYg7tPEeWl3fD8v47XsA" type="5003"/>
-                <children xmi:type="notation:BasicCompartment" xmi:id="_edWYhLtPEeWl3fD8v47XsA" type="7006">
-                  <children xmi:type="notation:Shape" xmi:id="_jIwXsLtPEeWl3fD8v47XsA" type="3005" fontName="Liberation Sans">
-                    <children xmi:type="notation:DecorationNode" xmi:id="_jIwXsrtPEeWl3fD8v47XsA" type="5001"/>
-                    <element xmi:type="syvolt:Atom" href="P1.syvolt#//@hasProperty.0/@match.0/@class.3/@attribute.0/@attributeValue"/>
-                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_jIwXsbtPEeWl3fD8v47XsA" x="5" y="4"/>
-                  </children>
-                </children>
-                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_edWYgbtPEeWl3fD8v47XsA"/>
-                <element xmi:type="syvolt:MatchAttribute" href="P1.syvolt#//@hasProperty.0/@match.0/@class.3/@attribute.0"/>
-                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_edWYgrtPEeWl3fD8v47XsA" x="16" y="5"/>
-              </children>
-            </children>
+            <children xmi:type="notation:BasicCompartment" xmi:id="_PDdS17tOEeWl3fD8v47XsA" type="7019"/>
             <styles xmi:type="notation:DescriptionStyle" xmi:id="_PDdS0btOEeWl3fD8v47XsA"/>
             <styles xmi:type="notation:FontStyle" xmi:id="_PDdS0rtOEeWl3fD8v47XsA" fontName="Liberation Sans"/>
             <styles xmi:type="notation:LineStyle" xmi:id="_PDdS07tOEeWl3fD8v47XsA"/>
@@ -103,21 +47,7 @@
           </children>
           <children xmi:type="notation:Node" xmi:id="_QtAqkLtOEeWl3fD8v47XsA" type="3031">
             <children xmi:type="notation:DecorationNode" xmi:id="_QtAqlrtOEeWl3fD8v47XsA" type="5014"/>
-            <children xmi:type="notation:BasicCompartment" xmi:id="_QtAql7tOEeWl3fD8v47XsA" type="7019">
-              <children xmi:type="notation:Shape" xmi:id="_gPIfMLtPEeWl3fD8v47XsA" type="3004" fontName="Liberation Sans">
-                <children xmi:type="notation:DecorationNode" xmi:id="_gPIfM7tPEeWl3fD8v47XsA" type="5003"/>
-                <children xmi:type="notation:BasicCompartment" xmi:id="_gPIfNLtPEeWl3fD8v47XsA" type="7006">
-                  <children xmi:type="notation:Shape" xmi:id="_jrzaYLtPEeWl3fD8v47XsA" type="3005" fontName="Liberation Sans">
-                    <children xmi:type="notation:DecorationNode" xmi:id="_jrzaYrtPEeWl3fD8v47XsA" type="5001"/>
-                    <element xmi:type="syvolt:Atom" href="P1.syvolt#//@hasProperty.0/@match.0/@class.4/@attribute.0/@attributeValue"/>
-                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_jrzaYbtPEeWl3fD8v47XsA" x="10" y="4"/>
-                  </children>
-                </children>
-                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_gPIfMbtPEeWl3fD8v47XsA"/>
-                <element xmi:type="syvolt:MatchAttribute" href="P1.syvolt#//@hasProperty.0/@match.0/@class.4/@attribute.0"/>
-                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_gPIfMrtPEeWl3fD8v47XsA" x="10" y="5"/>
-              </children>
-            </children>
+            <children xmi:type="notation:BasicCompartment" xmi:id="_QtAql7tOEeWl3fD8v47XsA" type="7019"/>
             <styles xmi:type="notation:DescriptionStyle" xmi:id="_QtAqkbtOEeWl3fD8v47XsA"/>
             <styles xmi:type="notation:FontStyle" xmi:id="_QtAqkrtOEeWl3fD8v47XsA" fontName="Liberation Sans"/>
             <styles xmi:type="notation:LineStyle" xmi:id="_QtAqk7tOEeWl3fD8v47XsA"/>
@@ -139,21 +69,7 @@
         <children xmi:type="notation:BasicCompartment" xmi:id="_FFtQRrtOEeWl3fD8v47XsA" type="7030">
           <children xmi:type="notation:Node" xmi:id="_TbMvILtOEeWl3fD8v47XsA" type="3034">
             <children xmi:type="notation:DecorationNode" xmi:id="_TbMvJrtOEeWl3fD8v47XsA" type="5016"/>
-            <children xmi:type="notation:BasicCompartment" xmi:id="_TbMvJ7tOEeWl3fD8v47XsA" type="7022">
-              <children xmi:type="notation:Shape" xmi:id="_sMlvsLtPEeWl3fD8v47XsA" type="3011" fontName="Liberation Sans">
-                <children xmi:type="notation:DecorationNode" xmi:id="_sMmWwLtPEeWl3fD8v47XsA" type="5010"/>
-                <children xmi:type="notation:BasicCompartment" xmi:id="_sMmWwbtPEeWl3fD8v47XsA" type="7011">
-                  <children xmi:type="notation:Shape" xmi:id="_uprdMLtPEeWl3fD8v47XsA" type="3013" fontName="Liberation Sans">
-                    <children xmi:type="notation:DecorationNode" xmi:id="_uprdMrtPEeWl3fD8v47XsA" type="5007"/>
-                    <element xmi:type="syvolt:Atom" href="P1.syvolt#//@hasProperty.0/@apply/@class.0/@attribute.0/@attributeValue"/>
-                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_uprdMbtPEeWl3fD8v47XsA" x="11" y="1"/>
-                  </children>
-                </children>
-                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_sMlvsbtPEeWl3fD8v47XsA"/>
-                <element xmi:type="syvolt:ApplyAttribute" href="P1.syvolt#//@hasProperty.0/@apply/@class.0/@attribute.0"/>
-                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_sMlvsrtPEeWl3fD8v47XsA" x="15" y="5"/>
-              </children>
-            </children>
+            <children xmi:type="notation:BasicCompartment" xmi:id="_TbMvJ7tOEeWl3fD8v47XsA" type="7022"/>
             <styles xmi:type="notation:DescriptionStyle" xmi:id="_TbMvIbtOEeWl3fD8v47XsA"/>
             <styles xmi:type="notation:FontStyle" xmi:id="_TbMvIrtOEeWl3fD8v47XsA" fontName="Liberation Sans"/>
             <styles xmi:type="notation:LineStyle" xmi:id="_TbMvI7tOEeWl3fD8v47XsA"/>
@@ -163,21 +79,7 @@
           </children>
           <children xmi:type="notation:Node" xmi:id="_VBIyMLtOEeWl3fD8v47XsA" type="3034">
             <children xmi:type="notation:DecorationNode" xmi:id="_VBIyNrtOEeWl3fD8v47XsA" type="5016"/>
-            <children xmi:type="notation:BasicCompartment" xmi:id="_VBIyN7tOEeWl3fD8v47XsA" type="7022">
-              <children xmi:type="notation:Shape" xmi:id="_tAcOgLtPEeWl3fD8v47XsA" type="3011" fontName="Liberation Sans">
-                <children xmi:type="notation:DecorationNode" xmi:id="_tAcOg7tPEeWl3fD8v47XsA" type="5010"/>
-                <children xmi:type="notation:BasicCompartment" xmi:id="_tAcOhLtPEeWl3fD8v47XsA" type="7011">
-                  <children xmi:type="notation:Shape" xmi:id="_vXXpoLtPEeWl3fD8v47XsA" type="3013" fontName="Liberation Sans">
-                    <children xmi:type="notation:DecorationNode" xmi:id="_vXXportPEeWl3fD8v47XsA" type="5007"/>
-                    <element xmi:type="syvolt:Atom" href="P1.syvolt#//@hasProperty.0/@apply/@class.1/@attribute.0/@attributeValue"/>
-                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_vXXpobtPEeWl3fD8v47XsA" x="10" y="5"/>
-                  </children>
-                </children>
-                <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_tAcOgbtPEeWl3fD8v47XsA"/>
-                <element xmi:type="syvolt:ApplyAttribute" href="P1.syvolt#//@hasProperty.0/@apply/@class.1/@attribute.0"/>
-                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_tAcOgrtPEeWl3fD8v47XsA" x="13" y="5"/>
-              </children>
-            </children>
+            <children xmi:type="notation:BasicCompartment" xmi:id="_VBIyN7tOEeWl3fD8v47XsA" type="7022"/>
             <styles xmi:type="notation:DescriptionStyle" xmi:id="_VBIyMbtOEeWl3fD8v47XsA"/>
             <styles xmi:type="notation:FontStyle" xmi:id="_VBIyMrtOEeWl3fD8v47XsA" fontName="Liberation Sans"/>
             <styles xmi:type="notation:LineStyle" xmi:id="_VBIyM7tOEeWl3fD8v47XsA"/>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syvolt:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:syvolt="http://syvolt/2.0">
+  <hasProperty name="M2_if">
+    <match/>
+    <apply>
+      <class className="SoftwareComposition">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="ELEMENT1"/>
+        </attribute>
+      </class>
+    </apply>
+  </hasProperty>
+  <hasProperty name="M2_then1">
+    <match/>
+    <apply>
+      <class className="SoftwareComposition">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="ELEMENT1"/>
+        </attribute>
+      </class>
+      <class className="CompositionType">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="ELEMENT2"/>
+        </attribute>
+      </class>
+      <association associationName="softwareComposition" source="//@hasProperty.1/@apply/@class.0" target="//@hasProperty.1/@apply/@class.1"/>
+    </apply>
+  </hasProperty>
+  <hasProperty name="M2_then2">
+    <match/>
+    <apply>
+      <class className="SoftwareComposition">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="ELEMENT1"/>
+        </attribute>
+      </class>
+      <class className="CompositionType">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="ELEMENT2"/>
+        </attribute>
+      </class>
+      <class className="CompositionType"/>
+      <association associationName="softwareComposition" source="//@hasProperty.2/@apply/@class.0" target="//@hasProperty.2/@apply/@class.1"/>
+      <association associationName="softwareComposition" source="//@hasProperty.2/@apply/@class.0" target="//@hasProperty.2/@apply/@class.2"/>
+    </apply>
+  </hasProperty>
+</syvolt:TransformationModel>

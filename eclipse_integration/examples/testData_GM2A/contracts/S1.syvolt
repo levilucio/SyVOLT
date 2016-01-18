@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syvolt:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:syvolt="http://syvolt/2.0">
+  <hasProperty name="S1_if">
+    <match/>
+    <apply>
+      <class className="System">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="SYSTEM"/>
+        </attribute>
+      </class>
+      <class className="SystemMapping"/>
+      <class className="SwcToEcuMapping"/>
+      <class className="ComponentPrototype">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="COMPONENTPROTOTYPE"/>
+        </attribute>
+      </class>
+      <class className="SwcToEcuMapping_component"/>
+      <association associationName="mapping" source="//@hasProperty.0/@apply/@class.0" target="//@hasProperty.0/@apply/@class.1"/>
+      <association associationName="swMapping" source="//@hasProperty.0/@apply/@class.1" target="//@hasProperty.0/@apply/@class.2"/>
+      <association associationName="component" source="//@hasProperty.0/@apply/@class.2" target="//@hasProperty.0/@apply/@class.4"/>
+      <association associationName="componentPrototype" source="//@hasProperty.0/@apply/@class.4" target="//@hasProperty.0/@apply/@class.3"/>
+    </apply>
+  </hasProperty>
+</syvolt:TransformationModel>
