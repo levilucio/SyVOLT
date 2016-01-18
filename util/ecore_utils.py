@@ -45,7 +45,7 @@ class EcoreUtils(object):
                                                 
                 except Exception:
                     pass
-                
+            
         # treat all the remaining classes that have no containment links to them but that
         # inherit from classes that do.
         
@@ -113,10 +113,14 @@ class EcoreUtils(object):
                 trgtClassName = str(cRel.attributes['eType'].value).split('#//', 1)[1]
                 
                 srcClassName = str(sourceClass.attributes['name'].value)
-                if trgtClassName == str(targetClass.attributes['name'].value):
+                
+                # do not consider self loops in the containment classes, because they do not help with reaching the root
+                # TODO: containment loops could involve more than one class (e.g. A contains B contains C contains A). This case is not yet treated.
+                if trgtClassName == str(targetClass.attributes['name'].value) and not (trgtClassName == srcClassName):
                     
                     #return [str(cRel.attributes['name'].value)].extend(self.buildContaimentDependenciesForClass(sourceClass))
                     res.extend([(srcClassName, str(cRel.attributes['name'].value), trgtClassName)])
+                    
                     res.extend(self.buildContaimentDependenciesForClass(sourceClass))
         
         return res
@@ -134,9 +138,7 @@ class EcoreUtils(object):
         for mmClass in metamodelClasses:
             allContainmentRels[str(mmClass.attributes['name'].value)] = self.buildContaimentDependenciesForClass(mmClass)
 
-        # now add to the existing containment relations for a class the containment relations of it's supertypes
-        
-        #return allContainmentRels
+        # now add to the existing containment relations for a class the containment relations of its supertypes
 
         containmentRelsWithSuper = {}
         
@@ -290,7 +292,13 @@ class EcoreUtils(object):
         # now check which relations in the rule are built by which containment relation
         
         for node in range(len(rule.vs)):
+            
+#             if rule.vs[node]["mm__"] == "directLink_T":
+#                 print("................ Containment link: " + rule.vs[node]["attr1"])
+#                 print("................ self.containmentRels: " + str(self.containmentRels))
+                
             if rule.vs[node]["mm__"] == "directLink_T" and rule.vs[node]["attr1"] in self.containmentRels:
+                
                 # find the types of the source and the target elements of the containment in the rule
                 targetClassNode = rule.neighbors(rule.vs[node],1)                
                 targetClassName = rule.vs[targetClassNode]["mm__"][0]                
