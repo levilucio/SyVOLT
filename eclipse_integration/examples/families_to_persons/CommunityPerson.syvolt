@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syvolt:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:syvolt="http://syvolt/2.0">
+  <hasProperty name="CommunityPerson_if">
+    <match/>
+    <apply>
+      <class className="CommunityRoot">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="COMMUNITY"/>
+        </attribute>
+      </class>
+      <class className="Person">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="PERSON"/>
+        </attribute>
+      </class>
+      <association associationName="has" source="//@hasProperty.0/@apply/@class.0" target="//@hasProperty.0/@apply/@class.1"/>
+    </apply>
+  </hasProperty>
+  <hasProperty name="CommunityPerson_then">
+    <match/>
+    <apply>
+      <class className="CommunityRoot">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="COMMUNITY"/>
+        </attribute>
+      </class>
+      <class className="Person">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="PERSON"/>
+        </attribute>
+      </class>
+      <class className="Person"/>
+      <association associationName="has" source="//@hasProperty.1/@apply/@class.0" target="//@hasProperty.1/@apply/@class.1"/>
+      <association associationName="has" source="//@hasProperty.1/@apply/@class.0" target="//@hasProperty.1/@apply/@class.2"/>
+    </apply>
+  </hasProperty>
+</syvolt:TransformationModel>
