@@ -23,6 +23,9 @@ class NotContract(Contract):
         else:
             return result
 
+    def draw(self):
+        self.contract.draw()
+
 class AndContract(Contract):
     def __init__(self, atomic_contract_1, atomic_contract_2):
         super(AndContract, self).__init__()
@@ -53,3 +56,7 @@ class AndContract(Contract):
             print("And Contract: Second contract is " + result_2)
 
         return result_2
+
+    def draw(self):
+        self.contract_1.draw()
+        self.contract_2.draw()

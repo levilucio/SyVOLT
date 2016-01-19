@@ -76,7 +76,8 @@ class NewHimesisMatcher(object):
         # except KeyError:
         #     attr1 = []
 
-        # if "motherFather_Complete" in self.pattern_graph.name:# and "mother" in attr1 and "daughter" in attr1:
+        # if "HM2_then2_CompleteLHS" in self.pattern_graph.name:# and \
+        #     #"component" in attr1 and "componentPrototype" in attr1:# and "mother" in attr1 and "daughter" in attr1:
         #
         #
         #     #print("Source: " + self.source_graph.name)
@@ -298,13 +299,14 @@ class NewHimesisMatcher(object):
                 else:
                     ms_wo_disambig.append(match_set)
 
-        
+
         for ms in ms_wo_disambig + ms_w_disambig:
             yield ms
 
 
     def create_match_set(self, pm, combinations):
         match_set = {}
+        reverse_match_set = {}
 
         needed_disambig = False
 
@@ -325,8 +327,15 @@ class NewHimesisMatcher(object):
                 #    s_label = self.source_graph.vs[s]["MT_label__"]
                 #except KeyError:
 
+                if s in reverse_match_set.keys() and reverse_match_set[s] != p:
+                    # we already have another element binding to this one, so fail
+                    if self.debug:
+                        print("Another pattern element is already binding to this source element")
+                    return {}, False
+
                 if self.debug:
                     print("Setting " + str(p) + " to " + str(s))
+
                 if p in match_set.keys() and match_set[p] != s:
                     if self.debug:
                         print("Already binding")
@@ -351,6 +360,7 @@ class NewHimesisMatcher(object):
                     #     # sys.exit()
 
                 match_set[p] = s
+                reverse_match_set[s] = p
 
         if self.debug:
             print("Match set:")

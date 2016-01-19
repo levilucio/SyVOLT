@@ -99,7 +99,36 @@ def load_contracts(contracts, superclasses_dict, atomic_names, simple_if_then_na
             graph_to_dot("contract_" + if_contract.complete.name, if_contract.complete)
             graph_to_dot("contract_" + then_contract.complete.name, then_contract.complete)
 
-    #for contract_name_if, prop_equation in prop_if_then_names:
+    for contract_name_if, prop_equation in prop_if_then_names:
+
+        if_contract = load_contract(contract_name_if, contracts, superclasses_dict)
+
+        prop_stack = []
+        for p in prop_equation:
+
+            if p == "AND":
+                if len(prop_stack) < 2:
+                    raise Exception("Contract Prop Logic failure for AND")
+
+                last_1 = prop_stack.pop()
+                last_2 = prop_stack.pop()
+                c = AndContract(last_1, last_2)
+            elif p == "NOT":
+                if len(prop_stack) < 1:
+                    raise Exception("Contract Prop Logic failure for NOT")
+
+                last = prop_stack.pop()
+                c = NotContract(last)
+            else:
+                c = load_contract(p, contracts, superclasses_dict)
+
+            prop_stack.append(c)
+        if len(prop_stack) != 1:
+            raise Exception("Contract Prop Logic failure")
+
+        full_contract = IfThenContract(if_contract, prop_stack.pop())
+        if_then_contracts.append([contract_name_if, full_contract])
+
     return atomic_contracts, if_then_contracts
 
 

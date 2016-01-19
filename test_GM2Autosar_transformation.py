@@ -81,6 +81,9 @@ class Prover():
             #["M3_if", "M3_then"],
         ]
         prop_if_then_contracts = [
+            #structure is 'if graph', 'then graph'
+            #where the 'then graph' is made up of polish notation
+            ["M2_if", ["M2_then1", "M2_then2", "NOT", "AND"]]
 
         ]
 
