@@ -41,7 +41,9 @@ class AtomicContract(Contract):
         self.connected_matcher = Matcher(connected, disambig_matching = True)
         self.complete_matcher = Matcher(complete, disambig_matching = True)
 
+        self.last_packet = None
 
+        self.verbosity = 0
 
         try:
             self.contract_mms = [mm.replace("MT_pre__", "") for mm in self.complete.vs["mm__"]]
@@ -66,6 +68,19 @@ class AtomicContract(Contract):
         graph_to_dot("contract_connected_" + contract_name, self.connected)
         graph_to_dot("contract_complete_" + contract_name, self.complete)
 
+    def get_pivots(self):
+        eqs = self.complete["equations"]
+        pivots = {}
+        for eq in eqs:
+            (node_num, attr), (typ, value) = eq
+            if attr != "pivot" or typ != "constant":
+                continue
+            label = self.complete.vs[node_num]["MT_label__"]
+            pivots[value] = label
+
+        matches = list(self.last_packet.match_sets.values())[0].matches[0]
+        return pivots, matches
+
 
     def check_isolated(self, pc):
 
@@ -78,6 +93,7 @@ class AtomicContract(Contract):
             return self.ISOLATED
         else:
             return self.NO_ISOLATED
+
 
 
         # pc_mms = pc.vs["mm__"]
@@ -127,6 +143,8 @@ class AtomicContract(Contract):
         p.graph = pc
 
         self.complete_matcher.packet_in(p)
+
+        self.last_packet = p
 
         if self.complete_matcher.is_success:
             return self.COMPLETE_FOUND

@@ -30,7 +30,34 @@ class IfThenContract(Contract):
         if verbosity > 1:
             print("Result for then contract: " + then_result)
 
+        #do a final check for pivots
+        if then_result == self.COMPLETE_FOUND:
+            then_result = self.check_pivots(pc)
         return then_result
+
+    def check_pivots(self, pc):
+
+        if_pivots, if_matches = self.if_contract.get_pivots()
+
+        then_pivots, then_matches = self.then_contract.get_pivots()
+
+        for pivot, label in if_pivots.items():
+
+            #the pivot is only defined on the if graph
+            if pivot not in then_pivots:
+                continue
+
+            if_guid = if_matches[label]
+
+            then_label = then_pivots[pivot]
+            then_guid = then_matches[then_label]
+
+            #these two matches are on different nodes in the source graph
+            #so the pivots don't match
+            if if_guid != then_guid:
+                return self.COMPLETE_NOT_FOUND
+        return self.COMPLETE_FOUND
+
 
     def draw(self):
         self.if_contract.draw()
