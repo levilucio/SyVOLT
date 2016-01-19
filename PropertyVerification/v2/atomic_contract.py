@@ -69,6 +69,12 @@ class AtomicContract(Contract):
         graph_to_dot("contract_complete_" + contract_name, self.complete)
 
     def get_pivots(self):
+        if len(self.last_packet.match_sets) == 0:
+            #matching failed, so don't bother returning anything
+            return {}
+
+        matches = list(self.last_packet.match_sets.values())[0].matches[0]
+
         eqs = self.complete["equations"]
         pivots = {}
         for eq in eqs:
@@ -76,10 +82,11 @@ class AtomicContract(Contract):
             if attr != "pivot" or typ != "constant":
                 continue
             label = self.complete.vs[node_num]["MT_label__"]
-            pivots[value] = label
 
-        matches = list(self.last_packet.match_sets.values())[0].matches[0]
-        return pivots, matches
+            #lookup the GUID that got matched to the label
+            pivots[value] = matches[label]
+
+        return pivots
 
 
     def check_isolated(self, pc):

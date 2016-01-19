@@ -26,6 +26,9 @@ class NotContract(Contract):
     def draw(self):
         self.contract.draw()
 
+    def get_pivots(self):
+        return self.contract.get_pivots()
+
 class AndContract(Contract):
     def __init__(self, atomic_contract_1, atomic_contract_2):
         super(AndContract, self).__init__()
@@ -60,3 +63,24 @@ class AndContract(Contract):
     def draw(self):
         self.contract_1.draw()
         self.contract_2.draw()
+
+    def get_pivots(self):
+        pivots_1 = self.contract_1.get_pivots()
+        pivots_2 = self.contract_2.get_pivots()
+
+        # print("Contract 1")
+        # print(pivots_1)
+        #
+        # print("Contract 2")
+        # print(pivots_2)
+
+        #put these two together
+        #report a FAILURE if they are inconsistent
+
+        result = dict(pivots_1)
+        for key in pivots_2:
+            if key in result and result[key] != pivots_2[key]:
+                result[key] = "FAILURE"
+            else:
+                result[key] = pivots_2[key]
+        return result
