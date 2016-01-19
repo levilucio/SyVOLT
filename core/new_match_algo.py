@@ -66,23 +66,24 @@ class NewHimesisMatcher(object):
         # print(self.pattern_graph.name + " vs " + self.source_graph.name)
 
 
-        # try:
-        #     mms = self.source_graph.vs["mm__"]
-        # except KeyError:
-        #     mms = []
+        try:
+            mms = self.source_graph.vs["mm__"]
+        except KeyError:
+            mms = []
         #
         # try:
         #     attr1 = self.source_graph.vs["attr1"]
         # except KeyError:
         #     attr1 = []
 
-        # if "HM2_then2_CompleteLHS" in self.pattern_graph.name:# and \
+        # if "ermodelOUTentitiesSolveRefERModelEntityTypeERModelEntityType" in self.pattern_graph.name and \
+        #                 "HEmpty_L0R0-0_L1R0-0_L3R0-0_L4R0" in self.source_graph.name and "ERModel" in mms and "EntityType" in mms:# and \
         #     #"component" in attr1 and "componentPrototype" in attr1:# and "mother" in attr1 and "daughter" in attr1:
         #
         #
         #     #print("Source: " + self.source_graph.name)
         #     self.debug = True
-        #     self.compare_to_old = True
+        #     self.compare_to_old = False
         #     graph_to_dot("z_source_" + self.source_graph.name, self.source_graph)
         #     graph_to_dot("z_pattern_" + self.pattern_graph.name, self.pattern_graph)
         # else:
@@ -188,10 +189,7 @@ class NewHimesisMatcher(object):
                         print("\nChecking Graph " + self.source_graph.name + " nodes:")
                         self.print_link(self.source_graph, graph_n0_n, graph_n1_n, graph_link_n)
 
-                    if patt_link_n is not None and graph_link_n is not None:
-                        nodes_match_link = self.match_nodes(graph_link_n, patt_link_n)
-                    else:
-                        nodes_match_link = False
+                    nodes_match_link = self.match_nodes(graph_link_n, patt_link_n)
 
                     if not nodes_match_link:
                         if self.debug:
@@ -388,14 +386,19 @@ class NewHimesisMatcher(object):
     def match_nodes(self, graph_node, patt_node):
         # print("Match nodes: graph_node " + str(graph_node))
         # print("Match nodes: patt_node " + str(patt_node))
-        sourceMM = self.source_mms[graph_node]
+
         targetMM = self.pattern_mms[patt_node]
 
-        if sourceMM != targetMM:
-            # if self.debug:
-            #     print("Source: " + sourceMM)
-            #     print("Target: " + targetMM)
+        if graph_node is not None:
+            sourceMM = self.source_mms[graph_node]
+        else:
+            sourceMM = "backward_link"
 
+        # if self.debug:
+        #     print("Source: " + sourceMM)
+        #     print("Target: " + targetMM)
+
+        if sourceMM != targetMM:
 
             # is this a hack?
             if targetMM == "trace_link" and sourceMM == "backward_link":
