@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <syvolt:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:syvolt="http://syvolt/2.0">
-  <hasProperty name="prop2_b">
+  <hasProperty name="prop2_if">
     <match/>
     <apply>
       <class className="Inst">
         <attribute attributeName="name">
           <attributeValue xsi:type="syvolt:Atom" value="Handler"/>
+        </attribute>
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="INST"/>
+        </attribute>
+      </class>
+    </apply>
+  </hasProperty>
+  <hasProperty name="prop2_then">
+    <match/>
+    <apply>
+      <class className="Inst">
+        <attribute attributeName="name">
+          <attributeValue xsi:type="syvolt:Atom" value="Handler"/>
+        </attribute>
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="INST"/>
         </attribute>
       </class>
       <class className="ProcDef">

@@ -1,15 +1,15 @@
 from core.himesis import Himesis, HimesisPreConditionPatternLHS
 import uuid
 
-class Hprop2_a_CompleteLHS(HimesisPreConditionPatternLHS):
+class Hprop2_then_CompleteLHS(HimesisPreConditionPatternLHS):
         def __init__(self):
                 """
-                Creates the himesis graph representing the AToM3 model Hprop2_a_CompleteLHS.
+                Creates the himesis graph representing the AToM3 model Hprop2_then_CompleteLHS.
                 """
                 # Flag this instance as compiled now
                 self.is_compiled = True
 
-                super(Hprop2_a_CompleteLHS, self).__init__(name='Hprop2_a_CompleteLHS', num_nodes=0, edges=[])
+                super(Hprop2_then_CompleteLHS, self).__init__(name='Hprop2_then_CompleteLHS', num_nodes=0, edges=[])
 
                 # Set the graph attributes
                 self["mm__"] = []
@@ -26,7 +26,7 @@ class Hprop2_a_CompleteLHS(HimesisPreConditionPatternLHS):
 return True
 """
                 self["name"] = """"""
-                self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'prop2_a')
+                self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'prop2_then')
         
                 # Nodes that represent match classes
         
@@ -52,6 +52,26 @@ return True
                 self.vs[0]["MT_dirty__"] = False
                 self.vs[0]["mm__"] = """MT_pre__Inst"""
                 self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match class ProcDef() node
+                self.add_node()
+                self.vs[1]["MT_subtypeMatching__"] = False
+                self.vs[1]["MT_pre__attr1"] = """
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by: attr_value.
+# You can access any attribute x of this node by: this['x'].
+# If the constraint relies on attribute values from other nodes,
+# use the LHS/NAC constraint instead.
+# The given constraint must evaluate to a boolean expression.
+#===============================================================================
+
+return True
+"""
+                self.vs[1]["MT_label__"] = """2"""
+                self.vs[1]["MT_subtypes__"] = []
+                self.vs[1]["MT_dirty__"] = False
+                self.vs[1]["mm__"] = """MT_pre__ProcDef"""
+                self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
         
                 
         # Nodes that represent the match associations of the property.
@@ -72,10 +92,23 @@ return True
                 ])
         
                 # Add the attribute equations
-                self["equations"] = [((0,'name'),('constant','Handler')), ]
+                self["equations"] = [((0,'name'),('constant','Handler')), ((0,'pivot'),('constant','INST')), ((1,'name'),('constant','Handler')), ]
         
         
         def eval_attr11(self, attr_value, this):
+
+                        #===============================================================================
+                        # This code is executed when evaluating if a node shall be matched by this rule.
+                        # You can access the value of the current node's attribute value by: attr_value.
+                        # You can access any attribute x of this node by: this['x'].
+                        # If the constraint relies on attribute values from other nodes,
+                        # use the LHS/NAC constraint instead.
+                        # The given constraint must evaluate to a boolean expression.
+                        #===============================================================================
+
+                return True
+        
+        def eval_attr12(self, attr_value, this):
 
                         #===============================================================================
                         # This code is executed when evaluating if a node shall be matched by this rule.

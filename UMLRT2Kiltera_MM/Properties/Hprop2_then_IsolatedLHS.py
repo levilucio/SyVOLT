@@ -1,15 +1,15 @@
 from core.himesis import Himesis, HimesisPreConditionPatternLHS
 import uuid
 
-class Hprop2_b_IsolatedLHS(HimesisPreConditionPatternLHS):
+class Hprop2_then_IsolatedLHS(HimesisPreConditionPatternLHS):
         def __init__(self):
                 """
-        Creates the himesis graph representing the AToM3 model Hprop2_b_IsolatedLHS.
+        Creates the himesis graph representing the AToM3 model Hprop2_then_IsolatedLHS.
                 """
         # Flag this instance as compiled now
                 self.is_compiled = True
         
-                super(Hprop2_b_IsolatedLHS, self).__init__(name='Hprop2_b_IsolatedLHS', num_nodes=0, edges=[])
+                super(Hprop2_then_IsolatedLHS, self).__init__(name='Hprop2_then_IsolatedLHS', num_nodes=0, edges=[])
         
         # Add the edges
                 self.add_edges([])
@@ -28,7 +28,7 @@ class Hprop2_b_IsolatedLHS(HimesisPreConditionPatternLHS):
 return True
 """
                 self["name"] = """"""
-                self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'prop2_b')
+                self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'prop2_then')
         
         # Set the node attributes
         
