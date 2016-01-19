@@ -1,7 +1,7 @@
 from core.himesis import Himesis
 import uuid
 
-class HState2ProcDef_copy(Himesis):
+class HState2ProcDefcopy(Himesis):
     def __init__(self):
 
     
@@ -12,14 +12,14 @@ class HState2ProcDef_copy(Himesis):
         # Flag this instance as compiled now
         self.is_compiled = True
         
-        super(HState2ProcDef_copy, self).__init__(name='HState2ProcDef_copy', num_nodes=0, edges=[])
+        super(HState2ProcDefcopy, self).__init__(name='HState2ProcDefcopy', num_nodes=0, edges=[])
         
         
         # Set the graph attributes
         self["mm__"] = ['HimesisMM']
         
-        self["name"] = """State2ProcDef"""
-        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'State2ProcDef')
+        self["name"] = """State2ProcDefcopy"""
+        self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'State2ProcDefcopy')
         
         # match model. We only support one match model
         self.add_node()

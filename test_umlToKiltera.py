@@ -17,22 +17,8 @@ from PropertyVerification.v2.atomic_contract import AtomicContract
 from PropertyVerification.v2.ContractProver import ContractProver
 
 from core.himesis_utils import graph_to_dot, load_directory
-from util.test_script_utils import select_rules, get_sub_and_super_classes
+from util.test_script_utils import select_rules, get_sub_and_super_classes, load_contracts
 from util.slicer import Slicer
-
-# imports for properties' atomic contracts
-
-from UMLRT2Kiltera_MM.Properties.HAC1_IsolatedLHS import HAC1_IsolatedLHS
-from UMLRT2Kiltera_MM.Properties.HAC1_ConnectedLHS import HAC1_ConnectedLHS
-from UMLRT2Kiltera_MM.Properties.HAC1_CompleteLHS import HAC1_CompleteLHS
-from UMLRT2Kiltera_MM.Properties.Hprop2_a_IsolatedLHS import Hprop2_a_IsolatedLHS
-from UMLRT2Kiltera_MM.Properties.Hprop2_a_ConnectedLHS import Hprop2_a_ConnectedLHS
-from UMLRT2Kiltera_MM.Properties.Hprop2_a_CompleteLHS import Hprop2_a_CompleteLHS
-
-from UMLRT2Kiltera_MM.Properties.Hprop2_b_IsolatedLHS import Hprop2_b_IsolatedLHS
-from UMLRT2Kiltera_MM.Properties.Hprop2_b_ConnectedLHS import Hprop2_b_ConnectedLHS
-from UMLRT2Kiltera_MM.Properties.Hprop2_b_CompleteLHS import Hprop2_b_CompleteLHS
-
 
 class Prover():
 
@@ -47,7 +33,7 @@ class Prover():
 
         r0 = 'HMapRootElementRule'
         r1 = 'HState2ProcDef'
-        r1_copy = 'HState2ProcDef_copy'
+        r1_copy = 'HState2ProcDefcopy'
         r2 = 'HBasicState2ProcDef'
         r3 = 'HBasicStateNoOutgoing2ProcDef'
         r4 = 'HCompositeState2ProcDef'
@@ -66,7 +52,7 @@ class Prover():
 
 
 
-        full_transformation = [[r0,],[r1,r1_copy],[r2,],[r3,],[r4,],[r5,],[r6,],[r7,],[r8,],[r9,],[r10,],[r11,],[r12,],[r13,],[r14,],[r15,],[r16,],]
+        full_transformation = [[r0,],[r1],[r1_copy],[r2,],[r3,],[r4,]]#,[r5,],[r6,],[r7,],[r8,],[r9,],[r10,],[r11,],[r12,],[r13,],[r14,],[r15,],[r16,],]
 
         self.rules, self.transformation = pyramify.get_rules("UMLRT2Kiltera_MM/transformation/Himesis/", full_transformation)
 
@@ -88,62 +74,31 @@ class Prover():
 
         pyramify.set_supertypes(superclasses_dict, self.rules, self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators)
 
+        # load the contracts
 
-        # load the contracts, and add polymorphism
+        contracts = load_directory("UMLRT2Kiltera_MM/Properties/")
 
-        if (args.draw_svg):
-                graph_to_dot("property_AC1_isolated", HAC1_IsolatedLHS())
-                graph_to_dot("property_AC1_connected", HAC1_ConnectedLHS())
-                graph_to_dot("property_AC1_complete", HAC1_CompleteLHS())
-                graph_to_dot("property_AC2_isolated", Hprop2_a_IsolatedLHS())
-                graph_to_dot("property_AC2_connected", Hprop2_a_ConnectedLHS())
-                graph_to_dot("property_AC2_complete", Hprop2_a_CompleteLHS())
-                graph_to_dot("property_AC3_isolated", Hprop2_b_IsolatedLHS())
-                graph_to_dot("property_AC3_connected", Hprop2_b_ConnectedLHS())
-                graph_to_dot("property_AC3_complete", Hprop2_b_CompleteLHS())
+        atomic_contracts = [
+            "AC1",
+            #"prop2_a",
+            #"prop2_b",
+        ]
+        if_then_contracts = [
+            # ["S1_if", "S1_then"],
+            # ["M1_if", "M1_then"],
+            # ["M3_if", "M3_then"],
+        ]
+        prop_if_then_contracts = [
+            # structure is 'if graph', 'then graph'
+            # where the 'then graph' is made up of reverse polish notation
+            #["M2_if", ["M2_then1", "M2_then2", "NOT", "AND"]],
+        ]
 
+        self.atomic_contracts, self.if_then_contracts = load_contracts(contracts, superclasses_dict,
+                                                                       atomic_contracts, if_then_contracts,
+                                                                       prop_if_then_contracts,
+                                                                       args.draw_svg)
 
-        self.atomic_contracts = []
-        self.if_then_contracts = []
-
-
-        isolated = HAC1_IsolatedLHS()
-        connected = HAC1_ConnectedLHS()
-        complete = HAC1_CompleteLHS()
-
-        isolated["superclasses_dict"] = superclasses_dict
-        connected["superclasses_dict"] = superclasses_dict
-        complete["superclasses_dict"] = superclasses_dict
-
-        c0 = AtomicContract(isolated, connected, complete)
-
-        self.atomic_contracts.append(("AC1", c0))
-
-
-
-        isolated = Hprop2_a_IsolatedLHS()
-        connected = Hprop2_a_ConnectedLHS()
-        complete = Hprop2_a_CompleteLHS()
-
-        isolated["superclasses_dict"] = superclasses_dict
-        connected["superclasses_dict"] = superclasses_dict
-        complete["superclasses_dict"] = superclasses_dict
-
-        c1 = AtomicContract(isolated, connected, complete)
-
-        self.atomic_contracts.append(("AC2", c1))
-
-        isolated = Hprop2_b_IsolatedLHS()
-        connected = Hprop2_b_ConnectedLHS()
-        complete = Hprop2_b_CompleteLHS()
-
-        isolated["superclasses_dict"] = superclasses_dict
-        connected["superclasses_dict"] = superclasses_dict
-        complete["superclasses_dict"] = superclasses_dict
-
-        c2 = AtomicContract(isolated, connected, complete)
-
-        self.atomic_contracts.append(("AC3", c2))
 
 
 
