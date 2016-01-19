@@ -583,7 +583,7 @@ def load_directory(directory):
 
     for f in sorted(files):
 
-        if not f.endswith(".py"):
+        if not f.endswith(".py") or f.startswith("__"):
             continue
 
         file_name = directory + "/" + f
