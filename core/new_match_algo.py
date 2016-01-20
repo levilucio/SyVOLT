@@ -50,9 +50,34 @@ class NewHimesisMatcher(object):
 
         self.pattern_attribs = [[attrib for attrib in node.attribute_names() if attrib.startswith("MT_pre__")] for node in self.pattern_graph.vs]
 
-
+        self.patt_eqs_constant, self.patt_eqs_variable = self.load_equations(pattern_graph)
+        self.src_eqs_constant, self.src_eqs_variable = self.load_equations(source_graph)
 
         self.oldMatcher = None
+
+    def load_equations(self, graph):
+        try:
+            eqs = graph["equations"]
+        except KeyError:
+            print("Graph has no equations array: " + graph.name)
+            eqs = []
+
+        eqs_constant = {}
+        eqs_variable = []
+
+        for eq in eqs:
+            if eq[1][0] == "constant":
+                node_num = eq[0][0]
+                attr = eq[0][1]
+                try:
+                    eqs_constant[node_num].append((attr, eq[1][1]))
+                except KeyError:
+                    eqs_constant[node_num] = [(attr, eq[1][1])]
+            else:
+                eqs_variable.append(eq)
+
+        return eqs_constant, eqs_variable
+
 
     def has_match(self, context = {}):
         try:
@@ -76,18 +101,20 @@ class NewHimesisMatcher(object):
         # except KeyError:
         #     attr1 = []
 
-        # if "ermodelOUTentitiesSolveRefERModelEntityTypeERModelEntityType" in self.pattern_graph.name and \
-        #                 "HEmpty_L0R0-0_L1R0-0_L3R0-0_L4R0" in self.source_graph.name and "ERModel" in mms and "EntityType" in mms:# and \
+        # if "HBasicStateNoOutgoing2ProcDef_rule_combinator_matcher" in self.pattern_graph.name \
+        #         and "HEmpty_L0R0-0_L1R0-0_L2R0-T0_L2R0-T1.74" in self.source_graph.name:# and \
         #     #"component" in attr1 and "componentPrototype" in attr1:# and "mother" in attr1 and "daughter" in attr1:
         #
         #
         #     #print("Source: " + self.source_graph.name)
-        #     self.debug = True
+        #     self.debug = False
+        #     self.show_eqs = True
         #     self.compare_to_old = False
         #     graph_to_dot("z_source_" + self.source_graph.name, self.source_graph)
         #     graph_to_dot("z_pattern_" + self.pattern_graph.name, self.pattern_graph)
         # else:
         #    self.debug = False
+        #    self.show_eqs = False
         #    self.compare_to_old = False
 
 
@@ -249,10 +276,10 @@ class NewHimesisMatcher(object):
             yield {}
             return
 
-        if self.debug:
-            print("Link matches:")
-            for k in link_matches.keys():
-                print(str(k) + " : " + str(link_matches[k]))
+        # if self.debug:
+        #     print("Link matches:")
+        #     for k in link_matches.keys():
+        #         print(str(k) + " : " + str(link_matches[k]))
 
 
         #HACK:
@@ -284,14 +311,14 @@ class NewHimesisMatcher(object):
         ms_w_disambig = []
         ms_wo_disambig = []
         for pm in combinations:
-            if self.debug:
-                print("Potential match:")
-                print(pm)
+            # if self.debug:
+            #     print("Potential match:")
+            #     print(pm)
             match_set, needed_disambig = self.create_match_set(pm, combinations)
 
-            if self.debug:
-                print("Match set:")
-                print(match_set)
+            # if self.debug:
+            #     print("Match set:")
+            #     print(match_set)
 
             if match_set:
 
@@ -387,8 +414,6 @@ class NewHimesisMatcher(object):
 
     #@Profiler2
     def match_nodes(self, graph_node, patt_node):
-        # print("Match nodes: graph_node " + str(graph_node))
-        # print("Match nodes: patt_node " + str(patt_node))
 
         targetMM = self.pattern_mms[patt_node]
 
@@ -412,41 +437,11 @@ class NewHimesisMatcher(object):
             # if debug:
             #    print("Superclasses: " + str(superclasses_dict))
 
-
-
-
-
             # print("Superclasses: " + str(superclasses_dict))
 
             if sourceMM not in superclasses_dict or not superclasses_dict[sourceMM] or targetMM not in \
                     superclasses_dict[sourceMM]:
                 return False
-
-        # print("Source MM: " + sourceMM)
-        # print("Target MM: " + targetMM)
-
-        # graph_attrib = graph.vs[graph_node]["attr1"]
-        #
-        # try:
-        #     pattern_attrib = pattern.vs[patt_node]["attr1"]
-        # except KeyError:
-        #     pattern_attrib = pattern.vs[patt_node]["MT_pre__attr1"]
-        #
-        #
-        # #return graph.vs[graph_node]["attr1"]
-        #
-        # if graph_attrib == pattern_attrib:
-        #     #print(graph_attrib)
-        #     #print(pattern_attrib)
-        #     return True
-        #
-        # if "return True" in pattern_attrib:
-        #     return True
-        #
-        # if graph_attrib in pattern_attrib:
-        #     #print(graph_attrib)
-        #     #print(pattern_attrib)
-        #     return True
 
         are_feasible = self.are_semantically_feasible(graph_node, patt_node)
         if self.debug:
@@ -475,42 +470,44 @@ class NewHimesisMatcher(object):
         # print("Patt node: " + str(patt_node_num))
         # print("Patt constant: " + str(self.patt_eqs_constant))
 
-        # src_equations = []
-        # if src_node_num in self.src_eqs_constant:
-        #     src_equations = self.src_eqs_constant[src_node_num]
-        #
-        # if patt_node_num in self.patt_eqs_constant:
-        #     patt_equations = self.patt_eqs_constant[patt_node_num]
-        #
-        #     # print("Source Eq: " + str(src_equation))
-        #     # print("Pattern Eq: " + str(patt_equations))
-        #
-        #     for patt_eq in patt_equations:
-        #         patt_attr = patt_eq[0]
-        #         patt_value = patt_eq[1]
-        #
-        #         found = False
-        #         for (src_attr, src_value) in src_equations:
-        #             if patt_attr == src_attr:
-        #                 if patt_value == src_value:
-        #                     found = True
-        #                     break
-        #                 else:
-        #                     # print("Equations do not match")
-        #                     return False
-        #
-        #         if found:
-        #             continue
-        #
-        #         try:
-        #             if src_node[patt_attr] != patt_value:
-        #                 # print("Couldn't find value, found " + str(src_node[patt_attr]))
-        #                 # print("Patt eq: " + str(patt_eq))
-        #                 return False
-        #         except KeyError:
-        #             # print("Couldn't find " + patt_attr + " on node " + src_node["mm__"])
-        #             # the attribute does not exist on the node
-        #             return False
+        src_equations = []
+        patt_label = patt_node["MT_label__"]
+
+        if src_node_num in self.src_eqs_constant:
+            src_equations = self.src_eqs_constant[src_node_num]
+
+        if int(patt_label) in self.patt_eqs_constant:
+            patt_equations = self.patt_eqs_constant[int(patt_label)]
+
+            # print("Source Eq: " + str(src_equation))
+            # print("Pattern Eq: " + str(patt_equations))
+
+            for patt_eq in patt_equations:
+                patt_attr = patt_eq[0]
+                patt_value = patt_eq[1]
+
+                found = False
+                for (src_attr, src_value) in src_equations:
+                    if patt_attr == src_attr:
+                        if patt_value == src_value:
+                            found = True
+                            break
+                        else:
+                            # print("Equations do not match")
+                            return False
+
+                if found:
+                    continue
+
+                try:
+                    if src_node[patt_attr] != patt_value:
+                        # print("Couldn't find value, found " + str(src_node[patt_attr]))
+                        # print("Patt eq: " + str(patt_eq))
+                        return False
+                except KeyError:
+                    # print("Couldn't find " + patt_attr + " on node " + src_node["mm__"])
+                    # the attribute does not exist on the node
+                    return False
 
         # Check for attributes value/constraint
         for attr in self.pattern_attribs[patt_node_num]:
@@ -526,7 +523,7 @@ class NewHimesisMatcher(object):
             attr_name = attr[8:]
 
             # methName = self.G2.get_attr_constraint_name(patt_node.index, attr)
-            methName = 'eval_%s%s' % (attr_name, patt_node['MT_label__'])
+            methName = 'eval_%s%s' % (attr_name, patt_label)
             #
             # print("Attr name: " + attr_name)
             # print("Meth name: " + methName)
