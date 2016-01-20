@@ -20,10 +20,8 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
     direct_links = []
     backward_links = []
     match_elements = []
-    isolated_match_elements = []
+    #isolated_match_elements = []
     apply_elements = []
-
-    non_isolated_elements = []
 
     dls = []
     bls = []
@@ -47,7 +45,6 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
             bls.append(i)
         else:
             if mm in ["MatchModel", "ApplyModel", "paired_with"]:
-                non_isolated_elements.append(i)
                 continue
 
             neighbours = attached[i]
@@ -58,9 +55,6 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
             if len(neighbours) == 1:
                 continue
 
-
-            for n in neighbours:
-                non_isolated_elements.append(n)
 
             for n in neighbours[:1]:
                 n_mm = mms[n]
@@ -87,10 +81,6 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
         n1 = neighbours[1]
         direct_links.append((n0, n1, dl))
 
-        non_isolated_elements.append(n0)
-        non_isolated_elements.append(n1)
-        non_isolated_elements.append(dl)
-
     if debug:
         print("Direct links: ")
         for n0, n1, nlink in direct_links:
@@ -103,10 +93,6 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
         n1 = neighbours[1]
         backward_links.append((n0, n1, bl))
 
-        non_isolated_elements.append(n0)
-        non_isolated_elements.append(n1)
-        non_isolated_elements.append(bl)
-
     if debug:
         print("Backward links: ")
         for n0, n1, nlink in backward_links:
@@ -114,10 +100,7 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
 
 
     #find the non-isolated elements
-    for i in range(len(mms)):
-        if i not in non_isolated_elements:
-            isolated_match_elements.append(i)
-
+    isolated_match_elements = [i for i in range(len(attached)) if len(attached[i]) == 1]
 
     for me in match_elements:
         me = me.index
@@ -127,9 +110,10 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
             ae = ae.index
 
             found_link = False
-            for a, b, c in backward_links:
+            for a, b, _ in backward_links:
                 if (a == me and b == ae) or (b == me and a == ae):
                     found_link = True
+                    break
 
             if not found_link:
                 backward_links.append((me, ae, None))
@@ -152,11 +136,11 @@ def match_links(pattern, pattern_data, graph, source_data, verbosity=0, match_al
     #     print("Pattern: " + pattern.name + " vs " + graph.name)
 
     for iso_match_element in pattern_data["isolated_match_elements"]:
-        matched_element = False
         # print("Matching iso element: " + str(iso_match_element))
         for node in range(len(graph.vs)):
             # print("Matching on: " + str(node))
-            nodes_match = self.match_nodes(node, iso_match_element)
+            nodes_match = match_nodes(graph, node, pattern, iso_match_element, verbosity)
+
             if nodes_match:
                 return True
 
