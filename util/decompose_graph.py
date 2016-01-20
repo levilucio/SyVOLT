@@ -146,7 +146,7 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
 
 def match_links(pattern, pattern_data, graph, source_data, verbosity=0, match_all = False):
 
-    # if "Prop1" in pattern.name:
+    # if "HSon2Man" in pattern.name:
     #     verbosity = 2
     #
     #     print("Pattern: " + pattern.name + " vs " + graph.name)
@@ -270,9 +270,9 @@ def match_nodes(graph, graph_node, pattern, patt_node, verbosity = 0):
         # HACK: For slicing, we want to reverse these
         # because of subtyping
 
-        temp = sourceMM
-        sourceMM = targetMM
-        targetMM = temp
+        # temp = sourceMM
+        # sourceMM = targetMM
+        # targetMM = temp
 
         # is this a hack?
         if targetMM == "trace_link" and sourceMM == "backward_link":
