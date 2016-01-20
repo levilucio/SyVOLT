@@ -15,6 +15,7 @@ class Slicer():
 
         self.debug = False
 
+        self.data = {}
         self.direct_links = {}
         self.backward_links = {}
         self.match_elements = {}
@@ -36,7 +37,7 @@ class Slicer():
                 self.match_elements[rule_name] = data["match_elements"]
                 self.isolated_match_elements[rule_name] = data["isolated_match_elements"]
                 self.apply_elements[rule_name] = data["apply_elements"]
-
+                self.data[rule_name] = data
 
                 #if self.debug:
                     #print("Drawing: " + rule.name)
@@ -111,21 +112,10 @@ class Slicer():
                 #     print("Match Elements: " + str(self.match_elements[rule.name]))
                 #     print("Apply Elements: " + str(self.apply_elements[rule.name]))
 
-                #HACK: temp removal of equations
-                eqs = graph["equations"]
-                graph["equations"] = []
-
-                matcher = HimesisMatcher(rule, graph)
-                graph["equations"] = eqs
 
                 graph["superclasses_dict"] = rule["superclasses_dict"]
 
-                #matcher = None
-
-                if match_links(matcher, graph, self.direct_links[graph.name], rule, self.direct_links[rule.name], verbosity=0):
-                    required_rules.append(rule)
-
-                if match_links(matcher, graph, self.backward_links[graph.name], rule, self.backward_links[rule.name], verbosity=0):
+                if match_links(graph, self.data[graph.name], rule, self.data[rule.name], verbosity=0):
                     required_rules.append(rule)
 
                 # for dl in dls:
@@ -230,12 +220,13 @@ class Slicer():
 
         print("Slicing for: " + contract_name)
 
-        data = decompose_graph(contract, verbosity = 0)
+        data = decompose_graph(contract, verbosity = 2)
         self.direct_links[contract_name] = data["direct_links"]
         self.backward_links[contract_name] = data["backward_links"]
         self.match_elements[contract_name] = data["match_elements"]
         self.isolated_match_elements[contract_name] = data["isolated_match_elements"]
         self.apply_elements[contract_name] = data["apply_elements"]
+        self.data[contract_name] = data
 
 
         if self.debug:
@@ -255,7 +246,8 @@ class Slicer():
         print("Required rules for contract " + contract_name + ": " + str(sorted(rr_names)))
 
 
-
+        import sys
+        sys.exit()
 
         #raise Exception("Contract Required Rules")
 

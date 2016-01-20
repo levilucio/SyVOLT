@@ -144,142 +144,129 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
     return data
 
 
-def match_links(matcher, pattern, pattern_dls, graph, graph_dls, verbosity=0, match_all = False):
+def match_links(pattern, pattern_data, graph, source_data, verbosity=0, match_all = False):
 
 
-    # print("\n=====================\nMatching links")
-    # print("Pattern: " + pattern.name + " Graph: " + graph.name)
-    #
-    # for patt0_n, patt1_n, patt_link_n in pattern_dls:
-    #
-    #     print("\nPattern nodes:")
-    #     if patt_link_n:
-    #         link = pattern.vs[patt_link_n]["mm__"]
-    #     else:
-    #         link = "backward_link"
-    #
-    #     print(pattern.vs[patt0_n]["mm__"] + " - " + link + " - " + pattern.vs[patt1_n]["mm__"])
-    #
-    # for graph_n0_n, graph_n1_n, graph_link_n in graph_dls:
-    #
-    #
-    #     print("\nGraph " + graph.name + " nodes:")
-    #     if graph_link_n:
-    #         link = graph.vs[graph_link_n]["mm__"]
-    #     else:
-    #         link = "backward_link"
-    #     print(graph.vs[graph_n0_n]["mm__"] + " - " + link + " - " + graph.vs[graph_n1_n]["mm__"])
+    for iso_match_element in pattern_data["isolated_match_elements"]:
+        matched_element = False
+        # print("Matching iso element: " + str(iso_match_element))
+        for node in range(len(graph.vs)):
+            # print("Matching on: " + str(node))
 
+            nodes_match = match_nodes(node, iso_match_element)
+            if nodes_match:
+                iso_link = (iso_match_element, None, None)
+                node_link = (node, None, None)
+                matched_element = True
+
+                try:
+                    link_matches[iso_link].append(node_link)
+                except KeyError:
+                    link_matches[iso_link] = [node_link]
+
+        if not matched_element:
+            return
     # copy these links, as we might need to remove some
-    graph_dls = deepcopy(graph_dls)
+    links = [
+        [pattern_data["direct_links"], source_data["direct_links"]],
+        [pattern_data["backward_links"], source_data["backward_links"]],
+    ]
 
-    for patt0_n, patt1_n, patt_link_n in pattern_dls:
+    for patt_links, source_links in links:
 
-        if verbosity > 1:
-            print("\nChecking Pattern " + pattern.name + " nodes:")
-            print_link(pattern, patt0_n, patt1_n, patt_link_n)
-
-
-        found_match = False
-
-        if verbosity > 1:
-            print("\n===================\nGraph " + graph.name + " nodes:")
-            for graph_n0_n, graph_n1_n, graph_link_n in graph_dls:
-                print_link(graph, graph_n0_n, graph_n1_n, graph_link_n)
-            print("\n===================\nGraph " + graph.name + " nodes:")
-
-        graph_links = graph_dls
-        for graph_n0_n, graph_n1_n, graph_link_n in graph_links:
+        for patt0_n, patt1_n, patt_link_n in patt_links:
 
             if verbosity > 1:
-                print("\nChecking Graph " + graph.name + " nodes:")
-                print_link(graph, graph_n0_n, graph_n1_n, graph_link_n)
+                print("\nChecking Pattern " + pattern.name + " nodes:")
+                print_link(pattern, patt0_n, patt1_n, patt_link_n)
 
 
-            nodes_match_1 = match_nodes(matcher, graph, graph_n0_n, pattern, patt0_n)
+            if verbosity > 1:
+                print("\n===================\nGraph " + graph.name + " nodes:")
+                for graph_n0_n, graph_n1_n, graph_link_n in graph_dls:
+                    print_link(graph, graph_n0_n, graph_n1_n, graph_link_n)
+                print("\n===================\nGraph " + graph.name + " nodes:")
 
-            nodes_match_2 = match_nodes(matcher, graph, graph_n1_n, pattern, patt1_n)
-
-            nodes_match_3 = match_nodes(matcher, graph, graph_n1_n, pattern, patt0_n)
-
-            nodes_match_4 = match_nodes(matcher, graph, graph_n0_n, pattern, patt1_n)
-
-
-            nodes_match = (nodes_match_1 and nodes_match_2) or (nodes_match_3 and nodes_match_4)
-
-            #if nodes_match:
-            #    print("\nNodes found!")
-            # if not nodes_match:
-            #     print("Failure matching on " + pc.vs[pc_n0_n]["mm__"] + " vs " + contract.vs[n0_n]["mm__"])
-
-            # if not nodes_match:
-            #     print("Failure matching on " + pc.vs[pc_n1_n]["mm__"] + " vs " + contract.vs[n1_n]["mm__"])
-
-            if patt_link_n and graph_link_n:
-                nodes_match = nodes_match and match_nodes(matcher, graph, graph_link_n, pattern, patt_link_n)
-
-
-            if nodes_match:
-                found_match = True
-
+            for graph_n0_n, graph_n1_n, graph_link_n in source_links:
 
                 if verbosity > 1:
-                    print("\nFound the pattern link: ")
-                    print_link(pattern, patt0_n, patt1_n, patt_link_n)
+                    print("\nChecking Graph " + graph.name + " nodes:")
+                    print_link(graph, graph_n0_n, graph_n1_n, graph_link_n)
 
-                if not match_all:
+
+                links_match = match_nodes(graph, graph_link_n, pattern, patt_link_n)
+
+                if not links_match:
+                    continue
+
+                nodes_match_1 = match_nodes(graph, graph_n0_n, pattern, patt0_n)
+
+                nodes_match_2 = match_nodes(graph, graph_n1_n, pattern, patt1_n)
+
+                nodes_match_3 = match_nodes(graph, graph_n1_n, pattern, patt0_n)
+
+                nodes_match_4 = match_nodes(graph, graph_n0_n, pattern, patt1_n)
+
+
+                nodes_match = (nodes_match_1 and nodes_match_2) or (nodes_match_3 and nodes_match_4)
+
+                #if nodes_match:
+                #    print("\nNodes found!")
+                # if not nodes_match:
+                #     print("Failure matching on " + pc.vs[pc_n0_n]["mm__"] + " vs " + contract.vs[n0_n]["mm__"])
+
+                # if not nodes_match:
+                #     print("Failure matching on " + pc.vs[pc_n1_n]["mm__"] + " vs " + contract.vs[n1_n]["mm__"])
+
+                if nodes_match:
+                    if verbosity > 1:
+                        print("\nFound the pattern link: ")
+                        print_link(pattern, patt0_n, patt1_n, patt_link_n)
+
                     return True
 
-                #need to check the correct number of links
-                else:
-                    graph_links.remove((graph_n0_n, graph_n1_n, graph_link_n))
-                    break
+                    #pc_direct_links.remove([pc_n0_n, pc_n1_n, pc_link_n])
+                    #break
+                # else:
+                #     if verbosity > 1:
+                #         print("\nNot match on:")
+                #         print(graph.vs[graph_n0_n]["mm__"])
+                #         print(graph.vs[graph_n1_n]["mm__"])
+                #
+                #         if graph_link_n:
+                #             print(graph.vs[graph_link_n]["mm__"])
+                #         print()
 
-
-
-        if not found_match and match_all:
-
-            if verbosity > 1:
-                print("Could not find pattern link: ")
-                print_link(pattern, patt0_n, patt1_n, patt_link_n)
-            return False
-
-                #pc_direct_links.remove([pc_n0_n, pc_n1_n, pc_link_n])
-                #break
-            # else:
+            # if not found_match:
             #     if verbosity > 1:
-            #         print("\nNot match on:")
-            #         print(graph.vs[graph_n0_n]["mm__"])
-            #         print(graph.vs[graph_n1_n]["mm__"])
-            #
-            #         if graph_link_n:
-            #             print(graph.vs[graph_link_n]["mm__"])
+            #         print("No direct link matches found")
+            #         print("Couldn't find:")
+            #         print(pattern.vs[patt0_n]["mm__"])
+            #         print(pattern.vs[patt1_n]["mm__"])
+            #         if patt_link_n:
+            #             print(pattern.vs[patt_link_n]["mm__"])
             #         print()
+            #     return False
 
-        # if not found_match:
-        #     if verbosity > 1:
-        #         print("No direct link matches found")
-        #         print("Couldn't find:")
-        #         print(pattern.vs[patt0_n]["mm__"])
-        #         print(pattern.vs[patt1_n]["mm__"])
-        #         if patt_link_n:
-        #             print(pattern.vs[patt_link_n]["mm__"])
-        #         print()
-        #     return False
-
-    #return True if all are found successfully
-    #return False if we don't need all, and none were found
-    return match_all
+    return False
 
 
-def match_nodes(matcher, graph, graph_node, pattern, patt_node, debug = False):
+def match_nodes(graph, graph_node, pattern, patt_node, debug = False):
 
     #print("Match nodes: graph_node " + str(graph_node))
     #print("Match nodes: patt_node " + str(patt_node))
-    sourceMM = graph.vs[graph_node]["mm__"].replace("MT_pre__", "")
-    targetMM = pattern.vs[patt_node]["mm__"].replace("MT_pre__", "")
 
 
+    if graph_node is not None:
+        sourceMM = graph.vs[graph_node]["mm__"].replace("MT_pre__", "")
+    else:
+        sourceMM = "backward_link"
+
+
+    if patt_node is not None:
+        targetMM = pattern.vs[patt_node]["mm__"].replace("MT_pre__", "")
+    else:
+        targetMM = "backward_link"
 
     if sourceMM != targetMM:
 
@@ -356,6 +343,9 @@ def are_semantically_feasible(graph, src_node_num, pattern, patt_node_num):
     # This feasibility check looks at the data stored in the pair of candidates.
     # It verifies that all attribute constraints are satisfied.
     # =======================================================================
+
+    if not src_node_num or not patt_node_num:
+        return True
 
     src_node = graph.vs[src_node_num]
     patt_node = pattern.vs[patt_node_num]
