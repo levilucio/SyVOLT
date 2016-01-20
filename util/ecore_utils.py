@@ -6,7 +6,7 @@ Created on 2015-02-16
 
 from xml.dom import minidom
 from copy import deepcopy
-
+from core.himesis_utils import graph_to_dot
 class EcoreUtils(object):
     '''
     a set of utils to deal with ecore files
@@ -318,11 +318,11 @@ class EcoreUtils(object):
         '''  
         
         missingContainmentLinks = {}
-        
+
         for node in range(len(pathCond.vs)):
             targetClassName = pathCond.vs[node]["mm__"]
+
             if targetClassName in self.mmClassContained.keys() and targetClassName not in missingContainmentLinks.keys():
-                
                 # get all the containment relations into produced call instances, if an apply class
                 # of this type without containment links has not been found yet. Only one apply class
                 # of a given type without containment links is kept. 
@@ -336,8 +336,22 @@ class EcoreUtils(object):
 
                 # check if any containment relation into the class already exists
                 if set(inputRelNames).intersection(set(self.containmentRels)) == set():
-                    missingContainmentLinks[targetClassName] = self.mmClassContained[targetClassName]                        
-                 
+
+                    # get the containment links already built in this pathcond
+                    builtContainmentLinks = self.getBuiltContainmentLinks(pathCond)
+
+                    for attr1 in self.mmClassContained[targetClassName]:
+
+                        #if this link is built already in this pathCond, do nothing
+                        if targetClassName in builtContainmentLinks and attr1 in builtContainmentLinks[targetClassName]:
+                            pass
+                        else:
+                            #mark this as a missing containment link
+                            try:
+                                missingContainmentLinks[targetClassName].append(attr1)
+                            except KeyError:
+                                missingContainmentLinks[targetClassName] = [attr1]
+
         return missingContainmentLinks
             
     
