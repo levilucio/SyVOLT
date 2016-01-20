@@ -146,26 +146,20 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
 
 def match_links(pattern, pattern_data, graph, source_data, verbosity=0, match_all = False):
 
+    # if "Prop1" in pattern.name:
+    #     verbosity = 2
+    #
+    #     print("Pattern: " + pattern.name + " vs " + graph.name)
 
     for iso_match_element in pattern_data["isolated_match_elements"]:
         matched_element = False
         # print("Matching iso element: " + str(iso_match_element))
         for node in range(len(graph.vs)):
             # print("Matching on: " + str(node))
-
-            nodes_match = match_nodes(node, iso_match_element)
+            nodes_match = self.match_nodes(node, iso_match_element)
             if nodes_match:
-                iso_link = (iso_match_element, None, None)
-                node_link = (node, None, None)
-                matched_element = True
+                return True
 
-                try:
-                    link_matches[iso_link].append(node_link)
-                except KeyError:
-                    link_matches[iso_link] = [node_link]
-
-        if not matched_element:
-            return
     # copy these links, as we might need to remove some
     links = [
         [pattern_data["direct_links"], source_data["direct_links"]],
@@ -176,36 +170,38 @@ def match_links(pattern, pattern_data, graph, source_data, verbosity=0, match_al
 
         for patt0_n, patt1_n, patt_link_n in patt_links:
 
-            if verbosity > 1:
-                print("\nChecking Pattern " + pattern.name + " nodes:")
-                print_link(pattern, patt0_n, patt1_n, patt_link_n)
 
-
-            if verbosity > 1:
-                print("\n===================\nGraph " + graph.name + " nodes:")
-                for graph_n0_n, graph_n1_n, graph_link_n in graph_dls:
-                    print_link(graph, graph_n0_n, graph_n1_n, graph_link_n)
-                print("\n===================\nGraph " + graph.name + " nodes:")
+            # if verbosity > 1:
+            #     print("\n===================\nGraph " + graph.name + " nodes:")
+            #     for graph_n0_n, graph_n1_n, graph_link_n in source_links:
+            #         print_link(graph, graph_n0_n, graph_n1_n, graph_link_n)
+            #     print("\n===================\nGraph " + graph.name + " nodes:")
 
             for graph_n0_n, graph_n1_n, graph_link_n in source_links:
-
-                if verbosity > 1:
-                    print("\nChecking Graph " + graph.name + " nodes:")
-                    print_link(graph, graph_n0_n, graph_n1_n, graph_link_n)
 
 
                 links_match = match_nodes(graph, graph_link_n, pattern, patt_link_n)
 
                 if not links_match:
+                    #if verbosity > 1:
+                    #    print("Links don't match")
                     continue
 
-                nodes_match_1 = match_nodes(graph, graph_n0_n, pattern, patt0_n)
+                if verbosity > 1:
+                    print("\nChecking Pattern " + pattern.name + " nodes:")
+                    print_link(pattern, patt0_n, patt1_n, patt_link_n)
 
-                nodes_match_2 = match_nodes(graph, graph_n1_n, pattern, patt1_n)
+                if verbosity > 1:
+                    # print("\nChecking Graph " + graph.name + " nodes:")
+                    print_link(graph, graph_n0_n, graph_n1_n, graph_link_n)
 
-                nodes_match_3 = match_nodes(graph, graph_n1_n, pattern, patt0_n)
+                nodes_match_1 = match_nodes(graph, graph_n0_n, pattern, patt0_n, verbosity)
 
-                nodes_match_4 = match_nodes(graph, graph_n0_n, pattern, patt1_n)
+                nodes_match_2 = match_nodes(graph, graph_n1_n, pattern, patt1_n, verbosity)
+
+                nodes_match_3 = match_nodes(graph, graph_n1_n, pattern, patt0_n, verbosity)
+
+                nodes_match_4 = match_nodes(graph, graph_n0_n, pattern, patt1_n, verbosity)
 
 
                 nodes_match = (nodes_match_1 and nodes_match_2) or (nodes_match_3 and nodes_match_4)
@@ -251,7 +247,7 @@ def match_links(pattern, pattern_data, graph, source_data, verbosity=0, match_al
     return False
 
 
-def match_nodes(graph, graph_node, pattern, patt_node, debug = False):
+def match_nodes(graph, graph_node, pattern, patt_node, verbosity = 0):
 
     #print("Match nodes: graph_node " + str(graph_node))
     #print("Match nodes: patt_node " + str(patt_node))
@@ -268,12 +264,15 @@ def match_nodes(graph, graph_node, pattern, patt_node, debug = False):
     else:
         targetMM = "backward_link"
 
+
+
     if sourceMM != targetMM:
+        # HACK: For slicing, we want to reverse these
+        # because of subtyping
 
-        # if debug:
-        #     print("Source: " + sourceMM)
-        #     print("Target: " + targetMM)
-
+        temp = sourceMM
+        sourceMM = targetMM
+        targetMM = temp
 
         # is this a hack?
         if targetMM == "trace_link" and sourceMM == "backward_link":
@@ -285,12 +284,16 @@ def match_nodes(graph, graph_node, pattern, patt_node, debug = False):
         #    print("Superclasses: " + str(superclasses_dict))
 
 
-
+        if verbosity > 1:
+            print("Source MM: " + sourceMM + " vs Target MM: " + targetMM)
 
 
         #print("Superclasses: " + str(superclasses_dict))
 
         if sourceMM not in superclasses_dict or not superclasses_dict[sourceMM] or targetMM not in superclasses_dict[sourceMM]:
+            if verbosity > 1:
+                print("Not a supertype")
+                print(superclasses_dict[sourceMM])
             return False
 
     # print("Source MM: " + sourceMM)
@@ -320,12 +323,23 @@ def match_nodes(graph, graph_node, pattern, patt_node, debug = False):
     #     return True
 
     are_feasible = are_semantically_feasible(graph, graph_node, pattern, patt_node)
-    #print("Are feasible: " + str(are_feasible))
+    if verbosity > 1:
+        print("Are feasible: " + str(are_feasible))
+    #     print("Source: " + sourceMM + " vs " + "Target: " + targetMM)
+    #     print("Graph: " + graph.vs[graph_node]["attr1"])
+    #     print("Patt: " + pattern.vs[patt_node]["MT_pre__attr1"])
+    #
     return are_feasible
 
+
 def print_link(graph, n0, n1, nlink):
-    if nlink:
+    if nlink is not None:
         link = graph.vs[nlink]["mm__"].replace("MT_pre__", "")
+        try:
+            link += " (" + str(graph.vs[nlink]["MT_pre__attr1"]) + ") "
+            link = link.replace("\n", "").replace("return True", "").replace("return False", "")[-40:]
+        except KeyError:
+            link += " (" + str(graph.vs[nlink]["attr1"]) + ") "
     else:
         link = "backward_link"
     print(graph.vs[n0]["mm__"].replace("MT_pre__", "") + " - " + link + " - " + graph.vs[n1]["mm__"].replace("MT_pre__", ""))
