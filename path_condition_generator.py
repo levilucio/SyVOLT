@@ -26,6 +26,8 @@ import time
 
 from copy import deepcopy
 
+from core.himesis_utils import build_traceability
+
 #from solver.prolog_attribute_equation_evaluator import PrologAttributeEquationEvaluator
 from solver.simple_attribute_equation_evaluator import SimpleAttributeEquationEvaluator
 
@@ -197,24 +199,11 @@ class PathConditionGenerator(object):
         if self.verbosity >= 1:
             print("Start building traceability for rules")
         # transformation to built traceability for rules
-        from property_prover_rules.traceability_construction.Himesis.HBuildTraceabilityForRuleLHS import \
-            HBuildTraceabilityForRuleLHS
-        from property_prover_rules.traceability_construction.Himesis.HBuildTraceabilityForRuleRHS import \
-            HBuildTraceabilityForRuleRHS
 
-        build_traceability_for_rule = ARule(clean_graph(HBuildTraceabilityForRuleLHS()), clean_graph(HBuildTraceabilityForRuleRHS()))
 
         for layerIndex in range(0, len(self.transformation)):
             for ruleIndex in range(0, len(self.transformation[layerIndex])):
-                while True:
-                    p = Packet()
-                    p.graph = self.transformation[layerIndex][ruleIndex]
-                    p = build_traceability_for_rule.packet_in(p)
-                    if not build_traceability_for_rule.is_success:
-                        break
-
-
-                self.transformation[layerIndex][ruleIndex] = clean_graph(p.graph)
+                self.transformation[layerIndex][ruleIndex] = build_traceability(self.transformation[layerIndex][ruleIndex])
 
 #         print("----------------------------")
 #         print("Rule Combinators: ")
