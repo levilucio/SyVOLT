@@ -32,6 +32,10 @@
           </attributeValue>
         </attribute>
       </class>
+      <association associationName="persons" source="//@hasProperty.0/@apply/@class.1" target="//@hasProperty.0/@apply/@class.0"/>
+      <association associationName="persons" source="//@hasProperty.0/@apply/@class.1" target="//@hasProperty.0/@apply/@class.2"/>
     </apply>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.0" sourceClass="//@hasProperty.0/@match.0/@class.0"/>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.2" sourceClass="//@hasProperty.0/@match.0/@class.2"/>
   </hasProperty>
 </syvolt:TransformationModel>

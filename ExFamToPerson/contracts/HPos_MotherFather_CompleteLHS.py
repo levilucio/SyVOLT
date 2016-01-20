@@ -192,8 +192,64 @@ return attr_value == "fathers"
         
         
         # Nodes that represent the apply associations of the property.
+        # apply association Community--persons-->Man node
+                self.add_node()
+                self.vs[8]["MT_subtypeMatching__"] = False
+                self.vs[8]["MT_pre__attr1"] = """
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by: attr_value.
+# You can access any attribute x of this node by: this['x'].
+# If the constraint relies on attribute values from other nodes,
+# use the LHS/NAC constraint instead.
+# The given constraint must evaluate to a boolean expression.
+#===============================================================================
+
+return attr_value == "persons"
+"""
+                self.vs[8]["MT_label__"] = """9"""
+                self.vs[8]["MT_subtypes__"] = []
+                self.vs[8]["MT_dirty__"] = False
+                self.vs[8]["mm__"] = """MT_pre__directLink_T"""
+                self.vs[8]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc8')
+        # apply association Community--persons-->Woman node
+                self.add_node()
+                self.vs[9]["MT_subtypeMatching__"] = False
+                self.vs[9]["MT_pre__attr1"] = """
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by: attr_value.
+# You can access any attribute x of this node by: this['x'].
+# If the constraint relies on attribute values from other nodes,
+# use the LHS/NAC constraint instead.
+# The given constraint must evaluate to a boolean expression.
+#===============================================================================
+
+return attr_value == "persons"
+"""
+                self.vs[9]["MT_label__"] = """10"""
+                self.vs[9]["MT_subtypes__"] = []
+                self.vs[9]["MT_dirty__"] = False
+                self.vs[9]["mm__"] = """MT_pre__directLink_T"""
+                self.vs[9]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc9')
         
                 # Nodes that represent trace relations
+                # backward association Member---->Man node
+                self.add_node()
+                self.vs[10]["MT_subtypeMatching__"] = False
+                self.vs[10]["MT_label__"] = """11"""
+                self.vs[10]["MT_subtypes__"] = []
+                self.vs[10]["MT_dirty__"] = False
+                self.vs[10]["mm__"] = """MT_pre__trace_link"""
+                self.vs[10]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink10')
+                # backward association Member---->Woman node
+                self.add_node()
+                self.vs[11]["MT_subtypeMatching__"] = False
+                self.vs[11]["MT_label__"] = """12"""
+                self.vs[11]["MT_subtypes__"] = []
+                self.vs[11]["MT_dirty__"] = False
+                self.vs[11]["mm__"] = """MT_pre__trace_link"""
+                self.vs[11]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink11')
 
 
         
@@ -203,6 +259,14 @@ return attr_value == "fathers"
         
                 # Add the edges
                 self.add_edges([
+                (3,10), # apply_class Man() -> backward_association
+                (10,0), #  backward_association -> apply_class Member()
+                (5,11), # apply_class Woman() -> backward_association
+                (11,2), #  backward_association -> apply_class Member()
+                (4,8), # apply_class Community() -> association persons
+                (8,3), # association persons  -> apply_class Man()
+                (4,9), # apply_class Community() -> association persons
+                (9,5), # association persons  -> apply_class Woman()
                 (1,6), # match_class Family() -> association mothers
                 (6,2), # association mothers  -> match_class Member()
                 (1,7), # match_class Family() -> association fathers
@@ -322,6 +386,34 @@ return attr_value == "fathers"
 
                 return True
         
+        def eval_attr19(self, attr_value, this):
+
+                        #===============================================================================
+                        # This code is executed when evaluating if a node shall be matched by this rule.
+                        # You can access the value of the current node's attribute value by: attr_value.
+                        # You can access any attribute x of this node by: this['x'].
+                        # If the constraint relies on attribute values from other nodes,
+                        # use the LHS/NAC constraint instead.
+                        # The given constraint must evaluate to a boolean expression.
+                        #===============================================================================
+
+                return attr_value == "persons"
+
+
+        def eval_attr110(self, attr_value, this):
+
+                        #===============================================================================
+                        # This code is executed when evaluating if a node shall be matched by this rule.
+                        # You can access the value of the current node's attribute value by: attr_value.
+                        # You can access any attribute x of this node by: this['x'].
+                        # If the constraint relies on attribute values from other nodes,
+                        # use the LHS/NAC constraint instead.
+                        # The given constraint must evaluate to a boolean expression.
+                        #===============================================================================
+
+                return attr_value == "persons"
+
+
         
         def constraint(self, PreNode, graph):
                 """
