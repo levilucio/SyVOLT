@@ -91,10 +91,10 @@ class NewHimesisMatcher(object):
         # print(self.pattern_graph.name + " vs " + self.source_graph.name)
 
 
-        try:
-            mms = self.source_graph.vs["mm__"]
-        except KeyError:
-            mms = []
+        # try:
+        #     mms = self.source_graph.vs["mm__"]
+        # except KeyError:
+        #     mms = []
         #
         # try:
         #     attr1 = self.source_graph.vs["attr1"]
@@ -227,15 +227,14 @@ class NewHimesisMatcher(object):
                         continue
 
                     nodes_match_1 = self.match_nodes(graph_n0_n, patt0_n)
-
-                    nodes_match_2 = self.match_nodes(graph_n1_n, patt1_n)
-
                     nodes_match_3 = self.match_nodes(graph_n1_n, patt0_n)
 
+                    #if the first node doesn't match, skip the other
+                    if not nodes_match_1 and not nodes_match_3:
+                        continue
+
+                    nodes_match_2 = self.match_nodes(graph_n1_n, patt1_n)
                     nodes_match_4 = self.match_nodes(graph_n0_n, patt1_n)
-
-
-
 
                     nodes_match = ((nodes_match_1 and nodes_match_2) or (nodes_match_3 and nodes_match_4)) and nodes_match_link
 
