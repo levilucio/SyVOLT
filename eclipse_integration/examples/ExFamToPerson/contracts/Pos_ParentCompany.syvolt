@@ -6,7 +6,7 @@
       <class xsi:type="syvolt:AnyMatchClass" className="Parent"/>
       <class xsi:type="syvolt:AnyMatchClass" className="Company"/>
       <association xsi:type="syvolt:PositiveMatchAssociation" associationName="livesIn" source="//@hasProperty.0/@match.0/@class.1" target="//@hasProperty.0/@match.0/@class.0"/>
-      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="worksIn" source="//@hasProperty.0/@match.0/@class.1" target="//@hasProperty.0/@match.0/@class.2"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="employees" source="//@hasProperty.0/@match.0/@class.2" target="//@hasProperty.0/@match.0/@class.1"/>
     </match>
     <apply>
       <class className="TownHall"/>

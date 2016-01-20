@@ -5,8 +5,8 @@
       <class xsi:type="syvolt:AnyMatchClass" className="Member"/>
       <class xsi:type="syvolt:AnyMatchClass" className="Family"/>
       <class xsi:type="syvolt:AnyMatchClass" className="Member"/>
-      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="daughter" source="//@hasProperty.0/@match.0/@class.1" target="//@hasProperty.0/@match.0/@class.0"/>
-      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="mother" source="//@hasProperty.0/@match.0/@class.1" target="//@hasProperty.0/@match.0/@class.2"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="daughters" source="//@hasProperty.0/@match.0/@class.1" target="//@hasProperty.0/@match.0/@class.0"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="mothers" source="//@hasProperty.0/@match.0/@class.1" target="//@hasProperty.0/@match.0/@class.2"/>
     </match>
     <apply>
       <class className="Man"/>

@@ -149,7 +149,7 @@ return attr_value == "livesIn"
                 self.vs[5]["MT_dirty__"] = False
                 self.vs[5]["mm__"] = """MT_pre__directLink_S"""
                 self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc5')
-        # match association Parent--worksIn-->Company node
+        # match association Company--employees-->Parent node
                 self.add_node()
                 self.vs[6]["MT_subtypeMatching__"] = False
                 self.vs[6]["MT_pre__attr1"] = """
@@ -162,7 +162,7 @@ return attr_value == "livesIn"
 # The given constraint must evaluate to a boolean expression.
 #===============================================================================
 
-return attr_value == "worksIn"
+return attr_value == "employees"
 """
                 self.vs[6]["MT_label__"] = """7"""
                 self.vs[6]["MT_subtypes__"] = []
@@ -227,8 +227,8 @@ return attr_value == "workers"
                 (7,4), # association workers  -> apply_class Person()
                 (1,5), # match_class Parent() -> association livesIn
                 (5,0), # association livesIn  -> match_class City()
-                (1,6), # match_class Parent() -> association worksIn
-                (6,2) # association worksIn  -> match_class Company()
+                (2,6), # match_class Company() -> association employees
+                (6,1) # association employees  -> match_class Parent()
                 ])
         
                 # Add the attribute equations
@@ -301,7 +301,7 @@ return attr_value == "workers"
                         # The given constraint must evaluate to a boolean expression.
                         #===============================================================================
 
-                return attr_value == "worksIn"
+                return attr_value == "employees"
 
 
         

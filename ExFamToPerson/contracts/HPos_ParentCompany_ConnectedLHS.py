@@ -106,7 +106,7 @@ return attr_value == "livesIn"
                 self.vs[3]["MT_dirty__"] = False
                 self.vs[3]["mm__"] = """MT_pre__directLink_S"""
                 self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc3')
-        # match association Parent--worksIn-->Company node
+        # match association Company--employees-->Parent node
                 self.add_node()
                 self.vs[4]["MT_pre__attr1"] = """
 #===============================================================================
@@ -118,7 +118,7 @@ return attr_value == "livesIn"
 # The given constraint must evaluate to a boolean expression.
 #===============================================================================
 
-return attr_value == "worksIn"
+return attr_value == "employees"
 """
 
                 self.vs[4]["MT_label__"] = """5"""
@@ -131,8 +131,8 @@ return attr_value == "worksIn"
                 self.add_edges([
                 (1,3), # match_class Parent() -> association livesIn
                 (3,0), # association livesIn  -> match_class City()
-                (1,4), # match_class Parent() -> association worksIn
-                (4,2) # association worksIn  -> match_class Company()
+                (2,4), # match_class Company() -> association employees
+                (4,1) # association employees  -> match_class Parent()
         ])
         
                 # Add the attribute equations
@@ -203,7 +203,7 @@ return attr_value == "worksIn"
                 # The given constraint must evaluate to a boolean expression.
                 #===============================================================================
 
-                return attr_value == "worksIn"
+                return attr_value == "employees"
 
 
         

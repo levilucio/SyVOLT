@@ -109,7 +109,7 @@ return True
         
                 
         # Nodes that represent the match associations of the property.
-        # match association Family--daughter-->Member node
+        # match association Family--daughters-->Member node
                 self.add_node()
                 self.vs[4]["MT_subtypeMatching__"] = False
                 self.vs[4]["MT_pre__attr1"] = """
@@ -122,14 +122,14 @@ return True
 # The given constraint must evaluate to a boolean expression.
 #===============================================================================
 
-return attr_value == "daughter"
+return attr_value == "daughters"
 """
                 self.vs[4]["MT_label__"] = """5"""
                 self.vs[4]["MT_subtypes__"] = []
                 self.vs[4]["MT_dirty__"] = False
                 self.vs[4]["mm__"] = """MT_pre__directLink_S"""
                 self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc4')
-        # match association Family--mother-->Member node
+        # match association Family--mothers-->Member node
                 self.add_node()
                 self.vs[5]["MT_subtypeMatching__"] = False
                 self.vs[5]["MT_pre__attr1"] = """
@@ -142,7 +142,7 @@ return attr_value == "daughter"
 # The given constraint must evaluate to a boolean expression.
 #===============================================================================
 
-return attr_value == "mother"
+return attr_value == "mothers"
 """
                 self.vs[5]["MT_label__"] = """6"""
                 self.vs[5]["MT_subtypes__"] = []
@@ -173,10 +173,10 @@ return attr_value == "mother"
                 self.add_edges([
                 (3,6), # apply_class Man() -> backward_association
                 (6,1), #  backward_association -> apply_class Family()
-                (1,4), # match_class Family() -> association daughter
-                (4,0), # association daughter  -> match_class Member()
-                (1,5), # match_class Family() -> association mother
-                (5,2) # association mother  -> match_class Member()
+                (1,4), # match_class Family() -> association daughters
+                (4,0), # association daughters  -> match_class Member()
+                (1,5), # match_class Family() -> association mothers
+                (5,2) # association mothers  -> match_class Member()
                 ])
         
                 # Add the attribute equations
@@ -235,7 +235,7 @@ return attr_value == "mother"
                         # The given constraint must evaluate to a boolean expression.
                         #===============================================================================
 
-                return attr_value == "daughter"
+                return attr_value == "daughters"
 
 
         def eval_attr16(self, attr_value, this):
@@ -249,7 +249,7 @@ return attr_value == "mother"
                         # The given constraint must evaluate to a boolean expression.
                         #===============================================================================
 
-                return attr_value == "mother"
+                return attr_value == "mothers"
 
 
         

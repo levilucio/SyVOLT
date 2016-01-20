@@ -51,7 +51,7 @@
     <styles xmi:type="notation:LineStyle" xmi:id="_G0-0c6OzEeW3fdyWju5yew"/>
     <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_G0-0dKOzEeW3fdyWju5yew"/>
     <element xmi:type="syvolt:AtomicContract" href="Neg_SchoolOrdFac.syvolt#//@hasProperty.0"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_G0-0daOzEeW3fdyWju5yew" x="58" y="122" width="195" height="227"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_G0-0daOzEeW3fdyWju5yew" x="120" y="72" width="195" height="227"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_5K-ikaOyEeW3fdyWju5yew"/>
   <element xmi:type="syvolt:TransformationModel" href="Neg_SchoolOrdFac.syvolt#/"/>

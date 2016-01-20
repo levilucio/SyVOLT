@@ -225,7 +225,7 @@ return True
         
                 
         # Nodes that represent the match associations of the property.
-        # match association Family--mother-->Member node
+        # match association Family--mothers-->Member node
                 self.add_node()
                 self.vs[10]["MT_subtypeMatching__"] = False
                 self.vs[10]["MT_pre__attr1"] = """
@@ -238,14 +238,14 @@ return True
 # The given constraint must evaluate to a boolean expression.
 #===============================================================================
 
-return attr_value == "mother"
+return attr_value == "mothers"
 """
                 self.vs[10]["MT_label__"] = """11"""
                 self.vs[10]["MT_subtypes__"] = []
                 self.vs[10]["MT_dirty__"] = False
                 self.vs[10]["mm__"] = """MT_pre__directLink_S"""
                 self.vs[10]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc10')
-        # match association Family--daughter-->Member node
+        # match association Family--daughters-->Member node
                 self.add_node()
                 self.vs[11]["MT_subtypeMatching__"] = False
                 self.vs[11]["MT_pre__attr1"] = """
@@ -258,14 +258,14 @@ return attr_value == "mother"
 # The given constraint must evaluate to a boolean expression.
 #===============================================================================
 
-return attr_value == "daughter"
+return attr_value == "daughters"
 """
                 self.vs[11]["MT_label__"] = """12"""
                 self.vs[11]["MT_subtypes__"] = []
                 self.vs[11]["MT_dirty__"] = False
                 self.vs[11]["mm__"] = """MT_pre__directLink_S"""
                 self.vs[11]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc11')
-        # match association Family--father-->Member node
+        # match association Family--fathers-->Member node
                 self.add_node()
                 self.vs[12]["MT_subtypeMatching__"] = False
                 self.vs[12]["MT_pre__attr1"] = """
@@ -278,14 +278,14 @@ return attr_value == "daughter"
 # The given constraint must evaluate to a boolean expression.
 #===============================================================================
 
-return attr_value == "father"
+return attr_value == "fathers"
 """
                 self.vs[12]["MT_label__"] = """13"""
                 self.vs[12]["MT_subtypes__"] = []
                 self.vs[12]["MT_dirty__"] = False
                 self.vs[12]["mm__"] = """MT_pre__directLink_S"""
                 self.vs[12]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc12')
-        # match association Family--son-->Member node
+        # match association Family--sons-->Member node
                 self.add_node()
                 self.vs[13]["MT_subtypeMatching__"] = False
                 self.vs[13]["MT_pre__attr1"] = """
@@ -298,7 +298,7 @@ return attr_value == "father"
 # The given constraint must evaluate to a boolean expression.
 #===============================================================================
 
-return attr_value == "son"
+return attr_value == "sons"
 """
                 self.vs[13]["MT_label__"] = """14"""
                 self.vs[13]["MT_subtypes__"] = []
@@ -308,7 +308,7 @@ return attr_value == "son"
         
         
         # Nodes that represent the apply associations of the property.
-        # apply association Community--has-->Woman node
+        # apply association Community--persons-->Woman node
                 self.add_node()
                 self.vs[14]["MT_subtypeMatching__"] = False
                 self.vs[14]["MT_pre__attr1"] = """
@@ -321,14 +321,14 @@ return attr_value == "son"
 # The given constraint must evaluate to a boolean expression.
 #===============================================================================
 
-return attr_value == "has"
+return attr_value == "persons"
 """
                 self.vs[14]["MT_label__"] = """15"""
                 self.vs[14]["MT_subtypes__"] = []
                 self.vs[14]["MT_dirty__"] = False
                 self.vs[14]["mm__"] = """MT_pre__directLink_T"""
                 self.vs[14]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc14')
-        # apply association Community--has-->Woman node
+        # apply association Community--persons-->Woman node
                 self.add_node()
                 self.vs[15]["MT_subtypeMatching__"] = False
                 self.vs[15]["MT_pre__attr1"] = """
@@ -341,14 +341,14 @@ return attr_value == "has"
 # The given constraint must evaluate to a boolean expression.
 #===============================================================================
 
-return attr_value == "has"
+return attr_value == "persons"
 """
                 self.vs[15]["MT_label__"] = """16"""
                 self.vs[15]["MT_subtypes__"] = []
                 self.vs[15]["MT_dirty__"] = False
                 self.vs[15]["mm__"] = """MT_pre__directLink_T"""
                 self.vs[15]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc15')
-        # apply association Community--has-->Man node
+        # apply association Community--persons-->Man node
                 self.add_node()
                 self.vs[16]["MT_subtypeMatching__"] = False
                 self.vs[16]["MT_pre__attr1"] = """
@@ -361,14 +361,14 @@ return attr_value == "has"
 # The given constraint must evaluate to a boolean expression.
 #===============================================================================
 
-return attr_value == "has"
+return attr_value == "persons"
 """
                 self.vs[16]["MT_label__"] = """17"""
                 self.vs[16]["MT_subtypes__"] = []
                 self.vs[16]["MT_dirty__"] = False
                 self.vs[16]["mm__"] = """MT_pre__directLink_T"""
                 self.vs[16]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc16')
-        # apply association Community--has-->Man node
+        # apply association Community--persons-->Man node
                 self.add_node()
                 self.vs[17]["MT_subtypeMatching__"] = False
                 self.vs[17]["MT_pre__attr1"] = """
@@ -381,7 +381,7 @@ return attr_value == "has"
 # The given constraint must evaluate to a boolean expression.
 #===============================================================================
 
-return attr_value == "has"
+return attr_value == "persons"
 """
                 self.vs[17]["MT_label__"] = """18"""
                 self.vs[17]["MT_subtypes__"] = []
@@ -439,22 +439,22 @@ return attr_value == "has"
                 (20,2), #  backward_association -> apply_class Member()
                 (8,21), # apply_class Man() -> backward_association
                 (21,4), #  backward_association -> apply_class Member()
-                (9,14), # apply_class Community() -> association has
-                (14,5), # association has  -> apply_class Woman()
-                (9,15), # apply_class Community() -> association has
-                (15,6), # association has  -> apply_class Woman()
-                (9,16), # apply_class Community() -> association has
-                (16,7), # association has  -> apply_class Man()
-                (9,17), # apply_class Community() -> association has
-                (17,8), # association has  -> apply_class Man()
-                (1,10), # match_class Family() -> association mother
-                (10,0), # association mother  -> match_class Member()
-                (1,11), # match_class Family() -> association daughter
-                (11,3), # association daughter  -> match_class Member()
-                (1,12), # match_class Family() -> association father
-                (12,2), # association father  -> match_class Member()
-                (1,13), # match_class Family() -> association son
-                (13,4) # association son  -> match_class Member()
+                (9,14), # apply_class Community() -> association persons
+                (14,5), # association persons  -> apply_class Woman()
+                (9,15), # apply_class Community() -> association persons
+                (15,6), # association persons  -> apply_class Woman()
+                (9,16), # apply_class Community() -> association persons
+                (16,7), # association persons  -> apply_class Man()
+                (9,17), # apply_class Community() -> association persons
+                (17,8), # association persons  -> apply_class Man()
+                (1,10), # match_class Family() -> association mothers
+                (10,0), # association mothers  -> match_class Member()
+                (1,11), # match_class Family() -> association daughters
+                (11,3), # association daughters  -> match_class Member()
+                (1,12), # match_class Family() -> association fathers
+                (12,2), # association fathers  -> match_class Member()
+                (1,13), # match_class Family() -> association sons
+                (13,4) # association sons  -> match_class Member()
                 ])
         
                 # Add the attribute equations
@@ -541,7 +541,7 @@ return attr_value == "has"
                         # The given constraint must evaluate to a boolean expression.
                         #===============================================================================
 
-                return attr_value == "mother"
+                return attr_value == "mothers"
 
 
         def eval_attr112(self, attr_value, this):
@@ -555,7 +555,7 @@ return attr_value == "has"
                         # The given constraint must evaluate to a boolean expression.
                         #===============================================================================
 
-                return attr_value == "daughter"
+                return attr_value == "daughters"
 
 
         def eval_attr113(self, attr_value, this):
@@ -569,7 +569,7 @@ return attr_value == "has"
                         # The given constraint must evaluate to a boolean expression.
                         #===============================================================================
 
-                return attr_value == "father"
+                return attr_value == "fathers"
 
 
         def eval_attr114(self, attr_value, this):
@@ -583,7 +583,7 @@ return attr_value == "has"
                         # The given constraint must evaluate to a boolean expression.
                         #===============================================================================
 
-                return attr_value == "son"
+                return attr_value == "sons"
 
 
         
@@ -663,7 +663,7 @@ return attr_value == "has"
                         # The given constraint must evaluate to a boolean expression.
                         #===============================================================================
 
-                return attr_value == "has"
+                return attr_value == "persons"
 
 
         def eval_attr116(self, attr_value, this):
@@ -677,7 +677,7 @@ return attr_value == "has"
                         # The given constraint must evaluate to a boolean expression.
                         #===============================================================================
 
-                return attr_value == "has"
+                return attr_value == "persons"
 
 
         def eval_attr117(self, attr_value, this):
@@ -691,7 +691,7 @@ return attr_value == "has"
                         # The given constraint must evaluate to a boolean expression.
                         #===============================================================================
 
-                return attr_value == "has"
+                return attr_value == "persons"
 
 
         def eval_attr118(self, attr_value, this):
@@ -705,7 +705,7 @@ return attr_value == "has"
                         # The given constraint must evaluate to a boolean expression.
                         #===============================================================================
 
-                return attr_value == "has"
+                return attr_value == "persons"
 
 
         
