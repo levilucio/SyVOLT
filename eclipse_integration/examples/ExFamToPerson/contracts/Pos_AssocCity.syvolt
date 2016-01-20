@@ -6,15 +6,10 @@
     </match>
     <apply>
       <class className="Committee"/>
-      <class className="TownHall"/>
-      <class className="Community"/>
       <class className="Association"/>
       <association associationName="committee" source="//@hasProperty.0/@apply/@class.1" target="//@hasProperty.0/@apply/@class.0"/>
-      <association associationName="townHalls" source="//@hasProperty.0/@apply/@class.2" target="//@hasProperty.0/@apply/@class.1"/>
-      <association associationName="associations" source="//@hasProperty.0/@apply/@class.2" target="//@hasProperty.0/@apply/@class.3"/>
     </apply>
     <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.0" sourceClass="//@hasProperty.0/@match.0/@class.0"/>
     <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.1" sourceClass="//@hasProperty.0/@match.0/@class.0"/>
-    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.3" sourceClass="//@hasProperty.0/@match.0/@class.0"/>
   </hasProperty>
 </syvolt:TransformationModel>

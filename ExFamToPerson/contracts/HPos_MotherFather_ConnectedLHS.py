@@ -86,9 +86,53 @@ return True
         
         
         # Nodes that represent the edges of the property.
+        # match association Family--mothers-->Member node
+                self.add_node()
+                self.vs[3]["MT_pre__attr1"] = """
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by: attr_value.
+# You can access any attribute x of this node by: this['x'].
+# If the constraint relies on attribute values from other nodes,
+# use the LHS/NAC constraint instead.
+# The given constraint must evaluate to a boolean expression.
+#===============================================================================
+
+return attr_value == "mothers"
+"""
+
+                self.vs[3]["MT_label__"] = """4"""
+                self.vs[3]["MT_subtypes__"] = []
+                self.vs[3]["MT_dirty__"] = False
+                self.vs[3]["mm__"] = """MT_pre__directLink_S"""
+                self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc3')
+        # match association Family--fathers-->Member node
+                self.add_node()
+                self.vs[4]["MT_pre__attr1"] = """
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by: attr_value.
+# You can access any attribute x of this node by: this['x'].
+# If the constraint relies on attribute values from other nodes,
+# use the LHS/NAC constraint instead.
+# The given constraint must evaluate to a boolean expression.
+#===============================================================================
+
+return attr_value == "fathers"
+"""
+
+                self.vs[4]["MT_label__"] = """5"""
+                self.vs[4]["MT_subtypes__"] = []
+                self.vs[4]["MT_dirty__"] = False
+                self.vs[4]["mm__"] = """MT_pre__directLink_S"""
+                self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc4')
         
         # Add the edges
                 self.add_edges([
+                (1,3), # match_class Family() -> association mothers
+                (3,2), # association mothers  -> match_class Member()
+                (1,4), # match_class Family() -> association fathers
+                (4,0) # association fathers  -> match_class Member()
         ])
         
                 # Add the attribute equations
@@ -133,6 +177,34 @@ return True
 
                 return True        
         
+
+        def eval_attr14(self, attr_value, this):
+        
+                #===============================================================================
+                # This code is executed when evaluating if a node shall be matched by this rule.
+                # You can access the value of the current node's attribute value by: attr_value.
+                # You can access any attribute x of this node by: this['x'].
+                # If the constraint relies on attribute values from other nodes,
+                # use the LHS/NAC constraint instead.
+                # The given constraint must evaluate to a boolean expression.
+                #===============================================================================
+
+                return attr_value == "mothers"
+
+
+        def eval_attr15(self, attr_value, this):
+        
+                #===============================================================================
+                # This code is executed when evaluating if a node shall be matched by this rule.
+                # You can access the value of the current node's attribute value by: attr_value.
+                # You can access any attribute x of this node by: this['x'].
+                # If the constraint relies on attribute values from other nodes,
+                # use the LHS/NAC constraint instead.
+                # The given constraint must evaluate to a boolean expression.
+                #===============================================================================
+
+                return attr_value == "fathers"
+
 
         
         def constraint(self, PreNode, graph):
