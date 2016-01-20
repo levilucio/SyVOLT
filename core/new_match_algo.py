@@ -189,7 +189,10 @@ class NewHimesisMatcher(object):
                         print("\nChecking Graph " + self.source_graph.name + " nodes:")
                         self.print_link(self.source_graph, graph_n0_n, graph_n1_n, graph_link_n)
 
-                    nodes_match_link = self.match_nodes(graph_link_n, patt_link_n)
+                    if patt_link_n is not None and graph_link_n is not None:
+                        nodes_match_link = self.match_nodes(graph_link_n, patt_link_n)
+                    else:
+                        nodes_match_link = False
 
                     if not nodes_match_link:
                         if self.debug:
