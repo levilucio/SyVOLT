@@ -28,40 +28,65 @@ class Prover():
         pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
 
 
+        do_handbuilt_transformation = True
 
+        if do_handbuilt_transformation:
+            r0 = 'HState2ProcDef'
+            r1 = 'HMapRootElementRule'
+            r2 = 'HRuleConnect2RootElement'
+            r3 = 'HMapHeirarchyOfStates2HeirarchyOfProcs'
+            r4 = 'HBasicStateNoOutgoing2ProcDef'
+            r5 = 'HBasicState2ProcDef'
+            r6 = 'HCompositeState2ProcDef'
+            r7 = 'HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans'
+            r8 = 'HState2HProcDef'
+            r9 = 'HState2CProcDef'
+            r10 = 'HTransition2QInstSIBLING'
+            r11 = 'HTransition2QInstOUT'
+            r12 = 'HTransition2Inst'
+            r13 = 'HTransition2ListenBranch'
+            r14 = 'HConnectOutputsOfExitPoint2BProcDefTransition2QInst'
+            r15 = 'HTransition2HListenBranch'
+            r16 = 'HConnectOPState2CProcDefTransition2InstotherInTransitions'
 
+            full_transformation = [[r1, ], [r0, ], [r4, r5, r6, ], [r7, r8, r9, ], [r10, r11, r12, ],
+                                   [r13, r14, r15, r16, ], [r2, r3, ], ]
 
-        r0 = 'HMapRootElementRule'
-        r1 = 'HState2ProcDef'
-        r1_copy = 'HState2ProcDefcopy'
-        r2 = 'HBasicState2ProcDef'
-        r3 = 'HBasicStateNoOutgoing2ProcDef'
-        r4 = 'HCompositeState2ProcDef'
-        r5 = 'HState2HProcDef'
-        r6 = 'HState2CProcDef'
-        r7 = 'HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans'
-        r8 = 'HTransition2QInstSIBLING'
-        r9 = 'HTransition2QInstOUT'
-        r10 = 'HTransition2Inst'
-        r11 = 'HTransition2ListenBranch'
-        r12 = 'HConnectOutputsOfExitPoint2BProcDefTransition2QInst'
-        r13 = 'HTransitionHListenBranch'
-        r14 = 'HConnectOPState2CProcDefTransition2InstotherInTransitions'
-        r15 = 'HRuleConnect2RootElement'
-        r16 = 'HMapHierarchyOfStates2HierarchyOfProcs'
+            rules_dir = "UMLRT2Kiltera_MM/transformation/handbuilt/"
 
+        else:
 
+            r0 = 'HMapRootElementRule'
+            r1 = 'HState2ProcDef'
+            r1_copy = 'HState2ProcDefcopy'
+            r2 = 'HBasicState2ProcDef'
+            r3 = 'HBasicStateNoOutgoing2ProcDef'
+            r4 = 'HCompositeState2ProcDef'
+            r5 = 'HState2HProcDef'
+            r6 = 'HState2CProcDef'
+            r7 = 'HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans'
+            r8 = 'HTransition2QInstSIBLING'
+            r9 = 'HTransition2QInstOUT'
+            r10 = 'HTransition2Inst'
+            r11 = 'HTransition2ListenBranch'
+            r12 = 'HConnectOutputsOfExitPoint2BProcDefTransition2QInst'
+            r13 = 'HTransitionHListenBranch'
+            r14 = 'HConnectOPState2CProcDefTransition2InstotherInTransitions'
+            r15 = 'HRuleConnect2RootElement'
+            r16 = 'HMapHierarchyOfStates2HierarchyOfProcs'
 
-        full_transformation = [[r0,],[r1],[r1_copy],[r2,],[r3,],[r4,]]#,[r5,],[r6,],[r7,],[r8,],[r9,],[r10,],[r11,],[r12,],[r13,],[r14,],[r15,],[r16,],]
+            full_transformation = [[r1],[r2,],[r3,],[r4,],[r5,],[r6,],[r7,],[r8,],[r9,],[r10,],[r11,],[r12,],[r13,],[r14,],[r15,],[r16,],]
 
-        self.rules, self.transformation = pyramify.get_rules("UMLRT2Kiltera_MM/transformation/Himesis/", full_transformation)
+            rules_dir = "UMLRT2Kiltera_MM/transformation/from_ATL/"
+
+        self.rules, self.transformation = pyramify.get_rules(rules_dir, full_transformation)
 
         inputMM = "UMLRT2Kiltera_MM/metamodels/rt_new.ecore"
         outputMM = "UMLRT2Kiltera_MM/metamodels/klt_new.ecore"
         subclasses_dict, superclasses_dict = get_sub_and_super_classes(inputMM, outputMM)
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
-            pyramify.ramify_directory("UMLRT2Kiltera_MM/transformation/Himesis/", self.transformation)
+            pyramify.ramify_directory(rules_dir, self.transformation)
 
 
         pre_metamodel = ["MT_pre__S_MM", "MoTifRule"]
@@ -99,13 +124,11 @@ class Prover():
                                                                        prop_if_then_contracts,
                                                                        args.draw_svg)
 
-
-
-
+        slicer = Slicer(self.rules, self.transformation)
         if args.slice > 0:
             print("Slicing for contract number " + str(args.slice))
             contract = self.atomic_contracts[args.slice - 1]
-            self.new_rules, self.new_transformation = slice_transformation(self.rules, self.transformation, contract, args)
+            self.new_rules, self.new_transformation = slicer.slice_transformation(contract)
 
 
         # generate path conditions
@@ -114,6 +137,7 @@ class Prover():
         ts0 = time.time()
         pc_set.build_path_conditions()
         ts1 = time.time()
+
 
         print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
         print("Number of path conditions: " + str(pc_set.num_path_conditions))
