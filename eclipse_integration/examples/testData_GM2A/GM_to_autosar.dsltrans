@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dsltrans:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dsltrans="http://dsltrans/2.0">
+  <source xsi:type="dsltrans:FilePort" name="maininput" filePathURI="IN">
+    <metaModelId metaModelURI="Industrial.ecore" metaModelName="indMM"/>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="initSysTemp_CreationRule" previousSource="//@source.0">
+    <metaModelId metaModelURI="Autosar.ecore" metaModelName="autosarMM"/>
+    <hasRule description="MapPN2FiveElements">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="industrial" className="PhysicalNode">
+          <attribute attributeName="name"/>
+        </class>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="industrial" className="Partition"/>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="industrial" className="Module"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="partition" source="//@source.1/@hasRule.0/@match.0/@class.0" target="//@source.1/@hasRule.0/@match.0/@class.1"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="module" source="//@source.1/@hasRule.0/@match.0/@class.1" target="//@source.1/@hasRule.0/@match.0/@class.2"/>
+      </match>
+      <apply>
+        <class packageName="autosar" className="SystemMapping">
+          <attribute attributeName="shortName">
+            <attributeValue xsi:type="dsltrans:Concat">
+              <leftTerm xsi:type="dsltrans:Atom" value="SysMapping_"/>
+              <rightTerm xsi:type="dsltrans:AttributeRef" attributeRef="//@source.1/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+            </attributeValue>
+          </attribute>
+        </class>
+        <class packageName="autosar" className="System">
+          <attribute attributeName="shortName">
+            <attributeValue xsi:type="dsltrans:Concat">
+              <leftTerm xsi:type="dsltrans:Atom" value="SysTemplate_"/>
+              <rightTerm xsi:type="dsltrans:AttributeRef" attributeRef="//@source.1/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+            </attributeValue>
+          </attribute>
+        </class>
+        <class packageName="autosar" className="SoftwareComposition">
+          <attribute attributeName="shortName">
+            <attributeValue xsi:type="dsltrans:Concat">
+              <leftTerm xsi:type="dsltrans:Atom" value="SoftwareComposition_"/>
+              <rightTerm xsi:type="dsltrans:AttributeRef" attributeRef="//@source.1/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+            </attributeValue>
+          </attribute>
+        </class>
+        <class packageName="autosar" className="CompositionType">
+          <attribute attributeName="shortName">
+            <attributeValue xsi:type="dsltrans:Concat">
+              <leftTerm xsi:type="dsltrans:Atom" value="CompositionType_"/>
+              <rightTerm xsi:type="dsltrans:AttributeRef" attributeRef="//@source.1/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+            </attributeValue>
+          </attribute>
+        </class>
+        <class packageName="autosar" className="EcuInstance">
+          <attribute attributeName="shortName">
+            <attributeValue xsi:type="dsltrans:Concat">
+              <leftTerm xsi:type="dsltrans:Atom" value="EcuInstance_"/>
+              <rightTerm xsi:type="dsltrans:AttributeRef" attributeRef="//@source.1/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+            </attributeValue>
+          </attribute>
+        </class>
+        <association associationName="mapping" source="//@source.1/@hasRule.0/@apply/@class.1" target="//@source.1/@hasRule.0/@apply/@class.0"/>
+        <association associationName="softwareComposition" source="//@source.1/@hasRule.0/@apply/@class.1" target="//@source.1/@hasRule.0/@apply/@class.2"/>
+        <association associationName="softwareComposition" source="//@source.1/@hasRule.0/@apply/@class.2" target="//@source.1/@hasRule.0/@apply/@class.3"/>
+      </apply>
+    </hasRule>
+    <hasRule description="MapPartition">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="industrial" className="Partition">
+          <attribute attributeName="name"/>
+        </class>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="industrial" className="PhysicalNode"/>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="industrial" className="Module"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="partition" source="//@source.1/@hasRule.1/@match.0/@class.1" target="//@source.1/@hasRule.1/@match.0/@class.0"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="module" source="//@source.1/@hasRule.1/@match.0/@class.0" target="//@source.1/@hasRule.1/@match.0/@class.2"/>
+      </match>
+      <apply>
+        <class packageName="autosar" className="SwcToEcuMapping">
+          <attribute attributeName="shortName">
+            <attributeValue xsi:type="dsltrans:Concat">
+              <leftTerm xsi:type="dsltrans:Atom" value="Swc2EcuMapping_"/>
+              <rightTerm xsi:type="dsltrans:AttributeRef" attributeRef="//@source.1/@hasRule.1/@match.0/@class.0/@attribute.0"/>
+            </attributeValue>
+          </attribute>
+        </class>
+      </apply>
+    </hasRule>
+    <hasRule description="MapModule">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="industrial" className="Module">
+          <attribute attributeName="name"/>
+        </class>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="industrial" className="Partition"/>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="industrial" className="PhysicalNode"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="partition" source="//@source.1/@hasRule.2/@match.0/@class.2" target="//@source.1/@hasRule.2/@match.0/@class.1"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="module" source="//@source.1/@hasRule.2/@match.0/@class.1" target="//@source.1/@hasRule.2/@match.0/@class.0"/>
+      </match>
+      <apply>
+        <class packageName="autosar" className="SwCompToEcuMapping_component">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="autosar" className="ComponentPrototype">
+          <attribute attributeName="shortName">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.1/@hasRule.2/@match.0/@class.0/@attribute.0"/>
+          </attribute>
+        </class>
+        <association associationName="componentPrototype" source="//@source.1/@hasRule.2/@apply/@class.0" target="//@source.1/@hasRule.2/@apply/@class.1"/>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="sysmapping_swMapping_SolveRef" previousSource="//@source.1">
+    <metaModelId metaModelURI="Autosar.ecore" metaModelName="autosarMM"/>
+    <hasRule description="ConnECU2VirtualDevice1">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="industrial" className="PhysicalNode"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="industrial" className="Partition"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="partition" source="//@source.2/@hasRule.0/@match.0/@class.0" target="//@source.2/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="autosar" className="SystemMapping">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="autosar" className="SwcToEcuMapping">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="swMapping" source="//@source.2/@hasRule.0/@apply/@class.0" target="//@source.2/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.2/@hasRule.0/@apply/@class.0" sourceClass="//@source.2/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.2/@hasRule.0/@apply/@class.1" sourceClass="//@source.2/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="compostype_component_SolveRef" previousSource="//@source.2">
+    <metaModelId metaModelURI="Autosar.ecore" metaModelName="autosarMM"/>
+    <hasRule description="ConnVirtualDevice2Distributable1">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="industrial" className="PhysicalNode"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="industrial" className="Partition"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="industrial" className="Module"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="partition" source="//@source.3/@hasRule.0/@match.0/@class.0" target="//@source.3/@hasRule.0/@match.0/@class.1"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="module" source="//@source.3/@hasRule.0/@match.0/@class.1" target="//@source.3/@hasRule.0/@match.0/@class.2"/>
+      </match>
+      <apply>
+        <class packageName="autosar" className="CompositionType">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="autosar" className="ComponentPrototype">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="component" source="//@source.3/@hasRule.0/@apply/@class.0" target="//@source.3/@hasRule.0/@apply/@class.1"/>
+        <association associationName="type" source="//@source.3/@hasRule.0/@apply/@class.1" target="//@source.3/@hasRule.0/@apply/@class.0"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.3/@hasRule.0/@apply/@class.0" sourceClass="//@source.3/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.3/@hasRule.0/@apply/@class.1" sourceClass="//@source.3/@hasRule.0/@match.0/@class.2"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="compostype_port_SolveRef" previousSource="//@source.6">
+    <metaModelId metaModelURI="Autosar.ecore" metaModelName="autosarMM"/>
+    <hasRule description="ConnectPPortPrototype">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="industrial" className="PhysicalNode"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="industrial" className="Partition"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="industrial" className="Module"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="industrial" className="Scheduler">
+          <attribute attributeName="name"/>
+        </class>
+        <class xsi:type="dsltrans:ExistsMatchClass" className="Service"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="partition" source="//@source.4/@hasRule.0/@match.0/@class.0" target="//@source.4/@hasRule.0/@match.0/@class.1"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="module" source="//@source.4/@hasRule.0/@match.0/@class.1" target="//@source.4/@hasRule.0/@match.0/@class.2"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="scheduler" source="//@source.4/@hasRule.0/@match.0/@class.2" target="//@source.4/@hasRule.0/@match.0/@class.3"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="provided" source="//@source.4/@hasRule.0/@match.0/@class.3" target="//@source.4/@hasRule.0/@match.0/@class.4"/>
+      </match>
+      <apply>
+        <class packageName="autosar" className="CompositionType">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="autosar" className="PPortPrototype">
+          <attribute attributeName="shortName">
+            <attributeValue xsi:type="dsltrans:Concat">
+              <leftTerm xsi:type="dsltrans:AttributeRef" attributeRef="//@source.4/@hasRule.0/@match.0/@class.3/@attribute.0"/>
+              <rightTerm xsi:type="dsltrans:Atom" value="PROV"/>
+            </attributeValue>
+          </attribute>
+        </class>
+        <association associationName="port" source="//@source.4/@hasRule.0/@apply/@class.0" target="//@source.4/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.4/@hasRule.0/@apply/@class.0" sourceClass="//@source.4/@hasRule.0/@match.0/@class.0"/>
+    </hasRule>
+    <hasRule description="ConnectRPortPrototype">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="industrial" className="PhysicalNode"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="industrial" className="Partition"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="industrial" className="Module"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="industrial" className="Scheduler">
+          <attribute attributeName="name"/>
+        </class>
+        <class xsi:type="dsltrans:ExistsMatchClass" className="Service"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="partition" source="//@source.4/@hasRule.1/@match.0/@class.0" target="//@source.4/@hasRule.1/@match.0/@class.1"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="module" source="//@source.4/@hasRule.1/@match.0/@class.1" target="//@source.4/@hasRule.1/@match.0/@class.2"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="scheduler" source="//@source.4/@hasRule.1/@match.0/@class.2" target="//@source.4/@hasRule.1/@match.0/@class.3"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="required" source="//@source.4/@hasRule.1/@match.0/@class.3" target="//@source.4/@hasRule.1/@match.0/@class.4"/>
+      </match>
+      <apply>
+        <class packageName="autosar" className="CompositionType">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="autosar" className="PPortPrototype">
+          <attribute attributeName="shortName">
+            <attributeValue xsi:type="dsltrans:Concat">
+              <leftTerm xsi:type="dsltrans:AttributeRef" attributeRef="//@source.4/@hasRule.1/@match.0/@class.3/@attribute.0"/>
+              <rightTerm xsi:type="dsltrans:Atom" value="REQ"/>
+            </attributeValue>
+          </attribute>
+        </class>
+        <association associationName="port" source="//@source.4/@hasRule.1/@apply/@class.0" target="//@source.4/@hasRule.1/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.4/@hasRule.1/@apply/@class.0" sourceClass="//@source.4/@hasRule.1/@match.0/@class.0"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="mapping_component_SolveRef" previousSource="//@source.3">
+    <metaModelId metaModelURI="Autosar.ecore" metaModelName="autosarMM"/>
+    <hasRule description="ConnVirtualDevice2Distributable2">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="industrial" className="Partition"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="industrial" className="Module"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="module" source="//@source.5/@hasRule.0/@match.0/@class.0" target="//@source.5/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="autosar" className="SwcToEcuMapping">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="autosar" className="SwCompToEcuMapping_component">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="component" source="//@source.5/@hasRule.0/@apply/@class.0" target="//@source.5/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.5/@hasRule.0/@apply/@class.0" sourceClass="//@source.5/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.5/@hasRule.0/@apply/@class.1" sourceClass="//@source.5/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="mapping_ecuInstance_SolveRef" previousSource="//@source.5">
+    <metaModelId metaModelURI="Autosar.ecore" metaModelName="autosarMM"/>
+    <hasRule description="ConnECU2VirtualDevice2">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="industrial" className="PhysicalNode"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="industrial" className="Partition"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="partition" source="//@source.6/@hasRule.0/@match.0/@class.0" target="//@source.6/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="autosar" className="SwcToEcuMapping">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <class packageName="autosar" className="EcuInstance">
+          <attribute attributeName="ApplyAttribute">
+            <attributeValue xsi:type="dsltrans:Atom" value="solveRef"/>
+          </attribute>
+        </class>
+        <association associationName="ecuInstance" source="//@source.6/@hasRule.0/@apply/@class.0" target="//@source.6/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.6/@hasRule.0/@apply/@class.1" sourceClass="//@source.6/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.6/@hasRule.0/@apply/@class.0" sourceClass="//@source.6/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+</dsltrans:TransformationModel>
