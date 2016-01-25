@@ -142,6 +142,7 @@ class ContractProver():
                 print(pc_name)
             print('\n')
 
+            atomic_contract.draw()
             for pc, pc_name in pathCondGen.get_path_conditions(expand = False):
                 if pc_name in success_smallest_pc_set:
                     pc = expand_graph(pc)
@@ -152,4 +153,4 @@ class ContractProver():
 
 
         proof_time = time.time() - start_time
-        print("Took " + str(proof_time) + " seconds to prove " + str(len(atomic_contracts)) + " contracts\n")
+        print("Took " + str(proof_time) + " seconds to prove " + str(len(atomic_contracts + if_then_contracts)) + " contracts\n")
