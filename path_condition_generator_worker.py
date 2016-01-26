@@ -41,7 +41,7 @@ class path_condition_generator_worker(Process):
         
         self.pruner = pruner
         
-        self.pruning = False
+        self.pruning = True
         
         
     def getRuleNamesInPathCondition(self, pcName):
@@ -439,8 +439,7 @@ class path_condition_generator_worker(Process):
                                                     # we are dealing with a partial combination of the rule.
                                                     # create a copy of the path condition in the accumulator because this match of the rule is partial.
     
-                                                    # add the result to the local accumulator
-                                                    partialTotalPathCondLayerAccumulator.append(newPathCond.name)
+
     
                                                     # store the parent of the newly created path condition
                                                     childrenPathConditions.append(newPathCond.name)
@@ -449,7 +448,10 @@ class path_condition_generator_worker(Process):
                                                 shrunk_newCond = shrink_graph(newPathCond)
                                                 self.pc_dict[newPathCondName] = shrunk_newCond
                                                 new_pc_dict[newPathCondName] = shrunk_newCond
-            
+
+                                                # add the result to the local accumulator
+                                                partialTotalPathCondLayerAccumulator.append(newPathCond.name)
+
                                                 if self.verbosity >= 2:
                                                     print("Created path condition with name: " + newPathCondName)
     
