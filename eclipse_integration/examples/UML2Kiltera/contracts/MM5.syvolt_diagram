@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:syvolt="http://syvolt/2.0" xmi:id="_quJKgMP8EeWFe7xcygVxyw" type="Syvolt" measurementUnit="Pixel">
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_quJKgcP8EeWFe7xcygVxyw"/>
+  <element xmi:type="syvolt:TransformationModel" href="MM5.syvolt#/"/>
+</notation:Diagram>

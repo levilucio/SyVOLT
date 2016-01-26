@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syvolt:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:syvolt="http://syvolt/2.0">
+  <hasProperty name="MM9_if">
+    <match/>
+    <apply>
+      <class className="Trigger">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="TRIGGER"/>
+        </attribute>
+      </class>
+    </apply>
+  </hasProperty>
+  <hasProperty name="MM9_then1">
+    <match/>
+    <apply>
+      <class className="Trigger">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="TRIGGER"/>
+        </attribute>
+      </class>
+      <class className="Expr"/>
+      <association associationName="output" source="//@hasProperty.1/@apply/@class.0" target="//@hasProperty.1/@apply/@class.1"/>
+    </apply>
+  </hasProperty>
+  <hasProperty name="MM9_then2">
+    <match/>
+    <apply>
+      <class className="Trigger">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="TRIGGER"/>
+        </attribute>
+      </class>
+      <class className="Expr"/>
+      <class className="Expr"/>
+      <association associationName="output" source="//@hasProperty.2/@apply/@class.0" target="//@hasProperty.2/@apply/@class.1"/>
+      <association associationName="output" source="//@hasProperty.2/@apply/@class.0" target="//@hasProperty.2/@apply/@class.2"/>
+    </apply>
+  </hasProperty>
+</syvolt:TransformationModel>

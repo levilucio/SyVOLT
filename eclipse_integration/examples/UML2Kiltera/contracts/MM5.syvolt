@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syvolt:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:syvolt="http://syvolt/2.0">
+  <hasProperty name="MM5_if">
+    <match/>
+    <apply>
+      <class className="Listen">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="LISTEN"/>
+        </attribute>
+      </class>
+    </apply>
+  </hasProperty>
+  <hasProperty name="MM5_then">
+    <match/>
+    <apply>
+      <class className="Listen">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="LISTEN"/>
+        </attribute>
+      </class>
+      <class className="ListenBranch"/>
+      <association associationName="branches" source="//@hasProperty.1/@apply/@class.0" target="//@hasProperty.1/@apply/@class.1"/>
+    </apply>
+  </hasProperty>
+</syvolt:TransformationModel>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syvolt:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:syvolt="http://syvolt/2.0">
+  <hasProperty name="MM10_if">
+    <match/>
+    <apply>
+      <class className="ConditionSet">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="CONDSET"/>
+        </attribute>
+      </class>
+    </apply>
+  </hasProperty>
+  <hasProperty name="MM10_then1">
+    <match/>
+    <apply>
+      <class className="ConditionSet">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="ConditionSet"/>
+        </attribute>
+      </class>
+      <class className="Proc"/>
+      <association associationName="alternative" source="//@hasProperty.1/@apply/@class.0" target="//@hasProperty.1/@apply/@class.1"/>
+    </apply>
+  </hasProperty>
+  <hasProperty name="MM10_then2">
+    <match/>
+    <apply>
+      <class className="ConditionSet">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="ConditionSet"/>
+        </attribute>
+      </class>
+      <class className="Proc"/>
+      <class className="Proc"/>
+      <association associationName="alternative" source="//@hasProperty.2/@apply/@class.0" target="//@hasProperty.2/@apply/@class.1"/>
+      <association associationName="alternative" source="//@hasProperty.2/@apply/@class.0" target="//@hasProperty.2/@apply/@class.2"/>
+    </apply>
+  </hasProperty>
+</syvolt:TransformationModel>
