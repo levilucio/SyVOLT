@@ -43,7 +43,7 @@ class AtomicContract(Contract):
         self.connected_matcher = Matcher(connected, disambig_matching = True)
         self.complete_matcher = Matcher(complete, disambig_matching = True)
 
-        self.name = self.isolated.name.replace("_Isolated", "").replace("_if", "")
+        self.name = self.isolated.name[1:].replace("_IsolatedLHS", "").replace("_if", "")
 
         self.last_packet = None
 
