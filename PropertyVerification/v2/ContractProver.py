@@ -109,38 +109,35 @@ class ContractProver():
 
         proof_time = time.time() - start_time
         num_contracts_to_print = 20
+        contract_name_max_size = 300
 
         print("")
         for contract_name, atomic_contract in atomic_contracts + if_then_contracts:
-
-            if type(contract_name) is list:
-                contract_name = contract_name[0].complete.name
-
             print("\n" + str(len(contract_succeeded_pcs[contract_name])) + " Successful PCs for " + contract_name + ":")
             if len(contract_succeeded_pcs[contract_name]) < num_contracts_to_print:
                 for pc_name in sorted(contract_succeeded_pcs[contract_name]):
-                    print(pc_name)
+                    print(pc_name[:contract_name_max_size])
             else:
                 print("More than " + str(num_contracts_to_print) + " contracts")
 
             print ('\nSmallest Path Conditions where the contract succeeded:')
             success_smallest_pc_set = self.find_smallest_pc(contract_succeeded_pcs[contract_name])
             for pc_name in success_smallest_pc_set:
-                print(pc_name)
+                print(pc_name[:contract_name_max_size])
 
             print('\n')
 
             print("\n" + str(len(contract_failed_pcs[contract_name])) + " failed PCs for " + contract_name + ":")
             if len(contract_failed_pcs[contract_name]) < num_contracts_to_print:
                 for pc_name in sorted(contract_failed_pcs[contract_name]):
-                    print(pc_name)
+                    print(pc_name[:contract_name_max_size])
             else:
                 print("More than " + str(num_contracts_to_print) + " contracts")
 
             print ('\nSmallest Path Conditions where the contract fails:')
             failed_smallest_pc_set = self.find_smallest_pc(contract_failed_pcs[contract_name])
             for pc_name in failed_smallest_pc_set:
-                print(pc_name)
+                print(pc_name[:contract_name_max_size])
             print('\n')
 
             atomic_contract.draw()
@@ -153,4 +150,11 @@ class ContractProver():
                     graph_to_dot(contract_name + "_failed_" + pc_name, pc)
 
 
-        print("Took " + str(proof_time) + " seconds to prove " + str(len(atomic_contracts + if_then_contracts)) + " contracts\n")
+
+        print("Summary:")
+        for contract_name, atomic_contract in atomic_contracts + if_then_contracts:
+            print("Name:" + contract_name)
+            print("\tNum Succeeded Contracts: " + str(len(contract_succeeded_pcs[contract_name])))
+            print("\tNum Failed Contracts: " + str(len(contract_failed_pcs[contract_name])))
+
+        print("Took " + str(proof_time) + " seconds to prove " + str(len(atomic_contracts + if_then_contracts)) + " contracts")
