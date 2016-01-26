@@ -47,21 +47,20 @@ class Test:
             ['HMother2Woman'],
             ['HDaughter2Woman'],
             ['HSon2Man'],
-            ['HCity2TownHall', 'HCityCompany2Association'],
             ['HNeighborhood2District'],
+            ['HCity2TownHall', 'HCityCompany2Association'],
+
             ['HcopersonsSolveRefCountryFamilyParentCommunityMan'],
             ['HcopersonsSolveRefCountryFamilyParentCommunityWoman'],
 
             ['HcopersonsSolveRefCountryFamilyChildCommunityMan'],
             ['HcopersonsSolveRefCountryFamilyChildCommunityWoman'],
 
-            ['HcotownHallsSolveRefCountryCityCommunityTownHall'],
-
-            ['HcoassociationsSolveRefCountryCityCompanyCommunityAssociation'],
-
+            ['HcotownHallsSolveRefCountryCityCommunityTownHall',
+             'HcoassociationsSolveRefCountryCityCompanyCommunityAssociation',
+            'HacommitteeSolveRefCompanyCityAssociationCommittee'],
             ['HtworkersSolveRefCompanyParentCityTownHallPerson'],
             ['HtdistrictsSolveRefCityNeighborhoodTownHallDistrict'],
-            ['HacommitteeSolveRefCompanyCityAssociationCommittee'],
             ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityPerson'],
             ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictSpecialFacilityPerson']
 
@@ -148,6 +147,7 @@ class Test:
             self.new_rules, self.new_transformation = slicer.slice_transformation(contract)
             print("Number rules after: " + str(len(self.rules)))
 
+        #raise Exception()
 
     def test_correct(self,args):
 
@@ -182,11 +182,18 @@ class Test:
             pyramify.ramify_directory("ExFamToPerson/transformation/", self.transformation)
  
         pyramify.set_supertypes(self.superclasses_dict, self.rules, self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators)
- 
+
+
+        print("superclasses_dict:")
+        for mm in self.superclasses_dict:
+            print(mm + " : " + str(self.superclasses_dict[mm]))
+
         #raise Exception()
  
         s = PathConditionGenerator(self.transformation, "ExFamToPerson/Persons_Extended.ecore", self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)#
-    
+
+
+        #raise Exception()
         ts0 = time.time()
         s.build_path_conditions()
         ts1 = time.time()
@@ -195,7 +202,9 @@ class Test:
         print("\n\nTime to build the set of path conditions: " + str(pc_time))
 #        print("Size of the set of path conditions: " + str(float(sys.getsizeof(s.pathConditionSet) / 1024)))
         print("Number of path conditions: " + str(s.num_path_conditions))
- 
+
+        # import sys
+        # sys.exit()
 #         #check if the correct number of path conditions were produced
 #         if not int(expected_num_pcs) == -1 and not int(expected_num_pcs) == s.num_path_conditions:
 # 
@@ -203,9 +212,11 @@ class Test:
 #             num_pcs_s = "The number of produced path conditions is incorrect.\n" + str(expected_num_pcs) + " were expected, but " + str(s.num_path_conditions) + " were produced."
 #             print(num_pcs_s)
 #             #raise Exception(num_pcs_s)
-#  
+#
+
+
         print("printing path conditions")
-        s.print_path_conditions_screen()
+        #s.print_path_conditions_screen()
 # 
 #        s.print_path_conditions_file()
 # # 
@@ -222,7 +233,9 @@ class Test:
         contract_prover = ContractProver()
 
         contract_prover.prove_contracts(s, self.atomic_contracts, [])#self.if_then_contracts)
-
+        print("\n\nTime to build the set of path conditions: " + str(pc_time))
+        #        print("Size of the set of path conditions: " + str(float(sys.getsizeof(s.pathConditionSet) / 1024)))
+        print("Number of path conditions: " + str(s.num_path_conditions))
 
 def _print_states(self, s):
     for state in s.symbStateSpace:

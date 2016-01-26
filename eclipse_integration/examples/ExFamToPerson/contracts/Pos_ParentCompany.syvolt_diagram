@@ -33,7 +33,7 @@
             <styles xmi:type="notation:LineStyle" xmi:id="_Kt3Mu6PCEeWgsb_fT6AV4Q"/>
             <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_Kt3MvKPCEeWgsb_fT6AV4Q"/>
             <element xmi:type="syvolt:AnyMatchClass" href="Pos_ParentCompany.syvolt#//@hasProperty.0/@match.0/@class.2"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Kt3MvaPCEeWgsb_fT6AV4Q" x="256" y="5"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Kt3MvaPCEeWgsb_fT6AV4Q" x="268" y="5"/>
           </children>
         </children>
         <styles xmi:type="notation:DescriptionStyle" xmi:id="_Kt1XgaPCEeWgsb_fT6AV4Q"/>
@@ -41,7 +41,7 @@
         <styles xmi:type="notation:LineStyle" xmi:id="_Kt1Xg6PCEeWgsb_fT6AV4Q"/>
         <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_Kt1XhKPCEeWgsb_fT6AV4Q"/>
         <element xmi:type="syvolt:PreCondition" href="Pos_ParentCompany.syvolt#//@hasProperty.0/@match.0"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Kt1XhaPCEeWgsb_fT6AV4Q" width="363"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Kt1XhaPCEeWgsb_fT6AV4Q" width="375"/>
       </children>
     </children>
     <children xmi:type="notation:BasicCompartment" xmi:id="_Kt0wcqPCEeWgsb_fT6AV4Q" type="7028">
@@ -65,7 +65,7 @@
             <styles xmi:type="notation:LineStyle" xmi:id="_Kt_IhaPCEeWgsb_fT6AV4Q"/>
             <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_Kt_IhqPCEeWgsb_fT6AV4Q"/>
             <element xmi:type="syvolt:ApplyClass" href="Pos_ParentCompany.syvolt#//@hasProperty.0/@apply/@class.1"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Kt_Ih6PCEeWgsb_fT6AV4Q" x="140"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Kt_Ih6PCEeWgsb_fT6AV4Q" x="136" y="1"/>
           </children>
         </children>
         <styles xmi:type="notation:DescriptionStyle" xmi:id="_Kt96YaPCEeWgsb_fT6AV4Q"/>
@@ -117,7 +117,7 @@
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_fjkycL-9EeW93pfukFhJNw" type="4003" source="_Kt3MuKPCEeWgsb_fT6AV4Q" target="_Kt3MsKPCEeWgsb_fT6AV4Q">
     <children xmi:type="notation:DecorationNode" xmi:id="_fjlZgL-9EeW93pfukFhJNw" type="6002">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_fjmAkL-9EeW93pfukFhJNw" x="-9" y="15"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_fjmAkL-9EeW93pfukFhJNw" x="-4" y="15"/>
     </children>
     <styles xmi:type="notation:RoutingStyle" xmi:id="_fjkycb-9EeW93pfukFhJNw"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_fjkycr-9EeW93pfukFhJNw" fontName="Liberation Sans"/>

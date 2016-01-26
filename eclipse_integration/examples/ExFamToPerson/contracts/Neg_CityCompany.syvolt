@@ -5,6 +5,7 @@
       <class xsi:type="syvolt:AnyMatchClass" className="City"/>
       <class xsi:type="syvolt:AnyMatchClass" className="Company"/>
       <association xsi:type="syvolt:PositiveMatchAssociation" associationName="companies" source="//@hasProperty.0/@match.0/@class.0" target="//@hasProperty.0/@match.0/@class.1"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="isIn" source="//@hasProperty.0/@match.0/@class.1" target="//@hasProperty.0/@match.0/@class.0"/>
     </match>
     <apply>
       <class className="Association"/>

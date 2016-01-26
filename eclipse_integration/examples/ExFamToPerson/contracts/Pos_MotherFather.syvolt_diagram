@@ -39,7 +39,7 @@
             <styles xmi:type="notation:LineStyle" xmi:id="_xE8jsqO_EeWgsb_fT6AV4Q"/>
             <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_xE8js6O_EeWgsb_fT6AV4Q"/>
             <element xmi:type="syvolt:AnyMatchClass" href="Pos_MotherFather.syvolt#//@hasProperty.0/@match.0/@class.1"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_xE8jtKO_EeWgsb_fT6AV4Q" x="164"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_xE8jtKO_EeWgsb_fT6AV4Q" x="160" y="5"/>
           </children>
           <children xmi:type="notation:Node" xmi:id="_xE8jt6O_EeWgsb_fT6AV4Q" type="3031">
             <children xmi:type="notation:DecorationNode" xmi:id="_xE9KwKO_EeWgsb_fT6AV4Q" type="5014"/>
@@ -209,7 +209,7 @@
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_hvMCgL_KEeW93pfukFhJNw" type="4003" source="_xE78qKO_EeWgsb_fT6AV4Q" target="_xE8jt6O_EeWgsb_fT6AV4Q">
     <children xmi:type="notation:DecorationNode" xmi:id="_hvMpkL_KEeW93pfukFhJNw" type="6002">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_hvMpkb_KEeW93pfukFhJNw" y="40"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_hvMpkb_KEeW93pfukFhJNw" x="-7" y="21"/>
     </children>
     <styles xmi:type="notation:RoutingStyle" xmi:id="_hvMCgb_KEeW93pfukFhJNw"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_hvMCgr_KEeW93pfukFhJNw" fontName="Liberation Sans"/>
@@ -247,7 +247,7 @@
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_xF6C8L_MEeW93pfukFhJNw" type="4005" source="_xFt_yKO_EeWgsb_fT6AV4Q" target="_xFt_wKO_EeWgsb_fT6AV4Q">
     <children xmi:type="notation:DecorationNode" xmi:id="_xF6qAL_MEeW93pfukFhJNw" type="6004">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_xF6qAb_MEeW93pfukFhJNw" x="-14" y="-57"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_xF6qAb_MEeW93pfukFhJNw" x="-14" y="-52"/>
     </children>
     <styles xmi:type="notation:RoutingStyle" xmi:id="_xF6C8b_MEeW93pfukFhJNw"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_xF6C8r_MEeW93pfukFhJNw" fontName="Liberation Sans"/>
@@ -258,7 +258,7 @@
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_x9-6cL_MEeW93pfukFhJNw" type="4005" source="_xFt_yKO_EeWgsb_fT6AV4Q" target="_xFum0qO_EeWgsb_fT6AV4Q">
     <children xmi:type="notation:DecorationNode" xmi:id="_x9-6dL_MEeW93pfukFhJNw" type="6004">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_x9-6db_MEeW93pfukFhJNw" x="-18" y="67"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_x9-6db_MEeW93pfukFhJNw" x="-6" y="50"/>
     </children>
     <styles xmi:type="notation:RoutingStyle" xmi:id="_x9-6cb_MEeW93pfukFhJNw"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_x9-6cr_MEeW93pfukFhJNw" fontName="Liberation Sans"/>

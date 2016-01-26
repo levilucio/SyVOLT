@@ -13,7 +13,7 @@
             <styles xmi:type="notation:LineStyle" xmi:id="_NSLE46O0EeW3fdyWju5yew"/>
             <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_NSLE5KO0EeW3fdyWju5yew"/>
             <element xmi:type="syvolt:AnyMatchClass" href="Neg_CityCompany.syvolt#//@hasProperty.0/@match.0/@class.0"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NSLE5aO0EeW3fdyWju5yew" x="2" y="7"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NSLE5aO0EeW3fdyWju5yew" x="22" y="3"/>
           </children>
           <children xmi:type="notation:Node" xmi:id="_SNLmUKO0EeW3fdyWju5yew" type="3031">
             <children xmi:type="notation:DecorationNode" xmi:id="_SNMNYKO0EeW3fdyWju5yew" type="5014"/>
@@ -23,7 +23,7 @@
             <styles xmi:type="notation:LineStyle" xmi:id="_SNLmU6O0EeW3fdyWju5yew"/>
             <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_SNLmVKO0EeW3fdyWju5yew"/>
             <element xmi:type="syvolt:AnyMatchClass" href="Neg_CityCompany.syvolt#//@hasProperty.0/@match.0/@class.1"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SNLmVaO0EeW3fdyWju5yew" x="134" y="7"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SNLmVaO0EeW3fdyWju5yew" x="130" y="3"/>
           </children>
         </children>
         <styles xmi:type="notation:DescriptionStyle" xmi:id="_Mb8ngaO0EeW3fdyWju5yew"/>
@@ -31,7 +31,7 @@
         <styles xmi:type="notation:LineStyle" xmi:id="_Mb8ng6O0EeW3fdyWju5yew"/>
         <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_Mb8nhKO0EeW3fdyWju5yew"/>
         <element xmi:type="syvolt:PreCondition" href="Neg_CityCompany.syvolt#//@hasProperty.0/@match.0"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Mb8nhaO0EeW3fdyWju5yew" x="38" y="10" width="241" height="95"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Mb8nhaO0EeW3fdyWju5yew" x="6" y="2" width="237" height="95"/>
       </children>
     </children>
     <children xmi:type="notation:BasicCompartment" xmi:id="_5GE_CKOzEeW3fdyWju5yew" type="7028">
@@ -45,7 +45,7 @@
             <styles xmi:type="notation:LineStyle" xmi:id="_kfcnU6O1EeW3fdyWju5yew"/>
             <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_kfcnVKO1EeW3fdyWju5yew"/>
             <element xmi:type="syvolt:ApplyClass" href="Neg_CityCompany.syvolt#//@hasProperty.0/@apply/@class.0"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_kfcnVaO1EeW3fdyWju5yew" x="9" y="5"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_kfcnVaO1EeW3fdyWju5yew" x="2" y="3"/>
           </children>
         </children>
         <styles xmi:type="notation:DescriptionStyle" xmi:id="_LelAUaO0EeW3fdyWju5yew"/>
@@ -53,7 +53,7 @@
         <styles xmi:type="notation:LineStyle" xmi:id="_LelAU6O0EeW3fdyWju5yew"/>
         <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_LelAVKO0EeW3fdyWju5yew"/>
         <element xmi:type="syvolt:PostCondition" href="Neg_CityCompany.syvolt#//@hasProperty.0/@apply"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_LelAVaO0EeW3fdyWju5yew" x="14" y="11" width="269" height="70"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_LelAVaO0EeW3fdyWju5yew" x="2" y="5" width="241" height="70"/>
       </children>
     </children>
     <styles xmi:type="notation:DescriptionStyle" xmi:id="_5GE_AaOzEeW3fdyWju5yew"/>
@@ -61,7 +61,7 @@
     <styles xmi:type="notation:LineStyle" xmi:id="_5GE_A6OzEeW3fdyWju5yew"/>
     <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_5GE_BKOzEeW3fdyWju5yew"/>
     <element xmi:type="syvolt:AtomicContract" href="Neg_CityCompany.syvolt#//@hasProperty.0"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_5GE_BaOzEeW3fdyWju5yew" x="168" y="24" width="313" height="277"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_5GE_BaOzEeW3fdyWju5yew" x="180" y="12" width="265" height="229"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_4EkesaOzEeW3fdyWju5yew"/>
   <element xmi:type="syvolt:TransformationModel" href="Neg_CityCompany.syvolt#/"/>
@@ -81,5 +81,16 @@
     <element xmi:type="syvolt:PositiveMatchAssociation" href="Neg_CityCompany.syvolt#//@hasProperty.0/@match.0/@association.0"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_C8OS06O2EeW3fdyWju5yew" points="[25, -4, -73, 0]$[79, -8, -19, -4]"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_C8Pg8KO2EeW3fdyWju5yew" id="(0.23170731707317074,0.4090909090909091)"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_84JbQMOYEeWFe7xcygVxyw" type="4003" source="_SNLmUKO0EeW3fdyWju5yew" target="_NSLE4KO0EeW3fdyWju5yew">
+    <children xmi:type="notation:DecorationNode" xmi:id="_84KCUMOYEeWFe7xcygVxyw" type="6002">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_84KCUcOYEeWFe7xcygVxyw" x="-4" y="9"/>
+    </children>
+    <styles xmi:type="notation:RoutingStyle" xmi:id="_84JbQcOYEeWFe7xcygVxyw"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_84JbQsOYEeWFe7xcygVxyw" fontName="Liberation Sans"/>
+    <element xmi:type="syvolt:PositiveMatchAssociation" href="Neg_CityCompany.syvolt#//@hasProperty.0/@match.0/@association.1"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_84JbQ8OYEeWFe7xcygVxyw" points="[-22, -7, 132, 0]$[-149, -14, 5, -7]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_84NssMOYEeWFe7xcygVxyw" id="(0.15853658536585366,0.18181818181818182)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_84NsscOYEeWFe7xcygVxyw" id="(0.673469387755102,0.09090909090909091)"/>
   </edges>
 </notation:Diagram>

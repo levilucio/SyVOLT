@@ -111,6 +111,26 @@ return attr_value == "companies"
                 self.vs[3]["MT_dirty__"] = False
                 self.vs[3]["mm__"] = """MT_pre__directLink_S"""
                 self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc3')
+        # match association Company--isIn-->City node
+                self.add_node()
+                self.vs[4]["MT_subtypeMatching__"] = False
+                self.vs[4]["MT_pre__attr1"] = """
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by: attr_value.
+# You can access any attribute x of this node by: this['x'].
+# If the constraint relies on attribute values from other nodes,
+# use the LHS/NAC constraint instead.
+# The given constraint must evaluate to a boolean expression.
+#===============================================================================
+
+return attr_value == "isIn"
+"""
+                self.vs[4]["MT_label__"] = """5"""
+                self.vs[4]["MT_subtypes__"] = []
+                self.vs[4]["MT_dirty__"] = False
+                self.vs[4]["mm__"] = """MT_pre__directLink_S"""
+                self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc4')
         
         
         # Nodes that represent the apply associations of the property.
@@ -118,12 +138,12 @@ return attr_value == "companies"
                 # Nodes that represent trace relations
                 # backward association City---->Association node
                 self.add_node()
-                self.vs[4]["MT_subtypeMatching__"] = False
-                self.vs[4]["MT_label__"] = """5"""
-                self.vs[4]["MT_subtypes__"] = []
-                self.vs[4]["MT_dirty__"] = False
-                self.vs[4]["mm__"] = """MT_pre__trace_link"""
-                self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink4')
+                self.vs[5]["MT_subtypeMatching__"] = False
+                self.vs[5]["MT_label__"] = """6"""
+                self.vs[5]["MT_subtypes__"] = []
+                self.vs[5]["MT_dirty__"] = False
+                self.vs[5]["mm__"] = """MT_pre__trace_link"""
+                self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'blink5')
 
 
         
@@ -133,10 +153,12 @@ return attr_value == "companies"
         
                 # Add the edges
                 self.add_edges([
-                (2,4), # apply_class Association() -> backward_association
-                (4,0), #  backward_association -> apply_class City()
+                (2,5), # apply_class Association() -> backward_association
+                (5,0), #  backward_association -> apply_class City()
                 (0,3), # match_class City() -> association companies
-                (3,1) # association companies  -> match_class Company()
+                (3,1), # association companies  -> match_class Company()
+                (1,4), # match_class Company() -> association isIn
+                (4,0) # association isIn  -> match_class City()
                 ])
         
                 # Add the attribute equations
@@ -182,6 +204,20 @@ return attr_value == "companies"
                         #===============================================================================
 
                 return attr_value == "companies"
+
+
+        def eval_attr15(self, attr_value, this):
+
+                        #===============================================================================
+                        # This code is executed when evaluating if a node shall be matched by this rule.
+                        # You can access the value of the current node's attribute value by: attr_value.
+                        # You can access any attribute x of this node by: this['x'].
+                        # If the constraint relies on attribute values from other nodes,
+                        # use the LHS/NAC constraint instead.
+                        # The given constraint must evaluate to a boolean expression.
+                        #===============================================================================
+
+                return attr_value == "isIn"
 
 
         

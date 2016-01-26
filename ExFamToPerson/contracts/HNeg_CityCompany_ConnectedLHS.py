@@ -88,11 +88,33 @@ return attr_value == "companies"
                 self.vs[2]["MT_dirty__"] = False
                 self.vs[2]["mm__"] = """MT_pre__directLink_S"""
                 self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc2')
+        # match association Company--isIn-->City node
+                self.add_node()
+                self.vs[3]["MT_pre__attr1"] = """
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by: attr_value.
+# You can access any attribute x of this node by: this['x'].
+# If the constraint relies on attribute values from other nodes,
+# use the LHS/NAC constraint instead.
+# The given constraint must evaluate to a boolean expression.
+#===============================================================================
+
+return attr_value == "isIn"
+"""
+
+                self.vs[3]["MT_label__"] = """4"""
+                self.vs[3]["MT_subtypes__"] = []
+                self.vs[3]["MT_dirty__"] = False
+                self.vs[3]["mm__"] = """MT_pre__directLink_S"""
+                self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc3')
         
         # Add the edges
                 self.add_edges([
                 (0,2), # match_class City() -> association companies
-                (2,1) # association companies  -> match_class Company()
+                (2,1), # association companies  -> match_class Company()
+                (1,3), # match_class Company() -> association isIn
+                (3,0) # association isIn  -> match_class City()
         ])
         
                 # Add the attribute equations
@@ -137,6 +159,20 @@ return attr_value == "companies"
                 #===============================================================================
 
                 return attr_value == "companies"
+
+
+        def eval_attr14(self, attr_value, this):
+        
+                #===============================================================================
+                # This code is executed when evaluating if a node shall be matched by this rule.
+                # You can access the value of the current node's attribute value by: attr_value.
+                # You can access any attribute x of this node by: this['x'].
+                # If the constraint relies on attribute values from other nodes,
+                # use the LHS/NAC constraint instead.
+                # The given constraint must evaluate to a boolean expression.
+                #===============================================================================
+
+                return attr_value == "isIn"
 
 
         

@@ -3,13 +3,20 @@
   <hasProperty name="Pos_AssocCity">
     <match>
       <class xsi:type="syvolt:AnyMatchClass" className="City"/>
+      <class xsi:type="syvolt:AnyMatchClass" className="Country"/>
+      <class xsi:type="syvolt:AnyMatchClass" className="Company"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="cities" source="//@hasProperty.0/@match.0/@class.1" target="//@hasProperty.0/@match.0/@class.0"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="companies" source="//@hasProperty.0/@match.0/@class.0" target="//@hasProperty.0/@match.0/@class.2"/>
     </match>
     <apply>
       <class className="Committee"/>
-      <class className="Association"/>
+      <class className="TownHall"/>
+      <class className="Community"/>
       <association associationName="committee" source="//@hasProperty.0/@apply/@class.1" target="//@hasProperty.0/@apply/@class.0"/>
+      <association associationName="townHalls" source="//@hasProperty.0/@apply/@class.2" target="//@hasProperty.0/@apply/@class.1"/>
     </apply>
-    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.0" sourceClass="//@hasProperty.0/@match.0/@class.0"/>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.2" sourceClass="//@hasProperty.0/@match.0/@class.1"/>
     <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.1" sourceClass="//@hasProperty.0/@match.0/@class.0"/>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.0" sourceClass="//@hasProperty.0/@match.0/@class.0"/>
   </hasProperty>
 </syvolt:TransformationModel>

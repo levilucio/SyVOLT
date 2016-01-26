@@ -50,11 +50,73 @@ return True
                 self.vs[0]["MT_dirty__"] = False
                 self.vs[0]["mm__"] = """MT_pre__City"""
                 self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match class Country() node
+                self.add_node()
+                self.vs[1]["MT_pre__attr1"] = """
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by: attr_value.
+# You can access any attribute x of this node by: this['x'].
+# If the constraint relies on attribute values from other nodes,
+# use the LHS/NAC constraint instead.
+# The given constraint must evaluate to a boolean expression.
+#===============================================================================
+
+return True
+"""
+                self.vs[1]["MT_label__"] = """2"""
+                self.vs[1]["MT_dirty__"] = False
+                self.vs[1]["mm__"] = """MT_pre__Country"""
+                self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
+        # match class Company() node
+                self.add_node()
+                self.vs[2]["MT_pre__attr1"] = """
+#===============================================================================
+# This code is executed when evaluating if a node shall be matched by this rule.
+# You can access the value of the current node's attribute value by: attr_value.
+# You can access any attribute x of this node by: this['x'].
+# If the constraint relies on attribute values from other nodes,
+# use the LHS/NAC constraint instead.
+# The given constraint must evaluate to a boolean expression.
+#===============================================================================
+
+return True
+"""
+                self.vs[2]["MT_label__"] = """3"""
+                self.vs[2]["MT_dirty__"] = False
+                self.vs[2]["mm__"] = """MT_pre__Company"""
+                self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
         
                 # Add the attribute equations
                 self["equations"] = []    
         
         def eval_attr11(self, attr_value, this):
+        
+                #===============================================================================
+                # This code is executed when evaluating if a node shall be matched by this rule.
+                # You can access the value of the current node's attribute value by: attr_value.
+                # You can access any attribute x of this node by: this['x'].
+                # If the constraint relies on attribute values from other nodes,
+                # use the LHS/NAC constraint instead.
+                # The given constraint must evaluate to a boolean expression.
+                #===============================================================================
+
+                return True
+        
+        def eval_attr12(self, attr_value, this):
+        
+                #===============================================================================
+                # This code is executed when evaluating if a node shall be matched by this rule.
+                # You can access the value of the current node's attribute value by: attr_value.
+                # You can access any attribute x of this node by: this['x'].
+                # If the constraint relies on attribute values from other nodes,
+                # use the LHS/NAC constraint instead.
+                # The given constraint must evaluate to a boolean expression.
+                #===============================================================================
+
+                return True
+        
+        def eval_attr13(self, attr_value, this):
         
                 #===============================================================================
                 # This code is executed when evaluating if a node shall be matched by this rule.

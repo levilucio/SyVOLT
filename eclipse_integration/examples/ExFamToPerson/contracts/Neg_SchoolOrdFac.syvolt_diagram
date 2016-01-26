@@ -43,7 +43,7 @@
         <styles xmi:type="notation:LineStyle" xmi:id="_JF4gE6OzEeW3fdyWju5yew"/>
         <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_JF4gFKOzEeW3fdyWju5yew"/>
         <element xmi:type="syvolt:PostCondition" href="Neg_SchoolOrdFac.syvolt#//@hasProperty.0/@apply"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JF4gFaOzEeW3fdyWju5yew" x="16" y="12"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JF4gFaOzEeW3fdyWju5yew" x="14" y="2"/>
       </children>
     </children>
     <styles xmi:type="notation:DescriptionStyle" xmi:id="_G0-0caOzEeW3fdyWju5yew"/>
