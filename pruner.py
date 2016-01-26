@@ -62,7 +62,11 @@ class Pruner(object):
                             required_rules.append([contain_rule_name, className])
 
                     if not found_class:
-                        raise Exception("Error: No rule builds containment link for class " + className + " from rule.name " + rule_names[rule.name])
+                        message = "Error: No rule builds containment link for class " + className + " from rule.name " + rule_names[rule.name]
+                        if self.debug:
+                            raise Exception(message)
+                        else:
+                            print(message)
 
 
 
