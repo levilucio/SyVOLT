@@ -48,7 +48,6 @@ class ContractProver():
         print("\nStarting to prove contracts:")
         start_time = time.time()
 
-
         contract_failed_pcs = {}
         contract_succeeded_pcs = {}
         for contract_name, atomic_contract in atomic_contracts + if_then_contracts:
@@ -108,14 +107,14 @@ class ContractProver():
             for contract_name in succeed.keys():
                 contract_succeeded_pcs[contract_name] += succeed[contract_name]
 
-
+        proof_time = time.time() - start_time
         num_contracts_to_print = 20
 
         print("")
         for contract_name, atomic_contract in atomic_contracts + if_then_contracts:
 
 
-            print("\nSuccessful PCs for " + contract_name + ":")
+            print("\n" + str(len(contract_succeeded_pcs[contract_name])) + " Successful PCs for " + contract_name + ":")
             if len(contract_succeeded_pcs[contract_name]) < num_contracts_to_print:
                 for pc_name in sorted(contract_succeeded_pcs[contract_name]):
                     print(pc_name)
@@ -129,7 +128,7 @@ class ContractProver():
 
             print('\n')
 
-            print("\nFailed PCs for " + contract_name + ":")
+            print("\n" + str(len(contract_failed_pcs[contract_name])) + " failed PCs for " + contract_name + ":")
             if len(contract_failed_pcs[contract_name]) < num_contracts_to_print:
                 for pc_name in sorted(contract_failed_pcs[contract_name]):
                     print(pc_name)
@@ -152,5 +151,4 @@ class ContractProver():
                     graph_to_dot(contract_name + "_failed_" + pc_name, pc)
 
 
-        proof_time = time.time() - start_time
         print("Took " + str(proof_time) + " seconds to prove " + str(len(atomic_contracts + if_then_contracts)) + " contracts\n")

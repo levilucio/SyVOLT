@@ -84,3 +84,53 @@ class AndContract(Contract):
             else:
                 result[key] = pivots_2[key]
         return result
+
+class OrContract(Contract):
+    def __init__(self, atomic_contract_1, atomic_contract_2):
+        super(OrContract, self).__init__()
+
+        self.contract_1 = atomic_contract_1
+        self.contract_2 = atomic_contract_2
+
+    def check_isolated(self, pc):
+
+        result_1 = self.contract_1.check_isolated(pc)
+        if result_1 == self.ISOLATED:
+            return result_1
+
+        return self.contract_2.check_isolated(pc)
+
+    def check(self, pc, verbosity = 0):
+        result_1 = self.contract_1.check(pc, verbosity)
+
+        if result_1 == self.COMPLETE_FOUND:
+            return result_1
+
+        if verbosity > 1:
+            print("Or Contract: First contract is " + result_1)
+
+        result_2 = self.contract_2.check(pc, verbosity)
+
+        if verbosity > 1:
+            print("Or Contract: Second contract is " + result_2)
+
+        return result_2
+
+    def draw(self):
+        self.contract_1.draw()
+        self.contract_2.draw()
+
+    def get_pivots(self):
+        pivots_1 = self.contract_1.get_pivots()
+        pivots_2 = self.contract_2.get_pivots()
+
+        # print("Contract 1")
+        # print(pivots_1)
+        #
+        # print("Contract 2")
+        # print(pivots_2)
+
+        #put these two together
+        #report a FAILURE if they are inconsistent
+
+        return pivots_1.update(pivots_2)
