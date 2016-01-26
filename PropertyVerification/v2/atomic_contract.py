@@ -33,6 +33,8 @@ class AtomicContract(Contract):
 
         super(AtomicContract, self).__init__()
 
+
+
         self.isolated = isolated
         self.connected = connected
         self.complete = complete
@@ -40,6 +42,8 @@ class AtomicContract(Contract):
         self.isolated_matcher = Matcher(isolated, disambig_matching = True)
         self.connected_matcher = Matcher(connected, disambig_matching = True)
         self.complete_matcher = Matcher(complete, disambig_matching = True)
+
+        self.name = self.isolated.name.replace("_Isolated", "").replace("_if", "")
 
         self.last_packet = None
 
@@ -63,12 +67,15 @@ class AtomicContract(Contract):
         #print("Complete Data: " + str(self.complete_data))
 
     def draw(self):
-        contract_name = self.isolated.name.replace("_Isolated", "")
-        graph_to_dot("contract_isolated_" + contract_name, self.isolated)
-        graph_to_dot("contract_connected_" + contract_name, self.connected)
-        graph_to_dot("contract_complete_" + contract_name, self.complete)
+
+        graph_to_dot("contract_isolated_" + self.name, self.isolated)
+        graph_to_dot("contract_connected_" + self.name, self.connected)
+        graph_to_dot("contract_complete_" + self.name, self.complete)
 
     def get_pivots(self):
+        if self.last_packet is None:
+            return {}
+
         if len(self.last_packet.match_sets) == 0:
             #matching failed, so don't bother returning anything
             return {}

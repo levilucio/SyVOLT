@@ -113,6 +113,8 @@ class ContractProver():
         print("")
         for contract_name, atomic_contract in atomic_contracts + if_then_contracts:
 
+            if type(contract_name) is list:
+                contract_name = contract_name[0].complete.name
 
             print("\n" + str(len(contract_succeeded_pcs[contract_name])) + " Successful PCs for " + contract_name + ":")
             if len(contract_succeeded_pcs[contract_name]) < num_contracts_to_print:

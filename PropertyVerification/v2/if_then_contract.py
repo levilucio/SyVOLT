@@ -8,6 +8,8 @@ class IfThenContract(Contract):
         self.if_contract = if_contract
         self.then_contract = then_contract
 
+        self.name = self.if_contract.name
+
     def check_isolated(self, pc):
         return self.if_contract.check_isolated(pc)
 
@@ -41,6 +43,8 @@ class IfThenContract(Contract):
 
         then_pivots = self.then_contract.get_pivots()
 
+        if if_pivots is None or then_pivots is None:
+            return self.COMPLETE_FOUND
         # print("If pivots")
         # print(if_pivots)
         #

@@ -6,6 +6,7 @@ class NotContract(Contract):
         super(NotContract, self).__init__()
 
         self.contract = atomic_contract
+        self.name = atomic_contract.name
 
     def check_isolated(self, pc):
         return self.contract.check_isolated(pc)
@@ -35,6 +36,8 @@ class AndContract(Contract):
 
         self.contract_1 = atomic_contract_1
         self.contract_2 = atomic_contract_2
+
+        self.name = atomic_contract_1.name
 
     def check_isolated(self, pc):
 
@@ -91,6 +94,8 @@ class OrContract(Contract):
 
         self.contract_1 = atomic_contract_1
         self.contract_2 = atomic_contract_2
+
+        self.name = atomic_contract_1.name
 
     def check_isolated(self, pc):
 

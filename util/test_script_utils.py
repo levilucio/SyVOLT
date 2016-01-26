@@ -84,52 +84,61 @@ def load_contracts(contracts, superclasses_dict, atomic_names, simple_if_then_na
     atomic_contracts = []
     for contract_name in atomic_names:
         atomic_contract = load_contract(contract_name, contracts, superclasses_dict)
-        atomic_contracts.append([contract_name, atomic_contract])
-        if draw_svg:
-            graph_to_dot("contract_" + atomic_contract.complete.name, atomic_contract.complete)
+        atomic_contracts.append([atomic_contract.name, atomic_contract])
 
     if_then_contracts = []
     for contract_name_if, contract_name_then in simple_if_then_names:
         if_contract = load_contract(contract_name_if, contracts, superclasses_dict)
         then_contract = load_contract(contract_name_then, contracts, superclasses_dict)
         if_then_contract = IfThenContract(if_contract, then_contract)
-        if_then_contracts.append([contract_name_if, if_then_contract])
-
-        if draw_svg:
-            graph_to_dot("contract_" + if_contract.complete.name, if_contract.complete)
-            graph_to_dot("contract_" + then_contract.complete.name, then_contract.complete)
+        if_then_contracts.append([if_then_contract.name, if_then_contract])
 
     for contract_name_if, prop_equation in prop_if_then_names:
 
-        if_contract = load_contract(contract_name_if, contracts, superclasses_dict)
+        if type(contract_name_if) is list:
+            if_contract = handle_prop(contract_name_if, contracts, superclasses_dict)
+        else:
+            if_contract = load_contract(contract_name_if, contracts, superclasses_dict)
 
-        prop_stack = []
-        for p in prop_equation:
+        then_contract = handle_prop(prop_equation, contracts, superclasses_dict)
 
-            if p == "AND":
-                if len(prop_stack) < 2:
-                    raise Exception("Contract Prop Logic failure for AND")
-
-                last_1 = prop_stack.pop()
-                last_2 = prop_stack.pop()
-                c = AndContract(last_1, last_2)
-            elif p == "NOT":
-                if len(prop_stack) < 1:
-                    raise Exception("Contract Prop Logic failure for NOT")
-
-                last = prop_stack.pop()
-                c = NotContract(last)
-            else:
-                c = load_contract(p, contracts, superclasses_dict)
-
-            prop_stack.append(c)
-        if len(prop_stack) != 1:
-            raise Exception("Contract Prop Logic failure")
-
-        full_contract = IfThenContract(if_contract, prop_stack.pop())
-        if_then_contracts.append([contract_name_if, full_contract])
+        full_contract = IfThenContract(if_contract, then_contract)
+        if_then_contracts.append([full_contract.name, full_contract])
 
     return atomic_contracts, if_then_contracts
+
+def handle_prop(prop_equation, contracts, superclasses_dict):
+    prop_stack = []
+    for p in prop_equation:
+        if p == "AND":
+            if len(prop_stack) < 2:
+                raise Exception("Contract Prop Logic failure for AND")
+
+            last_1 = prop_stack.pop()
+            last_2 = prop_stack.pop()
+            c = AndContract(last_1, last_2)
+        elif p == "OR":
+            if len(prop_stack) < 2:
+                raise Exception("Contract Prop Logic failure for OR")
+
+            last_1 = prop_stack.pop()
+            last_2 = prop_stack.pop()
+            c = OrContract(last_1, last_2)
+
+        elif p == "NOT":
+            if len(prop_stack) < 1:
+                raise Exception("Contract Prop Logic failure for NOT")
+
+            last = prop_stack.pop()
+            c = NotContract(last)
+
+        else:
+            c = load_contract(p, contracts, superclasses_dict)
+
+        prop_stack.append(c)
+    if len(prop_stack) != 1:
+        raise Exception("Contract Prop Logic failure")
+    return prop_stack.pop()
 
 
 def load_contract(contract_name, contracts, superclasses_dict):
