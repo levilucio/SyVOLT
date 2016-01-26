@@ -5,7 +5,7 @@ Created on Sep 6, 2015
 '''
 
 from util.ecore_utils import *
-
+from core.himesis_utils import graph_to_dot
 class Pruner(object):
     '''
     checks whether a path condition can be removed from the set of path conditions being built
@@ -13,7 +13,7 @@ class Pruner(object):
     left to symbolically execute
     '''
 
-    def __init__(self, metamodel, transformation):
+    def __init__(self, metamodel, transformation, rule_names):
         '''
         Constructor
         '''
@@ -24,14 +24,54 @@ class Pruner(object):
         self.mmContainmentLinks = self.eu.getContaimentLinksForClasses()
         
         self.ruleContainmentLinks = {}
+        self.ruleMissingContLinks = {}
+
+        self.linksToRules = {}
+
         for layer in transformation:
             for rule in layer:
                 self.ruleContainmentLinks[rule.name] = self.eu.getBuiltContainmentLinks(rule)
+                self.ruleMissingContLinks[rule.name] = self.eu.getMissingContainmentLinks(rule)
+
+                for contain_link in self.ruleContainmentLinks[rule.name]:
+
+                    try:
+                        self.linksToRules[contain_link].append(rule_names[rule.name])
+                    except KeyError:
+                        self.linksToRules[contain_link] = [rule_names[rule.name]]
 
                 if self.debug:
-                    print("Rule containment links: " + rule.name + " = " + str(self.ruleContainmentLinks[rule.name]))
-                    
+                    rule_name = rule_names[rule.name]
+                    print("Rule containment links: " + rule_name + " = " + str(self.ruleContainmentLinks[rule.name]))
+                    print("Missing rule containment links: " + rule_name + " = " + str(self.ruleMissingContLinks[rule.name]))
+                    print()
+
+        #test containment links and see if any are missing
+
+        for layer in transformation:
+            for rule in layer:
+
+                required_rules = []
+
+                for className in self.ruleMissingContLinks[rule.name]:
+
+                    found_class = False
+                    for contain_rule_name, contain_links in self.ruleContainmentLinks.items():
+                        if className in contain_links.keys():
+                            found_class = True
+                            required_rules.append([contain_rule_name, className])
+
+                    if not found_class:
+                        raise Exception("Error: No rule builds containment link for class " + className + " from rule.name " + rule_names[rule.name])
+
+
+
         self.mmClassParents = self.eu.getSuperClassInheritanceRelationForClasses()
+
+        # print("mm class parents:")
+        # for mm in self.mmClassParents:
+        #     print(mm + " : " + str(self.mmClassParents[mm]))
+
         
 
     def getContainmentLinksBuiltByRuleSet(self, ruleNames):
@@ -69,22 +109,17 @@ class Pruner(object):
 
         missingContLinks = self.eu.getMissingContainmentLinks(pathCondition)
 
-
-        if self.debug:
-            print("Path condition: " + pathCondition.name)
-            print("Missing containment links: " + str(missingContLinks))
-                
         contLinksInRulesToTreat = self.getContainmentLinksBuiltByRuleSet(rulesToTreat)
         
-        if self.debug:
-            print("Rules to treat: ")
-            for rule in rulesToTreat:
-                print(rule)
-            print("Containment links in rules to treat: " + str(contLinksInRulesToTreat))
+        # if self.debug:
+        #     print("Rules to treat: ")
+        #     for rule in rulesToTreat:
+        #         print(rule)
+        #     print("Containment links in rules to treat: " + str(contLinksInRulesToTreat))
 
 
-        
         allMissingContLinksFound = True
+        contLinksNotFound = []
         
 #         # gather all the parents for all the classes that have missing containment links
 #         # TODO: should be based on cached data
@@ -98,10 +133,11 @@ class Pruner(object):
         for className in missingContLinks.keys():
 
             classPlusParents = self.mmClassParents[className]
-            classPlusParents.append(className) 
-                
+            classPlusParents.append(className)
+
             if set(classPlusParents).intersection(set(contLinksInRulesToTreat.keys())) == set():
                 allMissingContLinksFound = False
+                contLinksNotFound.append([className, missingContLinks[className]])
                 break
 
             else:
@@ -121,6 +157,7 @@ class Pruner(object):
                             break
                 if not foundInParent:
                     allMissingContLinksFound = False
+                    contLinksNotFound.append([className, missingContLinks[className]])
                     break
         
         if allMissingContLinksFound:
@@ -129,6 +166,18 @@ class Pruner(object):
                 print("... Pruner Returning True")
             return True
         else:
+            if self.debug:
+                print("=========================")
+                print("Path condition: " + pathCondition.name)
+                print("Missing containment links: " + str(contLinksNotFound))
+
+                print("Looking for:")
+                for contLink, contLinkEnd in contLinksNotFound:
+                    print(self.linksToRules[contLink])
+
+                # if len(missingContLinks) > 0:
+                #     graph_to_dot("missing_" + pathCondition.name, pathCondition)
+
             if self.debug:
                 print("... Pruner Returning False")
             return False
