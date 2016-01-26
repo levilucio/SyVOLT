@@ -55,34 +55,33 @@ class Prover():
             rules_dir = "UMLRT2Kiltera_MM/transformation/handbuilt/"
 
         else:
-
-            r0 = 'HMapRootElementRule'
-            r1 = 'HState2ProcDef'
-            r1_copy = 'HState2ProcDefcopy'
-            r2 = 'HBasicState2ProcDef'
-            r3 = 'HBasicStateNoOutgoing2ProcDef'
-            r4 = 'HCompositeState2ProcDef'
-            r5 = 'HState2HProcDef'
-            r6 = 'HState2CProcDef'
+            r0 = 'HState2ProcDef'
+            r1 = 'HMapRootElementRule'
+            r2 = 'HRuleConnect2RootElement'
+            r3 = 'HMapHeirarchyOfStates2HeirarchyOfProcs'
+            r4 = 'HBasicStateNoOutgoing2ProcDef'
+            r5 = 'HBasicState2ProcDef'
+            r6 = 'HCompositeState2ProcDef'
             r7 = 'HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans'
-            r8 = 'HTransition2QInstSIBLING'
-            r9 = 'HTransition2QInstOUT'
-            r10 = 'HTransition2Inst'
-            r11 = 'HTransition2ListenBranch'
-            r12 = 'HConnectOutputsOfExitPoint2BProcDefTransition2QInst'
-            r13 = 'HTransitionHListenBranch'
-            r14 = 'HConnectOPState2CProcDefTransition2InstotherInTransitions'
-            r15 = 'HRuleConnect2RootElement'
-            r16 = 'HMapHierarchyOfStates2HierarchyOfProcs'
+            r8 = 'HState2HProcDef'
+            r9 = 'HState2CProcDef'
+            r10 = 'HTransition2QInstSIBLING'
+            r11 = 'HTransition2QInstOUT'
+            r12 = 'HTransition2Inst'
+            r13 = 'HTransition2ListenBranch'
+            r14 = 'HConnectOutputsOfExitPoint2BProcDefTransition2QInst'
+            r15 = 'HTransition2HListenBranch'
+            r16 = 'HConnectOPState2CProcDefTransition2InstotherInTransitions'
 
-            full_transformation = [[r1],[r2,],[r3,],[r4,],[r5,],[r6,],[r7,],[r8,],[r9,],[r10,],[r11,],[r12,],[r13,],[r14,],[r15,],[r16,],]
-
+            full_transformation = [[r1, ], [r0, ], [r4, r5, r6, ], [r7, r8, r9, ], [r10, r11, r12, ],
+                                   [r13, r14, r15, r16, ], [r2, r3, ], ]
             rules_dir = "UMLRT2Kiltera_MM/transformation/from_ATL/"
 
         self.rules, self.transformation = pyramify.get_rules(rules_dir, full_transformation)
 
-        inputMM = "UMLRT2Kiltera_MM/metamodels/rt_new.ecore"
-        outputMM = "UMLRT2Kiltera_MM/metamodels/klt_new.ecore"
+
+        inputMM = "UMLRT2Kiltera_MM/transformation_for_prunning/metamodels/rt_new.ecore"
+        outputMM = "UMLRT2Kiltera_MM/transformation_for_prunning/metamodels/klt_new.ecore"
         subclasses_dict, superclasses_dict = get_sub_and_super_classes(inputMM, outputMM)
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
@@ -101,22 +100,36 @@ class Prover():
 
         # load the contracts
 
-        contracts = load_directory("UMLRT2Kiltera_MM/Properties/")
+        contracts = load_directory("UMLRT2Kiltera_MM/Properties/from_thesis/")
 
         atomic_contracts = [
-            "AC1",
-            #"prop2_a",
-            #"prop2_b",
+            "PP1",
+            "PP2",
+            "PP3",
+            "PP4",
+            "PP5",
         ]
         if_then_contracts = [
-            # ["S1_if", "S1_then"],
-            # ["M1_if", "M1_then"],
-            # ["M3_if", "M3_then"],
+            ["MM5_if", "MM5_then"],
+            ["MM6_if", "MM6_then"],
+            ["MM7_if", "MM7_then"],
+            ["MM11_if", "MM11_then"],
+            ["SS1_if", "SS1_then"],
+            ["SS2_if", "SS2_then"],
         ]
         prop_if_then_contracts = [
             # structure is 'if graph', 'then graph'
             # where the 'then graph' is made up of reverse polish notation
-            #["M2_if", ["M2_then1", "M2_then2", "NOT", "AND"]],
+            ["MM1_if", ["MM1_then1", "MM1_then2", "NOT", "AND"]],
+            ["MM2_if", ["MM2_then1", "MM2_then2", "NOT", "AND"]],
+            ["MM3_if", ["MM3_then1", "MM3_then2", "NOT", "AND"]],
+            ["MM4_if", ["MM4_then1", "MM4_then2", "NOT", "AND"]],
+
+            ["MM8_if", ["MM8_then1", "MM8_then2", "NOT", "AND", "MM8_then1", "NOT", "OR"]],
+            ["MM9_if", ["MM9_then1", "MM9_then2", "NOT", "AND", "MM9_then1", "NOT", "OR"]],
+            ["MM10_if", ["MM10_then1", "MM10_then2", "NOT", "AND", "MM10_then1", "NOT", "OR"]],
+
+            [["SS3_if1", "SS3_if2", "NOT", "AND"], ["SS3_then1", "SS3_then2", "NOT", "AND"]],
         ]
 
         self.atomic_contracts, self.if_then_contracts = load_contracts(contracts, superclasses_dict,
@@ -134,6 +147,8 @@ class Prover():
         # generate path conditions
         pc_set = PathConditionGenerator(self.transformation, outputMM, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
 
+        # import sys
+        # sys.exit()
         ts0 = time.time()
         pc_set.build_path_conditions()
         ts1 = time.time()
@@ -144,8 +159,9 @@ class Prover():
 
         # print path conditions to screen
 
-        if pc_set.num_path_conditions < 300:
-            pc_set.print_path_conditions_screen()
+        #if pc_set.num_path_conditions < 300:
+        #pc_set.print_path_conditions_screen()
+
 
         # now actually prove these contracts
 
