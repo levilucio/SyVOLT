@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syvolt:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:syvolt="http://syvolt/2.0">
+  <hasProperty name="SS3_if1">
+    <match/>
+    <apply>
+      <class className="Inst">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="INST"/>
+        </attribute>
+        <attribute attributeName="name">
+          <attributeValue xsi:type="syvolt:Atom" value="Handler"/>
+        </attribute>
+      </class>
+      <class className="Name"/>
+      <class className="Name"/>
+      <class className="Name"/>
+      <association associationName="channelNames" source="//@hasProperty.0/@apply/@class.0" target="//@hasProperty.0/@apply/@class.1"/>
+      <association associationName="channelNames" source="//@hasProperty.0/@apply/@class.0" target="//@hasProperty.0/@apply/@class.2"/>
+      <association associationName="channelNames" source="//@hasProperty.0/@apply/@class.0" target="//@hasProperty.0/@apply/@class.3"/>
+    </apply>
+  </hasProperty>
+  <hasProperty name="SS3_if2">
+    <match/>
+    <apply>
+      <class className="Inst">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="INST"/>
+        </attribute>
+        <attribute attributeName="name">
+          <attributeValue xsi:type="syvolt:Atom" value="Handler"/>
+        </attribute>
+      </class>
+      <class className="Name"/>
+      <class className="Name"/>
+      <class className="Name"/>
+      <class className="Name"/>
+      <association associationName="channelNames" source="//@hasProperty.1/@apply/@class.0" target="//@hasProperty.1/@apply/@class.1"/>
+      <association associationName="channelNames" source="//@hasProperty.1/@apply/@class.0" target="//@hasProperty.1/@apply/@class.2"/>
+      <association associationName="channelNames" source="//@hasProperty.1/@apply/@class.0" target="//@hasProperty.1/@apply/@class.3"/>
+      <association associationName="channelNames" source="//@hasProperty.1/@apply/@class.0" target="//@hasProperty.1/@apply/@class.4"/>
+    </apply>
+  </hasProperty>
+  <hasProperty name="SS3_then1">
+    <match/>
+    <apply>
+      <class className="Inst">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="INST"/>
+        </attribute>
+        <attribute attributeName="name">
+          <attributeValue xsi:type="syvolt:Atom" value="Handler"/>
+        </attribute>
+      </class>
+      <class className="Name"/>
+      <class className="Name"/>
+      <class className="Name"/>
+      <class className="ProcDef">
+        <attribute attributeName="name">
+          <attributeValue xsi:type="syvolt:Atom" value="Handler"/>
+        </attribute>
+      </class>
+      <association associationName="channelNames" source="//@hasProperty.2/@apply/@class.4" target="//@hasProperty.2/@apply/@class.1"/>
+      <association associationName="channelNames" source="//@hasProperty.2/@apply/@class.4" target="//@hasProperty.2/@apply/@class.2"/>
+      <association associationName="channelNames" source="//@hasProperty.2/@apply/@class.4" target="//@hasProperty.2/@apply/@class.3"/>
+    </apply>
+  </hasProperty>
+  <hasProperty name="SS3_then2">
+    <match/>
+    <apply>
+      <class className="Inst">
+        <attribute attributeName="pivot">
+          <attributeValue xsi:type="syvolt:Atom" value="INST"/>
+        </attribute>
+        <attribute attributeName="name">
+          <attributeValue xsi:type="syvolt:Atom" value="Handler"/>
+        </attribute>
+      </class>
+      <class className="Name"/>
+      <class className="Name"/>
+      <class className="Name"/>
+      <class className="Name"/>
+      <class className="ProcDef">
+        <attribute attributeName="name">
+          <attributeValue xsi:type="syvolt:Atom" value="Handler"/>
+        </attribute>
+      </class>
+      <association associationName="channelNames" source="//@hasProperty.3/@apply/@class.5" target="//@hasProperty.3/@apply/@class.1"/>
+      <association associationName="channelNames" source="//@hasProperty.3/@apply/@class.5" target="//@hasProperty.3/@apply/@class.2"/>
+      <association associationName="channelNames" source="//@hasProperty.3/@apply/@class.5" target="//@hasProperty.3/@apply/@class.3"/>
+      <association associationName="channelNames" source="//@hasProperty.3/@apply/@class.5" target="//@hasProperty.3/@apply/@class.4"/>
+    </apply>
+  </hasProperty>
+</syvolt:TransformationModel>

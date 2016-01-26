@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syvolt:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:syvolt="http://syvolt/2.0">
+  <hasProperty name="PP3">
+    <match>
+      <class xsi:type="syvolt:AnyMatchClass" className="State">
+        <attribute attributeName="isComposite">
+          <attributeValue xsi:type="syvolt:Atom" value="true"/>
+        </attribute>
+      </class>
+      <class xsi:type="syvolt:AnyMatchClass" className="ExitPoint"/>
+      <class xsi:type="syvolt:AnyMatchClass" className="Transition"/>
+      <class xsi:type="syvolt:AnyMatchClass" className="SIBLING0"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="transitions" source="//@hasProperty.0/@match.0/@class.1" target="//@hasProperty.0/@match.0/@class.2"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="type" source="//@hasProperty.0/@match.0/@class.2" target="//@hasProperty.0/@match.0/@class.3"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="exitPoints" source="//@hasProperty.0/@match.0/@class.0" target="//@hasProperty.0/@match.0/@class.1"/>
+    </match>
+    <apply>
+      <class className="Par"/>
+      <class className="Inst"/>
+      <class className="Name"/>
+      <class className="Name"/>
+      <class className="Name"/>
+      <class className="Name"/>
+      <class className="Trigger">
+        <attribute attributeName="channel">
+          <attributeValue xsi:type="syvolt:Atom" value="sh_in"/>
+        </attribute>
+      </class>
+      <association associationName="p" source="//@hasProperty.0/@apply/@class.0" target="//@hasProperty.0/@apply/@class.1"/>
+      <association associationName="channelNames" source="//@hasProperty.0/@apply/@class.1" target="//@hasProperty.0/@apply/@class.2"/>
+      <association associationName="channelNames" source="//@hasProperty.0/@apply/@class.1" target="//@hasProperty.0/@apply/@class.3"/>
+      <association associationName="channelNames" source="//@hasProperty.0/@apply/@class.1" target="//@hasProperty.0/@apply/@class.5"/>
+      <association associationName="channelNames" source="//@hasProperty.0/@apply/@class.1" target="//@hasProperty.0/@apply/@class.4"/>
+      <association associationName="p" source="//@hasProperty.0/@apply/@class.0" target="//@hasProperty.0/@apply/@class.6"/>
+    </apply>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.0" sourceClass="//@hasProperty.0/@match.0/@class.1"/>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.6" sourceClass="//@hasProperty.0/@match.0/@class.1"/>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.1" sourceClass="//@hasProperty.0/@match.0/@class.2"/>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.2" sourceClass="//@hasProperty.0/@match.0/@class.2"/>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.3" sourceClass="//@hasProperty.0/@match.0/@class.2"/>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.4" sourceClass="//@hasProperty.0/@match.0/@class.2"/>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.5" sourceClass="//@hasProperty.0/@match.0/@class.2"/>
+  </hasProperty>
+</syvolt:TransformationModel>
