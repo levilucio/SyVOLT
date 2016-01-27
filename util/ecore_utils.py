@@ -340,7 +340,8 @@ class EcoreUtils(object):
                     # get the containment links already built in this pathcond
                     builtContainmentLinks = self.getBuiltContainmentLinks(pathCond)
 
-                    for attr1 in self.mmClassContained[targetClassName]:
+                    #ignore duplicates
+                    for attr1 in set(self.mmClassContained[targetClassName]):
 
                         #if this link is built already in this pathCond, do nothing
                         if targetClassName in builtContainmentLinks and attr1 in builtContainmentLinks[targetClassName]:

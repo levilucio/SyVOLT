@@ -245,10 +245,6 @@ class Slicer():
 
         print("Required rules for contract " + contract_name + ": " + str(sorted(rr_names)))
 
-
-        import sys
-        sys.exit()
-
         #raise Exception("Contract Required Rules")
 
         for rr in required_rules:
