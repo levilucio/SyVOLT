@@ -117,6 +117,6 @@ class HcotownHallsSolveRefCountryCityCommunityTownHall(Himesis):
 		])
 
         # Add the attribute equations
-        self["equations"] = [((7,'ApplyAttribute'),('constant','solveRef')), ((9,'ApplyAttribute'),('constant','solveRef')), ]
+        self["equations"] = []
 
         

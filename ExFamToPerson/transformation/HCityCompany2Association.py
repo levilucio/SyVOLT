@@ -95,6 +95,6 @@ class HCityCompany2Association(Himesis):
 		])
 
         # Add the attribute equations
-        self["equations"] = [((7,'name'),('concat',((3,'name'),(5,'name')))), ((7,'ApplyAttribute'),('constant','solveRef')), ]
+        self["equations"] = [((7,'name'),('concat',((3,'name'),(5,'name')))), ]
 
         

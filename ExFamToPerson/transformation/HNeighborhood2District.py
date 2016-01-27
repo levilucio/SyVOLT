@@ -89,6 +89,6 @@ class HNeighborhood2District(Himesis):
 		])
 
         # Add the attribute equations
-        self["equations"] = [((7,'name'),(3,'name')), ((7,'ApplyAttribute'),('constant','solveRef')), ]
+        self["equations"] = [((7,'name'),(3,'name')), ]
 
         

@@ -171,6 +171,6 @@ class HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacility
 		])
 
         # Add the attribute equations
-        self["equations"] = [((11,'ApplyAttribute'),('constant','solveRef')), ((13,'name'),('concat',(('constant','Ordinary Facility Service for school '),(5,'name')))), ((13,'ApplyAttribute'),('constant','solveRef')), ((15,'ApplyAttribute'),('constant','solveRef')), ]
+        self["equations"] = [((13,'name'),('concat',(('constant','Ordinary Facility Service for school '),(5,'name')))), ]
 
         

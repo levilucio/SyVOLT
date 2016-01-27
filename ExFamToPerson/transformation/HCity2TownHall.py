@@ -89,6 +89,6 @@ class HCity2TownHall(Himesis):
 		])
 
         # Add the attribute equations
-        self["equations"] = [((5,'name'),('concat',((3,'name'),('constant',' TownHall')))), ((5,'ApplyAttribute'),('constant','solveRef')), ((7,'name'),('concat',((3,'name'),('constant',' TownHall Committee')))), ((7,'ApplyAttribute'),('constant','solveRef')), ]
+        self["equations"] = [((5,'name'),('concat',((3,'name'),('constant',' TownHall')))), ((7,'name'),('concat',((3,'name'),('constant',' TownHall Committee')))), ]
 
         

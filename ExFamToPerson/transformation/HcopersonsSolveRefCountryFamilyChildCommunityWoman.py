@@ -133,6 +133,6 @@ class HcopersonsSolveRefCountryFamilyChildCommunityWoman(Himesis):
 		])
 
         # Add the attribute equations
-        self["equations"] = [((9,'ApplyAttribute'),('constant','solveRef')), ((11,'ApplyAttribute'),('constant','solveRef')), ]
+        self["equations"] = []
 
         

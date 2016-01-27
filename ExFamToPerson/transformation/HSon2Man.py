@@ -95,6 +95,6 @@ class HSon2Man(Himesis):
 		])
 
         # Add the attribute equations
-        self["equations"] = [((7,'fullName'),('concat',((3,'firstName'),(5,'lastName')))), ((7,'ApplyAttribute'),('constant','solveRef')), ]
+        self["equations"] = [((7,'fullName'),('concat',((3,'firstName'),(5,'lastName')))), ]
 
         

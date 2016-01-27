@@ -73,6 +73,6 @@ class HCountry2Community(Himesis):
 		])
 
         # Add the attribute equations
-        self["equations"] = [((5,'ApplyAttribute'),('constant','solveRef')), ]
+        self["equations"] = []
 
         
