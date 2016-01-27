@@ -39,9 +39,9 @@ class AtomicContract(Contract):
         self.connected = connected
         self.complete = complete
 
-        self.isolated_matcher = Matcher(isolated, disambig_matching = True)
-        self.connected_matcher = Matcher(connected, disambig_matching = True)
-        self.complete_matcher = Matcher(complete, disambig_matching = True)
+        self.isolated_matcher = Matcher(isolated, disambig_matching = True, max = 1)
+        self.connected_matcher = Matcher(connected, disambig_matching = True, max = 1)
+        self.complete_matcher = Matcher(complete, disambig_matching = True, max = 1)
 
         self.name = self.isolated.name[1:].replace("_IsolatedLHS", "").replace("_if", "")
 
