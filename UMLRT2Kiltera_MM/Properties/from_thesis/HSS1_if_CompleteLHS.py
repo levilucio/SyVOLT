@@ -72,7 +72,7 @@ return True
                 ])
         
                 # Add the attribute equations
-                self["equations"] = [((0,'pivot'),('constant','INST')), ((0,'name'),('constant','Handler')), ]
+                self["equations"] = [((0,'pivot'),('constant','INST')), ]
         
         
         def eval_attr11(self, attr_value, this):

@@ -10,7 +10,7 @@
       <class xsi:type="syvolt:AnyMatchClass" className="ExitPoint"/>
       <class xsi:type="syvolt:AnyMatchClass" className="Transition"/>
       <class xsi:type="syvolt:AnyMatchClass" className="SIBLING0"/>
-      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="transitions" source="//@hasProperty.0/@match.0/@class.1" target="//@hasProperty.0/@match.0/@class.2"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="outgoingTransitions" source="//@hasProperty.0/@match.0/@class.1" target="//@hasProperty.0/@match.0/@class.2"/>
       <association xsi:type="syvolt:PositiveMatchAssociation" associationName="type" source="//@hasProperty.0/@match.0/@class.2" target="//@hasProperty.0/@match.0/@class.3"/>
       <association xsi:type="syvolt:PositiveMatchAssociation" associationName="exitPoints" source="//@hasProperty.0/@match.0/@class.0" target="//@hasProperty.0/@match.0/@class.1"/>
     </match>

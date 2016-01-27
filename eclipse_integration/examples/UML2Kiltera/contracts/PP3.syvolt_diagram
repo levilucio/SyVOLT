@@ -153,7 +153,7 @@
             <styles xmi:type="notation:LineStyle" xmi:id="_HMj5o8QCEeWFe7xcygVxyw"/>
             <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_HMj5pMQCEeWFe7xcygVxyw"/>
             <element xmi:type="syvolt:ApplyClass" href="PP3.syvolt#//@hasProperty.0/@apply/@class.6"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_HMj5pcQCEeWFe7xcygVxyw" x="88" y="-2"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_HMj5pcQCEeWFe7xcygVxyw" x="52" y="-3"/>
           </children>
         </children>
         <styles xmi:type="notation:DescriptionStyle" xmi:id="_yTpxEcQBEeWFe7xcygVxyw"/>

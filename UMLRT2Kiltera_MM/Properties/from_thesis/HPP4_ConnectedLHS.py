@@ -104,7 +104,7 @@ return True
         
         
         # Nodes that represent the edges of the property.
-        # match association ExitPoint--transitions-->Transition node
+        # match association ExitPoint--outgoingTransitions-->Transition node
                 self.add_node()
                 self.vs[4]["MT_pre__attr1"] = """
 #===============================================================================
@@ -116,7 +116,7 @@ return True
 # The given constraint must evaluate to a boolean expression.
 #===============================================================================
 
-return attr_value == "transitions"
+return attr_value == "outgoingTransitions"
 """
 
                 self.vs[4]["MT_label__"] = """5"""
@@ -167,8 +167,8 @@ return attr_value == "exitPoints"
         
         # Add the edges
                 self.add_edges([
-                (1,4), # match_class ExitPoint() -> association transitions
-                (4,2), # association transitions  -> match_class Transition()
+                (1,4), # match_class ExitPoint() -> association outgoingTransitions
+                (4,2), # association outgoingTransitions  -> match_class Transition()
                 (2,5), # match_class Transition() -> association type
                 (5,3), # association type  -> match_class OUT2()
                 (0,6), # match_class State() -> association exitPoints
@@ -242,7 +242,7 @@ return attr_value == "exitPoints"
                 # The given constraint must evaluate to a boolean expression.
                 #===============================================================================
 
-                return attr_value == "transitions"
+                return attr_value == "outgoingTransitions"
 
 
         def eval_attr16(self, attr_value, this):

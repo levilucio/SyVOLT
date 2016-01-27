@@ -247,7 +247,7 @@ return True
         
                 
         # Nodes that represent the match associations of the property.
-        # match association ExitPoint--transitions-->Transition node
+        # match association ExitPoint--outgoingTransitions-->Transition node
                 self.add_node()
                 self.vs[11]["MT_subtypeMatching__"] = False
                 self.vs[11]["MT_pre__attr1"] = """
@@ -260,7 +260,7 @@ return True
 # The given constraint must evaluate to a boolean expression.
 #===============================================================================
 
-return attr_value == "transitions"
+return attr_value == "outgoingTransitions"
 """
                 self.vs[11]["MT_label__"] = """12"""
                 self.vs[11]["MT_subtypes__"] = []
@@ -523,8 +523,8 @@ return attr_value == "p"
                 (18,8), # association channelNames  -> apply_class Name()
                 (4,19), # apply_class Par() -> association p
                 (19,10), # association p  -> apply_class Trigger()
-                (1,11), # match_class ExitPoint() -> association transitions
-                (11,2), # association transitions  -> match_class Transition()
+                (1,11), # match_class ExitPoint() -> association outgoingTransitions
+                (11,2), # association outgoingTransitions  -> match_class Transition()
                 (2,12), # match_class Transition() -> association type
                 (12,3), # association type  -> match_class SIBLING0()
                 (0,13), # match_class State() -> association exitPoints
@@ -601,7 +601,7 @@ return attr_value == "p"
                         # The given constraint must evaluate to a boolean expression.
                         #===============================================================================
 
-                return attr_value == "transitions"
+                return attr_value == "outgoingTransitions"
 
 
         def eval_attr113(self, attr_value, this):

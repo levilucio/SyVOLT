@@ -7,9 +7,6 @@
         <attribute attributeName="pivot">
           <attributeValue xsi:type="syvolt:Atom" value="INST"/>
         </attribute>
-        <attribute attributeName="name">
-          <attributeValue xsi:type="syvolt:Atom" value="Handler"/>
-        </attribute>
       </class>
     </apply>
   </hasProperty>
@@ -21,13 +18,11 @@
           <attributeValue xsi:type="syvolt:Atom" value="INST"/>
         </attribute>
         <attribute attributeName="name">
-          <attributeValue xsi:type="syvolt:Atom" value="Handler"/>
+          <attributeValue xsi:type="syvolt:AttributeRef" attributeRef="//@hasProperty.1/@apply/@class.1/@attribute.0"/>
         </attribute>
       </class>
       <class className="ProcDef">
-        <attribute attributeName="name">
-          <attributeValue xsi:type="syvolt:Atom" value="Handler"/>
-        </attribute>
+        <attribute attributeName="name"/>
       </class>
     </apply>
   </hasProperty>
