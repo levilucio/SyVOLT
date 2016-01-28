@@ -509,7 +509,7 @@ class NewHimesisMatcher(object):
             patt_attr = patt_eq[0]
 
             #skip matching pivots
-            if patt_attr == "pivot" or patt_attr == "__ApplyAttribute":
+            if patt_attr == "pivot" or "ApplyAttribute" in patt_attr:
                 continue
 
             patt_value = patt_eq[1]
