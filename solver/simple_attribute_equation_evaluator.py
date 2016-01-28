@@ -27,6 +27,10 @@ def is_consistent(graph, verbosity=0):
     for eq in eqs:
         node = eq[0][0]
         attr = eq[0][1]
+
+        if attr == "pivot" or "ApplyAttribute" in attr:
+            continue
+            
         value = eq[1]
 
         i += 1
