@@ -69,6 +69,10 @@ class NewHimesisMatcher(object):
             if eq[1][0] == "constant":
                 node_num = eq[0][0]
                 attr = eq[0][1]
+
+                if attr == "pivot" or "ApplyAttribute" in attr:
+                    continue
+
                 try:
                     eqs_constant[node_num].append((attr, eq[1][1]))
                 except KeyError:
@@ -507,11 +511,6 @@ class NewHimesisMatcher(object):
 
         for patt_eq in patt_equations:
             patt_attr = patt_eq[0]
-
-            #skip matching pivots
-            if patt_attr == "pivot" or "ApplyAttribute" in patt_attr:
-                continue
-
             patt_value = patt_eq[1]
 
             found = False
