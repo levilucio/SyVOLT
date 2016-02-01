@@ -102,10 +102,14 @@ class ContractProver():
         for worker in workers:
             [fail, succeed] = results_queue.get()
 
+            print("Thread finished at time: " + str(time.time() - start_time))
+
             for contract_name in fail.keys():
                 contract_failed_pcs[contract_name] += fail[contract_name]
             for contract_name in succeed.keys():
                 contract_succeeded_pcs[contract_name] += succeed[contract_name]
+
+
 
         proof_time = time.time() - start_time
         num_contracts_to_print = 20

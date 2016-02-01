@@ -63,25 +63,25 @@ class Slicer():
                 #if "UnionMother" not in rule.name:
                 #    continue
 
-                r_rules = self.find_required_rules(rule)
+                r_rules = self.find_required_rules(rule.name, [rule])
                 r_rules = sorted([r.name for r in r_rules])
                 print("Rule " + rule.name + " depends on: " + str(r_rules))
 
 
 
 
-    def find_required_rules(self, graph, is_contract = False, verbosity = 0):
+    def find_required_rules(self, graph_name, graph_list, is_contract = False, verbosity = 0):
 
 
         if self.debug:
-            print("\nLooking for required rules for graph: " + graph.name)
+            print("\nLooking for required rules for graph: " + graph_name)
 
 
-        try:
-            supertypes = graph["superclasses_dict"]
-        except KeyError:
-            print("Graph: " + graph.name + " does not have a superclasses dict")
-            supertypes = []
+        # try:
+        #     supertypes = graph["superclasses_dict"]
+        # except KeyError:
+        #     print("Graph: " + graph.name + " does not have a superclasses dict")
+        #     supertypes = []
 
 
 
@@ -93,7 +93,7 @@ class Slicer():
             #don't look at the same layer that a rule is on
             rule_names = [r.name for r in layer]
 
-            if graph.name in rule_names:
+            if graph_name in rule_names:
                 break
 
             for rule in layer:
@@ -113,10 +113,11 @@ class Slicer():
                 #     print("Apply Elements: " + str(self.apply_elements[rule.name]))
 
 
-                graph["superclasses_dict"] = rule["superclasses_dict"]
+                for graph in graph_list:
+                    graph["superclasses_dict"] = rule["superclasses_dict"]
 
-                if match_links(graph, self.data[graph.name], rule, self.data[rule.name], verbosity=0):
-                    required_rules.append(rule)
+                    if match_links(graph, self.data[graph.name], rule, self.data[rule.name], verbosity=0):
+                        required_rules.append(rule)
 
                 # for dl in dls:
                 #
@@ -213,21 +214,37 @@ class Slicer():
         return list(set(required_rules))
 
 
-    def slice_transformation(self, contract):
+    def decompose_contract(self, contract):
 
-        contract = contract[1].complete
-        contract_name = contract.name
+        contract_list = contract[1].get_graph()
+        contract_name = contract[1].name
 
         print("Slicing for: " + contract_name)
 
-        data = decompose_graph(contract, verbosity = 2)
-        self.direct_links[contract_name] = data["direct_links"]
-        self.backward_links[contract_name] = data["backward_links"]
-        self.match_elements[contract_name] = data["match_elements"]
-        self.isolated_match_elements[contract_name] = data["isolated_match_elements"]
-        self.apply_elements[contract_name] = data["apply_elements"]
-        self.data[contract_name] = data
+        self.direct_links[contract_name] = []
+        self.backward_links[contract_name] = []
+        self.match_elements[contract_name] = []
+        self.isolated_match_elements[contract_name] = []
+        self.apply_elements[contract_name] = []
 
+        for c in contract_list:
+
+            data = decompose_graph(c, verbosity = 2)
+
+            self.direct_links[c.name] = data["direct_links"]
+            self.backward_links[c.name] = data["backward_links"]
+            self.match_elements[c.name] = data["match_elements"]
+            self.isolated_match_elements[c.name] = data["isolated_match_elements"]
+            self.apply_elements[c.name] = data["apply_elements"]
+
+            self.data[c.name] = data
+
+        return contract_name, contract_list
+
+
+    def slice_transformation(self, contract):
+
+        contract_name, contract_list = self.decompose_contract(contract)
 
         if self.debug:
             #print("Direct links: " + str(self.direct_links))
@@ -238,7 +255,7 @@ class Slicer():
                     graph_to_dot(rule.name, rule)
 
 
-        required_rules = self.find_required_rules(contract, True, verbosity=2)
+        required_rules = self.find_required_rules(contract_name, contract_list, True, verbosity=2)
 
 
         rr_names = [rule.name for rule in required_rules]
@@ -249,7 +266,7 @@ class Slicer():
 
         for rr in required_rules:
 
-            new_rrs = self.find_required_rules(rr, self.transformation)
+            new_rrs = self.find_required_rules(rr.name, [rr], self.transformation)
             for new_rr in new_rrs:
                 if new_rr not in required_rules:
                     required_rules.append(new_rr)

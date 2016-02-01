@@ -33,7 +33,7 @@ class AtomicContract(Contract):
 
         super(AtomicContract, self).__init__()
 
-
+        self.__name__ = "AtomicContract"
 
         self.isolated = isolated
         self.connected = connected
@@ -65,6 +65,9 @@ class AtomicContract(Contract):
 
         #print("Connected Data: " + str(self.connected_data))
         #print("Complete Data: " + str(self.complete_data))
+
+    def get_graph(self):
+        return [self.complete]
 
     def draw(self):
 

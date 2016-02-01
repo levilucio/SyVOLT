@@ -27,12 +27,15 @@ class prover_worker(Process):
 
         print("Starting contract prover worker")
 
+        #self.verbosity = 2
         while True:
 
             pc, pc_name = self.pc_queue.get()
 
             if pc_name == "STOP":
                 break
+
+            #print("PC: " + pc_name)
 
             pc = expand_graph(pc)
             pc.name = pc_name

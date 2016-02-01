@@ -10,6 +10,13 @@ class IfThenContract(Contract):
 
         self.name = self.if_contract.name
 
+        self.__name__ = "IfThenContract"
+
+    def get_graph(self):
+        if_graph = self.if_contract.get_graph()
+        then_graph = self.then_contract.get_graph()
+        return if_graph + then_graph
+
     def check_isolated(self, pc):
         return self.if_contract.check_isolated(pc)
 
@@ -63,7 +70,7 @@ class IfThenContract(Contract):
             #so the pivots don't match
             #FAILURE is returned from an AND contract if the guids were different
             if if_guid != then_guid or then_guid == "FAILURE":
-                return self.COMPLETE_NOT_FOUND
+                return self.NO_COMPLETE
         return self.COMPLETE_FOUND
 
 

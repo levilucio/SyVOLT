@@ -8,6 +8,9 @@ class NotContract(Contract):
         self.contract = atomic_contract
         self.name = atomic_contract.name
 
+    def get_graph(self):
+        return self.contract.get_graph()
+
     def check_isolated(self, pc):
         return self.contract.check_isolated(pc)
 
@@ -38,6 +41,11 @@ class AndContract(Contract):
         self.contract_2 = atomic_contract_2
 
         self.name = atomic_contract_1.name
+
+    def get_graph(self):
+        contract_1 = self.contract_1.get_graph()
+        contract_2 = self.contract_2.get_graph()
+        return contract_1 + contract_2
 
     def check_isolated(self, pc):
 
@@ -96,6 +104,11 @@ class OrContract(Contract):
         self.contract_2 = atomic_contract_2
 
         self.name = atomic_contract_1.name
+
+    def get_graph(self):
+        contract_1 = self.contract_1.get_graph()
+        contract_2 = self.contract_2.get_graph()
+        return contract_1 + contract_2
 
     def check_isolated(self, pc):
 
