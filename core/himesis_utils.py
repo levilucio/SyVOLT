@@ -77,8 +77,11 @@ def graph_to_dot(name, g, verbosity = 0):
     nodes = {}
     graph = pydot.Dot(name, graph_type='digraph')
 
-    mms = g.vs["mm__"]
-
+    try:
+        mms = g.vs["mm__"]
+    except KeyError:
+        mms = []
+        
     internal_links = {}
 
     i = 0
