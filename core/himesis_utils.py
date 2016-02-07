@@ -81,7 +81,7 @@ def graph_to_dot(name, g, verbosity = 0):
         mms = g.vs["mm__"]
     except KeyError:
         mms = []
-        
+
     internal_links = {}
 
     i = 0
@@ -89,7 +89,7 @@ def graph_to_dot(name, g, verbosity = 0):
     
         node_type = str(v['mm__'])
         
-        vattr += node_type + str(i)
+        vattr = node_type + str(i)
         i += 1
         
         try:
@@ -106,7 +106,6 @@ def graph_to_dot(name, g, verbosity = 0):
             # fillcolor="lightgray"
 
             internal_links[int(v.index)] = {}
-            vattr = ''
             continue
 
             
@@ -116,7 +115,6 @@ def graph_to_dot(name, g, verbosity = 0):
         elif node_type in ['match_contains', 'MT_pre__match_contains', 'MT_post__match_contains']:
             #fillcolor="#F798A1"
             internal_links[int(v.index)] = {}
-            vattr = ''
             continue
             
         elif node_type in ['ApplyModel', 'MT_pre__ApplyModel', 'MT_post__ApplyModel']:
@@ -125,7 +123,6 @@ def graph_to_dot(name, g, verbosity = 0):
         elif node_type in ['apply_contains', 'MT_pre__apply_contains', 'MT_post__apply_contains']:
             #fillcolor="#FCDB58"
             internal_links[int(v.index)] = {}
-            vattr = ''
             continue
 
         elif node_type in ['Equation', 'MT_pre__Equation', 'MT_post__Equation']:
@@ -190,10 +187,14 @@ def graph_to_dot(name, g, verbosity = 0):
 
                  
         elif node_type in ['backward_link', "MT_pre__backward_link", "MT_post__backward_link"]:
-            fillcolor="coral" 
+            fillcolor="coral"
+            internal_links[int(v.index)] = {}
+            continue
             
         elif node_type in ['trace_link', 'MT_pre__trace_link', 'MT_post__trace_link']:
             fillcolor="lightgoldenrod"
+            internal_links[int(v.index)] = {}
+            continue
               
         else:
 
@@ -212,9 +213,7 @@ def graph_to_dot(name, g, verbosity = 0):
             vattr += "\\n" + str(v['GUID__'])
                 
         nodes[v.index] = pydot.Node(vattr, style="filled", fillcolor=fillcolor)
-        graph.add_node(nodes[v.index])  
-        
-        vattr = ''
+        graph.add_node(nodes[v.index])
         
     try:
         eqs = g["equations"]
@@ -242,15 +241,31 @@ def graph_to_dot(name, g, verbosity = 0):
         else:
             graph.add_edge(pydot.Edge(nodes[src],nodes[trgt]))
 
-    link_colours = {"paired_with":"darkgray", "match_contains":"#6E2229", "apply_contains":"#938344"}
+    link_colours = {"paired_with":"#505050", "match_contains":"#6E2229", "apply_contains":"#938344",
+                    "trace_link":"darkgoldenrod", "backward_link":"#B9512B"}
     for link in internal_links.keys():
-        mm = mms[link]
+        mm = mms[link].replace("MT_pre__", "")
         src = internal_links[link]["source"]
         trgt = internal_links[link]["target"]
 
         #print("MM: " + str(mm) + " Source: " + str(src) + " Target: " + str(trgt))
 
-        graph.add_edge(pydot.Edge(nodes[src], nodes[trgt], color=link_colours[mm]))
+
+        color = link_colours[mm]
+        label = ""
+        arrowhead = "vee"
+        penwidth = 1
+
+        if mm == "trace_link" or mm == "backward_link":
+            temp = src
+            src = trgt
+            trgt = temp
+
+            label = mm
+            arrowhead="none"
+            penwidth = 2
+
+        graph.add_edge(pydot.Edge(nodes[src], nodes[trgt], color=color, label=label, arrowhead=arrowhead, penwidth = penwidth))
 
     if len(name) > 250:
         replace_tokens = [["HEmptyPathCondition", ""],
