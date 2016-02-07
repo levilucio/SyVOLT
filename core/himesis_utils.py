@@ -69,10 +69,6 @@ def graph_to_dot(name, g, verbosity = 0):
     verbosity = 1, represent these edges as their own node
     """
 
-
-    #print("Name: " + name)
-
-
     if g is None:
         print("graph_to_dot Error: Empty graph")
         return 
@@ -81,11 +77,14 @@ def graph_to_dot(name, g, verbosity = 0):
     nodes = {}
     graph = pydot.Dot(name, graph_type='digraph')
 
+    mms = g.vs["mm__"]
+
+    internal_links = {}
+
     i = 0
     for v in g.vs:
     
         node_type = str(v['mm__'])
-        node_GUID = str(v['GUID__'])[-12:]
         
         vattr += node_type + str(i)
         i += 1
@@ -95,28 +94,36 @@ def graph_to_dot(name, g, verbosity = 0):
             vattr += "\\n Label " + label
         except Exception:
             pass
-                
-        fillcolor = "lightblue"
         
         if node_type in ['paired_with', 'MT_pre__paired_with', 'MT_post__paired_with']:
-            try:
-                vattr += "\\n Rule = " + str(v['rulename'])
-            except KeyError:
-                pass
-            fillcolor="lightgray"
+            # try:
+            #     vattr += "\\n Rule = " + str(v['rulename'])
+            # except KeyError:
+            #     pass
+            # fillcolor="lightgray"
+
+            internal_links[int(v.index)] = {}
+            vattr = ''
+            continue
+
             
         elif node_type in ['MatchModel', 'MT_pre__MatchModel', 'MT_post__MatchModel']:
             fillcolor="#E15C34"
             
         elif node_type in ['match_contains', 'MT_pre__match_contains', 'MT_post__match_contains']:
-            fillcolor="#F798A1"
-            #vattr += "\\n" + str(v['GUID__'])
+            #fillcolor="#F798A1"
+            internal_links[int(v.index)] = {}
+            vattr = ''
+            continue
             
         elif node_type in ['ApplyModel', 'MT_pre__ApplyModel', 'MT_post__ApplyModel']:
             fillcolor="#FED017"  
             
         elif node_type in ['apply_contains', 'MT_pre__apply_contains', 'MT_post__apply_contains']:
-            fillcolor="#FCDB58"
+            #fillcolor="#FCDB58"
+            internal_links[int(v.index)] = {}
+            vattr = ''
+            continue
 
         elif node_type in ['Equation', 'MT_pre__Equation', 'MT_post__Equation']:
             fillcolor = "#66FF33"
@@ -184,30 +191,8 @@ def graph_to_dot(name, g, verbosity = 0):
             
         elif node_type in ['trace_link', 'MT_pre__trace_link', 'MT_post__trace_link']:
             fillcolor="lightgoldenrod"
-            #if  verbosity == 1:
-              #  nodes[v.index] = pydot.Node(vattr, style="filled", fillcolor="chocolate")
-              
               
         else:
-            # try:
-            #     vattr += "\\n Classtype = " + str(v['classtype'])
-            # except Exception:
-            #     pass
-                
-            # try:
-            #     vattr += "\\n Name = " + str(v['name'])
-            # except Exception:
-            #     pass
-                
-            # try:
-            #     vattr += get_attribute("\\n Classtype = ", v['MT_pre__classtype'])
-            # except Exception:
-            #     pass
-            #
-            # try:
-            #     vattr += get_attribute("\\n Name = ", v['MT_pre__name'])
-            # except Exception:
-            #     pass
 
             try:
               vattr += get_attribute("\\nPivotIn = ", v['MT_pivotIn__'])
@@ -237,13 +222,34 @@ def graph_to_dot(name, g, verbosity = 0):
 
     except KeyError:
         print("No equations on " + g.name)
-        
+
         
     for e in g.es:
-        graph.add_edge(pydot.Edge(nodes[e.source],nodes[e.target]))
 
+        src = int(e.source)
+        trgt = int(e.target)
 
-    if len(name) > 100:
+        if src in internal_links.keys():
+            internal_links[src]["target"] = trgt
+            continue
+        elif trgt in internal_links.keys():
+            internal_links[trgt]["source"] = src
+            continue
+
+        else:
+            graph.add_edge(pydot.Edge(nodes[src],nodes[trgt]))
+
+    link_colours = {"paired_with":"darkgray", "match_contains":"#6E2229", "apply_contains":"#938344"}
+    for link in internal_links.keys():
+        mm = mms[link]
+        src = internal_links[link]["source"]
+        trgt = internal_links[link]["target"]
+
+        #print("MM: " + str(mm) + " Source: " + str(src) + " Target: " + str(trgt))
+
+        graph.add_edge(pydot.Edge(nodes[src], nodes[trgt], color=link_colours[mm]))
+
+    if len(name) > 250:
         replace_tokens = [["HEmptyPathCondition", ""],
                           ["_", ""],["a", ""],["e", ""],["i", ""],
                           ["o", ""],["u", ""],["y", ""],["-", ""],
