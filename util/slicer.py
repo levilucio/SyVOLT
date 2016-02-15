@@ -2,8 +2,6 @@
 from core.himesis_utils import graph_to_dot
 from util.decompose_graph import decompose_graph, match_links
 
-from PyRamify import PyRamify
-
 from core.match_algo import HimesisMatcher
 from core.himesis_plus import makePreConditionPattern
 

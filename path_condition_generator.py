@@ -31,7 +31,6 @@ from core.himesis_utils import build_traceability
 #from solver.prolog_attribute_equation_evaluator import PrologAttributeEquationEvaluator
 from solver.simple_attribute_equation_evaluator import SimpleAttributeEquationEvaluator
 
-from PyRamify import PyRamify
 from PropertyProverTester import PropertyProverTester
 
 import multiprocessing

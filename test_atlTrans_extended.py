@@ -13,7 +13,7 @@ from path_condition_generator import PathConditionGenerator
 from t_core.matcher import Matcher
 from t_core.messages import Packet
 
-from PyRamify import PyRamify
+from pyramify.PyRamify import PyRamify
 
 from util.test_script_utils import select_rules, get_sub_and_super_classes
 from util.slicer import Slicer
