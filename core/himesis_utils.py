@@ -252,7 +252,7 @@ def graph_to_dot(name, g, verbosity = 0):
 
 
         color = link_colours[mm]
-        label = "''"
+        label = mm
         arrowhead = "vee"
         penwidth = 1
 
@@ -261,7 +261,6 @@ def graph_to_dot(name, g, verbosity = 0):
             src = trgt
             trgt = temp
 
-            label = mm
             arrowhead="none"
             penwidth = 2
 
