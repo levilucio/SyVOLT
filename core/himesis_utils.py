@@ -211,7 +211,7 @@ def graph_to_dot(name, g, verbosity = 0):
             fillcolor="lightblue"
 
             vattr += "\\n" + str(v['GUID__'])
-                
+
         nodes[v.index] = pydot.Node(vattr, style="filled", fillcolor=fillcolor)
         graph.add_node(nodes[v.index])
         
@@ -244,7 +244,7 @@ def graph_to_dot(name, g, verbosity = 0):
     link_colours = {"paired_with":"#505050", "match_contains":"#6E2229", "apply_contains":"#938344",
                     "trace_link":"darkgoldenrod", "backward_link":"#B9512B"}
     for link in internal_links.keys():
-        mm = mms[link].replace("MT_pre__", "")
+        mm = mms[link].replace("MT_pre__", "").replace("MT_post__", "")
         src = internal_links[link]["source"]
         trgt = internal_links[link]["target"]
 
@@ -252,7 +252,7 @@ def graph_to_dot(name, g, verbosity = 0):
 
 
         color = link_colours[mm]
-        label = ""
+        label = "''"
         arrowhead = "vee"
         penwidth = 1
 
@@ -281,13 +281,24 @@ def graph_to_dot(name, g, verbosity = 0):
 
     name = name[:240]
 
+    svg_filename = './dot/' + name + '.svg'
+
+
     try:
-        svg_filename = './dot/' + name + '.svg'
         graph.write_svg(svg_filename, prog = 'dot')
 
     except Exception as e:
         print("Error in graph_to_dot: " + str(e))
-        raise e
+        #raise(e)
+
+        dot_filename = svg_filename.replace(".svg", ".dot")
+        graph.write(dot_filename, prog='dot')
+
+        command = "dot -Tsvg " + dot_filename + " -o " + svg_filename
+        subprocess.call(command, shell=True)
+
+        command = "rm " + dot_filename
+        subprocess.call(command, shell=True)
 
 
 def draw_graphs(title, g_dir):
