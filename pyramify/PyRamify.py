@@ -279,19 +279,6 @@ class PyRamify:
         if partial:
             s = s + "LHS"
         return s
-        
-
-
-    #very hacky
-    #removes this attribute in the graph nodes
-    def fix_attrs_for_backward_patterns(self, graph):
-        # for node in graph.vs:
-        #     try:
-        #         del node["MT_pre__associationType"]
-        #     except Exception:
-        #         pass
-
-        return graph
 
     # create the backward patterns for this file
     def get_backward_patterns(self, rule):
@@ -391,10 +378,6 @@ class PyRamify:
         #write out the file
         new_graph.name = new_name
         new_graph["name"] = new_name
-
-
-        #BIG HACK
-        new_graph = self.fix_attrs_for_backward_patterns(new_graph)
 
         #remove equations for backward patterns
         new_graph["equations"] = []
@@ -860,9 +843,6 @@ class PyRamify:
             
             combinator_matchers[i].name = new_name
             combinator_matchers[i]["name"] = new_name + "_rc_matcher"    
-    
-            #BIG HACK
-            combinator_matchers[i] = self.fix_attrs_for_backward_patterns(combinator_matchers[i])
     
             file_name = combinator_matchers[i].compile(out_dir)
             if self.verbosity >= 2:
