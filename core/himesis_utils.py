@@ -573,8 +573,8 @@ def build_traceability(graph):
     match_nodes = []
     apply_nodes = []
 
-    match_in_backward = []
-    apply_in_backward = []
+    match_in_linked = []
+    apply_in_linked = []
 
     for e in graph.es:
         source = e.source
@@ -585,29 +585,33 @@ def build_traceability(graph):
         elif mms[source] == "apply_contains":
             apply_nodes.append(target)
 
-        if mms[source] == "backward_link":
-            match_in_backward.append([source, target])
-        elif mms[target] == "backward_link":
-            apply_in_backward.append([target, source])
+        if mms[source] in ["backward_link", "trace_link"]:
+            match_in_linked.append([source, target])
+        elif mms[target] in ["backward_link", "trace_link"]:
+            apply_in_linked.append([target, source])
 
     for match in match_nodes:
         for apply in apply_nodes:
 
-            backward_link = False
-            for apply_back_link, apply_element in apply_in_backward:
+            has_link = False
+            for apply_back_link, apply_element in apply_in_linked:
+
+                if has_link:
+                    break
 
                 #if this apply node has a backward link
                 if apply == apply_element:
 
-                    for match_back_link, match_element in match_in_backward:
+                    for match_back_link, match_element in match_in_linked:
 
                         #if this match node has a backward link
                         #and its the same backward link
                         if match == match_element and match_back_link == apply_back_link:
-                            backward_link = True
+                            has_link = True
+                            break
 
-            #there's a backward link, so ignore this match/apply element pair
-            if backward_link:
+            #there's a backward or trace link, so ignore this match/apply element pair
+            if has_link:
                 continue
 
             #print("Building link: " + str(match) + " to " + str(apply))
