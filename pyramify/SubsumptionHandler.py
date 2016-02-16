@@ -1,6 +1,8 @@
 
 from itertools import permutations
 from t_core.messages import Packet
+from core.himesis_plus import find_nodes_with_mm
+import traceback
 
 class SubsumptionHandler:
 
@@ -9,6 +11,40 @@ class SubsumptionHandler:
         self.transformation_layers = transformation_layers
 
         self.loopingRuleSubsumption = []
+        self.ruleSubsumption = {}
+
+    # return the layer a rule occurs in
+    def layer_rule_occurs_in(self, rule):
+        for layerIndex in range(len(self.transformation_layers)):
+            for ruleIndex in range(len(self.transformation_layers[layerIndex])):
+                if rule == self.transformation_layers[layerIndex][ruleIndex].name:
+                    return layerIndex
+        return None
+
+        # check if a rule has backward links
+
+    def rule_has_backward_links(self, rule):
+        rule_object = self.rules[rule]
+        backwards_links = find_nodes_with_mm(rule_object, ["backward_link"])
+        if len(backwards_links) == 0:
+            return False
+        return True
+
+    # find all the rules that subsume a given rule
+    def get_subsuming_rules(self, rule):
+        foundParent = False
+        subsuming_rules = []
+        for ruleKey in sorted(self.ruleSubsumption.keys()):
+            if rule in set(self.ruleSubsumption[ruleKey]):
+                # check for loops when two rules subsume each other
+                if rule not in set(subsuming_rules):
+                    foundParent = True
+                    subsuming_rules.append(ruleKey)
+                    subsuming_rules.extend(self.get_subsuming_rules(ruleKey))
+        if not foundParent:
+            return []
+        else:
+            return subsuming_rules
 
     # calculate the partial order induced by rule match subsumption for all rules in the transformation.
     def calculate_rule_subsumption(self, matchRulePatterns):
@@ -126,16 +162,54 @@ class SubsumptionHandler:
                 else:
                     ruleSubsumption[pair[1]] = [pair[0]]
 
+        self.ruleSubsumption = ruleSubsumption
+
         return ruleSubsumption
 
+    # Calculate if the rules need special treatment because they overlap.
+    # This happens when:
+    # - Rule A is subsumed by Rule B, rule A has no backward links and Rule B appears in the same layer as rule A, or in a layer before
+    # - Rule A is subsumed by rule B and both rule A and rule B have backward links and Rule A appears in the same layer as rule B
+    # returns a list of pairs of rules for which combinators need to be built for
+    def get_rules_needing_overlap_treatment(self):
+        rules_needing_overlap_treatment = {}
+        for rule in sorted(self.rules.keys()):
+            subsuming_rules = self.get_subsuming_rules(rule)
 
-    # return the layer a rule occurs in
-    def layer_rule_occurs_in(self, rule):
-        for layerIndex in range(len(self.transformation_layers)):
-            for ruleIndex in range(len(self.transformation_layers[layerIndex])):
-                if rule == self.transformation_layers[layerIndex][ruleIndex].name:
-                    return layerIndex
-        return None
+            for s_rule in subsuming_rules:
+                #                 print("---------------------------------")
+                #                 print("Rule: " + str(rule))
+                # #                 print "Has backward links: " + str(self.rule_has_backward_links(rule))
+                # #                 print "Position: " + str(self.layer_rule_occurs_in(rule))
+                #                 print("Subsuming Rule: " + str(s_rule))
+                # #                 print "Has backward links: " + str(self.rule_has_backward_links(s_rule))
+                # #                 print "Position: " + str(self.layer_rule_occurs_in(s_rule))
+                #                 print("---------------------------------")
+
+                try:
+                    if (not self.rule_has_backward_links(rule) and not self.rule_has_backward_links(s_rule)) or \
+                            (not self.rule_has_backward_links(rule) and self.rule_has_backward_links(s_rule)):
+                        if self.layer_rule_occurs_in(rule) >= self.layer_rule_occurs_in(s_rule):
+                            if rule in rules_needing_overlap_treatment.keys():
+                                rules_needing_overlap_treatment[rule].append(s_rule)
+                            else:
+                                rules_needing_overlap_treatment[rule] = [s_rule]
+
+                    elif (self.rule_has_backward_links(rule) and self.rule_has_backward_links(s_rule)):
+                        if self.layer_rule_occurs_in(rule) == self.layer_rule_occurs_in(s_rule):
+                            if rule in rules_needing_overlap_treatment.keys():
+                                rules_needing_overlap_treatment[rule].append(s_rule)
+                            else:
+                                rules_needing_overlap_treatment[rule] = [s_rule]
+                except Exception:
+                    print("ERROR in rules_needing_overlap_treatment()")
+                    tb = traceback.format_exc()
+                    print(tb)
+
+        return rules_needing_overlap_treatment
+
+
+
 
     def remove_subsumption_between_rules(self, ruleSubsumption):
         # remove from the subsumption relation subsumption between a rule in a layer and a rule in a layer appearing before
@@ -155,10 +229,18 @@ class SubsumptionHandler:
             print("Subsumption")
             print(ruleSubsumption)
 
+            self.ruleSubsumption = ruleSubsumption
+
             return ruleSubsumption
         except Exception as e:
             print(e)
             raise Exception("Error in subsuming rules")
+
+    # # remove loops in the subsumption relation by defining only one subsumption direction between rules that subsume each other.
+    #     # remove all upward subsumption relations for any but the top rule in the rules that subsume each other.
+    #     # remove all downward subsumption relations for any but the bottom rule in the rules that subsume each other.
+    #def removeLoops(self):
+
 
     def cleanLoopingRuleSubsumption(self):
         # remove from loopingRuleSubsumption relation rules that completeley overlap but belong to different layers, as they
@@ -182,3 +264,5 @@ class SubsumptionHandler:
                     newLoopingRuleSubsumption.append(loopDict[layer])
 
         self.loopingRuleSubsumption = newLoopingRuleSubsumption
+
+        return self.loopingRuleSubsumption

@@ -653,7 +653,7 @@ class PyRamify:
        
         subsuming_rules = []
         
-        if name in self.rules_needing_overlap_treatment():
+        if name in self.rulesNeedingOverlapTreatment:
             subsuming_rules = self.get_subsuming_rules(name)
         
 #             print "-----------------------------"
@@ -964,69 +964,6 @@ class PyRamify:
             return subsuming_rules
 
 
-
-
-
-    # return the layer a rule occurs in
-    def layer_rule_occurs_in(self, rule):
-        for layerIndex in range(len(self.transformation_layers)):
-            for ruleIndex in range(len(self.transformation_layers[layerIndex])):
-                if rule == self.transformation_layers[layerIndex][ruleIndex].name:
-                    return layerIndex
-        return None
-        
-
-    # Calculate if the rules need special treatment because they overlap.
-    # This happens when:
-    # - Rule A is subsumed by Rule B, rule A has no backward links and Rule B appears in the same layer as rule A, or in a layer before
-    # - Rule A is subsumed by rule B and both rule A and rule B have backward links and Rule A appears in the same layer as rule B
-    # returns a list of pairs of rules for which combinators need to be built for
-    def rules_needing_overlap_treatment(self):
-        rules_needing_overlap_treatment = {}
-        for rule in sorted(self.rules.keys()):
-            subsuming_rules = self.get_subsuming_rules(rule)           
-            
-            for s_rule in subsuming_rules:
-                
-#                 print("---------------------------------")
-#                 print("Rule: " + str(rule))
-# #                 print "Has backward links: " + str(self.rule_has_backward_links(rule))
-# #                 print "Position: " + str(self.layer_rule_occurs_in(rule))
-#                 print("Subsuming Rule: " + str(s_rule))
-# #                 print "Has backward links: " + str(self.rule_has_backward_links(s_rule))
-# #                 print "Position: " + str(self.layer_rule_occurs_in(s_rule))
-#                 print("---------------------------------")
-
-                try:
-                    if (not self.rule_has_backward_links(rule) and not self.rule_has_backward_links(s_rule)) or\
-                       (not self.rule_has_backward_links(rule) and self.rule_has_backward_links(s_rule)):
-                        if self.layer_rule_occurs_in(rule) >= self.layer_rule_occurs_in(s_rule):
-                            if rule in rules_needing_overlap_treatment.keys():
-                                rules_needing_overlap_treatment[rule].append(s_rule)
-                            else:
-                                rules_needing_overlap_treatment[rule] = [s_rule]
-
-                    elif (self.rule_has_backward_links(rule) and self.rule_has_backward_links(s_rule)):
-                        if self.layer_rule_occurs_in(rule) == self.layer_rule_occurs_in(s_rule):
-                            if rule in rules_needing_overlap_treatment.keys():
-                                rules_needing_overlap_treatment[rule].append(s_rule)
-                            else:
-                                rules_needing_overlap_treatment[rule] = [s_rule]
-                except Exception:
-                    print("ERROR in rules_needing_overlap_treatment()")
-                    tb = traceback.format_exc()
-                    print(tb)
-        
-        return rules_needing_overlap_treatment
-    
-    
-#     # remove loops in the subsumption relation by defining only one subsumption direction between rules that subsume each other.
-#     # remove all upward subsumption relations for any but the top rule in the rules that subsume each other.
-#     # remove all downward subsumption relations for any but the bottom rule in the rules that subsume each other.
-#     def remove_subsumption_loops(self):                    
-#         for rule1 in self.rules.keys():
-#             for rule2 in self.rules.keys()
-
     #ramify a whole directory
     #@do_cprofile
     def ramify_directory(self, dir_name, transformation_layers):
@@ -1070,10 +1007,8 @@ class PyRamify:
 
         subsumptionHandler = SubsumptionHandler(self.rules, self.transformation_layers)
         self.ruleSubsumption = subsumptionHandler.calculate_rule_subsumption(matchRulePatterns)
-        self.loopingRuleSubsumption = subsumptionHandler.loopingRuleSubsumption
         
-        rulesNeedingOverlapTreatment = self.rules_needing_overlap_treatment()
-        
+        self.rulesNeedingOverlapTreatment = subsumptionHandler.get_rules_needing_overlap_treatment()
 
         #build the combinators only after calculating the dependencies between rules
         for layer in transformation_layers:
@@ -1087,7 +1022,7 @@ class PyRamify:
 
         self.ruleSubsumption = subsumptionHandler.remove_subsumption_between_rules(self.ruleSubsumption)
 
-        subsumptionHandler.cleanLoopingRuleSubsumption()
+        loopingRuleSubsumption = subsumptionHandler.cleanLoopingRuleSubsumption()
 
         #print("Rules that need overlap treatment: " + str(rulesNeedingOverlapTreatment))
         #print("Subsumption order between rules for all layers: " + str(self.ruleSubsumption))
@@ -1097,7 +1032,7 @@ class PyRamify:
         print("Finished PyRamify")
         print("==================================\n")                    
 
-        return [rules, backwardPatterns, backwardPatterns2Rules, {}, matchRulePatterns, ruleCombinators, rulesNeedingOverlapTreatment, self.ruleSubsumption, subsumptionHandler.loopingRuleSubsumption]
+        return [rules, backwardPatterns, backwardPatterns2Rules, {}, matchRulePatterns, ruleCombinators, self.rulesNeedingOverlapTreatment, self.ruleSubsumption, loopingRuleSubsumption]
 
 
     #================================================================================
