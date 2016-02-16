@@ -28,7 +28,7 @@ class Prover():
         pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
 
 
-        do_handbuilt_transformation = True
+        do_handbuilt_transformation = args.handbuilt
 
         if do_handbuilt_transformation:
             r0 = 'HState2ProcDef'
@@ -50,35 +50,47 @@ class Prover():
             r16 = 'HConnectOPState2CProcDefTransition2InstotherInTransitions'
 
             full_transformation = [[r1, ], [r0, ], [r4, r5, r6, ], [r7, r8, r9, ], [r10, r11, r12, ],
-                                   [r13, r14, r15, r16, ], [r2, r3, ], ]
+                                   [r13, r14, r15, r16, ], [r2], [r3, ], ]
 
             rules_dir = "UMLRT2Kiltera_MM/transformation/handbuilt/"
 
         else:
-            r0 = 'HState2ProcDef'
-            r1 = 'HMapRootElementRule'
-            r2 = 'HRuleConnect2RootElement'
-            r3 = 'HMapHeirarchyOfStates2HeirarchyOfProcs'
-            r4 = 'HBasicStateNoOutgoing2ProcDef'
-            r5 = 'HBasicState2ProcDef'
-            r6 = 'HCompositeState2ProcDef'
-            r7 = 'HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans'
-            r8 = 'HState2HProcDef'
-            r9 = 'HState2CProcDef'
-            r10 = 'HTransition2QInstSIBLING'
-            r11 = 'HTransition2QInstOUT'
-            r12 = 'HTransition2Inst'
-            r13 = 'HTransition2ListenBranch'
-            r14 = 'HConnectOutputsOfExitPoint2BProcDefTransition2QInst'
-            r15 = 'HTransition2HListenBranch'
-            r16 = 'HConnectOPState2CProcDefTransition2InstotherInTransitions'
 
-            full_transformation = [[r1, ], [r0, ], [r4, r5, r6, ], [r7, r8, r9, ], [r10, r11, r12, ],
-                                   [r13, r14, r15, r16, ], [r2, r3, ], ]
+
+            r0 = 'HMapRootElementRule'
+            r1 = 'HState2ProcDef'
+            r2 = 'HBasicState2ProcDef'
+            r3 = 'HBasicStateNoOutgoing2ProcDef'
+            r4 = 'HCompositeState2ProcDef'
+            r5 = 'HState2HProcDef'
+            r6 = 'HState2CProcDef'
+            r7 = 'HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans'
+            r8 = 'HTransition2QInstSIBLING'
+            r9 = 'HTransition2QInstOUT'
+            r10 = 'HTransition2Inst'
+            r11 = 'HTransition2ListenBranch'
+            r12 = 'HConnectOutputsOfExitPoint2BProcDefTransition2QInst'
+            r13 = 'HTransitionHListenBranch'
+            r14 = 'HConnectOPState2CProcDefTransition2InstotherInTransitions'
+            r15 = 'HRuleConnect2RootElement'
+            r16 = 'HMapHierarchyOfStates2HierarchyOfProcs'
+
+            full_transformation = [[r0], [r1, ], [r3, r2, r4, ], [r7, r5, r6, ], [r8, r9, r10, ], \
+                                   [r11, r12, r13, r14, ], [r15], [r16, ],]
+
             rules_dir = "UMLRT2Kiltera_MM/transformation/from_ATL/"
+
+
+
 
         self.rules, self.transformation = pyramify.get_rules(rules_dir, full_transformation)
 
+        # hb = "handbuilt_" if args.handbuilt else ""
+        #
+        # for layer in self.transformation:
+        #     for r in layer:
+        #
+        #         graph_to_dot("rule_" + hb + r.name, r)
 
         inputMM = "UMLRT2Kiltera_MM/transformation_for_prunning/metamodels/rt_new.ecore"
         outputMM = "UMLRT2Kiltera_MM/transformation_for_prunning/metamodels/klt_new.ecore"
@@ -107,21 +119,39 @@ class Prover():
             "PP2",
             "PP3",
             "PP4",
-            "PP5",
+            # #"PP5",
         ]
+
+        if args.contract >=0 and args.contract <= 3:
+            atomic_contracts = atomic_contracts[args.contract:args.contract+1]
+        elif args.contract >= 0:
+            atomic_contracts = []
+
         if_then_contracts = [
             ["MM5_if", "MM5_then"],
             ["MM6_if", "MM6_then"],
             ["MM7_if", "MM7_then"],
             ["MM11_if", "MM11_then"],
             ["SS1_if", "SS1_then"],
-            ["SS2_if", "SS2_then"],
+
+            #skip this one
+            # #["SS2_if", "SS2_then"],
+
+            #["SS3_if1", "SS3_then1"],
+            #["SS3_if2", "SS3_then2"],
         ]
+
+        if args.contract >= 4 and args.contract <= 8:
+            args.contract -= 4
+            if_then_contracts = if_then_contracts[args.contract:args.contract + 1]
+        elif args.contract >= 0:
+            if_then_contracts = []
+
         prop_if_then_contracts = [
             # structure is 'if graph', 'then graph'
             # where the 'then graph' is made up of reverse polish notation
             ["MM1_if", ["MM1_then1", "MM1_then2", "NOT", "AND"]],
-            ["MM2_if", ["MM2_then1", "MM2_then2", "NOT", "AND"]],
+             ["MM2_if", ["MM2_then1", "MM2_then2", "NOT", "AND"]],
             ["MM3_if", ["MM3_then1", "MM3_then2", "NOT", "AND"]],
             ["MM4_if", ["MM4_then1", "MM4_then2", "NOT", "AND"]],
 
@@ -129,26 +159,53 @@ class Prover():
             ["MM9_if", ["MM9_then1", "MM9_then2", "NOT", "AND", "MM9_then1", "NOT", "OR"]],
             ["MM10_if", ["MM10_then1", "MM10_then2", "NOT", "AND", "MM10_then1", "NOT", "OR"]],
 
-            [["SS3_if1", "SS3_if2", "NOT", "AND"], ["SS3_then1", "SS3_then2", "NOT", "AND"]],
+            #skip this one
+            #  #[["SS3_if1", "SS3_if2", "NOT", "AND"], ["SS3_then1", "SS3_then2", "NOT", "AND"]],
         ]
+        if args.contract >= 9 and args.contract <= 15:
+            args.contract -= 9
+            prop_if_then_contracts = prop_if_then_contracts[args.contract:args.contract + 1]
+        elif args.contract >= 0:
+            prop_if_then_contracts = []
+
+        # if args.contract > -1:
+        #     prop_if_then_contracts = prop_if_then_contracts[args.contract:args.contract+1]
+            #print(prop_if_then_contracts)
+
 
         self.atomic_contracts, self.if_then_contracts = load_contracts(contracts, superclasses_dict,
                                                                        atomic_contracts, if_then_contracts,
                                                                        prop_if_then_contracts,
                                                                        args.draw_svg)
 
+
         slicer = Slicer(self.rules, self.transformation)
-        if args.slice > 0:
+        if args.slice >= 0:
             print("Slicing for contract number " + str(args.slice))
-            contract = self.atomic_contracts[args.slice - 1]
-            self.new_rules, self.new_transformation = slicer.slice_transformation(contract)
+            contract = None
+
+            if_then_slice = args.slice - len(self.atomic_contracts)
+
+            if args.slice >= 0 and args.slice <= len(self.atomic_contracts) -1:
+                contract = self.atomic_contracts[args.slice]
+                self.atomic_contracts = [contract]
+                self.if_then_contracts = []
+            elif if_then_slice >= 0 and if_then_slice <= len(self.if_then_contracts) - 1:
+                contract = self.if_then_contracts[if_then_slice]
+                self.atomic_contracts = []
+                self.if_then_contracts = [contract]
+
+            print("Number rules before: " + str(len(self.rules)))
+            self.rules, self.transformation = slicer.slice_transformation(contract)
+            print("Number rules after: " + str(len(self.rules)))
+
+            import sys
+            sys.exit()
 
 
         # generate path conditions
         pc_set = PathConditionGenerator(self.transformation, outputMM, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
 
-        # import sys
-        # sys.exit()
         ts0 = time.time()
         pc_set.build_path_conditions()
         ts1 = time.time()
@@ -161,16 +218,16 @@ class Prover():
 
         #if pc_set.num_path_conditions < 300:
         #pc_set.print_path_conditions_screen()
-
+        #pc_set.print_path_conditions_file()
 
         # now actually prove these contracts
-
+        
         contract_prover = ContractProver()
 
         contract_prover.prove_contracts(pc_set, self.atomic_contracts, self.if_then_contracts)
         print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
         print("Number of path conditions: " + str(pc_set.num_path_conditions))
-
+        print("Number rules after: " + str(len(self.rules)))
 
 if __name__ == "__main__":
     import argparse
@@ -193,9 +250,9 @@ if __name__ == "__main__":
                         help = 'Level of compression to use with pickling. Range: 0 (no compression) to 9 (high compression) (default: 6)')
     parser.set_defaults(compression = 6)
 
-    parser.add_argument('--slice', type = int, default = 0,
+    parser.add_argument('--slice', type = int, default = -1,
                         help = 'Index of contract to slice for. Range: 0 (no slicing) to #CONTRACTS (default: 0)')
-    parser.set_defaults(slice = 0)
+    parser.set_defaults(slice = -1)
 
     parser.add_argument('--no_svg', dest = 'draw_svg', action = 'store_false',
                         help = 'Flag to force svg files to not be drawn')
@@ -209,6 +266,14 @@ if __name__ == "__main__":
 
     parser.add_argument('--verbosity', type = int, default = 0,
                         help = 'Verbosity level (default: 0 - minimum output)')
+
+    parser.add_argument('--contract', type = int, default = -1,
+                        help = 'Contract selection (default: -1 - no contract)')
+    parser.set_defaults(contract = -1)
+
+    parser.add_argument('--handbuilt', dest = 'handbuilt', action = 'store_true',
+                        help = 'Select the handbuilt version (default: False - use HOT version)')
+    parser.set_defaults(handbuilt = False)
 
     args = parser.parse_args()
 
