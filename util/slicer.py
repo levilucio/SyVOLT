@@ -272,7 +272,7 @@ class Slicer():
                     required_rules.append(new_rr)
 
         rr_names = [rule.name for rule in required_rules]
-        print("Required rules: " + str(sorted(rr_names)))
+        print("Required rules for contract " + contract_name + ":\n" + str(sorted(rr_names)))
 
 
         new_rules = {}
