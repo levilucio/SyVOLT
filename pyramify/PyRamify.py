@@ -944,36 +944,7 @@ class PyRamify:
             bwPatterns.append([matcher, rewriter])
             #bwPatterns2Rule[matcher] = name 
             
-        return {name: bwPatterns}        
-        
-
-
-    def remove_equation_nodes(self, graph):        
-        
-        eq_nodes = find_nodes_with_mm(graph, ["Equation"])
-        nodes_to_remove = []
-        for eq in eq_nodes:
-            eq_num = get_node_num(graph, eq)
-            equation_attrib_nodes = flood_find_nodes(eq_num, graph, None, ["Attribute", "Constant"])
-            equation_attrib_nodes = [node for node in  equation_attrib_nodes if graph.vs[node]["mm__"] == "Attribute"]
-#            print "---------------- " + str(eq_num) + " -----------------------> Number of attribute nodes: " + str(len(equation_attrib_nodes))
-            
-            # equation is between an attribute of the match model and an attribute of the apply model
-            if len(equation_attrib_nodes) >= 2:
-                nodes_to_remove += flood_find_nodes(eq_num, graph, None, ["hasAttribute_S", "hasAttribute_T"])
-#                print flood_find_nodes(eq_num, graph, None, ["hasAttribute_S", "hasAttribute_T"])
-            # check if the equation is part of the elements of the apply model and remove it in that case
-            # don't remove the equation if it is part of the elements of the match model
-            else:
-                nodes_equation_is_connected_to = flood_find_nodes(equation_attrib_nodes[0], graph, ["paired_with", "backward_link","Equation"])         
-                for node in nodes_equation_is_connected_to:
-                    if graph.vs[node]["mm__"] == "ApplyModel":
-                        nodes_to_remove += flood_find_nodes(eq_num, graph, ["Attribute"])
-                
-        nodes_to_remove = list(set(nodes_to_remove))
-
-        graph.delete_nodes(nodes_to_remove)
-        return graph
+        return {name: bwPatterns}
 
     def remove_structure_nodes(self, graph):
         #structure_nodes = find_nodes_with_mm(graph, ["MatchModel", "match_contains", "paired_with", "ApplyModel", "apply_contains"])
@@ -988,7 +959,6 @@ class PyRamify:
 
         if self.draw_svg:
             graph_to_dot(graph.name + "_original", graph)
-        graph = self.remove_equation_nodes(graph)
 
         apply_contain_node = find_nodes_with_mm(graph, ["apply_contains"])
 #         apply_contain_node = get_node_num(graph, apply_contain_node[0])
