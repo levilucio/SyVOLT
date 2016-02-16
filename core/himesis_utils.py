@@ -564,7 +564,7 @@ def clean_graph(graph):
     return graph
 
 
-def build_traceability(graph):
+def build_traceability(graph, add_label = False):
     #print("Building traceability for: " + graph.name)
 
     vs = graph.vs
@@ -619,6 +619,9 @@ def build_traceability(graph):
             graph.add_node()
 
             graph.vs[node_count]["mm__"] = """trace_link"""
+
+            if add_label:
+                graph.vs[node_count]["MT_label__"] = str(node_count)
 
             # Add the edges
             graph.add_edges([

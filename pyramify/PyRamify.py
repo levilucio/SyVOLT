@@ -834,56 +834,8 @@ class PyRamify:
         rewriter = copy_graph(graph)
 
         #Add trace links
-
-        #rewriter = build_traceability(rewriter)
-
-        match_contains = find_nodes_with_mm(graph, ["match_contains"])
-        match_attached = []
-        for mc in match_contains:
-            match_attached += look_for_attached(mc, rewriter)
-        match_attached = list(set(match_attached))
-
-        apply_contains = find_nodes_with_mm(graph, ["apply_contains"])
-        apply_attached = []
-        for ac in apply_contains:
-            apply_attached += look_for_attached(ac, rewriter)
-        apply_attached = list(set(apply_attached))
-
-        linked_nodes = []
-
-        backward_links = find_nodes_with_mm(graph, ["backward_link", "trace_link"])
-        for bl in backward_links:
-            bl_attached = look_for_attached(bl, rewriter)
-
-            linked_nodes.append([bl_attached[0], bl_attached[1]])
-
-        for match_node in match_attached:
-
-            #print("Match node: " + str(rewriter.vs[match_node]["mm__"]))
-            if rewriter.vs[match_node]["mm__"] in ["MatchModel", "match_contains"]:
-                continue
-
-            for apply_node in apply_attached:
-                #print("Apply node: " + str(rewriter.vs[apply_node]["mm__"]))
-                if rewriter.vs[apply_node]["mm__"] in ["ApplyModel", "apply_contains"]:
-                    continue
-
-                found_link = False
-                for a, b in linked_nodes:
-
-                    if a == apply_node or b == apply_node:
-                        #there is already a link here
-                        found_link = True
-                        #print("Found the link")
-
-                if not found_link:
-                    #print("Did not find link")
-                    new_node = rewriter.add_node()
-                    rewriter.vs[new_node]["mm__"] = "trace_link"
-                    rewriter.vs[new_node]["MT_label__"] = str(new_node)
-
-                    rewriter.add_edge(apply_node, new_node)
-                    rewriter.add_edge(new_node, match_node)
+        #add the MT_label__ as well
+        rewriter = build_traceability(rewriter, add_label = True)
 
         rewriter = self.changeAttrType(rewriter, make_pre = False, back_to_trace = back_to_trace)
 
