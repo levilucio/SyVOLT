@@ -17,7 +17,8 @@ from PropertyVerification.v2.atomic_contract import AtomicContract
 from PropertyVerification.v2.ContractProver import ContractProver
 
 from core.himesis_utils import graph_to_dot, load_directory
-from util.test_script_utils import select_rules, get_sub_and_super_classes, load_contracts
+from util.test_script_utils import select_rules, get_sub_and_super_classes,\
+    load_transformation, changePropertyProverMetamodel, set_supertypes, load_contracts
 from util.slicer import Slicer
 
 
@@ -59,7 +60,7 @@ class Prover():
 
             rule_dir = "GM2AUTOSAR_MM/transformation_from_ATL/"
         
-        self.rules, self.transformation = pyramify.get_rules(rule_dir, full_transformation)
+        self.rules, self.transformation = load_transformation(rule_dir, full_transformation)
         
         inputMM = "GM2AUTOSAR_MM/metamodels/Industrial.ecore"
         outputMM = "GM2AUTOSAR_MM/metamodels/Autosar.ecore"
@@ -75,12 +76,12 @@ class Prover():
         pre_metamodel = ["MT_pre__S_MM", "MoTifRule"]
         post_metamodel = ["MT_post__T_MM", "MoTifRule"]
 
-        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict, superclasses_dict, dsltransInstallDir = "/home/dcx/Projects/SyVOLT")
+        changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict, superclasses_dict, dsltransInstallDir = "/home/dcx/Projects/SyVOLT")
         
         # go through all the matchers, combinators and tracers to add polymorphism on all classes in an inheritance hierarchy
                                                                   
         
-        pyramify.set_supertypes(superclasses_dict, self.rules, self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators)
+        set_supertypes(superclasses_dict, self.rules, self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators)
 
 
         # load the contracts

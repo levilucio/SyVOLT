@@ -93,6 +93,8 @@ class Prover():
         c0 = AtomicContract(isolated, connected, complete)
         
         self.atomic_contracts.append(("ERCopierProp", c0))
+
+        graph_to_dot("ERCopierProp", complete)
         
           
         

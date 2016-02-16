@@ -16,7 +16,7 @@ from t_core.messages import Packet
 from pyramify.PyRamify import PyRamify
 
 from util.test_script_utils import select_rules, get_sub_and_super_classes,\
-    load_transformation, changePropertyProverMetamodel, set_supertypes
+    load_transformation, changePropertyProverMetamodel, set_supertypes, load_contracts
 from util.slicer import Slicer
 
 from core.himesis_utils import graph_to_dot, load_directory

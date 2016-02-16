@@ -18,7 +18,8 @@ from PropertyVerification.v2.if_then_contract import IfThenContract
 from PropertyVerification.v2.prop_logic import NotContract, AndContract
 
 from core.himesis_utils import graph_to_dot
-from util.test_script_utils import select_rules, get_sub_and_super_classes
+from util.test_script_utils import select_rules, get_sub_and_super_classes,\
+    load_transformation, changePropertyProverMetamodel, set_supertypes, load_contracts
 from util.slicer import Slicer
 
 # imports for properties' atomic contracts
@@ -106,7 +107,7 @@ class Prover():
         full_transformation = [[r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11],[r12,r13,r14,r15,r16,r17,r18,r19,r20,r21,r22,r23,r24,r25,r26,r27],[r28,r29,r30,r31],[r32,r36,r35,r34,r33,r37],[r38,r39,r40,r41,],[r42,r43,r44,r45,r46,r47],[r48]]
         
 
-        self.rules, self.transformation = pyramify.get_rules("mbeddr2C_MM/real_transformation", full_transformation)
+        self.rules, self.transformation = load_transformation("mbeddr2C_MM/real_transformation", full_transformation)
 
         inputMM = "./mbeddr2C_MM/ecore_metamodels/Module.ecore"
         outputMM = "./mbeddr2C_MM/ecore_metamodels/C.ecore"
@@ -119,8 +120,8 @@ class Prover():
         post_metamodel = ["MT_post__T_MM", "MoTifRule"]
 
 
-        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict, superclasses_dict, ".")
-        pyramify.set_supertypes(superclasses_dict, self.rules, self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators)
+        changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict, superclasses_dict, ".")
+        set_supertypes(superclasses_dict, self.rules, self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators)
         
         # go through all the matchers, combinators and tracers to add polymorphism on all classes in an inheritance hierarchy
                                                                   

@@ -16,7 +16,8 @@ from t_core.messages import Packet
 
 from pyramify.PyRamify import PyRamify
 
-from util.test_script_utils import select_rules, get_sub_and_super_classes, load_contracts
+from util.test_script_utils import select_rules, get_sub_and_super_classes,\
+    load_transformation, changePropertyProverMetamodel, set_supertypes, load_contracts
 from util.slicer import Slicer
 
 from core.himesis_utils import graph_to_dot, load_directory
@@ -42,9 +43,7 @@ class Test():
             'HUnionDaughterRule',
             'HUnionSonRule']
         ]
-        pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
-
-        self.rules, self.transformation = pyramify.get_rules("ATLTrans/w_equations/", full_transformation)
+        self.rules, self.transformation = load_transformation("ATLTrans/w_equations/", full_transformation)
 
 
         inputMM = "ATLTrans/metamodels/Household.ecore"
@@ -55,7 +54,7 @@ class Test():
         pre_metamodel = ["MT_pre__FamiliesToPersons_MM", "MoTifRule"]
         post_metamodel = ["MT_post__FamiliesToPersons_MM", "MoTifRule"]
 
-        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict, superclasses_dict)
+        changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict, superclasses_dict)
 
 
         #load the contracts

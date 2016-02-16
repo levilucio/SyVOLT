@@ -70,8 +70,8 @@ class Prover():
     
         
                              
-        full_transformation = [[r0,],[r1,r1_1],[r2,],[r3,],[r4,],[r5,],[r6,],[r7,],[r8,],[r9,r9_1],[r10,],[r11,],[r12,],[r13,],[r14,],[r15,],[r16,],[r17,],[r18,],[r19,],[r20,],[r21,],[r22,],[r23,],]
-        
+        full_transformation = [[r0,],[r1],[r1_1],[r2,],[r3,],[r4,],[r5,],[r6,],[r7,],[r8,],[r9],[r9_1],[r10,],[r11,],[r12,],[r13,],[r14,],[r15,],[r16,],[r17,],[r18,],[r19,],[r20,],[r21,],[r22,],[r23,],]
+        #full_transformation = [[r0], [r1], [r11]]
         self.rules, self.transformation = pyramify.get_rules("ECore_Copier_MM/transformation", full_transformation)
         
         inputMM = "ECore_Copier_MM/Ecore.ecore"
@@ -81,7 +81,13 @@ class Prover():
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
             pyramify.ramify_directory("ECore_Copier_MM/transformation", self.transformation)
 
-                
+
+        print("Superclasses Dict:")
+        for key in sorted(superclasses_dict.keys()):
+            print(key + " : " + str(superclasses_dict[key]))
+
+        #raise Exception()
+
         pre_metamodel = ["MT_pre__S_MM", "MoTifRule"]
         post_metamodel = ["MT_post__T_MM", "MoTifRule"]
 
@@ -109,6 +115,7 @@ class Prover():
         c0 = AtomicContract(isolated, connected, complete)
         
         self.atomic_contracts.append(("Prop1", c0))
+        graph_to_dot(complete.name, complete)
 
         isolated = HEC_prop2_IsolatedLHS()
         connected = HEC_prop2_ConnectedLHS()
@@ -121,15 +128,17 @@ class Prover():
         c1 = AtomicContract(isolated, connected, complete)
 
         self.atomic_contracts.append(("Prop2", c1))
-        
-          
-        
+
+        slicer = Slicer(self.rules, self.transformation)
         if args.slice > 0:
             print("Slicing for contract number " + str(args.slice))
             contract = self.atomic_contracts[args.slice - 1]
-            self.new_rules, self.new_transformation = slice_transformation(self.rules, self.transformation, contract, args)
-            
-            
+
+
+            print("Number rules before: " + str(len(self.rules)))
+            self.new_rules, self.new_transformation = slicer.slice_transformation(contract)
+            print("Number rules after: " + str(len(self.rules)))
+
         # generate path conditions
         pc_set = PathConditionGenerator(self.transformation, "ECore_Copier_MM/Copy.ecore", self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
     

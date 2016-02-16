@@ -25,7 +25,8 @@ from PropertyVerification.v2.atomic_contract import AtomicContract
 from PropertyVerification.v2.ContractProver import ContractProver
 
 from core.himesis_utils import graph_to_dot, load_directory
-from util.test_script_utils import select_rules, get_sub_and_super_classes
+from util.test_script_utils import select_rules, get_sub_and_super_classes,\
+    load_transformation, changePropertyProverMetamodel, set_supertypes, load_contracts
 from util.slicer import Slicer
 
 # imports for properties' atomic contracts
@@ -44,9 +45,6 @@ class Prover():
     def do_proof(self,args):    
 
         pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
-        
-        
-        
         
         [*- get all the rules from the files generated to disk *]
         [% for (r in Rule.all) { %]
@@ -98,7 +96,7 @@ class Prover():
         
         absoluteBackendPath = "[%=absoluteBackendPath%]"
         
-        self.rules, self.transformation = pyramify.get_rules(absoluteBackendPath, full_transformation)
+        self.rules, self.transformation = load_transformation(absoluteBackendPath, full_transformation)
         
         
         inputMM = "[%=inputMM%]"
@@ -113,12 +111,12 @@ class Prover():
         pre_metamodel = ["MT_pre__S_MM", "MoTifRule"]
         post_metamodel = ["MT_post__T_MM", "MoTifRule"]
 
-        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict, superclasses_dict, dsltransInstallDir = "[%=dsltransInstallPath%]")
+        changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict, superclasses_dict, dsltransInstallDir = "[%=dsltransInstallPath%]")
         
         # go through all the matchers, combinators and tracers to add polymorphism on all classes in an inheritance hierarchy
                                                                   
         
-        pyramify.set_supertypes(superclasses_dict, self.rules, self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators)
+        set_supertypes(superclasses_dict, self.rules, self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators)
 
             
         # load the contracts, and add polymorphism
