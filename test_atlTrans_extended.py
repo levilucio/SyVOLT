@@ -15,7 +15,8 @@ from t_core.messages import Packet
 
 from pyramify.PyRamify import PyRamify
 
-from util.test_script_utils import select_rules, get_sub_and_super_classes
+from util.test_script_utils import select_rules, get_sub_and_super_classes,\
+    load_transformation, changePropertyProverMetamodel, set_supertypes
 from util.slicer import Slicer
 
 from core.himesis_utils import graph_to_dot, load_directory
@@ -65,9 +66,7 @@ class Test:
             ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictSpecialFacilityPerson']
 
         ]
-        pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
-
-        self.rules, self.transformation = pyramify.get_rules("ExFamToPerson/transformation", full_transformation)
+        self.rules, self.transformation = load_transformation("ExFamToPerson/transformation", full_transformation)
 
 
         inputMM = "ExFamToPerson/Families_Extended.ecore"
@@ -78,7 +77,7 @@ class Test:
         pre_metamodel = ["MT_pre__FamiliesToPersons_MM", "MoTifRule"]
         post_metamodel = ["MT_post__FamiliesToPersons_MM", "MoTifRule"]
 
-        pyramify.changePropertyProverMetamodel(pre_metamodel, post_metamodel, self.subclasses_dict, self.superclasses_dict)
+        changePropertyProverMetamodel(pre_metamodel, post_metamodel, self.subclasses_dict, self.superclasses_dict)
 
 
         #load the contractsp
@@ -181,7 +180,7 @@ class Test:
          self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
             pyramify.ramify_directory("ExFamToPerson/transformation/", self.transformation)
  
-        pyramify.set_supertypes(self.superclasses_dict, self.rules, self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators)
+        set_supertypes(self.superclasses_dict, self.rules, self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators)
 
 
         print("superclasses_dict:")
@@ -191,7 +190,6 @@ class Test:
         #raise Exception()
  
         s = PathConditionGenerator(self.transformation, "ExFamToPerson/Persons_Extended.ecore", self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)#
-
 
         #raise Exception()
         ts0 = time.time()
@@ -224,7 +222,7 @@ class Test:
 #         #raise Exception()
 # 
 #
-        #raise Exception()
+        raise Exception()
 
         print("\nContract proving:")
 

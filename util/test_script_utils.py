@@ -1,10 +1,34 @@
-from core.himesis_utils import graph_to_dot
+from core.himesis_utils import graph_to_dot, load_class
 from util.ecore_utils import EcoreUtils
 from core.himesis_plus import buildPreListFromClassNames
 
 from PropertyVerification.v2.atomic_contract import AtomicContract
 from PropertyVerification.v2.if_then_contract import IfThenContract
 from PropertyVerification.v2.prop_logic import *
+
+import os
+
+# get all the rules in the transformation
+def load_transformation(dir_name, full_transformation):
+    print("Loading transformation from directory: " + dir_name)
+
+    rules = {}
+    transformation = []
+
+    for layer in full_transformation:
+        new_layer = []
+        for rule_name in layer:
+            print("Loading rule: " + rule_name)
+
+            # add the rule to the rules dict
+            rule = load_class(dir_name + "/" + rule_name + ".py")
+            rules.update(rule)
+
+            new_layer.append(list(rule.values())[0])
+
+        transformation.append(new_layer)
+
+    return rules, transformation
 
 
 def select_rules(full_transformation, num_rules):
@@ -78,6 +102,149 @@ def get_sub_and_super_classes(inputMM, outputMM):
 
 
     return subclasses_dict, superclasses_dict
+
+#============================
+
+#renames elements from one metamodel into another metamodel
+def changeGraphMetamodel(mapping, directory):
+    print("Starting to rename elements in graphs")
+    #print("Mapping: " + str(mapping))
+
+    for d in os.listdir(directory):
+        if not os.path.isdir(directory + d):
+            continue
+
+        # ignore svn dirs
+        if d.startswith('.') or d.startswith("__"):
+            continue
+
+        graph_dir = directory + d + "/Himesis/"
+
+        try:
+            files = os.listdir(graph_dir)
+        except OSError:
+            print("Warning: " + graph_dir + " does not exist")
+            files = []
+
+        for f in files:
+
+            if f.startswith("__") or not f.endswith(".py") or f.startswith("."):
+                continue
+
+            #print("Examining " + graph_dir + f)
+
+            graph_file = graph_dir + f
+            try:
+                g = load_class(graph_file)
+            except ImportError:
+                print("ERROR " + graph_file)
+                continue
+
+            name = list(g.keys())[0]
+            graph = list(g.values())[0]
+
+            for node in graph.vs:
+                if not node["mm__"] in mapping.keys():
+                    continue
+
+                #set the new subtypes
+                node["mm__"] = mapping[node["mm__"]]
+
+            #need to compile rule back in order to update the file
+            graph.compile(graph_dir)
+
+    print("Finished changing graph metamodels\n")
+
+#change the proper prover matchers and rewriters to
+#refer to the correct metamodel
+def changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict, supertypes, dsltransInstallDir = "."):
+    print("Starting to change property prover metamodel")
+
+    property_prover_rules_dir = dsltransInstallDir + "/property_prover_rules/"
+    print("Rules dir: " + property_prover_rules_dir)
+    for d in os.listdir(property_prover_rules_dir):
+
+        if not os.path.isdir(property_prover_rules_dir + d):
+            continue
+
+        #ignore svn dirs
+        if d.startswith('.') or d.startswith("__"):
+            continue
+
+        rule_dir = property_prover_rules_dir + d + "/Himesis/"
+
+        try:
+            files = os.listdir(rule_dir)
+        except OSError:
+            print("Warning: " + rule_dir + " does not exist")
+            files = []
+
+        for f in files:
+            if not f.endswith(".py") or f.startswith("__") or f.startswith("."):
+                continue
+
+            rule_file = rule_dir + f
+
+            try:
+                rule = load_class(rule_file)
+            except ImportError as e:
+                print("ERROR loading " + rule_file)
+                traceback.print_exc()
+                continue
+
+            name = list(rule.keys())[0]
+            graph = list(rule.values())[0]
+
+            #TODO: Make this less fragile
+            if "LHS" in f:
+                graph["mm__"] = pre_metamodel
+            elif "RHS" in f:
+                graph["mm__"] = post_metamodel
+            else:
+                raise Exception("Error: Not LHS or RHS rule")
+
+            graph["superclasses_dict"] = supertypes
+
+            #need to compile rule back in order to update the file
+            graph.compile(rule_dir)
+
+    print("Finished changing property prover metamodel\n")
+
+def set_supertypes(superclasses_dict, rules, transformation, ruleTraceCheckers, matchRulePatterns, ruleCombinators):
+
+    print("Changing superclasses for rules and rule matchers")
+
+    #print(superclasses_dict)
+
+    for rule in rules.values():
+        rule["superclasses_dict"] = superclasses_dict
+
+    for layer in transformation:
+        for rule in layer:
+            rule["superclasses_dict"] = superclasses_dict
+
+    for ruleTraceChecker in ruleTraceCheckers.values():
+
+        if ruleTraceChecker:
+            ruleTraceChecker.condition["superclasses_dict"] = superclasses_dict
+
+
+    for mrp in matchRulePatterns.values():
+        matcher = mrp[0]
+
+        matcher.condition["superclasses_dict"] = superclasses_dict
+
+    for rc in ruleCombinators.values():
+
+        for pair in rc:
+            matcher = pair[0]
+
+            matcher.condition["superclasses_dict"] = superclasses_dict
+
+
+
+#=================================================
+
 
 def load_contracts(contracts, superclasses_dict, atomic_names, simple_if_then_names, prop_if_then_names, draw_svg):
 
