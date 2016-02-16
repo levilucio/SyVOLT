@@ -394,52 +394,32 @@ class PyRamify:
         return_graph = copy_graph(graph)
 
         # check to see which nodes have backward links
-        backwards_links = find_nodes_with_mm(graph, ["backward_link"])
-
         rule_has_backward_links = False
 
-        #no backward links in file, do nothing
-        if len(backwards_links) != 0:
+        # no backward links in file, do nothing
+        if "backward_link" in graph.vs["mm__"]:
             rule_has_backward_links = True
-            #return [{graph.name: None}, []]
         
         #there are backward links, so start RAMifying
         out_dir = "./patterns/"
-        outfile = out_dir + self.get_RAMified_name(name) + ".py"
 
         graph = self.do_RAMify(graph, out_dir, remove_rule_nodes = False)
-
-        #change the graph's name
-        #graph.name = self.get_RAMified_name(name)
-        #graph["name"] = self.get_RAMified_name(name)
-
-        #output the graph
-        #graph.compile(out_dir)
 
         bwPatterns = []
         bwPatterns2Rule = {}
 
-        #The node mappings may have changed
-        #So to be safe, find the backward/trace links again
-        backwards_links = find_nodes_with_mm(graph, ["MT_pre__trace_link"])
-
-       
         # make sure to copy the graph, as we will make multiple smaller matchers from it
         new_graph = copy_graph(graph)
         new_graph = makePreConditionPattern(new_graph)
 
 
-
         base_graph = copy_graph(new_graph)
 
- #get the ids of the structural nodes
-        
-        #TODO: Get rewriter graph from matcher rewriter
-        
+        #get the ids of the structural nodes
         structure_nodes = find_nodes_with_mm(return_graph, ["MT_pre__MatchModel", "MT_pre__paired_with",
                                                           "MT_pre__ApplyModel", "MT_pre__match_contains",
                                                           "MT_pre__apply_contains"])
-        structure_nums = [get_node_num(return_graph, item) for item in structure_nodes]
+        structure_nums = [item.index for item in structure_nodes]
         
         
         rewriter_graph = self.make_rewriter(return_graph)
