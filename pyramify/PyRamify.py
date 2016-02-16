@@ -415,80 +415,22 @@ class PyRamify:
 
         base_graph = copy_graph(new_graph)
 
-        #get the ids of the structural nodes
-        structure_nodes = find_nodes_with_mm(return_graph, ["MT_pre__MatchModel", "MT_pre__paired_with",
-                                                          "MT_pre__ApplyModel", "MT_pre__match_contains",
-                                                          "MT_pre__apply_contains"])
-        structure_nums = [item.index for item in structure_nodes]
-        
-        
         rewriter_graph = self.make_rewriter(return_graph)
-        #self.copy_graph(return_graph)
-        
-        
+
+
+        # get the ids of the structural nodes
+        structure_nodes = find_nodes_with_mm(return_graph, ["MT_pre__MatchModel", "MT_pre__paired_with",
+                                                            "MT_pre__ApplyModel", "MT_pre__match_contains",
+                                                            "MT_pre__apply_contains"])
+        structure_nums = [item.index for item in structure_nodes]
         rewriter_graph.delete_nodes(structure_nums)
 
-
-        #make the base graph
-        # nodes_w_eqs = self.get_all_nodes_with_equations(base_graph)
-        #
-        # remove_nodes = []
-        # keep_nodes = []
-        # for n in nodes_w_eqs.keys():
-        #
-        #     #node_num = self.get_node_num(graph, n)
-        #     connected = look_for_attached(n, base_graph)
-        #
-        #     in_match = False
-        #     in_apply = False
-        #     backward_link = False
-        #
-        #     for c in connected:
-        #         if graph.vs[c]["mm__"] == "MT_pre__match_contains":
-        #             in_match = True
-        #             keep_nodes.append(n)
-        #         elif graph.vs[c]["mm__"] == "MT_pre__apply_contains":
-        #             in_apply = True
-        #         elif graph.vs[c]["mm__"] == "MT_pre__trace_link":
-        #             backward_link = True
-        #
-        #     if in_apply and not backward_link:
-        #         remove_nodes += nodes_w_eqs[n]
-                
-#         print("Keep nodes: ")
-#         for k in keep_nodes:
-#             print(k["mm__"])
-            
-        #print("Remove nodes: ")
-        #for r in remove_nodes:
-            #print(r["mm__"])
-            
-        # for k in keep_nodes:
-        #
-        #     k_num = get_node_num(base_graph, k)
-        #     try:
-        #         remove_nodes.remove(k_num)
-        #     except Exception:
-        #         pass
-
-        #base_graph["equations"] = []
-
-        #base_graph.delete_nodes(remove_nodes)
-
-        
-        # # turn the backward links into trace links
-        #
-        # backwards_links2 = self.find_nodes_with_mm(rewriter_graph, ["backward_link"])
-        # #print(backwards_links2)
-        #
-        # for node in backwards_links2:
-        #      node["mm__"] = "trace_link
         
         # remove apply classes not connected to any backward link
-        
         apply_nums = []
         bk_links = find_nodes_with_mm(base_graph, ["MT_pre__trace_link"])
         bk_links_nums = [item.index for item in bk_links]
+
         apply_contains_nodes = find_nodes_with_mm(base_graph, ["MT_pre__apply_contains"])
         for node in apply_contains_nodes:
             apply_node = base_graph.neighbors(node,"out")[0]
@@ -510,57 +452,9 @@ class PyRamify:
         if self.draw_svg:
             graph_to_dot("base_graph_" + base_graph.name, base_graph)
         
-        
-        
-        link_nodes = find_nodes_with_mm(base_graph, ["MT_pre__directLink_S", "MT_pre__indirectLink_S"])
-        link_nums = [item.index for item in link_nodes]
-        
-        temp_input_nodes = []
-        
-#         for array in input_nodes:
-#             new_array = []
-#             for node in array:
-#                 node_num = self.get_node_num(base_graph, node)
-        
-        #input_nodes.append(link_nums)
-
-        # nodes_w_eqs = self.get_all_nodes_with_equations(base_graph)
-        #
-        #
-        # input_nodes = []
-        # for n in nodes_w_eqs.keys():
-        #
-        #     #print("Node w eqs: " + str(n["mm__"]))
-        #     #print(nodes_w_eqs)
-        #
-        #     #node_num = self.get_node_num(graph, n)
-        #     connected = look_for_attached(n, base_graph)
-        #     #print("Connected: " + str(connected))
-        #
-        #     backward_link = False
-        #
-        #     for c in connected:
-        #         #print("Connected to: " + base_graph.vs[c]["mm__"])
-        #         if base_graph.vs[c]["mm__"] == "MT_pre__trace_link":
-        #             #print("Connected to backward link")
-        #             backward_link = True
-        #
-        #     if not backward_link:
-        #         temp_array = []
-        #
-        #         for actual_node in nodes_w_eqs[n]:
-        #             temp_array.append(base_graph.vs[actual_node])
-        #
-        #         input_nodes.append(nodes_w_eqs[n])
-        #
-        #
-        # output = sum([list(map(list, combinations(input_nodes, i))) for i in range(len(input_nodes) + 1)], [])
 
         rewrite_name = rewriter_graph.name + "_rule_combinator_rewriter"
 
-        # levis_tiny_hack = True
-        # if levis_tiny_hack and len(output) > 1:
-        #     output = [output[0], output[-1]]
 
 
         # LEVI: we only need the total and the partial combinator.
@@ -577,12 +471,10 @@ class PyRamify:
 
         
         # remove all nodes that are not connected to backward links
-
         backwards_links = find_nodes_with_mm(partial_combinator_matcher, ["MT_pre__trace_link"])
 
         # keep the nodes attached to the backward link that should be kept
         nodes_to_keep = []
-
 
         #for each backward link found, create a matcher for the attached nodes
         i = 0
