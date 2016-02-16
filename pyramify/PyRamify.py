@@ -914,38 +914,6 @@ class PyRamify:
         matcher = Matcher(match_graph, disambig_matching = False)
 
         return {name : [matcher, Rewriter(rewriter)]}
-
-    # helper function for the user, to list all of the
-    # rules in the transformation that have backward links
-    def getRulesIncludingBackLinks(self, transformation, backwardPatterns):
-        rulesIncludingBackLinks = []
-
-        for layer in transformation:
-            back_links = []
-            for rule in layer:
-                bp = backwardPatterns[rule.name]
-                if bp is []:
-                    continue
-
-                #if the rule has a backwards pattern,
-                #then it has backwards links
-                back_links.append(rule)
-
-            #keep the layered structure
-            rulesIncludingBackLinks.append(back_links)
-        return rulesIncludingBackLinks
-
-
-    #================================================================================
-    
-    
-    # check if a rule has backward links
-    def rule_has_backward_links(self, rule):
-        rule_object = self.rules[rule]
-        backwards_links = find_nodes_with_mm(rule_object, ["backward_link"])
-        if len(backwards_links) == 0:
-            return False
-        return True
     
 
     # find all the rules that subsume a given rule    
