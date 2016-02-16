@@ -781,14 +781,6 @@ class PyRamify:
             
         return {name: bwPatterns}
 
-    def remove_structure_nodes(self, graph):
-        #structure_nodes = find_nodes_with_mm(graph, ["MatchModel", "match_contains", "paired_with", "ApplyModel", "apply_contains"])
-        structure_nodes = find_nodes_with_mm(graph, ["paired_with", "ApplyModel", "apply_contains"])
-        graph.delete_nodes(structure_nodes)
-        return graph
-
-
-
 
     def get_match_graph(self, graph):
 
@@ -796,24 +788,12 @@ class PyRamify:
             graph_to_dot(graph.name + "_original", graph)
 
         apply_contain_node = find_nodes_with_mm(graph, ["apply_contains"])
-#         apply_contain_node = get_node_num(graph, apply_contain_node[0])
-# 
-#         apply_nodes = flood_find_nodes(apply_contain_node, graph, ["ApplyModel", "backward_link", "trace_link"])
-#         apply_nodes = list(set(apply_nodes))
-        
+
         apply_nodes = []
         for node in apply_contain_node:
             node_num = get_node_num(graph, node)
             apply_nodes.extend(flood_find_nodes(node_num, graph, ["ApplyModel", "backward_link", "trace_link"]))
         apply_nodes = list(set(apply_nodes))
-
-#         print "-----------------------------"
-#         print graph.name
-#         print "found: "
-#         print "-----"
-#         for a in apply_nodes:
-#             print(graph.vs[a]["mm__"])
-#         print "-----------------------------"
 
         backward_links = find_nodes_with_mm(graph, ["backward_link"])
         attached_apply = []
@@ -827,8 +807,9 @@ class PyRamify:
                 pass
 
         graph.delete_nodes(apply_nodes)
-        
-        graph = self.remove_structure_nodes(graph)
+
+        structure_nodes = find_nodes_with_mm(graph, ["paired_with", "ApplyModel", "apply_contains"])
+        graph.delete_nodes(structure_nodes)
 
         return graph
 
@@ -843,8 +824,6 @@ class PyRamify:
         rewriter = self.changeAttrType(rewriter, make_pre = False, back_to_trace = back_to_trace)
 
         rewriter = makePostConditionPattern(rewriter)
-
-        #graph_to_dot("the_rewriter_graph_after_post_" + rewriter.name, rewriter)
 
         return rewriter
 
@@ -869,22 +848,7 @@ class PyRamify:
         graph["mm__"] = [graph["mm__"][0], 'MoTifRule']
         graph["MT_constraint__"] = get_default_constraint()
 
-
-
-        #Remove pre_cardinality
-        for i in range(len(graph.vs)):
-            node = graph.vs[i]
-            try:
-                del(node["MT_pre__cardinality"])
-            except:
-                pass
-
-            # if node["mm__"] != "MT_pre__directLink_S":
-            #     node["MT_pre__associationType"] = None
-
         old_name = graph.name
-
-
 
         graph.name = old_name + "_match_pattern_matcher"
         file_name = graph.compile(out_dir)
@@ -898,10 +862,8 @@ class PyRamify:
         rule = load_class(out_dir + "/" + old_name + "_match_pattern_matcher")
         match_graph = list(rule.values())[0]
 
-
         rewriter.pre = match_graph
         rewriter.name = old_name + "_match_pattern_rewriter"
-        #graph_to_dot("the_rewriter_graph" + rewriter.name, rewriter)
 
         file_name = rewriter.compile(out_dir)
         if self.verbosity >= 2:
@@ -909,8 +871,6 @@ class PyRamify:
 
         rewriter_dict = load_class(out_dir + rewriter.name)
         rewriter = list(rewriter_dict.values())[0]
-
-        #graph_to_dot("the_rewriter_graph_after" + rewriter.name, rewriter)
 
         matcher = Matcher(match_graph, disambig_matching = False)
 
