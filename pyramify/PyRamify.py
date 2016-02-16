@@ -45,13 +45,14 @@ class PyRamify:
         self.rules = {}
         self.loopingRuleSubsumption = []
 
+
     '''
      changeAttrType (M): Changes the type of attributes to 'string', which allows conditions and actions to be specified on attribute values in patterns.
      Also appends '__' to attributes starting with '__'. This is because the pLabel and pMatchSubtypes attributes (introduced in one of the next steps) need to be scoped appropriately for HOTs. 
      The first time a metamodel is ramified, each class will have a __pLabel and __pMatchSubtypes attribute.
      The next time, these attributes are renamed to ____pLabel and ____pMatchSubtypes, to allow a condition/action to be specified for the __pLabel and __pMatchSubtypes attributes which were introduced in the first RAMified metamodel.
     '''
-    def changeAttrType(self, graph, make_pre = True):
+    def changeAttrType(self, graph, make_pre = True, back_to_trace = False):
 
         #change mm of the graph
         try:
@@ -128,161 +129,9 @@ class PyRamify:
                 #TODO: Fold this into above for loop
                 if attrib == "mm__":
 
-                    if node["mm__"] == "backward_link":
-                        node["mm__"] = "trace_link"
-
-                    if make_pre:
-                        node["mm__"] = Himesis.Constants.MT_PRECOND_PREFIX + node["mm__"]
-                    else:
-                        node["mm__"] = Himesis.Constants.MT_POSTCOND_PREFIX + node["mm__"]
-                    continue
-
-                #skip the other attribs
-                if attrib in attribs_to_skip:
-                    continue
-
-
-                #TODO: Come up with a nice pattern for these attributes
-                #Hack for Attributes         
-                
-                if "Attribute" in node["mm__"] and attrib == "MT_pre__name":
-                    node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
-
-                #Hack for Constants
-                
-                    
-                elif "Constant" in node["mm__"] and attrib == "MT_pre__name":
-                    node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
-                    
-                elif "Constant" in node["mm__"] and attrib == "MT_pre__value":
-                    node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
-                    
-                elif "directLink" in node["mm__"] and attrib == "MT_pre__attr1":
-                    node[attrib] = "if attr_value == \"" + node[attrib] + "\":\n    return True\nreturn False\n"
-                    
-                elif "Constant" in node["mm__"] and attrib == "MT_post__value":
-                    node[attrib] = "return '" + node[attrib] + "'"
-
-                elif "Attribute" in node["mm__"] and attrib == "MT_post__name":
-                    node[attrib] = "return '" + node[attrib] + "'"
-
-                elif "Constant" in node["mm__"] and attrib == "MT_post__name":
-                    node[attrib] = "return '" + node[attrib] + "'"
-
-                elif "directLink" in node["mm__"] and attrib == "MT_post__attr1":
-                    node[attrib] = "return '" + node[attrib] + "'"
-                    
-                elif "paired_with" in node["mm__"] and attrib == "MT_post__rulename":
-                    node[attrib] = "return '" + node[attrib] + "'"
-
-                # Hack for trace_links
-                elif "trace_link" in node["mm__"] and attrib == "MT_pre__type":
-                    node[attrib] = None
-
-                else:
-                    #set the other values to the default match or rewrite code
-                    if make_pre:
-                        node[attrib] = get_default_match_code()
-                    else:
-                        node[attrib] = get_default_rewrite_code()
-
-            #set some other attribs for the node
-            if make_pre:
-                #node["MT_subtypeMatching__"] = False
-                #node["MT_subtypes__"] = "[]"
-                node["MT_dirty__"] = False
-
-        if make_pre:
-            graph["superclasses_dict"] = {}
-
-        return graph
-    
-    
-    '''
-     changeAttrType (M): Changes the type of attributes to 'string', which allows conditions and actions to be specified on attribute values in patterns.
-     Also appends '__' to attributes starting with '__'. This is because the pLabel and pMatchSubtypes attributes (introduced in one of the next steps) need to be scoped appropriately for HOTs. 
-     The first time a metamodel is ramified, each class will have a __pLabel and __pMatchSubtypes attribute.
-     The next time, these attributes are renamed to ____pLabel and ____pMatchSubtypes, to allow a condition/action to be specified for the __pLabel and __pMatchSubtypes attributes which were introduced in the first RAMified metamodel.
-    '''
-    def changeAttrTypeWithBack(self, graph, make_pre = True):
-
-        #change mm of the graph
-        try:
-            if make_pre:
-                graph["mm__"] = [str(Himesis.Constants.MT_PRECOND_PREFIX + graph["mm__"][0]), 'MoTifRule']
-            else:
-                graph["mm__"] = [str(Himesis.Constants.MT_POSTCOND_PREFIX + graph["mm__"][0]), 'MoTifRule']
-        except IndexError:
-            graph["mm__"] = "MM"
-
-        # set the default constraint or action of the graph
-        if make_pre:
-            graph["MT_constraint__"] = get_default_constraint()
-        else:
-            graph["MT_action__"] = get_default_action()
-
-        #don't change some of the attributes
-        attribs_to_skip = ["GUID__", "mm__", "MT_label__", "MT_subtypes__", "MT_dirty__", "MT_subtypeMatching__"]
-
-
-        #examine the nodes in order to change their attributes
-        for i in range(len(graph.vs)):
-            node = graph.vs[i]
-
-            #examine each attribute
-            #warning: node.attribute_names() may not
-            #produce the attribute names for only this node,
-            #but instead the set of all attributes for all nodes
-            for attrib in node.attribute_names():
-
-                #we ignore the attributes that are None
-                #this works around the above bug
-                if node[attrib] is None:
-                    continue
-
-                #skip some of the attribs
-                if attrib in attribs_to_skip:
-                    continue
-
-                #skip already RAMified attribs
-                #TODO: Fix for double RAMification
-                if Himesis.Constants.MT_PRECOND_PREFIX in attrib:
-                    continue
-
-                if Himesis.Constants.MT_POSTCOND_PREFIX in attrib:
-                    continue
-
-                #make sure to copy the value
-                val = copy.deepcopy(node[attrib])
-
-                #delete the attrib from the node
-                #(not really deletion, but will be ignored in the future)
-                node[attrib] = None
-
-                #re-add the value with the new attribute name
-                if make_pre:
-                    new_attrib_name = Himesis.Constants.MT_PRECOND_PREFIX + attrib
-                else:
-                    new_attrib_name = Himesis.Constants.MT_POSTCOND_PREFIX + attrib
-
-                node[new_attrib_name] = val
-
-        #go through the graph again,
-        #to fix some edge cases
-        for i in range(len(graph.vs)):
-            node = graph.vs[i]
-
-            for attrib in node.attribute_names():
-
-                if node[attrib] is None:
-                    continue
-
-                #add the prefix to the mm
-                #TODO: Fold this into above for loop
-                if attrib == "mm__":
-
-#                     if node["mm__"] == "backward_link":
-#                         node["mm__"] = "trace_link"
+                    if back_to_trace:
+                        if node["mm__"] == "backward_link":
+                            node["mm__"] = "trace_link"
 
                     if make_pre:
                         node["mm__"] = Himesis.Constants.MT_PRECOND_PREFIX + node["mm__"]
@@ -324,10 +173,6 @@ class PyRamify:
                 elif "Constant" in node["mm__"] and attrib == "MT_post__name":
                     node[attrib] = "return '" + node[attrib] + "'"
 
-                # Hack for trace_links
-                elif "trace_link" in node["mm__"] and attrib == "MT_pre__type":
-                    node[attrib] = None
-
                 else:
                     #set the other values to the default match or rewrite code
                     if make_pre:
@@ -337,8 +182,6 @@ class PyRamify:
 
             #set some other attribs for the node
             if make_pre:
-                #node["MT_subtypeMatching__"] = False
-                #node["MT_subtypes__"] = "[]"
                 node["MT_dirty__"] = False
 
         if make_pre:
@@ -378,7 +221,7 @@ class PyRamify:
 
 
         #change the attribs in this graph
-        graph = self.changeAttrType(graph)
+        graph = self.changeAttrType(graph, back_to_trace = True)
 
 
         #compile the output pattern for future study + use
@@ -418,7 +261,7 @@ class PyRamify:
 
 
         #change the attribs in this graph
-        graph = self.changeAttrTypeWithBack(graph)
+        graph = self.changeAttrType(graph, back_to_trace = False)
 
 
         #compile the output pattern for future study + use
@@ -1253,7 +1096,7 @@ class PyRamify:
                     rewriter.add_edge(new_node, match_node)
 
 
-        rewriter = self.changeAttrType(rewriter, False)
+        rewriter = self.changeAttrType(rewriter, make_pre = False, back_to_trace = True)
 
         rewriter = makePostConditionPattern(rewriter)
 
@@ -1319,7 +1162,7 @@ class PyRamify:
 
         #graph_to_dot("the_rewriter_graph_" + rewriter.name, rewriter)
 
-        rewriter = self.changeAttrTypeWithBack(rewriter, False)
+        rewriter = self.changeAttrType(rewriter, make_pre = False, back_to_trace = False)
 
         rewriter = makePostConditionPattern(rewriter)
 
