@@ -240,19 +240,16 @@ class PyRamify:
         return_graph = graph
 
         #check to see which nodes have backward links
-        backwards_links = find_nodes_with_mm(graph, ["backward_link"])
 
         #no backward links in file, do nothing
-        if len(backwards_links) == 0:
+        if "backward_link" not in graph.vs["mm__"]:
             return [{graph.name: None}, []]
 
         #there are backward links, so start RAMifying
         out_dir = "./patterns/"
-        outfile = out_dir + self.get_RAMified_name(name) + ".py"
 
         graph = graph.copy()
         graph = self.do_RAMify(graph, out_dir, remove_rule_nodes = False)
-
 
         bwPatterns = []
         bwPatterns2Rule = {}
@@ -261,48 +258,19 @@ class PyRamify:
         #So to be safe, find the backward/trace links again
         backwards_links = find_nodes_with_mm(graph, ["MT_pre__trace_link"])
 
-        #get the ids of the structural nodes
-        #structure_nodes = find_nodes_with_mm(graph, ["MT_pre__MatchModel", "MT_pre__paired_with", "MT_pre__ApplyModel", "MT_pre__match_contains", "MT_pre__apply_contains"])
-        #structure_nums = [get_node_num(graph, item) for item in structure_nodes]
-
-
         # make sure to copy the graph, as we will make multiple smaller matchers from it
         new_graph = graph.copy()
         new_graph = makePreConditionPattern(new_graph)
 
 
-        # keep the nodes attached to the backward link plus the 'structural' nodes
-        #that should be kept
-        nodes_to_keep = []  # + new_structure
+        # keep the nodes attached to the backward link
+        nodes_to_keep = []
 
 
-        #for each backward link found, create a matcher for the attached nodes
-        i = 0
+        #create a matcher for the attached nodes of all backward links
         for link in backwards_links:
             #find the nodes attached to the backwards link
             attached_nodes = look_for_attached(link, new_graph)
-
-
-            # #get the nodes attached to the nodes attached to the backward link
-            # attached_to_attached = []
-            # for a in attached_nodes:
-            #     b = self.look_for_attached(new_graph.vs[a], new_graph)
-            #     attached_to_attached += b
-            #
-            # #start a list of nodes to keep
-            # new_structure = []
-            #
-            # #the metamodels to keep
-            # keep_mms = ["MT_pre__MatchModel", "MT_pre__paired_with", "MT_pre__ApplyModel"]
-            #
-            # #for all the 'structural' nodes
-            # for item in structure_nums:
-            #
-            #     #keep the node if it is attached to a node attached to the backwards link
-            #     #or the metamodel should be kept
-            #     if item in attached_to_attached or new_graph.vs[item]["mm__"] in keep_mms:
-            #         new_structure.append(item)
-
 
             nodes_to_keep += attached_nodes
 
@@ -314,11 +282,9 @@ class PyRamify:
         #remove everything except for the attached nodes and the backward link
         new_graph.delete_nodes(nodes_to_remove)
 
-
         #create a new name for this backward matcher
         #replace the pattern name with the partial pattern name
-        new_name = new_graph.name + "_rule_trace_checker" + str(i)
-        i += 1
+        new_name = new_graph.name + "_rule_trace_checker"
 
         #write out the file
         new_graph.name = new_name
