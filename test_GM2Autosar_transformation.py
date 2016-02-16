@@ -26,7 +26,7 @@ class Prover():
 
     def do_proof(self,args):    
 
-        do_old_transformation = True
+        do_old_transformation = args.handbuilt
 
         pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
         
@@ -55,7 +55,7 @@ class Prover():
             r6 = 'HcompostypeportSolveRefPhysicalNodePartitionModuleSchedulerServiceCompositionTypeRPortPrototype'
             r7 = 'HmappingcomponentSolveRefPartitionModuleSwcToEcuMappingSwCompToEcuMappingcomponent'
             r8 = 'HmappingecuInstanceSolveRefPhysicalNodePartitionSwcToEcuMappingEcuInstance'
-            full_transformation = [[r0,],[r1,r2,],[r3,],[r4,],[r5,],[r6,],[r7,],[r8,],]
+            full_transformation = [[r0,],[r1,r2,],[r3,],[r4,],[r5],[r6,],[r7,],[r8,],]
 
             rule_dir = "GM2AUTOSAR_MM/transformation_from_ATL/"
         
@@ -89,22 +89,41 @@ class Prover():
 
         atomic_contracts = [
             "P1",
-            #"P2",
+            "P2",
         ]
+
+        # if args.contract >= 0 and args.contract <=1:
+        #     atomic_contracts = atomic_contracts[args.contract : args.contract+1]
+        # else:
+        #     atomic_contracts = []
+
         if_then_contracts = [
-            #["S1_if", "S1_then"],
-            #["M1_if", "M1_then"],
-            #["M3_if", "M3_then"],
+             ["S1_if", "S1_then"],
+            ["M1_if", "M1_then"],
+            ["M3_if", "M3_then"],
         ]
+
+        # if args.contract >= 2 and args.contract <= 4:
+        #     args.contract -= 2
+        #     if_then_contracts = if_then_contracts[args.contract: args.contract + 1]
+        # else:
+        #     if_then_contracts = []
+
         prop_if_then_contracts = [
             #structure is 'if graph', 'then graph'
             #where the 'then graph' is made up of reverse polish notation
-            # ["M2_if", ["M2_then1", "M2_then2", "NOT", "AND"]],
-            # ["M4_if", ["M4_then1", "M4_then2", "NOT", "AND"]],
-            # ["M5_if", ["M5_then1", "M5_then2", "NOT", "AND"]],
-            # ["M6_if", ["M6_then1", "M6_then2", "NOT", "AND"]],
+            ["M2_if", ["M2_then1", "M2_then2", "NOT", "AND"]],
+            ["M4_if", ["M4_then1", "M4_then2", "NOT", "AND"]],
+            ["M5_if", ["M5_then1", "M5_then2", "NOT", "AND"]],
+            ["M6_if", ["M6_then1", "M6_then2", "NOT", "AND"]],
 
         ]
+
+        # if args.contract >= 5 and args.contract <= 8:
+        #     args.contract -= 5
+        #     prop_if_then_contracts = prop_if_then_contracts[args.contract: args.contract + 1]
+        # else:
+        #     prop_if_then_contracts = []
 
         self.atomic_contracts, self.if_then_contracts = load_contracts(contracts, superclasses_dict,
                                                                        atomic_contracts, if_then_contracts, prop_if_then_contracts,
@@ -121,18 +140,19 @@ class Prover():
             
         # generate path conditions
         pc_set = PathConditionGenerator(self.transformation, outputMM, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
-    
+
         ts0 = time.time()
         pc_set.build_path_conditions()
         ts1 = time.time()
              
         print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
         print("Number of path conditions: " + str(pc_set.num_path_conditions))
- 
+
+
         # print path conditions to screen
         
-        if pc_set.num_path_conditions < 300:
-            pc_set.print_path_conditions_screen()
+        # if pc_set.num_path_conditions < 300:
+        #     pc_set.print_path_conditions_screen()
         
         # now actually prove these contracts
         
@@ -180,7 +200,15 @@ if __name__ == "__main__":
                         
     parser.add_argument('--verbosity', type = int, default = 0,
                         help = 'Verbosity level (default: 0 - minimum output)')
-                        
+
+    parser.add_argument('--contract', type = int, default = -1,
+                        help = 'Contract selection (default: -1 - no contract)')
+    parser.set_defaults(contract = -1)
+
+    parser.add_argument('--handbuilt', dest = 'handbuilt', action = 'store_true',
+                        help = 'Select the handbuilt version (default: False - use HOT version)')
+    parser.set_defaults(handbuilt = False)
+
     args = parser.parse_args()
 
 
