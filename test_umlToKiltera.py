@@ -6,7 +6,7 @@
 import time
 
 from path_condition_generator import PathConditionGenerator
-from PyRamify import PyRamify
+from pyramify.PyRamify import PyRamify
 
 from util.ecore_utils import EcoreUtils
 from core.himesis_plus import buildPreListFromClassNames

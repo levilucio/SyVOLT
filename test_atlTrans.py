@@ -14,7 +14,7 @@ from PropertyVerification.v2.ContractProver import ContractProver
 from t_core.matcher import Matcher
 from t_core.messages import Packet
 
-from PyRamify import PyRamify
+from pyramify.PyRamify import PyRamify
 
 from util.test_script_utils import select_rules, get_sub_and_super_classes, load_contracts
 from util.slicer import Slicer
