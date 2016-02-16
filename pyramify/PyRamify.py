@@ -490,8 +490,14 @@ class PyRamify:
 
         #remove everything except for the attached nodes and the backward link
         partial_combinator_matcher.delete_nodes(nodes_to_remove)
-       
+
+
+
+
+
+
         subsuming_rules = []
+        combinator_matchers = []
         
         if name in self.rulesNeedingOverlapTreatment:
             subsuming_rules = self.subsumingRules[name]
@@ -519,6 +525,10 @@ class PyRamify:
                 nodes.append(node)
             total_combinator_matcher.delete_vertices(nodes)                         
             combinator_matchers = [total_combinator_matcher]                
+
+
+
+
 
         for i in range(len(combinator_matchers)):
             
@@ -571,50 +581,31 @@ class PyRamify:
                        
                 backward_pattern.NACs = [NAC_graph]
 
+
             #create the Matcher
-
             matcher = Matcher(backward_pattern, disambig_matching = True)
- 
- 
-            #TODO: Make rewriter code simpler, and same as match pattern rewriter
- 
+
+
+            #make a copy of the rewriter graph and the backward pattern
             rewriter_graph_copy = copy_graph(rewriter_graph)
-
-#             if combinator_matchers[i] == None: 
-#                 rule = load_class("property_prover_rules/HEmptyPathCondition.py")
-#                 matcherCond = rule.values()[0]
-#                 matcher = Matcher(matcherCond)
-#                 backward_pattern = rule.values()[0]
-
             rewriter_graph_copy.pre = copy_graph(backward_pattern)
             rewriter_graph_copy.name = rewrite_name + "_" + str(i)
             
             file_name = rewriter_graph_copy.compile(out_dir)
             if self.verbosity >= 2:
                 print("Rewriter graph compiled to: " + file_name)
-            
-             
+
             rewriter_graph2 = load_class(out_dir + rewriter_graph_copy.name)
             rewriter_graph2 = list(rewriter_graph2.values())[0]
 
- 
-            # debug printout
+            rewriter_graph2.pre = copy_graph(backward_pattern)
+
+
             if self.draw_svg:
                 graph_to_dot(rewriter_graph2.name, rewriter_graph2)
- 
-            rewriter_graph2.pre = copy_graph(backward_pattern)
- 
-#            rewriter_graph2.pre = copy_graph(backward_pattern)
- 
-            for n in range(len(rewriter_graph2.pre.vs)):
-                node = rewriter_graph2.pre.vs[n]
-                #print("mm2__: " + node["mm__"])
- 
-            rewriter = Rewriter(rewriter_graph2)
- 
- 
+
             #append the new backward pattern and name mapping
-            bwPatterns.append([matcher, rewriter])
+            bwPatterns.append([matcher, Rewriter(rewriter_graph2)])
             #bwPatterns2Rule[matcher] = name 
             
         return {name: bwPatterns}
