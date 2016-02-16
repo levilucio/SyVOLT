@@ -52,7 +52,7 @@ class PyRamify:
      The first time a metamodel is ramified, each class will have a __pLabel and __pMatchSubtypes attribute.
      The next time, these attributes are renamed to ____pLabel and ____pMatchSubtypes, to allow a condition/action to be specified for the __pLabel and __pMatchSubtypes attributes which were introduced in the first RAMified metamodel.
     '''
-    def changeAttrType(self, graph, make_pre = True, back_to_trace = False):
+    def changeAttrType(self, graph, make_pre = True, back_to_trace = True):
 
         #change mm of the graph
         try:
@@ -191,19 +191,7 @@ class PyRamify:
 
 
     #RAMify this file
-    def do_RAMify(self, graph, output_dir, remove_rule_nodes = True):
-        
-        input_name = graph["name"]
-        #print("Starting to ramify file: " + input_name)
-
-
-        #rename the class
-        #graph["name"] = self.get_RAMified_name(input_name)
-
-        #turn the backward links into trace links
-        backwards_links = find_nodes_with_mm(graph, ["backward_link"])
-        for node in backwards_links:
-            node["mm__"] = "trace_link"
+    def do_RAMify(self, graph, output_dir, remove_rule_nodes = True, back_to_trace = True):
 
         #in some cases, the 'structural' or 'rule' nodes are removed
         if remove_rule_nodes is True:
@@ -211,57 +199,11 @@ class PyRamify:
             print("Removing rule nodes")
             graph.delete_nodes(remove_nodes)
 
-        #
-        # for n in graph.vs:
-        #     if "Attribute" in n["mm__"]:
-        #         print(n)
-
         #make sure this graph becomes a precondition pattern
         graph = makePreConditionPattern(graph)
 
-
         #change the attribs in this graph
-        graph = self.changeAttrType(graph, back_to_trace = True)
-
-
-        #compile the output pattern for future study + use
-        #throw everything in the output dir
-        #graph.compile(output_dir)
-
-        return graph
-
-
-    #RAMify this file keeping backward links
-    def do_RAMify_with_back(self, graph, output_dir, remove_rule_nodes = True):
-        
-        input_name = graph["name"]
-        #print("Starting to ramify file: " + input_name)
-
-
-        #rename the class
-        #graph["name"] = self.get_RAMified_name(input_name)
-
-#         backwards_links = find_nodes_with_mm(graph, ["backward_link"])
-#         for node in backwards_links:
-#             node["mm__"] = "trace_link"
-
-        #in some cases, the 'structural' or 'rule' nodes are removed
-        if remove_rule_nodes is True:
-            remove_nodes = find_nodes_with_mm(graph, ["MatchModel", "ApplyModel", "paired_with", "match_contains", "apply_contains", "directLink_T"])
-            print("Removing rule nodes")
-            graph.delete_nodes(remove_nodes)
-
-        #
-        # for n in graph.vs:
-        #     if "Attribute" in n["mm__"]:
-        #         print(n)
-
-        #make sure this graph becomes a precondition pattern
-        graph = makePreConditionPattern(graph)
-
-
-        #change the attribs in this graph
-        graph = self.changeAttrType(graph, back_to_trace = False)
+        graph = self.changeAttrType(graph, back_to_trace = back_to_trace)
 
 
         #compile the output pattern for future study + use
@@ -1137,7 +1079,7 @@ class PyRamify:
 
         graph = self.get_match_graph(graph)     
         
-        graph = self.do_RAMify_with_back(graph, out_dir, remove_rule_nodes = False)
+        graph = self.do_RAMify(graph, out_dir, remove_rule_nodes = False, back_to_trace = False)
 
         graph["mm__"] = [graph["mm__"][0], 'MoTifRule']
         graph["MT_constraint__"] = get_default_constraint()
