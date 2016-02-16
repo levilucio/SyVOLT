@@ -408,8 +408,7 @@ class PathConditionGenerator(object):
         start_time = time.time()
 
         for layer in range(len(self.transformation)):
-            if self.verbosity > 0:
-                print("Layer: " + str(layer + 1) + " at time " + str(time.time() - start_time))
+            print("Layer: " + str(layer + 1) + " at time " + str(time.time() - start_time))
 
             # for each path condition built so far, combine it with each of the rules from the current layer
 
