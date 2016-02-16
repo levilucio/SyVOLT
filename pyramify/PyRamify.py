@@ -348,46 +348,18 @@ class PyRamify:
 
     
     def get_all_nodes(self, graph):
-        node_list = []
 
-        for n in graph.vs:
+        mm_list = ["MT_pre__match_contains", "MT_pre__apply_contains",
+                   "MT_pre__paired_with",
+                   "MT_pre__MatchModel", "MT_pre__ApplyModel",
+                   "MT_pre__trace_link",
+                   "MT_pre__directLink_S", "MT_pre__directLink_T",
+                   "MT_pre__indirectLink_S", "MT_pre__indirectLink_T",
+                   ]
 
-            if n["mm__"] in ["MT_pre__match_contains", "MT_pre__apply_contains", \
-                             "MT_pre__paired_with",
-                             "MT_pre__MatchModel", "MT_pre__ApplyModel", \
-                             "MT_pre__hasAttribute_T", "MT_pre__hasAttribute_S", \
-                             "MT_pre__Attribute", "MT_pre__Equation", \
-                             "MT_pre__Constant", "MT_pre__Concat", \
-                             "MT_pre__leftExpr", "MT_pre__rightExpr", \
-                             "MT_pre__trace_link", "MT_pre__hasAttribute_S", \
-                             "MT_pre__directLink_S", "MT_pre__directLink_T", \
-                             "MT_pre__indirectLink_S", "MT_pre__indirectLink_T", \
-                             ]:
-                continue
+        node_list = [n for n in graph.vs if n["mm__"] not in mm_list]
 
-            node_list.append(n)
-            
         return node_list
-
-    def get_all_nodes_with_equations(self, graph):
-
-        #these are all nodes that are not part of the metamodel
-        all_nodes = self.get_all_nodes(graph)
-
-
-        all_nodes_w_eqs = {}
-        for n in all_nodes:
-
-            node_num = get_node_num(graph, n)
-
-            connected_nodes = flood_find_nodes(node_num, graph, ["MT_pre__match_contains", "MT_pre__apply_contains",
-                                                                "MT_pre__directLink_S", "MT_pre__directLink_T",
-                                                                "MT_pre__indirectLink_S", "MT_pre__indirectLink_T",
-                                                                "MT_pre__trace_link"], )
-
-            all_nodes_w_eqs[n] = connected_nodes
-        return all_nodes_w_eqs
-
 
     # Build the LHS condition for the combinators for rules that are subsumed by others.
     # If the combinator is to match outside the subsumed rule, writeOnTop is False
