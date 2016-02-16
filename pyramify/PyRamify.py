@@ -346,74 +346,12 @@ class PyRamify:
 
         return [{str(return_graph.name): matcher}, bwPatterns2Rule]
 
-
-    def get_links_in_apply(self, graph):
-        # find the apply_contains
-        apply_contains = self.find_nodes_with_mm(graph, ["MT_pre__apply_contains"])
-
-
-        # find the backward links
-        backwards_links = self.find_nodes_with_mm(graph, ["MT_pre__trace_link"])
-
-
-        #find node nums attached to a backward link
-        attached_to_backward_links = []
-        for bl in backwards_links:
-            attached_to_backward_links += self.look_for_attached(bl, graph)
-
-        nodes_to_delete = []
-        nodes_to_keep = []
-
-        #look at the apply_contains link
-        for apply_contain in apply_contains:
-            #find the attached nodes to this link
-            apply_attached_nodes = self.look_for_attached_of_attached(apply_contain, graph)
-
-
-            #for the nodes
-            for aan in apply_attached_nodes:
-                #get the node
-                node = graph.vs[aan]
-                #print(node)
-
-                if aan in attached_to_backward_links:
-                    #this node is attached to a backward link, so keep it
-                    nodes_to_keep.append(aan)
-                elif str(node["mm__"]) not in ["MT_pre__ApplyModel", "MT_pre__apply_contains", "MT_pre__paired_with", "MT_pre__hasAttribute_T"]:
-                    #don't remove important nodes, but delete all others
-                    nodes_to_delete.append(node)
-
-
-        #find all the hasAttribute nodes of the apply side
-        hasAttributeNodes = self.find_nodes_with_mm(graph, ["MT_pre__hasAttribute_T"])
-        for n in hasAttributeNodes:
-
-            #look at all the attached nodes to the hasAttribute node
-            attached = self.look_for_attached(n, graph)
-
-            #keep this hasAttribute node if it is connected to a node that is connected to a backward link
-            should_keep_attrib = False
-            for a in attached:
-                if a in nodes_to_keep:
-                    should_keep_attrib = True
-
-            #otherwise, delete this hasAttribute node and the attached nodes as well
-            if not should_keep_attrib:
-                nodes_to_delete.append(n)
-                nodes_to_delete += attached
-
-        #print("Nodes to delete: " + str(len(nodes_to_delete)))
-        return nodes_to_delete
-
-
-    def get_all_links(self, graph):
-        pass
     
     def get_all_nodes(self, graph):
         node_list = []
-        
+
         for n in graph.vs:
-            
+
             if n["mm__"] in ["MT_pre__match_contains", "MT_pre__apply_contains", \
                              "MT_pre__paired_with",
                              "MT_pre__MatchModel", "MT_pre__ApplyModel", \
@@ -426,27 +364,27 @@ class PyRamify:
                              "MT_pre__indirectLink_S", "MT_pre__indirectLink_T", \
                              ]:
                 continue
-            
+
             node_list.append(n)
             
         return node_list
-        
+
     def get_all_nodes_with_equations(self, graph):
-        
+
         #these are all nodes that are not part of the metamodel
         all_nodes = self.get_all_nodes(graph)
-        
-        
+
+
         all_nodes_w_eqs = {}
         for n in all_nodes:
-            
+
             node_num = get_node_num(graph, n)
-            
+
             connected_nodes = flood_find_nodes(node_num, graph, ["MT_pre__match_contains", "MT_pre__apply_contains",
                                                                 "MT_pre__directLink_S", "MT_pre__directLink_T",
                                                                 "MT_pre__indirectLink_S", "MT_pre__indirectLink_T",
                                                                 "MT_pre__trace_link"], )
-            
+
             all_nodes_w_eqs[n] = connected_nodes
         return all_nodes_w_eqs
 
