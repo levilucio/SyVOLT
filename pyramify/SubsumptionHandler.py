@@ -12,6 +12,7 @@ class SubsumptionHandler:
 
         self.loopingRuleSubsumption = []
         self.ruleSubsumption = {}
+        self.subsuming_rules = {}
 
     # return the layer a rule occurs in
     def layer_rule_occurs_in(self, rule):
@@ -155,7 +156,11 @@ class SubsumptionHandler:
 
         self.ruleSubsumption = ruleSubsumption
 
-        return ruleSubsumption
+        self.subsuming_rules = {}
+        for rule in sorted(self.rules.keys()):
+            self.subsuming_rules[rule] = self.get_subsuming_rules(rule)
+
+        return ruleSubsumption, self.subsuming_rules
 
     # Calculate if the rules need special treatment because they overlap.
     # This happens when:

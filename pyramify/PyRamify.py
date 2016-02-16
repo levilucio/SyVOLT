@@ -43,6 +43,7 @@ class PyRamify:
         self.verbosity = verbosity
         self.draw_svg =(draw_svg == "True")
         self.ruleSubsumption = {}
+        self.subsumingRules = {}
         self.rulesNeedingOverlapTreatment = []
         self.transformation_layers = []
         self.rules = {}
@@ -655,7 +656,7 @@ class PyRamify:
         subsuming_rules = []
         
         if name in self.rulesNeedingOverlapTreatment:
-            subsuming_rules = self.get_subsuming_rules(name)
+            subsuming_rules = self.subsumingRules[name]
         
 #             print "-----------------------------"
 #             print "Name: " + name
@@ -914,23 +915,6 @@ class PyRamify:
         matcher = Matcher(match_graph, disambig_matching = False)
 
         return {name : [matcher, Rewriter(rewriter)]}
-    
-
-    # find all the rules that subsume a given rule    
-    def get_subsuming_rules(self, rule):
-        foundParent = False
-        subsuming_rules = []
-        for ruleKey in sorted(self.ruleSubsumption.keys()):
-            if rule in set(self.ruleSubsumption[ruleKey]):
-                # check for loops when two rules subsume each other
-                if rule not in set(subsuming_rules):
-                    foundParent = True
-                    subsuming_rules.append(ruleKey)
-                    subsuming_rules.extend(self.get_subsuming_rules(ruleKey))
-        if not foundParent:
-            return []
-        else:
-            return subsuming_rules
 
 
     #ramify a whole directory
@@ -975,7 +959,7 @@ class PyRamify:
         self.rules = rules
 
         subsumptionHandler = SubsumptionHandler(self.rules, self.transformation_layers)
-        self.ruleSubsumption = subsumptionHandler.calculate_rule_subsumption(matchRulePatterns)
+        self.ruleSubsumption, self.subsumingRules = subsumptionHandler.calculate_rule_subsumption(matchRulePatterns)
 
         #record which rules have backward links
         has_backward_links = {}
