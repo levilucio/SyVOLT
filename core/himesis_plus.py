@@ -1,12 +1,5 @@
 from core.himesis import *
 
-#get the postion of this node in the Himesis graph
-def get_node_num(graph, node):
-    for i in range(graph.vcount()):
-        if graph.vs[i]["GUID__"] == node["GUID__"]:
-            return i
-    raise Exception("The node " + node["mm__"] + " was not found in this graph")
-
 #find the nodes with these mm names
 def find_nodes_with_mm(graph, mm_names):
     return [node for node in graph.vs if node["mm__"] in mm_names]

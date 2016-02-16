@@ -488,7 +488,7 @@ class PyRamify:
         
         apply_nums = []
         bk_links = find_nodes_with_mm(base_graph, ["MT_pre__trace_link"])
-        bk_links_nums = [get_node_num(base_graph, item) for item in bk_links]
+        bk_links_nums = [item.index for item in bk_links]
         apply_contains_nodes = find_nodes_with_mm(base_graph, ["MT_pre__apply_contains"])
         for node in apply_contains_nodes:
             apply_node = base_graph.neighbors(node,"out")[0]
@@ -499,10 +499,10 @@ class PyRamify:
         structure_nodes = find_nodes_with_mm(base_graph, ["MT_pre__MatchModel", "MT_pre__paired_with",
                                                           "MT_pre__ApplyModel", "MT_pre__match_contains",
                                                           "MT_pre__apply_contains"])
-        structure_nums = [get_node_num(base_graph, item) for item in structure_nodes]
+        structure_nums = [item.index for item in structure_nodes]
         
         link_nodes = find_nodes_with_mm(base_graph, ["MT_pre__directLink_T", "MT_pre__indirectLink_T"])
-        link_nums = [get_node_num(base_graph, item) for item in link_nodes]
+        link_nums = [item.index for item in link_nodes]
 
 
         base_graph.delete_nodes(structure_nums + link_nums + apply_nums)
@@ -513,7 +513,7 @@ class PyRamify:
         
         
         link_nodes = find_nodes_with_mm(base_graph, ["MT_pre__directLink_S", "MT_pre__indirectLink_S"])
-        link_nums = [get_node_num(base_graph, item) for item in link_nodes]
+        link_nums = [item.index for item in link_nodes]
         
         temp_input_nodes = []
         
@@ -737,7 +737,7 @@ class PyRamify:
 
         apply_nodes = []
         for node in apply_contain_node:
-            node_num = get_node_num(graph, node)
+            node_num = node.index
             apply_nodes.extend(flood_find_nodes(node_num, graph, ["ApplyModel", "backward_link", "trace_link"]))
         apply_nodes = list(set(apply_nodes))
 
