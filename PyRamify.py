@@ -1581,19 +1581,19 @@ class PyRamify:
     # returns a list of pairs of rules for which combinators need to be built for
     def rules_needing_overlap_treatment(self):
         rules_needing_overlap_treatment = {}
-        for rule in self.rules.keys():            
+        for rule in sorted(self.rules.keys()):
             subsuming_rules = self.get_subsuming_rules(rule)           
             
             for s_rule in subsuming_rules:
                 
-#                 print "---------------------------------"
-#                 print "Rule: " + str(rule)
-#                 print "Has backward links: " + str(self.rule_has_backward_links(rule))
-#                 print "Position: " + str(self.layer_rule_occurs_in(rule))
-#                 print "Subsuming Rule: " + str(s_rule)
-#                 print "Has backward links: " + str(self.rule_has_backward_links(s_rule))
-#                 print "Position: " + str(self.layer_rule_occurs_in(s_rule))
-#                 print "---------------------------------"
+#                 print("---------------------------------")
+#                 print("Rule: " + str(rule))
+# #                 print "Has backward links: " + str(self.rule_has_backward_links(rule))
+# #                 print "Position: " + str(self.layer_rule_occurs_in(rule))
+#                 print("Subsuming Rule: " + str(s_rule))
+# #                 print "Has backward links: " + str(self.rule_has_backward_links(s_rule))
+# #                 print "Position: " + str(self.layer_rule_occurs_in(s_rule))
+#                 print("---------------------------------")
 
                 try:
                     if (not self.rule_has_backward_links(rule) and not self.rule_has_backward_links(s_rule)) or\
@@ -1718,14 +1718,13 @@ class PyRamify:
                         rulesToDelete.append(subsumedRule)
                 self.ruleSubsumption[rule] = [r for r in self.ruleSubsumption[rule] if r not in rulesToDelete]
             # now remove empty dictionary entries
-            emptyEntries = []
-            for rule in self.ruleSubsumption.keys():
-                if self.ruleSubsumption[rule] == []:
-                    emptyEntries.append(rule)
-            for rule in emptyEntries:
-                del self.ruleSubsumption[rule]
-        except Exception:
-            print("Error in subsuming rules")
+            self.ruleSubsumption = dict((k, v) for k, v in self.ruleSubsumption.items() if v)
+
+            print("Subsumption")
+            print(self.ruleSubsumption)
+        except Exception as e:
+            print(e)
+            raise Exception("Error in subsuming rules")
             
         # remove from loopingRuleSubsumption relation rules that completeley overlap but belong to different layers, as they
         # will be treated by the total combinators. If rules belonging to more than one layer exist keep them only if two or
@@ -1818,6 +1817,7 @@ class PyRamify:
 
 
         property_prover_rules_dir = dsltransInstallDir + "/property_prover_rules/"
+        print("Rules dir: " + property_prover_rules_dir)
         for d in os.listdir(property_prover_rules_dir):
 
             if not os.path.isdir(property_prover_rules_dir + d):
@@ -1912,6 +1912,7 @@ class PyRamify:
                 matcher = pair[0]
 
                 matcher.condition["superclasses_dict"] = superclasses_dict
+
 
 if __name__ == "__main__":
      #No default action
