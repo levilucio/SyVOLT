@@ -1087,35 +1087,17 @@ class PyRamify:
 
         self.ruleSubsumption = subsumptionHandler.remove_subsumption_between_rules(self.ruleSubsumption)
 
-
-        # remove from loopingRuleSubsumption relation rules that completeley overlap but belong to different layers, as they
-        # will be treated by the total combinators. If rules belonging to more than one layer exist keep them only if two or
-        # more belong to the same layer, otherwise discard
-
-        cleanLoopingRuleSubsumption = []
-
-        for loopingRules in self.loopingRuleSubsumption:
-            loopDict = {}
-            for rule in loopingRules:
-                if self.layer_rule_occurs_in(rule) not in loopDict:
-                    loopDict[self.layer_rule_occurs_in(rule)] = [rule]
-                else:
-                    loopDict[self.layer_rule_occurs_in(rule)].append(rule) 
-            # keep entries that only have more than one rule
-            for layer in loopDict.keys():
-                if len(loopDict[layer]) > 1:
-                    cleanLoopingRuleSubsumption.append(loopDict[layer])
-            
+        subsumptionHandler.cleanLoopingRuleSubsumption()
 
         #print("Rules that need overlap treatment: " + str(rulesNeedingOverlapTreatment))
         #print("Subsumption order between rules for all layers: " + str(self.ruleSubsumption))
-        #print("Rules fully overlapping with each other: " + str(cleanLoopingRuleSubsumption))
+        #print("Rules fully overlapping with each other: " + str(subsumptionHandler.loopingRuleSubsumption))
 
         print("\n")
         print("Finished PyRamify")
         print("==================================\n")                    
 
-        return [rules, backwardPatterns, backwardPatterns2Rules, {}, matchRulePatterns, ruleCombinators, rulesNeedingOverlapTreatment, self.ruleSubsumption, cleanLoopingRuleSubsumption]
+        return [rules, backwardPatterns, backwardPatterns2Rules, {}, matchRulePatterns, ruleCombinators, rulesNeedingOverlapTreatment, self.ruleSubsumption, subsumptionHandler.loopingRuleSubsumption]
 
 
     #================================================================================

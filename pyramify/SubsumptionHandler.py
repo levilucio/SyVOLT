@@ -159,3 +159,26 @@ class SubsumptionHandler:
         except Exception as e:
             print(e)
             raise Exception("Error in subsuming rules")
+
+    def cleanLoopingRuleSubsumption(self):
+        # remove from loopingRuleSubsumption relation rules that completeley overlap but belong to different layers, as they
+        # will be treated by the total combinators. If rules belonging to more than one layer exist keep them only if two or
+        # more belong to the same layer, otherwise discard
+
+        newLoopingRuleSubsumption = []
+
+        for loopingRules in self.loopingRuleSubsumption:
+            loopDict = {}
+            for rule in loopingRules:
+                rule_layer = self.layer_rule_occurs_in(rule)
+                if rule_layer not in loopDict:
+                    loopDict[rule_layer] = [rule]
+                else:
+                    loopDict[rule_layer].append(rule)
+
+            # keep entries that only have more than one rule
+            for layer in loopDict.keys():
+                if len(loopDict[layer]) > 1:
+                    newLoopingRuleSubsumption.append(loopDict[layer])
+
+        self.loopingRuleSubsumption = newLoopingRuleSubsumption
