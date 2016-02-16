@@ -45,7 +45,6 @@ class PyRamify:
         self.ruleSubsumption = {}
         self.transformation_layers = []
         self.rules = {}
-        self.loopingRuleSubsumption = []
 
 
     '''
@@ -1069,7 +1068,7 @@ class PyRamify:
 
         self.rules = rules
 
-        subsumptionHandler = SubsumptionHandler(self.rules)
+        subsumptionHandler = SubsumptionHandler(self.rules, self.transformation_layers)
         self.ruleSubsumption = subsumptionHandler.calculate_rule_subsumption(matchRulePatterns)
         self.loopingRuleSubsumption = subsumptionHandler.loopingRuleSubsumption
         
@@ -1085,27 +1084,10 @@ class PyRamify:
                 rule_combinator = self.get_rule_combinators(rule5)
                 ruleCombinators.update(rule_combinator)
        
-        
-        # remove from the subsumption relation subsumption between a rule in a layer and a rule in a layer appearing before
-        # TODO: this should be replaced by layer ordering to avoid tests all the time during PC construction
-        try:
-            for rule in self.ruleSubsumption.keys():
-                rulesToDelete = []
-                for subsumedRule in self.ruleSubsumption[rule]:
-                    if self.layer_rule_occurs_in(rule) > self.layer_rule_occurs_in(subsumedRule) or\
-                       (self.layer_rule_occurs_in(rule) < self.layer_rule_occurs_in(subsumedRule) and
-                        self.rule_has_backward_links(rule) and self.rule_has_backward_links(subsumedRule)):
-                        rulesToDelete.append(subsumedRule)
-                self.ruleSubsumption[rule] = [r for r in self.ruleSubsumption[rule] if r not in rulesToDelete]
-            # now remove empty dictionary entries
-            self.ruleSubsumption = dict((k, v) for k, v in self.ruleSubsumption.items() if v)
 
-            print("Subsumption")
-            print(self.ruleSubsumption)
-        except Exception as e:
-            print(e)
-            raise Exception("Error in subsuming rules")
-            
+        self.ruleSubsumption = subsumptionHandler.remove_subsumption_between_rules(self.ruleSubsumption)
+
+
         # remove from loopingRuleSubsumption relation rules that completeley overlap but belong to different layers, as they
         # will be treated by the total combinators. If rules belonging to more than one layer exist keep them only if two or
         # more belong to the same layer, otherwise discard

@@ -4,8 +4,9 @@ from t_core.messages import Packet
 
 class SubsumptionHandler:
 
-    def __init__(self, rules):
+    def __init__(self, rules, transformation_layers):
         self.rules = rules
+        self.transformation_layers = transformation_layers
 
         self.loopingRuleSubsumption = []
 
@@ -126,3 +127,35 @@ class SubsumptionHandler:
                     ruleSubsumption[pair[1]] = [pair[0]]
 
         return ruleSubsumption
+
+
+    # return the layer a rule occurs in
+    def layer_rule_occurs_in(self, rule):
+        for layerIndex in range(len(self.transformation_layers)):
+            for ruleIndex in range(len(self.transformation_layers[layerIndex])):
+                if rule == self.transformation_layers[layerIndex][ruleIndex].name:
+                    return layerIndex
+        return None
+
+    def remove_subsumption_between_rules(self, ruleSubsumption):
+        # remove from the subsumption relation subsumption between a rule in a layer and a rule in a layer appearing before
+        # TODO: this should be replaced by layer ordering to avoid tests all the time during PC construction
+        try:
+            for rule in sorted(ruleSubsumption.keys()):
+                rulesToDelete = []
+                for subsumedRule in ruleSubsumption[rule]:
+                    if self.layer_rule_occurs_in(rule) > self.layer_rule_occurs_in(subsumedRule) or \
+                            (self.layer_rule_occurs_in(rule) < self.layer_rule_occurs_in(subsumedRule) and
+                                 self.rule_has_backward_links(rule) and self.rule_has_backward_links(subsumedRule)):
+                        rulesToDelete.append(subsumedRule)
+                ruleSubsumption[rule] = [r for r in ruleSubsumption[rule] if r not in rulesToDelete]
+            # now remove empty dictionary entries
+            ruleSubsumption = dict((k, v) for k, v in ruleSubsumption.items() if v)
+
+            print("Subsumption")
+            print(ruleSubsumption)
+
+            return ruleSubsumption
+        except Exception as e:
+            print(e)
+            raise Exception("Error in subsuming rules")
