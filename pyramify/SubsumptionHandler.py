@@ -21,15 +21,6 @@ class SubsumptionHandler:
                     return layerIndex
         return None
 
-        # check if a rule has backward links
-
-    def rule_has_backward_links(self, rule):
-        rule_object = self.rules[rule]
-        backwards_links = find_nodes_with_mm(rule_object, ["backward_link"])
-        if len(backwards_links) == 0:
-            return False
-        return True
-
     # find all the rules that subsume a given rule
     def get_subsuming_rules(self, rule):
         foundParent = False
@@ -171,31 +162,35 @@ class SubsumptionHandler:
     # - Rule A is subsumed by Rule B, rule A has no backward links and Rule B appears in the same layer as rule A, or in a layer before
     # - Rule A is subsumed by rule B and both rule A and rule B have backward links and Rule A appears in the same layer as rule B
     # returns a list of pairs of rules for which combinators need to be built for
-    def get_rules_needing_overlap_treatment(self):
+    def get_rules_needing_overlap_treatment(self, has_backward_links):
         rules_needing_overlap_treatment = {}
         for rule in sorted(self.rules.keys()):
             subsuming_rules = self.get_subsuming_rules(rule)
 
+            rule_has_bl = has_backward_links[rule]
+
             for s_rule in subsuming_rules:
+                s_rule_has_bl = has_backward_links[s_rule]
+
                 #                 print("---------------------------------")
                 #                 print("Rule: " + str(rule))
-                # #                 print "Has backward links: " + str(self.rule_has_backward_links(rule))
+                # #                 print "Has backward links: " + str(rule_has_bl)
                 # #                 print "Position: " + str(self.layer_rule_occurs_in(rule))
                 #                 print("Subsuming Rule: " + str(s_rule))
-                # #                 print "Has backward links: " + str(self.rule_has_backward_links(s_rule))
+                # #                 print "Has backward links: " + str(s_rule_has_bl)
                 # #                 print "Position: " + str(self.layer_rule_occurs_in(s_rule))
                 #                 print("---------------------------------")
 
                 try:
-                    if (not self.rule_has_backward_links(rule) and not self.rule_has_backward_links(s_rule)) or \
-                            (not self.rule_has_backward_links(rule) and self.rule_has_backward_links(s_rule)):
+                    if (not rule_has_bl and not s_rule_has_bl) or \
+                            (not rule_has_bl and s_rule_has_bl):
                         if self.layer_rule_occurs_in(rule) >= self.layer_rule_occurs_in(s_rule):
                             if rule in rules_needing_overlap_treatment.keys():
                                 rules_needing_overlap_treatment[rule].append(s_rule)
                             else:
                                 rules_needing_overlap_treatment[rule] = [s_rule]
 
-                    elif (self.rule_has_backward_links(rule) and self.rule_has_backward_links(s_rule)):
+                    elif rule_has_bl and s_rule_has_bl:
                         if self.layer_rule_occurs_in(rule) == self.layer_rule_occurs_in(s_rule):
                             if rule in rules_needing_overlap_treatment.keys():
                                 rules_needing_overlap_treatment[rule].append(s_rule)

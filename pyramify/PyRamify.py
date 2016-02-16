@@ -43,6 +43,7 @@ class PyRamify:
         self.verbosity = verbosity
         self.draw_svg =(draw_svg == "True")
         self.ruleSubsumption = {}
+        self.rulesNeedingOverlapTreatment = []
         self.transformation_layers = []
         self.rules = {}
 
@@ -1007,8 +1008,13 @@ class PyRamify:
 
         subsumptionHandler = SubsumptionHandler(self.rules, self.transformation_layers)
         self.ruleSubsumption = subsumptionHandler.calculate_rule_subsumption(matchRulePatterns)
-        
-        self.rulesNeedingOverlapTreatment = subsumptionHandler.get_rules_needing_overlap_treatment()
+
+        #record which rules have backward links
+        has_backward_links = {}
+        for rule in self.rules:
+            has_backward_links[rule] = (backwardPatterns[rule] is not None)
+
+        self.rulesNeedingOverlapTreatment = subsumptionHandler.get_rules_needing_overlap_treatment(has_backward_links)
 
         #build the combinators only after calculating the dependencies between rules
         for layer in transformation_layers:
