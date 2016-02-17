@@ -210,7 +210,7 @@ def graph_to_dot(name, g, verbosity = 0):
                 
             fillcolor="lightblue"
 
-            vattr += "\\n" + str(v['GUID__'])
+            #vattr += "\\n" + str(v['GUID__'])
 
         nodes[v.index] = pydot.Node(vattr, style="filled", fillcolor=fillcolor)
         graph.add_node(nodes[v.index])
