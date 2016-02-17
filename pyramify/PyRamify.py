@@ -431,12 +431,22 @@ class PyRamify:
         bk_links = find_nodes_with_mm(base_graph, ["MT_pre__trace_link"])
         bk_links_nums = [item.index for item in bk_links]
 
-        apply_contains_nodes = find_nodes_with_mm(base_graph, ["MT_pre__apply_contains"])
-        for node in apply_contains_nodes:
-            apply_node = base_graph.neighbors(node,"out")[0]
-            neighbors_apply_node = base_graph.neighbors(apply_node,"out")
-            if set(neighbors_apply_node).intersection(bk_links_nums) == set():
-                apply_nums.append(apply_node)
+        has_contains = "MT_pre__apply_contains" in base_graph.vs["mm__"]
+
+        if has_contains:
+            apply_contains_nodes = find_nodes_with_mm(base_graph, ["MT_pre__apply_contains"])
+            for node in apply_contains_nodes:
+                apply_node = base_graph.neighbors(node,"out")[0]
+                neighbors_apply_node = base_graph.neighbors(apply_node,"out")
+                if set(neighbors_apply_node).intersection(bk_links_nums) == set():
+                    apply_nums.append(apply_node)
+        else:
+            apply_model_node = find_nodes_with_mm(base_graph, ["MT_pre__ApplyModel"])[0]
+            apply_nodes = base_graph.neighbors(apply_model_node, "out")
+            for node in apply_nodes:
+                neighbors_apply_node = base_graph.neighbors(node, "out")
+                if set(neighbors_apply_node).intersection(bk_links_nums) == set():
+                    apply_nums.append(node)
 
         structure_nodes = find_nodes_with_mm(base_graph, ["MT_pre__MatchModel", "MT_pre__paired_with",
                                                           "MT_pre__ApplyModel", "MT_pre__match_contains",
