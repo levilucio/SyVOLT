@@ -270,7 +270,17 @@ def graph_to_dot(name, g, verbosity = 0):
             arrowhead="none"
             penwidth = 2
 
-        graph.add_edge(pydot.Edge(nodes[src], nodes[trgt], color=color, label=label, arrowhead=arrowhead, penwidth = penwidth))
+        try:
+            s = nodes[src]
+        except KeyError:
+            s = "NoSource"
+
+        try:
+            t = nodes[trgt]
+        except KeyError:
+            t = "NoTarget"
+
+        graph.add_edge(pydot.Edge(s, t, color=color, label=label, arrowhead=arrowhead, penwidth = penwidth))
 
     if len(name) > 250:
         replace_tokens = [["HEmptyPathCondition", ""],
@@ -572,6 +582,7 @@ def clean_graph(graph):
 
 def build_traceability(graph, add_label = False):
     #print("Building traceability for: " + graph.name)
+    #graph_to_dot("building_trace_" + graph.name, graph)
 
     vs = graph.vs
     mms = vs["mm__"]
@@ -582,14 +593,22 @@ def build_traceability(graph, add_label = False):
     match_in_linked = []
     apply_in_linked = []
 
+    has_contains = "match_contains" in mms
+
     for e in graph.es:
         source = e.source
         target = e.target
 
-        if mms[source] == "match_contains":
-            match_nodes.append(target)
-        elif mms[source] == "apply_contains":
-            apply_nodes.append(target)
+        if has_contains:
+            if mms[source] == "match_contains":
+                match_nodes.append(target)
+            elif mms[source] == "apply_contains":
+                apply_nodes.append(target)
+        else:
+            if mms[source] == "MatchModel" and mms[target] != "paired_with":
+                match_nodes.append(target)
+            elif mms[source] == "ApplyModel" and mms[target] != "paired_with":
+                apply_nodes.append(target)
 
         if mms[source] in ["backward_link", "trace_link"]:
             match_in_linked.append([source, target])
@@ -635,7 +654,6 @@ def build_traceability(graph, add_label = False):
                 (node_count, match), ]) # trace_link -> match_element
 
     #graph_to_dot("built_trace_" + graph.name, graph)
-
     return graph
 
 
