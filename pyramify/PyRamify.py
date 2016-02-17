@@ -616,12 +616,18 @@ class PyRamify:
         if self.draw_svg:
             graph_to_dot(graph.name + "_original", graph)
 
-        apply_contain_node = find_nodes_with_mm(graph, ["apply_contains"])
+        has_contains = "apply_contains" in graph.vs["mm__"]
 
         apply_nodes = []
-        for node in apply_contain_node:
-            node_num = node.index
-            apply_nodes.extend(flood_find_nodes(node_num, graph, ["ApplyModel", "backward_link", "trace_link"]))
+
+        if has_contains:
+            for node in find_nodes_with_mm(graph, ["apply_contains"]):
+                apply_nodes.extend(flood_find_nodes(node.index, graph, ["ApplyModel", "backward_link", "trace_link"]))
+        else:
+
+            for node in find_nodes_with_mm(graph, ["ApplyModel"]):
+                apply_nodes.extend(flood_find_nodes(node.index, graph, ["paired_with", "backward_link", "trace_link"]))
+
         apply_nodes = list(set(apply_nodes))
 
         backward_links = find_nodes_with_mm(graph, ["backward_link"])
