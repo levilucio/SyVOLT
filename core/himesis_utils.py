@@ -118,7 +118,7 @@ def graph_to_dot(name, g, verbosity = 0):
             continue
             
         elif node_type in ['ApplyModel', 'MT_pre__ApplyModel', 'MT_post__ApplyModel']:
-            fillcolor="#FED017"  
+            fillcolor="#FED017"
             
         elif node_type in ['apply_contains', 'MT_pre__apply_contains', 'MT_post__apply_contains']:
             #fillcolor="#FCDB58"
@@ -225,7 +225,9 @@ def graph_to_dot(name, g, verbosity = 0):
     except KeyError:
         print("No equations on " + g.name)
 
-        
+    link_colours = {"paired_with": "#505050", "match_contains": "#6E2229", "apply_contains": "#938344",
+                    "trace_link": "darkgoldenrod", "backward_link": "#B9512B"}
+
     for e in g.es:
 
         src = int(e.source)
@@ -239,10 +241,14 @@ def graph_to_dot(name, g, verbosity = 0):
             continue
 
         else:
-            graph.add_edge(pydot.Edge(nodes[src],nodes[trgt]))
 
-    link_colours = {"paired_with":"#505050", "match_contains":"#6E2229", "apply_contains":"#938344",
-                    "trace_link":"darkgoldenrod", "backward_link":"#B9512B"}
+            color = "black"
+            if "MatchModel" in mms[src]:
+                color = link_colours["match_contains"]
+            elif "ApplyModel" in mms[src]:
+                color = link_colours["apply_contains"]
+            graph.add_edge(pydot.Edge(nodes[src],nodes[trgt], color = color))
+
     for link in internal_links.keys():
         mm = mms[link].replace("MT_pre__", "").replace("MT_post__", "")
         src = internal_links[link]["source"]
