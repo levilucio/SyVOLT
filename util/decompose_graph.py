@@ -11,7 +11,7 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
 
     debug = False
 
-    #debug = "Hlayer0rule0_rule_combinator_matcher" in graph.name
+    #debug = "City2TownHall" in graph.name
 
     if debug:
         print("\nDecomposing graph: " + graph.name)
@@ -34,6 +34,8 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
     except KeyError:
         mms = []
 
+    has_contains = "match_contains" in mms
+
     for i in range(len(vs)):
         v = vs[i]
         mm = mms[i]
@@ -44,7 +46,10 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
         elif "trace_link" in mm or "backward_link" in mm:
             bls.append(i)
         else:
-            if mm in ["MatchModel", "ApplyModel", "paired_with"]:
+            if mm == "paired_with":
+                continue
+
+            if has_contains and mm in ["MatchModel", "ApplyModel"]:
                 continue
 
             neighbours = attached[i]
@@ -55,14 +60,22 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
             if len(neighbours) == 1:
                 continue
 
+            if has_contains:
+                for n in neighbours[:1]:
+                    n_mm = mms[n]
 
-            for n in neighbours[:1]:
-                n_mm = mms[n]
+                    if n_mm == "match_contains":
+                        match_elements.append(v)
+                    elif n_mm == "apply_contains":
+                        apply_elements.append(v)
+            else:
+                for n in neighbours[:1]:
+                    n_mm = mms[n]
 
-                if n_mm == "match_contains":
-                    match_elements.append(v)
-                elif n_mm == "apply_contains":
-                    apply_elements.append(v)
+                    if n_mm == "MatchModel" and mms[i] != "paired_with":
+                        match_elements.append(v)
+                    elif n_mm == "ApplyModel" and mms[i] != "paired_with":
+                        apply_elements.append(v)
 
 
     for dl in dls:
@@ -74,7 +87,11 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
         n0_neighbours_mm = [mms[n] for n in n0_neighbours]
 
         #we don't care about direct links in the apply part
-        if ignore_apply_dls and 'apply_contains' in n0_neighbours_mm:
+        if has_contains:
+            ignore_mm = 'apply_contains'
+        else:
+            ignore_mm = "ApplyModel"
+        if ignore_apply_dls and ignore_mm in n0_neighbours_mm:
             continue
 
         n0 = neighbours[0]
@@ -102,6 +119,7 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
     #find the non-isolated elements
     isolated_match_elements = [i for i in range(len(attached)) if len(attached[i]) == 1]
 
+    #this creates the trace links for elements that are not connected by a backward link
     for me in match_elements:
         me = me.index
 
@@ -118,11 +136,13 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
             if not found_link:
                 backward_links.append((me, ae, None))
 
-    # if debug:
-    #     print("\nRule name: " + graph.name)
-    #     print("Match contains: " + str(match_elements))
-    #     print("Isolated match elements: " + str(isolated_match_elements))
-    #     print("Apply contains: " + str(apply_elements))
+    if debug:
+        print("\nRule name: " + graph.name)
+        print("Match contains: " + str(match_elements))
+        print("Isolated match elements: " + str(isolated_match_elements))
+        print("Apply contains: " + str(apply_elements))
+
+        raise Exception()
 
     data = {"direct_links" : direct_links, "backward_links" : backward_links, "match_elements" : match_elements, "isolated_match_elements" : isolated_match_elements, "apply_elements" : apply_elements}
     return data
