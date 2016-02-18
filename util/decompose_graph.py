@@ -17,9 +17,6 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
         print("\nDecomposing graph: " + graph.name)
         graph_to_dot(graph.name, graph)
 
-
-
-    backward_links = []
     match_elements = []
     #isolated_match_elements = []
     apply_elements = []
@@ -31,15 +28,17 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
     except KeyError:
         mms = []
 
-    bls = [i for i in range(vcount) if mms[i] in ["trace_link", "backward_link"]]
-
     # only get the match direct links
     if ignore_apply_dls:
         dls = [i for i in range(vcount) if "directLink_S" in mms[i]]
     else:
         dls = [i for i in range(vcount) if "directLink" in mms[i]]
 
+    bls = [i for i in range(vcount) if mms[i] in ["trace_link", "backward_link"]]
+
+
     direct_links_dict = {n: [None, None] for n in dls}
+    backward_links_dict = {n: [None, None] for n in bls}
 
     attached = get_all_attached(graph)
 
@@ -56,10 +55,10 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
             direct_links_dict[target][0] = source
             continue
 
-        # if source in bls:
-        #     backward_links_dict[source][1] = target
-        # elif target in bls:
-        #     backward_links_dict[target][0] = source
+        if source in bls:
+            backward_links_dict[source][1] = target
+        elif target in bls:
+            backward_links_dict[target][0] = source
 
         source_mm = mms[source]
         target_mm = mms[target]
@@ -83,12 +82,8 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
         for n0, n1, nlink in direct_links:
             print_link(graph, n0, n1, nlink)
 
-    for bl in bls:
-
-        neighbours = attached[bl]
-        n0 = neighbours[0]
-        n1 = neighbours[1]
-        backward_links.append((n0, n1, bl))
+    backward_links = [[backward_links_dict[bl][0], backward_links_dict[bl][1], bl] for bl in
+                          backward_links_dict.keys()]
 
     if debug:
         print("Backward links: ")
