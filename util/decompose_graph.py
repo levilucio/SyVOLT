@@ -24,7 +24,9 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
     vs = graph.vs
     vcount = len(vs)
     try:
-        mms = [mm.replace("MT_pre__", "").replace("MT_post__","") for mm in vs["mm__"]]
+        mms = vs["mm__"]
+        if mms[0].startswith("MT_pre__"):
+            mms = [mm[8:] for mm in vs["mm__"]]
     except KeyError:
         mms = []
 
