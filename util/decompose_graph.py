@@ -23,59 +23,56 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
     #isolated_match_elements = []
     apply_elements = []
 
-    dls = []
-    bls = []
-
-    attached = get_all_attached(graph)
-
     vs = graph.vs
+    vcount = len(vs)
     try:
-        mms = vs["mm__"]
+        mms = [mm.replace("MT_pre__", "").replace("MT_post__","") for mm in vs["mm__"]]
     except KeyError:
         mms = []
+
+    dls = [i for i in range(vcount) if "directLink" in mms[i]]
+    bls = [i for i in range(vcount) if mms[i] in ["trace_link", "backward_link"]]
+
+    attached = get_all_attached(graph)
 
     has_contains = "match_contains" in mms
 
     for i in range(len(vs)):
-        v = vs[i]
+
         mm = mms[i]
 
-        #print("MM: " + mm)
-        if "directLink" in mm:
-            dls.append(i)
-        elif "trace_link" in mm or "backward_link" in mm:
-            bls.append(i)
+        if mm in ["paired_with", "directLink_S", "directLink_T", "trace_link", "backward_link"]:
+            continue
+
+        if has_contains and mm in ["MatchModel", "ApplyModel"]:
+            continue
+
+        neighbours = attached[i]
+        # print("Neighbours")
+        # print(neighbours)
+
+        #not attached to anything
+        if len(neighbours) == 1:
+            continue
+
+        v = vs[i]
+
+        if has_contains:
+            for n in neighbours[:1]:
+                n_mm = mms[n]
+
+                if n_mm == "match_contains":
+                    match_elements.append(v)
+                elif n_mm == "apply_contains":
+                    apply_elements.append(v)
         else:
-            if mm == "paired_with":
-                continue
+            for n in neighbours[:1]:
+                n_mm = mms[n]
 
-            if has_contains and mm in ["MatchModel", "ApplyModel"]:
-                continue
-
-            neighbours = attached[i]
-            # print("Neighbours")
-            # print(neighbours)
-
-            #not attached to anything
-            if len(neighbours) == 1:
-                continue
-
-            if has_contains:
-                for n in neighbours[:1]:
-                    n_mm = mms[n]
-
-                    if n_mm == "match_contains":
-                        match_elements.append(v)
-                    elif n_mm == "apply_contains":
-                        apply_elements.append(v)
-            else:
-                for n in neighbours[:1]:
-                    n_mm = mms[n]
-
-                    if n_mm == "MatchModel" and mms[i] != "paired_with":
-                        match_elements.append(v)
-                    elif n_mm == "ApplyModel" and mms[i] != "paired_with":
-                        apply_elements.append(v)
+                if n_mm == "MatchModel" and mms[i] != "paired_with":
+                    match_elements.append(v)
+                elif n_mm == "ApplyModel" and mms[i] != "paired_with":
+                    apply_elements.append(v)
 
 
     for dl in dls:
