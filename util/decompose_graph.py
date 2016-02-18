@@ -36,11 +36,8 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
 
     bls = [i for i in range(vcount) if mms[i] in ["trace_link", "backward_link"]]
 
-
     direct_links_dict = {n: [None, None] for n in dls}
     backward_links_dict = {n: [None, None] for n in bls}
-
-    attached = get_all_attached(graph)
 
     has_contains = "match_contains" in mms
 
@@ -91,14 +88,27 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
             print_link(graph, n0, n1, nlink)
 
 
-    #find the non-isolated elements
-    isolated_match_elements = [i for i in range(len(attached)) if len(attached[i]) == 1]
+
+    # for matchers, there might not be a match model
+    if "MatchModel" not in mms:
+        link_mms = ["directLink_S", "directLink_T", "backward_link", "trace_link"]
+        match_elements = [i for i in range(len(mms)) if mms[i] not in link_mms]
+
+    # find the non-isolated elements
+    isolated_match_elements = []
+    for me in match_elements:
+        isolated = True
+        for dl in direct_links + backward_links:
+            if me == dl[0] or me == dl[1]:
+                isolated = False
+                break
+        if isolated:
+            isolated_match_elements.append(me)
+
 
     #this creates the trace links for elements that are not connected by a backward link
     for me in match_elements:
-
         for ae in apply_elements:
-
             found_link = False
             for a, b, _ in backward_links:
                 if (a == me and b == ae) or (b == me and a == ae):
