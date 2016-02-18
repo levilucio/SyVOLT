@@ -17,7 +17,8 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
         print("\nDecomposing graph: " + graph.name)
         graph_to_dot(graph.name, graph)
 
-    direct_links = []
+
+
     backward_links = []
     match_elements = []
     #isolated_match_elements = []
@@ -30,68 +31,52 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
     except KeyError:
         mms = []
 
-    dls = [i for i in range(vcount) if "directLink" in mms[i]]
     bls = [i for i in range(vcount) if mms[i] in ["trace_link", "backward_link"]]
+
+    # only get the match direct links
+    if ignore_apply_dls:
+        dls = [i for i in range(vcount) if "directLink_S" in mms[i]]
+    else:
+        dls = [i for i in range(vcount) if "directLink" in mms[i]]
+
+    direct_links_dict = {n: [None, None] for n in dls}
 
     attached = get_all_attached(graph)
 
     has_contains = "match_contains" in mms
 
-    for i in range(len(vs)):
+    for e in graph.es:
+        source = e.source
+        target = e.target
 
-        mm = mms[i]
-
-        if mm in ["paired_with", "directLink_S", "directLink_T", "trace_link", "backward_link"]:
+        if source in dls:
+            direct_links_dict[source][1] = target
+            continue
+        elif target in dls:
+            direct_links_dict[target][0] = source
             continue
 
-        if has_contains and mm in ["MatchModel", "ApplyModel"]:
-            continue
+        # if source in bls:
+        #     backward_links_dict[source][1] = target
+        # elif target in bls:
+        #     backward_links_dict[target][0] = source
 
-        neighbours = attached[i]
-        # print("Neighbours")
-        # print(neighbours)
+        source_mm = mms[source]
+        target_mm = mms[target]
 
-        #not attached to anything
-        if len(neighbours) == 1:
-            continue
+        if has_contains and source_mm == "match_contains":
+            match_elements.append(target)
+        elif has_contains and source_mm == "apply_contains":
+            apply_elements.append(target)
 
-        if has_contains:
-            for n in neighbours[:1]:
-                n_mm = mms[n]
+        elif not has_contains and source_mm == "MatchModel":
+            if target_mm != "paired_with":
+                match_elements.append(target)
+        elif not has_contains and source_mm == "ApplyModel":
+            if target_mm != "paired_with":
+                apply_elements.append(target)
 
-                if n_mm == "match_contains":
-                    match_elements.append(i)
-                elif n_mm == "apply_contains":
-                    apply_elements.append(i)
-        else:
-            for n in neighbours[:1]:
-                n_mm = mms[n]
-
-                if n_mm == "MatchModel" and mms[i] != "paired_with":
-                    match_elements.append(i)
-                elif n_mm == "ApplyModel" and mms[i] != "paired_with":
-                    apply_elements.append(i)
-
-
-    for dl in dls:
-
-        neighbours = attached[dl]
-
-        n_link = neighbours[0]
-        n0_neighbours = attached[n_link]
-        n0_neighbours_mm = [mms[n] for n in n0_neighbours]
-
-        #we don't care about direct links in the apply part
-        if has_contains:
-            ignore_mm = 'apply_contains'
-        else:
-            ignore_mm = "ApplyModel"
-        if ignore_apply_dls and ignore_mm in n0_neighbours_mm:
-            continue
-
-        n0 = neighbours[0]
-        n1 = neighbours[1]
-        direct_links.append((n0, n1, dl))
+    direct_links = [[direct_links_dict[dl][0], direct_links_dict[dl][1], dl] for dl in direct_links_dict.keys()]
 
     if debug:
         print("Direct links: ")
