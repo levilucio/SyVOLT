@@ -21,20 +21,21 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
     #isolated_match_elements = []
     apply_elements = []
 
-    vs = graph.vs
-    vcount = len(vs)
+
     try:
-        mms = vs["mm__"]
+        mms = graph.vs["mm__"]
         if mms[0].startswith("MT_pre__"):
-            mms = [mm[8:] for mm in vs["mm__"]]
+            mms = [mm[8:] for mm in mms]
     except KeyError:
         mms = []
+        
+    vcount = len(mms)
 
     # only get the match direct links
     if ignore_apply_dls:
-        dls = [i for i in range(vcount) if "directLink_S" in mms[i]]
+        dls = [i for i in range(vcount) if mms[i] == "directLink_S"]
     else:
-        dls = [i for i in range(vcount) if "directLink" in mms[i]]
+        dls = [i for i in range(vcount) if mms[i] in ["directLink_S", "directLink_T"]]
 
     bls = [i for i in range(vcount) if mms[i] in ["trace_link", "backward_link"]]
 
