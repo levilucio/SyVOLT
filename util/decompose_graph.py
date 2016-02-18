@@ -55,24 +55,22 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
         if len(neighbours) == 1:
             continue
 
-        v = vs[i]
-
         if has_contains:
             for n in neighbours[:1]:
                 n_mm = mms[n]
 
                 if n_mm == "match_contains":
-                    match_elements.append(v)
+                    match_elements.append(i)
                 elif n_mm == "apply_contains":
-                    apply_elements.append(v)
+                    apply_elements.append(i)
         else:
             for n in neighbours[:1]:
                 n_mm = mms[n]
 
                 if n_mm == "MatchModel" and mms[i] != "paired_with":
-                    match_elements.append(v)
+                    match_elements.append(i)
                 elif n_mm == "ApplyModel" and mms[i] != "paired_with":
-                    apply_elements.append(v)
+                    apply_elements.append(i)
 
 
     for dl in dls:
@@ -118,11 +116,8 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
 
     #this creates the trace links for elements that are not connected by a backward link
     for me in match_elements:
-        me = me.index
 
         for ae in apply_elements:
-
-            ae = ae.index
 
             found_link = False
             for a, b, _ in backward_links:
