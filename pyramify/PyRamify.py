@@ -783,7 +783,7 @@ class PyRamify:
                 ruleCombinators.update(rule_combinator)
        
 
-        self.ruleSubsumption = subsumptionHandler.remove_subsumption_between_rules(self.ruleSubsumption)
+        self.ruleSubsumption = subsumptionHandler.remove_subsumption_between_rules(self.ruleSubsumption, has_backward_links)
 
         loopingRuleSubsumption = subsumptionHandler.cleanLoopingRuleSubsumption()
 

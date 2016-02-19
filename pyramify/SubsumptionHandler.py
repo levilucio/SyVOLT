@@ -211,7 +211,7 @@ class SubsumptionHandler:
 
 
 
-    def remove_subsumption_between_rules(self, ruleSubsumption):
+    def remove_subsumption_between_rules(self, ruleSubsumption, has_backward_links):
         # remove from the subsumption relation subsumption between a rule in a layer and a rule in a layer appearing before
         # TODO: this should be replaced by layer ordering to avoid tests all the time during PC construction
         try:
@@ -220,7 +220,7 @@ class SubsumptionHandler:
                 for subsumedRule in ruleSubsumption[rule]:
                     if self.layer_rule_occurs_in(rule) > self.layer_rule_occurs_in(subsumedRule) or \
                             (self.layer_rule_occurs_in(rule) < self.layer_rule_occurs_in(subsumedRule) and
-                                 self.rule_has_backward_links(rule) and self.rule_has_backward_links(subsumedRule)):
+                                 has_backward_links[rule] and has_backward_links[subsumedRule]):
                         rulesToDelete.append(subsumedRule)
                 ruleSubsumption[rule] = [r for r in ruleSubsumption[rule] if r not in rulesToDelete]
             # now remove empty dictionary entries
