@@ -14,13 +14,15 @@ class SubsumptionHandler:
         self.ruleSubsumption = {}
         self.subsuming_rules = {}
 
+        self.debug = False
+
     # return the layer a rule occurs in
     def layer_rule_occurs_in(self, rule):
         for layerIndex in range(len(self.transformation_layers)):
             for ruleIndex in range(len(self.transformation_layers[layerIndex])):
                 if rule == self.transformation_layers[layerIndex][ruleIndex].name:
                     return layerIndex
-        return None
+        raise Exception("Rule: " + rule + " not found in transformation")
 
     # find all the rules that subsume a given rule
     def get_subsuming_rules(self, rule):
@@ -160,6 +162,11 @@ class SubsumptionHandler:
         for rule in sorted(self.rules.keys()):
             self.subsuming_rules[rule] = self.get_subsuming_rules(rule)
 
+        if self.debug:
+            #print("Rule subsumption: " + str(ruleSubsumption))
+            print("Subsuming Rules:")
+            for rule in sorted(self.subsuming_rules.keys()):
+                print(rule + " : " + str(self.subsuming_rules[rule]))
         return ruleSubsumption, self.subsuming_rules
 
     # Calculate if the rules need special treatment because they overlap.
