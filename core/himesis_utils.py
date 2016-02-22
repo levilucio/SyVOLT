@@ -661,7 +661,7 @@ def build_traceability(graph, add_label = False):
 import importlib
 from time import sleep
 def load_class(full_class_string, args = None):
-    sleep(0.01)
+    #sleep(0.01)
     directory, module_name = os.path.split(full_class_string)
     module_name = os.path.splitext(module_name)[0]
 
