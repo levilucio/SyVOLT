@@ -34,47 +34,67 @@ class Pruner(object):
                 self.ruleMissingContLinks[rule.name] = self.eu.getMissingContainmentLinks(rule)
 
                 for contain_link in self.ruleContainmentLinks[rule.name]:
-
                     try:
                         self.linksToRules[contain_link].append(rule_names[rule.name])
                     except KeyError:
                         self.linksToRules[contain_link] = [rule_names[rule.name]]
 
-                if self.debug:
-                    rule_name = rule_names[rule.name]
-                    print("Rule containment links: " + rule_name + " = " + str(self.ruleContainmentLinks[rule.name]))
-                    print("Missing rule containment links: " + rule_name + " = " + str(self.ruleMissingContLinks[rule.name]))
-                    print()
-
         #test containment links and see if any are missing
-
+        required_rules = {}
         for layer in transformation:
             for rule in layer:
 
-                required_rules = []
+                required_rules[rule.name] = {}
 
-                for className in self.ruleMissingContLinks[rule.name]:
+                for className, link_names in self.ruleMissingContLinks[rule.name].items():
 
-                    found_class = False
-                    for contain_rule_name, contain_links in self.ruleContainmentLinks.items():
-                        if className in contain_links.keys():
-                            found_class = True
-                            required_rules.append([contain_rule_name, className])
+                    for link_name in link_names:
+                        found_link = False
+                        for contain_rule_name, contain_links in self.ruleContainmentLinks.items():
+                            if className in contain_links.keys() and link_name in contain_links[className]:
+                                found_link = True
 
-                    if not found_class:
-                        message = "Error: No rule builds containment link for class " + className + " from rule.name " + rule_names[rule.name]
-                        if self.debug:
-                            raise Exception(message)
-                        else:
-                            print(message)
+                                contain_rule_name = rule_names[contain_rule_name]
 
+                                try:
+                                    required_rules[rule.name][className+"/"+link_name].append(contain_rule_name)
+                                except KeyError:
+                                    required_rules[rule.name][className+"/"+link_name] = [contain_rule_name]
 
+                        if not found_link:
+                            message = "Error: No rule builds containment link " + link_name + " for class " + className + " from rule.name " + rule_names[rule.name]
+                            required_rules[rule.name][className + "/" + link_name] = ["None!"]
+
+                            if self.debug:
+                                print(message)
+                                #raise Exception(message)
+                            else:
+                                print(message)
 
         self.mmClassParents = self.eu.getSuperClassInheritanceRelationForClasses()
 
-        # print("mm class parents:")
-        # for mm in self.mmClassParents:
-        #     print(mm + " : " + str(self.mmClassParents[mm]))
+        if self.debug:
+            for layer in transformation:
+                for rule in layer:
+                    rule_name = rule_names[rule.name]
+                    print("\nRule: " + rule_name)
+                    if len(self.ruleContainmentLinks[rule.name]) > 0:
+                        print("Provides containment links: ")
+                        for k, v in self.ruleContainmentLinks[rule.name].items():
+                            print(str(k) + " : " + str(v))
+                    if len(required_rules[rule.name]) > 0:
+                        print("\nMissing rule containment links: ")
+                        for k, v in required_rules[rule.name].items():
+                            print(str(k) + " : " + str(v))
+                    print()
+
+            print("MM class parents:")
+            for mm in self.mmClassParents:
+                print(mm + " : " + str(self.mmClassParents[mm]))
+
+        raise Exception()
+
+
 
         
 
