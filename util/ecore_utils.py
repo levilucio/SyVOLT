@@ -23,7 +23,7 @@ class EcoreUtils(object):
         metamodelClasses = self.xmldoc.getElementsByTagName('eClassifiers')  
         self.mmClassContained = {}       
         self.containmentRels = []
-        
+
         # first get a dictionary with all the metamodel classes that have containment relations towards them.
         # several containment relations can exist towards the same metamodel class. 
         # also keep a list of all containment relations in the metamodel.
@@ -304,7 +304,14 @@ class EcoreUtils(object):
                 targetClassName = rule.vs[targetClassNode]["mm__"][0]                
 
                 if targetClassName not in containmentRelsInRule.keys():
-                    containmentRelsInRule[targetClassName] = rule.vs[node]["attr1"]                       
+                    containmentRelsInRule[targetClassName] = rule.vs[node]["attr1"]
+
+
+        #if a class has a superclass, pretend that each link can also be built for that parent class
+        if containmentRelsInRule:
+            for className in deepcopy(list(containmentRelsInRule.keys())):
+                for superclassName in self.inheritanceRels[className]:
+                    containmentRelsInRule[superclassName] = containmentRelsInRule[className]
                  
         return containmentRelsInRule
 
