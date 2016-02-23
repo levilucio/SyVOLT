@@ -17,6 +17,9 @@ class EcoreUtils(object):
         '''
         Constructor
         '''
+
+        print("Parsing: " + xmlfileName)
+
         self.xmldoc = minidom.parse(xmlfileName)
         self.inheritanceRels = self.getSuperClassInheritanceRelationForClasses()
         
@@ -24,11 +27,14 @@ class EcoreUtils(object):
         self.mmClassContained = {}       
         self.containmentRels = []
 
+        self.containmentLinks = {}
+
         # first get a dictionary with all the metamodel classes that have containment relations towards them.
         # several containment relations can exist towards the same metamodel class. 
         # also keep a list of all containment relations in the metamodel.
         
         for mmClass in metamodelClasses:
+            mmClassName = mmClass.attributes['name'].value
             rels = mmClass.getElementsByTagName('eStructuralFeatures')
             for rel in rels:
                 try:
@@ -40,12 +46,23 @@ class EcoreUtils(object):
                             self.mmClassContained[targetClassName] = [relName]
                         else:
                             self.mmClassContained[targetClassName].append(relName)
+
+                        containment_link = (mmClassName, relName)
+                        if targetClassName not in self.containmentLinks.keys():
+                            self.containmentLinks[targetClassName] = [containment_link]
+                        else:
+                            self.containmentLinks[targetClassName].append(containment_link)
                             
                         self.containmentRels.append(relName)
                                                 
-                except Exception:
+                except Exception as e:
                     pass
-            
+
+        print("MM class contained")
+        for k,v  in self.containmentLinks.items():
+            print(str(k) + " : " + str(v))
+
+
         # treat all the remaining classes that have no containment links to them but that
         # inherit from classes that do.
         
@@ -61,6 +78,9 @@ class EcoreUtils(object):
                 else:
                     self.mmClassContained[remContClass].extend(self.mmClassContained[contParentClass])
 
+        # print("\nMM class contained")
+        # for k, v in self.mmClassContained.items():
+        #     print(str(k) + " : " + str(v))
     
     
     def getMetamodelClassNames(self):
@@ -290,28 +310,31 @@ class EcoreUtils(object):
         containmentRelsInRule = {}
         
         # now check which relations in the rule are built by which containment relation
-        
-        for node in range(len(rule.vs)):
+
+        mms = rule.vs["mm__"]
+        attr1s = rule.vs["attr1"]
+
+        for node in range(rule.vcount()):
             
 #             if rule.vs[node]["mm__"] == "directLink_T":
 #                 print("................ Containment link: " + rule.vs[node]["attr1"])
 #                 print("................ self.containmentRels: " + str(self.containmentRels))
                 
-            if rule.vs[node]["mm__"] == "directLink_T" and rule.vs[node]["attr1"] in self.containmentRels:
+            if mms[node] == "directLink_T" and attr1s[node] in self.containmentRels:
                 
                 # find the types of the source and the target elements of the containment in the rule
-                targetClassNode = rule.neighbors(rule.vs[node],1)                
-                targetClassName = rule.vs[targetClassNode]["mm__"][0]                
+                neighbours = rule.neighbors(node)
+                targetClassName = mms[neighbours[1]]
+                sourceClassName = mms[neighbours[0]]
 
-                if targetClassName not in containmentRelsInRule.keys():
-                    containmentRelsInRule[targetClassName] = rule.vs[node]["attr1"]
+                link = (sourceClassName, attr1s[node])
 
 
-        #if a class has a superclass, pretend that each link can also be built for that parent class
-        if containmentRelsInRule:
-            for className in deepcopy(list(containmentRelsInRule.keys())):
-                for superclassName in self.inheritanceRels[className]:
-                    containmentRelsInRule[superclassName] = containmentRelsInRule[className]
+                try:
+                    if link not in containmentRelsInRule[targetClassName]:
+                        containmentRelsInRule[targetClassName].append(link)
+                except KeyError:
+                    containmentRelsInRule[targetClassName] = [link]
                  
         return containmentRelsInRule
 
