@@ -90,7 +90,7 @@ class EcoreUtils(object):
 
     
     
-    def buildContaimentDependenciesForClass(self, targetClass):
+    def buildContainmentDependenciesForClass(self, targetClass):
         '''
         auxiliary, build all containment relations for a class, recursively
         '''        
@@ -118,16 +118,16 @@ class EcoreUtils(object):
                 # TODO: containment loops could involve more than one class (e.g. A contains B contains C contains A). This case is not yet treated.
                 if trgtClassName == str(targetClass.attributes['name'].value) and not (trgtClassName == srcClassName):
                     
-                    #return [str(cRel.attributes['name'].value)].extend(self.buildContaimentDependenciesForClass(sourceClass))
+                    #return [str(cRel.attributes['name'].value)].extend(self.buildContainmentDependenciesForClass(sourceClass))
                     res.extend([(srcClassName, str(cRel.attributes['name'].value), trgtClassName)])
                     
-                    res.extend(self.buildContaimentDependenciesForClass(sourceClass))
+                    res.extend(self.buildContainmentDependenciesForClass(sourceClass))
         
         return res
         
 
 
-    def getContaimentLinksForClasses(self):
+    def getContainmentLinksForClasses(self):
         '''
         get all containment relations for the classes in the metamodel
         '''    
@@ -136,7 +136,7 @@ class EcoreUtils(object):
         metamodelClasses = self.xmldoc.getElementsByTagName('eClassifiers')
         
         for mmClass in metamodelClasses:
-            allContainmentRels[str(mmClass.attributes['name'].value)] = self.buildContaimentDependenciesForClass(mmClass)
+            allContainmentRels[str(mmClass.attributes['name'].value)] = self.buildContainmentDependenciesForClass(mmClass)
 
         # now add to the existing containment relations for a class the containment relations of its supertypes
 

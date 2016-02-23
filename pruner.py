@@ -21,7 +21,7 @@ class Pruner(object):
         self.debug = True
 
         self.eu = EcoreUtils(metamodel)
-        self.mmContainmentLinks = self.eu.getContaimentLinksForClasses()
+        self.mmContainmentLinks = self.eu.getContainmentLinksForClasses()
         
         self.ruleContainmentLinks = {}
         self.ruleMissingContLinks = {}
