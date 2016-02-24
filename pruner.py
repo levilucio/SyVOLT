@@ -18,7 +18,7 @@ class Pruner(object):
         Constructor
         '''
 
-        self.debug = True
+        self.debug = False
 
         self.eu = EcoreUtils(metamodel)
         #self.mmContainmentLinks = self.eu.getContainmentLinksForClasses()
