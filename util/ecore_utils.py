@@ -325,9 +325,11 @@ class EcoreUtils(object):
             if mms[node] == "directLink_T" and attr1s[node] in self.containmentRels:
                 
                 # find the types of the source and the target elements of the containment in the rule
-                neighbours = rule.neighbors(node)
-                targetClassName = mms[neighbours[1]]
-                sourceClassName = mms[neighbours[0]]
+                neighbours_out = rule.neighbors(node, 1)
+                neighbours_in = rule.neighbors(node, 2)
+
+                targetClassName = mms[neighbours_out[0]]
+                sourceClassName = mms[neighbours_in[0]]
 
                 link = (sourceClassName, attr1s[node])
 
@@ -337,7 +339,7 @@ class EcoreUtils(object):
                         containmentRelsInRule[targetClassName].append(link)
                 except KeyError:
                     containmentRelsInRule[targetClassName] = [link]
-                 
+
         return containmentRelsInRule
 
 
