@@ -21,12 +21,14 @@ class Pruner(object):
         self.debug = True
 
         self.eu = EcoreUtils(metamodel)
-        self.mmContainmentLinks = self.eu.getContainmentLinksForClasses()
+        #self.mmContainmentLinks = self.eu.getContainmentLinksForClasses()
         
         self.ruleContainmentLinks = {}
         self.ruleMissingContLinks = {}
 
         self.linksToRules = {}
+
+        self.mmClassParents = self.eu.getSuperClassInheritanceRelationForClasses()
 
         for layer in transformation:
             for rule in layer:
@@ -46,32 +48,66 @@ class Pruner(object):
 
                 required_rules[rule.name] = {}
 
+                #look at each class that the rule is missing
                 for className, link_names in self.ruleMissingContLinks[rule.name].items():
 
-                    for link_name in link_names:
+                    #look at each link the class is missing
+                    for source_class_name, link_name in link_names:
+
                         found_link = False
+
+                        # print("\nLooking for:")
+                        # print(className + " : " + source_class_name + " : " + link_name)
+
+                        link = (source_class_name, link_name)
+
+                        #look at the other rules
                         for contain_rule_name, contain_links in self.ruleContainmentLinks.items():
-                            if className in contain_links.keys() and link_name in contain_links[className]:
+
+                            if not contain_links:
+                                continue
+
+                            real_contain_rule_name = rule_names[contain_rule_name]
+
+                            #print(real_contain_rule_name + " : " + str(contain_links))
+
+                            if className in contain_links.keys() and link in contain_links[className]:
                                 found_link = True
+                                break
 
-                                contain_rule_name = rule_names[contain_rule_name]
+                            for cl_name in contain_links.keys():
+                                if className in self.mmClassParents[cl_name] and \
+                                    link in contain_links[cl_name]:
 
-                                try:
-                                    required_rules[rule.name][className+"/"+link_name].append(contain_rule_name)
-                                except KeyError:
-                                    required_rules[rule.name][className+"/"+link_name] = [contain_rule_name]
+                            # #see if the link is getting built by a superclass
+                            # for cl_name in self.mmClassParents[className] + [className]:
+                            #
+                            #     #try to find the link
+                            #     if cl_name in contain_links.keys() and link in contain_links[cl_name]:
+                                    found_link = True
+                                    break
 
-                        if not found_link:
+
+
+                        if found_link:
+                            full_link_name = className + "/" + link_name
+
+                            try:
+                                if real_contain_rule_name not in required_rules[rule.name][full_link_name]:
+                                    required_rules[rule.name][full_link_name].append(real_contain_rule_name)
+                            except KeyError:
+                                required_rules[rule.name][full_link_name] = [real_contain_rule_name]
+                        else:
                             message = "Error: No rule builds containment link " + link_name + " for class " + className + " from rule.name " + rule_names[rule.name]
                             required_rules[rule.name][className + "/" + link_name] = ["None!"]
 
-                            if self.debug:
-                                print(message)
-                                #raise Exception(message)
-                            else:
-                                print(message)
+                            print(message)
 
-        self.mmClassParents = self.eu.getSuperClassInheritanceRelationForClasses()
+                            if self.debug:
+                               raise Exception(message)
+
+
+
 
         if self.debug:
             for layer in transformation:
@@ -89,13 +125,10 @@ class Pruner(object):
                     print()
 
             print("MM class parents:")
-            for mm in self.mmClassParents:
+            for mm in sorted(self.mmClassParents):
                 print(mm + " : " + str(self.mmClassParents[mm]))
 
         raise Exception()
-
-
-
         
 
     def getContainmentLinksBuiltByRuleSet(self, ruleNames):

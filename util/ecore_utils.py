@@ -58,14 +58,16 @@ class EcoreUtils(object):
                 except Exception as e:
                     pass
 
-        print("MM class contained")
+        print("Containment Links")
         for k,v  in self.containmentLinks.items():
             print(str(k) + " : " + str(v))
 
 
         # treat all the remaining classes that have no containment links to them but that
         # inherit from classes that do.
-        
+
+        self.mmClassContained = deepcopy(self.containmentLinks)
+
         mmClassNames = self.getMetamodelClassNames()
         remainingContClasses = set(mmClassNames) - set(self.mmClassContained.keys())
         
@@ -78,9 +80,9 @@ class EcoreUtils(object):
                 else:
                     self.mmClassContained[remContClass].extend(self.mmClassContained[contParentClass])
 
-        # print("\nMM class contained")
-        # for k, v in self.mmClassContained.items():
-        #     print(str(k) + " : " + str(v))
+        print("\nMM class contained")
+        for k, v in self.mmClassContained.items():
+            print(str(k) + " : " + str(v))
     
     
     def getMetamodelClassNames(self):
@@ -349,39 +351,53 @@ class EcoreUtils(object):
         
         missingContainmentLinks = {}
 
-        for node in range(len(pathCond.vs)):
-            targetClassName = pathCond.vs[node]["mm__"]
+        mms = pathCond.vs["mm__"]
 
-            if targetClassName in self.mmClassContained.keys() and targetClassName not in missingContainmentLinks.keys():
-                # get all the containment relations into produced call instances, if an apply class
-                # of this type without containment links has not been found yet. Only one apply class
-                # of a given type without containment links is kept. 
-                inputRelNodes = pathCond.neighbors(pathCond.vs[node],2)
-                
-                inputRelNames = []
-                
-                for inputRelNode in inputRelNodes:
-                    if pathCond.vs[inputRelNode]["mm__"] == "directLink_T":
-                        inputRelNames.append(pathCond.vs[inputRelNode]["attr1"])
+        # get the containment links already built in this pathcond
+        builtContainmentLinks = self.getBuiltContainmentLinks(pathCond)
 
-                # check if any containment relation into the class already exists
-                if set(inputRelNames).intersection(set(self.containmentRels)) == set():
+        for node in range(len(mms)):
+            targetClassName = mms[node]
 
-                    # get the containment links already built in this pathcond
-                    builtContainmentLinks = self.getBuiltContainmentLinks(pathCond)
+            if targetClassName not in self.mmClassContained.keys() or targetClassName in missingContainmentLinks.keys():
+                continue
 
-                    #ignore duplicates
-                    for attr1 in set(self.mmClassContained[targetClassName]):
+            for containLink in self.mmClassContained[targetClassName]:
+                if targetClassName not in builtContainmentLinks or containLink not in builtContainmentLinks[targetClassName]:
+                    try:
+                        missingContainmentLinks[targetClassName].append(containLink)
+                    except KeyError:
+                        missingContainmentLinks[targetClassName] = [containLink]
 
-                        #if this link is built already in this pathCond, do nothing
-                        if targetClassName in builtContainmentLinks and attr1 in builtContainmentLinks[targetClassName]:
-                            pass
-                        else:
-                            #mark this as a missing containment link
-                            try:
-                                missingContainmentLinks[targetClassName].append(attr1)
-                            except KeyError:
-                                missingContainmentLinks[targetClassName] = [attr1]
+            # get all the containment relations into produced call instances, if an apply class
+            # of this type without containment links has not been found yet. Only one apply class
+            # of a given type without containment links is kept.
+            # inputRelNodes = pathCond.neighbors(pathCond.vs[node],2)
+            #
+            # inputRelNames = []
+            #
+            # for inputRelNode in inputRelNodes:
+            #     if pathCond.vs[inputRelNode]["mm__"] == "directLink_T":
+            #         inputRelNames.append(pathCond.vs[inputRelNode]["attr1"])
+            #
+            # # check if any containment relation into the class already exists
+            # if set(inputRelNames).intersection(set(self.containmentRels)) == set():
+            #
+            #     # get the containment links already built in this pathcond
+            #     builtContainmentLinks = self.getBuiltContainmentLinks(pathCond)
+            #
+            #     #ignore duplicates
+            #     for attr1 in set(self.mmClassContained[targetClassName]):
+            #
+            #         #if this link is built already in this pathCond, do nothing
+            #         if targetClassName in builtContainmentLinks and attr1 in builtContainmentLinks[targetClassName]:
+            #             pass
+            #         else:
+            #             #mark this as a missing containment link
+            #             try:
+            #                 missingContainmentLinks[targetClassName].append(attr1)
+            #             except KeyError:
+            #                 missingContainmentLinks[targetClassName] = [attr1]
 
         return missingContainmentLinks
             
