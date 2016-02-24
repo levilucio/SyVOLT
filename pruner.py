@@ -58,6 +58,8 @@ class Pruner(object):
 
                         # print("\nLooking for:")
                         # print(className + " : " + source_class_name + " : " + link_name)
+                        #
+                        # print(self.ruleContainmentLinks)
 
                         link = (source_class_name, link_name)
 
@@ -71,23 +73,10 @@ class Pruner(object):
 
                             #print(real_contain_rule_name + " : " + str(contain_links))
 
-                            if className in contain_links.keys() and link in contain_links[className]:
-                                found_link = True
-                                break
-
-                            for cl_name in contain_links.keys():
-                                if className in self.mmClassParents[cl_name] and \
-                                    link in contain_links[cl_name]:
-
-                            # #see if the link is getting built by a superclass
-                            # for cl_name in self.mmClassParents[className] + [className]:
-                            #
-                            #     #try to find the link
-                            #     if cl_name in contain_links.keys() and link in contain_links[cl_name]:
+                            for cl_name in [className] + self.mmClassParents[className]:
+                                if cl_name in contain_links.keys() and link in contain_links[cl_name]:
                                     found_link = True
                                     break
-
-
 
                         if found_link:
                             full_link_name = className + "/" + link_name
@@ -98,7 +87,7 @@ class Pruner(object):
                             except KeyError:
                                 required_rules[rule.name][full_link_name] = [real_contain_rule_name]
                         else:
-                            message = "Error: No rule builds containment link " + link_name + " for class " + className + " from rule.name " + rule_names[rule.name]
+                            message = "Error: No rule builds containment link '" + link_name + "' for class " + className + " from rule.name " + rule_names[rule.name]
                             required_rules[rule.name][className + "/" + link_name] = ["None!"]
 
                             print(message)
@@ -192,7 +181,17 @@ class Pruner(object):
         for className in missingContLinks.keys():
             for link in missingContLinks[className]:
 
-                if className not in contLinksInRulesToTreat or link not in contLinksInRulesToTreat[className]:
+                classPlusParents = [className] + self.mmClassParents[className]
+
+                foundLink = False
+                for c in classPlusParents:
+
+                    #check for the actual class
+                    if c in contLinksInRulesToTreat and link in contLinksInRulesToTreat[c]:
+                        foundLink = True
+                        continue
+
+                if not foundLink:
                     contLinksNotFound.append((className, link[0], link[1]))
                     allMissingContLinksFound = False
 
@@ -238,6 +237,10 @@ class Pruner(object):
                 print("=========================")
                 print("Path condition: " + pathCondition.name)
                 print("Missing containment links: " + str(contLinksNotFound))
+
+                print("Links to be built:")
+                for className, links in contLinksInRulesToTreat.items():
+                    print(className + " : " + str(links))
 
                 print("Looking for:")
                 for contLink, a, b in contLinksNotFound:
