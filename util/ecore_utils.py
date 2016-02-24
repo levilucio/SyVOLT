@@ -51,7 +51,8 @@ class EcoreUtils(object):
                         if targetClassName not in self.containmentLinks.keys():
                             self.containmentLinks[targetClassName] = [containment_link]
                         else:
-                            self.containmentLinks[targetClassName].append(containment_link)
+                            if containment_link not in self.containmentLinks[targetClassName]:
+                                self.containmentLinks[targetClassName].append(containment_link)
                             
                         self.containmentRels.append(relName)
                                                 
@@ -59,8 +60,10 @@ class EcoreUtils(object):
                     pass
 
         print("Containment Links")
-        for k,v  in self.containmentLinks.items():
-            print(str(k) + " : " + str(v))
+        for k,v  in sorted(self.containmentLinks.items()):
+            print(str(k) + " : ")
+            for c in sorted(v):
+                print("\t" + str(c))
 
 
         # treat all the remaining classes that have no containment links to them but that
@@ -78,11 +81,15 @@ class EcoreUtils(object):
                 if remContClass not in self.mmClassContained.keys():
                     self.mmClassContained[remContClass] = deepcopy(self.mmClassContained[contParentClass])
                 else:
-                    self.mmClassContained[remContClass].extend(self.mmClassContained[contParentClass])
+                    for link in self.mmClassContained[contParentClass]:
+                        if link not in self.mmClassContained[remContClass]:
+                            self.mmClassContained[remContClass].append(link)
 
-        print("\nMM class contained")
-        for k, v in self.mmClassContained.items():
-            print(str(k) + " : " + str(v))
+        print("\nContainment links (with inheritance)")
+        for k, v in sorted(self.mmClassContained.items()):
+            print(str(k) + " : ")
+            for c in sorted(v):
+                print("\t" + str(c))
     
     
     def getMetamodelClassNames(self):
