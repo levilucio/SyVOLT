@@ -29,6 +29,7 @@ class Pruner(object):
         self.linksToRules = {}
 
         self.mmClassParents = self.eu.getSuperClassInheritanceRelationForClasses()
+        self.mmClassChildren = self.eu.getSubClassInheritanceRelationForClasses()
 
         for layer in transformation:
             for rule in layer:
@@ -73,7 +74,15 @@ class Pruner(object):
 
                             #print(real_contain_rule_name + " : " + str(contain_links))
 
-                            for cl_name in [className] + self.mmClassParents[className]:
+                            parentClasses = []
+                            if className in self.mmClassParents:
+                                parentClasses = self.mmClassParents[className]
+
+                            childClasses = []
+                            if className in self.mmClassChildren:
+                                childClasses = self.mmClassChildren[className]
+
+                            for cl_name in [className] + parentClasses + childClasses:
                                 if cl_name in contain_links.keys() and link in contain_links[cl_name]:
                                     found_link = True
                                     break
@@ -91,6 +100,10 @@ class Pruner(object):
                             required_rules[rule.name][className + "/" + link_name] = ["None!"]
 
                             print(message)
+
+                            print("Containment links:")
+                            for k, v in self.ruleContainmentLinks.items():
+                                print(k + " : " + str(v))
 
                             if self.debug:
                                raise Exception(message)
