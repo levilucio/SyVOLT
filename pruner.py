@@ -127,8 +127,6 @@ class Pruner(object):
             print("MM class parents:")
             for mm in sorted(self.mmClassParents):
                 print(mm + " : " + str(self.mmClassParents[mm]))
-
-        raise Exception()
         
 
     def getContainmentLinksBuiltByRuleSet(self, ruleNames):
@@ -139,11 +137,15 @@ class Pruner(object):
         for ruleName in ruleNames:
             for className in self.ruleContainmentLinks[ruleName].keys():
                 if className in builtContainmentLinks:
-                    builtContainmentLinks[className].append(self.ruleContainmentLinks[ruleName][className])
-                    builtContainmentLinks[className] = list(set(builtContainmentLinks[className]))
+                    for link in self.ruleContainmentLinks[ruleName][className]:
+                        if link not in builtContainmentLinks[className]:
+                            builtContainmentLinks[className].append(link)
                 else:
-                    builtContainmentLinks[className] = [self.ruleContainmentLinks[ruleName][className]]
-            
+                    builtContainmentLinks[className] = self.ruleContainmentLinks[ruleName][className]
+
+        # print("\nRulenames: " + str(ruleNames))
+        # for c in builtContainmentLinks:
+        #     print(c + " : " + str(builtContainmentLinks[c]))
         return builtContainmentLinks
 
 
@@ -186,41 +188,50 @@ class Pruner(object):
 #             classesWithParentsToTreat.extend(self.eu.buildInheritanceDependenciesForClass([className]))
 #         
 #         classesWithParentsToTreat = list(set(classesWithParentsToTreat))
-         
+
         for className in missingContLinks.keys():
+            for link in missingContLinks[className]:
 
-            classPlusParents = self.mmClassParents[className]
-            classPlusParents.append(className)
-
-            if set(classPlusParents).intersection(set(contLinksInRulesToTreat.keys())) == set():
-                allMissingContLinksFound = False
-                contLinksNotFound.append([className, missingContLinks[className]])
-                break
-
-            else:
-                foundInParent = False
-                # TODO: cache the parents
-                # check if at least on of the containment links necessary for the class can still
-                # be built by one of the remaining rules. It is possible that this will be done by
-                # done by a parent of the class in one of the rules.
-                parentClasses = self.mmClassParents[className]
-                parentClasses.append(className)
-                
-                for parentClass in parentClasses:
-                    if parentClass in contLinksInRulesToTreat.keys():
-                        links = [link for link in missingContLinks[className] if link in contLinksInRulesToTreat[parentClass]]
-                        if links:
-                            foundInParent = True
-                            break
-                if not foundInParent:
+                if className not in contLinksInRulesToTreat or link not in contLinksInRulesToTreat[className]:
+                    contLinksNotFound.append((className, link[0], link[1]))
                     allMissingContLinksFound = False
-                    contLinksNotFound.append([className, missingContLinks[className]])
-                    break
+
+            # classPlusParents = self.mmClassParents[className]
+            # classPlusParents.append(className)
+            #
+            # print(classPlusParents)
+            # print(contLinksInRulesToTreat)
+            # raise Exception()
+
+            # if set(classPlusParents).intersection(set(contLinksInRulesToTreat.keys())) == set():
+            #     allMissingContLinksFound = False
+            #     contLinksNotFound.append([className, missingContLinks[className]])
+            #     break
+            #
+            # else:
+            #     foundInParent = False
+            #     # TODO: cache the parents
+            #     # check if at least on of the containment links necessary for the class can still
+            #     # be built by one of the remaining rules. It is possible that this will be done by
+            #     # done by a parent of the class in one of the rules.
+            #     parentClasses = self.mmClassParents[className]
+            #     parentClasses.append(className)
+            #
+            #     for parentClass in parentClasses:
+            #         if parentClass in contLinksInRulesToTreat.keys():
+            #             links = [link for link in missingContLinks[className] if link in contLinksInRulesToTreat[parentClass]]
+            #             if links:
+            #                 foundInParent = True
+            #                 break
+            #     if not foundInParent:
+            #         allMissingContLinksFound = False
+            #         contLinksNotFound.append([className, missingContLinks[className]])
+            #         break
         
         if allMissingContLinksFound:
 
-            if self.debug:
-                print("... Pruner Returning True")
+            #if self.debug:
+            #    print("... Pruner Returning True")
             return True
         else:
             if self.debug:
@@ -229,7 +240,7 @@ class Pruner(object):
                 print("Missing containment links: " + str(contLinksNotFound))
 
                 print("Looking for:")
-                for contLink, contLinkEnd in contLinksNotFound:
+                for contLink, a, b in contLinksNotFound:
                     print(self.linksToRules[contLink])
 
                 # if len(missingContLinks) > 0:
