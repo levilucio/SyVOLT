@@ -193,14 +193,20 @@ class Pruner(object):
 
         for className in missingContLinks.keys():
             for link in missingContLinks[className]:
-
-                classPlusParents = [className] + self.mmClassParents[className]
-
                 foundLink = False
-                for c in classPlusParents:
 
-                    #check for the actual class
-                    if c in contLinksInRulesToTreat and link in contLinksInRulesToTreat[c]:
+
+                parentClasses = []
+                if className in self.mmClassParents:
+                    parentClasses = self.mmClassParents[className]
+
+                childClasses = []
+                if className in self.mmClassChildren:
+                    childClasses = self.mmClassChildren[className]
+
+                for cl_name in [className] + parentClasses + childClasses:
+
+                    if cl_name in contLinksInRulesToTreat and link in contLinksInRulesToTreat[cl_name]:
                         foundLink = True
                         continue
 
