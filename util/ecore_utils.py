@@ -351,7 +351,10 @@ class EcoreUtils(object):
         
         missingContainmentLinks = {}
 
-        mms = pathCond.vs["mm__"]
+        try:
+            mms = pathCond.vs["mm__"]
+        except KeyError:
+            return {}
 
         # get the containment links already built in this pathcond
         builtContainmentLinks = self.getBuiltContainmentLinks(pathCond)
