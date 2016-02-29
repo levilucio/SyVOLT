@@ -59,41 +59,55 @@ class Pruner(object):
                     className = link[0]
                     source_class_name = link[1]
 
-                    print("Error for rule: " + self.rule_names[rule.name])
+                    print("\nError for rule: " + self.rule_names[rule.name])
+                    print("Missing containment links: ")
                     for l in links_not_found:
-                        print(l)
+                        print(source_class_name + " -> " + l[2] + " -> " + className)
 
-                    print("Containment links:")
-                    for k, v in sorted(self.ruleContainmentLinks.items()):
-                        print(k + " :")
-                        for c in v:
-                            print("\t" + str(c) + " : " + str(v[c]) )
+                        for cl, v in self.eu.containmentLinks.items():
+                            for conLink in v:
 
-                    print("Supertypes:")
-                    try:
-                        print(self.mmClassParents[className])
-                    except KeyError:
-                        pass
+                                if conLink[1] == l[2] and conLink[0] == source_class_name:
 
-                    print("Subtypes:")
-                    try:
-                        print(self.mmClassChildren[className])
-                    except KeyError:
-                        pass
+                                    if cl == className:
+                                        #this contain link is not inherited
+                                        continue
 
-                    print("Supertypes:")
-                    try:
-                        print(self.mmClassParents[source_class_name])
-                    except KeyError:
-                        pass
+                                    print("\tInherited from:")
+                                    print("\t" + conLink[0] + " -> " + conLink[1] + " -> " + cl)
+                                    break
 
-                    print("Subtypes:")
-                    try:
-                        print(self.mmClassChildren[source_class_name])
-                    except KeyError:
-                        pass
-
-                    raise Exception()
+        print("Containment links:")
+        for k, v in sorted(self.ruleContainmentLinks.items()):
+            print(k + " :")
+            for c in v:
+                print("\t" + str(c) + " : " + str(v[c]) )
+                    #
+                    # print("Supertypes:")
+                    # try:
+                    #     print(self.mmClassParents[className])
+                    # except KeyError:
+                    #     pass
+                    #
+                    # print("Subtypes:")
+                    # try:
+                    #     print(self.mmClassChildren[className])
+                    # except KeyError:
+                    #     pass
+                    #
+                    # print("Supertypes:")
+                    # try:
+                    #     print(self.mmClassParents[source_class_name])
+                    # except KeyError:
+                    #     pass
+                    #
+                    # print("Subtypes:")
+                    # try:
+                    #     print(self.mmClassChildren[source_class_name])
+                    # except KeyError:
+                    #     pass
+                    #
+                    # raise Exception()
 
                 # if found_link:
                 #     full_link_name = className + "/" + link_name
@@ -114,24 +128,24 @@ class Pruner(object):
 
 
 
-        if self.debug:
-            for layer in transformation:
-                for rule in layer:
-                    rule_name = rule_names[rule.name]
-                    print("\nRule: " + rule_name)
-                    if len(self.ruleContainmentLinks[rule.name]) > 0:
-                        print("Provides containment links: ")
-                        for k, v in self.ruleContainmentLinks[rule.name].items():
-                            print(str(k) + " : " + str(v))
-                    if len(required_rules[rule.name]) > 0:
-                        print("\nMissing rule containment links: ")
-                        for k, v in required_rules[rule.name].items():
-                            print(str(k) + " : " + str(v))
-                    print()
-
-            print("MM class parents:")
-            for mm in sorted(self.mmClassParents):
-                print(mm + " : " + str(self.mmClassParents[mm]))
+        # if self.debug:
+        #     for layer in transformation:
+        #         for rule in layer:
+        #             rule_name = rule_names[rule.name]
+        #             print("\nRule: " + rule_name)
+        #             if len(self.ruleContainmentLinks[rule.name]) > 0:
+        #                 print("Provides containment links: ")
+        #                 for k, v in self.ruleContainmentLinks[rule.name].items():
+        #                     print(str(k) + " : " + str(v))
+        #             if len(required_rules[rule.name]) > 0:
+        #                 print("\nMissing rule containment links: ")
+        #                 for k, v in required_rules[rule.name].items():
+        #                     print(str(k) + " : " + str(v))
+        #             print()
+        #
+        #     print("MM class parents:")
+        #     for mm in sorted(self.mmClassParents):
+        #         print(mm + " : " + str(self.mmClassParents[mm]))
 
     def will_links_be_built(self, contain_links, future_contain_links):
 
@@ -152,9 +166,9 @@ class Pruner(object):
             for source_class_name, link_name in link_names:
                 found_link = False
 
-                print("\nLooking for:")
-                print(className + " : " + source_class_name + " : " + link_name)
-                print(str([className] + parentClasses + childClasses))
+                #print("\nLooking for:")
+                #print(className + " : " + source_class_name + " : " + link_name)
+               # print(str([className] + parentClasses + childClasses))
                 #
                 # print(self.ruleContainmentLinks)
 
@@ -181,8 +195,8 @@ class Pruner(object):
                         #look at all links
                         for other_link in contain_links[cl_name]:
 
-                            print("\n\tComparing to:")
-                            print("\t" + cl_name + " : " + other_link[0] + " : " + other_link[1])
+                            #print("\n\tComparing to:")
+                            #print("\t" + cl_name + " : " + other_link[0] + " : " + other_link[1])
 
 
                             #the link name doesn't match
@@ -197,10 +211,10 @@ class Pruner(object):
                                 source_class += self.mmClassChildren[source_class_name]
 
                             if other_link[0] not in source_class:
-                                print("Source class not in heirarchy")
+                                #print("Source class not in heirarchy")
                                 continue
 
-                            print("Found the link")
+                            #print("Found the link")
                             found_link = True
                             break
 
