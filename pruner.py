@@ -18,7 +18,7 @@ class Pruner(object):
         Constructor
         '''
 
-        self.debug = True
+        self.debug = False
 
         self.eu = EcoreUtils(metamodel)
         #self.mmContainmentLinks = self.eu.getContainmentLinksForClasses()
@@ -44,6 +44,12 @@ class Pruner(object):
                     except KeyError:
                         self.linksToRules[contain_link] = [rule_names[rule.name]]
 
+        contain_links_to_build = {}
+
+        for rule_name, contain_links in self.ruleContainmentLinks.items():
+            contain_links_to_build.update(contain_links)
+
+
         #test containment links and see if any are missing
         required_rules = {}
         for layer in transformation:
@@ -51,7 +57,9 @@ class Pruner(object):
 
                 required_rules[rule.name] = {}
 
-                links_not_found = self.will_links_be_built(self.ruleMissingContLinks[rule.name], self.ruleContainmentLinks)
+
+
+                links_not_found = self.will_links_be_built(self.ruleMissingContLinks[rule.name], contain_links_to_build)
 
                 if len(links_not_found) > 0:
 
@@ -172,51 +180,39 @@ class Pruner(object):
                 #
                 # print(self.ruleContainmentLinks)
 
-                # look at the other rules
-                for contain_rule_name, contain_links in future_contain_links.items():
-                    if not contain_links:
+                #try all possibilities for the className
+                for cl_name in [className] + parentClasses + childClasses:
+                    if cl_name not in future_contain_links.keys():
                         continue
 
                     if found_link:
                         break
 
-                    #real_contain_rule_name = self.rule_names[contain_rule_name]
+                    #look at all links
+                    for other_link in future_contain_links[cl_name]:
 
-                    # print(real_contain_rule_name + " : " + str(contain_links))
+                        #print("\n\tComparing to:")
+                        #print("\t" + cl_name + " : " + other_link[0] + " : " + other_link[1])
 
-                    #try all possibilities for the className
-                    for cl_name in [className] + parentClasses + childClasses:
-                        if cl_name not in contain_links.keys():
+
+                        #the link name doesn't match
+                        if link_name != other_link[1]:
                             continue
 
-                        if found_link:
-                            break
+                        #now check to see if the source class is in the inheritance heirarchy
+                        source_class = [source_class_name]
+                        if source_class_name in self.mmClassParents:
+                            source_class += self.mmClassParents[source_class_name]
+                        if source_class_name in self.mmClassChildren:
+                            source_class += self.mmClassChildren[source_class_name]
 
-                        #look at all links
-                        for other_link in contain_links[cl_name]:
+                        if other_link[0] not in source_class:
+                            #print("Source class not in heirarchy")
+                            continue
 
-                            #print("\n\tComparing to:")
-                            #print("\t" + cl_name + " : " + other_link[0] + " : " + other_link[1])
-
-
-                            #the link name doesn't match
-                            if link_name != other_link[1]:
-                                continue
-
-                            #now check to see if the source class is in the inheritance heirarchy
-                            source_class = [source_class_name]
-                            if source_class_name in self.mmClassParents:
-                                source_class += self.mmClassParents[source_class_name]
-                            if source_class_name in self.mmClassChildren:
-                                source_class += self.mmClassChildren[source_class_name]
-
-                            if other_link[0] not in source_class:
-                                #print("Source class not in heirarchy")
-                                continue
-
-                            #print("Found the link")
-                            found_link = True
-                            break
+                        #print("Found the link")
+                        found_link = True
+                        break
 
                 if not found_link:
                     links_not_found.append((className, source_class_name, link_name))
@@ -265,82 +261,10 @@ class Pruner(object):
         missingContLinks = self.eu.getMissingContainmentLinks(pathCondition)
 
         contLinksInRulesToTreat = self.getContainmentLinksBuiltByRuleSet(rulesToTreat)
-        
-        # if self.debug:
-        #     print("Rules to treat: ")
-        #     for rule in rulesToTreat:
-        #         print(rule)
-        #     print("Containment links in rules to treat: " + str(contLinksInRulesToTreat))
 
+        missingLinks = self.will_links_be_built(missingContLinks, contLinksInRulesToTreat)
 
-        allMissingContLinksFound = True
-        contLinksNotFound = []
-        
-#         # gather all the parents for all the classes that have missing containment links
-#         # TODO: should be based on cached data
-#         classesWithParentsToTreat = []
-#         
-#         for className in missingContLinks.keys():
-#             classesWithParentsToTreat.extend(self.eu.buildInheritanceDependenciesForClass([className]))
-#         
-#         classesWithParentsToTreat = list(set(classesWithParentsToTreat))
-
-        for className in missingContLinks.keys():
-            for link in missingContLinks[className]:
-                foundLink = False
-
-
-                parentClasses = []
-                if className in self.mmClassParents:
-                    parentClasses = self.mmClassParents[className]
-
-                childClasses = []
-                if className in self.mmClassChildren:
-                    childClasses = self.mmClassChildren[className]
-
-                for cl_name in [className] + parentClasses + childClasses:
-
-                    if cl_name in contLinksInRulesToTreat and link in contLinksInRulesToTreat[cl_name]:
-                        foundLink = True
-                        continue
-
-                if not foundLink:
-                    contLinksNotFound.append((className, link[0], link[1]))
-                    allMissingContLinksFound = False
-
-            # classPlusParents = self.mmClassParents[className]
-            # classPlusParents.append(className)
-            #
-            # print(classPlusParents)
-            # print(contLinksInRulesToTreat)
-            # raise Exception()
-
-            # if set(classPlusParents).intersection(set(contLinksInRulesToTreat.keys())) == set():
-            #     allMissingContLinksFound = False
-            #     contLinksNotFound.append([className, missingContLinks[className]])
-            #     break
-            #
-            # else:
-            #     foundInParent = False
-            #     # TODO: cache the parents
-            #     # check if at least on of the containment links necessary for the class can still
-            #     # be built by one of the remaining rules. It is possible that this will be done by
-            #     # done by a parent of the class in one of the rules.
-            #     parentClasses = self.mmClassParents[className]
-            #     parentClasses.append(className)
-            #
-            #     for parentClass in parentClasses:
-            #         if parentClass in contLinksInRulesToTreat.keys():
-            #             links = [link for link in missingContLinks[className] if link in contLinksInRulesToTreat[parentClass]]
-            #             if links:
-            #                 foundInParent = True
-            #                 break
-            #     if not foundInParent:
-            #         allMissingContLinksFound = False
-            #         contLinksNotFound.append([className, missingContLinks[className]])
-            #         break
-        
-        if allMissingContLinksFound:
+        if len(missingLinks) == 0:
 
             #if self.debug:
             #    print("... Pruner Returning True")
@@ -349,14 +273,14 @@ class Pruner(object):
             if self.debug:
                 print("=========================")
                 print("Path condition: " + pathCondition.name)
-                print("Missing containment links: " + str(contLinksNotFound))
+                print("Missing containment links: " + str(missingLinks))
 
                 print("Links to be built:")
                 for className, links in contLinksInRulesToTreat.items():
                     print(className + " : " + str(links))
 
                 print("Looking for:")
-                for contLink, a, b in contLinksNotFound:
+                for contLink, a, b in missingLinks:
                     print(self.linksToRules[contLink])
 
                 # if len(missingContLinks) > 0:
