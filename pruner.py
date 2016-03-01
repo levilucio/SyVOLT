@@ -45,6 +45,10 @@ class Pruner(object):
                         self.linksToRules[contain_link] = [rule_names[rule.name]]
 
         #test containment links and see if any are missing
+
+        self.missing_contain_links = []
+        self.all_missing_contain_links = []
+
         required_rules = {}
         for layer in transformation:
             for rule in layer:
@@ -65,31 +69,55 @@ class Pruner(object):
                     className = link[0]
                     source_class_name = link[1]
 
+                    #source_class_name_inheritance = self.get_full_inheritance(source_class_name)
+                    #class_name_inheritance = self.get_full_inheritance(className)
+
                     print("\nError for rule: " + self.rule_names[rule.name])
                     print("Missing containment links: ")
                     for l in links_not_found:
-                        print(source_class_name + " -> " + l[2] + " -> " + className)
+
+                        if l not in self.all_missing_contain_links:
+                            self.all_missing_contain_links.append(l)
+
+                        missing_link = (source_class_name, l[2], className)
+                        print(missing_link[0] + " -> " + missing_link[1] + " -> " + missing_link[2])
 
                         for cl, v in self.eu.containmentLinks.items():
                             for conLink in v:
 
-                                if conLink[1] == l[2] and conLink[0] == source_class_name:
+                                if conLink[1] == l[2]:# and conLink[0] in source_class_name_inheritance:
 
                                     if cl == className:
                                         #this contain link is not inherited
+                                        if missing_link not in self.missing_contain_links:
+                                            self.missing_contain_links.append(missing_link)
                                         continue
 
                                     print("\tInherited from:")
                                     print("\t" + conLink[0] + " -> " + conLink[1] + " -> " + cl)
+
+                                    missing_link = (conLink[0], conLink[1], cl)
+                                    if missing_link not in self.missing_contain_links:
+                                        self.missing_contain_links.append(missing_link)
                                     break
 
-                    raise Exception()
-
-        print("Containment links:")
+        print("\nContainment links:")
         for k, v in sorted(self.ruleContainmentLinks.items()):
             print(k + " :")
             for c in v:
                 print("\t" + str(c) + " : " + str(v[c]) )
+
+        print("\nMissing containment links:")
+        for missing_link in sorted(self.missing_contain_links):
+            print(missing_link[0] + " -> " + missing_link[1] + " -> " + missing_link[2])
+
+    # def get_full_inheritance(self, className):
+    #     inheritance = [className]
+    #     if className in self.mmClassParents:
+    #         inheritance += self.mmClassParents[className]
+    #     if className in self.mmClassChildren:
+    #         inheritance += self.mmClassChildren[className]
+    #     return inheritance
 
 
     def will_links_be_built(self, contain_links, future_contain_links):
@@ -200,6 +228,11 @@ class Pruner(object):
         contLinksInRulesToTreat = self.getContainmentLinksBuiltByRuleSet(rulesToTreat)
 
         missingLinks = self.will_links_be_built(missingContLinks, contLinksInRulesToTreat)
+
+        #remove all the containment links we know to be missing
+        for ml in self.all_missing_contain_links:
+            if ml in missingLinks:
+                missingLinks.remove(ml)
 
         if len(missingLinks) == 0:
 
