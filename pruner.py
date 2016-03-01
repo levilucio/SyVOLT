@@ -44,12 +44,6 @@ class Pruner(object):
                     except KeyError:
                         self.linksToRules[contain_link] = [rule_names[rule.name]]
 
-        contain_links_to_build = {}
-
-        for rule_name, contain_links in self.ruleContainmentLinks.items():
-            contain_links_to_build.update(contain_links)
-
-
         #test containment links and see if any are missing
         required_rules = {}
         for layer in transformation:
@@ -57,7 +51,11 @@ class Pruner(object):
 
                 required_rules[rule.name] = {}
 
-
+                #get the contain links for the other rules
+                contain_links_to_build = {}
+                for rule_name, contain_links in self.ruleContainmentLinks.items():
+                    if rule_name != rule.name:
+                        contain_links_to_build.update(contain_links)
 
                 links_not_found = self.will_links_be_built(self.ruleMissingContLinks[rule.name], contain_links_to_build)
 
@@ -85,75 +83,14 @@ class Pruner(object):
                                     print("\t" + conLink[0] + " -> " + conLink[1] + " -> " + cl)
                                     break
 
+                    raise Exception()
+
         print("Containment links:")
         for k, v in sorted(self.ruleContainmentLinks.items()):
             print(k + " :")
             for c in v:
                 print("\t" + str(c) + " : " + str(v[c]) )
-                    #
-                    # print("Supertypes:")
-                    # try:
-                    #     print(self.mmClassParents[className])
-                    # except KeyError:
-                    #     pass
-                    #
-                    # print("Subtypes:")
-                    # try:
-                    #     print(self.mmClassChildren[className])
-                    # except KeyError:
-                    #     pass
-                    #
-                    # print("Supertypes:")
-                    # try:
-                    #     print(self.mmClassParents[source_class_name])
-                    # except KeyError:
-                    #     pass
-                    #
-                    # print("Subtypes:")
-                    # try:
-                    #     print(self.mmClassChildren[source_class_name])
-                    # except KeyError:
-                    #     pass
-                    #
-                    # raise Exception()
 
-                # if found_link:
-                #     full_link_name = className + "/" + link_name
-                #
-                #     try:
-                #         if real_contain_rule_name not in required_rules[rule.name][full_link_name]:
-                #             required_rules[rule.name][full_link_name].append(real_contain_rule_name)
-                #     except KeyError:
-                #         required_rules[rule.name][full_link_name] = [real_contain_rule_name]
-                # else:
-                #     message = "\nError: No rule builds containment link '" + source_class_name + "' -> '" + link_name + "' -> '" + className + "' from rule.name " + rule_names[rule.name]
-                #     required_rules[rule.name][className + "/" + link_name] = ["None!"]
-                #
-                #     print(message)
-                #
-
-
-
-
-
-        # if self.debug:
-        #     for layer in transformation:
-        #         for rule in layer:
-        #             rule_name = rule_names[rule.name]
-        #             print("\nRule: " + rule_name)
-        #             if len(self.ruleContainmentLinks[rule.name]) > 0:
-        #                 print("Provides containment links: ")
-        #                 for k, v in self.ruleContainmentLinks[rule.name].items():
-        #                     print(str(k) + " : " + str(v))
-        #             if len(required_rules[rule.name]) > 0:
-        #                 print("\nMissing rule containment links: ")
-        #                 for k, v in required_rules[rule.name].items():
-        #                     print(str(k) + " : " + str(v))
-        #             print()
-        #
-        #     print("MM class parents:")
-        #     for mm in sorted(self.mmClassParents):
-        #         print(mm + " : " + str(self.mmClassParents[mm]))
 
     def will_links_be_built(self, contain_links, future_contain_links):
 
