@@ -2,6 +2,9 @@
 __pycache__/
 *.py[cod]
 
+/property_prover_rules/**
+/footage_for_demo/*
+
 # C extensions
 *.so
 
@@ -57,7 +60,7 @@ docs/_build/
 .idea
 
 patterns/*.py
-./property_prover_rules/**
+
 *.py.bak
 
 *.DS_Store
