@@ -69,6 +69,9 @@ class EcoreUtils(object):
         # treat all the remaining classes that have no containment links to them but that
         # inherit from classes that do.
 
+        #save where the link was inherited from
+        self.originalLinks = {}
+
         self.mmClassContained = deepcopy(self.containmentLinks)
 
         mmClassNames = self.getMetamodelClassNames()
@@ -76,14 +79,26 @@ class EcoreUtils(object):
         
         for remContClass in remainingContClasses:
             parentClasses = self.inheritanceRels[remContClass]
+
             containedParentClasses = set(parentClasses).intersection(set(self.mmClassContained.keys()))
+
             for contParentClass in containedParentClasses:
                 if remContClass not in self.mmClassContained.keys():
                     self.mmClassContained[remContClass] = deepcopy(self.mmClassContained[contParentClass])
+
+                    self.originalLinks[remContClass] = {}
+                    for link in self.mmClassContained[contParentClass]:
+                        self.originalLinks[remContClass][link] = [contParentClass]
+
                 else:
                     for link in self.mmClassContained[contParentClass]:
                         if link not in self.mmClassContained[remContClass]:
                             self.mmClassContained[remContClass].append(link)
+
+                            try:
+                                self.originalLinks[remContClass][link].append(contParentClass)
+                            except KeyError:
+                                self.originalLinks[remContClass][link] = [contParentClass]
 
         print("\nContainment links (with inheritance)")
         for k, v in sorted(self.mmClassContained.items()):

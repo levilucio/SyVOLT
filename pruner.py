@@ -49,6 +49,9 @@ class Pruner(object):
         self.missing_contain_links = []
         self.all_missing_contain_links = []
 
+        #map to where link was inherited from
+        original_links = self.eu.originalLinks
+
         required_rules = {}
         for layer in transformation:
             for rule in layer:
@@ -82,24 +85,27 @@ class Pruner(object):
                         missing_link = (source_class_name, l[2], className)
                         print(missing_link[0] + " -> " + missing_link[1] + " -> " + missing_link[2])
 
-                        for cl, v in self.eu.containmentLinks.items():
-                            for conLink in v:
 
-                                if conLink[1] == l[2]:# and conLink[0] in source_class_name_inheritance:
+                        try:
+                            inherited_links = original_links[className]
+                            if (l[1], l[2]) in inherited_links:
+                                print("\tInherited from:")
+                                print("\t" + l[1] + " -> " + l[2] + " -> " + className)
+                            else:
+                                pass
+                                # print("Not inherited")
+                                #
+                                # for k in sorted(original_links[className].keys()):
+                                #     print(k)
+                                #     print(original_links[className][k])
 
-                                    if cl == className:
-                                        #this contain link is not inherited
-                                        if missing_link not in self.missing_contain_links:
-                                            self.missing_contain_links.append(missing_link)
-                                        continue
+                        except KeyError:
+                            pass
+                            # print("Not inherited")
+                            # print(original_links)
 
-                                    print("\tInherited from:")
-                                    print("\t" + conLink[0] + " -> " + conLink[1] + " -> " + cl)
 
-                                    missing_link = (conLink[0], conLink[1], cl)
-                                    if missing_link not in self.missing_contain_links:
-                                        self.missing_contain_links.append(missing_link)
-                                    break
+        #raise Exception()
 
         print("\nContainment links:")
         for k, v in sorted(self.ruleContainmentLinks.items()):
@@ -110,6 +116,7 @@ class Pruner(object):
         print("\nMissing containment links:")
         for missing_link in sorted(self.missing_contain_links):
             print(missing_link[0] + " -> " + missing_link[1] + " -> " + missing_link[2])
+
 
     # def get_full_inheritance(self, className):
     #     inheritance = [className]
