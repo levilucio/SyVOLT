@@ -77,7 +77,7 @@ class EcoreUtils(object):
         mmClassNames = self.getMetamodelClassNames()
         remainingContClasses = set(mmClassNames) - set(self.mmClassContained.keys())
         
-        for remContClass in remainingContClasses:
+        for remContClass in sorted(remainingContClasses):
             parentClasses = self.inheritanceRels[remContClass]
 
             containedParentClasses = set(parentClasses).intersection(set(self.mmClassContained.keys()))
@@ -86,19 +86,27 @@ class EcoreUtils(object):
                 if remContClass not in self.mmClassContained.keys():
                     self.mmClassContained[remContClass] = deepcopy(self.mmClassContained[contParentClass])
 
-                    self.originalLinks[remContClass] = {}
-                    for link in self.mmClassContained[contParentClass]:
-                        self.originalLinks[remContClass][link] = [contParentClass]
-
                 else:
                     for link in self.mmClassContained[contParentClass]:
                         if link not in self.mmClassContained[remContClass]:
                             self.mmClassContained[remContClass].append(link)
 
-                            try:
-                                self.originalLinks[remContClass][link].append(contParentClass)
-                            except KeyError:
-                                self.originalLinks[remContClass][link] = [contParentClass]
+                if contParentClass in self.containmentLinks:
+                    if remContClass not in self.originalLinks:
+                        self.originalLinks[remContClass] = {}
+                    for link in self.containmentLinks[contParentClass]:
+                        try:
+                            self.originalLinks[remContClass][link].append(contParentClass)
+                        except KeyError:
+                            self.originalLinks[remContClass][link] = [contParentClass]
+
+        # print("\nOriginal links")
+        # for k, v in sorted(self.originalLinks.items()):
+        #     print(str(k) + " : ")
+        #     for c in sorted(v):
+        #         print("\t" + str(c) + " " + str(v[c]))
+
+        #raise Exception()
 
         print("\nContainment links (with inheritance)")
         for k, v in sorted(self.mmClassContained.items()):
