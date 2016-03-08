@@ -371,8 +371,8 @@ class EcoreUtils(object):
         return all missing containment relations in a path condition, in the form of a
         dictionary having as key the targetClass and as data the containmentLinks that 
         can be used to build the missing containment link.
-        '''  
-        
+        '''
+
         missingContainmentLinks = {}
 
         try:
@@ -388,6 +388,16 @@ class EcoreUtils(object):
 
             if targetClassName not in self.mmClassContained.keys() or targetClassName in missingContainmentLinks.keys():
                 continue
+
+            skip_match_nodes = False
+            neighbours_in = pathCond.neighbors(node, 2)
+            for n in neighbours_in:
+                if mms[n] in ["MatchModel", "match_contains"]:
+                    skip_match_nodes = True
+                    break
+            if skip_match_nodes:
+                continue
+
 
             for containLink in self.mmClassContained[targetClassName]:
                 if targetClassName not in builtContainmentLinks or containLink not in builtContainmentLinks[targetClassName]:
