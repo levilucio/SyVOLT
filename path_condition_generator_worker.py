@@ -71,6 +71,14 @@ class path_condition_generator_worker(Process):
 
         name_dict = {}
 
+        rulesToTreat = []
+        if self.pruning:
+            # build the set of rules that remains to be executed
+            for l in range(self.layer + 1, len(self.transformation)):
+                for r in self.transformation[l]:
+                    rulesToTreat.append(r.name)
+
+
         if self.report_progress:
             progress_bar = ProgressBar(pathConSetLength)
 
@@ -82,9 +90,8 @@ class path_condition_generator_worker(Process):
                 progress_bar.update_progress(pathConditionIndex)
 
 
-            #newPathConditionSet.append(pc_name)
-
-            pc = expand_graph(self.pc_dict[pc_name])
+            shrunk_pc = self.pc_dict[pc_name]
+            pc = expand_graph(shrunk_pc)
             #print_graph(pc)
 
             #store the preds and succs of the pc graph if needed
@@ -196,18 +203,19 @@ class path_condition_generator_worker(Process):
                                 
                             # name the new path condition as the combination of the previous path condition and the rule    
                             newPathCond.name = new_name
-    
-                            shrunk_newCond = shrink_graph(newPathCond)
-                            self.pc_dict[new_name] = shrunk_newCond
-                            new_pc_dict[new_name] = shrunk_newCond
-    
-                            if self.verbosity >= 2 : print("Created path condition with name: " + newPathCond.name)
-                            localPathConditionLayerAccumulator.append(new_name)
-    
-                            #print_graph(newPathCond)
-    
-                            # store the newly created path condition as a child
-                            childrenPathConditions.append(new_name)
+
+                            if not self.pruning or self.pruner.isPathConditionStillFeasible(newPathCond, rulesToTreat):
+                                shrunk_newCond = shrink_graph(newPathCond)
+                                self.pc_dict[new_name] = shrunk_newCond
+                                new_pc_dict[new_name] = shrunk_newCond
+
+                                if self.verbosity >= 2 : print("Created path condition with name: " + newPathCond.name)
+                                localPathConditionLayerAccumulator.append(new_name)
+
+                                #print_graph(newPathCond)
+
+                                # store the newly created path condition as a child
+                                childrenPathConditions.append(new_name)
                                     
 
                     newPathConditionSet.extend(localPathConditionLayerAccumulator)
@@ -395,7 +403,11 @@ class path_condition_generator_worker(Process):
                                             if not rewriter.is_success:
                                                 if self.verbosity >= 2:
                                                     print("Path Condition: " + newPathCondName + " has inconsistent equations")
-                                                                                                            
+
+                                            # elif self.pruning and not self.pruner.isPathConditionStillFeasible(newPathCond,
+                                            #                                                                 rulesToTreat):
+                                            #     if self.verbosity >= 2:
+                                            #         print("Path Condition: " + newPathCondName + " was pruned")
                                             else:
                                                 if isTotalCombinator:
     
@@ -444,16 +456,15 @@ class path_condition_generator_worker(Process):
     
                                                     # store the parent of the newly created path condition
                                                     childrenPathConditions.append(newPathCond.name)
-    
+
+                                                if self.verbosity >= 2:
+                                                    print("Created path condition with name: " + newPathCondName)
+
                                                 # store the new path condition
                                                 shrunk_newCond = shrink_graph(newPathCond)
                                                 self.pc_dict[newPathCondName] = shrunk_newCond
                                                 new_pc_dict[newPathCondName] = shrunk_newCond
 
-                                                if self.verbosity >= 2:
-                                                    print("Created path condition with name: " + newPathCondName)
-    
-    
                                     p = i.next_in(p)
                                     pathCondSubnum += 1
                                     
@@ -567,6 +578,9 @@ class path_condition_generator_worker(Process):
 
         #print("newPathConditionSet: " + str(newPathConditionSet))
         #print("currentPathConditionSet: " + str(self.currentPathConditionSet))
+
+        print("Current length: " + str(len(self.currentPathConditionSet)))
+        print("New length: " + str(len(newPathConditionSet)))
 
 
         self.currentPathConditionSet.extend(newPathConditionSet)
