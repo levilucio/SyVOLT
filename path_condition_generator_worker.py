@@ -320,7 +320,7 @@ class path_condition_generator_worker(Process):
 
                                 pathCondSubnum = 0
 
-                                while i.is_success:
+                                while i.is_success:# and pathCondSubnum < 1:
 
                                     #go through all the children of this path condition
 
@@ -438,8 +438,9 @@ class path_condition_generator_worker(Process):
                                                     
                                                     # we are dealing with a partial combination of the rule.
                                                     # create a copy of the path condition in the accumulator because this match of the rule is partial.
-    
 
+                                                    # add the result to the local accumulator
+                                                    partialTotalPathCondLayerAccumulator.append(newPathCond.name)
     
                                                     # store the parent of the newly created path condition
                                                     childrenPathConditions.append(newPathCond.name)
@@ -448,9 +449,6 @@ class path_condition_generator_worker(Process):
                                                 shrunk_newCond = shrink_graph(newPathCond)
                                                 self.pc_dict[newPathCondName] = shrunk_newCond
                                                 new_pc_dict[newPathCondName] = shrunk_newCond
-
-                                                # add the result to the local accumulator
-                                                partialTotalPathCondLayerAccumulator.append(newPathCond.name)
 
                                                 if self.verbosity >= 2:
                                                     print("Created path condition with name: " + newPathCondName)
@@ -581,7 +579,8 @@ class path_condition_generator_worker(Process):
             for l in range(self.layer+1,len(self.transformation)):
                 for r in self.transformation[l]:
                     rulesToTreat.append(r.name)   
-            
+
+            pruning_time = time.time()
             for pathCondName in self.currentPathConditionSet:
     
                 # test if the new path condition can still lead to to a path condition
@@ -590,8 +589,13 @@ class path_condition_generator_worker(Process):
                 #treatedRules = self.getRuleNamesInPathCondition(pathCondName)
                 
                 pathConditionsToPrune = []
-                
-                if not self.pruner.isPathConditionStillFeasible(expand_graph(self.pc_dict[pathCondName]), rulesToTreat):
+
+                try:
+                    pc = expand_graph(self.pc_dict[pathCondName])
+                except KeyError:
+                    pc = None
+
+                if pc is not None and not self.pruner.isPathConditionStillFeasible(pc, rulesToTreat):
                     
                     pathConditionsToPrune.append(pathCondName)
                     if self.verbosity >= 2:
@@ -604,6 +608,8 @@ class path_condition_generator_worker(Process):
                         del name_dict[prunnedPCName]
                     
                 self.currentPathConditionSet = [pc for pc in self.currentPathConditionSet if pc not in pathConditionsToPrune]
+
+            print("Time taken for pruning: " + str(time.time() - pruning_time))
 
         print("Thread finished: Took " + str(time.time() - start_time) + " seconds")
         
