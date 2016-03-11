@@ -227,8 +227,8 @@ class path_condition_generator_worker(Process):
 
                     # check if the backward links cannot be found by matching them on the path condition
 
-                    if not pc_preds or not pc_succs:
-                        pc_preds, pc_succs = get_preds_and_succs(pc)
+                    # if not pc_preds or not pc_succs:
+                    #     pc_preds, pc_succs = get_preds_and_succs(pc)
                         #pc_preds = [(len(tmp), tmp) for tmp in pc.get_adjlist(mode=2)]
                         #pc_succs = [(len(tmp), tmp) for tmp in pc.get_adjlist(mode=1)]
 
