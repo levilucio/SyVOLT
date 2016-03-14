@@ -586,25 +586,21 @@ class path_condition_generator_worker(Process):
 
 
         self.currentPathConditionSet.extend(newPathConditionSet)
+
+        self.currentPathConditionSet = list(set(self.currentPathConditionSet))
         
         if self.pruning:
-        
-            rulesToTreat = []    
-
-            # build the set of rules that remains to be executed
-            for l in range(self.layer+1,len(self.transformation)):
-                for r in self.transformation[l]:
-                    rulesToTreat.append(r.name)   
 
             pruning_time = time.time()
-            for pathCondName in self.currentPathConditionSet:
+
+            for pathCondName in deepcopy(self.currentPathConditionSet):
     
                 # test if the new path condition can still lead to to a path condition
                 # where all the containment relations are respected by executing the remaining rules.
                 # if not, the path condition is not kept.
                 #treatedRules = self.getRuleNamesInPathCondition(pathCondName)
                 
-                pathConditionsToPrune = []
+                #pathConditionsToPrune = []
 
                 try:
                     pc = expand_graph(self.pc_dict[pathCondName])
@@ -613,7 +609,7 @@ class path_condition_generator_worker(Process):
 
                 if pc is not None and not self.pruner.isPathConditionStillFeasible(pc, rulesToTreat):
                     
-                    pathConditionsToPrune.append(pathCondName)
+                    #pathConditionsToPrune.append(pathCondName)
 
                     try:
                         del name_dict[pathCondName]
@@ -632,17 +628,19 @@ class path_condition_generator_worker(Process):
 
 
                     if self.verbosity >= 2:
-                        print("Path Condition: " + pathCondName + " cannot be completed with all necessary containment associations")                               
-    
+                        print("Path Condition: " + pathCondName + " cannot be completed with all necessary containment associations")
+
+
+                    #for pctp in pathConditionsToPrune:
+                    self.currentPathConditionSet.remove(pathCondName)
+
                 # remove path conditions that have been prunned
                 # for prunnedPCName in pathConditionsToPrune:
                 #     del self.pc_dict[prunnedPCName]
                 #     if prunnedPCName in name_dict.keys():
                 #         del name_dict[prunnedPCName]
 
-                self.currentPathConditionSet = list(set(self.currentPathConditionSet))
-                for pctp in pathConditionsToPrune:
-                    self.currentPathConditionSet.remove(pctp)
+
                 #self.currentPathConditionSet = [pc for pc in self.currentPathConditionSet if pc not in pathConditionsToPrune]
 
             print("Time taken for pruning: " + str(time.time() - pruning_time))
