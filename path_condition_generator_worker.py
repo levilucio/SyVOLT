@@ -42,6 +42,8 @@ class path_condition_generator_worker(Process):
         self.pruner = pruner
         
         self.pruning = True
+
+        self.pc_dict = None
         
         
     def getRuleNamesInPathCondition(self, pcName):
@@ -612,16 +614,36 @@ class path_condition_generator_worker(Process):
                 if pc is not None and not self.pruner.isPathConditionStillFeasible(pc, rulesToTreat):
                     
                     pathConditionsToPrune.append(pathCondName)
+
+                    try:
+                        del name_dict[pathCondName]
+                    except KeyError:
+                        pass
+
+                    try:
+                        del self.pc_dict[pathCondName]
+                    except KeyError:
+                        pass
+                    #
+                    # try:
+                    #     self.currentPathConditionSet.remove(pc)
+                    # except ValueError:
+                    #     pass
+
+
                     if self.verbosity >= 2:
                         print("Path Condition: " + pathCondName + " cannot be completed with all necessary containment associations")                               
     
                 # remove path conditions that have been prunned
-                for prunnedPCName in pathConditionsToPrune:
-                    del self.pc_dict[prunnedPCName]
-                    if prunnedPCName in name_dict.keys():
-                        del name_dict[prunnedPCName]
-                    
-                self.currentPathConditionSet = [pc for pc in self.currentPathConditionSet if pc not in pathConditionsToPrune]
+                # for prunnedPCName in pathConditionsToPrune:
+                #     del self.pc_dict[prunnedPCName]
+                #     if prunnedPCName in name_dict.keys():
+                #         del name_dict[prunnedPCName]
+
+                self.currentPathConditionSet = list(set(self.currentPathConditionSet))
+                for pctp in pathConditionsToPrune:
+                    self.currentPathConditionSet.remove(pctp)
+                #self.currentPathConditionSet = [pc for pc in self.currentPathConditionSet if pc not in pathConditionsToPrune]
 
             print("Time taken for pruning: " + str(time.time() - pruning_time))
 
