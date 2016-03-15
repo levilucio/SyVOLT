@@ -446,7 +446,7 @@ class EcoreUtils(object):
                         source_hier = [source_class]
                         if source_class in mmClassParents:
                             source_hier += mmClassParents[source_class]
-                        if targetClassName in mmClassChildren:
+                        if source_class in mmClassChildren:
                             source_hier += mmClassChildren[source_class]
 
                         if link[0] in source_hier:
