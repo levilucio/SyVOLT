@@ -64,7 +64,7 @@ class Pruner(object):
                     if rule_name != rule.name:
                         contain_links_to_build.update(contain_links)
 
-                links_not_found = self.will_links_be_built(rule.name, self.ruleMissingContLinks[rule.name], contain_links_to_build)
+                links_not_found = self.will_links_be_built(rule.name, self.ruleMissingContLinks[rule.name], contain_links_to_build, require_all_links = True)
 
                 if len(links_not_found) > 0:
 
@@ -100,7 +100,7 @@ class Pruner(object):
                             # print(original_links)
 
 
-        #raise Exception()
+
 
         print("\nContainment links:")
         for k, v in sorted(self.ruleContainmentLinks.items()):
@@ -108,10 +108,13 @@ class Pruner(object):
             for c in v:
                 print("\t" + str(c) + " : " + str(v[c]) )
 
+        #raise Exception()
+
         print("\nMissing containment links:")
-        for missing_link in sorted(self.missing_contain_links):
+        for missing_link in sorted(self.all_missing_contain_links):
             print(missing_link[0] + " -> " + missing_link[1] + " -> " + missing_link[2])
 
+        #raise Exception()
 
     # def get_full_inheritance(self, className):
     #     inheritance = [className]
@@ -122,16 +125,20 @@ class Pruner(object):
     #     return inheritance
 
 
-    def will_links_be_built(self, rule_name, contain_links, future_contain_links):
+    def will_links_be_built(self, rule_name, contain_links, future_contain_links, require_all_links = False):
 
         links_not_found = []
 
+        if len(contain_links) == 0:
+            return []
+
         debug = False
 
-        if "L6R0" in rule_name or "layer6rule0" in rule_name:
-            debug = True
+        # if "L0R2" in rule_name:
+        #      debug = True
 
         if debug:
+
             print("\n" + rule_name + " Missing Containment links:")
             for k, v in sorted(contain_links.items()):
                 print(k + " :")
@@ -148,8 +155,9 @@ class Pruner(object):
             if className in self.mmClassChildren:
                 childClasses = self.mmClassChildren[className]
 
-
             # look at each link the class is missing
+
+            found_one_contain_link = False
             for source_class_name, link_name in link_names:
                 found_link = False
 
@@ -159,6 +167,9 @@ class Pruner(object):
                 #print(str([className] + parentClasses + childClasses))
 
                 #print(self.ruleContainmentLinks)
+
+                if not require_all_links and found_one_contain_link:
+                    break
 
                 #try all possibilities for the className
                 for cl_name in [className] + parentClasses + childClasses:
@@ -190,20 +201,23 @@ class Pruner(object):
                             #print("Source class not in heirarchy")
                             continue
 
+                        if debug:
+                            print("Matched on: " + str(other_link))
                         #print("Found the link")
                         found_link = True
+                        found_one_contain_link = True
                         break
 
                 if not found_link:
                     links_not_found.append((className, source_class_name, link_name))
 
         if debug:
-            print("Links not found for " + rule_name)
             if len(links_not_found) > 0:
+                print("Links not found for " + rule_name)
                 for link in links_not_found:
                     print(link)
 
-            #raise Exception()
+            raise Exception()
         return links_not_found
 
 
@@ -267,9 +281,9 @@ class Pruner(object):
                 print("Path condition: " + pathCondition.name)
                 print("Missing containment links: " + str(missingLinks))
 
-                print("Links to be built:")
-                for className, links in contLinksInRulesToTreat.items():
-                    print(className + " : " + str(links))
+                # print("Links to be built:")
+                # for className, links in contLinksInRulesToTreat.items():
+                #     print(className + " : " + str(links))
 
                 print("Looking for:")
                 for contLink, a, b in missingLinks:
