@@ -80,7 +80,7 @@ class path_condition_generator_worker(Process):
                 for r in self.transformation[l]:
                     rulesToTreat.append(r.name)
 
-
+        progress_bar = None
         if self.report_progress:
             progress_bar = ProgressBar(pathConSetLength)
 
@@ -576,7 +576,6 @@ class path_condition_generator_worker(Process):
                         shrunk_pc = shrink_graph(newPathCond)   
                         self.pc_dict[newPathCondName] = shrunk_pc
                         new_pc_dict[newPathCondName] = shrunk_pc
-                            
 
         #print("newPathConditionSet: " + str(newPathConditionSet))
         #print("currentPathConditionSet: " + str(self.currentPathConditionSet))
@@ -588,7 +587,7 @@ class path_condition_generator_worker(Process):
         self.currentPathConditionSet.extend(newPathConditionSet)
 
         self.currentPathConditionSet = list(set(self.currentPathConditionSet))
-        
+
         if self.pruning:
 
             pruning_time = time.time()
