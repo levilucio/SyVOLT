@@ -413,6 +413,8 @@ class path_condition_generator_worker(Process):
                                             #     if self.verbosity >= 2:
                                             #         print("Path Condition: " + newPathCondName + " was pruned")
                                             else:
+
+                                                valid = True
                                                 if isTotalCombinator:
     
                                                     #print("Going to write a total: " + newPathCondName)
@@ -455,8 +457,12 @@ class path_condition_generator_worker(Process):
                                                     # we are dealing with a partial combination of the rule.
                                                     # create a copy of the path condition in the accumulator because this match of the rule is partial.
 
-                                                    # add the result to the local accumulator
-                                                    partialTotalPathCondLayerAccumulator.append(newPathCond.name)
+                                                    if self.pruning and not self.pruner.isPathConditionStillFeasible(
+                                                            newPathCond, rulesToTreat):
+                                                        valid = False
+                                                    else:
+                                                        # add the result to the local accumulator
+                                                        partialTotalPathCondLayerAccumulator.append(newPathCond.name)
     
                                                     # store the parent of the newly created path condition
                                                     childrenPathConditions.append(newPathCond.name)
@@ -464,10 +470,13 @@ class path_condition_generator_worker(Process):
                                                 if self.verbosity >= 2:
                                                     print("Created path condition with name: " + newPathCondName)
 
+
                                                 # store the new path condition
                                                 shrunk_newCond = shrink_graph(newPathCond)
                                                 self.pc_dict[newPathCondName] = shrunk_newCond
-                                                new_pc_dict[newPathCondName] = shrunk_newCond
+
+                                                if valid:
+                                                    new_pc_dict[newPathCondName] = shrunk_newCond
 
                                     p = i.next_in(p)
                                     pathCondSubnum += 1
@@ -601,62 +610,17 @@ class path_condition_generator_worker(Process):
                 except KeyError:
                     pass
 
+                # try:
+                #     del self.pc_dict[pathCondName]
+                # except KeyError:
+                #     pass
+
                 try:
-                    del self.pc_dict[pathCondName]
+                    del new_pc_dict[pathCondName]
                 except KeyError:
                     pass
 
                 self.currentPathConditionSet.remove(pathCondName)
-
-            for pathCondName in deepcopy(newPathConditionSet):
-    
-                # test if the new path condition can still lead to to a path condition
-                # where all the containment relations are respected by executing the remaining rules.
-                # if not, the path condition is not kept.
-                #treatedRules = self.getRuleNamesInPathCondition(pathCondName)
-                
-                #pathConditionsToPrune = []
-
-                try:
-                    pc = expand_graph(self.pc_dict[pathCondName])
-                except KeyError:
-                    pc = None
-
-                if pc is not None and not self.pruner.isPathConditionStillFeasible(pc, rulesToTreat):
-                    
-                    #pathConditionsToPrune.append(pathCondName)
-
-                    try:
-                        del name_dict[pathCondName]
-                    except KeyError:
-                        pass
-
-                    try:
-                        del self.pc_dict[pathCondName]
-                    except KeyError:
-                        pass
-                    #
-                    # try:
-                    #     self.currentPathConditionSet.remove(pc)
-                    # except ValueError:
-                    #     pass
-
-
-                    if self.verbosity >= 2:
-                        print("Path Condition: " + pathCondName + " cannot be completed with all necessary containment associations")
-
-
-                    #for pctp in pathConditionsToPrune:
-                    newPathConditionSet.remove(pathCondName)
-
-                # remove path conditions that have been prunned
-                # for prunnedPCName in pathConditionsToPrune:
-                #     del self.pc_dict[prunnedPCName]
-                #     if prunnedPCName in name_dict.keys():
-                #         del name_dict[prunnedPCName]
-
-
-                #self.currentPathConditionSet = [pc for pc in self.currentPathConditionSet if pc not in pathConditionsToPrune]
 
             print("Time taken for pruning: " + str(time.time() - pruning_time))
 
