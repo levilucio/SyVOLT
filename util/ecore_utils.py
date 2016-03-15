@@ -59,11 +59,11 @@ class EcoreUtils(object):
                 except Exception as e:
                     pass
 
-        print("Containment Links")
-        for k,v  in sorted(self.containmentLinks.items()):
-            print(str(k) + " : ")
-            for c in sorted(v):
-                print("\t" + str(c))
+        # print("Containment Links")
+        # for k,v  in sorted(self.containmentLinks.items()):
+        #     print(str(k) + " : ")
+        #     for c in sorted(v):
+        #         print("\t" + str(c))
 
 
         # treat all the remaining classes that have no containment links to them but that
@@ -381,6 +381,12 @@ class EcoreUtils(object):
         can be used to build the missing containment link.
         '''
 
+        debug = False
+
+        # if "HcompostypeportSolveRefPhysicalNodePartitionModuleSchedulerServiceCompositionTypeRPortPrototype" in pathCond.name or "L4R0" in pathCond.name:
+        #     debug = True
+        #     print("\nExamining: " + pathCond.name)
+
         missingContainmentLinks = {}
 
         try:
@@ -390,6 +396,15 @@ class EcoreUtils(object):
 
         # get the containment links already built in this pathcond
         builtContainmentLinks = self.getBuiltContainmentLinks(pathCond)
+
+        mmClassParents = self.getSuperClassInheritanceRelationForClasses()
+        mmClassChildren = self.getSubClassInheritanceRelationForClasses()
+
+        if debug:
+            print("Built containment links:")
+            for link in builtContainmentLinks:
+                print(link + " : " + str(builtContainmentLinks[link]))
+                print("End built")
 
         for node in range(len(mms)):
             targetClassName = mms[node]
@@ -406,9 +421,38 @@ class EcoreUtils(object):
             if skip_match_nodes:
                 continue
 
+            if debug:
+                print("Class: " + targetClassName)
+                print("Links: " + str(self.mmClassContained[targetClassName]))
 
             for containLink in self.mmClassContained[targetClassName]:
-                if targetClassName not in builtContainmentLinks or containLink not in builtContainmentLinks[targetClassName]:
+                hier = [targetClassName]
+                if targetClassName in mmClassParents:
+                    hier += mmClassParents[targetClassName]
+                if targetClassName in mmClassChildren:
+                    hier += mmClassChildren[targetClassName]
+
+                link_already_built = False
+                for target_class in hier:
+                    if target_class not in builtContainmentLinks:
+                        continue
+
+                    for link in builtContainmentLinks[target_class]:
+                        if link[1] != containLink[1]:
+                            continue
+
+                        source_class = link[0]
+
+                        source_hier = [source_class]
+                        if source_class in mmClassParents:
+                            source_hier += mmClassParents[source_class]
+                        if targetClassName in mmClassChildren:
+                            source_hier += mmClassChildren[source_class]
+
+                        if link[0] in source_hier:
+                            link_already_built = True
+
+                if not link_already_built:
                     try:
                         missingContainmentLinks[targetClassName].append(containLink)
                     except KeyError:
@@ -444,9 +488,13 @@ class EcoreUtils(object):
             #             except KeyError:
             #                 missingContainmentLinks[targetClassName] = [attr1]
 
+        if debug:
+            print("Missing containment links:")
+            for link in missingContainmentLinks:
+                print(link + " : " + str(missingContainmentLinks[link]))
+            raise Exception()
+
         return missingContainmentLinks
-            
-    
         
 
 
