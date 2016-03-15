@@ -84,6 +84,8 @@ class path_condition_generator_worker(Process):
         if self.report_progress:
             progress_bar = ProgressBar(pathConSetLength)
 
+        pcs_to_prune = []
+
         for pathConditionIndex in range(pathConSetLength):
 
             pc_name = self.currentPathConditionSet[pathConditionIndex]
@@ -577,14 +579,15 @@ class path_condition_generator_worker(Process):
                         self.pc_dict[newPathCondName] = shrunk_pc
                         new_pc_dict[newPathCondName] = shrunk_pc
 
+            if self.pruning and not self.pruner.isPathConditionStillFeasible(pc, rulesToTreat):
+                pcs_to_prune.append(pc_name)
+
+
         #print("newPathConditionSet: " + str(newPathConditionSet))
         #print("currentPathConditionSet: " + str(self.currentPathConditionSet))
 
         print("Current length: " + str(len(self.currentPathConditionSet)))
         print("New length: " + str(len(newPathConditionSet)))
-
-
-        self.currentPathConditionSet.extend(newPathConditionSet)
 
         self.currentPathConditionSet = list(set(self.currentPathConditionSet))
 
@@ -592,7 +595,20 @@ class path_condition_generator_worker(Process):
 
             pruning_time = time.time()
 
-            for pathCondName in deepcopy(self.currentPathConditionSet):
+            for pathCondName in pcs_to_prune:
+                try:
+                    del name_dict[pathCondName]
+                except KeyError:
+                    pass
+
+                try:
+                    del self.pc_dict[pathCondName]
+                except KeyError:
+                    pass
+
+                self.currentPathConditionSet.remove(pathCondName)
+
+            for pathCondName in deepcopy(newPathConditionSet):
     
                 # test if the new path condition can still lead to to a path condition
                 # where all the containment relations are respected by executing the remaining rules.
@@ -631,7 +647,7 @@ class path_condition_generator_worker(Process):
 
 
                     #for pctp in pathConditionsToPrune:
-                    self.currentPathConditionSet.remove(pathCondName)
+                    newPathConditionSet.remove(pathCondName)
 
                 # remove path conditions that have been prunned
                 # for prunnedPCName in pathConditionsToPrune:
@@ -643,6 +659,10 @@ class path_condition_generator_worker(Process):
                 #self.currentPathConditionSet = [pc for pc in self.currentPathConditionSet if pc not in pathConditionsToPrune]
 
             print("Time taken for pruning: " + str(time.time() - pruning_time))
+
+        self.currentPathConditionSet.extend(newPathConditionSet)
+
+        self.currentPathConditionSet = list(set(self.currentPathConditionSet))
 
         print("Thread finished: Took " + str(time.time() - start_time) + " seconds")
         
