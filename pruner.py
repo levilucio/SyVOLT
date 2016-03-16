@@ -30,8 +30,8 @@ class Pruner(object):
 
         self.rule_names = rule_names
 
-        self.mmClassParents = self.eu.getSuperClassInheritanceRelationForClasses()
-        self.mmClassChildren = self.eu.getSubClassInheritanceRelationForClasses()
+        self.mmClassParents = self.eu.mmClassParents
+        self.mmClassChildren = self.eu.mmClassChildren
 
         for layer in transformation:
             for rule in layer:
