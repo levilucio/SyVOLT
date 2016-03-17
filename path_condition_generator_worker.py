@@ -49,7 +49,7 @@ class path_condition_generator_worker(Process):
 
     def load_pc_dict(self, pcs):
 
-        print("PC length: " + str(len(pcs)))
+        #print("PC length: " + str(len(pcs)))
 
         self.pc_dict = PCDict(pcs)
         
@@ -102,9 +102,7 @@ class path_condition_generator_worker(Process):
                 progress_bar.update_progress(pathConditionIndex)
 
 
-            shrunk_pc = self.pc_dict[pc_name]
-            pc = expand_graph(shrunk_pc)
-            #print_graph(pc)
+            pc = self.pc_dict[pc_name]
 
             #store the preds and succs of the pc graph if needed
             pc_preds = []
@@ -200,7 +198,7 @@ class path_condition_generator_worker(Process):
                         
                         if not (subsumingRulesinPC or subsumedRulesinPC or ruleInLoopAndHasSubsumingParent):
 
-                            cpc = expand_graph(self.pc_dict[child_pc_name])
+                            cpc = self.pc_dict[child_pc_name]
 
                             #take off the num of nodes in the name
                             cpc.name = cpc.name.split(".")[0]
@@ -390,7 +388,7 @@ class path_condition_generator_worker(Process):
     
     
                                             #get the path condition from the dictionary
-                                            cpc = expand_graph(self.pc_dict[child_pc_name])
+                                            cpc = self.pc_dict[child_pc_name]
     
                                             # if the combinator is not the total one, make a copy of the path condition in the set
                                             # of combinations generated so far.
@@ -542,7 +540,7 @@ class path_condition_generator_worker(Process):
                         # execute the rule
 
                         p = Packet()
-                        cpc = expand_graph(self.pc_dict[childrenPathConditions[pathConditionIndex]])
+                        cpc = self.pc_dict[childrenPathConditions[pathConditionIndex]]
                         p.graph = cpc
                         p = combinatorMatcher.packet_in(p)
 #                         print "----> PC Name: " + childrenPathConditions[pathConditionIndex]                         
