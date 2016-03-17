@@ -9,19 +9,24 @@ class PCDict(object):
 
     def __init__(self, d, capacity=100):
         self.capacity = capacity
-        self.cache = collections.OrderedDict()
+        self.get_cache = collections.OrderedDict()
+        self.set_cache = collections.OrderedDict()
         self.pcdict = d
 
     def __getitem__(self, key):
 
-        return self.pcdict[key]
-        # try:
-        #     return self.cache[key]
-        # except KeyError:
-        #     value = expand_graph(self.pcdict[key])
-        #
-        #     self.__setitem__(key, value)
-        #     return value
+        try:
+            return self.get_cache[key]
+        except KeyError:
+            pass
+        value = self.pcdict[key]
+
+        if len(self.get_cache) > self.capacity:
+            self.get_cache.popitem(last = False)
+
+        self.get_cache[key] = value
+        return value
+
 
     def __setitem__(self, key, value):
         self.pcdict[key] = value
