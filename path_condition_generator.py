@@ -475,6 +475,9 @@ class PathConditionGenerator(object):
                 
                 new_worker = path_condition_generator_worker(self.transformation, self.prunner, layer,\
                                                              layer*1000+i, report_progress, self.verbosity)
+
+                new_worker.daemon = True
+                
                 new_worker.currentPathConditionSet = pc_chunks[i]#pc_queue
                 new_worker.attributeEquationEvaluator = self.attributeEquationEvaluator
 
