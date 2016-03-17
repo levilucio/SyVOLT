@@ -21,6 +21,8 @@ import numpy.random as nprnd
 from profiler import *
 from util.progress import ProgressBar
 
+from PCDict import PCDict
+
 class path_condition_generator_worker(Process):
 
 
@@ -44,6 +46,12 @@ class path_condition_generator_worker(Process):
         self.pruning = True
 
         self.pc_dict = None
+
+    def load_pc_dict(self, pcs):
+
+        print("PC length: " + str(len(pcs)))
+
+        self.pc_dict = PCDict(pcs)
         
         
     def getRuleNamesInPathCondition(self, pcName):

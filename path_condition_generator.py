@@ -477,7 +477,7 @@ class PathConditionGenerator(object):
                                                              layer*1000+i, report_progress, self.verbosity)
 
                 new_worker.daemon = True
-                
+
                 new_worker.currentPathConditionSet = pc_chunks[i]#pc_queue
                 new_worker.attributeEquationEvaluator = self.attributeEquationEvaluator
 
@@ -485,7 +485,7 @@ class PathConditionGenerator(object):
 
                 new_worker.results_queue = results_queue
 
-                new_worker.pc_dict = pc_dict
+                new_worker.load_pc_dict(pc_dict)
 
                 #new_worker.verbosity = self.verbosity
                 #new_worker.layer = layer
