@@ -368,21 +368,15 @@ class PathConditionGenerator(object):
 
         currentpathConditionSet = [HEmptyPathCondition.name]
 
+        # store a dictionary from pc name to pc
+        pc_dict = {HEmptyPathCondition.name : shrink_graph(HEmptyPathCondition)}
+
         # start with a set (list) of path conditions containing only the empty path condition (declared in the constructor)
         # a path condition is a list of where the elements are rules (or combinations of rules) with traceability information
 
 
         if self.verbosity >= 1 : print("Start building path conditions")
 
-
-        # store a dictionary from pc name to pc
-        #pc_dict = {HEmptyPathCondition.name:HEmptyPathCondition}
-
-        #global_hp.setref()
-
-
-
-        manager = Manager()
 
         if not self.do_parallel:
             print("Restricting to one thread")
@@ -391,17 +385,6 @@ class PathConditionGenerator(object):
             cpu_count = multiprocessing.cpu_count()
             print("CPU Count: " + str(cpu_count))
 
-
-        pc_dict = {}#manager.dict()
-
-
-
-
-
-        #pc_dict = PCDict(1000)
-
-        pc_dict[HEmptyPathCondition.name] = shrink_graph(HEmptyPathCondition)
-        
         # now go through the layers one-by-one
 
         start_time = time.time()
