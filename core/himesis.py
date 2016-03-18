@@ -121,8 +121,7 @@ class Himesis(ig.Graph):
         return self.copy()
     
     def __str__(self):
-        s = super(Himesis, self).__str__()
-        return self.name + ' ' + s[s.index('('):] + ' ' + str(self[Himesis.Constants.GUID])
+        return self.name + ' V: ' + str(self.vcount()) + ' E: ' + str(len(self.es)) + ' GUID: ' + str(self[Himesis.Constants.GUID])
     
     def get_id(self):
         """
