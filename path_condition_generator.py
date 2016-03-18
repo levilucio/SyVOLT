@@ -385,6 +385,8 @@ class PathConditionGenerator(object):
             cpu_count = multiprocessing.cpu_count()
             print("CPU Count: " + str(cpu_count))
 
+        manager = Manager()
+
         # now go through the layers one-by-one
 
         start_time = time.time()
