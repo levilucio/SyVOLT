@@ -18,7 +18,10 @@ class EcoreUtils(object):
         Constructor
         '''
 
-        print("Parsing: " + xmlfileName)
+        self.debug = False
+
+        if self.debug:
+            p rint("Parsing: " + xmlfileName)
 
         self.xmldoc = minidom.parse(xmlfileName)
         self.inheritanceRels = self.getSuperClassInheritanceRelationForClasses()
@@ -59,11 +62,12 @@ class EcoreUtils(object):
                 except Exception as e:
                     pass
 
-        # print("Containment Links")
-        # for k,v  in sorted(self.containmentLinks.items()):
-        #     print(str(k) + " : ")
-        #     for c in sorted(v):
-        #         print("\t" + str(c))
+        if self.debug:
+            print("Containment Links")
+            for k,v  in sorted(self.containmentLinks.items()):
+                print(str(k) + " : ")
+                for c in sorted(v):
+                    print("\t" + str(c))
 
 
         # treat all the remaining classes that have no containment links to them but that
@@ -106,13 +110,15 @@ class EcoreUtils(object):
         #     for c in sorted(v):
         #         print("\t" + str(c) + " " + str(v[c]))
 
-        #raise Exception()
+        if self.debug:
+            print("\nContainment links (with inheritance)")
+            for k, v in sorted(self.mmClassContained.items()):
+                print(str(k) + " : ")
+                for c in sorted(v):
+                    print("\t" + str(c))
 
-        print("\nContainment links (with inheritance)")
-        for k, v in sorted(self.mmClassContained.items()):
-            print(str(k) + " : ")
-            for c in sorted(v):
-                print("\t" + str(c))
+        self.mmClassParents = self.getSuperClassInheritanceRelationForClasses()
+        self.mmClassChildren = self.getSubClassInheritanceRelationForClasses()
     
     
     def getMetamodelClassNames(self):
@@ -397,8 +403,7 @@ class EcoreUtils(object):
         # get the containment links already built in this pathcond
         builtContainmentLinks = self.getBuiltContainmentLinks(pathCond)
 
-        mmClassParents = self.getSuperClassInheritanceRelationForClasses()
-        mmClassChildren = self.getSubClassInheritanceRelationForClasses()
+
 
         if debug:
             print("Built containment links:")
@@ -427,10 +432,10 @@ class EcoreUtils(object):
 
             for containLink in self.mmClassContained[targetClassName]:
                 hier = [targetClassName]
-                if targetClassName in mmClassParents:
-                    hier += mmClassParents[targetClassName]
-                if targetClassName in mmClassChildren:
-                    hier += mmClassChildren[targetClassName]
+                if targetClassName in self.mmClassParents:
+                    hier += self.mmClassParents[targetClassName]
+                if targetClassName in self.mmClassChildren:
+                    hier += self.mmClassChildren[targetClassName]
 
                 link_already_built = False
                 for target_class in hier:
@@ -444,10 +449,10 @@ class EcoreUtils(object):
                         source_class = link[0]
 
                         source_hier = [source_class]
-                        if source_class in mmClassParents:
-                            source_hier += mmClassParents[source_class]
-                        if source_class in mmClassChildren:
-                            source_hier += mmClassChildren[source_class]
+                        if source_class in self.mmClassParents:
+                            source_hier += self.mmClassParents[source_class]
+                        if source_class in self.mmClassChildren:
+                            source_hier += self.mmClassChildren[source_class]
 
                         if link[0] in source_hier:
                             link_already_built = True
