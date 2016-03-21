@@ -101,20 +101,18 @@ class Pruner(object):
 
 
 
+        if self.debug:
+            print("\nContainment links:")
+            for k, v in sorted(self.ruleContainmentLinks.items()):
+                print(k + " :")
+                for c in v:
+                    print("\t" + str(c) + " : " + str(v[c]) )
 
-        print("\nContainment links:")
-        for k, v in sorted(self.ruleContainmentLinks.items()):
-            print(k + " :")
-            for c in v:
-                print("\t" + str(c) + " : " + str(v[c]) )
+        if self.debug:
+            print("\nMissing containment links:")
+            for missing_link in sorted(self.all_missing_contain_links):
+                print(missing_link[0] + " -> " + missing_link[1] + " -> " + missing_link[2])
 
-        #raise Exception()
-
-        print("\nMissing containment links:")
-        for missing_link in sorted(self.all_missing_contain_links):
-            print(missing_link[0] + " -> " + missing_link[1] + " -> " + missing_link[2])
-
-        #raise Exception()
 
     # def get_full_inheritance(self, className):
     #     inheritance = [className]
