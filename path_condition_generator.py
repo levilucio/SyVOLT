@@ -424,6 +424,8 @@ class PathConditionGenerator(object):
 
                     pc_chunks[min_index].append(pc)
                     pc_count[min_index] += weight
+
+                pc_chunks = [chunk for chunk in pc_chunks if chunk]
             else:
                 shuffle(currentpathConditionSet)
                 pc_chunks = self.chunks(currentpathConditionSet, chunkSize)
