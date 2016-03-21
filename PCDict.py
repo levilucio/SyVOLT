@@ -1,8 +1,6 @@
 
 import collections
-
-
-from core.himesis_utils import shrink_graph, expand_graph
+from core.himesis_utils import expand_graph
 
 class PCDict(object):
 
@@ -19,6 +17,7 @@ class PCDict(object):
             return self.get_cache[key]
         except KeyError:
             pass
+
         value = self.pcdict[key]
 
         expanded_value = expand_graph(value)
@@ -31,7 +30,15 @@ class PCDict(object):
 
 
     def __setitem__(self, key, value):
+
         self.pcdict[key] = value
+
+        #make sure to invalidate get_cache
+        try:
+            del self.get_cache[key]
+        except KeyError:
+            pass
+
         # self.cache[key] = value
         #
         # if len(self.cache) > self.capacity:
