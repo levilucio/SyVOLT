@@ -21,7 +21,7 @@ class EcoreUtils(object):
         self.debug = False
 
         if self.debug:
-            p rint("Parsing: " + xmlfileName)
+            print("Parsing: " + xmlfileName)
 
         self.xmldoc = minidom.parse(xmlfileName)
         self.inheritanceRels = self.getSuperClassInheritanceRelationForClasses()
