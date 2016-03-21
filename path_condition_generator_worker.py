@@ -201,15 +201,15 @@ class path_condition_generator_worker(Process):
                             cpc = self.pc_dict[child_pc_name]
 
                             #take off the num of nodes in the name
-                            cpc.name = cpc.name.split(".")[0]
+                            cpc_name = cpc.name.split(".")[0]
 
-                            new_name = cpc.name + '_' + rule_name + "-0"
+                            new_name = cpc_name + '_' + rule_name + "-0"
     
                             # create a new path condition which is the result of combining the rule with the current path condition being examined
-                            #newPathCond = deepcopy(cpc)
-                            newPathCond = disjoint_model_union(cpc,rule)
+                            newPathCond = deepcopy(cpc)
+                            newPathCond = disjoint_model_union(newPathCond,rule)
 
-                            new_name += "." + str(len(newPathCond.vs))
+                            new_name += "." + str(newPathCond.vcount())
                                 
                             # name the new path condition as the combination of the previous path condition and the rule    
                             newPathCond.name = new_name
