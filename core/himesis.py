@@ -105,6 +105,8 @@ class Himesis(ig.Graph):
         if hasattr(self, "NACs"):
             cpy.NACs = copy.deepcopy(self.NACs)
 
+        cpy["equations"] = copy.deepcopy(self["equations"])
+
         # cpy.init_params = copy.deepcopy(self.init_params)
         #cpy.import_name = copy.deepcopy(self.import_name)
         try:
