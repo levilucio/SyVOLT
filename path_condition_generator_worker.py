@@ -206,7 +206,7 @@ class path_condition_generator_worker(Process):
                             new_name = cpc_name + '_' + rule_name + "-0"
     
                             # create a new path condition which is the result of combining the rule with the current path condition being examined
-                            newPathCond = deepcopy(cpc)
+                            newPathCond = cpc.copy()
                             newPathCond = disjoint_model_union(newPathCond,rule)
 
                             new_name += "." + str(newPathCond.vcount())
