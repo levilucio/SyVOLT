@@ -14,6 +14,8 @@ from core.himesis_utils import clean_graph
 from core.himesis_utils import print_graph
 from core.himesis_utils import set_do_pickle
 from core.himesis_utils import set_compression
+from core.himesis_utils import build_traceability
+from core.himesis_utils import delete_graph
 
 from core.himesis_plus import *
 
@@ -26,7 +28,7 @@ import time
 
 from copy import deepcopy
 
-from core.himesis_utils import build_traceability
+
 
 #from solver.prolog_attribute_equation_evaluator import PrologAttributeEquationEvaluator
 from solver.simple_attribute_equation_evaluator import SimpleAttributeEquationEvaluator
@@ -550,6 +552,21 @@ class PathConditionGenerator(object):
         self.num_path_conditions = len(currentpathConditionSet)
 
         print("Time to finish up: " + str(time.time() - cleanup_time))
+
+    #clean up
+    def __del__(self):
+        print("Destructor")
+
+        import os
+        d = "./pickle"
+        #size = sum(os.path.getsize(d+"/"+f) for f in os.listdir(d))
+        #print("Size of pickle dir: " + str(size/1000000) + "MB")
+
+        for pc_name in self.currentpathConditionSet:
+            delete_graph(pc_name)
+
+        #size = sum(os.path.getsize(d + "/" + f) for f in os.listdir(d))
+        #print("Size of pickle dir: " + str(size / 1000000) + "MB")
 
 
     def get_all_path_conditions(self):
