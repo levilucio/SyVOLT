@@ -9,7 +9,7 @@ from t_core.tc_python.frule import FRule
 import time
 
 from multiprocessing import Process
-from core.himesis_utils import expand_graph, shrink_graph, disjoint_model_union, print_graph, graph_to_dot, get_preds_and_succs
+from core.himesis_utils import expand_graph, shrink_graph, delete_graph, disjoint_model_union, print_graph, graph_to_dot, get_preds_and_succs
 
 from copy import deepcopy
 
@@ -429,6 +429,10 @@ class path_condition_generator_worker(Process):
 
                                                     newPathCondName += "." + str(len(newPathCond.vs))
                                                     newPathCond.name = newPathCondName
+
+                                                    if self.pruning and not self.pruner.isPathConditionStillFeasible(
+                                                            newPathCond, rulesToTreat):
+                                                        valid = False
                                                                                                         
                                                     # because the rule combines totally with a path condition in the accumulator we just copy it
                                                     # directly on top of the accumulated path condition
@@ -483,6 +487,8 @@ class path_condition_generator_worker(Process):
 
                                                 if valid:
                                                     new_pc_dict[newPathCondName] = shrunk_newCond
+                                                else:
+                                                    pcs_to_prune.append(newPathCondName)
 
                                     p = i.next_in(p)
                                     pathCondSubnum += 1
@@ -621,12 +627,17 @@ class path_condition_generator_worker(Process):
                 # except KeyError:
                 #     pass
 
+                delete_graph(pathCondName)
+
                 try:
                     del new_pc_dict[pathCondName]
                 except KeyError:
                     pass
 
-                self.currentPathConditionSet.remove(pathCondName)
+                try:
+                    self.currentPathConditionSet.remove(pathCondName)
+                except ValueError:
+                    pass
 
             print("Time taken for pruning: " + str(time.time() - pruning_time))
 
