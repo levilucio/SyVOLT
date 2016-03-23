@@ -530,6 +530,9 @@ class PathConditionGenerator(object):
                     try:
                         pc_name = currentpathConditionSet[i]
                         currentpathConditionSet[i] = name_dict[pc_name]
+
+                        delete_graph(pc_name)
+
                         #print("Changed " + pc_name + " to " + name_dict[pc_name])
 
                     except KeyError:
@@ -559,14 +562,14 @@ class PathConditionGenerator(object):
 
         import os
         d = "./pickle"
-        #size = sum(os.path.getsize(d+"/"+f) for f in os.listdir(d))
-        #print("Size of pickle dir: " + str(size/1000000) + "MB")
+        # size = sum(os.path.getsize(d+"/"+f) for f in os.listdir(d))
+        # print("Size of pickle dir: " + str(size/1000000) + "MB")
 
         for pc_name in self.currentpathConditionSet:
             delete_graph(pc_name)
 
-        #size = sum(os.path.getsize(d + "/" + f) for f in os.listdir(d))
-        #print("Size of pickle dir: " + str(size / 1000000) + "MB")
+        # size = sum(os.path.getsize(d + "/" + f) for f in os.listdir(d))
+        # print("Size of pickle dir: " + str(size / 1000000) + "MB")
 
 
     def get_all_path_conditions(self):
