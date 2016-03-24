@@ -385,7 +385,12 @@ pickle_dir = "pickle/"
 
 def delete_graph(graph_name):
     file_name = hashlib.sha256(graph_name.encode("UTF-8")).hexdigest()
-    os.remove(pickle_dir + "/" + file_name)
+
+    try:
+        os.remove(pickle_dir + "/" + file_name)
+    except FileNotFoundError:
+        pass
+        #print("Graph: " + graph_name + " did not exist")
 
 # shrink a graph into an array
 def shrink_graph(graph):
