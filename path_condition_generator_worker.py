@@ -603,12 +603,8 @@ class path_condition_generator_worker(Process):
             if self.pruning and not self.pruner.isPathConditionStillFeasible(pc, rulesToTreat):
                 pcs_to_prune.append(pc_name)
 
-
-        #print("newPathConditionSet: " + str(newPathConditionSet))
-        #print("currentPathConditionSet: " + str(self.currentPathConditionSet))
-
-        print("Current length: " + str(len(self.currentPathConditionSet)))
-        print("New length: " + str(len(newPathConditionSet)))
+        #print("Current length: " + str(len(self.currentPathConditionSet)))
+        #print("New length: " + str(len(newPathConditionSet)))
 
         self.currentPathConditionSet = list(set(self.currentPathConditionSet))
 
@@ -617,7 +613,10 @@ class path_condition_generator_worker(Process):
             pruning_time = time.time()
 
             for pathCondName in pcs_to_prune:
+                delete_graph(pathCondName)
+
                 try:
+                    delete_graph(name_dict[pathCondName])
                     del name_dict[pathCondName]
                 except KeyError:
                     pass
@@ -627,7 +626,7 @@ class path_condition_generator_worker(Process):
                 # except KeyError:
                 #     pass
 
-                delete_graph(pathCondName)
+
 
                 try:
                     del new_pc_dict[pathCondName]
