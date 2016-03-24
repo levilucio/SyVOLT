@@ -90,6 +90,10 @@ class PathConditionGenerator(object):
 
         self.ruleContainment = []
 
+        self.pc_dict = {}
+        self.currentpathConditionSet = []
+        self.num_path_conditions = 0
+
         self.verbosity = args.verbosity
         
         self.attributeEquationEvaluator = SimpleAttributeEquationEvaluator(self.verbosity)
@@ -396,8 +400,6 @@ class PathConditionGenerator(object):
         for layer in range(len(self.transformation)):
             print("Layer: " + str(layer + 1) + " at time " + str(time.time() - start_time))
 
-            # for each path condition built so far, combine it with each of the rules from the current layer
-
             #store the old length
             pathConSetLength = len(currentpathConditionSet)
 
@@ -408,9 +410,8 @@ class PathConditionGenerator(object):
             print("Path Cond Set Size: " + str(pathConSetLength))
             print("Chunksize: " + str(chunkSize))
 
-
             use_bin_packing = True
-            sort_time = time.time()
+            layer_start_time = time.time()
 
             if use_bin_packing:
                 pc_chunks = [[] for i in range(cpu_count)]
@@ -429,30 +430,16 @@ class PathConditionGenerator(object):
 
                 pc_chunks = [chunk for chunk in pc_chunks if chunk]
             else:
+                # divide the path conditions up into little pieces
                 shuffle(currentpathConditionSet)
                 pc_chunks = self.chunks(currentpathConditionSet, chunkSize)
 
-
-            print("Time to sort: " + str(time.time() - sort_time))
-            #name_dict = manager.dict()
-
-            #print("After ceil: " + str(math.ceil(pathConSetLength / float(cpu_count))))
-
-
             workers = []
-
-            #chunk_time = time.time()
-            #divide the path conditions up into little pieces
-
-
-            #print("Time to chunk: " + str(time.time() - chunk_time))
 
             results_queue = manager.Queue()
 
-
             #initialize the workers
             for i in range(len(pc_chunks)):#range(cpu_count):
-                #worker_time = time.time()
 
                 #only one thread should print a progress bar
                 if i == 0:
@@ -485,32 +472,25 @@ class PathConditionGenerator(object):
 
                 #new_worker.name_dict = name_dict
 
-
                 new_worker.ruleCombinators = self.ruleCombinators
                 new_worker.ruleTraceCheckers =  self.ruleTraceCheckers
                 new_worker.overlappingRules = self.overlappingRules
                 new_worker.subsumption = self.subsumption
                 new_worker.loopingRuleSubsumption = self.loopingRuleSubsumption
 
-
-
                 workers.append(new_worker)
 
-                #print("Time to initialize worker: " + str(time.time() - worker_time))
-
-
-            #worker_start_time = time.time()
             for worker in workers:
                 worker.start()
 
-            #print("Time to start workers: " + str(time.time() - worker_start_time))
+            #print("Time to start layer: " + str(time.time() - layer_start_time))
 
 
             for worker in workers:
                 worker.join()
 
 
-            #result_time = time.time()
+            layer_finish_time = time.time()
 
             currentpathConditionSet = []
 
@@ -522,9 +502,6 @@ class PathConditionGenerator(object):
 
                 name_dict.update(r[2])
 
-            #print("Time to collect results: " + str(time.time() - result_time ))
-
-            #change_names_time = time.time()
             if len(name_dict.keys()) > 0:
                 for i in range(len(currentpathConditionSet)):
                     try:
@@ -538,23 +515,15 @@ class PathConditionGenerator(object):
                     except KeyError:
                         pass
 
-
-            #print("PC Dict Keys: " + str(pc_dict.keys()))
-            #print("Time to change names: " + str(time.time() - change_names_time))
-            #print("PC Length: " + str(len(currentpathConditionSet)))
-
-
+            #print("Time to finish layer: " + str(time.time() - layer_finish_time))
 
         # h = global_hp.heap()
         # print("\nMemory usage:")
         # print(h)
 
-        cleanup_time = time.time()
         self.pc_dict = pc_dict
         self.currentpathConditionSet = currentpathConditionSet
         self.num_path_conditions = len(currentpathConditionSet)
-
-        print("Time to finish up: " + str(time.time() - cleanup_time))
 
     #clean up
     def __del__(self):
