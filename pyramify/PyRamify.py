@@ -187,8 +187,8 @@ class PyRamify:
             if make_pre:
                 node["MT_dirty__"] = False
 
-        if make_pre:
-            graph["superclasses_dict"] = {}
+        # if make_pre:
+        #     graph["superclasses_dict"] = {}
 
         return graph
 

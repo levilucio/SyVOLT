@@ -129,6 +129,8 @@ class HimesisMatcher(object):
         # print("Patt constant eqs: " + str(self.patt_eqs_constant))
         # print("Patt variable eqs: " + str(self.patt_eqs_variable))
 
+        self.superclasses_dict = superclasses_dict
+
         self.G1 = source_graph
         self.G2 = pattern_graph
         self.pred1 = pred1
@@ -183,24 +185,10 @@ class HimesisMatcher(object):
             self.mm1 = self.G1.vs["mm__"]
             self.mm2 = [mm[8:] for mm in self.G2.vs["mm__"]]
 
-
-
-            #self.patt_has_subtype = self.G2.vs['MT_subtypeMatching__']
-
-            try:
-                self.superclasses_dict = self.G2["superclasses_dict"]
-            except KeyError:
-                self.superclasses_dict = {}
-                print("Graph " + self.G2.name + " needs to be updated. Can't find 'superclasses_dict'")
-
             if self.superclasses_dict:
                 self.src_has_supertype = [child_mm in self.superclasses_dict for child_mm in self.mm1]
             else:
                 self.src_has_supertype = [False] * self.G1_vcount
-
-
-
-            self.superclasses_dict = self.G2["superclasses_dict"]
 
             #ignore an empty directory
             if self.superclasses_dict:
