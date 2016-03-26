@@ -31,6 +31,8 @@ class Matcher(RulePrimitive):
 
         self.disambig_matching = disambig_matching
 
+        self.superclasses_dict = {}
+
         if disambig_matching:
             self.HimesisMatcher = NewHimesisMatcher
             self.condition_pred = decompose_graph(condition)
@@ -215,7 +217,8 @@ class Matcher(RulePrimitive):
 
                 nacMatcher = self.HimesisMatcher(source_graph=graph, pattern_graph=NAC,
                                             pred1 = self.graph_pred, succ1 = self.graph_succ,
-                                            pred2 = self.NAC_preds[NAC.name], succ2 = self.NAC_succs[NAC.name])
+                                            pred2 = self.NAC_preds[NAC.name], succ2 = self.NAC_succs[NAC.name],
+                                            superclasses_dict = self.superclasses_dict)
                 # Convert the pivots
                 nac_pivots = pivots.to_mapping(graph, NAC)
                 try:
@@ -235,7 +238,8 @@ class Matcher(RulePrimitive):
         else:
             lhsMatcher = self.HimesisMatcher(source_graph=graph, pattern_graph=self.condition,
                                         pred1 = self.graph_pred, succ1 = self.graph_succ,
-                                        pred2 = self.condition_pred, succ2 = self.condition_succ)
+                                        pred2 = self.condition_pred, succ2 = self.condition_succ,
+                                             superclasses_dict = self.superclasses_dict)
             # Convert the pivots
             lhs_pivots = pivots.to_mapping(graph, self.condition)
             try:
@@ -259,7 +263,8 @@ class Matcher(RulePrimitive):
         # Continue the matching looking for the LHS now
         lhsMatcher = self.HimesisMatcher(source_graph=graph, pattern_graph=self.condition,
                                     pred1 = self.graph_pred, succ1 = self.graph_succ,
-                                    pred2 = self.condition_pred, succ2 = self.condition_succ)
+                                    pred2 = self.condition_pred, succ2 = self.condition_succ,
+                                         superclasses_dict = self.superclasses_dict)
 
         # Augment the bridge mapping with the pivot mappings
         lhs_pivots = pivots.to_mapping(graph, self.condition)
@@ -278,7 +283,8 @@ class Matcher(RulePrimitive):
                         # Now continue the matching looking for a match of the corresponding NAC
                         nacMatcher = self.HimesisMatcher(source_graph=graph, pattern_graph=NAC,
                                                     pred1 = self.graph_pred, succ1 = self.graph_succ,
-                                                    pred2 = self.NAC_preds[NAC.name], succ2 = self.NAC_succs[NAC.name])
+                                                    pred2 = self.NAC_preds[NAC.name], succ2 = self.NAC_succs[NAC.name],
+                                                         superclasses_dict = self.superclasses_dict)
 
                         for nac_mapping in nacMatcher.match_iter(context=bridgeMapping):
                             if NAC.constraint(lambda i: getSourceNodeFromLabel(i, nac_mapping, NAC), graph):

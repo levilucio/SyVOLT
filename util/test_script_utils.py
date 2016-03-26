@@ -226,12 +226,14 @@ def set_supertypes(superclasses_dict, rules, transformation, ruleTraceCheckers, 
     for ruleTraceChecker in ruleTraceCheckers.values():
 
         if ruleTraceChecker:
+            ruleTraceChecker.superclasses_dict = superclasses_dict
             ruleTraceChecker.condition["superclasses_dict"] = superclasses_dict
 
 
     for mrp in matchRulePatterns.values():
         matcher = mrp[0]
 
+        matcher.superclasses_dict = superclasses_dict
         matcher.condition["superclasses_dict"] = superclasses_dict
 
     for rc in ruleCombinators.values():
@@ -239,6 +241,7 @@ def set_supertypes(superclasses_dict, rules, transformation, ruleTraceCheckers, 
         for pair in rc:
             matcher = pair[0]
 
+            matcher.superclasses_dict = superclasses_dict
             matcher.condition["superclasses_dict"] = superclasses_dict
 
 

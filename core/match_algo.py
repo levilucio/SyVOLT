@@ -62,7 +62,7 @@ class HimesisMatcher(object):
         Represents a pattern matching algorithm for typed attributed multi-graphs.
         The pattern matching algorithm is based on VF2.
     """
-    def __init__(self, source_graph, pattern_graph, pred1={}, succ1={}, pred2 = {}, succ2 = {}):
+    def __init__(self, source_graph, pattern_graph, pred1={}, succ1={}, pred2 = {}, succ2 = {}, superclasses_dict = {}):
         """
             Represents a pattern matching algorithm for typed attributed multi-graphs.
             @param source_graph: The source graph.

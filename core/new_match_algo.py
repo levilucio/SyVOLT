@@ -11,7 +11,8 @@ import time
 from profiler import *
 
 class NewHimesisMatcher(object):
-    def __init__(self, source_graph, pattern_graph, pred1 = {}, succ1 = {}, pred2 = {}, succ2 = {}):
+
+    def __init__(self, source_graph, pattern_graph, pred1 = {}, succ1 = {}, pred2 = {}, succ2 = {}, superclasses_dict = {}):
         self.debug = False
         self.compare_to_old = False
 
@@ -37,6 +38,8 @@ class NewHimesisMatcher(object):
 
         self.source_graph = source_graph
         self.pattern_graph = pattern_graph
+
+        self.superclasses_dict = superclasses_dict
 
         try:
             self.source_mms = [mm.replace("MT_pre__", "") for mm in source_graph.vs["mm__"]]
@@ -450,15 +453,14 @@ class NewHimesisMatcher(object):
             if targetMM == "trace_link" and sourceMM == "backward_link":
                 return True
 
-            superclasses_dict = self.pattern_graph["superclasses_dict"]
 
             # if debug:
             #    print("Superclasses: " + str(superclasses_dict))
 
             # print("Superclasses: " + str(superclasses_dict))
 
-            if sourceMM not in superclasses_dict or not superclasses_dict[sourceMM] or targetMM not in \
-                    superclasses_dict[sourceMM]:
+            if sourceMM not in self.superclasses_dict or not self.superclasses_dict[sourceMM] or targetMM not in \
+                    self.superclasses_dict[sourceMM]:
 
                 # if self.debug:
                 #     print("Src: " + sourceMM + " Trgt: " + targetMM + " Node mms don't match")
