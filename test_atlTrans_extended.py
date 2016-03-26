@@ -66,7 +66,8 @@ class Test:
             ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictSpecialFacilityPerson']
 
         ]
-        self.rules, self.transformation = load_transformation("ExFamToPerson/transformation", full_transformation)
+        self.rules, self.transformation = load_transformation("ExFamToPerson/transformation/no_contains", full_transformation)
+
 
 
         inputMM = "ExFamToPerson/Families_Extended.ecore"
@@ -80,19 +81,7 @@ class Test:
         changePropertyProverMetamodel(pre_metamodel, post_metamodel, self.subclasses_dict, self.superclasses_dict)
 
 
-        #load the contractsp
-
-
-
-
-
-        # also make sure the transformation has this information
-        for rule in self.rules.values():
-            rule["superclasses_dict"] = self.superclasses_dict
-
-        for layer in self.transformation:
-            for rule in layer:
-                rule["superclasses_dict"] = self.superclasses_dict
+        #load the contracts
 
         contracts = load_directory("ExFamToPerson/contracts")
 
@@ -128,13 +117,13 @@ class Test:
             complete = contracts[h_contract_name + "_CompleteLHS"]
             complete["superclasses_dict"] = self.superclasses_dict
 
-            if args.draw_svg:
-                graph_to_dot("contract_" + complete.name, complete)
+            # if args.draw_svg:
+            #     graph_to_dot("contract_" + complete.name, complete)
 
             self.atomic_contracts.append([contract_name, AtomicContract(iso, connected, complete)])
 
 
-        slicer = Slicer(self.rules, self.transformation)
+        slicer = Slicer(self.rules, self.transformation, self.superclasses_dict)
 
         if args.slice > 0:
             contract = self.atomic_contracts[args.slice - 1]
@@ -191,7 +180,10 @@ class Test:
  
         s = PathConditionGenerator(self.transformation, "ExFamToPerson/Persons_Extended.ecore", self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)#
 
+
+
         #raise Exception()
+
         ts0 = time.time()
         s.build_path_conditions()
         ts1 = time.time()

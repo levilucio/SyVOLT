@@ -9,7 +9,7 @@ from copy import deepcopy
 class Slicer():
 
 
-    def __init__(self, rules, transformation):
+    def __init__(self, rules, transformation, superclasses_dict):
 
         self.debug = False
 
@@ -24,6 +24,7 @@ class Slicer():
         self.rules = rules
         self.transformation = transformation
 
+        self.superclasses_dict = superclasses_dict
 
         for layer in transformation:
             for rule in layer:
@@ -112,9 +113,8 @@ class Slicer():
 
 
                 for graph in graph_list:
-                    graph["superclasses_dict"] = rule["superclasses_dict"]
 
-                    if match_links(graph, self.data[graph.name], rule, self.data[rule.name], verbosity=0):
+                    if match_links(graph, self.data[graph.name], rule, self.data[rule.name], self.superclasses_dict, verbosity=0):
                         required_rules.append(rule)
 
                 # for dl in dls:

@@ -212,29 +212,19 @@ def changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict
 
 def set_supertypes(superclasses_dict, rules, transformation, ruleTraceCheckers, matchRulePatterns, ruleCombinators):
 
-    print("Changing superclasses for rules and rule matchers")
+    print("Changing superclasses for matchers")
 
     #print(superclasses_dict)
-
-    for rule in rules.values():
-        rule["superclasses_dict"] = superclasses_dict
-
-    for layer in transformation:
-        for rule in layer:
-            rule["superclasses_dict"] = superclasses_dict
 
     for ruleTraceChecker in ruleTraceCheckers.values():
 
         if ruleTraceChecker:
             ruleTraceChecker.superclasses_dict = superclasses_dict
-            ruleTraceChecker.condition["superclasses_dict"] = superclasses_dict
-
 
     for mrp in matchRulePatterns.values():
         matcher = mrp[0]
 
         matcher.superclasses_dict = superclasses_dict
-        matcher.condition["superclasses_dict"] = superclasses_dict
 
     for rc in ruleCombinators.values():
 
@@ -242,9 +232,6 @@ def set_supertypes(superclasses_dict, rules, transformation, ruleTraceCheckers, 
             matcher = pair[0]
 
             matcher.superclasses_dict = superclasses_dict
-            matcher.condition["superclasses_dict"] = superclasses_dict
-
-
 
 #=================================================
 

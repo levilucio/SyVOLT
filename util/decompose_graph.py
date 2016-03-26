@@ -135,7 +135,7 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
     return data
 
 
-def match_links(pattern, pattern_data, graph, source_data, verbosity=0, match_all = False):
+def match_links(pattern, pattern_data, graph, source_data, superclasses_dict, verbosity=0, match_all = False):
 
     # if "HSon2Man" in pattern.name:
     #     verbosity = 2
@@ -146,7 +146,7 @@ def match_links(pattern, pattern_data, graph, source_data, verbosity=0, match_al
         # print("Matching iso element: " + str(iso_match_element))
         for node in range(len(graph.vs)):
             # print("Matching on: " + str(node))
-            nodes_match = match_nodes(graph, node, pattern, iso_match_element, verbosity)
+            nodes_match = match_nodes(graph, node, pattern, iso_match_element, superclasses_dict, verbosity)
 
             if nodes_match:
                 return True
@@ -171,7 +171,7 @@ def match_links(pattern, pattern_data, graph, source_data, verbosity=0, match_al
             for graph_n0_n, graph_n1_n, graph_link_n in source_links:
 
 
-                links_match = match_nodes(graph, graph_link_n, pattern, patt_link_n)
+                links_match = match_nodes(graph, graph_link_n, pattern, patt_link_n, superclasses_dict)
 
                 if not links_match:
                     #if verbosity > 1:
@@ -186,13 +186,13 @@ def match_links(pattern, pattern_data, graph, source_data, verbosity=0, match_al
                     # print("\nChecking Graph " + graph.name + " nodes:")
                     print_link(graph, graph_n0_n, graph_n1_n, graph_link_n)
 
-                nodes_match_1 = match_nodes(graph, graph_n0_n, pattern, patt0_n, verbosity)
+                nodes_match_1 = match_nodes(graph, graph_n0_n, pattern, patt0_n, superclasses_dict, verbosity = verbosity)
 
-                nodes_match_2 = match_nodes(graph, graph_n1_n, pattern, patt1_n, verbosity)
+                nodes_match_2 = match_nodes(graph, graph_n1_n, pattern, patt1_n, superclasses_dict, verbosity = verbosity)
 
-                nodes_match_3 = match_nodes(graph, graph_n1_n, pattern, patt0_n, verbosity)
+                nodes_match_3 = match_nodes(graph, graph_n1_n, pattern, patt0_n, superclasses_dict, verbosity = verbosity)
 
-                nodes_match_4 = match_nodes(graph, graph_n0_n, pattern, patt1_n, verbosity)
+                nodes_match_4 = match_nodes(graph, graph_n0_n, pattern, patt1_n, superclasses_dict, verbosity = verbosity)
 
 
                 nodes_match = (nodes_match_1 and nodes_match_2) or (nodes_match_3 and nodes_match_4)
@@ -238,7 +238,7 @@ def match_links(pattern, pattern_data, graph, source_data, verbosity=0, match_al
     return False
 
 
-def match_nodes(graph, graph_node, pattern, patt_node, verbosity = 0):
+def match_nodes(graph, graph_node, pattern, patt_node, superclasses_dict, verbosity = 0):
 
     #print("Match nodes: graph_node " + str(graph_node))
     #print("Match nodes: patt_node " + str(patt_node))
@@ -269,7 +269,7 @@ def match_nodes(graph, graph_node, pattern, patt_node, verbosity = 0):
         if targetMM == "trace_link" and sourceMM == "backward_link":
             return True
 
-        superclasses_dict = pattern["superclasses_dict"]
+        #superclasses_dict = pattern["superclasses_dict"]
 
         #if debug:
         #    print("Superclasses: " + str(superclasses_dict))
