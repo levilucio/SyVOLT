@@ -10,7 +10,6 @@ except ImportError:
     import util.misc3 as misc
     from util.misc3 import indent_text
 
-
 import numpy.random as nprnd
 
 from .himesis_utils import standardize_name, is_RAM_attribute, to_non_RAM_attribute
@@ -105,7 +104,8 @@ class Himesis(ig.Graph):
         if hasattr(self, "NACs"):
             cpy.NACs = copy.deepcopy(self.NACs)
 
-        cpy["equations"] = copy.deepcopy(self["equations"])
+        #cpy["equations"] = copy.deepcopy(self["equations"])
+        cpy["equations"] = self["equations"].copy()
 
         # cpy.init_params = copy.deepcopy(self.init_params)
         #cpy.import_name = copy.deepcopy(self.import_name)
