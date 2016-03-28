@@ -539,9 +539,8 @@ def disjoint_model_union(first, second):
     # for index_e in second.edge_iter():
     #    first.add_edges([(nb_nodes_first + second.es[index_e].tuple[0],nb_nodes_first + second.es[index_e].tuple[1])])
 
-    edges = []
-    for index_e in second.edge_iter():
-        edges.append((nb_nodes_first + second.es[index_e].tuple[0],nb_nodes_first + second.es[index_e].tuple[1]))
+
+    edges = [(nb_nodes_first + e.source, nb_nodes_first + e.target) for e in second.es]
     first.add_edges(edges)
 
     first["equations"] += update_equations(second["equations"], node_num_mapping)
