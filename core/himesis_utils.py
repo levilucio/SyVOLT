@@ -421,8 +421,6 @@ def expand_graph(small_value):
             f = gzip.open(pickle_dir + small_value, "rb")
         small_value = pickle.load(f)
         f.close()
-    else:
-        small_value = deepcopy(small_value)
 
     #igraph_dict = small_value
 
