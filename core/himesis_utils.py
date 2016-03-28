@@ -474,7 +474,7 @@ def expand_graph(small_value):
 
 def update_equation(part, node_mapping):
     if part[0] == 'constant':
-        return part
+        return deepcopy(part)
     elif part[0] == 'concat':
 
         left = update_equation(part[1][0], node_mapping)
@@ -482,7 +482,7 @@ def update_equation(part, node_mapping):
         return ('concat', (left, right))
     else:
         try:
-            return (node_mapping[part[0]], part[1])
+            return node_mapping[part[0]], part[1]
         except KeyError:
             print("Could not update equation")
             print(part)
@@ -499,24 +499,27 @@ def update_equations(equations, node_mapping):
     #print("After equations: " + str(new_eqs))
     return new_eqs
 
+#@do_cprofile
 def disjoint_model_union(first, second):
     """
     merge two himesis graphs
     """
-    
-    if first.vcount() == 0:
-        return second.copy()
-    
-    if second.vcount() == 0:
-        return first.copy()
 
     nb_nodes_first = first.vcount()
+    nb_nodes_second = second.vcount()
+
+    if nb_nodes_first == 0:
+        return second.copy()
+    
+    if nb_nodes_second == 0:
+        return first.copy()
 
     node_num_mapping = {}
 
     # first copy the nodes
     attrib_names = second.vs[0].attribute_names()
-    for index_v in second.node_iter():
+    for index_v in range(nb_nodes_second):
+
         new_node_index = first.add_node()
         new_node = first.vs[new_node_index]
 
@@ -543,7 +546,7 @@ def disjoint_model_union(first, second):
         edges.append((nb_nodes_first + second.es[index_e].tuple[0],nb_nodes_first + second.es[index_e].tuple[1]))
     first.add_edges(edges)
 
-    first["equations"] += update_equations(deepcopy(second["equations"]), node_num_mapping)
+    first["equations"] += update_equations(second["equations"], node_num_mapping)
 
     return first
 
