@@ -516,26 +516,24 @@ def disjoint_model_union(first, second):
 
     node_num_mapping = {}
 
+    first.add_vertices(nb_nodes_second)
+
     # first copy the nodes
     attrib_names = second.vs[0].attribute_names()
     for index_v in range(nb_nodes_second):
 
-        new_node_index = first.add_node()
+        new_node_index = index_v + nb_nodes_first
+
         new_node = first.vs[new_node_index]
 
         node_num_mapping[index_v] = new_node_index
 
         for attrib in attrib_names:
 
-            #skip copying the GUID
-            if attrib == "GUID__":
-                continue
-
             #skip None attribs
             if second.vs[index_v][attrib] is not None:
                 #copy the other attribs
                 new_node[attrib] = second.vs[index_v][attrib]
-
  
     # then copy the edges
     # for index_e in second.edge_iter():
@@ -547,6 +545,7 @@ def disjoint_model_union(first, second):
     first.add_edges(edges)
 
     first["equations"] += update_equations(second["equations"], node_num_mapping)
+
 
     return first
 
