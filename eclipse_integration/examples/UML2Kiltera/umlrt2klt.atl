@@ -1,0 +1,196 @@
+-- @nsURI PIKLT=http://ca.queensu.cs.afmg.kiltera.piklt/piklt.1.ecore
+-- @nsURI UMLRT=http://ca.queensu.cs.afmg.kiltera.umlrt2kiltera.metamodel/rt.1.ecore
+
+module umlrt2klt;
+create OUT : PIKLT from IN : UMLRT;
+
+helper context UMLRT!StateMachine def : statename : String = 'S'+self.name;
+
+helper context UMLRT!State def : outgoingTransitions : Set(UMLRT!Transition) = if self.owningStateMachine.oclIsUndefined() then Set{} else self.owningStateMachine.transitions->select(t | self.exitPoints->includes(t.src) and t.triggers->notEmpty()) endif;
+
+helper context UMLRT!Vertex def : exitpointname : String = 'B'+self.name;
+
+abstract rule State2ProcDef {
+	from state : UMLRT!State
+	to pd : PIKLT!ProcDef (
+		name <- state.statename,
+		channelNames <- Sequence{thisModule.Name_enp(),thisModule.Name_exit(),thisModule.Name_exack()}
+	)
+}
+
+rule BasicState2ProcDef extends State2ProcDef {
+	from state : UMLRT!State (state.states.size() = 0 and state.outgoingTransitions->notEmpty())
+	to 
+		pd : PIKLT!ProcDef (
+			p <- listen
+		),
+		listen : PIKLT!Listen (branches <- state.outgoingTransitions->append(listen_exit)),
+		listen_exit : PIKLT!ListenBranch(channel <- 'exit', p <- listen_exit_trig),
+		listen_exit_trig : PIKLT!Trigger(channel <- 'exack')
+}
+
+rule BasicStateNoOutgoing2ProcDef extends State2ProcDef {
+	from state : UMLRT!State (state.states->isEmpty() and state.outgoingTransitions->isEmpty())
+	to pd : PIKLT!ProcDef (p <- null),
+	null : PIKLT!Null
+}
+
+--First rule that automatically transformas all transitions - works on transitions of simple states
+rule Transition2ListenBranch {
+	from trans : UMLRT!Transition (trans.src.owningStateMachine.states.isEmpty() and trans.triggers->notEmpty())
+	to branch : PIKLT!ListenBranch (
+		channel <- trans.triggers->first().signal.name,
+		p <- thisModule.Transition2QInst(trans)
+	)
+}
+
+rule CompositeState2ProcDef extends State2ProcDef {
+	from state : UMLRT!State (state.states.size() > 0)
+	to 
+		pd : PIKLT!ProcDef (
+			p <- ld,
+			channelNames <- Sequence{thisModule.Name_enp(),thisModule.Name_exit(),thisModule.Name_exack(),thisModule.Name_sh()}
+		),
+		ld : PIKLT!LocalDef (
+			def <- Set{thisModule.State2CProcDef(state),thisModule.State2HProcDef(state)}.union(state.states->append(state.exitPoints)),
+			p <- new
+		),
+		instC : PIKLT!Inst (name <-'C',channelNames <- Sequence{thisModule.Name_enp(),thisModule.Name_exit_in(),thisModule.Name_exack_in(),thisModule.Name_sh_in()}),
+		instH : PIKLT!Inst (name <-'H', channelNames <- Sequence{thisModule.Name_exit_in(),thisModule.Name_exack_in(),thisModule.Name_sh_in()}),
+		new : PIKLT!New(channelNames <- Sequence{thisModule.Name_exit_in(),thisModule.Name_exack_in(),thisModule.Name_sh_in()}, p <- new_par),
+		new_par : PIKLT!Par(p <- Sequence{instC,instH})
+}
+
+-- CREATES A PROCESS FOR THE STATE TO WHICH THE INITIAL TRANSITION GOES TO - ELSE BRANCH IN C Process
+-- ALSO CREATES STATES TO WHICH OTHER IN_TRANSITIONS GO TO- FOR EACH CONDITION BRANCH IN C
+-- Transition2Inst lazy rule is used by the next rule (State2CProcDef)
+-- used for any incoming transition of a composite state (initial transition or just regular incoming transition)
+lazy rule Transition2Inst {
+	from trans : UMLRT!Transition(trans.dest.owningStateMachine.entryPoints->includes(trans.dest))
+	to inst : PIKLT!Inst (
+		name <- trans.dest.owningStateMachine.statename,
+		channelNames <- Sequence{thisModule.EntryPoint2Name(trans.dest),thisModule.Name_exit_in(),thisModule.Name_exack_in(),thisModule.Name_sh_in()}
+	)
+}
+
+lazy rule State2CProcDef {
+	from state : UMLRT!State
+	to pd : PIKLT!ProcDef(name <- 'C', channelNames <- Sequence{thisModule.Name_enp(),thisModule.Name_exit(),thisModule.Name_exack(),thisModule.Name_sh()}, p <- condset),
+	condset : PIKLT!ConditionSet (
+		alternative <- thisModule.Transition2Inst(state.initialTransition),
+		branches <- state.transitions->select(t | t.type = #IN)->collect(t | thisModule.EntryPoint2CCondBranch(t.src))
+	)
+}
+
+lazy rule EntryPoint2CCondBranch {
+	from entry : UMLRT!EntryPoint
+	to branch : PIKLT!ConditionBranch (
+		if <- cond, 
+		then <- thisModule.Transition2Inst(
+			entry.owningStateMachine.transitions->select(t | t.src = entry)->first()
+		)
+	),
+	cond : PIKLT!Expr(literal <- 'enp="'+entry.name+'"')
+}
+
+lazy rule Transition2QInst {
+	from t : UMLRT!Transition(t.type = #SIBLING or (t.type = #OUT and t.owningStateMachine.exitPoints->includes(t.dest)))
+	to inst : PIKLT!Inst(
+		name <- 
+		if t.type = #SIBLING 
+		then t.dest.owningStateMachine.statename 
+		else t.dest.exitpointname 
+		endif,
+		channelNames <- if t.type = #SIBLING then Sequence{thisModule.EntryPoint2Name(t.dest),thisModule.Name_exit(),thisModule.Name_exack(),thisModule.Name_sh()} else Sequence{thisModule.Name_sh()} endif
+	)
+}
+
+lazy rule EntryPoint2Name {
+	from ep : UMLRT!EntryPoint
+	to name : PIKLT!Name (literal <- '"'+ep.name+'"')
+}
+
+lazy rule Name_enp {
+	from elem : UMLRT!Element
+	to name : PIKLT!Name(literal <- 'enp')
+}
+
+--next rule defined only for composite states
+rule ExitPoint2BProcDef {
+	from exit : UMLRT!ExitPoint(exit.owningStateMachine.states.notEmpty())
+	to procdef : PIKLT!ProcDef(
+		name <- exit.exitpointname,
+		channelNames <- thisModule.Name_sh_in(),
+		p <- par
+	),
+	par : PIKLT!Par(
+		p <- if(exit.outgoingTransitions.notEmpty()) then
+			Sequence{trigger_shin,thisModule.Transition2QInst(exit.outgoingTransitions->first())}
+		else
+			trigger_shin
+		endif
+	),
+	trigger_shin : PIKLT!Trigger(channel <- 'sh_in')
+}
+
+lazy rule State2HProcDef {
+	from state : UMLRT!State
+	to pd : PIKLT!ProcDef(
+		name <- 'H',
+		channelNames <- Sequence{thisModule.Name_exit_in(),thisModule.Name_exack_in(),thisModule.Name_sh_in()},
+		p <- listen
+	),
+	listen : PIKLT!Listen(branches <- state.outgoingTransitions->union(Sequence{exitbranch,shinbranch})),
+	exitbranch : PIKLT!ListenBranch(channel <- 'exit',p <- exitbranch_seq),
+	exitbranch_trigexitin : PIKLT!Trigger(channel <- 'exit_in'),
+	exitbranch_listen : PIKLT!Listen(branches <- exitbranch_listen_exackin),
+	exitbranch_listen_exackin : PIKLT!ListenBranch(channel <- 'exack_in',p <- exitbranch_listen_exackin_trigexack),
+	exitbranch_listen_exackin_trigexack : PIKLT!Trigger(channel <- 'exack'),
+	exitbranch_seq : PIKLT!Seq(p <- Sequence{exitbranch_trigexitin,exitbranch_listen}),
+	shinbranch : PIKLT!ListenBranch(channel <- 'sh_in', p <- shinbranch_done),
+	shinbranch_done : PIKLT!Null
+}
+
+--second rule that automatically transformas all transitions - works on group transitions or trans from composite states.
+-- The coming function is for group transitions
+rule Transition2HListenBranch {
+	from trans : UMLRT!Transition (trans.src.owningStateMachine.states.notEmpty() and trans.triggers->notEmpty())
+	to branch : PIKLT!ListenBranch (
+		channel <- trans.triggers->first().signal.name,
+		p <- seq
+	),
+	seq : PIKLT!Seq(p <- Sequence{trigexitin, listen}),
+	trigexitin : PIKLT!Trigger(channel <- 'exit_in'),
+	listen : PIKLT!Listen(branches <- listen_exackin),
+	listen_exackin : PIKLT!ListenBranch(channel <- 'exack_in',p <- thisModule.Transition2QInst(trans))
+}
+
+lazy rule Name_exit {
+	from elem : UMLRT!Element
+	to name : PIKLT!Name(literal <- 'exit')
+}
+
+lazy rule Name_exack {
+	from elem : UMLRT!Element
+	to name : PIKLT!Name(literal <- 'exack')
+}
+
+lazy rule Name_sh {
+	from elem : UMLRT!Element
+	to name : PIKLT!Name(literal <- 'sh')
+}
+
+lazy rule Name_exit_in {
+	from elem : UMLRT!Element
+	to name : PIKLT!Name(literal <- 'exit_in')
+}
+
+lazy rule Name_exack_in {
+	from elem : UMLRT!Element
+	to name : PIKLT!Name(literal <- 'exack_in')
+}
+
+lazy rule Name_sh_in {
+	from elem : UMLRT!Element
+	to name : PIKLT!Name(literal <- 'sh_in')
+}
