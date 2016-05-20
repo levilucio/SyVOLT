@@ -31,7 +31,10 @@ class Matcher(RulePrimitive):
 
         self.disambig_matching = disambig_matching
 
-        self.superclasses_dict = {}
+        try:
+            self.superclasses_dict = condition["superclasses_dict"]
+        except KeyError:
+            self.superclasses_dict = {}
 
         if disambig_matching:
             self.HimesisMatcher = NewHimesisMatcher
