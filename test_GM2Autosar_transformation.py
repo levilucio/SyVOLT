@@ -44,7 +44,12 @@ class Prover():
 
             full_transformation = [[r0, r1, r2, ], [r3, ], [r4, ], [r7, ], [r8, ], [r5, r6, ], ]
 
-            rule_dir = "GM2AUTOSAR_MM/transformation"
+            #rule_dir = "GM2AUTOSAR_MM/transformation"
+
+            #use the faulty version, as the ATL code is faulty
+            rule_dir = "GM2AUTOSAR_MM/transformation/faulty_from_DSLTrans/"
+
+
 
         else:
             r0 = 'HcreateComponent'
@@ -149,6 +154,7 @@ class Prover():
         print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
         print("Number of path conditions: " + str(pc_set.num_path_conditions))
 
+        #raise Exception()
 
         # print path conditions to screen
         
