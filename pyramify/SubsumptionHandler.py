@@ -43,21 +43,20 @@ class SubsumptionHandler:
     # calculate the partial order induced by rule match subsumption for all rules in the transformation.
     def calculate_rule_subsumption(self, matchRulePatterns):
 
-        rulepairs = list(permutations(sorted(self.rules.keys()),2))
+        all_rulepairs = list(permutations(sorted(self.rules.keys()),2))
 
         # keep only the pairs which correspond to subsumption relations (second element subsumes the first)
 
-        pairsToRemove = []
+        rulepairs = []
 
-        for pair in rulepairs:
+        for pair in all_rulepairs:
             p = Packet()
             p.graph = self.rules[pair[1]]
-            p = matchRulePatterns[pair[0]][0].packet_in(p)
+            matcher = matchRulePatterns[pair[0]][0]
+            matcher.packet_in(p)
 
-            if not matchRulePatterns[pair[0]][0].is_success:
-                pairsToRemove.append(pair)
-
-        rulepairs = [pair for pair in rulepairs if pair not in pairsToRemove]
+            if matcher.is_success:
+                rulepairs.append(pair)
 
         ruleChains = []
         ruleSubsumption = {}
@@ -167,6 +166,7 @@ class SubsumptionHandler:
             print("Subsuming Rules:")
             for rule in sorted(self.subsuming_rules.keys()):
                 print(rule + " : " + str(self.subsuming_rules[rule]))
+
         return ruleSubsumption, self.subsuming_rules
 
     # Calculate if the rules need special treatment because they overlap.
@@ -213,6 +213,10 @@ class SubsumptionHandler:
                     tb = traceback.format_exc()
                     print(tb)
 
+        if self.debug:
+            print("Rules needing overlap treatment:")
+            print(rules_needing_overlap_treatment)
+
         return rules_needing_overlap_treatment
 
 
@@ -233,8 +237,9 @@ class SubsumptionHandler:
             # now remove empty dictionary entries
             ruleSubsumption = dict((k, v) for k, v in ruleSubsumption.items() if v)
 
-            print("Subsumption")
-            print(ruleSubsumption)
+            if self.debug:
+                print("Subsumption of rules on same layer")
+                print(ruleSubsumption)
 
             self.ruleSubsumption = ruleSubsumption
 
