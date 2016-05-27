@@ -182,7 +182,7 @@ return attr_value == "scheduler"
                 self.vs[7]["MT_dirty__"] = False
                 self.vs[7]["mm__"] = """MT_pre__directLink_S"""
                 self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc7')
-        # match association Scheduler--provided-->Service node
+        # match association Scheduler--required-->Service node
                 self.add_node()
                 self.vs[8]["MT_pre__attr1"] = """
 #===============================================================================
@@ -194,7 +194,7 @@ return attr_value == "scheduler"
 # The given constraint must evaluate to a boolean expression.
 #===============================================================================
 
-return attr_value == "provided"
+return attr_value == "required"
 """
 
                 self.vs[8]["MT_label__"] = """9"""
@@ -211,8 +211,8 @@ return attr_value == "provided"
                 (6,2), # association module  -> match_class Module()
                 (2,7), # match_class Module() -> association scheduler
                 (7,3), # association scheduler  -> match_class Scheduler()
-                (3,8), # match_class Scheduler() -> association provided
-                (8,4) # association provided  -> match_class Service()
+                (3,8), # match_class Scheduler() -> association required
+                (8,4) # association required  -> match_class Service()
         ])
         
                 # Add the attribute equations
@@ -337,7 +337,7 @@ return attr_value == "provided"
                 # The given constraint must evaluate to a boolean expression.
                 #===============================================================================
 
-                return attr_value == "provided"
+                return attr_value == "required"
 
 
         
