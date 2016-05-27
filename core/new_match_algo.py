@@ -53,6 +53,27 @@ class NewHimesisMatcher(object):
 
         self.pattern_attribs = [[attrib for attrib in node.attribute_names() if attrib.startswith("MT_pre__")] for node in self.pattern_graph.vs]
 
+        # if "P2_Connected" in self.pattern_graph.name and \
+        #                 "RPort" in self.source_graph.name:  # "HPP3_CompleteLHS" in self.pattern_graph.name:# and \
+        #
+        #     #
+        #     # "component" in attr1 and "componentPrototype" in attr1:# and "mother" in attr1 and "daughter" in attr1:
+        #     print(self.pattern_graph.name)
+        #
+        #     # print("Source: " + self.source_graph.name)
+        #     self.debug = True
+        #     self.show_eqs = True
+        #     self.compare_to_old = False
+        #     graph_to_dot("z_source_" + self.source_graph.name, self.source_graph)
+        #     graph_to_dot("z_pattern_" + self.pattern_graph.name, self.pattern_graph)
+        #
+        # else:
+        #     self.debug = False
+        #     self.show_eqs = False
+        #     self.compare_to_old = False
+
+        self.debug_equations = False
+
         self.patt_eqs_constant, self.patt_eqs_variable = self.load_equations(pattern_graph)
         self.src_eqs_constant, self.src_eqs_variable = self.load_equations(source_graph)
 
@@ -68,7 +89,16 @@ class NewHimesisMatcher(object):
         eqs_constant = {}
         eqs_variable = []
 
+
+
+        if self.debug_equations:
+            print("Looking at equation")
         for eq in eqs:
+
+            if self.debug_equations:
+                print(eq)
+                print(eq[1])
+
             if eq[1][0] == "constant":
                 node_num = eq[0][0]
                 attr = eq[0][1]
@@ -109,21 +139,7 @@ class NewHimesisMatcher(object):
         #     attr1 = []
 
 
-        # if "HPP3_CompleteLHS" in self.pattern_graph.name:# and \
-        #         #"HEmptyPathCondition_HState2ProcDef-0_HCompositeState2ProcDef-P0_HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans-P0_HState2HProcDef-OVER1_HTransition2QInstSIBLING-0_HConnectOutputsOfExitPoint2BProcDefTransition2QInst-P0" in self.source_graph.name:
-        #     #"component" in attr1 and "componentPrototype" in attr1:# and "mother" in attr1 and "daughter" in attr1:
-        #     print(self.pattern_graph.name)
-        #
-        #     #print("Source: " + self.source_graph.name)
-        #     self.debug = True
-        #     self.show_eqs = True
-        #     self.compare_to_old = False
-        #     graph_to_dot("z_source_" + self.source_graph.name, self.source_graph)
-        #     #graph_to_dot("z_pattern_" + self.pattern_graph.name, self.pattern_graph)
-        # else:
-        #    self.debug = False
-        #    self.show_eqs = False
-        #    self.compare_to_old = False
+
 
 
         if self.compare_to_old:
@@ -150,7 +166,20 @@ class NewHimesisMatcher(object):
                 print("Matchers give different results")
                 print(self.source_graph.name + " vs " + self.pattern_graph.name)
 
+        if self.debug_equations:
+            print("Pattern eqs:")
+            print(self.pattern_graph["equations"])
+            print("Pattern eqs (constant)")
+            print(self.patt_eqs_constant)
+            print("Pattern eqs (variable)")
+            print(self.patt_eqs_variable)
 
+            print("Source eqs:")
+            print(self.source_graph["equations"])
+            print("Source eqs (constant)")
+            print(self.src_eqs_constant)
+            print("Source eqs (variable)")
+            print(self.src_eqs_variable)
 
 
         for mapping in self._match():
@@ -411,20 +440,25 @@ class NewHimesisMatcher(object):
                 match_set[p] = s
                 reverse_match_set[s] = p
 
-        if self.debug:
-            print("Match set:")
-            print(pm)
-            print(match_set)
+        # if self.debug:
+        #     print("Match set:")
+        #     print(pm)
+        #     print(match_set)
         return match_set, needed_disambig
 
     def print_link(self, graph, n0, n1, nlink):
         if nlink is not None:
             link = graph.vs[nlink]["mm__"].replace("MT_pre__", "")
             try:
-                link += " (" + str(graph.vs[nlink]["MT_pre__attr1"]) + ") "
-                link = link.replace("\n", "").replace("return True", "").replace("return False", "")
+                attr_string = str(graph.vs[nlink]["MT_pre__attr1"])
+                attr_string = attr_string.replace("\n", "").replace("return True", "").replace("return False", "")
             except KeyError:
-                link += " (" + str(graph.vs[nlink]["attr1"]) + ") "
+                attr_string = str(graph.vs[nlink]["attr1"])
+
+            attr_string = attr_string.replace("#","").replace("=", "").replace("This code is executed when evaluating if a node shall be matched by this rule. You can access the value of the current node's attribute value by: attr_value. You can access any attribute x of this node by: this['x']. If the constraint relies on attribute values from other nodes, use the LHS/NAC constraint instead. The given constraint must evaluate to a boolean expression.", "")
+
+            link += " (" + attr_string + ") "
+
         else:
             link = "backward_link"
         print(graph.vs[n0]["mm__"].replace("MT_pre__", "") + " - " + link + " - " + graph.vs[n1]["mm__"].replace("MT_pre__", ""))
@@ -489,11 +523,12 @@ class NewHimesisMatcher(object):
 
 
 
-        # print("\n")
-        # print("Src node: " + str(src_node_num))
-        # print("Src constant: " + str(self.src_eqs_constant))
-        # print("Patt node: " + str(patt_node_num))
-        # print("Patt constant: " + str(self.patt_eqs_constant))
+        if self.debug_equations:
+            print("\n")
+            print("Src node: " + str(src_node_num))
+            print("Src constant: " + str(self.src_eqs_constant))
+            print("Patt node: " + str(patt_node_num))
+            print("Patt constant: " + str(self.patt_eqs_constant))
 
         src_equations = []
         patt_label = patt_node["MT_label__"]
