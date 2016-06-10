@@ -4,8 +4,11 @@ from core.himesis_utils import graph_to_dot
 from copy import deepcopy
 from profiler import *
 
+from functools import lru_cache
+
 #@do_cprofile
 #@Profiler
+@lru_cache(maxsize=32)
 def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
     #decompose graph into directLinks, backwardLinks, and isolated elements
 
