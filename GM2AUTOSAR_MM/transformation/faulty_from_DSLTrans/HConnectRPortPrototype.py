@@ -69,7 +69,7 @@ class HConnectRPortPrototype(Himesis):
         # apply class PPortPrototype() node
         self.add_node()
 
-        self.vs[9]["mm__"] = """PPortPrototype""" 
+        self.vs[9]["mm__"] = """RPortPrototype""" 
         self.vs[9]["attr1"] = """1"""
         
         
