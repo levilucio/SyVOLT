@@ -53,8 +53,8 @@ class NewHimesisMatcher(object):
 
         self.pattern_attribs = [[attrib for attrib in node.attribute_names() if attrib.startswith("MT_pre__")] for node in self.pattern_graph.vs]
 
-        # if "P2_Connected" in self.pattern_graph.name and \
-        #                 "RPort" in self.source_graph.name:  # "HPP3_CompleteLHS" in self.pattern_graph.name:# and \
+        # if "MM5_then_Complete" in self.pattern_graph.name and \
+        #                 "HEmptyPathCondition_HState2ProcDef-0_HBasicState2ProcDef-P0_HTransition2Inst-0_HTransitionHListenBranch" in self.source_graph.name:  # "HPP3_CompleteLHS" in self.pattern_graph.name:# and \
         #
         #     #
         #     # "component" in attr1 and "componentPrototype" in attr1:# and "mother" in attr1 and "daughter" in attr1:
@@ -405,21 +405,28 @@ class NewHimesisMatcher(object):
                 #    s_label = self.source_graph.vs[s]["MT_label__"]
                 #except KeyError:
 
-                if s in reverse_match_set.keys() and reverse_match_set[s] != p:
-                    # we already have another element binding to this one, so fail
-                    if self.debug:
-                        print("Another pattern element is already binding to this source element")
-                    return {}, False
+                try:
+                    if reverse_match_set[s] != p:
+                        # we already have another element binding to this one, so fail
+                        if self.debug:
+                            print("Another pattern element is already binding to this source element")
+                        return {}, False
+                except KeyError:
+                    pass
 
                 if self.debug:
                     print("Setting " + str(p) + " to " + str(s))
 
-                if p in match_set.keys() and match_set[p] != s:
-                    if self.debug:
-                        print("Already binding")
-                        print(str(p) + " : " + str(match_set[p]))
+                try:
+                    if match_set[p] != s:
+                        if self.debug:
+                            print("Already binding")
+                            print(str(p) + " : " + str(match_set[p]))
 
-                    needed_disambig = True
+                        needed_disambig = True
+                except KeyError:
+                    pass
+
                     # if len(combinations) > 1:
                     #
                     #     #there is already a binding, so ignore this matching possibility
