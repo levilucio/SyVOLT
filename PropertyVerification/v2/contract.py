@@ -11,3 +11,5 @@ class Contract(object):
 
         # detail the status of the property
         self.status = self.NOT_CHECKED
+
+        self.debug = False

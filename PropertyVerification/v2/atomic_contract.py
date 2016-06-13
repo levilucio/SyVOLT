@@ -41,7 +41,12 @@ class AtomicContract(Contract):
 
         self.isolated_matcher = Matcher(isolated, disambig_matching = True, max = 1)
         self.connected_matcher = Matcher(connected, disambig_matching = True, max = 1)
-        self.complete_matcher = Matcher(complete, disambig_matching = True, max = 1)
+
+        #need to find multiple matches for pivots
+        if self.has_pivots():
+            self.complete_matcher = Matcher(complete, disambig_matching = True)
+        else:
+            self.complete_matcher = Matcher(complete, disambig_matching = True, max = 1)
 
         self.name = self.isolated.name[1:].replace("_IsolatedLHS", "").replace("_if", "")
 
@@ -75,6 +80,14 @@ class AtomicContract(Contract):
         graph_to_dot("contract_connected_" + self.name, self.connected)
         graph_to_dot("contract_complete_" + self.name, self.complete)
 
+    def has_pivots(self):
+        eqs = self.complete["equations"]
+        for eq in eqs:
+            (node_num, attr), (typ, value) = eq
+            if attr == "pivot" and typ == "constant":
+                return True
+        return False
+
     def get_pivots(self):
         if self.last_packet is None:
             return {}
@@ -83,7 +96,8 @@ class AtomicContract(Contract):
             #matching failed, so don't bother returning anything
             return {}
 
-        matches = list(self.last_packet.match_sets.values())[0].matches[0]
+        match_list = list(self.last_packet.match_sets.values())
+        print("Length of matches: " + str(len(match_list[0].matches)))
 
         eqs = self.complete["equations"]
         pivots = {}
@@ -93,8 +107,12 @@ class AtomicContract(Contract):
                 continue
             label = self.complete.vs[node_num]["MT_label__"]
 
-            #lookup the GUID that got matched to the label
-            pivots[value] = matches[label]
+            for match_set in match_list[0].matches:
+                #lookup the GUID that got matched to the label
+                try:
+                    pivots[value].append(match_set[label])
+                except KeyError:
+                    pivots[value] = [match_set[label]]
 
         return pivots
 
