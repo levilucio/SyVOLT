@@ -51,6 +51,7 @@ class ContractProver():
         contract_failed_pcs = {}
         contract_succeeded_pcs = {}
         for contract_name, atomic_contract in atomic_contracts + if_then_contracts:
+            print("Proving: " + atomic_contract.to_string())
             contract_failed_pcs[contract_name] = []
             contract_succeeded_pcs[contract_name] = []
 
@@ -118,6 +119,7 @@ class ContractProver():
         print("")
         for contract_name, atomic_contract in atomic_contracts + if_then_contracts:
             print("\n" + str(len(contract_succeeded_pcs[contract_name])) + " Successful PCs for " + contract_name + ":")
+
             if len(contract_succeeded_pcs[contract_name]) < num_contracts_to_print:
                 for pc_name in sorted(contract_succeeded_pcs[contract_name]):
                     print(pc_name[:contract_name_max_size])

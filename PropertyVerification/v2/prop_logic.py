@@ -8,7 +8,7 @@ class NotContract(Contract):
         self.contract = atomic_contract
         self.name = atomic_contract.name
 
-        self.debug = True
+        self.debug = False
 
     def to_string(self):
         return "NOT(" + self.name + ")"
@@ -51,7 +51,7 @@ class AndContract(Contract):
 
         self.name = atomic_contract_1.name
 
-        self.debug = True
+        self.debug = False
 
     def to_string(self):
         return "AND(" + self.contract_1.to_string() + ", " + self.contract_2.to_string() + ")"
@@ -113,6 +113,9 @@ class OrContract(Contract):
 
         self.name = atomic_contract_1.name
 
+    def to_string(self):
+        return "OR(" + self.contract_1.to_string() + ", " + self.contract_2.to_string() + ")"
+
     def get_graph(self):
         contract_1 = self.contract_1.get_graph()
         contract_2 = self.contract_2.get_graph()
@@ -150,16 +153,16 @@ class OrContract(Contract):
         pivots_1 = self.contract_1.get_pivots()
         pivots_2 = self.contract_2.get_pivots()
 
-        # print("Contract 1")
-        # print(pivots_1)
-        #
-        # print("Contract 2")
-        # print(pivots_2)
-
         #put these two together
         #report a FAILURE if they are inconsistent
 
-        #TODO: Implement properly
-        raise NotImplementedError()
+        if pivots_1 == self.COMPLETE_FOUND or pivots_2 == self.COMPLETE_FOUND:
+            return self.COMPLETE_FOUND
 
-        return pivots_1.update(pivots_2)
+        for pivot_key in pivots_1.keys():
+            if pivot_key in pivots_2.keys():
+                pivots_2[pivot_key] += pivots_1[pivot_key]
+            else:
+                pivots_2[pivot_key] = pivots_1[pivot_key]
+
+        return pivots_2

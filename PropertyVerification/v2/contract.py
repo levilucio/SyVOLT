@@ -19,7 +19,7 @@ class Contract(object):
 
     def merge_pivots(self, pivots_1, pivots_2):
 
-        pivot_debug = True
+        pivot_debug = False
 
         if pivots_1 is None or pivots_2 is None:
             if pivot_debug:
