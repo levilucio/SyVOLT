@@ -12,7 +12,7 @@ class IfThenContract(Contract):
 
         self.__name__ = "IfThenContract"
 
-        self.debug = True
+        self.debug = False
 
     def get_graph(self):
         if_graph = self.if_contract.get_graph()

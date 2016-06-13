@@ -97,7 +97,7 @@ class AtomicContract(Contract):
             return {}
 
         match_list = list(self.last_packet.match_sets.values())
-        print("Length of matches: " + str(len(match_list[0].matches)))
+        #print("Length of matches: " + str(len(match_list[0].matches)))
 
         eqs = self.complete["equations"]
         pivots = {}
