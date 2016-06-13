@@ -14,6 +14,9 @@ class IfThenContract(Contract):
 
         self.debug = False
 
+    def to_string(self):
+        return "IF(" + self.if_contract.to_string() + "): THEN("+ self.then_contract.to_string() + ")"
+
     def get_graph(self):
         if_graph = self.if_contract.get_graph()
         then_graph = self.then_contract.get_graph()
@@ -25,8 +28,8 @@ class IfThenContract(Contract):
     def check(self, pc, verbosity=0):
         result = self.if_contract.check(pc, verbosity)
 
-        if self.debug:
-            print("Result for if contract: " + result)
+        # if self.debug:
+        #     print("Result for if contract: " + result)
 
         #don't fail if if_contract is not found
         if result == self.NO_COMPLETE:
@@ -55,44 +58,7 @@ class IfThenContract(Contract):
 
         then_pivots = self.then_contract.get_pivots()
 
-        if if_pivots is None or then_pivots is None:
-            if self.debug:
-                print("No pivots in either if or then contract.")
-            return self.COMPLETE_FOUND
-        # print("If pivots")
-        # print(if_pivots)
-        #
-        # print("Then pivots, matches")
-        # print(then_pivots)
-
-        all_if_pivots_succeed = True
-        for pivot, if_guids in if_pivots.items():
-
-            #the pivot is only defined on the if graph
-            if pivot not in then_pivots:
-                continue
-
-            then_guids = then_pivots[pivot]
-            if "FAILURE" in then_guids:
-                if self.debug:
-                    print("Pivot failure on " + str(pivot))
-                return self.NO_COMPLETE
-
-            if_guid_succeed = False
-
-            for if_guid in if_guids:
-                #these two matches are on different nodes in the source graph
-                #so the pivots don't match
-                #FAILURE is returned from an AND contract if the guids were different
-                if if_guid in then_guids:
-                    if_guid_succeed = True
-
-            all_if_pivots_succeed = all_if_pivots_succeed and if_guid_succeed
-
-        if all_if_pivots_succeed:
-            return self.COMPLETE_FOUND
-        else:
-            return self.NO_COMPLETE
+        return Contract.merge_pivots(self, if_pivots, then_pivots)
 
 
     def draw(self):

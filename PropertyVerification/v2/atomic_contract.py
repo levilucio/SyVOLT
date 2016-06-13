@@ -71,6 +71,9 @@ class AtomicContract(Contract):
         #print("Connected Data: " + str(self.connected_data))
         #print("Complete Data: " + str(self.complete_data))
 
+    def to_string(self):
+        return self.name
+
     def get_graph(self):
         return [self.complete]
 
@@ -169,7 +172,7 @@ class AtomicContract(Contract):
         p = Packet()
         p.graph = pc
 
-        self.connected_matcher.packet_in(p)
+        self.connected_matcher.packet_in(p, verbosity = verbosity)
 
         if not self.connected_matcher.is_success:
             return self.NO_CONNECTED

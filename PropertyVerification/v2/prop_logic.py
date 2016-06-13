@@ -8,6 +8,11 @@ class NotContract(Contract):
         self.contract = atomic_contract
         self.name = atomic_contract.name
 
+        self.debug = True
+
+    def to_string(self):
+        return "NOT(" + self.name + ")"
+
     def get_graph(self):
         return self.contract.get_graph()
 
@@ -16,16 +21,20 @@ class NotContract(Contract):
 
     def check(self, pc, verbosity=0):
         result = self.contract.check(pc, verbosity)
+        new_result = result
 
-        if verbosity > 1:
-            print("NotContract: Result was " + result)
+        if self.debug:
+            print("NotContract: Result was originally " + result)
 
         if result == self.contract.NO_COMPLETE:
-            return self.contract.COMPLETE_FOUND
+            new_result = self.contract.COMPLETE_FOUND
         elif result == self.contract.COMPLETE_FOUND:
-            return self.contract.NO_COMPLETE
-        else:
-            return result
+            new_result = self.contract.NO_COMPLETE
+
+        if self.debug:
+            print("NotContract: Result changed to " + new_result)
+
+        return new_result
 
     def draw(self):
         self.contract.draw()
@@ -41,6 +50,11 @@ class AndContract(Contract):
         self.contract_2 = atomic_contract_2
 
         self.name = atomic_contract_1.name
+
+        self.debug = True
+
+    def to_string(self):
+        return "AND(" + self.contract_1.to_string() + ", " + self.contract_2.to_string() + ")"
 
     def get_graph(self):
         contract_1 = self.contract_1.get_graph()
@@ -58,15 +72,15 @@ class AndContract(Contract):
     def check(self, pc, verbosity = 0):
         result_1 = self.contract_1.check(pc, verbosity)
 
+        if verbosity > 1 or self.debug:
+            print("And Contract: First contract is " + result_1)
+
         if result_1 != self.COMPLETE_FOUND:
             return result_1
 
-        if verbosity > 1:
-            print("And Contract: First contract is " + result_1)
-
         result_2 = self.contract_2.check(pc, verbosity)
 
-        if verbosity > 1:
+        if verbosity > 1 or self.debug:
             print("And Contract: Second contract is " + result_2)
 
         return result_2
@@ -88,13 +102,7 @@ class AndContract(Contract):
         #put these two together
         #report a FAILURE if they are inconsistent
 
-        result = dict(pivots_1)
-        for key in pivots_2:
-            if key in result and result[key] != pivots_2[key]:
-                result[key] = "FAILURE"
-            else:
-                result[key] = pivots_2[key]
-        return result
+        return Contract.merge_pivots(self, pivots_1, pivots_2)
 
 class OrContract(Contract):
     def __init__(self, atomic_contract_1, atomic_contract_2):
@@ -150,5 +158,8 @@ class OrContract(Contract):
 
         #put these two together
         #report a FAILURE if they are inconsistent
+
+        #TODO: Implement properly
+        raise NotImplementedError()
 
         return pivots_1.update(pivots_2)
