@@ -394,22 +394,12 @@ class NewHimesisMatcher(object):
 
         needed_disambig = False
 
-        for pair in pm:
-            (k, v) = pair
+        for ps, ss in pm:
 
-            p0, p1, p_link = k
-            s0, s1, s_link = v
-
-            for p, s in [(p0, s0), (p1, s1), (p_link, s_link)]:
+            for p, s in zip(ps, ss):
 
                 if p is None or s is None:
                     continue
-
-                #p_label = self.pattern_graph.vs[p]["MT_label__"]
-
-                #try:
-                #    s_label = self.source_graph.vs[s]["MT_label__"]
-                #except KeyError:
 
                 try:
                     if reverse_match_set[s] != p:
@@ -419,36 +409,6 @@ class NewHimesisMatcher(object):
                         return {}, False
                 except KeyError:
                     pass
-
-                if self.debug:
-                    print("Setting " + str(p) + " to " + str(s))
-
-                # try:
-                #     if match_set[p] != s:
-                #         if self.debug:
-                #             print("Already binding")
-                #             print(str(p) + " : " + str(match_set[p]))
-                #
-                #         needed_disambig = True
-                # except KeyError:
-                #     pass
-
-                    # if len(combinations) > 1:
-                    #
-                    #     #there is already a binding, so ignore this matching possibility
-                    #     return {}
-                    # else:
-                    #     #this matching would fail unless we allow this
-                    #     #so this is where disambiguation is needed
-                    #     pass
-                    #     #
-                    #     # print("Already a binding")
-                    #     # print(pm)
-                    #     # graph_to_dot("source", self.source_graph)
-                    #     # graph_to_dot("pattern", self.pattern_graph)
-                    #
-                    #     # import sys
-                    #     # sys.exit()
 
                 match_set[p] = s
                 reverse_match_set[s] = p
