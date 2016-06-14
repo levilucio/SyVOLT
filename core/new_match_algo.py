@@ -359,8 +359,13 @@ class NewHimesisMatcher(object):
 
         for pm in self.combo_generator(link_matches):
             # if self.debug:
-            #     print("Potential match:")
-            #     print(pm)
+
+            # import copy
+            #
+            # print("Potential match:")
+            #
+            # for pair in copy.deepcopy(pm):
+            #     print(pair)
             match_set, needed_disambig = self.create_match_set(pm)
 
             # if self.debug:
@@ -380,7 +385,8 @@ class NewHimesisMatcher(object):
 
     def combo_generator(self, link_matches):
         for values in product(*link_matches.values()):
-            yield zip(link_matches, values)
+            if len(set(values)) == len(values):
+                yield zip(link_matches, values)
 
     def create_match_set(self, pm):
         match_set = {}
@@ -417,15 +423,15 @@ class NewHimesisMatcher(object):
                 if self.debug:
                     print("Setting " + str(p) + " to " + str(s))
 
-                try:
-                    if match_set[p] != s:
-                        if self.debug:
-                            print("Already binding")
-                            print(str(p) + " : " + str(match_set[p]))
-
-                        needed_disambig = True
-                except KeyError:
-                    pass
+                # try:
+                #     if match_set[p] != s:
+                #         if self.debug:
+                #             print("Already binding")
+                #             print(str(p) + " : " + str(match_set[p]))
+                #
+                #         needed_disambig = True
+                # except KeyError:
+                #     pass
 
                     # if len(combinations) > 1:
                     #
