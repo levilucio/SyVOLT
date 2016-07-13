@@ -4,7 +4,13 @@ from core.himesis_utils import graph_to_dot
 from copy import deepcopy
 from profiler import *
 
-from functools import lru_cache
+try:
+    from functools import lru_cache
+except ImportError:
+    def lru_cache(maxsize=32):
+        def true_decorator(f):
+            return f
+        return true_decorator
 
 #@do_cprofile
 #@Profiler
@@ -42,8 +48,16 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
 
     bls = [i for i in range(vcount) if mms[i] in ["trace_link", "backward_link"]]
 
-    direct_links_dict = {n: [None, None] for n in dls}
-    backward_links_dict = {n: [None, None] for n in bls}
+    #direct_links_dict = {n: [None, None] for n in dls}
+    #backward_links_dict = {n: [None, None] for n in bls}
+
+    direct_links_dict = {}
+    for n in dls:
+        direct_links_dict[n] = [None, None]
+
+    backward_links_dict = {}
+    for n in bls:
+        backward_links_dict[n] = [None, None]
 
     has_contains = "match_contains" in mms
 
