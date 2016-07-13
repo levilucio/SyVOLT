@@ -10,7 +10,12 @@ Useful Himesis-related operations
 '''
 
 
-import pydot
+try:
+    import pydot
+    has_pydot = True
+except ImportError:
+    has_pydot = False
+
 import subprocess
 import re
 import sys
@@ -68,6 +73,9 @@ def graph_to_dot(name, g, verbosity = 0):
     verbosity = 0, represent directLink, indirectLink, backward, etc. edges as just edges in the dot graph
     verbosity = 1, represent these edges as their own node
     """
+
+    if not has_pydot:
+        return
 
     if g is None:
         print("graph_to_dot Error: Empty graph")
@@ -666,7 +674,12 @@ def build_traceability(graph, add_label = False):
 
 
 #function to dynamically load a new class
-import importlib
+
+try:
+    import importlib
+except ImportError:
+    pass
+
 from time import sleep
 def load_class(full_class_string, args = None):
     #sleep(0.01)
