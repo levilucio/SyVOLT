@@ -90,7 +90,7 @@ class Packet(Message):
     #     cpy.match_sets = copy.deepcopy(self.match_sets)
     #     return cpy
 
-    @profile
+    #@profile
     def copy_readonly(self):
         cpy = Packet()
         cpy.graph = self.graph
