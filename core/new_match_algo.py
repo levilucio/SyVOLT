@@ -366,7 +366,7 @@ class NewHimesisMatcher(object):
             #
             # for pair in copy.deepcopy(pm):
             #     print(pair)
-            match_set, needed_disambig = self.create_match_set(pm)
+            match_set = self.create_match_set(pm)
 
             # if self.debug:
             #     print("Match set:")
@@ -392,12 +392,8 @@ class NewHimesisMatcher(object):
         match_set = {}
         reverse_match_set = {}
 
-        needed_disambig = False
-
         for ps, ss in pm:
-
             for p, s in zip(ps, ss):
-
                 if p is None or s is None:
                     continue
 
@@ -406,7 +402,7 @@ class NewHimesisMatcher(object):
                         # we already have another element binding to this one, so fail
                         if self.debug:
                             print("Another pattern element is already binding to this source element")
-                        return {}, False
+                        return {}
                 except KeyError:
                     pass
 
@@ -417,7 +413,7 @@ class NewHimesisMatcher(object):
         #     print("Match set:")
         #     print(pm)
         #     print(match_set)
-        return match_set, needed_disambig
+        return match_set
 
     def print_link(self, graph, n0, n1, nlink):
         if nlink is not None:
