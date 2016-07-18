@@ -23,10 +23,15 @@ from util.progress import ProgressBar
 
 from PCDict import PCDict
 
-class path_condition_generator_worker(Process):
+#needed to use kernprof
+class DummyProcess:
+    def join(self):
+        pass
 
-    # def join(self):
-    #     pass
+    def start(self):
+        self.run()
+
+class path_condition_generator_worker(Process):
 
     def __init__(self, transformation, pruner, layer, num, report_progress, verbosity):
         super(path_condition_generator_worker, self).__init__()
