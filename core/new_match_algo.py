@@ -12,6 +12,7 @@ from profiler import *
 
 class NewHimesisMatcher(object):
 
+    #@profile
     def __init__(self, source_graph, pattern_graph, pred1 = {}, succ1 = {}, pred2 = {}, succ2 = {}, superclasses_dict = {}):
         self.debug = False
         self.compare_to_old = False
@@ -41,8 +42,9 @@ class NewHimesisMatcher(object):
 
         self.superclasses_dict = superclasses_dict
 
+        #not removing MT_pre__ anymore. This may cause problems
         try:
-            self.source_mms = [mm.replace("MT_pre__", "") for mm in source_graph.vs["mm__"]]
+            self.source_mms = source_graph.vs["mm__"]#[mm.replace("MT_pre__", "") for mm in source_graph.vs["mm__"]]
         except KeyError:
             self.source_mms = []
 
@@ -51,7 +53,11 @@ class NewHimesisMatcher(object):
         except KeyError:
             self.pattern_mms = []
 
-        self.pattern_attribs = [[attrib for attrib in node.attribute_names() if attrib.startswith("MT_pre__")] for node in self.pattern_graph.vs]
+        #get the set of pattern attribs from the first node if it exists
+        try:
+            self.pattern_attribs = [attrib for attrib in self.pattern_graph.vs[0].attribute_names() if attrib.startswith("MT_pre__")]
+        except IndexError:
+            self.pattern_attribs = []
 
         # if "MM5_then_Complete" in self.pattern_graph.name and \
         #                 "HEmptyPathCondition_HState2ProcDef-0_HBasicState2ProcDef-P0_HTransition2Inst-0_HTransitionHListenBranch" in self.source_graph.name:  # "HPP3_CompleteLHS" in self.pattern_graph.name:# and \
@@ -551,7 +557,7 @@ class NewHimesisMatcher(object):
 
 
         # Check for attributes value/constraint
-        for attr in self.pattern_attribs[patt_node_num]:
+        for attr in self.pattern_attribs:
             # Attribute constraints are stored as attributes in the pattern node.
             # The attribute must be prefixed by a specific keyword
             #if not attr.startswith("MT_pre__"):
