@@ -12,7 +12,7 @@ from profiler import *
 
 class NewHimesisMatcher(object):
 
-    #@profile
+
     def __init__(self, source_graph, pattern_graph, pred1 = {}, succ1 = {}, pred2 = {}, succ2 = {}, superclasses_dict = {}):
         self.debug = False
         self.compare_to_old = False
@@ -84,6 +84,9 @@ class NewHimesisMatcher(object):
         self.src_eqs_constant, self.src_eqs_variable = self.load_equations(source_graph)
 
         self.oldMatcher = None
+
+        self.pattern_nodes = [node for node in self.pattern_graph.vs]
+        self.source_nodes = [node for node in self.source_graph.vs]
 
     def load_equations(self, graph):
         try:
@@ -193,7 +196,6 @@ class NewHimesisMatcher(object):
 
     def reset_recursion_limit(self):
         pass
-
 
     def _match(self):
 
@@ -442,7 +444,7 @@ class NewHimesisMatcher(object):
 
     #==============================================================
 
-    #@Profiler2
+
     def match_nodes(self, graph_node, patt_node):
 
         targetMM = self.pattern_mms[patt_node]
@@ -476,9 +478,10 @@ class NewHimesisMatcher(object):
                 return False
 
         are_feasible = self.are_semantically_feasible(graph_node, patt_node)
-        if self.debug:
-            print("Src: " + sourceMM + " Trgt: " + targetMM + " Are feasible: " + str(are_feasible))
+        # if self.debug:
+        #     print("Src: " + sourceMM + " Trgt: " + targetMM + " Are feasible: " + str(are_feasible))
         return are_feasible
+
 
     def are_semantically_feasible(self, src_node_num, patt_node_num):
         """
@@ -493,17 +496,17 @@ class NewHimesisMatcher(object):
         # It verifies that all attribute constraints are satisfied.
         # =======================================================================
 
-        src_node = self.source_graph.vs[src_node_num]
-        patt_node = self.pattern_graph.vs[patt_node_num]
+        src_node = self.source_nodes[src_node_num]
+        patt_node = self.pattern_nodes[patt_node_num]
 
 
 
-        if self.debug_equations:
-            print("\n")
-            print("Src node: " + str(src_node_num))
-            print("Src constant: " + str(self.src_eqs_constant))
-            print("Patt node: " + str(patt_node_num))
-            print("Patt constant: " + str(self.patt_eqs_constant))
+        # if self.debug_equations:
+        #     print("\n")
+        #     print("Src node: " + str(src_node_num))
+        #     print("Src constant: " + str(self.src_eqs_constant))
+        #     print("Patt node: " + str(patt_node_num))
+        #     print("Patt constant: " + str(self.patt_eqs_constant))
 
         src_equations = []
         patt_label = patt_node["MT_label__"]
@@ -596,7 +599,7 @@ class NewHimesisMatcher(object):
                 # TODO: This should be a TransformationLanguageSpecificException
                 print("Source graph: " + self.source_graph.name)
                 print("Pattern graph: " + self.pattern_graph.name)
-                for n in self.source_graph.vs:
+                for n in self.source_nodes:
                     try:
                         print("Type: " + str(n["type"]))
                         print("MM: " + n["mm__"])
