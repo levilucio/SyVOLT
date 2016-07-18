@@ -32,12 +32,8 @@ from PropertyVerification.v2.if_then_contract import IfThenContract
 from PropertyVerification.v2.prop_logic import NotContract, AndContract
 
 
-#contracts
+from util.parser import load_parser
 
-
-
-from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
-##Pattern COntract - END
 class Test:
 
     def setUp(self, args):
@@ -86,16 +82,16 @@ class Test:
         contracts = load_directory("ExFamToPerson/contracts")
 
         contracts_to_load = [
-            "Neg_CityCompany",
-            "Neg_CountryCity",
-            "Neg_SchoolOrdFac",
-            "Pos_AssocCity",
-            "Pos_ChildSchool",
+            # "Neg_CityCompany",
+            # "Neg_CountryCity",
+            # "Neg_SchoolOrdFac",
+            # "Pos_AssocCity",
+            # "Pos_ChildSchool",
             "Pos_DaughterMother",
-            "Pos_FourMembers",
-            "Pos_MotherFather",
-            "Pos_ParentCompany",
-            "Pos_TownHallComm"
+            # "Pos_FourMembers",
+            # "Pos_MotherFather",
+            # "Pos_ParentCompany",
+            # "Pos_TownHallComm"
         ]
 
         self.atomic_contracts = []
@@ -214,7 +210,7 @@ class Test:
 #         #raise Exception()
 # 
 #
-        raise Exception()
+        #raise Exception()
 
         print("\nContract proving:")
 
@@ -238,43 +234,7 @@ def _print_states(self, s):
 
 
 if __name__ == "__main__":
-    import argparse
-
-    parser = argparse.ArgumentParser(description='Run the uml to kiltera test.')
-    parser.add_argument('--skip_tests', dest = 'run_tests', action = 'store_false',
-                        help = 'Option to skip the running of matching tests')
-    parser.set_defaults(run_tests = True)
-
-    parser.add_argument('--skip_parallel', dest = 'do_parallel', action = 'store_false',
-                        help = 'Option to force computation to run single-thread')
-    parser.set_defaults(do_parallel = True)
-
-    parser.add_argument('--skip_pickle', dest = 'do_pickle', action = 'store_false',
-                        help = 'Option to skip the use of pickling')
-    parser.set_defaults(do_pickle = True)
-
-    parser.add_argument('--compression', type = int, default = 6,
-                        help = 'Level of compression to use with pickling. Range: 0 (no compression) to 9 (high compression) (default: 6)')
-    parser.set_defaults(compression = 6)
-
-    parser.add_argument('--slice', type = int, default = 0,
-                        help = 'Index of contract to slice for. Range: 0 (no slicing) to #CONTRACTS (default: 0)')
-    parser.set_defaults(slice = 0)
-
-
-    parser.add_argument('--no_svg', dest = 'draw_svg', action = 'store_false',
-                        help = 'Flag to force svg files to not be drawn')
-    parser.set_defaults(draw_svg = True)
-
-    parser.add_argument('--num_pcs', type = int, default = -1,
-                        help = 'Number of path conditions which should be produced by this test (default: -1)')
-
-    parser.add_argument('--num_rules', type = int, default = -1,
-                        help = 'Number of rules in the transformation (default: -1)')
-
-    parser.add_argument('--verbosity', type = int, default = 0,
-                        help = 'Verbosity level (default: 0 - minimum output)')
-
+    parser = load_parser()
     args = parser.parse_args()
 
 
