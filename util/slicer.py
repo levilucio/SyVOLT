@@ -241,7 +241,8 @@ class Slicer():
 
 
     def slice_transformation(self, contract):
-
+        import time
+        start_time = time.time()
         contract_name, contract_list = self.decompose_contract(contract)
 
         if self.debug:
@@ -289,6 +290,8 @@ class Slicer():
             if len(new_layer) > 0:
                 new_transformation.append(new_layer)
 
+        end_time = time.time() - start_time
 
+        print("Slicing took: " + str(end_time) + " seconds")
 
         return new_rules, new_transformation
