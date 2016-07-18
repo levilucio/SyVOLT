@@ -82,18 +82,22 @@ class Packet(Message):
     pivots: %s''' % (self.current, self.graph.name, ms, self.global_pivots)
         return s
     
-    def clone(self):
-        cpy = Packet()
-        cpy.graph = self.graph.copy()
-        cpy.global_pivots = copy.copy(self.global_pivots)
-        cpy.current = self.current
-        cpy.match_sets = copy.deepcopy(self.match_sets)
-        return cpy
-    
+    # def clone(self):
+    #     cpy = Packet()
+    #     cpy.graph = self.graph.copy()
+    #     cpy.global_pivots = copy.copy(self.global_pivots)
+    #     cpy.current = self.current
+    #     cpy.match_sets = copy.deepcopy(self.match_sets)
+    #     return cpy
+
+    @profile
     def copy_readonly(self):
         cpy = Packet()
         cpy.graph = self.graph
-        cpy.global_pivots = copy.copy(self.global_pivots)
+        if len(self.global_pivots) == 0:
+            cpy.global_pivots = {}
+        else:
+            cpy.global_pivots = copy.copy(self.global_pivots)
         cpy.current = self.current
         cpy.match_sets = copy.deepcopy(self.match_sets)
         return cpy
@@ -123,7 +127,7 @@ class Packet(Message):
         return self.copy_readonly()
     
     def __deepcopy__(self, memo):
-        return self.__copy__()
+        return self.copy_readonly()
     
 #    def get_curr_matchset(self):
 #        return self.match_sets[self.current]
@@ -183,7 +187,10 @@ class MatchSet:
     def __deepcopy__(self, memo):
         cpy = MatchSet()
         cpy.match2rewrite = self.match2rewrite
-        cpy.matches = [copy.deepcopy(match) for match in self.matches]
+        if len(self.matches) == 0:
+            cpy.matches = []
+        else:
+            cpy.matches = [copy.deepcopy(match) for match in self.matches]
         return cpy
 
 
