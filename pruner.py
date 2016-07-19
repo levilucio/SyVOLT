@@ -6,6 +6,9 @@ Created on Sep 6, 2015
 
 from util.ecore_utils import *
 from core.himesis_utils import graph_to_dot
+
+from profiler import *
+
 class Pruner(object):
     '''
     checks whether a path condition can be removed from the set of path conditions being built
@@ -13,7 +16,7 @@ class Pruner(object):
     left to symbolically execute
     '''
 
-    def __init__(self, metamodel, transformation, rule_names):
+    def __init__(self, metamodel, transformation, rule_names, pc_name_function):
         '''
         Constructor
         '''
@@ -29,9 +32,13 @@ class Pruner(object):
         self.linksToRules = {}
 
         self.rule_names = rule_names
+        self.pc_name_function = pc_name_function
 
         self.mmClassParents = self.eu.mmClassParents
         self.mmClassChildren = self.eu.mmClassChildren
+
+        self.ruleContainmentLinks["HEmpty"] = {}
+        self.ruleMissingContLinks["HEmpty"] = {}
 
         for layer in transformation:
             for rule in layer:
@@ -49,14 +56,9 @@ class Pruner(object):
         self.missing_contain_links = []
         self.all_missing_contain_links = []
 
-        #map to where link was inherited from
-        original_links = self.eu.originalLinks
 
-        required_rules = {}
         for layer in transformation:
             for rule in layer:
-
-                required_rules[rule.name] = {}
 
                 #get the contain links for the other rules
                 contain_links_to_build = {}
@@ -67,52 +69,18 @@ class Pruner(object):
                 links_not_found = self.will_links_be_built(rule.name, self.ruleMissingContLinks[rule.name], contain_links_to_build, require_all_links = True)
 
                 if len(links_not_found) > 0:
-
                     print("\nError for rule: " + self.rule_names[rule.name])
-                    print("Missing containment links: ")
-                    for l in links_not_found:
-
-                        if l not in self.all_missing_contain_links:
-                            self.all_missing_contain_links.append(l)
-
-                        className = l[0]
-                        missing_link = (l[1], l[2], className)
-                        print(missing_link[0] + " -> " + missing_link[1] + " -> " + className)
-
-
-                        try:
-                            inherited_links = original_links[className]
-                            if (missing_link[0], missing_link[1]) in inherited_links:
-                                class_inherited_from = inherited_links[(missing_link[0], missing_link[1])]
-                                print("\tInherited from:")
-                                print("\t" + str(class_inherited_from) + " -> " + missing_link[1] + " -> " + className)
-                            else:
-                                pass
-                                # print("Not inherited")
-                                #
-                                # for k in sorted(original_links[className].keys()):
-                                #     print(k)
-                                #     print(original_links[className][k])
-
-                        except KeyError:
-                            pass
-                            # print("Not inherited")
-                            # print(original_links)
-
-
+                    self.print_missing_links(links_not_found, rule)
 
         if self.debug:
-            print("\nContainment links:")
-            for k, v in sorted(self.ruleContainmentLinks.items()):
-                print(k + " :")
-                for c in v:
-                    print("\t" + str(c) + " : " + str(v[c]) )
+            self.print_dict("Containment links", self.ruleContainmentLinks)
 
         if self.debug:
-            print("\nMissing containment links:")
+            print("\nTransformation is missing " + str(len(self.all_missing_contain_links)) + " containment links:")
             for missing_link in sorted(self.all_missing_contain_links):
                 print(missing_link[0] + " -> " + missing_link[1] + " -> " + missing_link[2])
 
+        #raise Exception()
 
     # def get_full_inheritance(self, className):
     #     inheritance = [className]
@@ -121,6 +89,45 @@ class Pruner(object):
     #     if className in self.mmClassChildren:
     #         inheritance += self.mmClassChildren[className]
     #     return inheritance
+
+    def print_dict(self, name, d):
+        print("\n" + name + ":")
+        for k, v in sorted(d.items()):
+            print(k + " :")
+            for c in v:
+                print("\t" + str(c) + " : " + str(v[c]))
+
+    def print_missing_links(self, links_not_found, rule):
+        # map to where link was inherited from
+        original_links = self.eu.originalLinks
+
+        print("Rule is missing containment links: ")
+        for l in links_not_found:
+            if l not in self.all_missing_contain_links:
+                self.all_missing_contain_links.append(l)
+
+            className = l[0]
+            missing_link = (l[1], l[2], className)
+            print(missing_link[0] + " -> " + missing_link[1] + " -> " + className)
+
+            try:
+                inherited_links = original_links[className]
+                if (missing_link[0], missing_link[1]) in inherited_links:
+                    class_inherited_from = inherited_links[(missing_link[0], missing_link[1])]
+                    print("\tInherited from:")
+                    print("\t" + str(class_inherited_from) + " -> " + missing_link[1] + " -> " + className)
+                else:
+                    pass
+                    # print("Not inherited")
+                    #
+                    # for k in sorted(original_links[className].keys()):
+                    #     print(k)
+                    #     print(original_links[className][k])
+
+            except KeyError:
+                pass
+                # print("Not inherited")
+                # print(original_links)
 
 
     def will_links_be_built(self, rule_name, contain_links, future_contain_links, require_all_links = False):
@@ -232,7 +239,7 @@ class Pruner(object):
                         if link not in builtContainmentLinks[className]:
                             builtContainmentLinks[className].append(link)
                 else:
-                    builtContainmentLinks[className] = self.ruleContainmentLinks[ruleName][className]
+                    builtContainmentLinks[className] = deepcopy(self.ruleContainmentLinks[ruleName][className])
 
         # print("\nRulenames: " + str(ruleNames))
         # for c in builtContainmentLinks:
@@ -250,6 +257,14 @@ class Pruner(object):
             
         return builtClasses
 
+    def combine_dicts(self, d1, d2):
+        for key, value in d2.items():
+            if key not in d1:
+                d1[key] = deepcopy(value)
+                continue
+            for v in value:
+                if v not in d1[key]:
+                    d1[key].append(v)
 
     def isPathConditionStillFeasible(self, pathCondition, rulesToTreat):
         '''
@@ -257,11 +272,21 @@ class Pruner(object):
         containment requirements cannot be fulfilled
         '''
 
-        missingContLinks = self.eu.getMissingContainmentLinks(pathCondition)
+        rules_in_pc = self.pc_name_function(pathCondition.name)
 
-        contLinksInRulesToTreat = self.getContainmentLinksBuiltByRuleSet(rulesToTreat)
+        all_missing = {}
+        all_built = {}
+        for rule in rules_in_pc:
+            self.combine_dicts(all_missing, self.ruleMissingContLinks[rule])
+            self.combine_dicts(all_built, self.ruleContainmentLinks[rule])
 
-        missingLinks = self.will_links_be_built(pathCondition.name, missingContLinks, contLinksInRulesToTreat)
+        if len(all_missing) == 0:
+            return True
+
+        contLinksInRulesToTreat = deepcopy(self.getContainmentLinksBuiltByRuleSet(rulesToTreat))
+        contLinksInRulesToTreat.update(all_built)
+
+        missingLinks = self.will_links_be_built(pathCondition.name, all_missing, contLinksInRulesToTreat)
 
         #remove all the containment links we know to be missing
         for ml in self.all_missing_contain_links:
@@ -274,6 +299,8 @@ class Pruner(object):
             #    print("... Pruner Returning True")
             return True
         else:
+            #raise Exception()
+
             if self.debug:
                 print("=========================")
                 print("Path condition: " + pathCondition.name)
