@@ -23,8 +23,15 @@ from util.progress import ProgressBar
 
 from PCDict import PCDict
 
-class path_condition_generator_worker(Process):
+#needed to use kernprof
+class DummyProcess:
+    def join(self):
+        pass
 
+    def start(self):
+        self.run()
+
+class path_condition_generator_worker(Process):
 
     def __init__(self, transformation, pruner, layer, num, report_progress, verbosity):
         super(path_condition_generator_worker, self).__init__()
@@ -46,6 +53,8 @@ class path_condition_generator_worker(Process):
         self.pruning = True
 
         self.pc_dict = None
+
+
 
     def load_pc_dict(self, pcs):
 
@@ -80,6 +89,7 @@ class path_condition_generator_worker(Process):
         new_pc_dict = {}
 
         name_dict = {}
+        reverse_name_dict = {}
 
         rulesToTreat = []
         if self.pruning:
@@ -441,17 +451,28 @@ class path_condition_generator_worker(Process):
     
                                                     previousTotalPC = None                                                    
                                                     writeOverPreviousTotalPC = False
-    
-                                                    for nameTotalPC in name_dict.keys():
-                                                        if name_dict[nameTotalPC] == cpc.name:
-                                                            previousTotalPC = nameTotalPC
-                                                            writeOverPreviousTotalPC = True
-                                                            break
-                                                    
-                                                    if not writeOverPreviousTotalPC:
+
+                                                    try:
+                                                        reverse_name = reverse_name_dict[cpc.name]
+                                                        name_dict[reverse_name] = newPathCondName
+                                                        reverse_name_dict[newPathCondName] = reverse_name
+                                                    except KeyError:
                                                         name_dict[cpc.name] = newPathCondName
-                                                    else:
-                                                        name_dict[previousTotalPC] = newPathCondName
+                                                        reverse_name_dict[newPathCondName] = cpc.name
+                                                    # if cpc.name in reverse_name_dict:
+                                                    #     name_dict[reverse_name_dict]
+                                                    # for nameTotalPC in name_dict.keys():
+                                                    #     if name_dict[nameTotalPC] == cpc.name:
+                                                    #         previousTotalPC = nameTotalPC
+                                                    #         writeOverPreviousTotalPC = True
+                                                    #         break
+                                                    #
+                                                    # if not writeOverPreviousTotalPC:
+                                                    #     name_dict[cpc.name] = newPathCondName
+                                                    #     reverse_name_dict[newPathCondName] = cpc.name
+                                                    # else:
+                                                    #     name_dict[previousTotalPC] = newPathCondName
+                                                    #     reverse_name_dict[newPathCondName] = previousTotalPC
                                                         
                                                     #change the child's name in the child's array
                                                     childrenPathConditions[child_pc_index] = newPathCondName
@@ -582,16 +603,26 @@ class path_condition_generator_worker(Process):
                         previousTotalPC = None                                                    
                         writeOverPreviousTotalPC = False
 
-                        for nameTotalPC in name_dict.keys():
-                            if name_dict[nameTotalPC] == cpc.name:
-                                previousTotalPC = nameTotalPC
-                                writeOverPreviousTotalPC = True
-                                break
-                        
-                        if not writeOverPreviousTotalPC:
+                        try:
+                            reverse_name = reverse_name_dict[cpc.name]
+                            name_dict[reverse_name] = newPathCondName
+                            reverse_name_dict[newPathCondName] = reverse_name
+                        except KeyError:
                             name_dict[cpc.name] = newPathCondName
-                        else:
-                            name_dict[previousTotalPC] = newPathCondName                  
+                            reverse_name_dict[newPathCondName] = cpc.name
+
+                        # for nameTotalPC in name_dict.keys():
+                        #     if name_dict[nameTotalPC] == cpc.name:
+                        #         previousTotalPC = nameTotalPC
+                        #         writeOverPreviousTotalPC = True
+                        #         break
+                        #
+                        # if not writeOverPreviousTotalPC:
+                        #     name_dict[cpc.name] = newPathCondName
+                        #     reverse_name_dict[newPathCondName] = cpc.name
+                        # else:
+                        #     name_dict[previousTotalPC] = newPathCondName
+                        #     reverse_name_dict[newPathCondName] = previousTotalPC
 
                         childrenPathConditions[pathConditionIndex] = newPathCondName
                         

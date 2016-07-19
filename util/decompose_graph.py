@@ -4,11 +4,19 @@ from core.himesis_utils import graph_to_dot
 from copy import deepcopy
 from profiler import *
 
-from functools import lru_cache
+try:
+    from functools import lru_cache
+except ImportError:
+    print("Warning: Could not import lru_cache")
+    def lru_cache(maxsize=32):
+        def true_decorator(f):
+            return f
+        return true_decorator
 
 #@do_cprofile
+@profile
 #@Profiler
-@lru_cache(maxsize=32)
+#@lru_cache(maxsize=256)
 def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
     #decompose graph into directLinks, backwardLinks, and isolated elements
 
@@ -18,7 +26,7 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
 
     if debug:
         print("\nDecomposing graph: " + graph.name)
-        graph_to_dot(graph.name, graph)
+        #graph_to_dot(graph.name, graph)
 
     match_elements = []
     #isolated_match_elements = []
@@ -44,6 +52,14 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
 
     direct_links_dict = {n: [None, None] for n in dls}
     backward_links_dict = {n: [None, None] for n in bls}
+
+    # direct_links_dict = {}
+    # for n in dls:
+    #     direct_links_dict[n] = [None, None]
+    #
+    # backward_links_dict = {}
+    # for n in bls:
+    #     backward_links_dict[n] = [None, None]
 
     has_contains = "match_contains" in mms
 
@@ -112,19 +128,6 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
                 break
         if isolated:
             isolated_match_elements.append(me)
-
-
-    #this creates the trace links for elements that are not connected by a backward link
-    for me in match_elements:
-        for ae in apply_elements:
-            found_link = False
-            for a, b, _ in backward_links:
-                if (a == me and b == ae) or (b == me and a == ae):
-                    found_link = True
-                    break
-
-            if not found_link:
-                backward_links.append((me, ae, None))
 
     if debug:
         print("\nRule name: " + graph.name)

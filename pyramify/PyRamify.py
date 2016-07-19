@@ -337,41 +337,32 @@ class PyRamify:
     
         match_apply_nodes = self.get_all_nodes(graph)
         
-        LHS_condition_string = "from core.himesis_plus import flood_find_nodes\n"
+        LHS_condition_string = "from core.himesis_plus import find_connected_match_node\n"
         LHS_condition_string += "nodesToCheck = ["
 
         for node in match_apply_nodes:
             node_label = node["MT_label__"]
             LHS_condition_string += "'" + str(node_label) + "'" + ","
         LHS_condition_string += "]\n"
-        LHS_condition_string += "setsOfpairedWithNodes = []\n"
 
-        # check what rule the match found is connected to 
-        LHS_condition_string += "for node in nodesToCheck:\n"
-        #LHS_condition_string += "    print 'Node: ' + str(node)\n"
-        LHS_condition_string += "    pairedWithNodes = flood_find_nodes(PreNode(node).index, graph,['directLink_S', 'directLink_T', \
-'indirectLink_S', 'indirectLink_T','hasAttribute_S', 'hasAttribute_T', 'trace_link'],['paired_with'], ['paired_with'])\n"
-        LHS_condition_string += "    setsOfpairedWithNodes.append(set(pairedWithNodes))\n"   
-        #LHS_condition_string += "    print 'Rule nodes: ' + str(pairedWithNodes)\n"
-                
-        LHS_condition_string += "result = set.intersection(*setsOfpairedWithNodes)\n"
-        #LHS_condition_string += "print '>>>>>> Result: ' + str(result)\n"
-        # it is fully connected to the subsuming rule            
-        if writeOnTop:
-            LHS_condition_string += "if result == set():\n"
-            LHS_condition_string += "    return False\n"
-            LHS_condition_string += "else:\n"
-            LHS_condition_string += "    return True"  
-        # it is not fully connected to the subsuming rule              
-        else:
-            LHS_condition_string += "if result != set():\n"
-            LHS_condition_string += "    return False\n"
-            LHS_condition_string += "else:\n"
-            LHS_condition_string += "    return True\n"
+        # check what rule the match found is connected to
+        LHS_condition_string += "MatchNodes = [find_connected_match_node(PreNode(node).index, graph) for node in nodesToCheck]\n"
+
+        LHS_condition_string += "result = len(set(MatchNodes)) == 1\n"
+        # it is fully connected to the subsuming rule
+
+        #LHS_condition_string += "print(MatchNodes)\n"
+        #LHS_condition_string += "print('Result: ' + str(result))\n"
+
+        LHS_condition_string += "return " + str(writeOnTop) + " and result\n"
                          
-#         print "--------------------------------------------------------------"
-#         print LHS_condition_string              
-#         print "--------------------------------------------------------------"
+        # print("--------------------------------------------------------------")
+        # print(LHS_condition_string              )
+        # print(graph.name)
+        # graph_to_dot("match_code_"+graph.name, graph)
+        # print("--------------------------------------------------------------")
+
+
         
         return LHS_condition_string
 
@@ -787,9 +778,11 @@ class PyRamify:
 
         loopingRuleSubsumption = subsumptionHandler.cleanLoopingRuleSubsumption()
 
-        #print("Rules that need overlap treatment: " + str(rulesNeedingOverlapTreatment))
-        #print("Subsumption order between rules for all layers: " + str(self.ruleSubsumption))
-        #print("Rules fully overlapping with each other: " + str(subsumptionHandler.loopingRuleSubsumption))
+        # print("Rules that need overlap treatment: " + str(self.rulesNeedingOverlapTreatment))
+        # print("Subsumption order between rules for all layers: " + str(self.ruleSubsumption))
+        # print("Rules fully overlapping with each other: " + str(subsumptionHandler.loopingRuleSubsumption))
+
+        #raise Exception()
 
         print("\n")
         print("Finished PyRamify")

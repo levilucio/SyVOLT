@@ -21,7 +21,7 @@ from core.himesis_utils import graph_to_dot
 from util.test_script_utils import select_rules, get_sub_and_super_classes,\
     load_transformation, changePropertyProverMetamodel, set_supertypes, load_contracts
 from util.slicer import Slicer
-
+from util.parser import load_parser
 # imports for properties' atomic contracts
 #
 # from mbeddr2C_MM.props.HAssignmentInstance_IsolatedLHS import HAssignmentInstance_IsolatedLHS
@@ -50,71 +50,74 @@ class Prover():
         pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
         
         
-        
-        
-        
+        transformation_dir = "mbeddr2C_MM/real_transformation/no_contains"
+
         r0 = 'Hlayer0rule0'
         r1 = 'Hlayer0rule1'
         r2 = 'Hlayer0rule2'
         r3 = 'Hlayer0rule3'
         r4 = 'Hlayer0rule4'
-        r5 = 'Hlayer0rule5'
-        r6 = 'Hlayer0rule6'
-        r7 = 'Hlayer0rule7'
-        r8 = 'Hlayer0rule8'
-        r9 = 'Hlayer0rule9'
-        r10 = 'Hlayer0rule10'
-        r11 = 'Hlayer0rule11'
-        r12 = 'Hlayer1rule0'
-        r13 = 'Hlayer1rule1'
-        r14 = 'Hlayer1rule2'
-        r15 = 'Hlayer1rule3'
-        r16 = 'Hlayer1rule4'
-        r17 = 'Hlayer1rule5'
-        r18 = 'Hlayer1rule6'
-        r19 = 'Hlayer1rule7'
-        r20 = 'Hlayer1rule8'
-        r21 = 'Hlayer1rule9'
-        r22 = 'Hlayer1rule10'
-        r23 = 'Hlayer1rule11'
-        r24 = 'Hlayer1rule12'
-        r25 = 'Hlayer1rule13'
-        r26 = 'Hlayer1rule14'
-        r27 = 'Hlayer1rule15'
-        r28 = 'Hlayer2rule0'
-        r29 = 'Hlayer2rule1'
-        r30 = 'Hlayer2rule2'
-        r31 = 'Hlayer2rule3'
-        r32 = 'Hlayer3rule0'
-        r33 = 'Hlayer3rule1'
-        r34 = 'Hlayer3rule2'
-        r35 = 'Hlayer3rule3'
-        r36 = 'Hlayer3rule4'
-        r37 = 'Hlayer3rule5'
-        r38 = 'Hlayer4rule0'
-        r39 = 'Hlayer4rule1'
-        r40 = 'Hlayer4rule2'
-        r41 = 'Hlayer4rule3'
-        r42 = 'Hlayer5rule0'
-        r43 = 'Hlayer5rule1'
-        r44 = 'Hlayer5rule2'
-        r45 = 'Hlayer5rule3'
-        r46 = 'Hlayer5rule4'
-        r47 = 'Hlayer5rule5'
-        r48 = 'Hlayer6rule0'
-    
-        
-        full_transformation = [[r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11],[r12,r13,r14,r15,r16,r17,r18,r19,r20,r21,r22,r23,r24,r25,r26,r27],[r28,r29,r30,r31],[r32,r36,r35,r34,r33,r37],[r38,r39,r40,r41,],[r42,r43,r44,r45,r46,r47],[r48]]
-        
+        r5 = 'Hlayer0rule6'
+        r6 = 'Hlayer0rule7'
+        r7 = 'Hlayer0rule8'
+        r8 = 'Hlayer0rule9'
+        r9 = 'Hlayer0rule10'
+        r10 = 'Hlayer0rule11'
+        r11 = 'Hlayer1rule0'
+        r12 = 'Hlayer1rule1'
+        r13 = 'Hlayer1rule2'
+        r14 = 'Hlayer1rule3'
+        r15 = 'Hlayer1rule4'
+        r16 = 'Hlayer1rule5'
+        r17 = 'Hlayer1rule6'
+        r18 = 'Hlayer1rule7'
+        r19 = 'Hlayer1rule8'
+        r20 = 'Hlayer1rule9'
+        r21 = 'Hlayer1rule10'
+        r22 = 'Hlayer1rule11'
+        r23 = 'Hlayer1rule12'
+        r24 = 'Hlayer1rule13'
+        r25 = 'Hlayer1rule14'
+        r26 = 'Hlayer1rule15'
+        r27 = 'Hlayer2rule1'
+        r28 = 'Hlayer2rule2'
+        r29 = 'Hlayer2rule3'
+        r30 = 'Hlayer3rule0'
+        r31 = 'Hlayer3rule1'
+        r32 = 'Hlayer3rule2'
+        r33 = 'Hlayer3rule3'
+        r34 = 'Hlayer3rule4'
+        r35 = 'Hlayer3rule5'
+        r36 = 'Hlayer4rule0'
+        r37 = 'Hlayer4rule1'
+        r38 = 'Hlayer4rule2'
+        r39 = 'Hlayer4rule3'
+        r40 = 'Hlayer5rule0'
+        r41 = 'Hlayer5rule1'
+        r42 = 'Hlayer5rule2'
+        r43 = 'Hlayer5rule3'
+        r44 = 'Hlayer5rule4'
+        r45 = 'Hlayer5rule5'
+        r46 = 'Hlayer6rule0'
 
-        self.rules, self.transformation = load_transformation("mbeddr2C_MM/real_transformation", full_transformation)
+        full_transformation = [[r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, ],
+                               [r11, r12, r13, r14, r15, r16, r17, r18, r19, r20, r21, r22, r23, r24, r25, r26, ],
+                               [r27, r28, r29, ], [r30, r31, r32, r33, r34, r35, ], [r36, r37, r38, r39, ],
+                               [r40, r41, r42, r43, r44, r45, ], [r46, ], ]
+
+        self.rules, self.transformation = load_transformation(transformation_dir, full_transformation)
 
         inputMM = "./mbeddr2C_MM/ecore_metamodels/Module.ecore"
         outputMM = "./mbeddr2C_MM/ecore_metamodels/C.ecore"
         subclasses_dict, superclasses_dict = get_sub_and_super_classes(inputMM, outputMM)
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
-            pyramify.ramify_directory("mbeddr2C_MM/real_transformation", self.transformation)
+            pyramify.ramify_directory(transformation_dir, self.transformation)
+
+        # for rule in self.rules:
+        #     graph_to_dot(rule, self.rules[rule])
+
+
 
         pre_metamodel = ["MT_pre__S_MM", "MoTifRule"]
         post_metamodel = ["MT_post__T_MM", "MoTifRule"]
@@ -178,6 +181,8 @@ class Prover():
         inputMM = "./mbeddr2C_MM/ecore_metamodels/Module.ecore"
         pc_set = PathConditionGenerator(self.transformation, outputMM, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
 
+        raise Exception()
+
         ts0 = time.time()
         pc_set.build_path_conditions()
         ts1 = time.time()
@@ -186,6 +191,9 @@ class Prover():
         print("Number of path conditions: " + str(pc_set.num_path_conditions))
 
         # print path conditions to screen
+
+
+        #pc_set.print_path_conditions_file()
 
 #         if pc_set.num_path_conditions < 300:
 #             pc_set.print_path_conditions_screen()
@@ -214,43 +222,7 @@ class Prover():
 
 
 if __name__ == "__main__":
-    import argparse
-
-    parser = argparse.ArgumentParser(description='Run the ecore_copier test.')
-    
-    parser.add_argument('--skip_tests', dest = 'run_tests', action = 'store_false',
-                        help = 'Option to skip the running of matching tests')
-    parser.set_defaults(run_tests = True)
-
-    parser.add_argument('--skip_parallel', dest = 'do_parallel', action = 'store_false',
-                        help = 'Option to force computation to run single-thread')
-    parser.set_defaults(do_parallel = True)
-
-    parser.add_argument('--skip_pickle', dest = 'do_pickle', action = 'store_false',
-                        help = 'Option to skip the use of pickling')
-    parser.set_defaults(do_pickle = True)
-    
-    parser.add_argument('--compression', type = int, default = 6,
-                        help = 'Level of compression to use with pickling. Range: 0 (no compression) to 9 (high compression) (default: 6)')
-    parser.set_defaults(compression = 6)
-    
-    parser.add_argument('--slice', type = int, default = 0,
-                        help = 'Index of contract to slice for. Range: 0 (no slicing) to #CONTRACTS (default: 0)')
-    parser.set_defaults(slice = 0)
-    
-    parser.add_argument('--no_svg', dest = 'draw_svg', action = 'store_false',
-                        help = 'Flag to force svg files to not be drawn')
-    parser.set_defaults(draw_svg = True)
-
-    parser.add_argument('--num_pcs', type = int, default = -1,
-                        help = 'Number of path conditions which should be produced by this test (default: -1)')
-
-    parser.add_argument('--num_rules', type = int, default = -1,
-                        help = 'Number of rules in the transformation (default: -1)')
-                        
-    parser.add_argument('--verbosity', type = int, default = 0,
-                        help = 'Verbosity level (default: 0 - minimum output)')
-                        
+    parser = load_parser()
     args = parser.parse_args()
 
 

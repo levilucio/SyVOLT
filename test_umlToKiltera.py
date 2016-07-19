@@ -20,6 +20,7 @@ from core.himesis_utils import graph_to_dot, load_directory
 from util.test_script_utils import select_rules, get_sub_and_super_classes,\
     load_transformation, changePropertyProverMetamodel, set_supertypes, load_contracts
 from util.slicer import Slicer
+from util.parser import load_parser
 
 class Prover():
 
@@ -53,11 +54,9 @@ class Prover():
             full_transformation = [[r1, ], [r0, ], [r4, r5, r6, ], [r7, r8, r9, ], [r10, r11, r12, ],
                                    [r13, r14, r15, r16, ], [r2], [r3, ], ]
 
-            rules_dir = "UMLRT2Kiltera_MM/transformation/handbuilt/"
+            rules_dir = "UMLRT2Kiltera_MM/transformation/no_contains/"
 
         else:
-
-
             r0 = 'HMapRootElementRule'
             r1 = 'HState2ProcDef'
             r2 = 'HBasicState2ProcDef'
@@ -76,6 +75,8 @@ class Prover():
             r15 = 'HRuleConnect2RootElement'
             r16 = 'HMapHierarchyOfStates2HierarchyOfProcs'
 
+            #full_transformation = [[r0, ], [r1, ], [r2, ], [r3, ], [r4, ], [r5, ], [r6, ], [r7, ], [r8, ], [r9, ],
+            #                        [r10, ], [r11, ], [r12, ], [r13, ], [r14, ], [r15, ], [r16, ], ]
             full_transformation = [[r0], [r1, ], [r3, r2, r4, ], [r7, r5, r6, ], [r8, r9, r10, ], \
                                    [r11, r12, r13, r14, ], [r15], [r16, ],]
 
@@ -100,6 +101,7 @@ class Prover():
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
             pyramify.ramify_directory(rules_dir, self.transformation)
 
+        #raise Exception()
 
         pre_metamodel = ["MT_pre__S_MM", "MoTifRule"]
         post_metamodel = ["MT_post__T_MM", "MoTifRule"]
@@ -180,7 +182,7 @@ class Prover():
                                                                        args.draw_svg)
 
 
-        slicer = Slicer(self.rules, self.transformation)
+        slicer = Slicer(self.rules, self.transformation, superclasses_dict)
         if args.slice >= 0:
             print("Slicing for contract number " + str(args.slice))
             contract = None
@@ -197,11 +199,22 @@ class Prover():
                 self.if_then_contracts = [contract]
 
             print("Number rules before: " + str(len(self.rules)))
-            self.rules, self.transformation = slicer.slice_transformation(contract)
+            self.rules2, self.transformation2 = slicer.slice_transformation(contract)
+            # for l in self.transformation:
+            #     for r in l:
+            #         print(r.name)
+            #     print("---")
+            # print("==============")
+            # for l in self.transformation2:
+            #     for r in l:
+            #         print(r.name)
+            #     print("---")
+
+            raise Exception()
             print("Number rules after: " + str(len(self.rules)))
 
-            import sys
-            sys.exit()
+            # import sys
+            # sys.exit()
 
 
         # generate path conditions
@@ -231,53 +244,9 @@ class Prover():
         print("Number rules after: " + str(len(self.rules)))
 
 if __name__ == "__main__":
-    import argparse
 
-    parser = argparse.ArgumentParser(description='Run the ecore_copier test.')
-
-    parser.add_argument('--skip_tests', dest = 'run_tests', action = 'store_false',
-                        help = 'Option to skip the running of matching tests')
-    parser.set_defaults(run_tests = True)
-
-    parser.add_argument('--skip_parallel', dest = 'do_parallel', action = 'store_false',
-                        help = 'Option to force computation to run single-thread')
-    parser.set_defaults(do_parallel = True)
-
-    parser.add_argument('--skip_pickle', dest = 'do_pickle', action = 'store_false',
-                        help = 'Option to skip the use of pickling')
-    parser.set_defaults(do_pickle = True)
-
-    parser.add_argument('--compression', type = int, default = 6,
-                        help = 'Level of compression to use with pickling. Range: 0 (no compression) to 9 (high compression) (default: 6)')
-    parser.set_defaults(compression = 6)
-
-    parser.add_argument('--slice', type = int, default = -1,
-                        help = 'Index of contract to slice for. Range: 0 (no slicing) to #CONTRACTS (default: 0)')
-    parser.set_defaults(slice = -1)
-
-    parser.add_argument('--no_svg', dest = 'draw_svg', action = 'store_false',
-                        help = 'Flag to force svg files to not be drawn')
-    parser.set_defaults(draw_svg = True)
-
-    parser.add_argument('--num_pcs', type = int, default = -1,
-                        help = 'Number of path conditions which should be produced by this test (default: -1)')
-
-    parser.add_argument('--num_rules', type = int, default = -1,
-                        help = 'Number of rules in the transformation (default: -1)')
-
-    parser.add_argument('--verbosity', type = int, default = 0,
-                        help = 'Verbosity level (default: 0 - minimum output)')
-
-    parser.add_argument('--contract', type = int, default = -1,
-                        help = 'Contract selection (default: -1 - no contract)')
-    parser.set_defaults(contract = -1)
-
-    parser.add_argument('--handbuilt', dest = 'handbuilt', action = 'store_true',
-                        help = 'Select the handbuilt version (default: False - use HOT version)')
-    parser.set_defaults(handbuilt = False)
-
+    parser = load_parser()
     args = parser.parse_args()
-
 
     prover = Prover()
     prover.do_proof(args)

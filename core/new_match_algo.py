@@ -12,6 +12,7 @@ from profiler import *
 
 class NewHimesisMatcher(object):
 
+
     def __init__(self, source_graph, pattern_graph, pred1 = {}, succ1 = {}, pred2 = {}, succ2 = {}, superclasses_dict = {}):
         self.debug = False
         self.compare_to_old = False
@@ -41,8 +42,9 @@ class NewHimesisMatcher(object):
 
         self.superclasses_dict = superclasses_dict
 
+        #not removing MT_pre__ anymore. This may cause problems
         try:
-            self.source_mms = [mm.replace("MT_pre__", "") for mm in source_graph.vs["mm__"]]
+            self.source_mms = source_graph.vs["mm__"]#[mm.replace("MT_pre__", "") for mm in source_graph.vs["mm__"]]
         except KeyError:
             self.source_mms = []
 
@@ -51,7 +53,11 @@ class NewHimesisMatcher(object):
         except KeyError:
             self.pattern_mms = []
 
-        self.pattern_attribs = [[attrib for attrib in node.attribute_names() if attrib.startswith("MT_pre__")] for node in self.pattern_graph.vs]
+        #get the set of pattern attribs from the first node if it exists
+        try:
+            self.pattern_attribs = [attrib for attrib in self.pattern_graph.vs[0].attribute_names() if attrib.startswith("MT_pre__")]
+        except IndexError:
+            self.pattern_attribs = []
 
         # if "MM5_then_Complete" in self.pattern_graph.name and \
         #                 "HEmptyPathCondition_HState2ProcDef-0_HBasicState2ProcDef-P0_HTransition2Inst-0_HTransitionHListenBranch" in self.source_graph.name:  # "HPP3_CompleteLHS" in self.pattern_graph.name:# and \
@@ -78,6 +84,9 @@ class NewHimesisMatcher(object):
         self.src_eqs_constant, self.src_eqs_variable = self.load_equations(source_graph)
 
         self.oldMatcher = None
+
+        self.pattern_nodes = [node for node in self.pattern_graph.vs]
+        self.source_nodes = [node for node in self.source_graph.vs]
 
     def load_equations(self, graph):
         try:
@@ -187,7 +196,6 @@ class NewHimesisMatcher(object):
 
     def reset_recursion_limit(self):
         pass
-
 
     def _match(self):
 
@@ -359,9 +367,14 @@ class NewHimesisMatcher(object):
 
         for pm in self.combo_generator(link_matches):
             # if self.debug:
-            #     print("Potential match:")
-            #     print(pm)
-            match_set, needed_disambig = self.create_match_set(pm)
+
+            # import copy
+            #
+            # print("Potential match:")
+            #
+            # for pair in copy.deepcopy(pm):
+            #     print(pair)
+            match_set = self.create_match_set(pm)
 
             # if self.debug:
             #     print("Match set:")
@@ -380,69 +393,26 @@ class NewHimesisMatcher(object):
 
     def combo_generator(self, link_matches):
         for values in product(*link_matches.values()):
-            yield zip(link_matches, values)
+            if len(set(values)) == len(values):
+                yield zip(link_matches, values)
 
     def create_match_set(self, pm):
         match_set = {}
         reverse_match_set = {}
 
-        needed_disambig = False
-
-        for pair in pm:
-            (k, v) = pair
-
-            p0, p1, p_link = k
-            s0, s1, s_link = v
-
-            for p, s in [(p0, s0), (p1, s1), (p_link, s_link)]:
-
+        for ps, ss in pm:
+            for p, s in zip(ps, ss):
                 if p is None or s is None:
                     continue
-
-                #p_label = self.pattern_graph.vs[p]["MT_label__"]
-
-                #try:
-                #    s_label = self.source_graph.vs[s]["MT_label__"]
-                #except KeyError:
 
                 try:
                     if reverse_match_set[s] != p:
                         # we already have another element binding to this one, so fail
                         if self.debug:
                             print("Another pattern element is already binding to this source element")
-                        return {}, False
+                        return {}
                 except KeyError:
                     pass
-
-                if self.debug:
-                    print("Setting " + str(p) + " to " + str(s))
-
-                try:
-                    if match_set[p] != s:
-                        if self.debug:
-                            print("Already binding")
-                            print(str(p) + " : " + str(match_set[p]))
-
-                        needed_disambig = True
-                except KeyError:
-                    pass
-
-                    # if len(combinations) > 1:
-                    #
-                    #     #there is already a binding, so ignore this matching possibility
-                    #     return {}
-                    # else:
-                    #     #this matching would fail unless we allow this
-                    #     #so this is where disambiguation is needed
-                    #     pass
-                    #     #
-                    #     # print("Already a binding")
-                    #     # print(pm)
-                    #     # graph_to_dot("source", self.source_graph)
-                    #     # graph_to_dot("pattern", self.pattern_graph)
-                    #
-                    #     # import sys
-                    #     # sys.exit()
 
                 match_set[p] = s
                 reverse_match_set[s] = p
@@ -451,7 +421,7 @@ class NewHimesisMatcher(object):
         #     print("Match set:")
         #     print(pm)
         #     print(match_set)
-        return match_set, needed_disambig
+        return match_set
 
     def print_link(self, graph, n0, n1, nlink):
         if nlink is not None:
@@ -474,7 +444,7 @@ class NewHimesisMatcher(object):
 
     #==============================================================
 
-    #@Profiler2
+
     def match_nodes(self, graph_node, patt_node):
 
         targetMM = self.pattern_mms[patt_node]
@@ -508,9 +478,10 @@ class NewHimesisMatcher(object):
                 return False
 
         are_feasible = self.are_semantically_feasible(graph_node, patt_node)
-        if self.debug:
-            print("Src: " + sourceMM + " Trgt: " + targetMM + " Are feasible: " + str(are_feasible))
+        # if self.debug:
+        #     print("Src: " + sourceMM + " Trgt: " + targetMM + " Are feasible: " + str(are_feasible))
         return are_feasible
+
 
     def are_semantically_feasible(self, src_node_num, patt_node_num):
         """
@@ -525,17 +496,17 @@ class NewHimesisMatcher(object):
         # It verifies that all attribute constraints are satisfied.
         # =======================================================================
 
-        src_node = self.source_graph.vs[src_node_num]
-        patt_node = self.pattern_graph.vs[patt_node_num]
+        src_node = self.source_nodes[src_node_num]
+        patt_node = self.pattern_nodes[patt_node_num]
 
 
 
-        if self.debug_equations:
-            print("\n")
-            print("Src node: " + str(src_node_num))
-            print("Src constant: " + str(self.src_eqs_constant))
-            print("Patt node: " + str(patt_node_num))
-            print("Patt constant: " + str(self.patt_eqs_constant))
+        # if self.debug_equations:
+        #     print("\n")
+        #     print("Src node: " + str(src_node_num))
+        #     print("Src constant: " + str(self.src_eqs_constant))
+        #     print("Patt node: " + str(patt_node_num))
+        #     print("Patt constant: " + str(self.patt_eqs_constant))
 
         src_equations = []
         patt_label = patt_node["MT_label__"]
@@ -589,7 +560,7 @@ class NewHimesisMatcher(object):
 
 
         # Check for attributes value/constraint
-        for attr in self.pattern_attribs[patt_node_num]:
+        for attr in self.pattern_attribs:
             # Attribute constraints are stored as attributes in the pattern node.
             # The attribute must be prefixed by a specific keyword
             #if not attr.startswith("MT_pre__"):
@@ -628,7 +599,7 @@ class NewHimesisMatcher(object):
                 # TODO: This should be a TransformationLanguageSpecificException
                 print("Source graph: " + self.source_graph.name)
                 print("Pattern graph: " + self.pattern_graph.name)
-                for n in self.source_graph.vs:
+                for n in self.source_nodes:
                     try:
                         print("Type: " + str(n["type"]))
                         print("MM: " + n["mm__"])

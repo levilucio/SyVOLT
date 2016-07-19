@@ -85,6 +85,7 @@ class Matcher(RulePrimitive):
         return reduce(lambda x, y: '%s %s' % (x,y), s)
 
     #@do_cprofile
+    #@profile
     def packet_in(self, packet, verbosity = 0, preds=[], succs=[]):
         self.exception = None
         self.is_success = False
