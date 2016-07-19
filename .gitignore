@@ -4,6 +4,10 @@ __pycache__/
 
 /property_prover_rules/**
 /footage_for_demo/*
+dot/
+pickle/
+patterns/
+property_prover_rules/
 
 # C extensions
 *.so
