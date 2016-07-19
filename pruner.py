@@ -8,6 +8,7 @@ from util.ecore_utils import *
 from core.himesis_utils import graph_to_dot
 
 from profiler import *
+from operator import itemgetter
 
 class Pruner(object):
     '''
@@ -102,7 +103,7 @@ class Pruner(object):
         original_links = self.eu.originalLinks
 
         print("Rule is missing containment links: ")
-        for l in links_not_found:
+        for l in sorted(links_not_found, key=itemgetter(1,2,0)):
             if l not in self.all_missing_contain_links:
                 self.all_missing_contain_links.append(l)
 
@@ -266,7 +267,7 @@ class Pruner(object):
                 if v not in d1[key]:
                     d1[key].append(v)
 
-    @profile
+    #@profile
     def isPathConditionStillFeasible(self, pathCondition, rulesToTreat):
         '''
         decide whether a path condition can be removed from the path condition set because the
