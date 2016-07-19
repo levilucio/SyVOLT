@@ -523,7 +523,7 @@ class path_condition_generator_worker(Process):
             ###########################################################################
             
             ruleNamesInLayer = [rule.name for rule in self.transformation[self.layer]]
-            rulesForSecondPhase = set(self.overlappingRules.keys()).intersection(ruleNamesInLayer)
+            rulesForSecondPhase = sorted(set(self.overlappingRules.keys()).intersection(ruleNamesInLayer))
             
 #             print("--------------------------------")
 #             print("overlapping rules: " + str(self.overlappingRules.keys()))
@@ -533,7 +533,7 @@ class path_condition_generator_worker(Process):
                 
             for pathConditionIndex in range(len(childrenPathConditions)):
                 
-                for rule_name in sorted(rulesForSecondPhase):
+                for rule_name in rulesForSecondPhase:
                     ruleNamesInPC = []
                     for token in childrenPathConditions[pathConditionIndex].split("_"):
                         ruleNamesInPC.append(token.split("-")[0])
