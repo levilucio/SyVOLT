@@ -239,7 +239,7 @@ class Pruner(object):
                         if link not in builtContainmentLinks[className]:
                             builtContainmentLinks[className].append(link)
                 else:
-                    builtContainmentLinks[className] = deepcopy(self.ruleContainmentLinks[ruleName][className])
+                    builtContainmentLinks[className] = self.ruleContainmentLinks[ruleName][className]
 
         # print("\nRulenames: " + str(ruleNames))
         # for c in builtContainmentLinks:
@@ -260,12 +260,13 @@ class Pruner(object):
     def combine_dicts(self, d1, d2):
         for key, value in d2.items():
             if key not in d1:
-                d1[key] = deepcopy(value)
+                d1[key] = [v for v in value]
                 continue
             for v in value:
                 if v not in d1[key]:
                     d1[key].append(v)
 
+    @profile
     def isPathConditionStillFeasible(self, pathCondition, rulesToTreat):
         '''
         decide whether a path condition can be removed from the path condition set because the
@@ -283,7 +284,7 @@ class Pruner(object):
         if len(all_missing) == 0:
             return True
 
-        contLinksInRulesToTreat = deepcopy(self.getContainmentLinksBuiltByRuleSet(rulesToTreat))
+        contLinksInRulesToTreat = self.getContainmentLinksBuiltByRuleSet(rulesToTreat)
         contLinksInRulesToTreat.update(all_built)
 
         missingLinks = self.will_links_be_built(pathCondition.name, all_missing, contLinksInRulesToTreat)
