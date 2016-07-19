@@ -54,6 +54,25 @@ def look_for_attached_of_attached(link_node, graph):
     #ignore duplicates
     return list(set(attached_of_attached))
 
+def find_connected_match_node(node, graph):
+    containing_node = graph.neighbors(node, 2)[0]
+    mms = graph.vs["mm__"]
+
+    if mms[containing_node] == "match_contains" or mms[containing_node] == "apply_contains" :
+        containing_node = graph.neighbors(containing_node, 2)[0]
+
+    if mms[containing_node] == "MatchModel":
+        return containing_node
+
+    #containing node should be the ApplyModel now
+
+    paired_with_node = graph.neighbors(containing_node, 2)[0]
+
+    match_model = graph.neighbors(paired_with_node, 2)[0]
+
+    if mms[match_model] != "MatchModel":
+        raise Exception("The node is not a MatchModel!")
+    return match_model
 
 #flood fill throughout the graph starting at the start node
 #this flood occurs through the edges in the graph
