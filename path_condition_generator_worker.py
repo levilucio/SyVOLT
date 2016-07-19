@@ -533,8 +533,7 @@ class path_condition_generator_worker(Process):
                 
             for pathConditionIndex in range(len(childrenPathConditions)):
                 
-                for rule_name in rulesForSecondPhase:
-                    
+                for rule_name in sorted(rulesForSecondPhase):
                     ruleNamesInPC = []
                     for token in childrenPathConditions[pathConditionIndex].split("_"):
                         ruleNamesInPC.append(token.split("-")[0])
