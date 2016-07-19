@@ -65,7 +65,7 @@ class Pruner(object):
                 contain_links_to_build = {}
                 for rule_name, contain_links in self.ruleContainmentLinks.items():
                     if rule_name != rule.name:
-                        contain_links_to_build.update(contain_links)
+                        self.combine_dicts(contain_links_to_build, contain_links)
 
                 links_not_found = self.will_links_be_built(rule.name, self.ruleMissingContLinks[rule.name], contain_links_to_build, require_all_links = True)
 
@@ -95,8 +95,12 @@ class Pruner(object):
         print("\n" + name + ":")
         for k, v in sorted(d.items()):
             print(k + " :")
-            for c in v:
-                print("\t" + str(c) + " : " + str(v[c]))
+            try:
+                for c in sorted(v):
+                    print("\t" + str(c) + " : " + str(v[c]))
+            except TypeError:
+                for c in sorted(v):
+                    print("\t" + str(c))
 
     def print_missing_links(self, links_not_found, rule):
         # map to where link was inherited from
@@ -144,15 +148,10 @@ class Pruner(object):
         #      debug = True
 
         if debug:
-
-            print("\n" + rule_name + " Missing Containment links:")
-            for k, v in sorted(contain_links.items()):
-                print(k + " :")
-                for c in v:
-                    print("\t" + str(c))
+            self.print_dict(rule_name + " Missing Containment links:", contain_links)
 
         # look at each class that the rule is missing
-        for className, link_names in contain_links.items():
+        for className, link_names in sorted(contain_links.items()):
             parentClasses = []
             if className in self.mmClassParents:
                 parentClasses = self.mmClassParents[className]
@@ -164,7 +163,7 @@ class Pruner(object):
             # look at each link the class is missing
 
             found_one_contain_link = False
-            for source_class_name, link_name in link_names:
+            for source_class_name, link_name in sorted(link_names, key=itemgetter(0, 1)):
                 found_link = False
 
                 if debug:
@@ -220,10 +219,10 @@ class Pruner(object):
         if debug:
             if len(links_not_found) > 0:
                 print("Links not found for " + rule_name)
-                for link in links_not_found:
+                for link in sorted(links_not_found):
                     print(link)
 
-            raise Exception()
+            #raise Exception()
         return links_not_found
 
 
@@ -298,7 +297,7 @@ class Pruner(object):
         if len(missingLinks) == 0:
 
             #if self.debug:
-            #    print("... Pruner Returning True")
+            #   print("... Pruner Returning True")
             return True
         else:
             #raise Exception()
