@@ -340,11 +340,27 @@ class EcoreUtils(object):
         except KeyError:
             return {}
 
+        #print("Rule Name: " + pathCond.name)
         for node in range(len(mms)):
             targetClassName = mms[node]
 
-            if targetClassName not in self.containmentLinks.keys():
+            if targetClassName in ["trace_link", "MatchModel", "ApplyModel", "paired_with", "directLink_S", "directlink_T"]:
                 continue
+
+            try:
+                class_inheri = self.getSuperClassInheritanceRelationForClasses()[targetClassName]
+            except KeyError:
+                class_inheri = []
+            class_inheri.append(targetClassName)
+
+            has_links = False
+            for cl in class_inheri:
+                if cl in self.containmentLinks.keys():
+                    has_links = True
+            if not has_links:
+                continue
+
+            #print("\nTarget Class: " + targetClassName)
 
             skip_match_nodes = False
             neighbours_in = pathCond.neighbors(node, 2)
@@ -355,15 +371,14 @@ class EcoreUtils(object):
             if skip_match_nodes:
                 continue
 
-            if debug:
-                print("Class: " + targetClassName)
-                print("Links: " + str(self.containmentLinks[targetClassName]))
+            for cl in class_inheri:
+                if cl in self.containmentLinks:
 
-            for containLink in self.containmentLinks[targetClassName]:
-                try:
-                    missingContainmentLinks[targetClassName].append(containLink)
-                except KeyError:
-                    missingContainmentLinks[targetClassName] = [containLink]
+                    for containLink in self.containmentLinks[cl]:
+                        try:
+                            missingContainmentLinks[cl].append(containLink)
+                        except KeyError:
+                            missingContainmentLinks[cl] = [containLink]
 
         if debug:
             if len(missingContainmentLinks) > 0:
