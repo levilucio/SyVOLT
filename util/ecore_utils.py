@@ -348,7 +348,7 @@ class EcoreUtils(object):
                 continue
 
             try:
-                class_inheri = self.getSuperClassInheritanceRelationForClasses()[targetClassName]
+                class_inheri = self.mmClassParents[targetClassName]
             except KeyError:
                 class_inheri = []
             class_inheri.append(targetClassName)

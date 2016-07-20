@@ -20,10 +20,10 @@ class PrunerHelper:
             for rule in layer:
                 self.ruleContainmentLinks[rule.name] = self.eu.getBuiltContainmentLinks(rule)
 
-                print("\n================\nRule: " + rule.name)
-                #self.print_dict("Rule containment links:", self.ruleContainmentLinks[rule.name])
+                #print("\n================\nRule: " + rule.name)
+                #self.print_dict("Rule containment links", self.ruleContainmentLinks[rule.name])
                 self.ruleContainmentLinksExtended[rule.name] = self.extend_links(self.ruleContainmentLinks[rule.name])
-                self.print_dict("ruleContainmentLinksExtended:", self.ruleContainmentLinksExtended[rule.name])
+                #self.print_dict("ruleContainmentLinksExtended", self.ruleContainmentLinksExtended[rule.name])
 
                 for classname, clinks in self.ruleContainmentLinksExtended[rule.name].items():
                     for clink in clinks:
@@ -34,6 +34,8 @@ class PrunerHelper:
                             self.links_to_rules[link] = [rule.name]
 
                 self.ruleMissingContLinks[rule.name] = self.eu.getMissingContainmentLinks(rule)
+
+                #self.print_dict("ruleMissingContLinks (before removing built)", self.ruleMissingContLinks[rule.name])
 
                 #remove those missing cont links which are built in the same rule
                 missing_links_copy = deepcopy(self.ruleMissingContLinks[rule.name])
@@ -50,9 +52,9 @@ class PrunerHelper:
                         del self.ruleMissingContLinks[rule.name][classname]
 
 
-                #self.print_dict("ruleMissingContLinks:", self.ruleMissingContLinks[rule.name])
+                #self.print_dict("ruleMissingContLinks", self.ruleMissingContLinks[rule.name])
                 self.ruleMissingContLinksExtended[rule.name] = self.extend_links(self.ruleMissingContLinks[rule.name])
-                #self.print_dict("ruleMissingContLinksExtended:", self.ruleMissingContLinksExtended[rule.name])
+                #self.print_dict("ruleMissingContLinksExtended", self.ruleMissingContLinksExtended[rule.name])
 
 
         #raise Exception()
@@ -61,22 +63,17 @@ class PrunerHelper:
         #     print(links)
         #     print(rules)
 
-        # build the list of contain links for each layer
-        self.layer_contain_links = []
-        for layer in transformation:
-            layer_links = {}
-            for rule in layer:
-                rule_links = self.ruleContainmentLinksExtended[rule.name]
 
-                for classname, links in rule_links.items():
-                    if classname not in layer_links:
-                        layer_links[classname] = links
-                    else:
-                        for link in links:
-                            if link not in layer_links[classname]:
-                                layer_links[classname].append(link)
+    def combine_dicts(self, d1, d2):
+        for classname, links in d2.items():
+            if classname not in d1:
+                d1[classname] = links
+            else:
+                for link in links:
+                    if link not in d1[classname]:
+                        d1[classname].append(link)
+        return d1
 
-            self.layer_contain_links.append(layer_links)
 
     def extend_links(self, links):
         if len(links) == 0:
