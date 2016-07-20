@@ -20,6 +20,8 @@ import subprocess
 import re
 import sys
 import os
+from os import path
+
 import uuid
 from profiler import *
 
@@ -682,20 +684,17 @@ except ImportError:
 
 from time import sleep
 def load_class(full_class_string, args = None):
-    #sleep(0.01)
-
-    from os import path
-
-    #sometimes the file is still being written,
-    #so wait for a bit
-    if not path.isfile(full_class_string):
-        sleep(0.01)
 
     directory, module_name = os.path.split(full_class_string)
     module_name = os.path.splitext(module_name)[0]
 
-    path = list(sys.path)
+    old_path = list(sys.path)
     sys.path.insert(0, directory)
+
+    # sometimes the file is still being written,
+    # so wait for a bit
+    if not path.isfile(full_class_string):
+        sleep(0.001)
 
     succeed = True
     try:
@@ -714,11 +713,10 @@ def load_class(full_class_string, args = None):
         succeed = False
         loaded_module = None
     finally:
-        sys.path[:] = path # restore
+        sys.path[:] = old_path # restore
 
     if not succeed:
 
-        from os import path
         print("File: " + full_class_string)
         print("Exists: " + str(path.isfile(full_class_string)))
         raise Exception("Could not load module: " + module_name)
