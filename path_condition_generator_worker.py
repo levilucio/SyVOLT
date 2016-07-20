@@ -91,12 +91,18 @@ class path_condition_generator_worker(Process):
         name_dict = {}
         reverse_name_dict = {}
 
+        ruleNamesInLayer = [rule.name for rule in self.transformation[self.layer]]
+        rulesForSecondPhase = sorted(set(self.overlappingRules.keys()).intersection(ruleNamesInLayer))
+
         rulesToTreat = []
         if self.pruning:
             # build the set of rules that remains to be executed
             for l in range(self.layer + 1, len(self.transformation)):
                 for r in self.transformation[l]:
                     rulesToTreat.append(r.name)
+
+            rulesToTreat += list(rulesForSecondPhase)
+
 
         progress_bar = None
         if self.report_progress:
@@ -522,9 +528,7 @@ class path_condition_generator_worker(Process):
             # path conditions generated during the first phase
             ###########################################################################
             
-            ruleNamesInLayer = [rule.name for rule in self.transformation[self.layer]]
-            rulesForSecondPhase = sorted(set(self.overlappingRules.keys()).intersection(ruleNamesInLayer))
-            
+
 #             print("--------------------------------")
 #             print("overlapping rules: " + str(self.overlappingRules.keys()))
 #             print("rules in layer: " + str(ruleNamesInLayer))
