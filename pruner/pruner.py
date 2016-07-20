@@ -30,26 +30,11 @@ class Pruner(object):
         self.prunerHelper = PrunerHelper(self.eu, transformation)
 
 
-        self.links_to_rules = {}
-
         self.rule_names = rule_names
         self.pc_name_function = pc_name_function
 
-        self.mmClassParents = self.eu.mmClassParents
-        self.mmClassChildren = self.eu.mmClassChildren
 
 
-
-        # for links, rules in self.links_to_rules.items():
-        #     print(links)
-        #     print(rules)
-
-        # build the list of contain links for each layer
-        self.layer_contain_links = []
-        for layer in transformation:
-            layer_links = {}
-            # for rule in layer:
-            #     layer_links.extend()
 
 
 

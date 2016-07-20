@@ -12,15 +12,19 @@ class PrunerHelper:
         self.ruleContainmentLinksExtended = {"HEmpty": {}}
         self.ruleMissingContLinksExtended = {"HEmpty": {}}
 
+        self.mmClassParents = self.eu.getSuperClassInheritanceRelationForClasses()
+
+        self.links_to_rules = {}
+
         for layer in transformation:
             for rule in layer:
                 self.ruleContainmentLinks[rule.name] = self.eu.getBuiltContainmentLinks(rule)
                 self.ruleMissingContLinks[rule.name] = self.eu.getMissingContainmentLinks(rule)
 
                 print("\n================\nRule: " + rule.name)
-                # self.print_dict("Rule containment links:", self.ruleContainmentLinks[rule.name])
+                self.print_dict("Rule containment links:", self.ruleContainmentLinks[rule.name])
                 self.ruleContainmentLinksExtended[rule.name] = self.extend_links(self.ruleContainmentLinks[rule.name])
-                # self.print_dict("ruleContainmentLinksExtended:", self.ruleContainmentLinksExtended[rule.name])
+                self.print_dict("ruleContainmentLinksExtended:", self.ruleContainmentLinksExtended[rule.name])
 
                 for classname, clinks in self.ruleContainmentLinksExtended[rule.name].items():
                     for clink in clinks:
@@ -34,6 +38,27 @@ class PrunerHelper:
                 self.ruleMissingContLinksExtended[rule.name] = self.extend_links(self.ruleMissingContLinks[rule.name])
                 # self.print_dict("ruleMissingContLinksExtended:", self.ruleMissingContLinksExtended[rule.name])
 
+
+        # for links, rules in self.links_to_rules.items():
+        #     print(links)
+        #     print(rules)
+
+        # build the list of contain links for each layer
+        self.layer_contain_links = []
+        for layer in transformation:
+            layer_links = {}
+            for rule in layer:
+                rule_links = self.ruleContainmentLinksExtended[rule.name]
+
+                for classname, links in rule_links.items():
+                    if classname not in layer_links:
+                        layer_links[classname] = links
+                    else:
+                        for link in links:
+                            if link not in layer_links[classname]:
+                                layer_links[classname].append(link)
+
+            self.layer_contain_links.append(layer_links)
 
     def extend_links(self, links):
         if len(links) == 0:

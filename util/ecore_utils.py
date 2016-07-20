@@ -25,19 +25,43 @@ class EcoreUtils(object):
 
         self.xmldoc = minidom.parse(xmlfileName)
         self.inheritanceRels = self.getSuperClassInheritanceRelationForClasses()
-        
-        metamodelClasses = self.xmldoc.getElementsByTagName('eClassifiers')  
+
         self.mmClassContained = {}       
         self.containmentRels = []
-
-        self.containmentLinks = {}
-
 
 
         self.mmClassParents = self.getSuperClassInheritanceRelationForClasses()
         self.mmClassChildren = self.getSubClassInheritanceRelationForClasses()
-    
-    
+
+        self.containmentLinks = {}
+        metamodelClasses = self.xmldoc.getElementsByTagName('eClassifiers')
+
+        # first get a dictionary with all the metamodel classes that have containment relations towards them.
+        # several containment relations can exist towards the same metamodel class.
+        # also keep a list of all containment relations in the metamodel.
+
+        for mmClass in metamodelClasses:
+            mmClassName = mmClass.attributes['name'].value
+            rels = mmClass.getElementsByTagName('eStructuralFeatures')
+
+            for rel in rels:
+
+                try:
+                    if str(rel.attributes['containment'].value) == "true":
+                        targetClassName = str(rel.attributes['eType'].value).split('#//', 1)[1]
+                        relName = str(rel.attributes['name'].value)
+
+                        containment_link = (mmClassName, relName)
+
+                        if targetClassName not in self.containmentLinks.keys():
+                            self.containmentLinks[targetClassName] = [containment_link]
+                        else:
+                            if containment_link not in self.containmentLinks[targetClassName]:
+                                self.containmentLinks[targetClassName].append(containment_link)
+                        self.containmentRels.append(relName)
+                except KeyError:
+                    pass
+
     def getMetamodelClassNames(self):
         '''
         Get a list with all the names of the classes in the ecore metamodel file.
