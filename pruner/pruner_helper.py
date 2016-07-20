@@ -2,9 +2,10 @@ from copy import deepcopy
 
 class PrunerHelper:
 
-    def __init__(self, eu, transformation):
+    def __init__(self, eu, transformation, rule_names):
 
         self.eu = eu
+        self.rule_names = rule_names
 
         self.ruleContainmentLinks = {"HEmpty": {}}
         self.ruleMissingContLinks = {"HEmpty": {}}
@@ -20,7 +21,7 @@ class PrunerHelper:
             for rule in layer:
                 self.ruleContainmentLinks[rule.name] = self.eu.getBuiltContainmentLinks(rule)
 
-                #print("\n================\nRule: " + rule.name)
+                #print("\n================\nRule: " + self.rule_names[rule.name])
                 #self.print_dict("Rule containment links", self.ruleContainmentLinks[rule.name])
                 self.ruleContainmentLinksExtended[rule.name] = self.extend_links(self.ruleContainmentLinks[rule.name])
                 #self.print_dict("ruleContainmentLinksExtended", self.ruleContainmentLinksExtended[rule.name])

@@ -25,102 +25,42 @@ class EcoreUtils(object):
 
         self.xmldoc = minidom.parse(xmlfileName)
         self.inheritanceRels = self.getSuperClassInheritanceRelationForClasses()
-        
-        metamodelClasses = self.xmldoc.getElementsByTagName('eClassifiers')  
-        self.mmClassContained = {}       
+
         self.containmentRels = []
 
+
+        self.mmClassParents = self.getSuperClassInheritanceRelationForClasses()
+        self.mmClassChildren = self.getSubClassInheritanceRelationForClasses()
+
         self.containmentLinks = {}
+        metamodelClasses = self.xmldoc.getElementsByTagName('eClassifiers')
 
         # first get a dictionary with all the metamodel classes that have containment relations towards them.
-        # several containment relations can exist towards the same metamodel class. 
+        # several containment relations can exist towards the same metamodel class.
         # also keep a list of all containment relations in the metamodel.
-        
+
         for mmClass in metamodelClasses:
             mmClassName = mmClass.attributes['name'].value
             rels = mmClass.getElementsByTagName('eStructuralFeatures')
+
             for rel in rels:
+
                 try:
                     if str(rel.attributes['containment'].value) == "true":
                         targetClassName = str(rel.attributes['eType'].value).split('#//', 1)[1]
                         relName = str(rel.attributes['name'].value)
-                                                                 
-                        if targetClassName not in self.mmClassContained.keys():
-                            self.mmClassContained[targetClassName] = [relName]
-                        else:
-                            self.mmClassContained[targetClassName].append(relName)
 
                         containment_link = (mmClassName, relName)
+
                         if targetClassName not in self.containmentLinks.keys():
                             self.containmentLinks[targetClassName] = [containment_link]
                         else:
                             if containment_link not in self.containmentLinks[targetClassName]:
                                 self.containmentLinks[targetClassName].append(containment_link)
-                            
                         self.containmentRels.append(relName)
-                                                
-                except Exception as e:
+                except KeyError:
                     pass
 
-        if self.debug:
-            print("Containment Links")
-            for k,v  in sorted(self.containmentLinks.items()):
-                print(str(k) + " : ")
-                for c in sorted(v):
-                    print("\t" + str(c))
-
-
-        # treat all the remaining classes that have no containment links to them but that
-        # inherit from classes that do.
-
-        #save where the link was inherited from
-        self.originalLinks = {}
-
-        self.mmClassContained = deepcopy(self.containmentLinks)
-
-        mmClassNames = self.getMetamodelClassNames()
-        remainingContClasses = set(mmClassNames) - set(self.mmClassContained.keys())
-        
-        for remContClass in sorted(remainingContClasses):
-            parentClasses = self.inheritanceRels[remContClass]
-
-            containedParentClasses = set(parentClasses).intersection(set(self.mmClassContained.keys()))
-
-            for contParentClass in containedParentClasses:
-                if remContClass not in self.mmClassContained.keys():
-                    self.mmClassContained[remContClass] = deepcopy(self.mmClassContained[contParentClass])
-
-                else:
-                    for link in self.mmClassContained[contParentClass]:
-                        if link not in self.mmClassContained[remContClass]:
-                            self.mmClassContained[remContClass].append(link)
-
-                if contParentClass in self.containmentLinks:
-                    if remContClass not in self.originalLinks:
-                        self.originalLinks[remContClass] = {}
-                    for link in self.containmentLinks[contParentClass]:
-                        try:
-                            self.originalLinks[remContClass][link].append(contParentClass)
-                        except KeyError:
-                            self.originalLinks[remContClass][link] = [contParentClass]
-
-        # print("\nOriginal links")
-        # for k, v in sorted(self.originalLinks.items()):
-        #     print(str(k) + " : ")
-        #     for c in sorted(v):
-        #         print("\t" + str(c) + " " + str(v[c]))
-
-        if self.debug:
-            print("\nContainment links (with inheritance)")
-            for k, v in sorted(self.mmClassContained.items()):
-                print(str(k) + " : ")
-                for c in sorted(v):
-                    print("\t" + str(c))
-
-        self.mmClassParents = self.getSuperClassInheritanceRelationForClasses()
-        self.mmClassChildren = self.getSubClassInheritanceRelationForClasses()
-    
-    
     def getMetamodelClassNames(self):
         '''
         Get a list with all the names of the classes in the ecore metamodel file.
@@ -400,22 +340,27 @@ class EcoreUtils(object):
         except KeyError:
             return {}
 
-        # get the containment links already built in this pathcond
-        builtContainmentLinks = self.getBuiltContainmentLinks(pathCond)
-
-
-
-        if debug:
-            print("Built containment links:")
-            for link in builtContainmentLinks:
-                print(link + " : " + str(builtContainmentLinks[link]))
-                print("End built")
-
+        #print("Rule Name: " + pathCond.name)
         for node in range(len(mms)):
             targetClassName = mms[node]
 
-            if targetClassName not in self.mmClassContained.keys() or targetClassName in missingContainmentLinks.keys():
+            if targetClassName in ["trace_link", "MatchModel", "ApplyModel", "paired_with", "directLink_S", "directlink_T"]:
                 continue
+
+            try:
+                class_inheri = self.mmClassParents[targetClassName]
+            except KeyError:
+                class_inheri = []
+            class_inheri.append(targetClassName)
+
+            has_links = False
+            for cl in class_inheri:
+                if cl in self.containmentLinks.keys():
+                    has_links = True
+            if not has_links:
+                continue
+
+            #print("\nTarget Class: " + targetClassName)
 
             skip_match_nodes = False
             neighbours_in = pathCond.neighbors(node, 2)
@@ -426,78 +371,21 @@ class EcoreUtils(object):
             if skip_match_nodes:
                 continue
 
-            if debug:
-                print("Class: " + targetClassName)
-                print("Links: " + str(self.mmClassContained[targetClassName]))
+            for cl in class_inheri:
+                if cl in self.containmentLinks:
 
-            for containLink in self.mmClassContained[targetClassName]:
-                hier = [targetClassName]
-                if targetClassName in self.mmClassParents:
-                    hier += self.mmClassParents[targetClassName]
-                if targetClassName in self.mmClassChildren:
-                    hier += self.mmClassChildren[targetClassName]
-
-                link_already_built = False
-                for target_class in hier:
-                    if target_class not in builtContainmentLinks:
-                        continue
-
-                    for link in builtContainmentLinks[target_class]:
-                        if link[1] != containLink[1]:
-                            continue
-
-                        source_class = link[0]
-
-                        source_hier = [source_class]
-                        if source_class in self.mmClassParents:
-                            source_hier += self.mmClassParents[source_class]
-                        if source_class in self.mmClassChildren:
-                            source_hier += self.mmClassChildren[source_class]
-
-                        if link[0] in source_hier:
-                            link_already_built = True
-
-                if not link_already_built:
-                    try:
-                        missingContainmentLinks[targetClassName].append(containLink)
-                    except KeyError:
-                        missingContainmentLinks[targetClassName] = [containLink]
-
-            # get all the containment relations into produced call instances, if an apply class
-            # of this type without containment links has not been found yet. Only one apply class
-            # of a given type without containment links is kept.
-            # inputRelNodes = pathCond.neighbors(pathCond.vs[node],2)
-            #
-            # inputRelNames = []
-            #
-            # for inputRelNode in inputRelNodes:
-            #     if pathCond.vs[inputRelNode]["mm__"] == "directLink_T":
-            #         inputRelNames.append(pathCond.vs[inputRelNode]["attr1"])
-            #
-            # # check if any containment relation into the class already exists
-            # if set(inputRelNames).intersection(set(self.containmentRels)) == set():
-            #
-            #     # get the containment links already built in this pathcond
-            #     builtContainmentLinks = self.getBuiltContainmentLinks(pathCond)
-            #
-            #     #ignore duplicates
-            #     for attr1 in set(self.mmClassContained[targetClassName]):
-            #
-            #         #if this link is built already in this pathCond, do nothing
-            #         if targetClassName in builtContainmentLinks and attr1 in builtContainmentLinks[targetClassName]:
-            #             pass
-            #         else:
-            #             #mark this as a missing containment link
-            #             try:
-            #                 missingContainmentLinks[targetClassName].append(attr1)
-            #             except KeyError:
-            #                 missingContainmentLinks[targetClassName] = [attr1]
+                    for containLink in self.containmentLinks[cl]:
+                        try:
+                            missingContainmentLinks[cl].append(containLink)
+                        except KeyError:
+                            missingContainmentLinks[cl] = [containLink]
 
         if debug:
-            print("Missing containment links:")
-            for link in missingContainmentLinks:
-                print(link + " : " + str(missingContainmentLinks[link]))
-            raise Exception()
+            if len(missingContainmentLinks) > 0:
+                print("Missing containment links:")
+                for link in missingContainmentLinks:
+                    print(link + " : " + str(missingContainmentLinks[link]))
+                raise Exception()
 
         return missingContainmentLinks
         
