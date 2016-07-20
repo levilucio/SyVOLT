@@ -65,13 +65,27 @@ class PrunerHelper:
 
 
     def combine_dicts(self, d1, d2):
-        for classname, links in d2.items():
-            if classname not in d1:
-                d1[classname] = links
-            else:
-                for link in links:
-                    if link not in d1[classname]:
-                        d1[classname].append(link)
+        for key, value in d2.items():
+            if key not in d1:
+                d1[key] = [v for v in value]
+                continue
+            for v in value:
+                if v not in d1[key]:
+                    d1[key].append(v)
+        return d1
+
+    #take everything out of d1 that is in d2
+    def subtract_dicts(self, d1, d2):
+        for key, values in d2.items():
+            if key not in d1:
+                continue
+
+            for val in values:
+                try:
+                    d1[key].remove(val)
+                except ValueError:
+                    pass
+        d1 = {k:v for k, v in d1.items() if v }
         return d1
 
 

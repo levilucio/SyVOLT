@@ -58,7 +58,7 @@ class Pruner(object):
                     self.prunerHelper.print_dict("Missing Links", links_not_found)
 
                 if len(links_not_found):
-                    self.combine_dicts(self.all_missing_contain_links, links_not_found)
+                    self.prunerHelper.combine_dicts(self.all_missing_contain_links, links_not_found)
 
 
         if self.debug:
@@ -101,44 +101,15 @@ class Pruner(object):
 
 
 
-    def getContainmentLinksBuiltByRuleSet(self, ruleNames):
+    def combineForAll(self, ruleNames, sourceDict):
         '''
-        get all the containment links built by a set of rules
+        get all the links built by a set of rules, either containment or missing
         '''
-        builtContainmentLinks = {}
+        links = {}
         for ruleName in ruleNames:
-            for className in self.ruleContainmentLinks[ruleName].keys():
-                if className in builtContainmentLinks:
-                    for link in self.ruleContainmentLinks[ruleName][className]:
-                        if link not in builtContainmentLinks[className]:
-                            builtContainmentLinks[className].append(link)
-                else:
-                    builtContainmentLinks[className] = self.ruleContainmentLinks[ruleName][className]
+            links = self.prunerHelper.combine_dicts(links, sourceDict[ruleName])
+        return links
 
-        # print("\nRulenames: " + str(ruleNames))
-        # for c in builtContainmentLinks:
-        #     print(c + " : " + str(builtContainmentLinks[c]))
-        return builtContainmentLinks
-
-
-    def getClassesLinksBuiltByRuleSet(self, ruleNames):
-        '''
-        get all the classes built by a set of rules
-        '''
-        builtClasses = []
-        for ruleName in ruleNames:
-            builtClasses.extend(self.ruleClasses[ruleName])
-            
-        return builtClasses
-
-    def combine_dicts(self, d1, d2):
-        for key, value in d2.items():
-            if key not in d1:
-                d1[key] = [v for v in value]
-                continue
-            for v in value:
-                if v not in d1[key]:
-                    d1[key].append(v)
 
     #@profile
     def isPathConditionStillFeasible(self, pathCondition, rulesToTreat):
@@ -149,65 +120,64 @@ class Pruner(object):
 
         rules_in_pc = self.pc_name_function(pathCondition.name)
 
-        all_missing = {}
-        all_built = {}
-        for rule in rules_in_pc:
-            self.combine_dicts(all_missing, self.ruleMissingContLinks[rule])
-            self.combine_dicts(all_built, self.ruleContainmentLinks[rule])
-
-        if len(all_missing) == 0:
+        pc_missing = self.combineForAll(rules_in_pc, self.prunerHelper.ruleMissingContLinks)
+        if len(pc_missing) == 0:
             return True
 
-        contLinksInRulesToTreat = self.getContainmentLinksBuiltByRuleSet(rulesToTreat)
-        contLinksInRulesToTreat.update(all_built)
+        pc_built = self.combineForAll(rules_in_pc, self.prunerHelper.ruleContainmentLinksExtended)
 
+        #print("PC: " + pathCondition.name)
+        #self.prunerHelper.print_dict("PC Missing", pc_missing)
+        #self.prunerHelper.print_dict("PC Built", pc_built)
+        pc_missing = self.prunerHelper.subtract_dicts(pc_missing, pc_built)
 
-        missingLinks = self.will_links_be_built(pathCondition.name, all_missing, contLinksInRulesToTreat)
+        #self.prunerHelper.print_dict("PC Missing After", pc_missing)
 
-        #remove all the containment links we know to be missing
-        for ml in self.all_missing_contain_links:
-            if ml in missingLinks:
-                missingLinks.remove(ml)
+        if len(pc_missing) == 0:
+            return True
+
+        rule_links = self.combineForAll(rulesToTreat, self.prunerHelper.ruleContainmentLinksExtended)
+
+        missingLinks = self.will_links_be_built(pathCondition.name, pc_missing, rule_links)
 
         if len(missingLinks) == 0:
-
-            #if self.debug:
-            #   print("... Pruner Returning True")
             return True
-        else:
-            #raise Exception()
 
-            if self.debug:
-                print("=========================")
-                print("Path condition: " + pathCondition.name)
-                print("Missing containment links: " + str(missingLinks))
+        missingLinks = self.prunerHelper.subtract_dicts(missingLinks, self.all_missing_contain_links)
 
-                # print("Links to be built:")
-                # for className, links in contLinksInRulesToTreat.items():
-                #     print(className + " : " + str(links))
+        if len(missingLinks) == 0:
+            return True
 
-                print("Future rules:")
-                future_rules = [self.rule_names[rule] for rule in rulesToTreat]
+        if self.debug:
+            print("=========================")
+            print("Path condition: " + pathCondition.name)
+            self.prunerHelper.print_dict("Missing Links", missingLinks)
 
-                print("Looking for:")
-                for contLink, a, b in missingLinks:
-                    print(self.linksToRules[contLink])
-                    for rule in self.linksToRules[contLink]:
-                        if rule in future_rules:
-                            rule_index = future_rules.index(rule)
+            self.prunerHelper.print_dict("Links to be built", rule_links)
+
+            future_rules = [self.rule_names[rule] for rule in rulesToTreat]
+
+            print("Looking for:")
+            for className, values in missingLinks.items():
+                for val in values:
+                    link = (className, val[0], val[1])
+                    rules_to_find = self.prunerHelper.links_to_rules[link]
+                    print(rules_to_find)
+
+                    for find_rule in rules_to_find:
+                        if find_rule in future_rules:
                             print("ERROR: Pruner incorrectly reports link will not be built!")
-                            print(contLink)
-                            print("Built in rule: " + rule + " which builds:")
-                            print(self.ruleContainmentLinks[rulesToTreat[rule_index]])
+                            print(className + " " + str(val))
+                            print("Built in rule: " + find_rule)
+
                             raise Exception()
 
+            # if len(missingContLinks) > 0:
+            #     graph_to_dot("missing_" + pathCondition.name, pathCondition)
 
-                # if len(missingContLinks) > 0:
-                #     graph_to_dot("missing_" + pathCondition.name, pathCondition)
-
-            if self.debug:
-                print("... Pruner Returning False")
-            return False
+        if self.debug:
+            print("... Pruner Returning False")
+        return False
         
         
         
