@@ -208,7 +208,7 @@ class Himesis(ig.Graph):
     #             raise Exception('%s is not a valid attribute' % label)
     #
     #     return plot(self, bbox=(0, 0, width, height), **visual_style)
-    
+
     def _compile_additional_info(self, file):
         if hasattr(self, "execute_body"):
             s = '''
@@ -267,7 +267,7 @@ class Himesis(ig.Graph):
             #print("Pickling: " + str(type(value)) + " " + str(value))
             #return '''
         #%s = pickle.loads("""%s""")''' % (access, pickle.dumps(value))
-    
+
     def compile(self, file_path, init_params = []):
         """
         Compiles the graph into a Python file.
@@ -539,7 +539,7 @@ class HimesisPreConditionPattern(HimesisPattern):
             @param attr_name: The name of the attribute.
         """
         return 'eval_%s%s' % (to_non_RAM_attribute(attr_name), self.vs[node]['MT_label__'])
-    
+
     def _compile_additional_info(self, file):
         """
         Compiles the constraint code into a callable method.
@@ -580,7 +580,7 @@ class HimesisPreConditionPatternLHS(HimesisPreConditionPattern):
         super(HimesisPreConditionPatternLHS, self).__init__(name, num_nodes, edges)
         #self.import_name = 'HimesisPreConditionPatternLHS'
         self.NACs = []
-    
+
     def _compile_additional_info(self, file):
         """
         Compiles the constraint code into a callable method and links to NACs.
@@ -809,7 +809,7 @@ class HimesisPostConditionPattern(HimesisPattern):
                 # Returns true also if there is code after return attr_value 
                 return True
         return False
-    
+
     def _compile_additional_info(self, file):
         """
         Compiles the execute and action codes into callable methods as well as the pointer to the pre-condition pattern. 
@@ -875,34 +875,34 @@ class HimesisPostConditionPattern(HimesisPattern):
 """
 '''
         super(HimesisPostConditionPattern, self)._compile_additional_info(file)
-    
+
+    def set_attributes(self, node, index, has_old_values):
+        transformationCode = []
+        for attrName in self.vs.attribute_names():
+            if attrName.startswith("MT_pre__") or attrName.startswith("MT_post__"):
+                attr = self.vs[node][attrName]
+                if not attr:
+                    # No action to perform for this attribute
+                    continue
+                attrName = to_non_RAM_attribute(attrName)
+                if self.attribute_is_specified(attr):
+                    old_value = 'None'
+                    if has_old_values:
+                        old_value = "vs[%s]['%s']" % (index, to_non_RAM_attribute(attrName))
+                    # TODO: This should be a TransformationLanguageSpecificException
+                    transformationCode.append("""vs[%s]['%s'] = self.%s(%s, lambda i: graph.vs[match[i]], graph)
+""" \
+                                              % (index, to_non_RAM_attribute(attrName),
+                                                 self.get_attr_action_name(node, attrName),
+                                                 old_value))
+        return ''.join(transformationCode)
+
+    #@profile
     def set_execute_body(self):
         """
         Compiles the body of the execute method.
         """
-        
-        def set_attributes(node, index, has_old_values):
-            transformationCode = []
-            for attrName in self.vs[node].attribute_names():
-                if is_RAM_attribute(attrName):
-                    attr = self.vs[node][attrName]
-                    if not attr:
-                        # No action to perform for this attribute
-                        continue
-                    attrName = to_non_RAM_attribute(attrName)
-                    if self.attribute_is_specified(attr):
-                        old_value = 'None'
-                        if has_old_values:
-                            old_value = "vs[%s]['%s']" % (index, to_non_RAM_attribute(attrName))
-                        #TODO: This should be a TransformationLanguageSpecificException
-                        transformationCode.append("""vs[%s]['%s'] = self.%s(%s, lambda i: graph.vs[match[i]], graph)
-""" \
-    % (index, to_non_RAM_attribute(attrName),
-       self.get_attr_action_name(node, attrName),
-       old_value))
-            return ''.join(transformationCode)
-        
-        
+
         LHS_labels = {}     # {label: meta-model name}
         if self.is_compiled and Himesis.Constants.MT_LABEL in self.pre.vs.attribute_names():
             LHS_labels = dict([(label, self.pre.vs[self.pre.get_node_with_label(label)][Himesis.Constants.META_MODEL])
@@ -932,7 +932,7 @@ labels = match.copy()
         for label in LHS_labels:
             rhsNode = self.get_node_with_label(label)
             if rhsNode is None: continue        # not in the interface graph (LHS n RHS)
-            updateCode = set_attributes(rhsNode, "labels['%s']" % label, has_old_values=True)
+            updateCode = self.set_attributes(rhsNode, "labels['%s']" % label, has_old_values=True)
             if len(updateCode) > 0:
                 transformationCode.append("""# %s%s
 %s""" % (to_non_RAM_attribute(self.vs[rhsNode][Himesis.Constants.META_MODEL]), label, updateCode))
@@ -970,7 +970,7 @@ labels['%s'] = node_num
 vs[node_num]["mm__"] = '%s'
 vs[node_num]['GUID__'] = nprnd.randint(9223372036854775806)
 """ % (className, label, label, className))
-                transformationCode += set_attributes(rhsNode, 'node_num', has_old_values = False)
+                transformationCode += self.set_attributes(rhsNode, 'node_num', has_old_values = False)
                 transformationCode.append("""
 node_num += 1
 """)
@@ -990,28 +990,31 @@ node_num += 1
         transformationCode.append("""graph.add_edges([
 """)
 
+        MT_labels = self.vs["MT_label__"]
+        mms = self.vs["mm__"]
 
-        visited_edges = []
-        for label in sorted(new_labels):
-            for edge in self.es:
-                if edge.index in visited_edges:
-                    continue
+        ls = sorted(new_labels)
+        # visited_edges = []
+        for edge in self.es:
+            src_label = MT_labels[edge.source]
+            tar_label = MT_labels[edge.target]
 
-                src_label = self.vs[edge.source]["MT_label__"]
-                tar_label = self.vs[edge.target]["MT_label__"]
+            for label in ls:
+                # if edge.index in visited_edges:
+                #     continue
 
-                if not (label == src_label or label == tar_label):
-                    continue
+                if label == src_label or label == tar_label:
 
-                transformationCode.append("""# %s%s -> %s%s
-(labels['%s'], labels['%s']),
-""" % (to_non_RAM_attribute(self.vs[edge.source][Himesis.Constants.META_MODEL]),
-       src_label,
-       to_non_RAM_attribute(self.vs[edge.target][Himesis.Constants.META_MODEL]),
-       tar_label,
-       src_label,
-       tar_label))
-                visited_edges.append(edge.index)
+                    transformationCode.append("""# %s%s -> %s%s
+    (labels['%s'], labels['%s']),
+    """ % (to_non_RAM_attribute(mms[edge.source]),
+           src_label,
+           to_non_RAM_attribute(mms[edge.target]),
+           tar_label,
+           src_label,
+           tar_label))
+
+                    # visited_edges.append(edge.index)
 
         transformationCode.append("""])""")
         
