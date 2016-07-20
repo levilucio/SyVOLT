@@ -2,9 +2,11 @@ from copy import deepcopy
 
 class PrunerHelper:
 
-    def __init__(self, eu, transformation, rule_names):
+    def __init__(self, eu, new_eu, transformation, rule_names):
 
         self.eu = eu
+        self.new_eu = new_eu
+
         self.rule_names = rule_names
 
         self.ruleContainmentLinks = {"HEmpty": {}}
@@ -34,7 +36,11 @@ class PrunerHelper:
                         except KeyError:
                             self.links_to_rules[link] = [rule.name]
 
+                print("\nRule: " + rule.name)
                 self.ruleMissingContLinks[rule.name] = self.eu.getMissingContainmentLinks(rule)
+                self.print_dict("rule missing old", self.ruleMissingContLinks[rule.name])
+                self.ruleMissingContLinks[rule.name] = self.new_eu.getMissingContainmentLinks(rule)
+                self.print_dict("rule missing new", self.ruleMissingContLinks[rule.name])
 
                 #self.print_dict("ruleMissingContLinks (before removing built)", self.ruleMissingContLinks[rule.name])
 
@@ -58,7 +64,7 @@ class PrunerHelper:
                 #self.print_dict("ruleMissingContLinksExtended", self.ruleMissingContLinksExtended[rule.name])
 
 
-        #raise Exception()
+        raise Exception()
 
         # for links, rules in self.links_to_rules.items():
         #     print(links)
@@ -89,6 +95,15 @@ class PrunerHelper:
         d1 = {k:v for k, v in d1.items() if v }
         return d1
 
+    def compare_dicts(self, d1, d2):
+        for key, values in d1.items():
+            if key not in d2.keys():
+                print("Key: " + key + " is not in second dict!")
+            else:
+                for val in values:
+                    if val not in d2[key]:
+                        print("Value: " + str(val) + " is not in second dict!")
+                        print(key + " " + str(val))
 
     def extend_links(self, links):
         if len(links) == 0:
