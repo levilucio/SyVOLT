@@ -683,6 +683,14 @@ except ImportError:
 from time import sleep
 def load_class(full_class_string, args = None):
     #sleep(0.01)
+
+    from os import path
+
+    #sometimes the file is still being written,
+    #so wait for a bit
+    if not path.isfile(full_class_string):
+        sleep(0.01)
+
     directory, module_name = os.path.split(full_class_string)
     module_name = os.path.splitext(module_name)[0]
 
@@ -709,12 +717,9 @@ def load_class(full_class_string, args = None):
         sys.path[:] = path # restore
 
     if not succeed:
+
         from os import path
         print("File: " + full_class_string)
-
-        #for f in os.listdir(directory):
-        #    print(f)
-
         print("Exists: " + str(path.isfile(full_class_string)))
         raise Exception("Could not load module: " + module_name)
 
