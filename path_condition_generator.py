@@ -39,7 +39,7 @@ import multiprocessing
 from multiprocessing import Manager, Queue
 from path_condition_generator_worker import *
 
-from pruner import Pruner
+from pruner.pruner import Pruner
 
 from random import shuffle
 
@@ -101,7 +101,7 @@ class PathConditionGenerator(object):
         #with PyCallGraph(output=GraphvizOutput()):
         self._pre_process()
         
-        self.prunner = Pruner(self.targetMM, self.transformation, self.rule_names)
+        self.prunner = Pruner(self.targetMM, self.transformation, self.rule_names, self.rules_in_pc_name)
 
         self.debug()
 
@@ -589,6 +589,17 @@ class PathConditionGenerator(object):
 #             for fragment in pathCondition:
 #                 backLinksCacheKeys[backMatcherPosition].append((backLinkMatchers[backMatcherPosition].condition.name + fragment.name, fragment))
 #         return backLinksCacheKeys
+
+    def rules_in_pc_name(self, name):
+        rules = []
+        name = name.split(".")[0]
+        for token in name.split("_"):
+            if "-" in token:
+                rulename = token.split("-")[0]
+                rules.append(rulename)
+            else:
+                rules.append(token)
+        return rules
 
     def expand_pc_name_with_multiple_applications(self, name):
         new_name = ""
