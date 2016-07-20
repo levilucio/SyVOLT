@@ -34,14 +34,17 @@ class Pruner(object):
         self.pc_name_function = pc_name_function
 
 
-
-
-
-
-
-
         #test containment links and see if any are missing
         self.all_missing_contain_links = []
+
+        for layer_num in range(len(transformation)):
+            for rule in transformation[layer_num]:
+
+                print(rule.name)
+
+                missing_links = self.prunerHelper.ruleMissingContLinks[rule.name]
+
+                print(missing_links)
 
         # for layer in transformation:
         #     for rule in layer:
@@ -66,7 +69,7 @@ class Pruner(object):
             for missing_link in sorted(self.all_missing_contain_links):
                 print(missing_link[0] + " -> " + missing_link[1] + " -> " + missing_link[2])
 
-        #raise Exception()
+        raise Exception()
 
 
 

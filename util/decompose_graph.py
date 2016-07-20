@@ -14,7 +14,6 @@ except ImportError:
         return true_decorator
 
 #@do_cprofile
-@profile
 #@Profiler
 #@lru_cache(maxsize=256)
 def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):

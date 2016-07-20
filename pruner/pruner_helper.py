@@ -19,10 +19,9 @@ class PrunerHelper:
         for layer in transformation:
             for rule in layer:
                 self.ruleContainmentLinks[rule.name] = self.eu.getBuiltContainmentLinks(rule)
-                self.ruleMissingContLinks[rule.name] = self.eu.getMissingContainmentLinks(rule)
 
                 print("\n================\nRule: " + rule.name)
-                self.print_dict("Rule containment links:", self.ruleContainmentLinks[rule.name])
+                #self.print_dict("Rule containment links:", self.ruleContainmentLinks[rule.name])
                 self.ruleContainmentLinksExtended[rule.name] = self.extend_links(self.ruleContainmentLinks[rule.name])
                 self.print_dict("ruleContainmentLinksExtended:", self.ruleContainmentLinksExtended[rule.name])
 
@@ -34,10 +33,29 @@ class PrunerHelper:
                         except KeyError:
                             self.links_to_rules[link] = [rule.name]
 
-                # self.print_dict("ruleMissingContLinks:", self.ruleMissingContLinks[rule.name])
-                self.ruleMissingContLinksExtended[rule.name] = self.extend_links(self.ruleMissingContLinks[rule.name])
-                # self.print_dict("ruleMissingContLinksExtended:", self.ruleMissingContLinksExtended[rule.name])
+                self.ruleMissingContLinks[rule.name] = self.eu.getMissingContainmentLinks(rule)
 
+                #remove those missing cont links which are built in the same rule
+                missing_links_copy = deepcopy(self.ruleMissingContLinks[rule.name])
+                for classname, links in missing_links_copy.items():
+                    if classname not in self.ruleContainmentLinksExtended[rule.name]:
+                        continue
+
+                    for contain_link in self.ruleContainmentLinksExtended[rule.name][classname]:
+                        try:
+                            self.ruleMissingContLinks[rule.name][classname].remove(contain_link)
+                        except ValueError:
+                            pass
+                    if len(self.ruleMissingContLinks[rule.name][classname]) == 0:
+                        del self.ruleMissingContLinks[rule.name][classname]
+
+
+                #self.print_dict("ruleMissingContLinks:", self.ruleMissingContLinks[rule.name])
+                self.ruleMissingContLinksExtended[rule.name] = self.extend_links(self.ruleMissingContLinks[rule.name])
+                #self.print_dict("ruleMissingContLinksExtended:", self.ruleMissingContLinksExtended[rule.name])
+
+
+        #raise Exception()
 
         # for links, rules in self.links_to_rules.items():
         #     print(links)
