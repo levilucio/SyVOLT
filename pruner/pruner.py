@@ -23,7 +23,7 @@ class Pruner(object):
         Constructor
         '''
 
-        self.debug = True
+        self.debug = False
 
         self.eu = EcoreUtils(metamodel)
 
@@ -155,17 +155,16 @@ class Pruner(object):
 
             self.prunerHelper.print_dict("Links to be built", rule_links)
 
-            future_rules = [self.rule_names[rule] for rule in rulesToTreat]
 
-            print("Looking for:")
             for className, values in missingLinks.items():
                 for val in values:
                     link = (className, val[0], val[1])
                     rules_to_find = self.prunerHelper.links_to_rules[link]
-                    print(rules_to_find)
+                    #print(rules_to_find)
+                    #print(rulesToTreat)
 
                     for find_rule in rules_to_find:
-                        if find_rule in future_rules:
+                        if find_rule in rulesToTreat:
                             print("ERROR: Pruner incorrectly reports link will not be built!")
                             print(className + " " + str(val))
                             print("Built in rule: " + find_rule)
