@@ -32,15 +32,7 @@ class Pruner(object):
         self.rule_names = rule_names
         self.pc_name_function = pc_name_function
 
-        all_contain_links = {}
-
-        #cache the links for a set of rules
         self.rule_set_links = {}
-
-        for layer in transformation:
-            for rule in layer:
-                all_contain_links = self.prunerHelper.combine_dicts(all_contain_links, self.prunerHelper.ruleContainmentLinksExtended[rule.name])
-
 
         # test containment links and see if any are missing
         self.all_missing_contain_links = {}
@@ -52,7 +44,7 @@ class Pruner(object):
                 if len(missing_links) == 0:
                     continue
 
-                links_not_found = self.will_links_be_built(rule.name, missing_links, all_contain_links, require_all_links = True)
+                links_not_found = self.will_links_be_built(rule.name, missing_links, self.prunerHelper.ruleContainmentLinksExtended.keys(), require_all_links = True)
 
                 if self.debug and len(links_not_found) > 0:
                     print("\nError for rule: " + self.rule_names[rule.name])
@@ -72,9 +64,13 @@ class Pruner(object):
 
         #raise Exception()
 
-    def will_links_be_built(self, rule_name, missing_links, future_contain_links, require_all_links = False):
+    def will_links_be_built(self, rule_name, missing_links, future_contain_rules, require_all_links = False):
 
         links_not_found = {}
+
+        all_keys = []
+        for rule in future_contain_rules:
+            all_keys += list(self.prunerHelper.ruleContainmentLinksExtended[rule].keys())
 
         debug = False
 
@@ -86,7 +82,20 @@ class Pruner(object):
 
             for link in link_names:
 
-                if className not in future_contain_links or link not in future_contain_links[className]:
+                found_link = True
+                if className not in all_keys:
+                    found_link = False
+                else:
+                    for rule in future_contain_rules:
+                        try:
+                            vals = self.prunerHelper.ruleContainmentLinksExtended[rule][className]
+                            if link not in vals:
+                                found_link = False
+                                break
+                        except KeyError:
+                            pass
+
+                if not found_link:
                     try:
                         if link not in links_not_found[className]:
                             links_not_found[className].append(link)
@@ -143,9 +152,7 @@ class Pruner(object):
         if len(pc_missing) == 0:
             return True
 
-        rule_links = self.combineForAll(rulesToTreat, self.prunerHelper.ruleContainmentLinksExtended)
-
-        missingLinks = self.will_links_be_built(pathCondition.name, pc_missing, rule_links)
+        missingLinks = self.will_links_be_built(pathCondition.name, pc_missing, rulesToTreat)
 
         if len(missingLinks) == 0:
             return True
