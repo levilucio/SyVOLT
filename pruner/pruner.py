@@ -4,8 +4,8 @@ Created on Sep 6, 2015
 @author: levi
 '''
 
-from util.new_ecore_utils import EcoreUtils as NewEcoreUtils
-from util.ecore_utils2 import EcoreUtils
+from util.ecore_utils import EcoreUtils as NewEcoreUtils
+from util.ecore_utilsold import EcoreUtils
 from pruner.pruner_helper import PrunerHelper
 from core.himesis_utils import graph_to_dot
 

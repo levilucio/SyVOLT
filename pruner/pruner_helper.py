@@ -64,7 +64,7 @@ class PrunerHelper:
                 #self.print_dict("ruleMissingContLinksExtended", self.ruleMissingContLinksExtended[rule.name])
 
 
-        raise Exception()
+        #raise Exception()
 
         # for links, rules in self.links_to_rules.items():
         #     print(links)
