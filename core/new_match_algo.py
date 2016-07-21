@@ -197,6 +197,7 @@ class NewHimesisMatcher(object):
     def reset_recursion_limit(self):
         pass
 
+    #@profile
     def _match(self):
 
         link_matches = {}
@@ -258,12 +259,11 @@ class NewHimesisMatcher(object):
                     #     self.print_link(self.source_graph, graph_n0_n, graph_n1_n, graph_link_n)
                     # print("\n===================\n")#End Source Graph " + self.source_graph.name + " nodes:")
 
-                for source_link in source_links:
-                    graph_n0_n, graph_n1_n, graph_link_n = source_link
+                for graph_n0_n, graph_n1_n, graph_link_n in source_links:
 
-                    if self.debug:
-                        print("\nChecking Graph " + self.source_graph.name + " nodes:")
-                        self.print_link(self.source_graph, graph_n0_n, graph_n1_n, graph_link_n)
+                    # if self.debug:
+                    #     print("\nChecking Graph " + self.source_graph.name + " nodes:")
+                    #     self.print_link(self.source_graph, graph_n0_n, graph_n1_n, graph_link_n)
 
                     if patt_link_n is not None and graph_link_n is not None:
                         nodes_match_link = self.match_nodes(graph_link_n, patt_link_n)
@@ -271,8 +271,8 @@ class NewHimesisMatcher(object):
                         nodes_match_link = False
 
                     if not nodes_match_link:
-                        if self.debug:
-                            print("Link doesn't match")
+                        # if self.debug:
+                        #     print("Link doesn't match")
                         continue
 
                     nodes_match_1 = self.match_nodes(graph_n0_n, patt0_n)
@@ -287,9 +287,9 @@ class NewHimesisMatcher(object):
 
                     nodes_match = ((nodes_match_1 and nodes_match_2) or (nodes_match_3 and nodes_match_4)) and nodes_match_link
 
-                    if self.debug:
-                        #print("Nodes match link: " + str(nodes_match_link))
-                        print("Links matched: " + str(nodes_match))
+                    # if self.debug:
+                    #     #print("Nodes match link: " + str(nodes_match_link))
+                    #     print("Links matched: " + str(nodes_match))
 
                     if nodes_match:
 
@@ -444,7 +444,7 @@ class NewHimesisMatcher(object):
 
     #==============================================================
 
-
+    #@profile
     def match_nodes(self, graph_node, patt_node):
 
         targetMM = self.pattern_mms[patt_node]
@@ -482,7 +482,7 @@ class NewHimesisMatcher(object):
         #     print("Src: " + sourceMM + " Trgt: " + targetMM + " Are feasible: " + str(are_feasible))
         return are_feasible
 
-
+    #@profile
     def are_semantically_feasible(self, src_node_num, patt_node_num):
         """
             Determines whether the two nodes are syntactically feasible,
@@ -508,20 +508,24 @@ class NewHimesisMatcher(object):
         #     print("Patt node: " + str(patt_node_num))
         #     print("Patt constant: " + str(self.patt_eqs_constant))
 
-        src_equations = []
         patt_label = patt_node["MT_label__"]
 
-        if src_node_num in self.src_eqs_constant:
+        try:
             src_equations = self.src_eqs_constant[src_node_num]
+        except KeyError:
+            src_equations = []
 
         #HACK: Use patt node num not labels for contracts!
-        patt_equations = []
+
         if self.pattern_graph.name.endswith("LHS"):
-            if patt_node_num in self.patt_eqs_constant:
-                patt_equations = self.patt_eqs_constant[patt_node_num]
+            lookup = patt_node_num
         else:
-            if int(patt_label) in self.patt_eqs_constant:
-                patt_equations = self.patt_eqs_constant[int(patt_label)]
+            lookup = int(patt_label)
+
+        try:
+            patt_equations = self.patt_eqs_constant[lookup]
+        except KeyError:
+            patt_equations = []
 
 
         for patt_eq in patt_equations:
