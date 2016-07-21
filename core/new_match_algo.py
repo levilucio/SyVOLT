@@ -455,15 +455,22 @@ class NewHimesisMatcher(object):
             sourceMM = "backward_link"
 
         # if self.debug:
-        #     print("Source: " + sourceMM)
-        #     print("Target: " + targetMM)
+
+        if targetMM == "trace_link":
+            if sourceMM in ["trace_link", "backward_link"]:
+                return True
+            else:
+                return False
+
+        # if targetMM == "directLink_T" and sourceMM != "directLink_T":
+        #     return False
+        #
+        # if targetMM == "directLink_S" and sourceMM != "directLink_S":
+        #     return False
+
+        #print("Source: " + sourceMM + " vs Target: " + targetMM)
 
         if sourceMM != targetMM:
-
-            # is this a hack?
-            if targetMM == "trace_link" and sourceMM == "backward_link":
-                return True
-
 
             # if debug:
             #    print("Superclasses: " + str(superclasses_dict))
@@ -498,7 +505,6 @@ class NewHimesisMatcher(object):
 
         src_node = self.source_nodes[src_node_num]
         patt_node = self.pattern_nodes[patt_node_num]
-
 
 
         # if self.debug_equations:
