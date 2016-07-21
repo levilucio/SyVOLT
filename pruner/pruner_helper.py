@@ -14,6 +14,9 @@ class PrunerHelper:
         self.ruleContainmentLinksExtended = {"HEmpty": {}}
         #self.ruleMissingContLinksExtended = {"HEmpty": {}}
 
+        self.ruleContainmentLinks_List = {"HEmpty": []}
+        self.ruleMissingContLinks_List = {"HEmpty": []}
+
         self.mmClassParents = self.eu.getSuperClassInheritanceRelationForClasses()
 
         self.links_to_rules = {}
@@ -45,9 +48,12 @@ class PrunerHelper:
                 self.ruleMissingContLinks[rule.name] = self.subtract_dicts(missing_links_copy, self.ruleContainmentLinksExtended[rule.name])
 
 
+                self.ruleContainmentLinks_List[rule.name] = self.collapse_dict(self.ruleContainmentLinksExtended[rule.name])
+                self.ruleMissingContLinks_List[rule.name] = self.collapse_dict(self.ruleMissingContLinks[rule.name])
+
                 # print("rule: " + rule.name)
-                # self.print_dict("ruleMissingContLinks", self.ruleMissingContLinks[rule.name])
-                # self.print_dict("cont links", self.ruleContainmentLinksExtended[rule.name])
+                self.print_list("ruleMissingContLinks", self.ruleMissingContLinks_List[rule.name])
+                self.print_list("cont links", self.ruleContainmentLinks_List[rule.name])
                 #self.ruleMissingContLinksExtended[rule.name] = self.extend_links(self.ruleMissingContLinks[rule.name])
                 #self.print_dict("ruleMissingContLinksExtended", self.ruleMissingContLinksExtended[rule.name])
 
@@ -58,9 +64,20 @@ class PrunerHelper:
         #     print(links)
         #     print(rules)
 
+    def collapse_dict(self, d):
+        l = []
+        for key, values in d.items():
+            for v in values:
+                l.append((key, v[0], v[1]))
+        return l
+
+
     def remove_all_missing_links(self, all_missing_links):
         for rule, links in self.ruleMissingContLinks.items():
             self.ruleMissingContLinks[rule] = self.subtract_dicts(self.ruleMissingContLinks[rule], all_missing_links)
+            self.ruleMissingContLinks_List[rule] = self.collapse_dict(self.ruleMissingContLinks[rule])
+
+            #self.print_list("self.ruleMissingContLinks_List[" + rule + "]", self.ruleMissingContLinks_List[rule])
 
     def combine_dicts(self, d1, d2):
         for key, value in d2.items():
@@ -146,6 +163,12 @@ class PrunerHelper:
                 new_links.append((parent, linkname))
         return new_links
 
+
+    def print_list(self, name, l):
+        if str(type(l)) == "<class 'dict'>":
+            raise Exception()
+        print("\n" + name + ":")
+        print(sorted(l))
 
     def print_dict(self, name, d):
         print("\n" + name + ":")
