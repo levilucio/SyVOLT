@@ -127,8 +127,7 @@ class Pruner(object):
                 if key not in d1:
                     d1[key] = [v for v in value]
                     continue
-                for v in value:
-                    d1[key].append(v)
+                d1[key] += value
         for key in d1.keys():
             d1[key] = list(set(d1[key]))
 
