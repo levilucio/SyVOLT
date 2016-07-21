@@ -644,7 +644,7 @@ class path_condition_generator_worker(Process):
 
         if self.pruning:
 
-            pruning_time = time.time()
+            #pruning_time = time.time()
 
             for pathCondName in pcs_to_prune:
                 delete_graph(pathCondName)
@@ -672,7 +672,7 @@ class path_condition_generator_worker(Process):
                 except ValueError:
                     pass
 
-            print("Time taken for pruning: " + str(time.time() - pruning_time))
+            #print("Time taken for pruning: " + str(time.time() - pruning_time))
 
         self.currentPathConditionSet.extend(newPathConditionSet)
 
