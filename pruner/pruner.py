@@ -53,6 +53,8 @@ class Pruner(object):
                 if len(links_not_found):
                     self.prunerHelper.combine_dicts(self.all_missing_contain_links, links_not_found)
 
+        self.prunerHelper.remove_all_missing_links(self.all_missing_contain_links)
+
 
         if self.debug:
             missing_count = 0
@@ -63,6 +65,7 @@ class Pruner(object):
                 self.prunerHelper.print_dict("All missing containment links", self.all_missing_contain_links)
 
         #raise Exception()
+
 
     def will_links_be_built(self, rule_name, missing_links, future_contain_rules, require_all_links = False):
 
@@ -111,29 +114,25 @@ class Pruner(object):
         return links_not_found
 
 
+    #@profile
     def combineForAll(self, ruleNames, sourceDict):
         '''
         get all the links built by a set of rules, either containment or missing
         '''
-        name_str = str(sourceDict) + str(ruleNames)
 
-        try:
-            return self.rule_set_links[name_str]
-        except KeyError:
-            d1 = {}
-            for ruleName in ruleNames:
-                d2 = sourceDict[ruleName]
-                for key, value in d2.items():
-                    if key not in d1:
-                        d1[key] = [v for v in value]
-                        continue
-                    for v in value:
-                        d1[key].append(v)
-            for key in d1.keys():
-                d1[key] = list(set(d1[key]))
+        d1 = {}
+        for ruleName in ruleNames:
+            d2 = sourceDict[ruleName]
+            for key, value in d2.items():
+                if key not in d1:
+                    d1[key] = [v for v in value]
+                    continue
+                for v in value:
+                    d1[key].append(v)
+        for key in d1.keys():
+            d1[key] = list(set(d1[key]))
 
-                #links = self.prunerHelper.combine_dicts(links, sourceDict[ruleName])
-            self.rule_set_links[name_str] = d1
+            #links = self.prunerHelper.combine_dicts(links, sourceDict[ruleName])
         return d1
 
 

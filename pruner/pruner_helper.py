@@ -58,6 +58,9 @@ class PrunerHelper:
         #     print(links)
         #     print(rules)
 
+    def remove_all_missing_links(self, all_missing_links):
+        for rule, links in self.ruleMissingContLinks.items():
+            self.ruleMissingContLinks[rule] = self.subtract_dicts(self.ruleMissingContLinks[rule], all_missing_links)
 
     def combine_dicts(self, d1, d2):
         for key, value in d2.items():
