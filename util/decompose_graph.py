@@ -15,7 +15,8 @@ except ImportError:
 
 #@do_cprofile
 #@Profiler
-#@lru_cache(maxsize=256)
+@lru_cache(maxsize=1024)
+#@profile
 def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
     #decompose graph into directLinks, backwardLinks, and isolated elements
 
@@ -83,17 +84,18 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
         source_mm = mms[source]
         target_mm = mms[target]
 
-        if has_contains and source_mm == "match_contains":
-            match_elements.append(target)
-        elif has_contains and source_mm == "apply_contains":
-            apply_elements.append(target)
-
-        elif not has_contains and source_mm == "MatchModel":
-            if target_mm != "paired_with":
+        if not has_contains:
+            if source_mm == "MatchModel" and target_mm != "paired_with":
                 match_elements.append(target)
-        elif not has_contains and source_mm == "ApplyModel":
-            if target_mm != "paired_with":
+            elif source_mm == "ApplyModel" and target_mm != "paired_with":
                 apply_elements.append(target)
+        else:
+            if source_mm == "match_contains":
+                match_elements.append(target)
+            elif source_mm == "apply_contains":
+                apply_elements.append(target)
+
+
 
     direct_links = [[direct_links_dict[dl][0], direct_links_dict[dl][1], dl] for dl in direct_links_dict.keys()]
 
