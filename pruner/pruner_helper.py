@@ -2,10 +2,9 @@ from copy import deepcopy
 
 class PrunerHelper:
 
-    def __init__(self, eu, new_eu, transformation, rule_names):
+    def __init__(self, eu, transformation, rule_names):
 
         self.eu = eu
-        self.new_eu = new_eu
 
         self.rule_names = rule_names
 
@@ -36,27 +35,15 @@ class PrunerHelper:
                         except KeyError:
                             self.links_to_rules[link] = [rule.name]
 
-                print("\nRule: " + rule.name)
+                #print("\nRule: " + rule.name)
                 self.ruleMissingContLinks[rule.name] = self.eu.getMissingContainmentLinks(rule)
-                self.print_dict("rule missing old", self.ruleMissingContLinks[rule.name])
-                self.ruleMissingContLinks[rule.name] = self.new_eu.getMissingContainmentLinks(rule)
-                self.print_dict("rule missing new", self.ruleMissingContLinks[rule.name])
 
                 #self.print_dict("ruleMissingContLinks (before removing built)", self.ruleMissingContLinks[rule.name])
 
                 #remove those missing cont links which are built in the same rule
                 missing_links_copy = deepcopy(self.ruleMissingContLinks[rule.name])
-                for classname, links in missing_links_copy.items():
-                    if classname not in self.ruleContainmentLinksExtended[rule.name]:
-                        continue
+                self.ruleMissingContLinksExtended[rule.name] = self.subtract_dicts(missing_links_copy, self.ruleContainmentLinksExtended[rule.name])
 
-                    for contain_link in self.ruleContainmentLinksExtended[rule.name][classname]:
-                        try:
-                            self.ruleMissingContLinks[rule.name][classname].remove(contain_link)
-                        except ValueError:
-                            pass
-                    if len(self.ruleMissingContLinks[rule.name][classname]) == 0:
-                        del self.ruleMissingContLinks[rule.name][classname]
 
 
                 #self.print_dict("ruleMissingContLinks", self.ruleMissingContLinks[rule.name])
@@ -99,11 +86,24 @@ class PrunerHelper:
         for key, values in d1.items():
             if key not in d2.keys():
                 print("Key: " + key + " is not in second dict!")
+                #raise Exception()
             else:
                 for val in values:
                     if val not in d2[key]:
-                        print("Value: " + str(val) + " is not in second dict!")
+                        print("Value: " + str(val) + " is not in first dict!")
                         print(key + " " + str(val))
+                        #raise Exception()
+
+        for key, values in d2.items():
+            if key not in d1.keys():
+                print("Key: " + key + " is not in first dict!")
+                #raise Exception()
+            else:
+                for val in values:
+                    if val not in d1[key]:
+                        print("Value: " + str(val) + " is not in first dict!")
+                        print(key + " " + str(val))
+                        #raise Exception()
 
     def extend_links(self, links):
         if len(links) == 0:
