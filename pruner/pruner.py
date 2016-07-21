@@ -114,10 +114,9 @@ class Pruner(object):
         get all the links built by a set of rules, either containment or missing
         '''
 
-        d1 = []
+        d1 = set()
         for ruleName in ruleNames:
-            d2 = sourceList[ruleName]
-            d1 += d2
+            d1.update(sourceList[ruleName])
         return d1
 
 

@@ -52,8 +52,8 @@ class PrunerHelper:
                 self.ruleMissingContLinks_List[rule.name] = self.collapse_dict(self.ruleMissingContLinks[rule.name])
 
                 # print("rule: " + rule.name)
-                self.print_list("ruleMissingContLinks", self.ruleMissingContLinks_List[rule.name])
-                self.print_list("cont links", self.ruleContainmentLinks_List[rule.name])
+                #self.print_list("ruleMissingContLinks", self.ruleMissingContLinks_List[rule.name])
+                #self.print_list("cont links", self.ruleContainmentLinks_List[rule.name])
                 #self.ruleMissingContLinksExtended[rule.name] = self.extend_links(self.ruleMissingContLinks[rule.name])
                 #self.print_dict("ruleMissingContLinksExtended", self.ruleMissingContLinksExtended[rule.name])
 
@@ -69,7 +69,7 @@ class PrunerHelper:
         for key, values in d.items():
             for v in values:
                 l.append((key, v[0], v[1]))
-        return l
+        return set(l)
 
 
     def remove_all_missing_links(self, all_missing_links):
