@@ -106,7 +106,7 @@ class Pruner(object):
         '''
         get all the links built by a set of rules, either containment or missing
         '''
-        name_str = str(ruleNames)
+        name_str = str(sourceDict) + str(ruleNames)
 
         try:
             return self.rule_set_links[name_str]
