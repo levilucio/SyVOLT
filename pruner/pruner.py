@@ -66,53 +66,6 @@ class Pruner(object):
 
         #raise Exception()
 
-
-    def will_links_be_built(self, rule_name, missing_links, future_contain_rules, require_all_links = False):
-
-        links_not_found = {}
-
-        all_keys = []
-        for rule in future_contain_rules:
-            all_keys += list(self.prunerHelper.ruleContainmentLinksExtended[rule].keys())
-
-        debug = False
-
-        if debug:
-            self.prunerHelper.print_dict(rule_name + " Missing Containment links:", missing_links)
-
-        # look at each class that the rule is missing
-        for className, link_names in sorted(missing_links.items()):
-
-            for link in link_names:
-
-                found_link = True
-                if className not in all_keys:
-                    found_link = False
-                else:
-                    for rule in future_contain_rules:
-                        try:
-                            vals = self.prunerHelper.ruleContainmentLinksExtended[rule][className]
-                            if link not in vals:
-                                found_link = False
-                                break
-                        except KeyError:
-                            pass
-
-                if not found_link:
-                    try:
-                        if link not in links_not_found[className]:
-                            links_not_found[className].append(link)
-                    except KeyError:
-                        links_not_found[className] = [link]
-
-        if debug:
-            if len(links_not_found) > 0:
-                print("Links not found for " + rule_name)
-                self.prunerHelper.print_dict("Not Found Links", links_not_found)
-
-                raise Exception()
-        return links_not_found
-
     def will_links_be_built_lists(self, rule_name, missing_links, future_contain_rules, require_all_links = False):
         links_not_found = {}
 
@@ -156,26 +109,6 @@ class Pruner(object):
         return links_not_found
 
 
-    #@profile
-    def combineForAll(self, ruleNames, sourceDict):
-        '''
-        get all the links built by a set of rules, either containment or missing
-        '''
-
-        d1 = {}
-        for ruleName in ruleNames:
-            d2 = sourceDict[ruleName]
-            for key, value in d2.items():
-                if key not in d1:
-                    d1[key] = [v for v in value]
-                    continue
-                d1[key] += value
-        for key in d1.keys():
-            d1[key] = list(set(d1[key]))
-
-            #links = self.prunerHelper.combine_dicts(links, sourceDict[ruleName])
-        return d1
-
     def combineForAll_lists(self, ruleNames, sourceList):
         '''
         get all the links built by a set of rules, either containment or missing
@@ -197,19 +130,16 @@ class Pruner(object):
 
         rules_in_pc = self.pc_name_function(pathCondition.name)
 
-        pc_missing = self.combineForAll(rules_in_pc, self.prunerHelper.ruleMissingContLinks)
         pc_missing_lists = self.combineForAll_lists(rules_in_pc, self.prunerHelper.ruleMissingContLinks_List)
 
         if len(pc_missing_lists) == 0:
             return True
 
-        pc_built = self.combineForAll(rules_in_pc, self.prunerHelper.ruleContainmentLinksExtended)
         pc_built_lists = self.combineForAll_lists(rules_in_pc, self.prunerHelper.ruleContainmentLinks_List)
 
         #print("PC: " + pathCondition.name)
         #self.prunerHelper.print_dict("PC Missing", pc_missing)
         #self.prunerHelper.print_dict("PC Built", pc_built)
-        pc_missing = self.prunerHelper.subtract_dicts(pc_missing, pc_built)
         pc_missing_lists = set(pc_missing_lists) - set(pc_built_lists)
 
         #self.prunerHelper.print_dict("PC Missing After", pc_missing)
