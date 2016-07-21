@@ -485,9 +485,10 @@ class PathConditionGenerator(object):
 
             #print("Time to start layer: " + str(time.time() - layer_start_time))
 
-
-            for worker in workers:
+            for i, worker in enumerate(workers):
                 worker.join()
+                if len(pc_chunks) > 7:
+                    print("Worker #" + str(i) + " finished")
 
 
             layer_finish_time = time.time()
