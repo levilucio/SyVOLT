@@ -176,6 +176,17 @@ class Pruner(object):
             #links = self.prunerHelper.combine_dicts(links, sourceDict[ruleName])
         return d1
 
+    def combineForAll_lists(self, ruleNames, sourceList):
+        '''
+        get all the links built by a set of rules, either containment or missing
+        '''
+
+        d1 = []
+        for ruleName in ruleNames:
+            d2 = sourceList[ruleName]
+            d1 += d2
+        return d1
+
 
     #@profile
     def isPathConditionStillFeasible(self, pathCondition, rulesToTreat):
@@ -187,50 +198,50 @@ class Pruner(object):
         rules_in_pc = self.pc_name_function(pathCondition.name)
 
         pc_missing = self.combineForAll(rules_in_pc, self.prunerHelper.ruleMissingContLinks)
-        if len(pc_missing) == 0:
+        pc_missing_lists = self.combineForAll_lists(rules_in_pc, self.prunerHelper.ruleMissingContLinks_List)
+
+        if len(pc_missing_lists) == 0:
             return True
 
         pc_built = self.combineForAll(rules_in_pc, self.prunerHelper.ruleContainmentLinksExtended)
+        pc_built_lists = self.combineForAll_lists(rules_in_pc, self.prunerHelper.ruleContainmentLinks_List)
 
         #print("PC: " + pathCondition.name)
         #self.prunerHelper.print_dict("PC Missing", pc_missing)
         #self.prunerHelper.print_dict("PC Built", pc_built)
         pc_missing = self.prunerHelper.subtract_dicts(pc_missing, pc_built)
+        pc_missing_lists = set(pc_missing_lists) - set(pc_built_lists)
 
         #self.prunerHelper.print_dict("PC Missing After", pc_missing)
 
-        if len(pc_missing) == 0:
+        if len(pc_missing_lists) == 0:
             return True
 
-        missingLinks = self.will_links_be_built(pathCondition.name, pc_missing, rulesToTreat)
+        missingLinks = self.will_links_be_built_lists(pathCondition.name, pc_missing_lists, rulesToTreat)
 
         if len(missingLinks) == 0:
             return True
 
-        missingLinks = self.prunerHelper.subtract_dicts(missingLinks, self.all_missing_contain_links)
-
-        if len(missingLinks) == 0:
-            return True
 
         if self.debug:
             print("=========================")
             print("Path condition: " + pathCondition.name)
             self.prunerHelper.print_dict("Missing Links", missingLinks)
 
-            for className, values in missingLinks.items():
-                for val in values:
-                    link = (className, val[0], val[1])
-                    rules_to_find = self.prunerHelper.links_to_rules[link]
-                    print([self.rule_names[rule] for rule in rules_to_find])
-                    print([self.rule_names[rule] for rule in rulesToTreat])
-
-                    for find_rule in rules_to_find:
-                        if find_rule in rulesToTreat:
-                            print("ERROR: Pruner incorrectly reports link will not be built!")
-                            print(className + " " + str(val))
-                            print("Built in rule: " + find_rule)
-
-                            raise Exception()
+            # for className, values in missingLinks.items():
+            #     for val in values:
+            #         link = (className, val[0], val[1])
+            #         rules_to_find = self.prunerHelper.links_to_rules[link]
+            #         print([self.rule_names[rule] for rule in rules_to_find])
+            #         print([self.rule_names[rule] for rule in rulesToTreat])
+            #
+            #         for find_rule in rules_to_find:
+            #             if find_rule in rulesToTreat:
+            #                 print("ERROR: Pruner incorrectly reports link will not be built!")
+            #                 print(className + " " + str(val))
+            #                 print("Built in rule: " + find_rule)
+            #
+            #                 raise Exception()
 
             # if len(missingContLinks) > 0:
             #     graph_to_dot("missing_" + pathCondition.name, pathCondition)
