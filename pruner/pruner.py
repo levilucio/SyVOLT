@@ -34,6 +34,9 @@ class Pruner(object):
 
         all_contain_links = {}
 
+        #cache the links for a set of rules
+        self.rule_set_links = {}
+
         for layer in transformation:
             for rule in layer:
                 all_contain_links = self.prunerHelper.combine_dicts(all_contain_links, self.prunerHelper.ruleContainmentLinksExtended[rule.name])
@@ -99,14 +102,19 @@ class Pruner(object):
         return links_not_found
 
 
-
     def combineForAll(self, ruleNames, sourceDict):
         '''
         get all the links built by a set of rules, either containment or missing
         '''
-        links = {}
-        for ruleName in ruleNames:
-            links = self.prunerHelper.combine_dicts(links, sourceDict[ruleName])
+        name_str = str(ruleNames)
+
+        try:
+            return self.rule_set_links[name_str]
+        except KeyError:
+            links = {}
+            for ruleName in ruleNames:
+                links = self.prunerHelper.combine_dicts(links, sourceDict[ruleName])
+            self.rule_set_links[name_str] = links
         return links
 
 
