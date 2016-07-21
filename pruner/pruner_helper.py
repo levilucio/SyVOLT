@@ -12,7 +12,7 @@ class PrunerHelper:
         self.ruleMissingContLinks = {"HEmpty": {}}
 
         self.ruleContainmentLinksExtended = {"HEmpty": {}}
-        self.ruleMissingContLinksExtended = {"HEmpty": {}}
+        #self.ruleMissingContLinksExtended = {"HEmpty": {}}
 
         self.mmClassParents = self.eu.getSuperClassInheritanceRelationForClasses()
 
@@ -42,12 +42,13 @@ class PrunerHelper:
 
                 #remove those missing cont links which are built in the same rule
                 missing_links_copy = deepcopy(self.ruleMissingContLinks[rule.name])
-                self.ruleMissingContLinksExtended[rule.name] = self.subtract_dicts(missing_links_copy, self.ruleContainmentLinksExtended[rule.name])
+                self.ruleMissingContLinks[rule.name] = self.subtract_dicts(missing_links_copy, self.ruleContainmentLinksExtended[rule.name])
 
 
-
-                #self.print_dict("ruleMissingContLinks", self.ruleMissingContLinks[rule.name])
-                self.ruleMissingContLinksExtended[rule.name] = self.extend_links(self.ruleMissingContLinks[rule.name])
+                # print("rule: " + rule.name)
+                # self.print_dict("ruleMissingContLinks", self.ruleMissingContLinks[rule.name])
+                # self.print_dict("cont links", self.ruleContainmentLinksExtended[rule.name])
+                #self.ruleMissingContLinksExtended[rule.name] = self.extend_links(self.ruleMissingContLinks[rule.name])
                 #self.print_dict("ruleMissingContLinksExtended", self.ruleMissingContLinksExtended[rule.name])
 
 
@@ -82,28 +83,32 @@ class PrunerHelper:
         d1 = {k:v for k, v in d1.items() if v }
         return d1
 
-    def compare_dicts(self, d1, d2):
+    def compare_dicts(self, d1, d2, throw_exception=False):
         for key, values in d1.items():
             if key not in d2.keys():
                 print("Key: " + key + " is not in second dict!")
-                #raise Exception()
+                if throw_exception:
+                    raise Exception()
             else:
                 for val in values:
                     if val not in d2[key]:
                         print("Value: " + str(val) + " is not in first dict!")
                         print(key + " " + str(val))
-                        #raise Exception()
+                        if throw_exception:
+                            raise Exception()
 
         for key, values in d2.items():
             if key not in d1.keys():
                 print("Key: " + key + " is not in first dict!")
-                #raise Exception()
+                if throw_exception:
+                    raise Exception()
             else:
                 for val in values:
                     if val not in d1[key]:
                         print("Value: " + str(val) + " is not in first dict!")
                         print(key + " " + str(val))
-                        #raise Exception()
+                        if throw_exception:
+                            raise Exception()
 
     def extend_links(self, links):
         if len(links) == 0:
