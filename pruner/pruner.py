@@ -120,11 +120,21 @@ class Pruner(object):
         try:
             return self.rule_set_links[name_str]
         except KeyError:
-            links = {}
+            d1 = {}
             for ruleName in ruleNames:
-                links = self.prunerHelper.combine_dicts(links, sourceDict[ruleName])
-            self.rule_set_links[name_str] = links
-        return links
+                d2 = sourceDict[ruleName]
+                for key, value in d2.items():
+                    if key not in d1:
+                        d1[key] = [v for v in value]
+                        continue
+                    for v in value:
+                        d1[key].append(v)
+            for key in d1.keys():
+                d1[key] = list(set(d1[key]))
+
+                #links = self.prunerHelper.combine_dicts(links, sourceDict[ruleName])
+            self.rule_set_links[name_str] = d1
+        return d1
 
 
     #@profile
@@ -166,9 +176,6 @@ class Pruner(object):
             print("=========================")
             print("Path condition: " + pathCondition.name)
             self.prunerHelper.print_dict("Missing Links", missingLinks)
-
-            self.prunerHelper.print_dict("Links to be built", rule_links)
-
 
             for className, values in missingLinks.items():
                 for val in values:
