@@ -17,30 +17,11 @@ from PropertyVerification.v2.ContractProver import ContractProver
 from PropertyVerification.v2.if_then_contract import IfThenContract
 from PropertyVerification.v2.prop_logic import NotContract, AndContract
 
-from core.himesis_utils import graph_to_dot
+from core.himesis_utils import graph_to_dot, load_directory
 from util.test_script_utils import select_rules, get_sub_and_super_classes,\
     load_transformation, changePropertyProverMetamodel, set_supertypes, load_contracts
 from util.slicer import Slicer
 from util.parser import load_parser
-# imports for properties' atomic contracts
-#
-# from mbeddr2C_MM.props.HAssignmentInstance_IsolatedLHS import HAssignmentInstance_IsolatedLHS
-# from mbeddr2C_MM.props.HAssignmentInstance_ConnectedLHS import HAssignmentInstance_ConnectedLHS
-# from mbeddr2C_MM.props.HAssignmentInstance_CompleteLHS import HAssignmentInstance_CompleteLHS
-# from mbeddr2C_MM.props.HGlobalVarGetsCorrectFunctionAddressAtInit_IsolatedLHS import HGlobalVarGetsCorrectFunctionAddressAtInit_IsolatedLHS
-# from mbeddr2C_MM.props.HGlobalVarGetsCorrectFunctionAddressAtInit_ConnectedLHS import HGlobalVarGetsCorrectFunctionAddressAtInit_ConnectedLHS
-# from mbeddr2C_MM.props.HGlobalVarGetsCorrectFunctionAddressAtInit_CompleteLHS import HGlobalVarGetsCorrectFunctionAddressAtInit_CompleteLHS
-
-# from mbeddr2C_MM.props.HAssignmentInstance_IsolatedLHS import HAssignmentInstance_IsolatedLHS
-# from mbeddr2C_MM.props.HAssignmentInstance_ConnectedLHS import HAssignmentInstance_ConnectedLHS
-# from mbeddr2C_MM.props.HAssignmentInstance_CompleteLHS import HAssignmentInstance_CompleteLHS
-# from mbeddr2C_MM.props.HGlobalVarGetsCorrectFunctionAddressAtInit_IsolatedLHS import HGlobalVarGetsCorrectFunctionAddressAtInit_IsolatedLHS
-# from mbeddr2C_MM.props.HGlobalVarGetsCorrectFunctionAddressAtInit_ConnectedLHS import HGlobalVarGetsCorrectFunctionAddressAtInit_ConnectedLHS
-# from mbeddr2C_MM.props.HGlobalVarGetsCorrectFunctionAddressAtInit_CompleteLHS import HGlobalVarGetsCorrectFunctionAddressAtInit_CompleteLHS
-
-from mbeddr2C_MM.props.HVerySimple_IsolatedLHS import HVerySimple_IsolatedLHS
-from mbeddr2C_MM.props.HVerySimple_ConnectedLHS import HVerySimple_ConnectedLHS
-from mbeddr2C_MM.props.HVerySimple_CompleteLHS import HVerySimple_CompleteLHS
 
 class Prover():
 
@@ -109,7 +90,7 @@ class Prover():
 
         inputMM = "./mbeddr2C_MM/ecore_metamodels/Module.ecore"
         outputMM = "./mbeddr2C_MM/ecore_metamodels/C.ecore"
-        subclasses_dict, superclasses_dict = get_sub_and_super_classes(inputMM, outputMM)
+        subclasses_dict, self.superclasses_dict = get_sub_and_super_classes(inputMM, outputMM)
 
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
             pyramify.ramify_directory(transformation_dir, self.transformation)
@@ -123,50 +104,42 @@ class Prover():
         post_metamodel = ["MT_post__T_MM", "MoTifRule"]
 
 
-        changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict, superclasses_dict, ".")
-        set_supertypes(superclasses_dict, self.rules, self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators)
+        changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict, self.superclasses_dict, ".")
+        set_supertypes(self.superclasses_dict, self.rules, self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators)
         
         # go through all the matchers, combinators and tracers to add polymorphism on all classes in an inheritance hierarchy
                                                                   
 
             
         # load the contracts, and add polymorphism
+        contracts = load_directory("mbeddr2C_MM/props/")
 
+        atomic_contracts = [
+            'AssignmentInstance',
+            'GlobalVarGetsCorrectFunctionAddressAtInit',
+            'Simpler',
+            'VerySimple'
+        ]
 
-        if (args.draw_svg):
-            graph_to_dot("property_VerySimple_isolated", HVerySimple_IsolatedLHS())
-            graph_to_dot("property_VerySimple_connected", HVerySimple_ConnectedLHS())
-            graph_to_dot("property_VerySimple_complete", HVerySimple_CompleteLHS())
-            # graph_to_dot("property_GlobalVarGetsCorrectFunctionAddressAtInit_isolated", HGlobalVarGetsCorrectFunctionAddressAtInit_IsolatedLHS())
-            # graph_to_dot("property_GlobalVarGetsCorrectFunctionAddressAtInit_connected", HGlobalVarGetsCorrectFunctionAddressAtInit_ConnectedLHS())
-            # graph_to_dot("property_GlobalVarGetsCorrectFunctionAddressAtInit_complete", HGlobalVarGetsCorrectFunctionAddressAtInit_CompleteLHS())
+        if_then_contracts = []
+        prop_if_then_contracts = []
 
-        self.atomic_contracts = []
- 
+        self.atomic_contracts, self.if_then_contracts = load_contracts(contracts, self.superclasses_dict,
+                                                                       atomic_contracts, if_then_contracts,
+                                                                       prop_if_then_contracts,
+                                                                       args.draw_svg)
 
-        isolated = HVerySimple_IsolatedLHS()
-        connected = HVerySimple_ConnectedLHS()
-        complete = HVerySimple_CompleteLHS()
- 
-        isolated["superclasses_dict"] = superclasses_dict
-        connected["superclasses_dict"] = superclasses_dict
-        complete["superclasses_dict"] = superclasses_dict
- 
-        c0 = AtomicContract(isolated, connected, complete)
- 
-        self.atomic_contracts.append(("VerySimple", c0))
+        slicer = Slicer(self.rules, self.transformation, self.superclasses_dict)
 
         if args.slice > 0:
-            slicer = Slicer(self.rules, self.transformation)
-
             contract = self.atomic_contracts[args.slice - 1]
             print("Slicing for contract number " + str(args.slice) + " : " + contract[0])
+
+            self.atomic_contracts = [contract]
 
             print("Number rules before: " + str(len(self.rules)))
             self.rules, self.transformation = slicer.slice_transformation(contract)
             print("Number rules after: " + str(len(self.rules)))
-
-            #raise Exception()        
 
 
         for layer in self.transformation:
@@ -181,7 +154,7 @@ class Prover():
         inputMM = "./mbeddr2C_MM/ecore_metamodels/Module.ecore"
         pc_set = PathConditionGenerator(self.transformation, outputMM, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
 
-        raise Exception()
+        #raise Exception()
 
         ts0 = time.time()
         pc_set.build_path_conditions()
@@ -195,29 +168,16 @@ class Prover():
 
         #pc_set.print_path_conditions_file()
 
-#         if pc_set.num_path_conditions < 300:
-#             pc_set.print_path_conditions_screen()
-# 
-#         # now actually prove these contracts
-# 
-# 
-#         ts0 = time.time()
-# 
-#         verifier = StateProperty()
-# 
-#         for name, a_c in self.atomic_contracts:
-#             result = verifier.verifyCompositeStateProperty(pc_set, a_c)
-#             if len(result) == 0:
-#             	print("\n")
-#             	print("Contract " + name + " holds!")
-#             else:
-#             	print("\n")
-#             	print("Contract " + name + " does not hold!")
-#             	print(result)
-#         
-#         ts1 = time.time()
-#         
-#         print("\n\nTime to verify properties: " + str(ts1 - ts0) + " seconds.")
+        print("\nContract proving:")
+
+        pc_set.verbosity = 0
+
+        contract_prover = ContractProver()
+
+        contract_prover.prove_contracts(s, self.atomic_contracts, [])  # self.if_then_contracts)
+        print("\n\nTime to build the set of path conditions: " + str(ts1-ts0))
+        print("Number of path conditions: " + str(pc_set.num_path_conditions))
+
 
 
 
