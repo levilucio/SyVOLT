@@ -84,7 +84,8 @@ class Prover():
         full_transformation = [[r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, ],
                                [r11, r12, r13, r14, r15, r16, r17, r18, r19, r20, r21, r22, r23, r24, r25, r26, ],
                                [r27, r28, r29, ], [r30, r31, r32, r33, r34, r35, ], [r36, r37, r38, r39, ],
-                               [r40, r41, r42, r43, r44, r45, ], [r46, ], ]
+                               [r40, r41, r42, r43, r44, r45, ], [r46, ],
+        ]
 
         self.rules, self.transformation = load_transformation(transformation_dir, full_transformation)
 
@@ -97,8 +98,6 @@ class Prover():
 
         # for rule in self.rules:
         #     graph_to_dot(rule, self.rules[rule])
-
-
 
         pre_metamodel = ["MT_pre__S_MM", "MoTifRule"]
         post_metamodel = ["MT_post__T_MM", "MoTifRule"]
@@ -129,17 +128,14 @@ class Prover():
                                                                        prop_if_then_contracts,
                                                                        args.draw_svg)
 
-        slicer = Slicer(self.rules, self.transformation, self.superclasses_dict)
 
-        if args.slice > 0:
-            contract = self.atomic_contracts[args.slice - 1]
-            print("Slicing for contract number " + str(args.slice) + " : " + contract[0])
+        slicer = Slicer(self.rules, self.transformation, self.superclasses_dict, self.overlapping_rules)
 
-            self.atomic_contracts = [contract]
-
-            print("Number rules before: " + str(len(self.rules)))
+        if args.slice > -1:
+            contract, self.atomic_contracts, self.if_then_contracts = slicer.get_contract(args.slice,
+                                                                                          self.atomic_contracts,
+                                                                                          self.if_then_contracts)
             self.rules, self.transformation = slicer.slice_transformation(contract)
-            print("Number rules after: " + str(len(self.rules)))
 
 
         for layer in self.transformation:
@@ -174,7 +170,7 @@ class Prover():
 
         contract_prover = ContractProver()
 
-        contract_prover.prove_contracts(s, self.atomic_contracts, [])  # self.if_then_contracts)
+        contract_prover.prove_contracts(pc_set, self.atomic_contracts, [])  # self.if_then_contracts)
         print("\n\nTime to build the set of path conditions: " + str(ts1-ts0))
         print("Number of path conditions: " + str(pc_set.num_path_conditions))
 
