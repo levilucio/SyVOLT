@@ -116,20 +116,20 @@ class Slicer:
                 if rule in required_rules:
                     continue
 
-                #if not "FatherRule" in rule.name:
-                #    continue
+                rule_me = self.match_elements[rule.name]
 
-                # rule_dls = self.direct_links[rule.name]
-                #
-                # if verbosity > 1:
-                #     print("\n" + rule.name)
-                #     print("Rule DLs: " + str(rule_dls))
-                #     print("Match Elements: " + str(self.match_elements[rule.name]))
-                #     print("Apply Elements: " + str(self.apply_elements[rule.name]))
 
+                rule_me = set([rule.vs[n]["mm__"] for n in rule_me])
 
                 for graph in graph_list:
                     verbosity = 0
+
+                    graph_me = self.match_elements[graph.name]
+                    graph_me = set([graph.vs[n]["mm__"].replace("MT_pre__", "") for n in graph_me])
+
+                    if len(graph_me.intersection(rule_me)) > 0:
+                        required_rules.append(rule)
+                        continue
 
                     if match_links(graph, self.data[graph.name], rule, self.data[rule.name], self.superclasses_dict, verbosity=verbosity):
                         required_rules.append(rule)
