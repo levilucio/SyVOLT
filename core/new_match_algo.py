@@ -280,6 +280,7 @@ class NewHimesisMatcher(object):
                     if self.match_nodes(graph_n0_n, patt0_n) and self.match_nodes(graph_n1_n, patt1_n):
 
                         found_match = True
+                        patt_link = (patt0_n, patt1_n, patt_link_n)
                         source_link = (graph_n0_n, graph_n1_n, graph_link_n)
 
                         try:
