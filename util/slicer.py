@@ -130,9 +130,7 @@ class Slicer:
 
                 for graph in graph_list:
                     verbosity = 0
-                    if graph.name == "HcopersonsSolveRefCountryFamilyChildCommunityMan" and rule.name == "HCountry2Community":
-                        verbosity = 2
-                        print(self.backward_links[rule.name])
+
                     if match_links(graph, self.data[graph.name], rule, self.data[rule.name], self.superclasses_dict, verbosity=verbosity):
                         required_rules.append(rule)
 
@@ -155,7 +153,7 @@ class Slicer:
 
         for c in contract_list:
 
-            data = decompose_graph(c, verbosity = 2)
+            data = decompose_graph(c, verbosity = 0)
 
             self.direct_links[c.name] = data["direct_links"]
             self.backward_links[c.name] = data["backward_links"]
@@ -183,7 +181,7 @@ class Slicer:
                     graph_to_dot(rule.name, rule)
 
 
-        required_rules = self.find_required_rules(contract_name, contract_list, True, verbosity=2)
+        required_rules = self.find_required_rules(contract_name, contract_list, True, verbosity=0)
 
 
         rr_names = [rule.name for rule in required_rules]
