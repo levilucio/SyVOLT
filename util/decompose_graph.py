@@ -98,15 +98,14 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
 
 
 
-    direct_links = [[direct_links_dict[dl][0], direct_links_dict[dl][1], dl] for dl in direct_links_dict.keys()]
+    direct_links = [[val[0], val[1], dl] for dl, val in direct_links_dict.items()]
 
     if debug:
         print("Direct links: ")
         for n0, n1, nlink in direct_links:
             print_link(graph, n0, n1, nlink)
 
-    backward_links = [[backward_links_dict[bl][0], backward_links_dict[bl][1], bl] for bl in
-                          backward_links_dict.keys()]
+    backward_links = [[val[0], val[1], bl] for bl, val in backward_links_dict.items()]
 
     if debug:
         print("Backward links: ")
