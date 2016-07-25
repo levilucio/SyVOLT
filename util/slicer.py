@@ -2,11 +2,10 @@
 from core.himesis_utils import graph_to_dot
 from util.decompose_graph import decompose_graph, match_links
 
-from core.match_algo import HimesisMatcher
-from core.himesis_plus import makePreConditionPattern
+from core.himesis_utils import build_traceability
 
 from copy import deepcopy
-class Slicer():
+class Slicer:
 
 
     def __init__(self, rules, transformation, superclasses_dict, overlapping_rules):
@@ -22,6 +21,11 @@ class Slicer():
 
 
         self.rules = rules
+
+        for rule in self.rules:
+            self.rules[rule] = build_traceability(deepcopy(self.rules[rule]))
+
+
         self.transformation = transformation
 
         self.superclasses_dict = superclasses_dict
@@ -29,9 +33,13 @@ class Slicer():
         self.overlapping_rules = overlapping_rules
 
         for layer in transformation:
-            for rule in layer:
+            for i, rule in enumerate(layer):
 
                 rule_name = rule.name
+
+                #make sure to update layer with traceability rules
+                layer[i] = self.rules[rule_name]
+
                 data = decompose_graph(self.rules[rule_name], verbosity=0, ignore_apply_dls=True)
                 self.direct_links[rule_name] = data["direct_links"]
                 self.backward_links[rule_name] = data["backward_links"]
@@ -93,16 +101,6 @@ class Slicer():
         if self.debug:
             print("\nLooking for required rules for graph: " + graph_name)
 
-
-        # try:
-        #     supertypes = graph["superclasses_dict"]
-        # except KeyError:
-        #     print("Graph: " + graph.name + " does not have a superclasses dict")
-        #     supertypes = []
-
-
-
-
         required_rules = []
 
         for layer in self.transformation:
@@ -131,101 +129,13 @@ class Slicer():
 
 
                 for graph in graph_list:
-
-                    if match_links(graph, self.data[graph.name], rule, self.data[rule.name], self.superclasses_dict, verbosity=0):
+                    verbosity = 0
+                    if graph.name == "HcopersonsSolveRefCountryFamilyChildCommunityMan" and rule.name == "HCountry2Community":
+                        verbosity = 2
+                        print(self.backward_links[rule.name])
+                    if match_links(graph, self.data[graph.name], rule, self.data[rule.name], self.superclasses_dict, verbosity=verbosity):
                         required_rules.append(rule)
 
-                # for dl in dls:
-                #
-                #     if dl in rule_dls:
-                #         required_rules.append(rule)
-                #         if self.debug:
-                #             print("Add rule (dl): " + rule.name)
-                #         break
-                #
-                #     else:
-                #
-                #         #check for supertype matching
-                #
-                #         a, b = dl
-                #         for rule_dl in rule_dls:
-                #             ra, rb = rule_dl
-                #
-                #             if a in supertypes and ra in supertypes[a] and \
-                #                 b in supertypes and rb in supertypes[b]:
-                #                 required_rules.append(rule)
-                #
-                #                 if self.debug:
-                #                     print("Add rule (dl-supertypes): " + rule.name)
-                #                 break
-
-
-                # for backward_link in bls:
-                #     a, m = backward_link
-                #
-                #     if self.debug:
-                #         print("M: " + m + " A: " + a)
-                #         print("Match Elements: " + str(self.match_elements[rule.name]))
-                #         print("Apply Elements: " + str(self.apply_elements[rule.name]))
-                #
-                #     if m in self.match_elements[rule.name] and \
-                #         a in self.apply_elements[rule.name]:
-                #         required_rules.append(rule)
-                #         found_bls.append(backward_link)
-                #         if self.debug:
-                #             print("Add rule (bl): " + rule.name)
-                #     else:
-                #
-                #         #check for supertype matching
-                #
-                #         if a in supertypes and supertypes[a] in self.apply_elements[rule.name] and \
-                #             m in supertypes and supertypes[m] in self.match_elements[rule.name]:
-                #             required_rules.append(rule)
-                #             found_bls.append(backward_link)
-                #             if self.debug:
-                #                 print("Add rule (bl-supertypes): " + rule.name)
-                #
-                #
-                # isolated_elements = self.isolated_match_elements[graph.name]
-                #
-                # if isolated_elements:
-                #
-                #     isolated_added = False
-                #     rule_mms = rule.vs["mm__"]
-                #     #print("Rule mms: " + str(rule_mms))
-                #     #print("Isolated mms: " + str(isolated_elements))
-                #
-                #     for isolated_mm in isolated_elements:
-                #         if isolated_mm in rule_mms:
-                #             required_rules.append(rule)
-                #             isolated_added = True
-                #             break
-
-
-
-                # print("WARNING: HAVENT ADDED RULE YET")
-                # print("Rule: " + rule.name)
-
-                #rule_bls = self.backward_links[rule.name]
-
-                # print("Rule BLs: " + str(rule_bls))
-                #
-                # print("Match Elements: " + str(self.match_elements[rule.name]))
-                # print("Apply Elements: " + str(self.apply_elements[rule.name]))
-                #
-                # print("Contract BLs: " + str(bls))
-
-                #print("\nRule " + rule.name + " MMS: " + str(rule_mms))
-
-                # for mm in mms_required:
-                #     if mm in rule_mms:
-                #         required_rules.append(rule)
-                #
-                #         #print("Add rule: " + rule.name + " with mms: " + str(rule_mms))
-                #         break
-        # if len(found_bls) < len(bls):
-        #     print("\nERROR: Could not find all backward links for graph: " + graph.name)
-        #     print("Missing backward links: " + str(["M: " + m + " -> A: " + a for a,m in bls if (a,m) not in found_bls]))
 
         return list(set(required_rules))
 
@@ -327,6 +237,6 @@ class Slicer():
 
         print("Slicing took: " + str(end_time) + " seconds")
         print("Number rules after: " + str(len(new_rules)))
-        #raise Exception()
+        raise Exception()
 
         return new_rules, new_transformation
