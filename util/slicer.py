@@ -46,15 +46,15 @@ class Slicer():
 
 
 
-        if self.debug:
-
-            print("Supertype hierarchy: ")
-            supertypes = list(self.rules.values())[0]["superclasses_dict"]
-            defaults = ['MetaModelElement_S', 'MetaModelElement_T']
-            for k in sorted(supertypes.keys()):
-                v = [s for s in supertypes[k] if s not in defaults]
-                if v:
-                    print(k + " : " + str(v))
+        # if self.debug:
+        #
+        #     print("Supertype hierarchy: ")
+        #     supertypes = list(self.rules.values())[0]["superclasses_dict"]
+        #     defaults = ['MetaModelElement_S', 'MetaModelElement_T']
+        #     for k in sorted(supertypes.keys()):
+        #         v = [s for s in supertypes[k] if s not in defaults]
+        #         if v:
+        #             print(k + " : " + str(v))
 
 
 
@@ -248,9 +248,8 @@ class Slicer():
         contract_name, contract_list = self.decompose_contract(contract)
 
         if self.debug:
-            #print("Direct links: " + str(self.direct_links))
-            
-            graph_to_dot(contract.name, contract)
+
+            graph_to_dot(contract_name, contract_list[0])
             for layer in self.transformation:
                 for rule in layer:
                     graph_to_dot(rule.name, rule)
@@ -279,14 +278,16 @@ class Slicer():
         for rr in rrules_copy:
             for key, values in self.overlapping_rules.items():
                 if rr == key:
-                    rr_names += values
-                if rr in values:
+                    for val in values:
+                        if val not in rr_names:
+                            rr_names += values
+                            #print("Adding: " + str(values))
+                if rr in values and key not in rr_names:
                     rr_names.append(key)
-
-        rr_names = list(set(rr_names))
+                    #print("Adding: " + str(key))
 
         print("Required rules for contract " + contract_name + ":\n" + str(sorted(rr_names)))
-
+        #raise Exception()
 
         new_rules = {}
         for k in self.rules.keys():
@@ -307,5 +308,7 @@ class Slicer():
         end_time = time.time() - start_time
 
         print("Slicing took: " + str(end_time) + " seconds")
+
+        #raise Exception()
 
         return new_rules, new_transformation

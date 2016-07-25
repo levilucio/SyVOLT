@@ -144,7 +144,7 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
 
 def match_links(pattern, pattern_data, graph, source_data, superclasses_dict, verbosity=0, match_all = False):
 
-    # if "HSon2Man" in pattern.name:
+    # if "Simpler" in pattern.name and "Hlayer5rule1" in graph.name:
     #     verbosity = 2
     #
     #     print("Pattern: " + pattern.name + " vs " + graph.name)
@@ -189,10 +189,6 @@ def match_links(pattern, pattern_data, graph, source_data, superclasses_dict, ve
                     print("\nChecking Pattern " + pattern.name + " nodes:")
                     print_link(pattern, patt0_n, patt1_n, patt_link_n)
 
-                if verbosity > 1:
-                    # print("\nChecking Graph " + graph.name + " nodes:")
-                    print_link(graph, graph_n0_n, graph_n1_n, graph_link_n)
-
                 nodes_match_1 = match_nodes(graph, graph_n0_n, pattern, patt0_n, superclasses_dict, verbosity = verbosity)
 
                 nodes_match_2 = match_nodes(graph, graph_n1_n, pattern, patt1_n, superclasses_dict, verbosity = verbosity)
@@ -216,6 +212,8 @@ def match_links(pattern, pattern_data, graph, source_data, superclasses_dict, ve
                     if verbosity > 1:
                         print("\nFound the pattern link: ")
                         print_link(pattern, patt0_n, patt1_n, patt_link_n)
+                        print("On:")
+                        print_link(graph, graph_n0_n, graph_n1_n, graph_link_n)
 
                     return True
 
@@ -283,7 +281,7 @@ def match_nodes(graph, graph_node, pattern, patt_node, superclasses_dict, verbos
 
 
         if verbosity > 1:
-            print("Source MM: " + sourceMM + " vs Target MM: " + targetMM)
+            print("Pattern MM: " + sourceMM + " vs Target MM: " + targetMM)
 
 
         #print("Superclasses: " + str(superclasses_dict))
@@ -334,10 +332,17 @@ def print_link(graph, n0, n1, nlink):
     if nlink is not None:
         link = graph.vs[nlink]["mm__"].replace("MT_pre__", "")
         try:
-            link += " (" + str(graph.vs[nlink]["MT_pre__attr1"]) + ") "
-            link = link.replace("\n", "").replace("return True", "").replace("return False", "")[-40:]
+            attr_string = str(graph.vs[nlink]["MT_pre__attr1"])
+            attr_string = attr_string.replace("\n", "").replace("return True", "").replace("return False", "")
         except KeyError:
-            link += " (" + str(graph.vs[nlink]["attr1"]) + ") "
+            attr_string = str(graph.vs[nlink]["attr1"])
+
+        attr_string = attr_string.replace("#", "").replace("=", "").replace(
+            "This code is executed when evaluating if a node shall be matched by this rule. You can access the value of the current node's attribute value by: attr_value. You can access any attribute x of this node by: this['x']. If the constraint relies on attribute values from other nodes, use the LHS/NAC constraint instead. The given constraint must evaluate to a boolean expression.",
+            "")
+
+        link += " (" + attr_string + ") "
+
     else:
         link = "backward_link"
     print(graph.vs[n0]["mm__"].replace("MT_pre__", "") + " - " + link + " - " + graph.vs[n1]["mm__"].replace("MT_pre__", ""))
