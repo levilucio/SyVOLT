@@ -147,7 +147,7 @@ class Test:
 
         slicer = Slicer(self.rules, self.transformation, self.superclasses_dict, self.overlapping_rules)
 
-        if args.slice > 0:
+        if args.slice > -1:
             contract, self.atomic_contracts, self.if_then_contracts = slicer.get_contract(args.slice, self.atomic_contracts, self.if_then_contracts)
             self.rules, self.transformation = slicer.slice_transformation(contract)
 
