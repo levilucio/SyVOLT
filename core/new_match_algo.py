@@ -233,8 +233,8 @@ class NewHimesisMatcher(object):
                 return
 
         links = [
-            [self.pattern_data["direct_links"], self.source_data["direct_links"]],
             [self.pattern_data["backward_links"], self.source_data["backward_links"]],
+            [self.pattern_data["direct_links"], self.source_data["direct_links"]],
         ]
 
         for patt_links, source_links in links:
@@ -275,44 +275,17 @@ class NewHimesisMatcher(object):
                         #     print("Link doesn't match")
                         continue
 
-                    nodes_match_1 = self.match_nodes(graph_n0_n, patt0_n)
-                    nodes_match_3 = self.match_nodes(graph_n1_n, patt0_n)
 
-                    #if the first node doesn't match, skip the other
-                    if not nodes_match_1 and not nodes_match_3:
-                        continue
-
-                    nodes_match_2 = self.match_nodes(graph_n1_n, patt1_n)
-                    nodes_match_4 = self.match_nodes(graph_n0_n, patt1_n)
-
-                    nodes_match = ((nodes_match_1 and nodes_match_2) or (nodes_match_3 and nodes_match_4)) and nodes_match_link
-
-                    # if self.debug:
-                    #     #print("Nodes match link: " + str(nodes_match_link))
-                    #     print("Links matched: " + str(nodes_match))
-
-                    if nodes_match:
+                    #if nodes_match:
+                    if self.match_nodes(graph_n0_n, patt0_n) and self.match_nodes(graph_n1_n, patt1_n):
 
                         found_match = True
-                        pattern_link = (patt0_n, patt1_n, patt_link_n)
                         source_link = (graph_n0_n, graph_n1_n, graph_link_n)
 
-                        #original version matched
-                        if nodes_match_1 and nodes_match_2:
-                            try:
-                                link_matches[pattern_link].append(source_link)
-                            except KeyError:
-                                link_matches[pattern_link] = [source_link]
-
-                        #matched on the reversed versions
-                        if nodes_match_3 and nodes_match_4:
-                            source_link = (source_link[1], source_link[0], source_link[2])
-
-                            try:
-                                link_matches[pattern_link].append(source_link)
-                            except KeyError:
-                                link_matches[pattern_link] = [source_link]
-
+                        try:
+                            link_matches[patt_link].append(source_link)
+                        except KeyError:
+                            link_matches[patt_link] = [source_link]
 
                 if not found_match and len(self.pattern_data["isolated_match_elements"]) == 0:
                     if self.debug:
