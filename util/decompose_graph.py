@@ -144,7 +144,7 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
 
 def match_links(pattern, pattern_data, graph, source_data, superclasses_dict, verbosity=0, match_all = False):
 
-    # if "Simpler" in pattern.name and "Hlayer5rule1" in graph.name:
+    # if "HcopersonsSolveRefCountryFamilyParentCommunityMan" in pattern.name and "HCountry2Community" in graph.name:
     #     verbosity = 2
     #
     #     print("Pattern: " + pattern.name + " vs " + graph.name)
@@ -165,15 +165,18 @@ def match_links(pattern, pattern_data, graph, source_data, superclasses_dict, ve
     ]
 
     for patt_links, source_links in links:
+        if verbosity > 1:
+            print("\n===================\nPattern " + pattern.name + " nodes:")
+            for patt0_n, patt1_n, patt_link_n in patt_links:
+                print_link(pattern, patt0_n, patt1_n, patt_link_n)
+            print("Pattern " + pattern.name + " nodes:\n===================\n")
+            print("\n===================\nGraph " + graph.name + " nodes:")
+            for graph_n0_n, graph_n1_n, graph_link_n in source_links:
+                print_link(graph, graph_n0_n, graph_n1_n, graph_link_n)
+            print("Graph " + graph.name + " nodes:\n===================\n")
+
 
         for patt0_n, patt1_n, patt_link_n in patt_links:
-
-
-            # if verbosity > 1:
-            #     print("\n===================\nGraph " + graph.name + " nodes:")
-            #     for graph_n0_n, graph_n1_n, graph_link_n in source_links:
-            #         print_link(graph, graph_n0_n, graph_n1_n, graph_link_n)
-            #     print("\n===================\nGraph " + graph.name + " nodes:")
 
             for graph_n0_n, graph_n1_n, graph_link_n in source_links:
 
@@ -272,6 +275,8 @@ def match_nodes(graph, graph_node, pattern, patt_node, superclasses_dict, verbos
 
         # is this a hack?
         if targetMM == "trace_link" and sourceMM == "backward_link":
+            return True
+        if targetMM == "backward_link" and sourceMM == "trace_link":
             return True
 
         #superclasses_dict = pattern["superclasses_dict"]

@@ -237,6 +237,6 @@ class Slicer:
 
         print("Slicing took: " + str(end_time) + " seconds")
         print("Number rules after: " + str(len(new_rules)))
-        raise Exception()
+        #raise Exception()
 
         return new_rules, new_transformation
