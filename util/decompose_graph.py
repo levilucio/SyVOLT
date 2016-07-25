@@ -22,7 +22,7 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False, isolated_if_
 
     debug = False
 
-    debug = "Neg_SchoolOrdFac_CompleteLHS" in graph.name
+    #debug = "Hlayer1rule10" in graph.name
 
     if debug:
         print("\nDecomposing graph: " + graph.name)
@@ -121,7 +121,7 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False, isolated_if_
 
     # find the non-isolated elements
     isolated_match_elements = []
-    links = direct_links
+    links = list.copy(direct_links)
 
     if not isolated_if_attached_backward:
         links += backward_links
