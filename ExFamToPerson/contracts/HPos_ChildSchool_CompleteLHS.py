@@ -172,7 +172,7 @@ return attr_value == "special"
         
         
         # Nodes that represent the apply associations of the property.
-        # apply association Person--members-->SpecialFacility node
+        # apply association SpecialFacility--members-->Person node
                 self.add_node()
                 self.vs[7]["MT_subtypeMatching__"] = False
                 self.vs[7]["MT_pre__attr1"] = """
@@ -223,8 +223,8 @@ return attr_value == "members"
                 (8,0), #  backward_association -> apply_class Child()
                 (4,9), # apply_class SpecialFacility() -> backward_association
                 (9,1), #  backward_association -> apply_class School()
-                (3,7), # apply_class Person() -> association members
-                (7,4), # association members  -> apply_class SpecialFacility()
+                (4,7), # apply_class SpecialFacility() -> association members
+                (7,3), # association members  -> apply_class Person()
                 (0,5), # match_class Child() -> association goesTo
                 (5,1), # association goesTo  -> match_class School()
                 (1,6), # match_class School() -> association special

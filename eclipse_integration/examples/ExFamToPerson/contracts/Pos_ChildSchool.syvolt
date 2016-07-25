@@ -11,7 +11,7 @@
     <apply>
       <class className="Person"/>
       <class className="SpecialFacility"/>
-      <association associationName="members" source="//@hasProperty.0/@apply/@class.0" target="//@hasProperty.0/@apply/@class.1"/>
+      <association associationName="members" source="//@hasProperty.0/@apply/@class.1" target="//@hasProperty.0/@apply/@class.0"/>
     </apply>
     <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.0" sourceClass="//@hasProperty.0/@match.0/@class.0"/>
     <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.1" sourceClass="//@hasProperty.0/@match.0/@class.1"/>
