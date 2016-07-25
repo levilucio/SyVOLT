@@ -13,18 +13,16 @@ from util.progress import ProgressBar
 import time
 from time import sleep
 
-class ContractProver():
+class ContractProver:
 
     def __init__(self):
         #self.disambig = Disambiguator(0)
 
         self.verbosity = 2
 
-        self.draw_success_failed = False
+        self.pathCondGen = None
 
-    def rule_name_set(self, name):
-        rule_split = [rule.split("-")[0] for rule in name.split("_")]
-        return rule_split
+        self.draw_success_failed = False
 
     def find_smallest_pc(self, pc_names):
         smallest = []
@@ -50,6 +48,7 @@ class ContractProver():
     def prove_contracts(self, pathCondGen, atomic_contracts, if_then_contracts):
 
         self.verbosity = pathCondGen.verbosity
+        self.pathCondGen = pathCondGen
 
         print("\nStarting to prove contracts:")
         start_time = time.time()
@@ -70,31 +69,16 @@ class ContractProver():
 
         workers = []
 
-        rules = []
-        rules_seen = []
-
-        for layer in pathCondGen.transformation:
-            for rule in layer:
-                
-                real_name = pathCondGen.rule_names[rule.name]
-                rules.append(real_name)
-
         for i in range(cpu_count):
             new_worker = prover_worker(i, self.verbosity, pc_queue, results_queue, atomic_contracts, if_then_contracts)
             new_worker.start()
             workers.append(new_worker)
 
         for pc, pc_name in pathCondGen.get_path_conditions(expand=False):
-            rules_in_pc = pc_name.split("_")
-
-            for rs in rules_in_pc:
-                rs_2 = rs.split("-")[0]
-                rules_seen.append(rs_2)
-                
-            pc_queue.put([pc, pc_name])
+            pc_queue.put(pc)
 
         for i in range(cpu_count):
-            pc_queue.put([None, "STOP"])
+            pc_queue.put(None)
 
         #start a progress bar
         pc_set_length = pathCondGen.num_path_conditions
@@ -102,7 +86,7 @@ class ContractProver():
 
         len_pc_queue = pc_queue.qsize()
         while len_pc_queue > 0:
-            progress_bar.update_progress(len_pc_queue)
+            progress_bar.update_progress(pc_set_length - len_pc_queue)
             sleep(1)
             len_pc_queue = pc_queue.qsize()
 
@@ -119,55 +103,20 @@ class ContractProver():
             for contract_name in succeed.keys():
                 contract_succeeded_pcs[contract_name] += succeed[contract_name]
 
-        rules_seen = list(set(rules_seen))
-        print("Rules seen: " + str(rules_seen))
-        for rule in rules:
-            if rule not in rules_seen:
-                print("ERROR: Rule " + rule + " was not executed!")
+
 
         proof_time = time.time() - start_time
-        num_contracts_to_print = 20
-        contract_name_max_size = 300
+
 
         print("")
         for contract_name, atomic_contract in atomic_contracts + if_then_contracts:
-            print("\n" + str(len(contract_succeeded_pcs[contract_name])) + " Successful PCs for " + contract_name + ":")
 
-            if len(contract_succeeded_pcs[contract_name]) < num_contracts_to_print:
-                for pc_name in sorted(contract_succeeded_pcs[contract_name]):
-                    print(pc_name[:contract_name_max_size])
-            else:
-                print("More than " + str(num_contracts_to_print) + " contracts")
+            self.report_success_fail("Succeeded", contract_succeeded_pcs, contract_name)
 
-            print ('\nSmallest Path Conditions where the contract succeeded:')
-            success_smallest_pc_set = self.find_smallest_pc(contract_succeeded_pcs[contract_name])
-            for pc_name in success_smallest_pc_set:
-                print(pc_name[:contract_name_max_size])
-
-            print('\n')
-
-            print("\n" + str(len(contract_failed_pcs[contract_name])) + " failed PCs for " + contract_name + ":")
-            if len(contract_failed_pcs[contract_name]) < num_contracts_to_print:
-                for pc_name in sorted(contract_failed_pcs[contract_name]):
-                    print(pc_name[:contract_name_max_size])
-            else:
-                print("More than " + str(num_contracts_to_print) + " contracts")
-
-            print ('\nSmallest Path Conditions where the contract fails:')
-            failed_smallest_pc_set = self.find_smallest_pc(contract_failed_pcs[contract_name])
-            for pc_name in failed_smallest_pc_set:
-                print(pc_name[:contract_name_max_size])
-            print('\n')
+            self.report_success_fail("Failed", contract_failed_pcs, contract_name)
 
             if self.draw_success_failed:
                 atomic_contract.draw()
-                for pc, pc_name in pathCondGen.get_path_conditions(expand = False):
-                    if pc_name in success_smallest_pc_set:
-                        pc = expand_graph(pc)
-                        graph_to_dot(contract_name + "_success_" + pc_name, pc)
-                    elif pc_name in failed_smallest_pc_set:
-                        pc = expand_graph(pc)
-                        graph_to_dot(contract_name + "_failed_" + pc_name, pc)
 
         print("Summary:")
         for contract_name, atomic_contract in atomic_contracts + if_then_contracts:
@@ -175,4 +124,54 @@ class ContractProver():
             print("\tNum Succeeded Contracts: " + str(len(contract_succeeded_pcs[contract_name])))
             print("\tNum Failed Contracts: " + str(len(contract_failed_pcs[contract_name])))
 
-        print("Took " + str(proof_time) + " seconds to prove " + str(len(atomic_contracts + if_then_contracts)) + " contracts")
+        print("Took " + str(proof_time) + " seconds to prove " + str(len(atomic_contracts + if_then_contracts)) + " contracts\n")
+
+        #see if any rules are missing
+        rules = []
+        for layer in pathCondGen.transformation:
+            for rule in layer:
+                real_name = pathCondGen.rule_names[rule.name]
+                rules.append(real_name)
+
+        rules_seen = []
+        for pc, pc_name in pathCondGen.get_path_conditions(expand = False):
+            rules_in_pc = pathCondGen.rules_in_pc_name(pc_name)
+            rules_seen += rules_in_pc
+
+        rules_seen = set(rules_seen)
+        print("Rules seen: " + str(rules_seen))
+        for rule in rules:
+            if rule not in rules_seen:
+                print("ERROR: Rule " + rule + " was not executed!")
+
+    def report_success_fail(self, status, list_of_pcs, contract_name):
+        num_contracts_to_print = 20
+
+        print("\n" + str(len(list_of_pcs[contract_name])) + " " + status + " PCs for " + contract_name + ":")
+
+        if len(list_of_pcs[contract_name]) < num_contracts_to_print:
+            for pc_name in sorted(list_of_pcs[contract_name]):
+                self.print_name(pc_name)
+        else:
+            print("More than " + str(num_contracts_to_print) + " contracts")
+
+        print ('\nSmallest Path Conditions where the contract ' + status + ':')
+        success_smallest_pc_set = self.find_smallest_pc(list_of_pcs[contract_name])
+        for pc_name in success_smallest_pc_set:
+            self.print_name(pc_name)
+
+        print('\n')
+
+        if self.draw_success_failed:
+            for pc, pc_name in self.pathCondGen.get_path_conditions(expand = False):
+                if pc_name in list_of_pcs:
+                    pc = expand_graph(pc)
+                    graph_to_dot(contract_name + "_" + status + "_" + pc_name, pc)
+
+    def print_name(self, name):
+
+        contract_name_max_size = 300
+
+        name = name[:contract_name_max_size]
+        real_name_list = self.pathCondGen.rules_in_pc_real_name(name)
+        print("_".join(real_name_list))

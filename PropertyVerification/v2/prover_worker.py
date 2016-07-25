@@ -30,15 +30,14 @@ class prover_worker(Process):
         #self.verbosity = 2
         while True:
 
-            pc, pc_name = self.pc_queue.get()
+            pc = self.pc_queue.get()
 
-            if pc_name == "STOP":
+            if pc is None:
                 break
 
             #print("PC: " + pc_name)
 
             pc = expand_graph(pc)
-            pc.name = pc_name
 
 
             if pc.name == "HEmptyPathCondition":
@@ -67,8 +66,8 @@ class prover_worker(Process):
                 if result == contract.NO_COMPLETE:
                     #if self.verbosity > 0:
                         #print("Atomic contract: " + contract_name + " does not hold on " + pc.name + "\n")
-                    self.contract_failed_pcs[contract_name].append(pc_name)
+                    self.contract_failed_pcs[contract_name].append(pc.name)
                 if result == contract.COMPLETE_FOUND:
-                    self.contract_succeeded_pcs[contract_name].append(pc_name)
+                    self.contract_succeeded_pcs[contract_name].append(pc.name)
 
         self.results_queue.put([self.contract_failed_pcs, self.contract_succeeded_pcs])
