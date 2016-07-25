@@ -9,7 +9,7 @@ from copy import deepcopy
 class Slicer():
 
 
-    def __init__(self, rules, transformation, superclasses_dict):
+    def __init__(self, rules, transformation, superclasses_dict, overlapping_rules):
 
         self.debug = False
 
@@ -25,6 +25,8 @@ class Slicer():
         self.transformation = transformation
 
         self.superclasses_dict = superclasses_dict
+
+        self.overlapping_rules = overlapping_rules
 
         for layer in transformation:
             for rule in layer:
@@ -271,6 +273,18 @@ class Slicer():
                     required_rules.append(new_rr)
 
         rr_names = [rule.name for rule in required_rules]
+
+        #add in the rules which might be needed for subsumption
+        rrules_copy = list.copy(rr_names)
+        for rr in rrules_copy:
+            for key, values in self.overlapping_rules.items():
+                if rr == key:
+                    rr_names += values
+                if rr in values:
+                    rr_names.append(key)
+
+        rr_names = list(set(rr_names))
+
         print("Required rules for contract " + contract_name + ":\n" + str(sorted(rr_names)))
 
 
