@@ -67,6 +67,13 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
         source = e.source
         target = e.target
 
+        if source in bls:
+            backward_links_dict[source][1] = target
+            continue
+        elif target in bls:
+            backward_links_dict[target][0] = source
+            continue
+
         if source in dls:
             direct_links_dict[source][1] = target
             continue
@@ -74,12 +81,6 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
             direct_links_dict[target][0] = source
             continue
 
-        if source in bls:
-            backward_links_dict[source][1] = target
-            continue
-        elif target in bls:
-            backward_links_dict[target][0] = source
-            continue
 
         source_mm = mms[source]
         target_mm = mms[target]
