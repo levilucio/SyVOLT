@@ -17,12 +17,12 @@ except ImportError:
 #@Profiler
 @lru_cache(maxsize=1024)
 #@profile
-def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
+def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False, isolated_if_attached_backward = False):
     #decompose graph into directLinks, backwardLinks, and isolated elements
 
     debug = False
 
-    #debug = "City2TownHall" in graph.name
+    debug = "Neg_SchoolOrdFac_CompleteLHS" in graph.name
 
     if debug:
         print("\nDecomposing graph: " + graph.name)
@@ -121,9 +121,13 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
 
     # find the non-isolated elements
     isolated_match_elements = []
+    links = direct_links
+
+    if not isolated_if_attached_backward:
+        links += backward_links
     for me in match_elements:
         isolated = True
-        for dl in direct_links + backward_links:
+        for dl in links:
             if me == dl[0] or me == dl[1]:
                 isolated = False
                 break
@@ -136,7 +140,8 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False):
         print("Isolated match elements: " + str(isolated_match_elements))
         print("Apply contains: " + str(apply_elements))
 
-        raise Exception()
+        graph_to_dot(graph.name, graph)
+        #raise Exception()
 
     data = {"direct_links" : direct_links, "backward_links" : backward_links, "match_elements" : match_elements, "isolated_match_elements" : isolated_match_elements, "apply_elements" : apply_elements}
     return data

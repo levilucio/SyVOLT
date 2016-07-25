@@ -124,7 +124,7 @@ class Slicer:
                 for graph in graph_list:
                     verbosity = 0
 
-                    graph_me = self.match_elements[graph.name]
+                    graph_me = self.isolated_match_elements[graph.name]
                     graph_me = set([graph.vs[n]["mm__"].replace("MT_pre__", "") for n in graph_me])
 
                     if len(graph_me.intersection(rule_me)) > 0:
@@ -153,7 +153,7 @@ class Slicer:
 
         for c in contract_list:
 
-            data = decompose_graph(c, verbosity = 0)
+            data = decompose_graph(c, verbosity = 0, isolated_if_attached_backward=True)
 
             self.direct_links[c.name] = data["direct_links"]
             self.backward_links[c.name] = data["backward_links"]
