@@ -8,7 +8,10 @@ from multiprocessing import Manager
 
 from PropertyVerification.v2.prover_worker import prover_worker
 
+from util.progress import ProgressBar
+
 import time
+from time import sleep
 
 class ContractProver():
 
@@ -16,6 +19,8 @@ class ContractProver():
         #self.disambig = Disambiguator(0)
 
         self.verbosity = 2
+
+        self.draw_success_failed = False
 
     def rule_name_set(self, name):
         rule_split = [rule.split("-")[0] for rule in name.split("_")]
@@ -41,6 +46,7 @@ class ContractProver():
 
 
     #@do_cprofile
+    #@profile
     def prove_contracts(self, pathCondGen, atomic_contracts, if_then_contracts):
 
         self.verbosity = pathCondGen.verbosity
@@ -87,15 +93,18 @@ class ContractProver():
                 
             pc_queue.put([pc, pc_name])
 
-        rules_seen= list(set(rules_seen))
-        print("Rules seen: " + str(rules_seen))
-        for rule in rules:
-            if rule not in rules_seen:
-                print("ERROR: Rule " + rule + " was not executed!")
-
-
         for i in range(cpu_count):
             pc_queue.put([None, "STOP"])
+
+        #start a progress bar
+        pc_set_length = pathCondGen.num_path_conditions
+        progress_bar = ProgressBar(pc_set_length)
+
+        len_pc_queue = pc_queue.qsize()
+        while len_pc_queue > 0:
+            progress_bar.update_progress(len_pc_queue)
+            sleep(1)
+            len_pc_queue = pc_queue.qsize()
 
         for worker in workers:
             worker.join()
@@ -110,7 +119,11 @@ class ContractProver():
             for contract_name in succeed.keys():
                 contract_succeeded_pcs[contract_name] += succeed[contract_name]
 
-
+        rules_seen = list(set(rules_seen))
+        print("Rules seen: " + str(rules_seen))
+        for rule in rules:
+            if rule not in rules_seen:
+                print("ERROR: Rule " + rule + " was not executed!")
 
         proof_time = time.time() - start_time
         num_contracts_to_print = 20
@@ -146,16 +159,15 @@ class ContractProver():
                 print(pc_name[:contract_name_max_size])
             print('\n')
 
-            atomic_contract.draw()
-            for pc, pc_name in pathCondGen.get_path_conditions(expand = False):
-                if pc_name in success_smallest_pc_set:
-                    pc = expand_graph(pc)
-                    graph_to_dot(contract_name + "_success_" + pc_name, pc)
-                elif pc_name in failed_smallest_pc_set:
-                    pc = expand_graph(pc)
-                    graph_to_dot(contract_name + "_failed_" + pc_name, pc)
-
-
+            if self.draw_success_failed:
+                atomic_contract.draw()
+                for pc, pc_name in pathCondGen.get_path_conditions(expand = False):
+                    if pc_name in success_smallest_pc_set:
+                        pc = expand_graph(pc)
+                        graph_to_dot(contract_name + "_success_" + pc_name, pc)
+                    elif pc_name in failed_smallest_pc_set:
+                        pc = expand_graph(pc)
+                        graph_to_dot(contract_name + "_failed_" + pc_name, pc)
 
         print("Summary:")
         for contract_name, atomic_contract in atomic_contracts + if_then_contracts:

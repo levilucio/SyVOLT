@@ -9,9 +9,7 @@ class ProgressBar:
         self.current_num = 0
 
     # update_progress() : Displays or updates a console progress bar
-    ## Accepts a float between 0 and 1. Any int will be converted to a float.
-    ## A value under 0 represents a 'halt'.
-    ## A value at 1 or bigger represents 100%
+    ## Accepts the current item number (out of the total num_items)
     def update_progress(self, item_num):
 
         if item_num == self.num_items -1:
