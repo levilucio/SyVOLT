@@ -68,8 +68,24 @@ class Slicer():
                 r_rules = sorted([r.name for r in r_rules])
                 print("Rule " + rule.name + " depends on: " + str(r_rules))
 
+    def get_contract(self, contract_num, atomic, if_then):
 
+        contract = None
+        num = contract_num
+        if contract_num >= 0 and contract_num < len(atomic):
+            atomic = [atomic[contract_num]]
+            if_then = []
+            contract = atomic[0]
 
+        num -= len(atomic)
+        if contract_num >= 0 and contract_num < len(if_then):
+            atomic = []
+            if_then = [if_then[contract_num]]
+            contract = if_then[0]
+
+        print("Slicing for contract number " + str(contract_num) + " : " + contract[0])
+
+        return contract, atomic, if_then
 
     def find_required_rules(self, graph_name, graph_list, is_contract = False, verbosity = 0):
 
@@ -245,6 +261,8 @@ class Slicer():
     def slice_transformation(self, contract):
         import time
         start_time = time.time()
+
+        print("Number rules before: " + str(len(self.rules)))
         contract_name, contract_list = self.decompose_contract(contract)
 
         if self.debug:
@@ -308,7 +326,7 @@ class Slicer():
         end_time = time.time() - start_time
 
         print("Slicing took: " + str(end_time) + " seconds")
-
+        print("Number rules after: " + str(len(new_rules)))
         #raise Exception()
 
         return new_rules, new_transformation

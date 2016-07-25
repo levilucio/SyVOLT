@@ -77,59 +77,7 @@ class Test:
         changePropertyProverMetamodel(pre_metamodel, post_metamodel, self.subclasses_dict, self.superclasses_dict)
 
 
-        #load the contracts
 
-        contracts = load_directory("ExFamToPerson/contracts")
-
-        contracts_to_load = [
-            # "Neg_CityCompany",
-            # "Neg_CountryCity",
-            # "Neg_SchoolOrdFac",
-            # "Pos_AssocCity",
-            # "Pos_ChildSchool",
-            "Pos_DaughterMother",
-            # "Pos_FourMembers",
-            # "Pos_MotherFather",
-            # "Pos_ParentCompany",
-            # "Pos_TownHallComm"
-        ]
-
-        self.atomic_contracts = []
-
-        print("Contracts:")
-        for c in contracts:
-            print(c)
-
-        for contract_name in contracts_to_load:
-
-            h_contract_name = "H" + contract_name
-
-            iso = contracts[h_contract_name + "_IsolatedLHS"]
-            iso["superclasses_dict"] = self.superclasses_dict
-
-            connected = contracts[h_contract_name + "_ConnectedLHS"]
-            connected["superclasses_dict"] = self.superclasses_dict
-
-            complete = contracts[h_contract_name + "_CompleteLHS"]
-            complete["superclasses_dict"] = self.superclasses_dict
-
-            # if args.draw_svg:
-            #     graph_to_dot("contract_" + complete.name, complete)
-
-            self.atomic_contracts.append([contract_name, AtomicContract(iso, connected, complete)])
-
-
-        slicer = Slicer(self.rules, self.transformation, self.superclasses_dict)
-
-        if args.slice > 0:
-            contract = self.atomic_contracts[args.slice - 1]
-            print("Slicing for contract number " + str(args.slice) + " : " + contract[0])
-
-            self.atomic_contracts = [contract]
-
-            print("Number rules before: " + str(len(self.rules)))
-            self.new_rules, self.new_transformation = slicer.slice_transformation(contract)
-            print("Number rules after: " + str(len(self.rules)))
 
         #raise Exception()
 
@@ -171,6 +119,37 @@ class Test:
         print("superclasses_dict:")
         for mm in self.superclasses_dict:
             print(mm + " : " + str(self.superclasses_dict[mm]))
+
+#load the contracts
+
+        contracts = load_directory("ExFamToPerson/contracts")
+
+        atomic_contracts = [
+            "Neg_CityCompany",
+            "Neg_CountryCity",
+            "Neg_SchoolOrdFac",
+            "Pos_AssocCity",
+            "Pos_ChildSchool",
+            "Pos_DaughterMother",
+            "Pos_FourMembers",
+            "Pos_MotherFather",
+            "Pos_ParentCompany",
+            "Pos_TownHallComm"
+        ]
+
+        if_then_contracts = []
+        prop_if_then_contracts = []
+
+        self.atomic_contracts, self.if_then_contracts = load_contracts(contracts, self.superclasses_dict,
+                                                                       atomic_contracts, if_then_contracts,
+                                                                       prop_if_then_contracts,
+                                                                       args.draw_svg)
+
+        slicer = Slicer(self.rules, self.transformation, self.superclasses_dict, self.overlapping_rules)
+
+        if args.slice > 0:
+            contract, self.atomic_contracts, self.if_then_contracts = slicer.get_contract(args.slice, self.atomic_contracts, self.if_then_contracts)
+            self.rules, self.transformation = slicer.slice_transformation(contract)
 
         #raise Exception()
  

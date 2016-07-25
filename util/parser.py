@@ -21,7 +21,7 @@ def load_parser():
     parser.set_defaults(compression = 6)
 
     parser.add_argument('--slice', type = int, default = -1,
-                        help = 'Index of contract to slice for. Range: 0 (no slicing) to #CONTRACTS (default: 0)')
+                        help = 'Index of contract to slice for. Range: -1 (no slicing) to #CONTRACTS-1 (default: -1)')
     parser.set_defaults(slice = -1)
 
     parser.add_argument('--no_svg', dest = 'draw_svg', action = 'store_false',
