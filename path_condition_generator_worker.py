@@ -644,6 +644,7 @@ class path_condition_generator_worker(Process):
             #pruning_time = time.time()
 
             for pathCondName in pcs_to_prune:
+                #print("Pruning: " + pathCondName)
                 #delete_graph(pathCondName)
 
 
@@ -666,11 +667,14 @@ class path_condition_generator_worker(Process):
                     except ValueError:
                         pass
 
-                try:
-                    #delete_graph(name_dict[pathCondName])
-                    del name_dict[pathCondName]
-                except KeyError:
-                    pass
+                # else:
+                #     del name_dict[pathCondName]
+                # try:
+                #     #delete_graph(name_dict[pathCondName])
+                #     print("Removing: " + name_dict[pathCondName])
+                #     #del name_dict[pathCondName]
+                # except KeyError:
+                #     pass
 
                 # for key, value in dict.copy(name_dict).items():
                 #     if pathCondName == value:
@@ -682,6 +686,9 @@ class path_condition_generator_worker(Process):
 
         self.currentPathConditionSet = list(set(self.currentPathConditionSet))
 
+        # print("currentPathConditionSet: " + str(self.currentPathConditionSet))
+        # print("new_pc_dict: " + str(new_pc_dict.keys()))
+        # print("name_dict: " + str(name_dict.keys()))
         print("Thread finished: Took " + str(time.time() - start_time) + " seconds")
 
         self.results_queue.put((self.currentPathConditionSet, new_pc_dict, name_dict))
