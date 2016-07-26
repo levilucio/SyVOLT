@@ -658,11 +658,11 @@ class path_condition_generator_worker(Process):
             for pathCondName in pcs_to_prune:
                 delete_graph(pathCondName)
 
-                # try:
-                #     delete_graph(name_dict[pathCondName])
-                #     #del name_dict[pathCondName]
-                # except KeyError:
-                #     pass
+                try:
+                    delete_graph(name_dict[pathCondName])
+                    del name_dict[pathCondName]
+                except KeyError:
+                    pass
 
                 # try:
                 #     del self.pc_dict[pathCondName]
@@ -682,9 +682,9 @@ class path_condition_generator_worker(Process):
                     except ValueError:
                         pass
 
-                for key, value in dict.copy(name_dict).items():
-                    if pathCondName == value:
-                        del name_dict[key]
+                # for key, value in dict.copy(name_dict).items():
+                #     if pathCondName == value:
+                #         del name_dict[key]
 
             #print("Time taken for pruning: " + str(time.time() - pruning_time))
 
