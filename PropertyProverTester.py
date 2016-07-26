@@ -7,6 +7,8 @@ from t_core.rewriter import Rewriter
 
 from core.himesis_utils import graph_to_dot
 
+import time
+
 class PropertyProverTester:
 
     def __init__(self, args):
@@ -154,5 +156,34 @@ class PropertyProverTester:
                 raise Exception("The rewriter for " + self.rule_names[rule_name] + " did not rewrite successfully")
 
 
+    def check_rule_reachability(self, pathCondGen, curr_layer):
 
+        reachability_start = time.time()
+        #see if any rules are missing
+        rules = []
+        for i, layer in enumerate(pathCondGen.transformation):
+            if i > curr_layer:
+                break
 
+            for rule in layer:
+                real_name = pathCondGen.rule_names[rule.name]
+                rules.append(real_name)
+
+        rules_seen = []
+        for pc, pc_name in pathCondGen.get_path_conditions(expand = False):
+            rules_in_pc = pathCondGen.rules_in_pc_name(pc_name)
+            #print(rules_in_pc)
+            rules_seen += rules_in_pc
+
+        rules_seen = set(rules_seen)
+        rules_not_seen = []
+        print("Rules seen: " + str(rules_seen))
+        for rule in rules:
+            if rule not in rules_seen:
+                print("ERROR: Rule " + rule + " was not executed!")
+                rules_not_seen.append(rule)
+
+        if len(rules_not_seen) > 0:
+            raise Exception()
+
+        print("Reachability check took " + str(time.time() - reachability_start) + " seconds")

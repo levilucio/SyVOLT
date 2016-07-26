@@ -22,6 +22,7 @@ class ContractProver:
 
         self.pathCondGen = None
 
+        #super slow
         self.draw_success_failed = False
 
     def find_smallest_pc(self, pc_names):
@@ -126,24 +127,6 @@ class ContractProver:
 
         print("Took " + str(proof_time) + " seconds to prove " + str(len(atomic_contracts + if_then_contracts)) + " contracts\n")
 
-        #see if any rules are missing
-        rules = []
-        for layer in pathCondGen.transformation:
-            for rule in layer:
-                real_name = pathCondGen.rule_names[rule.name]
-                rules.append(real_name)
-
-        rules_seen = []
-        for pc, pc_name in pathCondGen.get_path_conditions(expand = False):
-            rules_in_pc = pathCondGen.rules_in_pc_name(pc_name)
-            rules_seen += rules_in_pc
-
-        rules_seen = set(rules_seen)
-        print("Rules seen: " + str(rules_seen))
-        for rule in rules:
-            if rule not in rules_seen:
-                print("ERROR: Rule " + rule + " was not executed!")
-
     def report_success_fail(self, status, list_of_pcs, contract_name):
         num_contracts_to_print = 20
 
@@ -164,9 +147,9 @@ class ContractProver:
 
         if self.draw_success_failed:
             for pc, pc_name in self.pathCondGen.get_path_conditions(expand = False):
-                if pc_name in list_of_pcs:
-                    pc = expand_graph(pc)
-                    graph_to_dot(contract_name + "_" + status + "_" + pc_name, pc)
+                pc = expand_graph(pc)
+                if pc.name in list_of_pcs[contract_name]:
+                    graph_to_dot(contract_name + "_" + status + "_" + pc.name, pc)
 
     def print_name(self, name):
 

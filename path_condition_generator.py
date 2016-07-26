@@ -99,11 +99,11 @@ class PathConditionGenerator(object):
         
         self.prunner = Pruner(self.targetMM, self.transformation, self.rule_names, self.rules_in_pc_name)
 
-        ppt = PropertyProverTester(args)
-        ppt.set_artifacts(self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators,
+        self.ppt = PropertyProverTester(args)
+        self.ppt.set_artifacts(self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators,
                           self.rule_names)
 
-        ppt.debug()
+        self.ppt.debug()
 
 
     #@do_cprofile
@@ -396,6 +396,10 @@ class PathConditionGenerator(object):
                     except KeyError:
                         pass
 
+            self.currentpathConditionSet = currentpathConditionSet
+            self.pc_dict = pc_dict
+            self.ppt.check_rule_reachability(self, layer)
+
             print("Time to finish layer: " + str(time.time() - layer_finish_time))
 
         # h = global_hp.heap()
@@ -530,19 +534,6 @@ class PathConditionGenerator(object):
             except IOError:
                 print("Graph name is too long: " + name)
                 
-    def check_rule_reachability(self):
-        print("Checking Reachability: ")
-        for layer in self.transformation:
-            for rule in layer:
-                ruleNotFound = True
-                for pc_name in sorted(self.currentpathConditionSet):
 
-                    if rule.name in pc_name:
-                        print("Found: " + rule.name + " (" + self.rule_names[rule.name] + ")")
-                        ruleNotFound = False
-                        break
-                if ruleNotFound: 
-                    print("Could not find: " + rule.name + " (" + self.rule_names[rule.name] + ")")
-                
                     
                 
