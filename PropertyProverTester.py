@@ -85,7 +85,7 @@ class PropertyProverTester:
     def test_matchRulePatterns(self):
 
         for rule_name in sorted(self.rules.keys()):
-            print("Testing match rule pattern for " + self.rule_names[rule_name])
+            #print("Testing match rule pattern for " + self.rule_names[rule_name])
 
             p = Packet()
             p.graph = self.rules[rule_name].copy()
@@ -110,7 +110,7 @@ class PropertyProverTester:
             if not rule_name in self.ruleTraceCheckers.keys():
                 continue
 
-            print("Testing rule trace checkers for " + self.rule_names[rule_name])
+            #print("Testing rule trace checkers for " + self.rule_names[rule_name])
 
             p = Packet()
             p.graph = self.rules[rule_name]
@@ -127,7 +127,7 @@ class PropertyProverTester:
 
     def test_ruleCombinators(self):
         for rule_name in sorted(self.rules.keys()):
-            print("Testing rule combinators for " + self.rule_names[rule_name])
+            #print("Testing rule combinators for " + self.rule_names[rule_name])
 
             if self.ruleCombinators[rule_name] is None:
                 continue
@@ -183,7 +183,8 @@ class PropertyProverTester:
                 print("ERROR: Rule " + rule + " was not executed!")
                 rules_not_seen.append(rule)
 
-        if len(rules_not_seen) > 0:
-            raise Exception()
-
         print("Reachability check took " + str(time.time() - reachability_start) + " seconds")
+
+        if len(rules_not_seen) > 0:
+           raise Exception()
+
