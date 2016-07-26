@@ -682,6 +682,10 @@ class path_condition_generator_worker(Process):
                     except ValueError:
                         pass
 
+                for key, value in dict.copy(name_dict).items():
+                    if pathCondName == value:
+                        del name_dict[key]
+
             #print("Time taken for pruning: " + str(time.time() - pruning_time))
 
         self.currentPathConditionSet.extend(newPathConditionSet)
@@ -689,7 +693,7 @@ class path_condition_generator_worker(Process):
         self.currentPathConditionSet = list(set(self.currentPathConditionSet))
 
         print("Thread finished: Took " + str(time.time() - start_time) + " seconds")
-        
+
         self.results_queue.put((self.currentPathConditionSet, new_pc_dict, name_dict))
 
 
