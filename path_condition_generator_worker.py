@@ -461,27 +461,15 @@ class path_condition_generator_worker(Process):
                                                     previousTotalPC = None                                                    
                                                     writeOverPreviousTotalPC = False
 
-                                                    try:
-                                                        reverse_name = reverse_name_dict[cpc.name]
-                                                        name_dict[reverse_name] = newPathCondName
-                                                        reverse_name_dict[newPathCondName] = reverse_name
-                                                    except KeyError:
-                                                        name_dict[cpc.name] = newPathCondName
-                                                        reverse_name_dict[newPathCondName] = cpc.name
-                                                    # if cpc.name in reverse_name_dict:
-                                                    #     name_dict[reverse_name_dict]
-                                                    # for nameTotalPC in name_dict.keys():
-                                                    #     if name_dict[nameTotalPC] == cpc.name:
-                                                    #         previousTotalPC = nameTotalPC
-                                                    #         writeOverPreviousTotalPC = True
-                                                    #         break
-                                                    #
-                                                    # if not writeOverPreviousTotalPC:
-                                                    #     name_dict[cpc.name] = newPathCondName
-                                                    #     reverse_name_dict[newPathCondName] = cpc.name
-                                                    # else:
-                                                    #     name_dict[previousTotalPC] = newPathCondName
-                                                    #     reverse_name_dict[newPathCondName] = previousTotalPC
+                                                    if valid:
+                                                        try:
+                                                            reverse_name = reverse_name_dict[cpc.name]
+                                                            name_dict[reverse_name] = newPathCondName
+                                                            reverse_name_dict[newPathCondName] = reverse_name
+                                                        except KeyError:
+                                                            name_dict[cpc.name] = newPathCondName
+                                                            reverse_name_dict[newPathCondName] = cpc.name
+
                                                         
                                                     #change the child's name in the child's array
                                                     childrenPathConditions[child_pc_index] = newPathCondName
