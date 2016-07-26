@@ -10,6 +10,7 @@ from core.himesis_utils import graph_to_dot
 
 from profiler import *
 from operator import itemgetter
+from collections import Counter
 
 class Pruner(object):
     '''
@@ -114,9 +115,9 @@ class Pruner(object):
         get all the links built by a set of rules, either containment or missing
         '''
 
-        d1 = set()
+        d1 = []
         for ruleName in ruleNames:
-            d1.update(sourceList[ruleName])
+            d1 += sourceList[ruleName]
         return d1
 
 
@@ -136,10 +137,20 @@ class Pruner(object):
 
         pc_built_lists = self.combineForAll_lists(rules_in_pc, self.prunerHelper.ruleContainmentLinks_List)
 
-        #print("PC: " + pathCondition.name)
-        #self.prunerHelper.print_dict("PC Missing", pc_missing)
-        #self.prunerHelper.print_dict("PC Built", pc_built)
-        pc_missing_lists = set(pc_missing_lists) - set(pc_built_lists)
+        # print("PC: ")
+        # for r in rules_in_pc:
+        #     print(self.rule_names[r])
+
+        miss_counter = Counter(pc_missing_lists)
+        built_counter = Counter(pc_built_lists)
+
+        #print(miss_counter)
+        #print(built_counter)
+        self.prunerHelper.print_list("PC Missing", pc_missing_lists)
+        self.prunerHelper.print_list("PC Built", pc_built_lists)
+
+        miss_counter.subtract(built_counter)
+        pc_missing_lists = [e for e in miss_counter.elements()]
 
         #self.prunerHelper.print_dict("PC Missing After", pc_missing)
 

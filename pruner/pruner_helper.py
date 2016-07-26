@@ -69,7 +69,7 @@ class PrunerHelper:
         for key, values in d.items():
             for v in values:
                 l.append((key, v[0], v[1]))
-        return set(l)
+        return l
 
 
     def remove_all_missing_links(self, all_missing_links):
