@@ -67,10 +67,6 @@ class PathConditionGenerator(object):
     #@do_cprofile
     def __init__(self, transformation, targetMM, ruleCombinators, ruleTraceCheckers, matchRulePatterns, overlappingRules, subsumption, loopingRuleSubsumption, args):
 
-        # the empty path condition
-
-        self.draw_svg = args.draw_svg
-        self.run_tests = args.run_tests
 
         self.do_parallel = args.do_parallel
 
@@ -103,65 +99,11 @@ class PathConditionGenerator(object):
         
         self.prunner = Pruner(self.targetMM, self.transformation, self.rule_names, self.rules_in_pc_name)
 
-        self.debug()
+        ppt = PropertyProverTester(args)
+        ppt.set_artifacts(self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators,
+                          self.rule_names)
 
-
-    def print_transformation(self):
-        for layer in self.transformation:
-            for rule in layer:
-                graph_to_dot("rule_" + str(self.rule_names[rule.name]), rule)
-                self.rules.append(rule.name)
-
-    def print_ruleCombinators(self):
-        for key in self.rules:
-
-            if not self.ruleCombinators[key]:
-                continue
-
-            value = self.ruleCombinators[key]
-            for (m, r) in value:
-                graph_to_dot("ruleCombinator_match_" + str(m.condition.name), m.condition)
-                graph_to_dot("ruleCombinator_rewrite_" + str(r.condition.name), r.condition)
-
-                if len(m.condition.NACs) > 0:
-                    graph_to_dot("ruleCombinator_NAC_" + str(m.condition.name), m.condition.NACs[0])
-
-
-    def print_ruleTraceCheckers(self):
-        for key in self.rules:
-            if self.ruleTraceCheckers[key] is None:
-                continue
-
-            tc = self.ruleTraceCheckers[key]
-            graph_to_dot("traceChecker_" + str(tc.condition.name), tc.condition)
-
-    def print_matchRulePatterns(self):
-        for key in self.rules:
-            if self.matchRulePatterns[key] is None:
-                continue
-
-            matcher, rewriter = self.matchRulePatterns[key]
-            graph_to_dot("matchPattern_matcher_" + str(matcher.condition.name), matcher.condition)
-            graph_to_dot("matchPattern_rewriter_" + str(rewriter.condition.name), rewriter.condition)
-
-
-    def debug(self):         
-
-        if self.draw_svg:
-            print("Drawing svgs...")
-            self.rules = []
-            self.print_transformation()
-            self.print_ruleCombinators()
-            self.print_ruleTraceCheckers()
-            self.print_matchRulePatterns()
-
-        if self.run_tests:
-            ppt = PropertyProverTester()
-            ppt.set_artifacts(self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators, self.rule_names)
- 
-            ppt.test_matchRulePatterns()
-            ppt.test_ruleTraceCheckers()
-            ppt.test_ruleCombinators()
+        ppt.debug()
 
 
     #@do_cprofile
@@ -210,16 +152,7 @@ class PathConditionGenerator(object):
             for ruleIndex in range(0, len(self.transformation[layerIndex])):
                 self.transformation[layerIndex][ruleIndex] = build_traceability(self.transformation[layerIndex][ruleIndex])
 
-#         print("----------------------------")
-#         print("Rule Combinators: ")
-#         print(self.ruleCombinators.keys())
-#         print("----------------------------")
-# 
-#         print("----------------------------")
-#         print("Rule Trace Checkers: ")
-#         print(self.ruleTraceCheckers.keys())
-#         print("----------------------------"  )
-                    
+
         if self.verbosity >= 1:
             print("Start changing rule names")
             
@@ -289,30 +222,7 @@ class PathConditionGenerator(object):
                         newRuleName = newRuleNameIter
                         break
                 loop[ruleIndex] = newRuleName
-                    
-#         # calculate the set of rules the require disambiguation.
-#         # these are the rules that have elements in the match part connected to two or more backward links.
-#         # keep in the dictionary the name of the rule and the element(s) that require disambiguation
-# 
-#         for layerIndex in range(len(self.transformation)):
-#             for ruleIndex in range(len(self.transformation[layerIndex])):
-#                 rule = self.transformation[layerIndex][ruleIndex]
-#                 matchContainsNodes = find_nodes_with_mm(rule, ["match_contains"])
-#                 matchNodes = [rule.neighbors(node,"out")[0] for node in matchContainsNodes]
-#                 
-#                 for mNode in matchNodes:
-#                     matchOutgoingNodes = rule.neighbors(rule.vs[mNode],"in")                    
-#                     backLinks = [node for node in matchOutgoingNodes if rule.vs[node]["mm__"] == "backward_link"]
-#                     
-#                     if len(backLinks) > 1:
-#                         if rule.name not in self.rulesRequiringDisambiguation.keys():
-#                             self.rulesRequiringDisambiguation[rule.name] = [rule.vs[mNode]["mm__"]]
-#                         else:
-#                             self.rulesRequiringDisambiguation[rule.name].append(rule.vs[mNode]["mm__"])
-                            
-#         print("Rules requiring disambiguation:" + str(self.rulesRequiringDisambiguation))
-#         print("\n")
-        
+
 
         if self.verbosity >= 2:                
             print("------------------------------------")
@@ -323,31 +233,6 @@ class PathConditionGenerator(object):
                     print("  " + self.rule_names[r.name])
             print("------------------------------------")
             print("\n")
-
-
-#         print("------------------------------------")
-#         print("Transformation: " )
-#         print(self.rule_names)
-#         print("------------------------------------")
-
-            
-#             # auxiliary function to order the nodes recursively, starting from the top nodes
-#             def _build_ordered_rules(topRules):
-#                 newTopRules = []
-#                 for rule in topRules:
-#                     if rule in set(self.partialOrder.keys()):
-#                         newTopRules.extend(self.partialOrder[rule])
-#                         orderedRules.extend(self.partialOrder[rule])
-#                 
-#                 if newTopRules != [] : _build_ordered_rules(newTopRules)
-#             
-#             # continue adding nodes as we go down the tree
-#             _build_ordered_rules(topRules)
-
-#             # remove from the layer the rules that need to be ordered
-#             self.transformation[layerIndex] = list(set(self.transformation[layerIndex]) - set(orderedRules))   
-#             # now place the reordered rules back in the layer, at the end
-#             self.transformation[layerIndex].extend(list(reversed(orderedRules)))
 
 
     def chunks(self, l, n):
@@ -463,14 +348,9 @@ class PathConditionGenerator(object):
 
                 new_worker.load_pc_dict(pc_dict)
 
-                #new_worker.verbosity = self.verbosity
-                #new_worker.layer = layer
-                #new_worker.transformation = self.transformation
 
                 new_worker.rule_names = self.rule_names
 
-
-                #new_worker.name_dict = name_dict
 
                 new_worker.ruleCombinators = self.ruleCombinators
                 new_worker.ruleTraceCheckers =  self.ruleTraceCheckers
@@ -516,7 +396,7 @@ class PathConditionGenerator(object):
                     except KeyError:
                         pass
 
-            #print("Time to finish layer: " + str(time.time() - layer_finish_time))
+            print("Time to finish layer: " + str(time.time() - layer_finish_time))
 
         # h = global_hp.heap()
         # print("\nMemory usage:")

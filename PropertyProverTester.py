@@ -5,9 +5,30 @@ from t_core.iterator import Iterator
 from t_core.matcher import Matcher
 from t_core.rewriter import Rewriter
 
-from core.himesis_plus import *
+from core.himesis_utils import graph_to_dot
 
 class PropertyProverTester:
+
+    def __init__(self, args):
+        self.draw_svg = args.draw_svg
+        self.draw_rules = args.draw_rules
+
+        self.run_tests = args.run_tests
+
+    def debug(self):
+        if self.draw_svg or self.draw_rules:
+            print("Drawing svgs...")
+            self.print_transformation()
+
+        if self.draw_svg:
+            self.print_ruleCombinators()
+            self.print_ruleTraceCheckers()
+            self.print_matchRulePatterns()
+
+        if self.run_tests:
+            self.test_matchRulePatterns()
+            self.test_ruleTraceCheckers()
+            self.test_ruleCombinators()
 
     def set_artifacts(self, transformation, ruleTraceCheckers, matchRulePatterns, ruleCombinators, rule_names):
         self.transformation = transformation
@@ -21,13 +42,51 @@ class PropertyProverTester:
         self.ruleCombinators = ruleCombinators
         self.rule_names = rule_names
 
+    def print_transformation(self):
+        for layer in self.transformation:
+            for rule in layer:
+                graph_to_dot("rule_" + str(self.rule_names[rule.name]), rule)
+
+    def print_ruleCombinators(self):
+        for key in self.rules:
+
+            if not self.ruleCombinators[key]:
+                continue
+
+            value = self.ruleCombinators[key]
+            for (m, r) in value:
+                graph_to_dot("ruleCombinator_match_" + str(m.condition.name), m.condition)
+                graph_to_dot("ruleCombinator_rewrite_" + str(r.condition.name), r.condition)
+
+                if len(m.condition.NACs) > 0:
+                    graph_to_dot("ruleCombinator_NAC_" + str(m.condition.name), m.condition.NACs[0])
+
+
+    def print_ruleTraceCheckers(self):
+        for key in self.rules:
+            if self.ruleTraceCheckers[key] is None:
+                continue
+
+            tc = self.ruleTraceCheckers[key]
+            graph_to_dot("traceChecker_" + str(tc.condition.name), tc.condition)
+
+    def print_matchRulePatterns(self):
+        for key in self.rules:
+            if self.matchRulePatterns[key] is None:
+                continue
+
+            matcher, rewriter = self.matchRulePatterns[key]
+            graph_to_dot("matchPattern_matcher_" + str(matcher.condition.name), matcher.condition)
+            graph_to_dot("matchPattern_rewriter_" + str(rewriter.condition.name), rewriter.condition)
+
+
     def test_matchRulePatterns(self):
 
         for rule_name in sorted(self.rules.keys()):
             print("Testing match rule pattern for " + self.rule_names[rule_name])
 
             p = Packet()
-            p.graph = copy_graph(self.rules[rule_name])
+            p.graph = self.rules[rule_name].copy()
 
             matcher = self.matchRulePatterns[rule_name][0]
 
@@ -76,7 +135,7 @@ class PropertyProverTester:
             rc = self.ruleCombinators[rule_name][-1]
 
             p = Packet()
-            p.graph = copy_graph(self.rules[rule_name])
+            p.graph = self.rules[rule_name].copy()
 
             matcher = rc[0]
             matcher.packet_in(p)
