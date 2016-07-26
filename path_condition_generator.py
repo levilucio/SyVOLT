@@ -398,7 +398,7 @@ class PathConditionGenerator(object):
         start_time = time.time()
 
         for layer in range(len(self.transformation)):
-            print("Layer: " + str(layer + 1) + " at time " + str(time.time() - start_time))
+            print("Layer: " + str(layer + 1) + "/" + str(len(self.transformation)+1) + " at time " + str(time.time() - start_time))
 
             #store the old length
             pathConSetLength = len(currentpathConditionSet)
@@ -590,6 +590,10 @@ class PathConditionGenerator(object):
 #             for fragment in pathCondition:
 #                 backLinksCacheKeys[backMatcherPosition].append((backLinkMatchers[backMatcherPosition].condition.name + fragment.name, fragment))
 #         return backLinksCacheKeys
+
+    def rules_in_pc_real_name(self, name):
+        return [self.rule_names[n] for n in self.rules_in_pc_name(name)]
+
 
     def rules_in_pc_name(self, name):
         rules = []
