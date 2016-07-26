@@ -135,6 +135,28 @@ class Pruner(object):
         if len(pc_missing_lists) == 0:
             return True
 
+        #only keep the number of links needed that we have elements for
+        mms = pathCondition.vs["mm__"]
+        new_pc_missing_lists = []
+        link_count = {}
+        for link in pc_missing_lists:
+            try:
+                link_count[link[0]].append(link)
+            except KeyError:
+                link_count[link[0]] = [link]
+
+        for key, values in link_count.items():
+            count = mms.count(key)
+            for i, val in enumerate(values):
+                if i == count:
+                    break
+                new_pc_missing_lists.append(val)
+
+        pc_missing_lists = new_pc_missing_lists
+
+        if len(pc_missing_lists) == 0:
+            return True
+
         pc_built_lists = self.combineForAll_lists(rules_in_pc, self.prunerHelper.ruleContainmentLinks_List)
 
         # print("PC: ")
@@ -146,18 +168,18 @@ class Pruner(object):
 
         #print(miss_counter)
         #print(built_counter)
-        self.prunerHelper.print_list("PC Missing", pc_missing_lists)
-        self.prunerHelper.print_list("PC Built", pc_built_lists)
+        #self.prunerHelper.print_list("PC Missing", pc_missing_lists)
+        #self.prunerHelper.print_list("PC Built", pc_built_lists)
 
         miss_counter.subtract(built_counter)
-        pc_missing_lists = [e for e in miss_counter.elements()]
+        new_pc_missing_lists = [e for e in miss_counter.elements()]
 
         #self.prunerHelper.print_dict("PC Missing After", pc_missing)
 
         if len(pc_missing_lists) == 0:
             return True
 
-        missingLinks = self.will_links_be_built_lists(pathCondition.name, pc_missing_lists, rulesToTreat)
+        missingLinks = self.will_links_be_built_lists(pathCondition.name, new_pc_missing_lists, rulesToTreat)
 
         if len(missingLinks) == 0:
             return True
@@ -167,6 +189,10 @@ class Pruner(object):
             print("=========================")
             print("Path condition: " + pathCondition.name)
             self.prunerHelper.print_dict("Missing Links", missingLinks)
+            self.prunerHelper.print_list("Missing Links", pc_missing_lists)
+            self.prunerHelper.print_list("Built Links", pc_built_lists)
+            if pathCondition.name == "HEmpty_L0R0-0_L1R1-0_L1R0-OVER1_L2R1-P0_L2R2-T0.40":
+                graph_to_dot(pathCondition.name, pathCondition)
 
             # for className, values in missingLinks.items():
             #     for val in values:
