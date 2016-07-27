@@ -133,7 +133,7 @@ class Pruner(object):
         '''
 
         #print(pathCondition.name)
-        #self.debug = "L1R0" in pathCondition.name
+        #self.debug = "L0R9" in pathCondition.name
 
 
         rules_in_pc = self.pc_name_function(pathCondition.name)
@@ -257,6 +257,9 @@ class Pruner(object):
         
     def print_results(self):
         if not self.collect_failure_results:
+            return
+
+        if len(self.failure_reasons) == 0:
             return
 
         print("Pruner Failure Reasons:")

@@ -18,6 +18,7 @@ class PrunerHelper:
         self.ruleMissingContLinks_List = {"HEmpty": []}
 
         self.mmClassParents = self.eu.getSuperClassInheritanceRelationForClasses()
+        self.mmClassChildren = self.eu.getSubClassInheritanceRelationForClasses()
 
         self.links_to_rules = {}
 
@@ -138,30 +139,30 @@ class PrunerHelper:
         new_links = dict.copy(links)
 
         for classname, clinks in links.items():
-            parent_links = self.generate_parent_links(clinks)
-            new_links[classname] = parent_links
+            child_links = self.generate_child_links(clinks)
+            new_links[classname] = child_links
 
-            if classname not in self.mmClassParents:
+            if classname not in self.mmClassChildren:
                 continue
 
-            for classname_parent in self.mmClassParents[classname]:
+            for classname_parent in self.mmClassChildren[classname]:
                 try:
-                    new_links[classname_parent] += deepcopy(parent_links)
+                    new_links[classname_parent] += deepcopy(child_links)
                 except KeyError:
-                    new_links[classname_parent] = deepcopy(parent_links)
+                    new_links[classname_parent] = deepcopy(child_links)
 
         return new_links
 
 
-    def generate_parent_links(self, links):
+    def generate_child_links(self, links):
         new_links = deepcopy(links)
         for link in new_links:
             classname = link[0]
             linkname = link[1]
-            if classname not in self.mmClassParents:
+            if classname not in self.mmClassChildren:
                 continue
-            for parent in self.mmClassParents[classname]:
-                new_links.append((parent, linkname))
+            for child in self.mmClassChildren[classname]:
+                new_links.append((child, linkname))
         return new_links
 
 
