@@ -9,6 +9,11 @@ global_profile_memory = False
 #create the tracker object
 global_memory_tracker = None
 
+try:
+    from pympler import tracker, asizeof
+except ImportError:
+    global_profile_memory = False
+    
 # try:
 #     from memory_profiler import profile
 # except ImportError:
@@ -24,10 +29,7 @@ if global_profile_memory:
 
 #
     #import pympler
-    try:
-        from pympler import tracker, asizeof
-    except ImportError:
-        global_profile_memory = False
+
 #
     # try:
     #     from memory_profiler import profile
