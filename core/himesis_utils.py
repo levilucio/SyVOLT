@@ -293,7 +293,7 @@ def graph_to_dot(name, g, verbosity = 0):
         graph.add_edge(pydot.Edge(s, t, color=color, label=label, arrowhead=arrowhead, penwidth = penwidth))
 
     if len(name) > 250:
-        replace_tokens = [["HEmptyPathCondition", ""],
+        replace_tokens = [
                           ["_", ""],["a", ""],["e", ""],["i", ""],
                           ["o", ""],["u", ""],["y", ""],["-", ""],
                           ["0", ""], ["1", ""], ["2", ""]]
@@ -475,7 +475,6 @@ def expand_graph(small_value):
     #graph.name = name
     #print(graph.name)
     #graph.is_compiled = is_compiled
-
 
 
     return graph
