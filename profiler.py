@@ -7,13 +7,30 @@ global_profile_memory = False
 #create the tracker object
 global_memory_tracker = None
 
+# try:
+#     from memory_profiler import profile
+# except ImportError:
+#     pass
+
 if global_profile_memory:
 
+    # try:
+    #     from guppy import hpy
+    #     global_hp = hpy()
+    # except ImportError:
+    #     global_profile_memory = False
+
+#
     #import pympler
     try:
-        from pympler import tracker
+        from pympler import tracker, asizeof
     except ImportError:
         global_profile_memory = False
+#
+    # try:
+    #     from memory_profiler import profile
+    # except ImportError:
+    #     global_profile_memory = False
 
 
 #set up cProfile
@@ -39,8 +56,9 @@ def do_cprofile(func):
     def profiled_func(*args, **kwargs):
         profile = pp.Profile()
         try:
-            if global_profile_memory:
-                global_memory_tracker = tracker.SummaryTracker()
+            # if global_profile_memory:
+            # #     global_hp.setref()
+            #     global_memory_tracker = tracker.SummaryTracker()
             profile.enable()
 
             result = func(*args, **kwargs)
@@ -53,6 +71,23 @@ def do_cprofile(func):
 
             if global_profile_memory and global_memory_tracker:
                 global_memory_tracker.print_diff()
+
+            # if global_profile_memory:
+            #     h = global_hp.heap()
+            #     print("\nMemory usage:")
+            #     print(h)
+            #
+            #     print("\nBy id:")
+            #     print(h.byid)
+            #     print(h.byvia)
+            #     print(h.byrcs)
+            #     print(h.referents)
+            #
+            #     print("\nreferents[0]:")
+            #     print(h.referents[0].byid)
+            #     print(h.referents[0].byvia)
+            #     print(h.referents[0].byrcs)
+            #     print(h.referents[0].referents)
 
             s = StringIO()
             sortby = 'time'
