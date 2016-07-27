@@ -282,6 +282,9 @@ class PathConditionGenerator(object):
 
         start_time = time.time()
 
+        min_chunk_size = 5
+        max_chunk_size = 100
+
         for layer in range(len(self.transformation)):
             print("Layer: " + str(layer + 1) + "/" + str(len(self.transformation)+1) + " at time " + str(time.time() - start_time))
 
@@ -290,20 +293,21 @@ class PathConditionGenerator(object):
 
             name_dict = {}
 
-            chunkSize = int(math.ceil(pathConSetLength / float(cpu_count)))                             
-            max_chunk_size = 200
+            chunkSize = int(math.ceil(pathConSetLength / float(cpu_count)))
 
             print("Path Cond Set Size: " + str(pathConSetLength))
-            print("Chunksize: " + str(chunkSize))
 
             use_bin_packing = True
             layer_start_time = time.time()
 
             if use_bin_packing:
 
-                if chunkSize > max_chunk_size:
-
+                if chunkSize < min_chunk_size:
+                    number_of_bins = int(math.ceil(pathConSetLength / float(min_chunk_size)))
+                    chunkSize = min_chunk_size
+                elif chunkSize > max_chunk_size:
                     number_of_bins = int(math.ceil(pathConSetLength / float(max_chunk_size)))
+                    chunkSize = max_chunk_size
                 else:
                     number_of_bins = cpu_count
 
@@ -327,24 +331,20 @@ class PathConditionGenerator(object):
                 shuffle(currentpathConditionSet)
                 pc_chunks = self.chunks(currentpathConditionSet, chunkSize)
 
-            workers = []
-            print("Starting " + str(len(pc_chunks)) + " workers")
-
             results_queue = manager.Queue()
+
+            print("Starting " + str(len(pc_chunks)) + " workers with chunk size: " + str(chunkSize))
+
+            workers = []
 
             #initialize the workers
             for i in range(len(pc_chunks)):#range(cpu_count):
 
-                #only one thread should print a progress bar
-                if i == 0:
-                    report_progress = True
-                else:
-                    report_progress = False
 
                 #print("Chunk size: " + str(len(pc_chunks[i])))
                 
-                new_worker = path_condition_generator_worker(self.transformation, self.prunner, layer,\
-                                                             layer*1000+i, report_progress, self.verbosity)
+                new_worker = path_condition_generator_worker(self.transformation, self.prunner, layer, layer * 1000 + i,
+                                                             False, self.verbosity)
 
                 new_worker.daemon = True
 
@@ -369,15 +369,18 @@ class PathConditionGenerator(object):
 
                 workers.append(new_worker)
 
-            for worker in workers:
-                worker.start()
 
-            #print("Time to start layer: " + str(time.time() - layer_start_time))
+            worker_chunks = self.chunks(workers, cpu_count)
+            for ws in worker_chunks:
+                for i, worker in enumerate(ws):
+                    if i == 0:
+                        worker.report_progress = True
+                    worker.start()
 
-            for i, worker in enumerate(workers):
-                worker.join()
-                if len(pc_chunks) > 7:
-                    print("Worker #" + str(i) + " finished")
+                #print("Time to start layer: " + str(time.time() - layer_start_time))
+
+                for worker in ws:
+                    worker.join()
 
 
             layer_finish_time = time.time()
