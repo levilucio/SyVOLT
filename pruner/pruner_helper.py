@@ -34,7 +34,8 @@ class PrunerHelper:
                     for clink in clinks:
                         link = (classname, clink[0], clink[1])
                         try:
-                            self.links_to_rules[link].append(rule.name)
+                            if rule.name not in self.links_to_rules[link]:
+                                self.links_to_rules[link].append(rule.name)
                         except KeyError:
                             self.links_to_rules[link] = [rule.name]
 
