@@ -283,7 +283,7 @@ class PathConditionGenerator(object):
         start_time = time.time()
 
         min_chunk_size = 5
-        max_chunk_size = 100
+        max_chunk_size = 20
 
         for layer in range(len(self.transformation)):
             print("Layer: " + str(layer + 1) + "/" + str(len(self.transformation)) + " at time " + str(time.time() - start_time))
@@ -371,7 +371,7 @@ class PathConditionGenerator(object):
 
 
             worker_chunks = self.chunks(workers, cpu_count)
-            for ws in worker_chunks:
+            for curr_round, ws in enumerate(worker_chunks):
                 for i, worker in enumerate(ws):
                     if i == 0:
                         worker.report_progress = True
@@ -379,8 +379,14 @@ class PathConditionGenerator(object):
 
                 #print("Time to start layer: " + str(time.time() - layer_start_time))
 
+                round_start_time = time.time()
                 for worker in ws:
                     worker.join()
+                round_time = int(time.time() - round_start_time)
+                rounds_remaining = len(worker_chunks) - curr_round
+                if round_time > 10:
+                    layer_time = round_time * rounds_remaining
+                    print("Time remaining in layer: " + str(layer_time) + " seconds = " + str(layer_time/60) + " minutes")
 
 
             layer_finish_time = time.time()
