@@ -1,16 +1,19 @@
 #profile memory
 global global_profile_memory
-global global_hp
+global global_memory_tracker
 
-global_profile_memory= False
+global_profile_memory = False
+
+#create the tracker object
+global_memory_tracker = None
 
 if global_profile_memory:
 
-    #import heapy
-    from guppy import hpy
-
-    #create the heapy object
-    global_hp = hpy()
+    #import pympler
+    try:
+        from pympler import tracker
+    except ImportError:
+        global_profile_memory = False
 
 
 #set up cProfile
@@ -36,9 +39,9 @@ def do_cprofile(func):
     def profiled_func(*args, **kwargs):
         profile = pp.Profile()
         try:
-            profile.enable()
             if global_profile_memory:
-                global_hp.setref()
+                global_memory_tracker = tracker.SummaryTracker()
+            profile.enable()
 
             result = func(*args, **kwargs)
             profile.disable()
@@ -48,24 +51,8 @@ def do_cprofile(func):
 
             print("\nFunction: " + str(func.__name__))
 
-            if global_profile_memory:
-                h = global_hp.heap()
-                print("\nMemory usage:")
-                print(h)
-
-                print("\nBy id:")
-                print(h.byid)
-                print(h.byvia)
-                print(h.byrcs)
-                print(h.referents)
-
-                print("\nreferents[0]:")
-                print(h.referents[0].byid)
-                print(h.referents[0].byvia)
-                print(h.referents[0].byrcs)
-                print(h.referents[0].referents)
-
-
+            if global_profile_memory and global_memory_tracker:
+                global_memory_tracker.print_diff()
 
             s = StringIO()
             sortby = 'time'
