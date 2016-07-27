@@ -383,8 +383,8 @@ class PathConditionGenerator(object):
                 for worker in ws:
                     worker.join()
                 round_time = int(time.time() - round_start_time)
-                rounds_remaining = len(worker_chunks) - curr_round
-                if round_time > 10:
+                rounds_remaining = len(worker_chunks) - curr_round -1
+                if rounds_remaining > 0 and round_time > 10:
                     layer_time = round_time * rounds_remaining
                     print("Time remaining in layer: " + str(layer_time) + " seconds = " + str(layer_time/60) + " minutes")
 
