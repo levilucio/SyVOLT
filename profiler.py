@@ -1,3 +1,5 @@
+from util.memory_status import *
+
 #profile memory
 global global_profile_memory
 global global_memory_tracker
