@@ -25,6 +25,7 @@ class Pruner(object):
         '''
 
         self.debug = False
+        self.collect_failure_results = False
 
         self.eu = EcoreUtils(metamodel)
 
@@ -66,6 +67,9 @@ class Pruner(object):
                 self.prunerHelper.print_dict("All missing containment links", self.all_missing_contain_links)
 
         #raise Exception()
+
+        #record why pcs are being pruned
+        self.failure_reasons = {}
 
     def will_links_be_built_lists(self, rule_name, missing_links, future_contain_rules, require_all_links = False):
         links_not_found = {}
@@ -129,7 +133,8 @@ class Pruner(object):
         '''
 
         #print(pathCondition.name)
-        #self.debug = "HEmpty_L0R1-0_L0R4-0_L0R0-OVER2_L0R3-OVER1_L1R0-T0.52" in pathCondition.name
+        #self.debug = "L1R0" in pathCondition.name
+
 
         rules_in_pc = self.pc_name_function(pathCondition.name)
 
@@ -203,19 +208,36 @@ class Pruner(object):
             return True
 
         if self.debug:
+
             print("=========================")
             print("Path condition: " + pathCondition.name)
             self.prunerHelper.print_dict("Missing Links", missingLinks)
-            self.prunerHelper.print_list("Missing Links", pc_missing_lists)
+            self.prunerHelper.print_list("Missing Links", new_pc_missing_lists)
             # self.prunerHelper.print_list("Built Links", pc_built_lists)
             #graph_to_dot(pathCondition.name, pathCondition)
 
             print("Looking for the following rules:")
+
+        if self.debug or self.collect_failure_results:
             for className, values in missingLinks.items():
                 for val in values:
                     link = (className, val[0], val[1])
                     rules_to_find = self.prunerHelper.links_to_rules[link]
-                    print([self.rule_names[rule] for rule in rules_to_find])
+
+                    if self.debug:
+                        print([self.rule_names[rule] for rule in rules_to_find])
+                        print(rules_to_find)
+
+                    for rule in rules_in_pc:
+
+                        if rule not in self.failure_reasons.keys():
+                            self.failure_reasons[rule] = {}
+
+                        if link not in self.failure_reasons[rule].keys():
+                            self.failure_reasons[rule][link] = []
+
+                        self.failure_reasons[rule][link] += rules_to_find
+
             #         print([self.rule_names[rule] for rule in rulesToTreat])
             #
             #         for find_rule in rules_to_find:
@@ -233,7 +255,16 @@ class Pruner(object):
             print("... Pruner Returning False")
         return False
         
-        
+    def print_results(self):
+        if not self.collect_failure_results:
+            return
+
+        print("Pruner Failure Reasons:")
+        for rule, links in sorted(self.failure_reasons.items()):
+            print(rule)
+            for link, rules_to_find in sorted(links.items()):
+                print(link)
+                print(Counter(rules_to_find).most_common())
         
                 
         

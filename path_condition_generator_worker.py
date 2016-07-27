@@ -94,10 +94,13 @@ class path_condition_generator_worker(Process):
         ruleNamesInLayer = [rule.name for rule in self.transformation[self.layer]]
         rulesForSecondPhase = sorted(set(self.overlappingRules.keys()).intersection(ruleNamesInLayer))
 
+        #print("Rules for Second Phase:")
+        #print(rulesForSecondPhase)
+
         rulesToTreat = []
         if self.pruning:
             # build the set of rules that remains to be executed
-            for l in range(self.layer + 1, len(self.transformation)):
+            for l in range(self.layer, len(self.transformation)):
                 for r in self.transformation[l]:
                     rulesToTreat.append(r.name)
 
@@ -689,6 +692,10 @@ class path_condition_generator_worker(Process):
         # print("currentPathConditionSet: " + str(self.currentPathConditionSet))
         # print("new_pc_dict: " + str(new_pc_dict.keys()))
         # print("name_dict: " + str(name_dict.keys()))
+
+        if self.pruning:
+            self.pruner.print_results()
+
         print("Thread finished: Took " + str(time.time() - start_time) + " seconds")
 
         self.results_queue.put((self.currentPathConditionSet, new_pc_dict, name_dict))
