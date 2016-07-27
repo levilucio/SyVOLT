@@ -128,6 +128,9 @@ class Pruner(object):
         containment requirements cannot be fulfilled
         '''
 
+        #print(pathCondition.name)
+        #self.debug = "HEmpty_L0R1-0_L0R4-0_L0R0-OVER2_L0R3-OVER1_L1R0-T0.52" in pathCondition.name
+
         rules_in_pc = self.pc_name_function(pathCondition.name)
 
         pc_missing_lists = self.combineForAll_lists(rules_in_pc, self.prunerHelper.ruleMissingContLinks_List)
@@ -176,7 +179,7 @@ class Pruner(object):
 
         #self.prunerHelper.print_dict("PC Missing After", pc_missing)
 
-        if len(pc_missing_lists) == 0:
+        if len(new_pc_missing_lists) == 0:
             return True
 
         missingLinks = self.will_links_be_built_lists(pathCondition.name, new_pc_missing_lists, rulesToTreat)
@@ -184,21 +187,35 @@ class Pruner(object):
         if len(missingLinks) == 0:
             return True
 
+        #not enough copies of the link may be built
+        # if it was from a rule already in the pc
+        link_already_built = True
+        for className, values in missingLinks.items():
+            for val in values:
+                link = (className, val[0], val[1])
+                rules_to_find = self.prunerHelper.links_to_rules[link]
+                for r in rules_to_find:
+                    if r not in rules_in_pc:
+                        link_already_built = False
+                        break
+
+        if link_already_built:
+            return True
 
         if self.debug:
             print("=========================")
             print("Path condition: " + pathCondition.name)
             self.prunerHelper.print_dict("Missing Links", missingLinks)
             self.prunerHelper.print_list("Missing Links", pc_missing_lists)
-            self.prunerHelper.print_list("Built Links", pc_built_lists)
-            if pathCondition.name == "HEmpty_L0R0-0_L1R1-0_L1R0-OVER1_L2R1-P0_L2R2-T0.40":
-                graph_to_dot(pathCondition.name, pathCondition)
+            # self.prunerHelper.print_list("Built Links", pc_built_lists)
+            #graph_to_dot(pathCondition.name, pathCondition)
 
-            # for className, values in missingLinks.items():
-            #     for val in values:
-            #         link = (className, val[0], val[1])
-            #         rules_to_find = self.prunerHelper.links_to_rules[link]
-            #         print([self.rule_names[rule] for rule in rules_to_find])
+            print("Looking for the following rules:")
+            for className, values in missingLinks.items():
+                for val in values:
+                    link = (className, val[0], val[1])
+                    rules_to_find = self.prunerHelper.links_to_rules[link]
+                    print([self.rule_names[rule] for rule in rules_to_find])
             #         print([self.rule_names[rule] for rule in rulesToTreat])
             #
             #         for find_rule in rules_to_find:
