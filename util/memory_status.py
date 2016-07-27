@@ -8,7 +8,7 @@ _pid = 0
 def _VmB():
     '''Private.
     '''
-    process = psutil.Process(_pid)
+    process = psutil.Process()
     mem_info = process.memory_info()
     data = [mem_info.rss, mem_info.vms]
 
@@ -40,5 +40,7 @@ def mem_after(fcn_name):
 
     diff_data = [d - _vmb_data[i] for i, d in enumerate(new_data)]
 
-    if sum(diff_data) > 1:
+    if sum(diff_data) > 1 or sum(diff_data) < -1:
         print("Function " + fcn_name + " mem usage: " + str(sum(diff_data)))
+    else:
+        print("Function " + fcn_name + ": no memory usage seen")
