@@ -291,6 +291,7 @@ class PathConditionGenerator(object):
             name_dict = {}
 
             chunkSize = int(math.ceil(pathConSetLength / float(cpu_count)))                             
+            max_chunk_size = 200
 
             print("Path Cond Set Size: " + str(pathConSetLength))
             print("Chunksize: " + str(chunkSize))
@@ -299,8 +300,15 @@ class PathConditionGenerator(object):
             layer_start_time = time.time()
 
             if use_bin_packing:
-                pc_chunks = [[] for i in range(cpu_count)]
-                pc_count = [0] * cpu_count
+
+                if chunkSize > max_chunk_size:
+
+                    number_of_bins = int(math.ceil(pathConSetLength / float(max_chunk_size)))
+                else:
+                    number_of_bins = cpu_count
+
+                pc_chunks = [[] for i in range(number_of_bins)]
+                pc_count = [0] * number_of_bins
 
                 pc_with_weights = [[pc, int(pc.split(".")[1])] for pc in currentpathConditionSet]
 
@@ -320,6 +328,7 @@ class PathConditionGenerator(object):
                 pc_chunks = self.chunks(currentpathConditionSet, chunkSize)
 
             workers = []
+            print("Starting " + str(len(pc_chunks)) + " workers")
 
             results_queue = manager.Queue()
 
