@@ -302,7 +302,10 @@ class PathConditionGenerator(object):
 
             if use_bin_packing:
 
-                if chunkSize < min_chunk_size:
+                if not self.do_parallel:
+                    number_of_bins = 1
+                    chunkSize = pathConSetLength
+                elif chunkSize < min_chunk_size:
                     number_of_bins = int(math.ceil(pathConSetLength / float(min_chunk_size)))
                     chunkSize = min_chunk_size
                 elif chunkSize > max_chunk_size:
@@ -384,7 +387,7 @@ class PathConditionGenerator(object):
                     worker.join()
                 round_time = int(time.time() - round_start_time)
                 rounds_remaining = len(worker_chunks) - curr_round -1
-                if rounds_remaining > 0 and round_time > 10:
+                if rounds_remaining > 0 and round_time > 5:
                     layer_time = round_time * rounds_remaining
                     print("Time remaining in layer: " + str(layer_time) + " seconds = " + str(layer_time/60) + " minutes")
 
