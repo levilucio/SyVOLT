@@ -13,14 +13,14 @@ try:
     from pympler import tracker, asizeof
 except ImportError:
     global_profile_memory = False
-    
+
 # try:
 #     from memory_profiler import profile
 # except ImportError:
 #     pass
 
 if global_profile_memory:
-
+    pass
     # try:
     #     from guppy import hpy
     #     global_hp = hpy()
