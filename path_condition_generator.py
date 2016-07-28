@@ -249,8 +249,6 @@ class PathConditionGenerator(object):
         http://msdl.cs.mcgill.ca/people/levi/30_publications/files/A_Technique_for_Symbolically_Verifying_Properties_of_Model_Transf.pdf
         """
 
-        curr_process = psutil.Process()
-
         self.num_path_conditions = 0
 
         from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
@@ -435,7 +433,8 @@ class PathConditionGenerator(object):
                     layer_time = round_time * rounds_remaining
                     print("Time remaining in layer " + str(layer + 1) + ": " + str(layer_time) + " seconds = {:.2f} minutes".format(layer_time/60))
 
-                print("Memory usage percent: {:.2f} %".format(curr_process.memory_percent()))
+                memory_percent = psutil.virtual_memory()[2]
+                print("Memory usage percent: {:.2f} %".format(memory_percent))
 
             layer_finish_time = time.time()
 
