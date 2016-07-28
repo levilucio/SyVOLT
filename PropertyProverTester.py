@@ -17,6 +17,14 @@ class PropertyProverTester:
 
         self.run_tests = args.run_tests
 
+        self.transformation = None
+        self.rules = None
+        self.ruleTraceCheckers = None
+        self.matchRulePatterns = None
+        self.ruleCombinators = None
+        self.rule_names = None
+
+
     def debug(self):
         if self.draw_svg or self.draw_rules:
             print("Drawing svgs...")
@@ -31,6 +39,14 @@ class PropertyProverTester:
             self.test_matchRulePatterns()
             self.test_ruleTraceCheckers()
             self.test_ruleCombinators()
+
+        #
+        self.transformation = None
+        self.rules = None
+        self.ruleTraceCheckers = None
+        self.matchRulePatterns = None
+        self.ruleCombinators = None
+        self.rule_names = None
 
     def set_artifacts(self, transformation, ruleTraceCheckers, matchRulePatterns, ruleCombinators, rule_names):
         self.transformation = transformation
@@ -158,7 +174,7 @@ class PropertyProverTester:
 
     def check_rule_reachability(self, pathCondGen, curr_layer):
 
-        reachability_start = time.time()
+        #reachability_start = time.time()
         #see if any rules are missing
         rules = []
         for i, layer in enumerate(pathCondGen.transformation):
