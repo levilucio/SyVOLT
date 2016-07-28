@@ -433,7 +433,7 @@ class PathConditionGenerator(object):
 
                 if rounds_remaining > 0 and round_time > 5:
                     layer_time = round_time * rounds_remaining
-                    print("Time remaining in layer " + str(layer) + ": " + str(layer_time) + " seconds = {:.2f} minutes".format(layer_time/60))
+                    print("Time remaining in layer " + str(layer + 1) + ": " + str(layer_time) + " seconds = {:.2f} minutes".format(layer_time/60))
 
                 print("Memory usage percent: {:.2f} %".format(curr_process.memory_percent()))
 
