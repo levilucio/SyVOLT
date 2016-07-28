@@ -47,3 +47,10 @@ class PCDict(object):
         #
         #     small_value = shrink_graph(value)
         #     self.pcdict[key] = small_value
+
+    def __delitem__(self, key):
+        del self.pcdict[key]
+        try:
+            del self.get_cache[key]
+        except KeyError:
+            pass

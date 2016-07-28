@@ -652,12 +652,10 @@ class path_condition_generator_worker(Process):
 
 
 
-                # try:
-                #     del self.pc_dict[pathCondName]
-                # except KeyError:
-                #     pass
-
-
+                try:
+                    del self.pc_dict[pathCondName]
+                except KeyError:
+                    pass
 
                 try:
                     del new_pc_dict[pathCondName]
@@ -696,7 +694,7 @@ class path_condition_generator_worker(Process):
         if self.pruning:
             self.pruner.print_results()
 
-        print("Thread finished: Took " + str(time.time() - start_time) + " seconds")
+        #print("Thread finished: Took " + str(time.time() - start_time) + " seconds")
 
         self.results_queue.put((self.currentPathConditionSet, new_pc_dict, name_dict))
 
