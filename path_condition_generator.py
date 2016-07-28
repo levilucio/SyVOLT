@@ -429,7 +429,7 @@ class PathConditionGenerator(object):
                 rounds_remaining = total_rounds - curr_round
                 print("Round " + str(curr_round + 1) + "/" + str(total_rounds + 1) + " took " + str(round_time) + " seconds")
 
-                if rounds_remaining > 0 and round_time > 5:
+                if rounds_remaining > 0 and round_time > 0:
                     layer_time = round_time * rounds_remaining
                     print("Time remaining in layer " + str(layer + 1) + ": " + str(layer_time) + " seconds = {:.2f} minutes".format(layer_time/60))
 
