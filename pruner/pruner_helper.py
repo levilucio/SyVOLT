@@ -4,11 +4,9 @@ class PrunerHelper:
 
     def __init__(self, eu, transformation, rule_names):
 
-        self.eu = eu
-
         self.rule_names = rule_names
 
-        self.ruleContainmentLinks = {"HEmpty": {}}
+        ruleContainmentLinks = {"HEmpty": {}}
         self.ruleMissingContLinks = {"HEmpty": {}}
 
         self.ruleContainmentLinksExtended = {"HEmpty": {}}
@@ -17,18 +15,18 @@ class PrunerHelper:
         self.ruleContainmentLinks_List = {"HEmpty": []}
         self.ruleMissingContLinks_List = {"HEmpty": []}
 
-        self.mmClassParents = self.eu.getSuperClassInheritanceRelationForClasses()
-        self.mmClassChildren = self.eu.getSubClassInheritanceRelationForClasses()
+        #self.mmClassParents = eu.getSuperClassInheritanceRelationForClasses()
+        self.mmClassChildren = eu.getSubClassInheritanceRelationForClasses()
 
         self.links_to_rules = {}
 
         for layer in transformation:
             for rule in layer:
-                self.ruleContainmentLinks[rule.name] = self.eu.getBuiltContainmentLinks(rule)
+                ruleContainmentLinks[rule.name] = eu.getBuiltContainmentLinks(rule)
 
                 #print("\n================\nRule: " + self.rule_names[rule.name])
                 #self.print_dict("Rule containment links", self.ruleContainmentLinks[rule.name])
-                self.ruleContainmentLinksExtended[rule.name] = self.extend_links(self.ruleContainmentLinks[rule.name])
+                self.ruleContainmentLinksExtended[rule.name] = self.extend_links(ruleContainmentLinks[rule.name])
                 #self.print_dict("ruleContainmentLinksExtended", self.ruleContainmentLinksExtended[rule.name])
 
                 for classname, clinks in self.ruleContainmentLinksExtended[rule.name].items():
@@ -41,7 +39,7 @@ class PrunerHelper:
                             self.links_to_rules[link] = [rule.name]
 
                 #print("\nRule: " + rule.name)
-                self.ruleMissingContLinks[rule.name] = self.eu.getMissingContainmentLinks(rule)
+                self.ruleMissingContLinks[rule.name] = eu.getMissingContainmentLinks(rule)
 
                 #self.print_dict("ruleMissingContLinks (before removing built)", self.ruleMissingContLinks[rule.name])
 
