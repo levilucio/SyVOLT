@@ -4,7 +4,7 @@ Created on Sep 6, 2015
 @author: levi
 '''
 
-from util.ecore_utils import EcoreUtils
+
 from pruner.pruner_helper import PrunerHelper
 from core.himesis_utils import graph_to_dot
 
@@ -27,9 +27,7 @@ class Pruner(object):
         self.debug = False
         self.collect_failure_results = False
 
-        self.eu = EcoreUtils(metamodel)
-
-        self.prunerHelper = PrunerHelper(self.eu, transformation, rule_names)
+        self.prunerHelper = PrunerHelper(metamodel, transformation, rule_names)
 
         self.rule_names = rule_names
         self.pc_name_function = pc_name_function

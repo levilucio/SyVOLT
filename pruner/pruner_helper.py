@@ -1,8 +1,9 @@
 from copy import deepcopy
+from util.ecore_utils import EcoreUtils
 
 class PrunerHelper:
 
-    def __init__(self, eu, transformation, rule_names):
+    def __init__(self, metamodel, transformation, rule_names):
 
         self.rule_names = rule_names
 
@@ -15,6 +16,7 @@ class PrunerHelper:
         self.ruleContainmentLinks_List = {"HEmpty": []}
         self.ruleMissingContLinks_List = {"HEmpty": []}
 
+        eu = EcoreUtils(metamodel)
         #self.mmClassParents = eu.getSuperClassInheritanceRelationForClasses()
         self.mmClassChildren = eu.getSubClassInheritanceRelationForClasses()
 
