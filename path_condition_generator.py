@@ -182,7 +182,7 @@ class PathConditionGenerator(object):
 
             for rule in self.transformation[layer]:
  
-                new_name = "L" + str(layer) + "R" + str(i)
+                new_name = "" + str(layer) + "R" + str(i)
 
                 #new_name = str(self.generate_letters(rule_num))
 

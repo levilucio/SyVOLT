@@ -208,7 +208,7 @@ class path_condition_generator_worker(Process):
                             #take off the num of nodes in the name
                             cpc_name = cpc.name.split(".")[0]
 
-                            new_name = cpc_name + '_' + rule_name + "-0"
+                            new_name = cpc_name + '_' + rule_name + "-"
     
                             # create a new path condition which is the result of combining the rule with the current path condition being examined
                             newPathCond = cpc.copy()
@@ -430,7 +430,7 @@ class path_condition_generator_worker(Process):
     
                                                     #print("Going to write a total: " + newPathCondName)
     
-                                                    newPathCondName = newPathCondName +"-T" + str(pathCondSubnum)
+                                                    newPathCondName = newPathCondName +"-T"# + str(pathCondSubnum)
 
                                                     newPathCondName += "." + str(len(newPathCond.vs))
                                                     newPathCond.name = newPathCondName
@@ -467,7 +467,7 @@ class path_condition_generator_worker(Process):
     
                                                     #print("Going to write a partial: " + newPathCondName)
     
-                                                    newPathCondName = newPathCondName +"-P" + str(pathCondSubnum)
+                                                    newPathCondName = newPathCondName +"-P"# + str(pathCondSubnum)
                                                     newPathCondName += "." + str(len(newPathCond.vs))
                                                     newPathCond.name = newPathCondName
                                                     
