@@ -336,6 +336,24 @@ class PathConditionGenerator(object):
 
             results_queue = manager.Queue()
 
+            #only give the workers exactly the artifacts they need
+            layer_rule_combinators = {}
+            layer_rule_trace_checkers = {}
+            layer_rule_overlapping_rules = {}
+
+            rules_in_layer = [rule.name for rule in self.transformation[layer]]
+            for rule, rcs in self.ruleCombinators.items():
+                if rule in rules_in_layer:
+                    layer_rule_combinators[rule] = rcs
+
+            for rule, rcs in self.ruleTraceCheckers.items():
+                if rule in rules_in_layer:
+                    layer_rule_trace_checkers[rule] = rcs
+
+            for rule, rcs in self.overlappingRules.items():
+                if rule in rules_in_layer:
+                    layer_rule_overlapping_rules[rule] = rcs
+
             print("Starting " + str(len(pc_chunks)) + " workers with chunk size: " + str(chunkSize))
 
             workers = []
@@ -364,9 +382,9 @@ class PathConditionGenerator(object):
                 new_worker.rule_names = self.rule_names
 
 
-                new_worker.ruleCombinators = self.ruleCombinators
-                new_worker.ruleTraceCheckers =  self.ruleTraceCheckers
-                new_worker.overlappingRules = self.overlappingRules
+                new_worker.ruleCombinators = layer_rule_combinators
+                new_worker.ruleTraceCheckers =  layer_rule_trace_checkers
+                new_worker.overlappingRules = layer_rule_overlapping_rules
                 new_worker.subsumption = self.subsumption
                 new_worker.loopingRuleSubsumption = self.loopingRuleSubsumption
 
