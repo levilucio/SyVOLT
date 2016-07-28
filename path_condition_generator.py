@@ -428,7 +428,7 @@ class PathConditionGenerator(object):
                 round_time = int(time.time() - round_start_time)
 
                 rounds_remaining = total_rounds - curr_round
-                print("Round " + str(curr_round) + "/" + str(total_rounds) + " took " + str(round_time) + " seconds")
+                print("Round " + str(curr_round + 1) + "/" + str(total_rounds + 1) + " took " + str(round_time) + " seconds")
 
                 if rounds_remaining > 0 and round_time > 5:
                     layer_time = round_time * rounds_remaining
