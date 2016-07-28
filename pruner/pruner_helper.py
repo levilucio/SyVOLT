@@ -7,14 +7,15 @@ class PrunerHelper:
 
         self.rule_names = rule_names
 
-        ruleContainmentLinks = {"HEmpty": {}}
-        self.ruleMissingContLinks = {"HEmpty": {}}
+        empty_pc_name = "E"
+        ruleContainmentLinks = {empty_pc_name: {}}
+        self.ruleMissingContLinks = {empty_pc_name: {}}
 
-        self.ruleContainmentLinksExtended = {"HEmpty": {}}
+        self.ruleContainmentLinksExtended = {empty_pc_name: {}}
         #self.ruleMissingContLinksExtended = {"HEmpty": {}}
 
-        self.ruleContainmentLinks_List = {"HEmpty": []}
-        self.ruleMissingContLinks_List = {"HEmpty": []}
+        self.ruleContainmentLinks_List = {empty_pc_name: []}
+        self.ruleMissingContLinks_List = {empty_pc_name: []}
 
         eu = EcoreUtils(metamodel)
         #self.mmClassParents = eu.getSuperClassInheritanceRelationForClasses()

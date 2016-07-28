@@ -68,7 +68,7 @@ class path_condition_generator_worker(Process):
     def getRuleNamesInPathCondition(self, pcName):
         ruleNames = []
         for token in pcName.split("_"):
-            if token == 'HEmpty':
+            if token == 'E':
                 pass
             else:
                 rulename = token.split("-")[0]

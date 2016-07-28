@@ -159,9 +159,9 @@ class PathConditionGenerator(object):
         if self.verbosity >= 1:
             print("Start changing rule names")
             
-        self.rule_names = {"HEmpty":"HEmptyPathCondition"}
+        self.rule_names = {"E":"HEmptyPathCondition"}
         # keep the original names around 
-        self.shortened_rule_names = {"HEmptyPathCondition":"HEmpty"}
+        self.shortened_rule_names = {"HEmptyPathCondition":"E"}
         # change rules names to be shorter
 
         for layer in range(len(self.transformation)):
@@ -171,7 +171,7 @@ class PathConditionGenerator(object):
 
             for rule in self.transformation[layer]:
  
-                new_name = "L" + str(layer) + "R" + str(i)
+                new_name = "" + str(layer) + "R" + str(i)
                                          
                 i += 1
                 self.rule_names[new_name] = rule.name
@@ -269,7 +269,7 @@ class PathConditionGenerator(object):
         from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 
         HEmptyPathCondition = clean_graph(HEmptyPathCondition())
-        HEmptyPathCondition.name = "HEmpty.0"
+        HEmptyPathCondition.name = "E.0"
 
         currentpathConditionSet = [HEmptyPathCondition.name]
 
@@ -469,7 +469,7 @@ class PathConditionGenerator(object):
             self.pc_dict = pc_dict
             self.ppt.check_rule_reachability(self, layer)
 
-            #print(asizeof.asized(self, detail = 2).format())
+            #print(asizeof.asized(self.pc_dict, detail = 4).format())
 
             print("Time to finish layer: " + str(time.time() - layer_finish_time))
             print("========================\n")
