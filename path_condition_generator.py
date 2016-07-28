@@ -28,7 +28,7 @@ import time
 
 from copy import deepcopy
 
-
+import psutil
 
 #from solver.prolog_attribute_equation_evaluator import PrologAttributeEquationEvaluator
 from solver.simple_attribute_equation_evaluator import SimpleAttributeEquationEvaluator
@@ -249,6 +249,7 @@ class PathConditionGenerator(object):
         http://msdl.cs.mcgill.ca/people/levi/30_publications/files/A_Technique_for_Symbolically_Verifying_Properties_of_Model_Transf.pdf
         """
 
+        curr_process = psutil.Process()
 
         self.num_path_conditions = 0
 
@@ -283,7 +284,7 @@ class PathConditionGenerator(object):
         start_time = time.time()
 
         min_chunk_size = 5
-        max_chunk_size = 20
+        max_chunk_size = 10
 
         for layer in range(len(self.transformation)):
             print("Layer: " + str(layer + 1) + "/" + str(len(self.transformation)) + " at time " + str(time.time() - start_time))
@@ -432,8 +433,9 @@ class PathConditionGenerator(object):
 
                 if rounds_remaining > 0 and round_time > 5:
                     layer_time = round_time * rounds_remaining
-                    print("Time remaining in layer " + str(layer) + ": " + str(layer_time) + " seconds = " + str(layer_time/60) + " minutes")
+                    print("Time remaining in layer " + str(layer) + ": " + str(layer_time) + " seconds = {:.2f} minutes".format(layer_time/60))
 
+                print("Memory usage percent: {:.2f} %".format(curr_process.memory_percent()))
 
             layer_finish_time = time.time()
 
