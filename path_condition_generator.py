@@ -374,6 +374,7 @@ class PathConditionGenerator(object):
 
 
             worker_chunks = self.chunks(workers, cpu_count)
+            total_rounds = len(worker_chunks) - 1
             for curr_round, ws in enumerate(worker_chunks):
                 for i, worker in enumerate(ws):
                     if i == 0:
@@ -386,10 +387,13 @@ class PathConditionGenerator(object):
                 for worker in ws:
                     worker.join()
                 round_time = int(time.time() - round_start_time)
-                rounds_remaining = len(worker_chunks) - curr_round -1
+
+                rounds_remaining = total_rounds - curr_round
+                print("Round " + str(curr_round) + "/" + str(total_rounds) + " took " + str(round_time) + " seconds")
+
                 if rounds_remaining > 0 and round_time > 5:
                     layer_time = round_time * rounds_remaining
-                    print("Time remaining in layer: " + str(layer_time) + " seconds = " + str(layer_time/60) + " minutes")
+                    print("Time remaining in layer " + str(layer) + ": " + str(layer_time) + " seconds = " + str(layer_time/60) + " minutes")
 
 
             layer_finish_time = time.time()
@@ -422,6 +426,7 @@ class PathConditionGenerator(object):
             self.ppt.check_rule_reachability(self, layer)
 
             print("Time to finish layer: " + str(time.time() - layer_finish_time))
+            print("========================\n")
 
         # h = global_hp.heap()
         # print("\nMemory usage:")
