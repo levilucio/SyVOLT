@@ -44,7 +44,7 @@ from pruner.pruner import Pruner
 from random import shuffle
 
 from profiler import *
-
+from string import ascii_uppercase
 
 class PathConditionGenerator(object):
     """
@@ -108,6 +108,15 @@ class PathConditionGenerator(object):
         #we don't need these anymore
         self.matchRulePatterns = None
 
+    def generate_letters(self, i):
+
+        if i <= 25:
+            return ascii_uppercase[i]
+        else:
+            i -= 26
+            return self.generate_letters(int(i%26)) + str(int(i/26))
+
+
 
     #@do_cprofile
     def _pre_process(self):
@@ -159,10 +168,12 @@ class PathConditionGenerator(object):
         if self.verbosity >= 1:
             print("Start changing rule names")
             
-        self.rule_names = {"E":"HEmptyPathCondition"}
+        self.rule_names = {"Em":"HEmptyPathCondition"}
         # keep the original names around 
-        self.shortened_rule_names = {"HEmptyPathCondition":"E"}
+        self.shortened_rule_names = {"HEmptyPathCondition":"Em"}
         # change rules names to be shorter
+
+        rule_num = 0
 
         for layer in range(len(self.transformation)):
             i = 0
@@ -171,8 +182,12 @@ class PathConditionGenerator(object):
 
             for rule in self.transformation[layer]:
  
-                new_name = "" + str(layer) + "R" + str(i)
-                                         
+                new_name = "L" + str(layer) + "R" + str(i)
+
+                #new_name = str(self.generate_letters(rule_num))
+
+                rule_num += 1
+
                 i += 1
                 self.rule_names[new_name] = rule.name
                 self.shortened_rule_names[rule.name] = new_name
@@ -269,7 +284,7 @@ class PathConditionGenerator(object):
         from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
 
         HEmptyPathCondition = clean_graph(HEmptyPathCondition())
-        HEmptyPathCondition.name = "E.0"
+        HEmptyPathCondition.name = "Em.0"
 
         currentpathConditionSet = [HEmptyPathCondition.name]
 

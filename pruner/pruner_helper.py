@@ -7,7 +7,7 @@ class PrunerHelper:
 
         self.rule_names = rule_names
 
-        empty_pc_name = "E"
+        empty_pc_name = "Em"
         ruleContainmentLinks = {empty_pc_name: {}}
         self.ruleMissingContLinks = {empty_pc_name: {}}
 
