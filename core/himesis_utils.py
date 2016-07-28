@@ -394,10 +394,11 @@ def set_compression(value):
 pickle_dir = "pickle/"
 
 def delete_graph(graph_name):
-    file_name = hashlib.sha256(graph_name.encode("UTF-8")).hexdigest()
+    file_name = hashlib.md5(graph_name.encode("UTF-8")).hexdigest()
+    file_name_as_int = str(int(file_name, 16))
 
     try:
-        os.remove(pickle_dir + "/" + file_name)
+        os.remove(pickle_dir + "/" + file_name_as_int)
     except FileNotFoundError:
         pass
         #print("Graph: " + graph_name + " did not exist")
@@ -407,15 +408,18 @@ def shrink_graph(graph):
     value = graph.__reduce__()
 
     if do_pickle:
-        file_name = hashlib.sha256(graph.name.encode("UTF-8")).hexdigest()
+        file_name = hashlib.md5(graph.name.encode("UTF-8")).hexdigest()
+        file_name_as_int = str(int(file_name, 16))
+
+        #print("Saved " + graph.name + " as " + file_name_as_int)
 
         if compression == 0:
-            f = open(pickle_dir + file_name, "wb")
+            f = open(pickle_dir + file_name_as_int, "wb")
         else:
-            f = gzip.open(pickle_dir + file_name, "wb", compresslevel=compression)
+            f = gzip.open(pickle_dir + file_name_as_int, "wb", compresslevel=compression)
         pickle.dump(value, f)
         f.close()
-        return file_name
+        return file_name_as_int
     else:
         return value
 
