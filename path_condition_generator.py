@@ -341,6 +341,8 @@ class PathConditionGenerator(object):
             layer_rule_trace_checkers = {}
             layer_rule_overlapping_rules = {}
 
+            layer_rules = self.transformation[layer]
+
             rules_in_layer = [rule.name for rule in self.transformation[layer]]
             for rule, rcs in self.ruleCombinators.items():
                 if rule in rules_in_layer:
@@ -354,6 +356,25 @@ class PathConditionGenerator(object):
                 if rule in rules_in_layer:
                     layer_rule_overlapping_rules[rule] = rcs
 
+
+            #calculate the overlapping rules for this layer
+            ruleNamesInLayer = [rule.name for rule in self.transformation[layer]]
+            rulesForSecondPhase = sorted(set(self.overlappingRules.keys()).intersection(ruleNamesInLayer))
+
+            # print("Rules for Second Phase:")
+            # print(rulesForSecondPhase)
+
+            rulesToTreat = []
+
+            # build the set of rules that remains to be executed
+            for l in range(layer + 1, len(self.transformation)):
+                for r in self.transformation[l]:
+                    rulesToTreat.append(r.name)
+
+            rulesToTreat += list(rulesForSecondPhase)
+
+
+
             print("Starting " + str(len(pc_chunks)) + " workers with chunk size: " + str(chunkSize))
 
             workers = []
@@ -364,7 +385,7 @@ class PathConditionGenerator(object):
 
                 #print("Chunk size: " + str(len(pc_chunks[i])))
                 
-                new_worker = path_condition_generator_worker(self.transformation, self.prunner, layer, layer * 1000 + i,
+                new_worker = path_condition_generator_worker(layer_rules, rulesToTreat, rulesForSecondPhase, self.prunner, layer, layer * 1000 + i,
                                                              False, self.verbosity)
 
                 new_worker.daemon = True

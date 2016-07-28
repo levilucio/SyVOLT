@@ -33,9 +33,11 @@ class DummyProcess:
 
 class path_condition_generator_worker(Process):
 
-    def __init__(self, transformation, pruner, layer, num, report_progress, verbosity):
+    def __init__(self, layer_rules, rulesToTreat, rulesForSecondPhase, pruner, layer, num, report_progress, verbosity):
         super(path_condition_generator_worker, self).__init__()
-        self.transformation = transformation
+        self.layer_rules = layer_rules
+        self.rulesToTreat = rulesToTreat
+        self.rulesForSecondPhase = rulesForSecondPhase
         self.layer = layer
         self.num = num
         self.currentPathConditionSet = None
@@ -91,22 +93,6 @@ class path_condition_generator_worker(Process):
         name_dict = {}
         reverse_name_dict = {}
 
-        ruleNamesInLayer = [rule.name for rule in self.transformation[self.layer]]
-        rulesForSecondPhase = sorted(set(self.overlappingRules.keys()).intersection(ruleNamesInLayer))
-
-        #print("Rules for Second Phase:")
-        #print(rulesForSecondPhase)
-
-        rulesToTreat = []
-        if self.pruning:
-            # build the set of rules that remains to be executed
-            for l in range(self.layer + 1, len(self.transformation)):
-                for r in self.transformation[l]:
-                    rulesToTreat.append(r.name)
-
-            rulesToTreat += list(rulesForSecondPhase)
-
-
         progress_bar = None
         if self.report_progress:
             progress_bar = ProgressBar(pathConSetLength)
@@ -138,7 +124,7 @@ class path_condition_generator_worker(Process):
             # Run first phase: run all rules without any overlaps with subsuming rules
             ###########################################################################
             
-            for rule in self.transformation[self.layer]:
+            for rule in self.layer_rules:
 
                 rule_name = rule.name
 
@@ -233,7 +219,7 @@ class path_condition_generator_worker(Process):
                             # name the new path condition as the combination of the previous path condition and the rule    
                             newPathCond.name = new_name
 
-                            if not self.pruning or self.pruner.isPathConditionStillFeasible(newPathCond, rulesToTreat):
+                            if not self.pruning or self.pruner.isPathConditionStillFeasible(newPathCond, self.rulesToTreat):
                                 shrunk_newCond = shrink_graph(newPathCond)
                                 self.pc_dict[new_name] = shrunk_newCond
                                 new_pc_dict[new_name] = shrunk_newCond
@@ -450,7 +436,7 @@ class path_condition_generator_worker(Process):
                                                     newPathCond.name = newPathCondName
 
                                                     if self.pruning and not self.pruner.isPathConditionStillFeasible(
-                                                            newPathCond, rulesToTreat):
+                                                            newPathCond, self.rulesToTreat):
                                                         valid = False
 
                                                     if self.verbosity >= 2:
@@ -489,7 +475,7 @@ class path_condition_generator_worker(Process):
                                                     # create a copy of the path condition in the accumulator because this match of the rule is partial.
 
                                                     if self.pruning and not self.pruner.isPathConditionStillFeasible(
-                                                            newPathCond, rulesToTreat):
+                                                            newPathCond, self.rulesToTreat):
                                                         valid = False
                                                     else:
                                                         # add the result to the local accumulator
@@ -533,7 +519,7 @@ class path_condition_generator_worker(Process):
                 
             for pathConditionIndex in range(len(childrenPathConditions)):
                 
-                for rule_name in rulesForSecondPhase:
+                for rule_name in self.rulesForSecondPhase:
                     ruleNamesInPC = []
                     for token in childrenPathConditions[pathConditionIndex].split("_"):
                         ruleNamesInPC.append(token.split("-")[0])
@@ -633,7 +619,7 @@ class path_condition_generator_worker(Process):
                         self.pc_dict[newPathCondName] = shrunk_pc
                         new_pc_dict[newPathCondName] = shrunk_pc
 
-            if self.pruning and not self.pruner.isPathConditionStillFeasible(pc, rulesToTreat):
+            if self.pruning and not self.pruner.isPathConditionStillFeasible(pc, self.rulesToTreat):
                 pcs_to_prune.append(pc_name)
 
         #print("Current length: " + str(len(self.currentPathConditionSet)))
@@ -693,6 +679,8 @@ class path_condition_generator_worker(Process):
 
         if self.pruning:
             self.pruner.print_results()
+
+        #print(asizeof.asized(self, detail = 2).format())
 
         #print("Thread finished: Took " + str(time.time() - start_time) + " seconds")
 
