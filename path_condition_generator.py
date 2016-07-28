@@ -105,6 +105,9 @@ class PathConditionGenerator(object):
 
         self.ppt.debug()
 
+        #we don't need these anymore
+        self.matchRulePatterns = None
+
 
     #@do_cprofile
     def _pre_process(self):
@@ -179,7 +182,7 @@ class PathConditionGenerator(object):
    
                 self.ruleTraceCheckers[new_name] = self.ruleTraceCheckers[rule.name]
                 del self.ruleTraceCheckers[rule.name]
-   
+
                 self.matchRulePatterns[new_name] = self.matchRulePatterns[rule.name]
                 del self.matchRulePatterns[rule.name]
                 
@@ -234,6 +237,18 @@ class PathConditionGenerator(object):
             print("------------------------------------")
             print("\n")
 
+
+    def get_artifacts_for_layer(self, artifact_dict, rules_in_layer, do_deletion = True):
+        return_dict = {}
+        found_rules = []
+        for rule, rcs in artifact_dict.items():
+            if rule in rules_in_layer:
+                return_dict[rule] = rcs
+                found_rules.append(rule)
+        if do_deletion:
+            for rule in found_rules:
+                del artifact_dict[rule]
+        return return_dict
 
     def chunks(self, l, n):
         n = max(1, n)
@@ -336,25 +351,14 @@ class PathConditionGenerator(object):
             results_queue = manager.Queue()
 
             #only give the workers exactly the artifacts they need
-            layer_rule_combinators = {}
-            layer_rule_trace_checkers = {}
-            layer_rule_overlapping_rules = {}
 
             layer_rules = self.transformation[layer]
 
             rules_in_layer = [rule.name for rule in self.transformation[layer]]
-            for rule, rcs in self.ruleCombinators.items():
-                if rule in rules_in_layer:
-                    layer_rule_combinators[rule] = rcs
 
-            for rule, rcs in self.ruleTraceCheckers.items():
-                if rule in rules_in_layer:
-                    layer_rule_trace_checkers[rule] = rcs
-
-            for rule, rcs in self.overlappingRules.items():
-                if rule in rules_in_layer:
-                    layer_rule_overlapping_rules[rule] = rcs
-
+            layer_rule_combinators = self.get_artifacts_for_layer(self.ruleCombinators, rules_in_layer)
+            layer_rule_trace_checkers = self.get_artifacts_for_layer(self.ruleTraceCheckers, rules_in_layer)
+            layer_rule_overlapping_rules = self.get_artifacts_for_layer(self.overlappingRules, rules_in_layer, do_deletion = False)
 
             #calculate the overlapping rules for this layer
             ruleNamesInLayer = [rule.name for rule in self.transformation[layer]]
@@ -464,6 +468,8 @@ class PathConditionGenerator(object):
             self.currentpathConditionSet = currentpathConditionSet
             self.pc_dict = pc_dict
             self.ppt.check_rule_reachability(self, layer)
+
+            #print(asizeof.asized(self, detail = 2).format())
 
             print("Time to finish layer: " + str(time.time() - layer_finish_time))
             print("========================\n")
