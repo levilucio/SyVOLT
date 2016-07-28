@@ -24,10 +24,12 @@ def load_parser():
                         help = 'Index of contract to slice for. Range: -1 (no slicing) to #CONTRACTS-1 (default: -1)')
     parser.set_defaults(slice = -1)
 
-    parser.add_argument('--no_svg', dest = 'draw_svg', action = 'store_false',
-                        help = 'Flag to force svg files to not be drawn')
-    parser.set_defaults(draw_svg = True)
+    parser.add_argument('--draw_svg', dest = 'draw_svg', action = 'store_true', default = False,
+                        help = 'Flag to force svg files to be drawn (default: False)')
 
+    parser.add_argument('--draw_rules', dest = 'draw_rules', action = 'store_true', default = False,
+                        help = 'Flag to force rule svg files to be drawn (default: False)')
+    
     parser.add_argument('--num_pcs', type = int, default = -1,
                         help = 'Number of path conditions which should be produced by this test (default: -1)')
 
