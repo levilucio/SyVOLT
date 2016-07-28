@@ -2,12 +2,19 @@
 __pycache__/
 *.py[cod]
 
+# Profiling results
+*.lprof
+
 /property_prover_rules/**
 /footage_for_demo/*
 dot/
 pickle/
 patterns/
 property_prover_rules/
+eclipse_integration/backend/
+
+# SVG files
+*.svg
 
 # C extensions
 *.so
@@ -61,6 +68,7 @@ docs/_build/
 
 #pycharm
 .idea
+.settings/
 
 patterns/*.py
 
