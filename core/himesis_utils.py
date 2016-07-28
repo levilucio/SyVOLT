@@ -409,14 +409,14 @@ def shrink_graph(graph):
 
     if do_pickle:
         file_name = hashlib.md5(graph.name.encode("UTF-8")).hexdigest()
-        file_name_as_int = str(int(file_name, 16))
+        file_name_as_int = int(file_name, 16)
 
         #print("Saved " + graph.name + " as " + file_name_as_int)
 
         if compression == 0:
-            f = open(pickle_dir + file_name_as_int, "wb")
+            f = open(pickle_dir + str(file_name_as_int), "wb")
         else:
-            f = gzip.open(pickle_dir + file_name_as_int, "wb", compresslevel=compression)
+            f = gzip.open(pickle_dir + str(file_name_as_int), "wb", compresslevel=compression)
         pickle.dump(value, f)
         f.close()
         return file_name_as_int
@@ -430,9 +430,9 @@ def expand_graph(small_value):
 
     if do_pickle:
         if compression == 0:
-            f = open(pickle_dir + small_value, "rb")
+            f = open(pickle_dir + str(small_value), "rb")
         else:
-            f = gzip.open(pickle_dir + small_value, "rb")
+            f = gzip.open(pickle_dir + str(small_value), "rb")
         small_value = pickle.load(f)
         f.close()
 
