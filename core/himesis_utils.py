@@ -92,6 +92,10 @@ def graph_to_dot(name, g, verbosity = 0):
     except KeyError:
         mms = []
 
+    skip_trace_links = False
+    if mms.count("trace_link") > 20:
+        skip_trace_links = True
+
     internal_links = {}
 
     i = 0
@@ -271,6 +275,9 @@ def graph_to_dot(name, g, verbosity = 0):
         label = mm
         arrowhead = "vee"
         penwidth = 1
+
+        if mm == "trace_link" and skip_trace_links:
+            continue
 
         if mm == "trace_link" or mm == "backward_link":
             temp = src
