@@ -171,7 +171,13 @@ class Slicer:
         start_time = time.time()
 
         print("Number rules before: " + str(len(self.rules)))
-        contract_name, contract_list = self.decompose_contract(contract)
+
+        try:
+            contract_name, contract_list = self.decompose_contract(contract)
+        except KeyError:
+            #this is actually a rule
+            contract_name = contract.name
+            contract_list = [contract]
 
         if self.debug:
 
@@ -187,6 +193,10 @@ class Slicer:
         rr_names = [rule.name for rule in required_rules]
 
         print("Required rules for contract " + contract_name + ": " + str(sorted(rr_names)))
+
+        #this contract is a rule, so make sure it requires itself
+        if contract_name in self.rules.keys():
+            required_rules.append(self.rules[contract_name])
 
         #raise Exception("Contract Required Rules")
 
