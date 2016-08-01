@@ -11,7 +11,7 @@ class Slicer:
 
     def __init__(self, rules, transformation, superclasses_dict, overlapping_rules):
 
-        self.debug = False
+        self.debug = True
 
         self.data = {}
         self.direct_links = {}
@@ -96,47 +96,7 @@ class Slicer:
 
         return contract, atomic, if_then
 
-    def find_required_rules(self, graph_name, graph_list, is_contract = False, verbosity = 0):
 
-
-        if self.debug:
-            print("\nLooking for required rules for graph: " + graph_name)
-
-        required_rules = []
-
-        for layer in self.transformation:
-
-            #don't look at the same layer that a rule is on
-            rule_names = [r.name for r in layer]
-
-            if graph_name in rule_names:
-                break
-
-            for rule in layer:
-
-                if rule in required_rules:
-                    continue
-
-                rule_me = self.match_elements[rule.name]
-
-
-                rule_me = set([rule.vs[n]["mm__"] for n in rule_me])
-
-                for graph in graph_list:
-                    verbosity = 0
-
-                    graph_me = self.isolated_match_elements[graph.name]
-                    graph_me = set([graph.vs[n]["mm__"].replace("MT_pre__", "") for n in graph_me])
-
-                    if len(graph_me.intersection(rule_me)) > 0:
-                        required_rules.append(rule)
-                        continue
-
-                    if match_links(graph, self.data[graph.name], rule, self.data[rule.name], self.superclasses_dict, verbosity=verbosity):
-                        required_rules.append(rule)
-
-
-        return list(set(required_rules))
 
 
     def decompose_contract(self, contract):
@@ -203,7 +163,7 @@ class Slicer:
 
         for rr in required_rules:
 
-            new_rrs = self.find_required_rules(rr.name, [rr], self.transformation)
+            new_rrs = self.find_required_rules(rr.name, [rr], False, self.transformation)
             for new_rr in new_rrs:
                 if new_rr not in required_rules:
                     required_rules.append(new_rr)
@@ -246,108 +206,157 @@ class Slicer:
 
         print("Slicing took: " + str(end_time) + " seconds")
         print("Number rules after: " + str(len(new_rules)))
-        #raise Exception()
+        raise Exception()
 
         return new_rules, new_transformation
 
-def match_links(pattern, pattern_data, graph, source_data, superclasses_dict, verbosity=0, match_all = False):
 
-    matcher = NewHimesisMatcher(graph, pattern, pred1=source_data, pred2=pattern_data, superclasses_dict=superclasses_dict)
+    def find_required_rules(self, pattern_name, pattern_list, is_contract = False, verbosity = 0):
+        if self.debug:
+            print("\nLooking for required rules for pattern: " + pattern_name)
 
+        required_rules = []
 
+        for layer in self.transformation:
+            # don't look at the same layer that a rule is on
 
-    for iso_match_element in pattern_data["isolated_match_elements"]:
-        # print("Matching iso element: " + str(iso_match_element))
-        for node in range(len(graph.vs)):
-            # print("Matching on: " + str(node))
-            nodes_match = matcher.match_nodes(node, iso_match_element)
+            if not is_contract:
+                rule_names = [r.name for r in layer]
 
-            if nodes_match:
-                return True
+                if pattern_name in rule_names:
+                    break
 
-    # copy these links, as we might need to remove some
-    links = [
-        [pattern_data["direct_links"], source_data["direct_links"]],
-        [pattern_data["backward_links"], source_data["backward_links"]],
-    ]
-
-    for patt_links, source_links in links:
-        if verbosity > 1:
-            print("\n===================\nPattern " + pattern.name + " nodes:")
-            for patt0_n, patt1_n, patt_link_n in patt_links:
-                matcher.print_link(pattern, patt0_n, patt1_n, patt_link_n)
-            print("Pattern " + pattern.name + " nodes:\n===================\n")
-            print("\n===================\nGraph " + graph.name + " nodes:")
-            for graph_n0_n, graph_n1_n, graph_link_n in source_links:
-                matcher.print_link(graph, graph_n0_n, graph_n1_n, graph_link_n)
-            print("Graph " + graph.name + " nodes:\n===================\n")
-
-
-        for patt0_n, patt1_n, patt_link_n in patt_links:
-
-            for graph_n0_n, graph_n1_n, graph_link_n in source_links:
-
-
-                links_match = matcher.match_nodes(graph_link_n, patt_link_n)
-
-                if not links_match:
-                    #if verbosity > 1:
-                    #    print("Links don't match")
+            for rule in layer:
+                if rule in required_rules:
                     continue
 
-                if verbosity > 1:
-                    print("\nChecking Pattern " + pattern.name + " nodes:")
-                    matcher.print_link(pattern, patt0_n, patt1_n, patt_link_n)
+                rule_me = self.match_elements[rule.name]
 
-                nodes_match_1 = matcher.match_nodes(graph_n0_n, patt0_n)
+                rule_me = set([rule.vs[n]["mm__"] for n in rule_me])
 
-                nodes_match_2 = matcher.match_nodes(graph_n1_n, patt1_n)
+                source_data = self.data[rule.name]
 
-                nodes_match_3 = matcher.match_nodes(graph_n1_n, patt0_n)
+                for pattern in pattern_list:
+                    verbosity = 0
 
-                nodes_match_4 = matcher.match_nodes(graph_n0_n, patt1_n)
+                    pattern_data = self.data[pattern.name]
+
+                    #we care about backward links for both rules and contracts,
+                    #but only direct link for contracts
+
+                    links = [
+                        [pattern_data["direct_links"], source_data["direct_links"]],
+                        [pattern_data["backward_links"], source_data["backward_links"]],
+                    ]
+
+                    graph_me = self.isolated_match_elements[pattern.name]
+                    graph_me = set([pattern.vs[n]["mm__"].replace("MT_pre__", "") for n in graph_me])
+
+                    if len(graph_me.intersection(rule_me)) > 0:
+                        required_rules.append(rule)
+                        continue
+
+                    if self.match_links(links, pattern, self.data[pattern.name], rule, self.data[rule.name], self.superclasses_dict,
+                                   verbosity = verbosity):
+                        required_rules.append(rule)
+
+        return list(set(required_rules))
+
+    def match_links(self, links, pattern, pattern_data, graph, source_data, superclasses_dict, verbosity=0, match_all = False):
+
+        matcher = NewHimesisMatcher(graph, pattern, pred1=source_data, pred2=pattern_data, superclasses_dict=superclasses_dict)
 
 
-                nodes_match = (nodes_match_1 and nodes_match_2) or (nodes_match_3 and nodes_match_4)
 
-                #if nodes_match:
-                #    print("\nNodes found!")
-                # if not nodes_match:
-                #     print("Failure matching on " + pc.vs[pc_n0_n]["mm__"] + " vs " + contract.vs[n0_n]["mm__"])
-
-                # if not nodes_match:
-                #     print("Failure matching on " + pc.vs[pc_n1_n]["mm__"] + " vs " + contract.vs[n1_n]["mm__"])
+        for iso_match_element in pattern_data["isolated_match_elements"]:
+            # print("Matching iso element: " + str(iso_match_element))
+            for node in range(len(graph.vs)):
+                # print("Matching on: " + str(node))
+                nodes_match = matcher.match_nodes(node, iso_match_element)
 
                 if nodes_match:
-                    if verbosity > 1:
-                        print("\nFound the pattern link: ")
-                        matcher.print_link(pattern, patt0_n, patt1_n, patt_link_n)
-                        print("On:")
-                        matcher.print_link(graph, graph_n0_n, graph_n1_n, graph_link_n)
-
                     return True
 
-                    #pc_direct_links.remove([pc_n0_n, pc_n1_n, pc_link_n])
-                    #break
-                # else:
+        # copy these links, as we might need to remove some
+
+
+        for patt_links, source_links in links:
+            if verbosity > 1:
+                print("\n===================\nPattern " + pattern.name + " nodes:")
+                for patt0_n, patt1_n, patt_link_n in patt_links:
+                    matcher.print_link(pattern, patt0_n, patt1_n, patt_link_n)
+                print("Pattern " + pattern.name + " nodes:\n===================\n")
+                print("\n===================\nGraph " + graph.name + " nodes:")
+                for graph_n0_n, graph_n1_n, graph_link_n in source_links:
+                    matcher.print_link(graph, graph_n0_n, graph_n1_n, graph_link_n)
+                print("Graph " + graph.name + " nodes:\n===================\n")
+
+
+            for patt0_n, patt1_n, patt_link_n in patt_links:
+
+                for graph_n0_n, graph_n1_n, graph_link_n in source_links:
+
+
+                    links_match = matcher.match_nodes(graph_link_n, patt_link_n)
+
+                    if not links_match:
+                        #if verbosity > 1:
+                        #    print("Links don't match")
+                        continue
+
+                    if verbosity > 1:
+                        print("\nChecking Pattern " + pattern.name + " nodes:")
+                        matcher.print_link(pattern, patt0_n, patt1_n, patt_link_n)
+
+                    nodes_match_1 = matcher.match_nodes(graph_n0_n, patt0_n)
+
+                    nodes_match_2 = matcher.match_nodes(graph_n1_n, patt1_n)
+
+                    nodes_match_3 = matcher.match_nodes(graph_n1_n, patt0_n)
+
+                    nodes_match_4 = matcher.match_nodes(graph_n0_n, patt1_n)
+
+
+                    nodes_match = (nodes_match_1 and nodes_match_2) or (nodes_match_3 and nodes_match_4)
+
+                    #if nodes_match:
+                    #    print("\nNodes found!")
+                    # if not nodes_match:
+                    #     print("Failure matching on " + pc.vs[pc_n0_n]["mm__"] + " vs " + contract.vs[n0_n]["mm__"])
+
+                    # if not nodes_match:
+                    #     print("Failure matching on " + pc.vs[pc_n1_n]["mm__"] + " vs " + contract.vs[n1_n]["mm__"])
+
+                    if nodes_match:
+                        if verbosity > 1:
+                            print("\nFound the pattern link: ")
+                            matcher.print_link(pattern, patt0_n, patt1_n, patt_link_n)
+                            print("On:")
+                            matcher.print_link(graph, graph_n0_n, graph_n1_n, graph_link_n)
+
+                        return True
+
+                        #pc_direct_links.remove([pc_n0_n, pc_n1_n, pc_link_n])
+                        #break
+                    # else:
+                    #     if verbosity > 1:
+                    #         print("\nNot match on:")
+                    #         print(graph.vs[graph_n0_n]["mm__"])
+                    #         print(graph.vs[graph_n1_n]["mm__"])
+                    #
+                    #         if graph_link_n:
+                    #             print(graph.vs[graph_link_n]["mm__"])
+                    #         print()
+
+                # if not found_match:
                 #     if verbosity > 1:
-                #         print("\nNot match on:")
-                #         print(graph.vs[graph_n0_n]["mm__"])
-                #         print(graph.vs[graph_n1_n]["mm__"])
-                #
-                #         if graph_link_n:
-                #             print(graph.vs[graph_link_n]["mm__"])
+                #         print("No direct link matches found")
+                #         print("Couldn't find:")
+                #         print(pattern.vs[patt0_n]["mm__"])
+                #         print(pattern.vs[patt1_n]["mm__"])
+                #         if patt_link_n:
+                #             print(pattern.vs[patt_link_n]["mm__"])
                 #         print()
+                #     return False
 
-            # if not found_match:
-            #     if verbosity > 1:
-            #         print("No direct link matches found")
-            #         print("Couldn't find:")
-            #         print(pattern.vs[patt0_n]["mm__"])
-            #         print(pattern.vs[patt1_n]["mm__"])
-            #         if patt_link_n:
-            #             print(pattern.vs[patt_link_n]["mm__"])
-            #         print()
-            #     return False
-
-    return False
+        return False
