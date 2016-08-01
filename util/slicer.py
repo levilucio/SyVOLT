@@ -20,6 +20,8 @@ class Slicer:
         self.isolated_match_elements = {}
         self.apply_elements = {}
 
+        self.found_links = {}
+        self.found_isolated_match_elements = {}
 
         self.rules = rules
 
@@ -76,6 +78,10 @@ class Slicer:
                 r_rules = self.find_required_rules(rule.name, [rule])
                 r_rules = sorted([r.name for r in r_rules])
                 print("Rule " + rule.name + " depends on: " + str(r_rules))
+
+        for layer in transformation:
+            for rule in layer:
+                self.check_for_missing_elements(rule, is_contract=False)
 
     def get_contract(self, contract_num, atomic, if_then):
 
@@ -139,6 +145,7 @@ class Slicer:
             #this is actually a rule
             contract_name = contract.name
             contract_list = [contract]
+
 
         if self.debug:
 
@@ -204,10 +211,15 @@ class Slicer:
 
         end_time = time.time() - start_time
 
+        for contract in contract_list:
+            self.check_for_missing_elements(contract, is_contract = True)
+
         print("Slicing took: " + str(end_time) + " seconds")
         print("Number rules after: " + str(len(new_rules)))
         #raise Exception()
 
+
+        #raise Exception()
         return new_rules, new_transformation
 
 
@@ -246,7 +258,10 @@ class Slicer:
                     #we care about backward links for both rules and contracts,
                     #but only direct link for contracts
 
-                    real_backward_links = [bl for bl in pattern_data["backward_links"] if pattern_mms[bl[2]] == "backward_link"]
+                    if is_contract:
+                        real_backward_links = pattern_data["backward_links"]
+                    else:
+                        real_backward_links = [bl for bl in pattern_data["backward_links"] if pattern_mms[bl[2]] == "backward_link"]
                     real_trace_links = [tl for tl in source_data["backward_links"] if source_mms[tl[2]] == "trace_link"]
 
                     links = [
@@ -261,7 +276,7 @@ class Slicer:
 
                         if len(graph_me.intersection(rule_me)) > 0:
                             required_rules.append(rule)
-                            continue
+                            #continue
 
                     if self.match_links(links, pattern, self.data[pattern.name], rule, self.data[rule.name], self.superclasses_dict,
                                    verbosity = verbosity):
@@ -273,6 +288,7 @@ class Slicer:
 
         matcher = NewHimesisMatcher(graph, pattern, pred1=source_data, pred2=pattern_data, superclasses_dict=superclasses_dict)
 
+        does_match = False
         for iso_match_element in pattern_data["isolated_match_elements"]:
             # print("Matching iso element: " + str(iso_match_element))
             for node in range(len(graph.vs)):
@@ -280,7 +296,10 @@ class Slicer:
                 nodes_match = matcher.match_nodes(node, iso_match_element)
 
                 if nodes_match:
-                    return True
+                    if pattern.name not in self.found_isolated_match_elements.keys():
+                        self.found_isolated_match_elements[pattern.name] = []
+                    self.found_isolated_match_elements[pattern.name].append(iso_match_element)
+                    does_match = True
 
         # copy these links, as we might need to remove some
 
@@ -339,7 +358,12 @@ class Slicer:
                             print("On:")
                             matcher.print_link(graph, graph_n0_n, graph_n1_n, graph_link_n)
 
-                        return True
+                        if pattern.name not in self.found_links.keys():
+                            self.found_links[pattern.name] = []
+                        self.found_links[pattern.name].append([patt0_n, patt1_n, patt_link_n])
+
+                        does_match = True
+                        #return True
 
                         #pc_direct_links.remove([pc_n0_n, pc_n1_n, pc_link_n])
                         #break
@@ -364,4 +388,45 @@ class Slicer:
                 #         print()
                 #     return False
 
-        return False
+        return does_match
+
+    def check_for_missing_elements(self, graph, is_contract = False):
+
+        mms = graph.vs["mm__"]
+
+        direct_links = self.data[graph.name]["direct_links"]
+
+        backward_links = self.data[graph.name]["backward_links"]
+
+        if not is_contract:
+            backward_links = [bl for bl in backward_links if bl[2] == "backward_link"]
+
+        try:
+            found_links = self.found_links[graph.name]
+        except KeyError:
+            found_links = []
+
+        if is_contract:
+            for dl in direct_links:
+
+                if dl not in found_links:
+
+                    #check to see if it is in the apply graph
+                    if "directLink_T" in mms[dl[2]]:
+                        continue
+
+                    print("Error! Direct link missing!")
+                elif found_links.count(dl) < direct_links.count(dl):
+                    print("Possible error in multiplicity!")
+
+
+        for iso in self.isolated_match_elements[graph.name]:
+            if iso not in self.found_isolated_match_elements:
+                print("Isolated element " + str(iso) + " cannot be found!")
+                raise Exception()
+
+        for bl in backward_links:
+            if bl not in found_links:
+                print("Error! Backward link might be missing!")
+            elif found_links.count(bl) < backward_links.count(bl):
+                print("Possible error in multiplicity!")
