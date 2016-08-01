@@ -50,6 +50,12 @@ class SubsumptionHandler:
         rulepairs = []
 
         for pair in all_rulepairs:
+        
+            if (pair[0].startswith(pair[1]) or pair[1].startswith(pair[0])) and \
+                ("copy" in pair[0] or "copy" in pair[1]):
+                #assume these are copies of each other
+                continue
+                
             p = Packet()
             p.graph = self.rules[pair[1]]
             matcher = matchRulePatterns[pair[0]][0]
