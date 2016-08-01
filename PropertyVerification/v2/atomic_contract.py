@@ -16,7 +16,6 @@ from core.match_algo import HimesisMatcher
 
 from copy import deepcopy
 
-from util.decompose_graph import decompose_graph, match_links
 
 
 class AtomicContract(Contract):
