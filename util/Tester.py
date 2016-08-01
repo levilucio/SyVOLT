@@ -9,7 +9,7 @@ from core.himesis_utils import graph_to_dot
 
 import time
 
-class PropertyProverTester:
+class Tester:
 
     def __init__(self, args):
         self.draw_svg = args.draw_svg
@@ -197,6 +197,8 @@ class PropertyProverTester:
         for rule in rules:
             if rule not in rules_seen:
                 print("ERROR: Rule " + rule + " was not executed!")
+                print("Rules seen:")
+                print(rules_seen)
                 rules_not_seen.append(rule)
 
         #print("Reachability check took " + str(time.time() - reachability_start) + " seconds")

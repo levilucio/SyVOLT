@@ -33,7 +33,7 @@ import psutil
 #from solver.prolog_attribute_equation_evaluator import PrologAttributeEquationEvaluator
 from solver.simple_attribute_equation_evaluator import SimpleAttributeEquationEvaluator
 
-from PropertyProverTester import PropertyProverTester
+from util.Tester import Tester
 
 import multiprocessing
 from multiprocessing import Manager, Queue
@@ -99,11 +99,11 @@ class PathConditionGenerator(object):
         
         self.prunner = Pruner(self.targetMM, self.transformation, self.rule_names, self.rules_in_pc_name)
 
-        self.ppt = PropertyProverTester(args)
-        self.ppt.set_artifacts(self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators,
-                          self.rule_names)
+        self.tester = Tester(args)
+        self.tester.set_artifacts(self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators,
+                                  self.rule_names)
 
-        self.ppt.debug()
+        self.tester.debug()
 
         #we don't need these anymore
         self.matchRulePatterns = None
@@ -312,7 +312,7 @@ class PathConditionGenerator(object):
         start_time = time.time()
 
         min_chunk_size = 5
-        max_chunk_size = 10
+        max_chunk_size = 20
 
         for layer in range(len(self.transformation)):
             print("Layer: " + str(layer + 1) + "/" + str(len(self.transformation)) + " at time " + str(time.time() - start_time))
@@ -482,7 +482,7 @@ class PathConditionGenerator(object):
 
             self.currentpathConditionSet = currentpathConditionSet
             self.pc_dict = pc_dict
-            self.ppt.check_rule_reachability(self, layer)
+            self.tester.check_rule_reachability(self, layer)
 
             #print(asizeof.asized(self.pc_dict, detail = 4).format())
 
