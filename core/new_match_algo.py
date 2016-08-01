@@ -518,7 +518,10 @@ class NewHimesisMatcher(object):
         #     print("Patt node: " + str(patt_node_num))
         #     print("Patt constant: " + str(self.patt_eqs_constant))
 
-        patt_label = patt_node["MT_label__"]
+        try:
+            patt_label = patt_node["MT_label__"]
+        except KeyError:
+            patt_label = -1
 
         try:
             src_equations = self.src_eqs_constant[src_node_num]
