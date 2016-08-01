@@ -151,30 +151,30 @@ class NewHimesisMatcher(object):
 
         required_mms = ["ComponentInstance", "ProvidedPort", "RequiredPort",
                         "StatementList", "Member", "GlobalVariableDeclaration"]
-        if "Hlayer5rule1_rule_trace_checker" in self.pattern_graph.name:
-            #if self.source_graph.name == "Em_0R0-_0R2-_0R3-_0R6-_0R1-OVER1_0R7-OVER1_1R0-T_1R1-P_1R2-T_2R2-P_2R3-P_2R5-P_2R1-OVER0_3R0-T_3R1-OVER0.168":
-            if "2R3" in self.source_graph.name and "2R4" in self.source_graph.name:
-                if not self.source_graph.name == "4R0":
-
-                    has_required = True
-
-                    # for k, v in sorted(self.superclasses_dict.items()):
-                    #
-                    #     print(k)
-                    #     print(v)
-
-                    for r in required_mms:
-                        if r not in mms:
-                            has_required = False
-
-                    if has_required and mms.count("ComponentInstance") < 2:
-                        has_required = False
-
-                    if has_required:
-                        self.print_reason_failed = True
-                        self.debug = True
-                        #graph_to_dot(self.source_graph.name, self.source_graph)
-                        graph_to_dot("links_" + self.source_graph.name, self.source_graph, force_trace_links = True)
+        # if "Hlayer5rule1_rule_trace_checker" in self.pattern_graph.name:
+        #     #if self.source_graph.name == "Em_0R0-_0R2-_0R3-_0R6-_0R1-OVER1_0R7-OVER1_1R0-T_1R1-P_1R2-T_2R2-P_2R3-P_2R5-P_2R1-OVER0_3R0-T_3R1-OVER0.168":
+        #     if "2R3" in self.source_graph.name and "2R4" in self.source_graph.name:
+        #         if not self.source_graph.name == "4R0":
+        #
+        #             has_required = True
+        #
+        #             # for k, v in sorted(self.superclasses_dict.items()):
+        #             #
+        #             #     print(k)
+        #             #     print(v)
+        #
+        #             for r in required_mms:
+        #                 if r not in mms:
+        #                     has_required = False
+        #
+        #             if has_required and mms.count("ComponentInstance") < 2:
+        #                 has_required = False
+        #
+        #             if has_required:
+        #                 self.print_reason_failed = True
+        #                 self.debug = True
+        #                 #graph_to_dot(self.source_graph.name, self.source_graph)
+        #                 graph_to_dot("links_" + self.source_graph.name, self.source_graph, force_trace_links = True)
 
 
 
