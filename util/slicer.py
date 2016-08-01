@@ -416,8 +416,16 @@ class Slicer:
                         continue
 
                     print("Error! Direct link missing!")
+                    print(dl)
+                    print(mms[dl[0]] + " " + mms[dl[2]] + " " + mms[dl[1]])
+
+                    self.print_rules_with_element(mms[dl[0]])
+                    self.print_rules_with_element(mms[dl[1]])
+
+                    #raise Exception()
                 elif found_links.count(dl) < direct_links.count(dl):
                     print("Possible error in multiplicity!")
+                    print(mms[dl[0]] + " " + mms[dl[2]] + " " + mms[dl[1]])
 
 
         for iso in self.isolated_match_elements[graph.name]:
@@ -428,5 +436,31 @@ class Slicer:
         for bl in backward_links:
             if bl not in found_links:
                 print("Error! Backward link might be missing!")
+                print(bl)
+                print(mms[bl[0]] + " " + mms[bl[2]] + " " + mms[bl[1]])
+                self.print_rules_with_element(mms[bl[0]])
+                self.print_rules_with_element(mms[bl[1]])
             elif found_links.count(bl) < backward_links.count(bl):
                 print("Possible error in multiplicity!")
+
+    def print_rules_with_element(self, element_mm):
+
+        element_mm = element_mm.replace("MT_pre__", "")
+        print("\nLooking for mm: " + element_mm)
+        found_a_rule = False
+        for rule_name, rule in sorted(self.rules.items()):
+            mms = rule.vs["mm__"]
+
+            for mm in mms:
+                if mm == element_mm:
+                    print("Rule " + rule_name + " contains mm: " + mm)
+                    found_a_rule = True
+                try:
+                    if element_mm in self.superclasses_dict[mm]:
+                        print("Rule " + rule_name + " contains mm: " + element_mm + " as " + mm)
+                        found_a_rule = True
+                except KeyError:
+                    pass
+
+        if not found_a_rule:
+            print("Error: MM not found in any rule!!")
