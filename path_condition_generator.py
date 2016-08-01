@@ -443,14 +443,14 @@ class PathConditionGenerator(object):
                 round_start_time = time.time()
                 for worker in ws:
                     worker.join()
-                round_time = int(time.time() - round_start_time)
+                round_time = time.time() - round_start_time
 
                 rounds_remaining = total_rounds - curr_round
-                print("Round " + str(curr_round + 1) + "/" + str(total_rounds + 1) + " took " + str(round_time) + " seconds")
+                print("Round " + str(curr_round + 1) + "/" + str(total_rounds + 1) + " took {:.2f} seconds".format(round_time))
 
                 if rounds_remaining > 0 and round_time > 0:
                     layer_time = round_time * rounds_remaining
-                    print("Time remaining in layer " + str(layer + 1) + ": " + str(layer_time) + " seconds = {:.2f} minutes".format(layer_time/60))
+                    print("Time remaining in layer " + str(layer + 1) + ": {:.2f}".format(layer_time) + " seconds = {:.2f} minutes".format(layer_time/60))
 
                 memory_percent = psutil.virtual_memory()[2]
                 print("Memory usage percent: {:.2f} %".format(memory_percent))
