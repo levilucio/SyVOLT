@@ -206,7 +206,7 @@ class Slicer:
 
         print("Slicing took: " + str(end_time) + " seconds")
         print("Number rules after: " + str(len(new_rules)))
-        raise Exception()
+        #raise Exception()
 
         return new_rules, new_transformation
 
@@ -230,31 +230,38 @@ class Slicer:
                 if rule in required_rules:
                     continue
 
-                rule_me = self.match_elements[rule.name]
-
-                rule_me = set([rule.vs[n]["mm__"] for n in rule_me])
+                if is_contract:
+                    rule_me = self.match_elements[rule.name]
+                    rule_me = set([rule.vs[n]["mm__"] for n in rule_me])
 
                 source_data = self.data[rule.name]
+                source_mms = rule.vs["mm__"]
 
                 for pattern in pattern_list:
                     verbosity = 0
 
                     pattern_data = self.data[pattern.name]
+                    pattern_mms = pattern.vs["mm__"]
 
                     #we care about backward links for both rules and contracts,
                     #but only direct link for contracts
 
+                    real_backward_links = [bl for bl in pattern_data["backward_links"] if pattern_mms[bl[2]] == "backward_link"]
+                    real_trace_links = [tl for tl in source_data["backward_links"] if source_mms[tl[2]] == "trace_link"]
+
                     links = [
-                        [pattern_data["direct_links"], source_data["direct_links"]],
-                        [pattern_data["backward_links"], source_data["backward_links"]],
+                        [real_backward_links, real_trace_links],
                     ]
 
-                    graph_me = self.isolated_match_elements[pattern.name]
-                    graph_me = set([pattern.vs[n]["mm__"].replace("MT_pre__", "") for n in graph_me])
+                    if is_contract:
+                        links.append([pattern_data["direct_links"], source_data["direct_links"]])
 
-                    if len(graph_me.intersection(rule_me)) > 0:
-                        required_rules.append(rule)
-                        continue
+                        graph_me = self.isolated_match_elements[pattern.name]
+                        graph_me = set([pattern.vs[n]["mm__"].replace("MT_pre__", "") for n in graph_me])
+
+                        if len(graph_me.intersection(rule_me)) > 0:
+                            required_rules.append(rule)
+                            continue
 
                     if self.match_links(links, pattern, self.data[pattern.name], rule, self.data[rule.name], self.superclasses_dict,
                                    verbosity = verbosity):
@@ -265,8 +272,6 @@ class Slicer:
     def match_links(self, links, pattern, pattern_data, graph, source_data, superclasses_dict, verbosity=0, match_all = False):
 
         matcher = NewHimesisMatcher(graph, pattern, pred1=source_data, pred2=pattern_data, superclasses_dict=superclasses_dict)
-
-
 
         for iso_match_element in pattern_data["isolated_match_elements"]:
             # print("Matching iso element: " + str(iso_match_element))
