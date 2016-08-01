@@ -1,5 +1,5 @@
 
-from util.decompose_graph import decompose_graph, match_nodes
+from util.decompose_graph import decompose_graph
 
 from core.match_algo import HimesisMatcher
 
@@ -15,6 +15,8 @@ class NewHimesisMatcher(object):
 
     def __init__(self, source_graph, pattern_graph, pred1 = {}, succ1 = {}, pred2 = {}, succ2 = {}, superclasses_dict = {}):
         self.debug = False
+        self.print_reason_failed = False
+
         self.compare_to_old = False
 
         source_data = pred1
@@ -134,46 +136,49 @@ class NewHimesisMatcher(object):
 
 
     def match_iter(self, context = {}):
-        # print(self.pattern_graph.name + " vs " + self.source_graph.name)
+        #print(self.pattern_graph.name + " vs " + self.source_graph.name)
 
 
-        # try:
-        #     mms = self.source_graph.vs["mm__"]
-        # except KeyError:
-        #     mms = []
-        #
-        # try:
-        #     attr1 = self.source_graph.vs["attr1"]
-        # except KeyError:
-        #     attr1 = []
+        try:
+            mms = self.source_graph.vs["mm__"]
+        except KeyError:
+            mms = []
+
+        try:
+            attr1 = self.source_graph.vs["attr1"]
+        except KeyError:
+            attr1 = []
+
+        required_mms = ["ComponentInstance", "ProvidedPort", "RequiredPort",
+                        "StatementList", "Member", "GlobalVariableDeclaration"]
+        if "Hlayer5rule1_rule_trace_checker" in self.pattern_graph.name:
+            #if self.source_graph.name == "Em_0R0-_0R2-_0R3-_0R6-_0R1-OVER1_0R7-OVER1_1R0-T_1R1-P_1R2-T_2R2-P_2R3-P_2R5-P_2R1-OVER0_3R0-T_3R1-OVER0.168":
+            if "2R3" in self.source_graph.name and "2R4" in self.source_graph.name:
+                if not self.source_graph.name == "4R0":
+
+                    has_required = True
+
+                    # for k, v in sorted(self.superclasses_dict.items()):
+                    #
+                    #     print(k)
+                    #     print(v)
+
+                    for r in required_mms:
+                        if r not in mms:
+                            has_required = False
+
+                    if has_required and mms.count("ComponentInstance") < 2:
+                        has_required = False
+
+                    if has_required:
+                        self.print_reason_failed = True
+                        self.debug = True
+                        #graph_to_dot(self.source_graph.name, self.source_graph)
+                        graph_to_dot("links_" + self.source_graph.name, self.source_graph, force_trace_links = True)
 
 
 
 
-
-        if self.compare_to_old:
-
-            #old_time = time.time()
-            self.oldMatcher = HimesisMatcher(self.source_graph, self.pattern_graph, self.pred1, self.succ1, self.pred2, self.succ2)
-            old_matches = [x for x in self.oldMatcher.match_iter()]
-            #old_time = time.time() - old_time
-
-            #new_time = time.time()
-            new_matches = [x for x in self._match()]
-            #new_time = time.time() - new_time
-
-            #print("Old time: " + str(old_time) + " seconds")
-            #print("New time " + str(new_time) + " seconds")
-
-            if self.debug:
-                print("Old matches: " + str(old_matches))
-                print("New matches: " + str(new_matches))
-
-
-            #if len(old_matches) != len(new_matches):
-            if old_matches != new_matches:
-                print("Matchers give different results")
-                print(self.source_graph.name + " vs " + self.pattern_graph.name)
 
         if self.debug_equations:
             print("Pattern eqs:")
@@ -202,7 +207,7 @@ class NewHimesisMatcher(object):
 
         link_matches = {}
 
-        failed_matches = []
+        #failed_matches = []
 
         if self.debug:
             print("\nMatching pattern: " + self.pattern_graph.name)
@@ -228,8 +233,9 @@ class NewHimesisMatcher(object):
                         link_matches[iso_link] = [node_link]
 
             if not matched_element:
-                if self.debug:
-                    failed_matches.append(iso_match_element)
+                if self.print_reason_failed:
+                    print("Failed on iso element: " + str(iso_match_element))
+                    #failed_matches.append(iso_match_element)
                 return
 
         links = [
@@ -279,6 +285,9 @@ class NewHimesisMatcher(object):
                     #if nodes_match:
                     if self.match_nodes(graph_n0_n, patt0_n) and self.match_nodes(graph_n1_n, patt1_n):
 
+                        if self.debug:
+                            print("Found a link - " + str(graph_n0_n) + " " + str(graph_link_n) + " " + str(graph_n1_n))
+
                         found_match = True
                         patt_link = (patt0_n, patt1_n, patt_link_n)
                         source_link = (graph_n0_n, graph_n1_n, graph_link_n)
@@ -289,12 +298,19 @@ class NewHimesisMatcher(object):
                             link_matches[patt_link] = [source_link]
 
                 if not found_match and len(self.pattern_data["isolated_match_elements"]) == 0:
-                    if self.debug:
+                    if self.debug or self.print_reason_failed:
                         print("Matching failed on:")
                         self.print_link(self.pattern_graph, patt0_n, patt1_n, patt_link_n)
+
+                        raise Exception()
                     return
 
+
+
         if len(link_matches) == 0:
+            if self.debug:
+                print("Found no matches")
+                raise Exception()
             yield {}
             return
 
@@ -339,6 +355,10 @@ class NewHimesisMatcher(object):
         #combinations = [[(key, value) for (key, value) in zip(link_matches, values)] for values in product(*link_matches.values())]
         #for pm in combinations:
 
+        if self.debug:
+            print("There are matches: " + str(link_matches))
+
+
         for pm in self.combo_generator(link_matches):
             # if self.debug:
 
@@ -350,11 +370,15 @@ class NewHimesisMatcher(object):
             #     print(pair)
             match_set = self.create_match_set(pm)
 
-            # if self.debug:
-            #     print("Match set:")
-            #     print(match_set)
+            if self.debug:
+                print("Match set:")
+                print(match_set)
 
             if match_set:
+
+                if self.debug:
+                    print("Found a match!")
+                    raise Exception()
                 yield match_set
                 # if needed_disambig:
                 #     ms_w_disambig.append(match_set)
@@ -367,6 +391,9 @@ class NewHimesisMatcher(object):
 
     def combo_generator(self, link_matches):
         for values in product(*link_matches.values()):
+
+            if self.debug:
+                print(values)
             if len(set(values)) == len(values):
                 yield zip(link_matches, values)
 
@@ -384,6 +411,9 @@ class NewHimesisMatcher(object):
                         # we already have another element binding to this one, so fail
                         if self.debug:
                             print("Another pattern element is already binding to this source element")
+                            print("Source: " + str(s))
+                            print("Pattern: " + str(p))
+                            raise Exception()
                         return {}
                 except KeyError:
                     pass
@@ -391,10 +421,10 @@ class NewHimesisMatcher(object):
                 match_set[p] = s
                 reverse_match_set[s] = p
 
-        # if self.debug:
-        #     print("Match set:")
-        #     print(pm)
-        #     print(match_set)
+        if self.debug:
+            print("Match set:")
+            print(pm)
+            print(match_set)
         return match_set
 
     def print_link(self, graph, n0, n1, nlink):
