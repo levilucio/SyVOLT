@@ -460,7 +460,7 @@ class NewHimesisMatcher(object):
 
         # if self.debug:
 
-        if targetMM == "trace_link":
+        if targetMM in ["trace_link", "backward_link"]:
             if sourceMM in ["trace_link", "backward_link"]:
                 return True
             else:
