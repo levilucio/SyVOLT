@@ -69,7 +69,8 @@ def get_attribute(s, attr):
             s += a
         return s
 
-def graph_to_dot(name, g, verbosity = 0):
+
+def graph_to_dot(name, g, verbosity = 0, force_trace_links = False):
     """
     build a dot file from a himesis graph
     verbosity = 0, represent directLink, indirectLink, backward, etc. edges as just edges in the dot graph
@@ -276,8 +277,9 @@ def graph_to_dot(name, g, verbosity = 0):
         arrowhead = "vee"
         penwidth = 1
 
-        if mm == "trace_link" and skip_trace_links:
-            continue
+        if not force_trace_links:
+            if mm == "trace_link" and skip_trace_links:
+                continue
 
         if mm == "trace_link" or mm == "backward_link":
             temp = src
