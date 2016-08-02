@@ -43,7 +43,7 @@ class Slicer:
                 #make sure to update layer with traceability rules
                 layer[i] = self.rules[rule_name]
 
-                data = decompose_graph(self.rules[rule_name], verbosity=0, ignore_apply_dls=True)
+                data = decompose_graph(self.rules[rule_name])
                 self.direct_links[rule_name] = data["direct_links"]
                 self.backward_links[rule_name] = data["backward_links"]
                 self.match_elements[rule_name] = data["match_elements"]
