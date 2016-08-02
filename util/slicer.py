@@ -394,7 +394,8 @@ class Slicer:
 
     def check_for_missing_elements(self, graph, is_contract = False):
 
-        mms = graph.vs["mm__"]
+        original_mms = graph.vs["mm__"]
+        mms = [mm.replace("MT_pre__", "") for mm in original_mms]
 
         direct_links = self.data[graph.name]["direct_links"]
 
@@ -410,20 +411,25 @@ class Slicer:
 
         if is_contract:
             for dl in direct_links:
-
                 if dl not in found_links:
+                    rwe = self.print_rules_with_element(original_mms[dl[0]], verbose = False)
+                    rwe2 = self.print_rules_with_element(original_mms[dl[1]], verbose = False)
 
                     #check to see if it is in the apply graph
                     if "directLink_T" in mms[dl[2]]:
-                        pass
-                        #print("Direct link potentially missing")
+                        if len(rwe) == 0 or len(rwe2) == 0:
+                            print("Elements in direct link are missing")
+                            print(mms[dl[0]] + " - " + mms[dl[2]] + " - " + mms[dl[1]])
                     else:
                         print("Error! Direct link missing!")
-                    print(dl)
-                    print(mms[dl[0]] + " " + mms[dl[2]] + " " + mms[dl[1]])
+                        print(mms[dl[0]] + " - " + mms[dl[2]] + " - " + mms[dl[1]])
+                    #print(dl)
 
-                    self.print_rules_with_element(mms[dl[0]])
-                    self.print_rules_with_element(mms[dl[1]])
+
+
+
+
+
 
                     #raise Exception()
                 elif found_links.count(dl) < direct_links.count(dl):
@@ -436,7 +442,7 @@ class Slicer:
             if iso not in self.found_isolated_match_elements[graph.name]:
                 print("Isolated element " + str(iso) + " cannot be found!")
                 print(mms[iso])
-                self.print_rules_with_element(mms[iso])
+                self.print_rules_with_element(original_mms[iso])
                 #raise Exception()
 
         for bl in backward_links:
@@ -444,29 +450,32 @@ class Slicer:
                 print("Error! Backward link might be missing!")
                 print(bl)
                 print(mms[bl[0]] + " " + mms[bl[2]] + " " + mms[bl[1]])
-                self.print_rules_with_element(mms[bl[0]])
-                self.print_rules_with_element(mms[bl[1]])
+                self.print_rules_with_element(original_mms[bl[0]])
+                self.print_rules_with_element(original_mms[bl[1]])
             elif found_links.count(bl) < backward_links.count(bl):
                 print("Possible error in multiplicity!")
 
-    def print_rules_with_element(self, element_mm):
-
+    def print_rules_with_element(self, element_mm, verbose = True):
         element_mm = element_mm.replace("MT_pre__", "")
-        print("\nLooking for mm: " + element_mm)
-        found_a_rule = False
+
+        rwe = []
+        if verbose: print("\nLooking for mm: " + element_mm)
         for rule_name, rule in sorted(self.rules.items()):
             mms = rule.vs["mm__"]
 
             for mm in mms:
                 if mm == element_mm:
-                    print("Rule " + rule_name + " contains mm: " + mm)
-                    found_a_rule = True
+                    if verbose: print("Rule " + rule_name + " contains mm: " + mm)
+                    rwe.append(rule_name)
                 try:
                     if element_mm in self.superclasses_dict[mm]:
-                        print("Rule " + rule_name + " contains mm: " + element_mm + " as " + mm)
-                        found_a_rule = True
+                        if verbose: print("Rule " + rule_name + " contains mm: " + element_mm + " as " + mm)
+                        rwe.append(rule_name)
                 except KeyError:
                     pass
 
-        if not found_a_rule:
-            print("Error: MM not found in any rule!!")
+        rwe = list(set(rwe))
+        if len(rwe) == 0:
+            print("Error: MM " + str(element_mm) + " not found in any rule!!")
+
+        return rwe
