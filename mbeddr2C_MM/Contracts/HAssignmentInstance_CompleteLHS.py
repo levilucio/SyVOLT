@@ -214,7 +214,7 @@ return True
                 self.vs[9]["MT_dirty__"] = False
                 self.vs[9]["mm__"] = """MT_pre__GenericDotExpression"""
                 self.vs[9]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-        # match class GlobalRefExpr() node
+        # match class GlobalVarRef() node
                 self.add_node()
                 self.vs[10]["MT_subtypeMatching__"] = False
                 self.vs[10]["MT_pre__attr1"] = """
@@ -232,7 +232,7 @@ return True
                 self.vs[10]["MT_label__"] = """11"""
                 self.vs[10]["MT_subtypes__"] = []
                 self.vs[10]["MT_dirty__"] = False
-                self.vs[10]["mm__"] = """MT_pre__GlobalRefExpr"""
+                self.vs[10]["mm__"] = """MT_pre__GlobalVarRef"""
                 self.vs[10]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
         # match class GlobalVariableDeclaration() node
                 self.add_node()
@@ -740,7 +740,7 @@ return attr_value == "target"
                 self.vs[35]["MT_dirty__"] = False
                 self.vs[35]["mm__"] = """MT_pre__directLink_T"""
                 self.vs[35]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc35')
-        # apply association ReferenceExpr--expression-->GlobalRefExpr node
+        # apply association ReferenceExpr--expression-->GlobalVarRef node
                 self.add_node()
                 self.vs[36]["MT_subtypeMatching__"] = False
                 self.vs[36]["MT_pre__attr1"] = """
@@ -820,7 +820,7 @@ return attr_value == "members"
                 self.vs[39]["MT_dirty__"] = False
                 self.vs[39]["mm__"] = """MT_pre__directLink_T"""
                 self.vs[39]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc39')
-        # apply association GlobalRefExpr--var-->GlobalVariableDeclaration node
+        # apply association GlobalVarRef--var-->GlobalVariableDeclaration node
                 self.add_node()
                 self.vs[40]["MT_subtypeMatching__"] = False
                 self.vs[40]["MT_pre__attr1"] = """
@@ -980,14 +980,14 @@ return attr_value == "struct"
                 (9,35), # apply_class GenericDotExpression() -> association target
                 (35,13), # association target  -> apply_class GenericMemberRef()
                 (12,36), # apply_class ReferenceExpr() -> association expression
-                (36,10), # association expression  -> apply_class GlobalRefExpr()
+                (36,10), # association expression  -> apply_class GlobalVarRef()
                 (15,37), # apply_class GlobalVarRef() -> association var
                 (37,11), # association var  -> apply_class GlobalVariableDeclaration()
                 (13,38), # apply_class GenericMemberRef() -> association member
                 (38,18), # association member  -> apply_class Member()
                 (17,39), # apply_class StructDeclaration() -> association members
                 (39,18), # association members  -> apply_class Member()
-                (10,40), # apply_class GlobalRefExpr() -> association var
+                (10,40), # apply_class GlobalVarRef() -> association var
                 (40,14), # association var  -> apply_class GlobalVariableDeclaration()
                 (11,41), # apply_class GlobalVariableDeclaration() -> association type
                 (41,19), # association type  -> apply_class TypeDefType()

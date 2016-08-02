@@ -111,7 +111,7 @@ class Prover():
 
             
         # load the contracts, and add polymorphism
-        contracts = load_directory("mbeddr2C_MM/props/")
+        contracts = load_directory("mbeddr2C_MM/Contracts/")
 
         atomic_contracts = [
             'AssignmentInstance',
