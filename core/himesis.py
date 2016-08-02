@@ -994,16 +994,22 @@ node_num += 1
         mms = self.vs["mm__"]
 
         ls = sorted(new_labels)
-        # visited_edges = []
+        added_edges = set()
         for edge in self.es:
             src_label = MT_labels[edge.source]
             tar_label = MT_labels[edge.target]
 
+            new_edge = (src_label, tar_label)
+            if new_edge in added_edges:
+                continue
+
             for label in ls:
-                # if edge.index in visited_edges:
-                #     continue
+                if new_edge in added_edges:
+                    break
 
                 if label == src_label or label == tar_label:
+
+                    added_edges.add(new_edge)
 
                     transformationCode.append("""# %s%s -> %s%s
     (labels['%s'], labels['%s']),
