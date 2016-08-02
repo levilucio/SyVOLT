@@ -127,6 +127,14 @@ class AtomicContract(Contract):
         self.isolated_matcher.packet_in(p)
 
         if self.isolated_matcher.is_success:
+            graph_pred = self.isolated_matcher.graph_pred
+            graph_succ = self.isolated_matcher.graph_succ
+
+            self.connected_matcher.graph_pred = graph_pred
+            self.connected_matcher.graph_pred = graph_succ
+
+            self.complete_matcher.graph_pred = graph_pred
+            self.complete_matcher.graph_succ = graph_succ
             return self.ISOLATED
         else:
             return self.NO_ISOLATED
