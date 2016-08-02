@@ -116,7 +116,7 @@ class Prover():
         atomic_contracts = [
             'AssignmentInstance',
             'GlobalVarGetsCorrectFunctionAddressAtInit',
-            'Simpler',
+            'Simple',
             'VerySimple'
         ]
 
