@@ -287,10 +287,12 @@ class Slicer:
     def match_links(self, links, pattern, pattern_data, graph, source_data, superclasses_dict, verbosity=0, match_all = False):
 
         matcher = NewHimesisMatcher(graph, pattern, pred1=source_data, pred2=pattern_data, superclasses_dict=superclasses_dict)
+        # pattern_mms = pattern.vs["mm__"]
+        # source_mms = graph.vs["mm__"]
 
         does_match = False
         for iso_match_element in pattern_data["isolated_match_elements"]:
-            # print("Matching iso element: " + str(iso_match_element))
+
             for node in range(len(graph.vs)):
                 # print("Matching on: " + str(node))
                 nodes_match = matcher.match_nodes(node, iso_match_element)
@@ -413,9 +415,10 @@ class Slicer:
 
                     #check to see if it is in the apply graph
                     if "directLink_T" in mms[dl[2]]:
-                        continue
-
-                    print("Error! Direct link missing!")
+                        pass
+                        #print("Direct link potentially missing")
+                    else:
+                        print("Error! Direct link missing!")
                     print(dl)
                     print(mms[dl[0]] + " " + mms[dl[2]] + " " + mms[dl[1]])
 
@@ -428,10 +431,13 @@ class Slicer:
                     print(mms[dl[0]] + " " + mms[dl[2]] + " " + mms[dl[1]])
 
 
+
         for iso in self.isolated_match_elements[graph.name]:
-            if iso not in self.found_isolated_match_elements:
+            if iso not in self.found_isolated_match_elements[graph.name]:
                 print("Isolated element " + str(iso) + " cannot be found!")
-                raise Exception()
+                print(mms[iso])
+                self.print_rules_with_element(mms[iso])
+                #raise Exception()
 
         for bl in backward_links:
             if bl not in found_links:
