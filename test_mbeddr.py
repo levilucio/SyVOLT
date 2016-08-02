@@ -68,6 +68,8 @@ class Prover():
         r32 = 'Hlayer3rule2'
         r33 = 'Hlayer3rule3'
         r34 = 'Hlayer3rule4'
+        r33copy = 'Hlayer3rule3'
+        r34copy = 'Hlayer3rule4'
         r35 = 'Hlayer3rule5'
         r36 = 'Hlayer4rule0'
         r37 = 'Hlayer4rule1'
@@ -83,7 +85,7 @@ class Prover():
 
         full_transformation = [[r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, ],
                                [r11, r12, r13, r14, r15, r16, r17, r18, r19, r20, r21, r22, r23, r24, r25, r26, ],
-                               [r27, r28, r29, ], [r30, r31, r32, r33, r34, r35, ], [r36, r37, r38, r39, ],
+                               [r27, r28, r29, ], [r30, r31, r32, r33, r34, r33copy, r34copy, r35, ], [r36, r37, r38, r39, ],
                                [r40, r41, r42, r43, r44, r45, ], [r46, ],
         ]
 
