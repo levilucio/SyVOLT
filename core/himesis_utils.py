@@ -402,9 +402,12 @@ def set_compression(value):
 
 pickle_dir = "pickle/"
 
-def delete_graph(graph_name):
+def get_filename(graph_name):
     file_name = hashlib.md5(graph_name.encode("UTF-8")).hexdigest()
-    file_name_as_int = str(int(file_name, 16))
+    return str(int(file_name, 16))
+
+def delete_graph(graph_name):
+    file_name_as_int = get_filename(graph_name)
 
     try:
         os.remove(pickle_dir + "/" + file_name_as_int)
@@ -417,8 +420,7 @@ def shrink_graph(graph):
     value = graph.__reduce__()
 
     if do_pickle:
-        file_name = hashlib.md5(graph.name.encode("UTF-8")).hexdigest()
-        file_name_as_int = int(file_name, 16)
+        file_name_as_int = get_filename(graph.name)
 
         #print("Saved " + graph.name + " as " + file_name_as_int)
 
