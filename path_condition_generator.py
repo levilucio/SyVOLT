@@ -467,7 +467,7 @@ class PathConditionGenerator(object):
 
                 name_dict.update(r[2])
 
-            if len(name_dict.keys()) > 0:
+            if len(name_dict) > 0:
                 for i in range(len(currentpathConditionSet)):
                     try:
                         pc_name = currentpathConditionSet[i]
@@ -499,10 +499,10 @@ class PathConditionGenerator(object):
 
     #clean up
     def __del__(self):
-        print("Destructor")
+        #print("Destructor")
 
-        import os
-        d = "./pickle"
+        # import os
+        # d = "./pickle"
         # size = sum(os.path.getsize(d+"/"+f) for f in os.listdir(d))
         # print("Size of pickle dir: " + str(size/1000000) + "MB")
 
@@ -511,6 +511,10 @@ class PathConditionGenerator(object):
 
         # size = sum(os.path.getsize(d + "/" + f) for f in os.listdir(d))
         # print("Size of pickle dir: " + str(size / 1000000) + "MB")
+
+        # for f in os.listdir(d):
+        #     graph = expand_graph(f)
+        #     print(graph.name)
 
 
     def get_all_path_conditions(self):
