@@ -312,7 +312,7 @@ class PathConditionGenerator(object):
         start_time = time.time()
 
         min_chunk_size = 5
-        max_chunk_size = 20
+        max_chunk_size = 50
 
         for layer in range(len(self.transformation)):
             print("Layer: " + str(layer + 1) + "/" + str(len(self.transformation)) + " at time " + str(time.time() - start_time))
@@ -450,7 +450,7 @@ class PathConditionGenerator(object):
 
                 if rounds_remaining > 0 and round_time > 0:
                     layer_time = round_time * rounds_remaining
-                    print("Time remaining in layer " + str(layer + 1) + ": {:.2f}".format(layer_time) + " seconds = {:.2f} minutes".format(layer_time/60))
+                    print("Time remaining in layer " + str(layer + 1) + "/" + str(len(self.transformation)) + ": {:.2f}".format(layer_time) + " seconds = {:.2f} minutes".format(layer_time/60))
 
                 memory_percent = psutil.virtual_memory()[2]
                 print("Memory usage percent: {:.2f} %".format(memory_percent))
