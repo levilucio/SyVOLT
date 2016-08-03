@@ -447,8 +447,8 @@ class path_condition_generator_worker(Process):
     
                                                     # several totals my exist, so the original PC may be rewritten multiple times
     
-                                                    previousTotalPC = None                                                    
-                                                    writeOverPreviousTotalPC = False
+                                                    # previousTotalPC = None
+                                                    # writeOverPreviousTotalPC = False
 
                                                     if valid:
                                                         try:
@@ -459,7 +459,9 @@ class path_condition_generator_worker(Process):
                                                             name_dict[cpc.name] = newPathCondName
                                                             reverse_name_dict[newPathCondName] = cpc.name
 
-                                                        
+                                                    #prune the old path condition
+                                                    pcs_to_prune.append(childrenPathConditions[child_pc_index])
+
                                                     #change the child's name in the child's array
                                                     childrenPathConditions[child_pc_index] = newPathCondName
     
