@@ -585,11 +585,16 @@ class path_condition_generator_worker(Process):
                         
                         # replace the original path condition by the result of overlapping the subsumed rule on it
                   
-                        previousTotalPC = None                                                    
-                        writeOverPreviousTotalPC = False
+                        # previousTotalPC = None
+                        # writeOverPreviousTotalPC = False
+
 
                         try:
                             reverse_name = reverse_name_dict[cpc.name]
+
+                            if reverse_name in name_dict:
+                                pcs_to_prune.append(name_dict[reverse_name])
+
                             name_dict[reverse_name] = newPathCondName
                             reverse_name_dict[newPathCondName] = reverse_name
                         except KeyError:
@@ -619,6 +624,7 @@ class path_condition_generator_worker(Process):
                         self.pc_dict[newPathCondName] = shrunk_pc
                         new_pc_dict[newPathCondName] = shrunk_pc
 
+
             if self.pruning and not self.pruner.isPathConditionStillFeasible(pc, self.rulesToTreat):
                 pcs_to_prune.append(pc_name)
 
@@ -634,14 +640,14 @@ class path_condition_generator_worker(Process):
 
             for pathCondName in pcs_to_prune:
                 #print("Pruning: " + pathCondName)
-                #delete_graph(pathCondName)
-
-
+                #
 
                 try:
                     del self.pc_dict[pathCondName]
                 except KeyError:
                     pass
+
+                delete_graph(pathCondName)
 
                 try:
                     del new_pc_dict[pathCondName]
