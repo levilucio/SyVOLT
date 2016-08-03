@@ -387,8 +387,7 @@ class NewHimesisMatcher(object):
 
         link_matches_list = [kv for kv in link_matches.items()]
 
-
-        link_matches_list.sort(key = lambda tup: str(tup[1]))
+        link_matches_list.sort(key = lambda tup: (len(tup[1]), str(tup[1])))
 
 
         for i, combo in enumerate(combo_generator3({}, {}, *link_matches_list)):
