@@ -139,20 +139,20 @@ class NewHimesisMatcher(object):
         #print(self.pattern_graph.name + " vs " + self.source_graph.name)
 
 
-        try:
-            mms = self.source_graph.vs["mm__"]
-        except KeyError:
-            mms = []
+        # try:
+        #     mms = self.source_graph.vs["mm__"]
+        # except KeyError:
+        #     mms = []
+        #
+        # try:
+        #     attr1 = self.source_graph.vs["attr1"]
+        # except KeyError:
+        #     attr1 = []
 
-        try:
-            attr1 = self.source_graph.vs["attr1"]
-        except KeyError:
-            attr1 = []
+        #print(self.pattern_graph.name + " vs " + self.source_graph.name)
 
-        print(self.pattern_graph.name + " vs " + self.source_graph.name)
-
-        required_mms = ["ComponentInstance", "ProvidedPort", "RequiredPort",
-                        "StatementList", "Member", "GlobalVariableDeclaration"]
+        # required_mms = ["ComponentInstance", "ProvidedPort", "RequiredPort",
+        #                 "StatementList", "Member", "GlobalVariableDeclaration"]
         # if "Hlayer5rule1_rule_trace_checker" in self.pattern_graph.name:
         #     #if self.source_graph.name == "Em_0R0-_0R2-_0R3-_0R6-_0R1-OVER1_0R7-OVER1_1R0-T_1R1-P_1R2-T_2R2-P_2R3-P_2R5-P_2R1-OVER0_3R0-T_3R1-OVER0.168":
         #     if "2R3" in self.source_graph.name and "2R4" in self.source_graph.name:
@@ -318,32 +318,6 @@ class NewHimesisMatcher(object):
 
 
 
-
-        # start_time = time.time()
-        # counter = 0
-        # for value in product(*link_matches.values()):
-        #     print(value)
-        #     print(counter)
-        #     counter += 1
-        # #print(len(values))
-        # print("Original time: " + str(time.time() - start_time))
-
-        # start_time = time.time()
-        # values = [value for value in product(*link_matches.values()) if len(set(values)) == len(values)]
-        # print(len(values))
-        # print("No dupes time: " + str(time.time() - start_time))
-
-        # start_time = time.time()
-        # values = [value for value in self.combo_generator2(link_matches)]
-        # print(len(values))
-        # print("No dupes #2 time: " + str(time.time() - start_time))
-
-        # for pm in self.combo_generator(link_matches):
-        #     for patt, src in pm:
-        #         print(patt)
-        #         print(src)
-
-
         #HACK:
         #for family transformation, directLinks are being doubled between families and members
         #remove these
@@ -365,27 +339,10 @@ class NewHimesisMatcher(object):
                 if count == 1 or len(new_v) == 0:
                     new_v.append(original_v)
 
-            #i+= 1
-            #rotate these matches so each multiple links get a chance to be different
 
-
-            #link_matches[k] = new_v[-i:] + new_v[:-i]
-
-
-        # ms_w_disambig = []
-        # ms_wo_disambig = []
-
-        #combinations = [[(key, value) for (key, value) in zip(link_matches, values)] for values in product(*link_matches.values())]
-        #for pm in combinations:
-        level = {}
-
-        from itertools import permutations
 
         def combo_generator3(match_set, reverse_match_set, *link_matches):
-            # print("Starting combo")
-            # for a in link_matches:
-            #     print(a)
-            #print(len(link_matches))
+
 
             if len(link_matches) == 0:
                 yield {}
@@ -396,79 +353,6 @@ class NewHimesisMatcher(object):
 
                 key, values = link_matches[0]
 
-                #print("Head: ")
-                #print(str(key) + " " + str(values))
-                #print("Tail: " + str(tail))
-
-                # if len(tail) == 0:
-                #     for v in values:
-                #
-                #         match_set_copy = match_set.copy()
-                #         for k2, v2 in zip(key, v):
-                #             print("K: " + str(k2))
-                #             print("V: " + str(v2))
-                #
-                #         yield [(key, v)]
-                # else:
-
-                    # is_same = []
-                    # for next, next_val in tail:
-                    #     if next_val == values:
-                    #         is_same.append(next)
-                    #     else:
-                    #         break
-
-                    #print("Is same: " + str(is_same))
-
-
-                    # if False:#len(is_same) > 0:
-                    #     #print("Is same: " + str(is_same))
-                    #     #print("Tail before: " + str(tail))
-                    #     new_tail = tail[len(is_same):]
-                    #     #print("Tail after: " + str(tail))
-                    #     is_same.append(key)
-                    #     # import sys
-                    #     # sys.exit()
-                    #
-                    #     print("Is same: " + str(is_same))
-                    #
-                    #
-                    #     for p in permutations(values, len(is_same)):
-                    #     # for p in product(is_same, values):
-                    #         #head = []
-                    #         print("P: " + str(p))
-                    #         collect = [z for z in zip(is_same, p)]
-                    #             # print("Z: " + str(z))
-                    #             # head += z
-                    #         print(is_same)
-                    #         print("Collect above:" + str(collect))
-                    #         #import sys
-                    #         #sys.exit()
-                    #         #print(head)
-                    #
-                    #         un = used_nodes.copy()
-                    #         # un.add(v[0])
-                    #         # un.add(v[2])
-                    #         for rest in combo_generator3(un, *new_tail):
-                    #             # print("Collect: " + str(collect))
-                    #             # print("Rest: "+ str(rest))
-                    #             #
-                    #             #
-                    #             yield collect + rest
-                    # else:
-
-                        # import sys
-                        # sys.exit()
-
-                        # l = int(len(used_nodes)/2)
-                        # try:
-                        #     level[l] += 1
-                        # except KeyError:
-                        #     level[l] = 1
-                        #
-                        # print(level)
-
-                        #print("At level: " + str(len(used_nodes)/2))
 
                 for v in values:
 
@@ -493,72 +377,19 @@ class NewHimesisMatcher(object):
 
                     if skip:
                         continue
-                    #print("Match set copy: " + str(match_set_copy))
-
-
-
-                    # if v[0] in used_nodes:# or v[1] in used_nodes:
-                    #     continue
-
-                    # un = used_nodes.copy()
-                    # un.add(v[0])
-                    #un.add(v[1])
-
-                    #yield [[(key, v)] + rest for rest in combo_generator3(un, *tail)]
 
                     for rest in combo_generator3(match_set_copy, reverse_match_set_copy, *tail):
 
-                        # print("To Try: " + str(i+1) + "/" + str(len(values) + 1))
-                        # print("Rest: " + str())
-                        #
-                        # print("V: " + str(v))
-                        #print("Rest: " + str(rest))
-                        # for r in rest:
-                        #     if v[0] == r[0]:
-                        #         print("Not valid mine")
-
-                        # is_valid = all(not v[0] == r[1][0] for r in rest)
-                        # if not is_valid:
-                        #     #print("Not valid")
-                        #     continue
-
-                        #acc = [(key, v)] + rest
-                        #print("Acc: " + str(acc))
                         match_set_copy_copy = match_set_copy.copy()
                         match_set_copy_copy.update(rest)
                         yield match_set_copy_copy
 
 
-        # print("There are matches: ")
-        #
-        # for k, v in link_matches.items():
-        #     print(str(k) + " : " + str(v))
-
-        # start_time = time.time()
-        # values = [value for value in product(*link_matches.values())]
-        # print(len(values))
-        # print("Original time: " + str(time.time() - start_time))
-
-        start_time = time.time()
         link_matches_list = [kv for kv in link_matches.items()]
 
 
-        # print("Link matches list")
-        # print(link_matches_list)
-
-        #link_matches_list.sort(key = lambda tup: (len(tup[1]), str(tup[1])))
         link_matches_list.sort(key = lambda tup: str(tup[1]))
-        #print("Sort time: " + str(time.time() - start_time))
 
-        # print("Link matches list")
-        # print(link_matches_list)
-
-        #print("Starting combo generator 3")
-
-        start_time = time.time()
-
-        #combos = [combo for combo in combo_generator3(set(), *link_matches_list)]
-            # print("Combo: " + str(combo))
 
         for i, combo in enumerate(combo_generator3({}, {}, *link_matches_list)):
             #print(i)
@@ -566,170 +397,11 @@ class NewHimesisMatcher(object):
             #print("New time: " + str(time.time() - start_time))
             yield combo
 
-        #print(len(combos))
-        print("New time: " + str(time.time() - start_time))
-
-
-
-        # start_time = time.time()
-        # link_matches_list = [kv for kv in link_matches.items()]
-
-        # print("Link matches list")
-        # print(link_matches_list)
-
-        # link_matches_list.sort(key = lambda tup: len(tup[1]), reverse = True)
-        #
-        # # print("Link matches list")
-        # # print(link_matches_list)
-        #
-        # print("Starting combo generator 3")
-        # combos = [combo for combo in combo_generator3(set(), *link_matches_list)]
-        # # print("Combo: " + str(combo))
-        # print(len(combos))
-        # print("Reverse time: " + str(time.time() - start_time))
-
-
-
-        # if len(link_matches) > 10:
-        # import sys
-        # sys.exit()
-
-        for pm in self.combo_generator2(link_matches):
-            # if self.debug:
-
-            # import copy
-            #
-            # print("Potential match:")
-            #
-            # for pair in copy.deepcopy(pm):
-            #     print(pair)
-            match_set = self.create_match_set(pm)
-
-                #match_set = list(match_set)
-                # if self.debug:
-
-
-            if match_set:
-                print("Match set in outer:")
-                print(match_set)
-                if self.debug:
-                    print("Found a match!")
-                    raise Exception()
-                yield match_set
-                # if needed_disambig:
-                #     ms_w_disambig.append(match_set)
-                # else:
-                #     ms_wo_disambig.append(match_set)
-
-
-        # for ms in ms_wo_disambig + ms_w_disambig:
-        #     yield ms
-        #yield None
-
-
-
-    def combo_gen(self, link_matches):
-        duplicate_keys = []
-
-        # if self.debug:
-        print("Link matches:")
-        for k, v in link_matches.items():
-            print(str(k) + " : " + str(v))
-
-            for k2, v2 in link_matches.items():
-                if k2 != k and v2 == v:
-                    print("Found duplicate")
-                    duplicate_keys.append(k)
-
-        print("Duplicate Keys")
-        print(duplicate_keys)
-
-        duplicate_link_matches = {k: v for k, v in link_matches.items() if k in duplicate_keys}
-        non_duplicate_link_matches = {k: v for k, v in link_matches.items() if k not in duplicate_keys}
-
-        print("Non duplicate keys")
-        print(non_duplicate_link_matches.keys())
-
-        from itertools import permutations
-
-        non_dupes = product(*non_duplicate_link_matches.values())
-        non_dupe_keys = non_duplicate_link_matches.keys()
-
-        print("dupe links")
-        for k, v in duplicate_link_matches.items():
-            print(k)
-            print(v)
-        dupes = permutations(duplicate_link_matches.values())
-        dupe_keys = duplicate_link_matches.keys()
-
-        return non_dupe_keys, non_dupes, dupe_keys, dupes
-
-    def combo_gen2(self, a, b):
-        for x in a:
-            for y in b:
-                yield x + y
-
     def combo_generator(self, link_matches):
         for values in product(*link_matches.values()):
             #if len(set(values)) == len(values):
             yield zip(link_matches, values)
 
-    def combo_generator2(self, link_matches):
-        for values in product(*link_matches.values()):
-            has_dupe = False
-            for i, v in enumerate(values):
-                for v2 in values[i + 1:]:
-                    if v[0] == v2[0]:
-                        has_dupe = True
-                        break
-                if has_dupe:
-                    break
-
-            if has_dupe:
-                continue
-            yield zip(link_matches, values)
-
-
-
-    def create_match_set2(self, ks, vs):
-
-
-        match_set = {}
-        reverse_match_set = {}
-
-        print("In match set")
-        print(ks)
-        print(vs)
-
-        for p, s in zip(ks, vs):
-
-            for pp, ss in zip(p, s):
-
-                if pp is None or ss is None:
-                    continue
-
-                try:
-                    if reverse_match_set[ss] != pp:
-                        # we already have another element binding to this one, so fail
-                        # if self.debug:
-                        # print("Another pattern element is already binding to this source element")
-                        # print("Source: " + str(ss))
-                        # print("Pattern: " + str(pp))
-                            # raise Exception()
-                        return {}
-                except KeyError:
-                    pass
-
-                match_set[pp] = ss
-                reverse_match_set[ss] = pp
-
-        return match_set
-
-        # if self.debug:
-        #     print("Match set:")
-        #     print(pm)
-        #     print(match_set)
-        #return match_set
 
     def create_match_set(self, pm):
         match_set = {}
