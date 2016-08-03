@@ -1,4 +1,4 @@
-from core.himesis_utils import graph_to_dot, load_class
+from core.himesis_utils import graph_to_dot, load_class, get_filename
 from util.ecore_utils import EcoreUtils
 from core.himesis_plus import buildPreListFromClassNames
 
@@ -315,4 +315,8 @@ def load_contract(contract_name, contracts, superclasses_dict):
     atomic = AtomicContract(iso, connected, complete)
     return atomic
 
-    
+def save_pcs(pathCondGen, filename):
+
+    with open(filename, 'w') as f:
+        for pc in pathCondGen.pc_dict:
+            f.write(get_filename(pc) + "\n")

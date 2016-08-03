@@ -10,13 +10,10 @@ import sys
 
 from path_condition_generator import PathConditionGenerator
 
-from t_core.matcher import Matcher
-from t_core.messages import Packet
-
 from pyramify.PyRamify import PyRamify
 
 from util.test_script_utils import select_rules, get_sub_and_super_classes,\
-    load_transformation, changePropertyProverMetamodel, set_supertypes, load_contracts
+    load_transformation, changePropertyProverMetamodel, set_supertypes, load_contracts, save_pcs
 from util.slicer import Slicer
 
 from core.himesis_utils import graph_to_dot, load_directory
@@ -83,30 +80,10 @@ class Test:
 
     def test_correct(self,args):
 
-#'HMapHeirarchyOfStates2HeirarchyOfProcs':  'HTransition2QInstSIBLING': < 'HState2HProcDef': 'HCompositeState2ProcDef':  'HTransition2ListenBranch':  'HExitPoint2BProcDef_WhetherOrNotExitPtHasOutgoingTrans':  'HBasicStateNoOutgoing2ProcDef':  'HBasicState2ProcDef': , 'HState2ProcDef'
-
-#Layer1: State2ProcDef
-#Layer2: BasicStateNoOutgoing2ProcDef, BasicState2ProcDef, CompositeState2ProcDef
-#Layer3: ExitPoint2BProcDef_WhetherOrNotExitPtHasOutgoingTrans, State2HProcDef
-#Layer4: Transition2QInstSIBLING
-#Layer5: Transition2ListenBranch
-#Layer6: MapHeirarchyOfStates2HeirarchyOfProcs
-
-#         a1 = self.rules['HState2ProcDef']
-#         b1 = self.rules['HBasicStateNoOutgoing2ProcDef']
-#         b2 = self.rules['HBasicState2ProcDef']
-#         b3 = self.rules['HCompositeState2ProcDef']
 
         pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
 
 
-
-        #get the expected num from the args
-        #expected_num_pcs = args.num_pcs
-        expected_num_pcs = 330
-                 
-        #TODO: Change this number if you are modifying the transformation at all
- 
  
  
         [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns,
@@ -168,16 +145,7 @@ class Test:
 #        print("Size of the set of path conditions: " + str(float(sys.getsizeof(s.pathConditionSet) / 1024)))
         print("Number of path conditions: " + str(s.num_path_conditions))
 
-        # import sys
-        # sys.exit()
-#         #check if the correct number of path conditions were produced
-#         if not int(expected_num_pcs) == -1 and not int(expected_num_pcs) == s.num_path_conditions:
-# 
-#             #TODO: Make this an exception
-#             num_pcs_s = "The number of produced path conditions is incorrect.\n" + str(expected_num_pcs) + " were expected, but " + str(s.num_path_conditions) + " were produced."
-#             print(num_pcs_s)
-#             #raise Exception(num_pcs_s)
-#
+        save_pcs(s, "pcs_atlTrans_extended.txt")
 
 
         print("printing path conditions")
@@ -191,16 +159,16 @@ class Test:
 #
         #raise Exception()
 
-        print("\nContract proving:")
-
-        s.verbosity = 0
-
-        contract_prover = ContractProver()
-
-        contract_prover.prove_contracts(s, self.atomic_contracts, [])#self.if_then_contracts)
-        print("\n\nTime to build the set of path conditions: " + str(pc_time))
-        #        print("Size of the set of path conditions: " + str(float(sys.getsizeof(s.pathConditionSet) / 1024)))
-        print("Number of path conditions: " + str(s.num_path_conditions))
+        # print("\nContract proving:")
+        #
+        # s.verbosity = 0
+        #
+        # contract_prover = ContractProver()
+        #
+        # contract_prover.prove_contracts(s, self.atomic_contracts, [])#self.if_then_contracts)
+        # print("\n\nTime to build the set of path conditions: " + str(pc_time))
+        # #        print("Size of the set of path conditions: " + str(float(sys.getsizeof(s.pathConditionSet) / 1024)))
+        # print("Number of path conditions: " + str(s.num_path_conditions))
 
 def _print_states(self, s):
     for state in s.symbStateSpace:

@@ -506,8 +506,10 @@ class PathConditionGenerator(object):
         # size = sum(os.path.getsize(d+"/"+f) for f in os.listdir(d))
         # print("Size of pickle dir: " + str(size/1000000) + "MB")
 
-        for pc_name in self.currentpathConditionSet:
-            delete_graph(pc_name)
+        #TODO: Make cleanup argument for test script
+        pass
+        # for pc_name in self.currentpathConditionSet:
+        #     delete_graph(pc_name)
 
         # size = sum(os.path.getsize(d + "/" + f) for f in os.listdir(d))
         # print("Size of pickle dir: " + str(size / 1000000) + "MB")
