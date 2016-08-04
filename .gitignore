@@ -13,6 +13,11 @@ patterns/
 property_prover_rules/
 eclipse_integration/backend/
 
+*.dsltrans_diagram
+*.syvolt_diagram
+*.ecore_diagram
+
+
 # SVG files
 *.svg
 
