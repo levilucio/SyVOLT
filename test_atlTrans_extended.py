@@ -13,7 +13,7 @@ from path_condition_generator import PathConditionGenerator
 from pyramify.PyRamify import PyRamify
 
 from util.test_script_utils import select_rules, get_sub_and_super_classes,\
-    load_transformation, changePropertyProverMetamodel, set_supertypes, load_contracts, save_pcs
+    load_transformation, changePropertyProverMetamodel, set_supertypes, load_contracts, save_pcs, load_pcs
 from util.slicer import Slicer
 
 from core.himesis_utils import graph_to_dot, load_directory
@@ -131,44 +131,45 @@ class Test:
         #raise Exception()
  
         s = PathConditionGenerator(self.transformation, "ExFamToPerson/Persons_Extended.ecore", self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)#
-
-
-
         #raise Exception()
 
-        ts0 = time.time()
-        s.build_path_conditions()
-        ts1 = time.time()
- 
-        pc_time = ts1 - ts0
-        print("\n\nTime to build the set of path conditions: " + str(pc_time))
-#        print("Size of the set of path conditions: " + str(float(sys.getsizeof(s.pathConditionSet) / 1024)))
+        if not args.pc_filename is None:
+            if len(args.pc_filename) == 0:
+                loaded_pc_dict = load_pcs("pcs_atlTrans_extended.txt")
+            else:
+                loaded_pc_dict = load_pcs(args.pc_filename)
+            s.load_saved_pcs(loaded_pc_dict)
+
+            pc_time = "(PCs loaded)"
+        else:
+
+            ts0 = time.time()
+            s.build_path_conditions()
+            ts1 = time.time()
+
+            pc_time = ts1 - ts0
+            print("\n\nTime to build the set of path conditions: " + str(pc_time))
+
+            save_pcs(s, "pcs_atlTrans_extended.txt")
+
         print("Number of path conditions: " + str(s.num_path_conditions))
 
-        save_pcs(s, "pcs_atlTrans_extended.txt")
-
-
-        print("printing path conditions")
+            #print("printing path conditions")
         #s.print_path_conditions_screen()
 # 
 #        s.print_path_conditions_file()
-# # 
-# #
-#         #raise Exception()
-# 
-#
         #raise Exception()
 
-        # print("\nContract proving:")
-        #
-        # s.verbosity = 0
-        #
-        # contract_prover = ContractProver()
-        #
-        # contract_prover.prove_contracts(s, self.atomic_contracts, [])#self.if_then_contracts)
-        # print("\n\nTime to build the set of path conditions: " + str(pc_time))
-        # #        print("Size of the set of path conditions: " + str(float(sys.getsizeof(s.pathConditionSet) / 1024)))
-        # print("Number of path conditions: " + str(s.num_path_conditions))
+        print("\nContract proving:")
+
+        s.verbosity = 0
+
+        contract_prover = ContractProver()
+
+        contract_prover.prove_contracts(s, self.atomic_contracts, [])#self.if_then_contracts)
+        print("\n\nTime to build the set of path conditions: " + str(pc_time))
+        #        print("Size of the set of path conditions: " + str(float(sys.getsizeof(s.pathConditionSet) / 1024)))
+        print("Number of path conditions: " + str(s.num_path_conditions))
 
 def _print_states(self, s):
     for state in s.symbStateSpace:

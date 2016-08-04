@@ -1,4 +1,4 @@
-from core.himesis_utils import graph_to_dot, load_class, get_filename
+from core.himesis_utils import graph_to_dot, load_class
 from util.ecore_utils import EcoreUtils
 from core.himesis_plus import buildPreListFromClassNames
 
@@ -316,7 +316,22 @@ def load_contract(contract_name, contracts, superclasses_dict):
     return atomic
 
 def save_pcs(pathCondGen, filename):
-
     with open(filename, 'w') as f:
-        for pc in pathCondGen.pc_dict:
-            f.write(get_filename(pc) + "\n")
+        f.write(str(pathCondGen.num_path_conditions) + "\n")
+        for pc_name in sorted(pathCondGen.currentpathConditionSet):
+            pc = pathCondGen.pc_dict[pc_name]
+            f.write(pc_name + "\n")
+            f.write(pc + "\n")
+
+def load_pcs(filename):
+    pc_dict = {}
+    print("Opening pc filename: " + filename)
+    with open(filename) as f:
+        num_pcs = f.readline()
+        print("Number of pcs to load: " + str(num_pcs))
+        for n in range(int(num_pcs)):
+            graph_name = f.readline().strip()
+            graph_filename = f.readline().strip()
+            pc_dict[graph_name] = int(graph_filename)
+
+    return pc_dict

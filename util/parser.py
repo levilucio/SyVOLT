@@ -2,7 +2,7 @@
 import argparse
 
 def load_parser():
-    parser = argparse.ArgumentParser(description='Run the ecore_copier test.')
+    parser = argparse.ArgumentParser(description='Run the test.')
 
     parser.add_argument('--skip_tests', dest = 'run_tests', action = 'store_false',
                         help = 'Option to skip the running of matching tests')
@@ -46,6 +46,9 @@ def load_parser():
     parser.add_argument('--handbuilt', dest = 'handbuilt', action = 'store_true',
                         help = 'Select the handbuilt version (default: False - use HOT version)')
     parser.set_defaults(handbuilt = False)
+
+    parser.add_argument('--load', dest = 'pc_filename', nargs='?', const="", type=str,
+                        help = 'Input the txt filename that contains the PC filenames you want to load')
 
     return parser
 

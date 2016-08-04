@@ -518,6 +518,12 @@ class PathConditionGenerator(object):
         #     graph = expand_graph(f)
         #     print(graph.name)
 
+    def load_saved_pcs(self, new_pc_dict):
+
+        self.pc_dict = new_pc_dict
+        self.currentpathConditionSet = list(sorted(new_pc_dict.keys()))
+        self.num_path_conditions = len(self.currentpathConditionSet)
+
 
     def get_all_path_conditions(self):
         path_conditions = []
@@ -528,9 +534,6 @@ class PathConditionGenerator(object):
     def get_path_conditions(self, expand=True):
 
         for pc_name in sorted(self.currentpathConditionSet):
-            
-            #print("-> " + pc_name)
-
             pc = self.pc_dict[pc_name]
 
             if expand:
