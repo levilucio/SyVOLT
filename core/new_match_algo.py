@@ -55,9 +55,12 @@ class NewHimesisMatcher(object):
         except KeyError:
             self.pattern_mms = []
 
+        self.pattern_nodes = [node for node in self.pattern_graph.vs]
+        self.source_nodes = [node for node in self.source_graph.vs]
+
         #get the set of pattern attribs from the first node if it exists
         try:
-            self.pattern_attribs = [attrib for attrib in self.pattern_graph.vs[0].attribute_names() if attrib.startswith("MT_pre__")]
+            self.pattern_attribs = [attrib for attrib in self.pattern_nodes[0].attribute_names() if attrib.startswith("MT_pre__")]
         except IndexError:
             self.pattern_attribs = []
 
@@ -80,15 +83,25 @@ class NewHimesisMatcher(object):
         #     self.show_eqs = False
         #     self.compare_to_old = False
 
-        self.debug_equations = False
-
-        self.patt_eqs_constant, self.patt_eqs_variable = self.load_equations(pattern_graph)
-        self.src_eqs_constant, self.src_eqs_variable = self.load_equations(source_graph)
-
         self.oldMatcher = None
 
-        self.pattern_nodes = [node for node in self.pattern_graph.vs]
-        self.source_nodes = [node for node in self.source_graph.vs]
+        self.debug_equations = False
+
+        self.is_contract = self.pattern_graph.name.endswith("LHS")
+
+        if len(self.pattern_nodes) > 0 and "MT_label__" in self.pattern_nodes[0].attribute_names():
+            self.pattern_labels = self.pattern_graph.vs["MT_label__"]
+        else:
+            self.pattern_labels = [-1] * len(self.pattern_nodes)
+
+        self.patt_eqs_constant, self.patt_eqs_variable = self.load_equations(pattern_graph)
+
+        if self.patt_eqs_constant or self.patt_eqs_variable:
+            self.src_eqs_constant, self.src_eqs_variable = self.load_equations(source_graph)
+
+
+
+
 
     def load_equations(self, graph):
         try:
@@ -522,14 +535,11 @@ class NewHimesisMatcher(object):
         #     print("Patt node: " + str(patt_node_num))
         #     print("Patt constant: " + str(self.patt_eqs_constant))
 
-        try:
-            patt_label = patt_node["MT_label__"]
-        except KeyError:
-            patt_label = -1
+        patt_label = self.pattern_labels[patt_node_num]
 
         #HACK: Use patt node num not labels for contracts!
 
-        if self.pattern_graph.name.endswith("LHS"):
+        if self.is_contract:
             lookup = patt_node_num
         else:
             lookup = int(patt_label)
@@ -544,7 +554,7 @@ class NewHimesisMatcher(object):
                 src_equations = self.src_eqs_constant[src_node_num]
             except KeyError:
                 src_equations = []
-                
+
             for patt_eq in patt_equations:
                 patt_attr = patt_eq[0]
 
