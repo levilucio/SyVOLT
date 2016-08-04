@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Module" nsURI="http://mcgill.transformationverification.org/Module/1.0"
+    nsPrefix="org.mcgill.transformationverification">
+  <eClassifiers xsi:type="ecore:EClass" name="MbeddrModule" abstract="true" eSuperTypes="#//IModuleContentContainer">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contents" upperBound="-1"
+        eType="#//IModuleContent" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ImplementationModule" eSuperTypes="#//MbeddrModule"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IModuleContent" abstract="true" eSuperTypes="#//IIdentifierNamedConcept"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Component" abstract="true" eSuperTypes="#//IModuleContent"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Interface" abstract="true" eSuperTypes="#//IModuleContent"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ClientServerInterface" eSuperTypes="#//Interface">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contents" upperBound="-1"
+        eType="#//ICSInterfaceContents" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ICSInterfaceContents" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Operation" eSuperTypes="#//ICSInterfaceContents #//ITyped #//IIdentifierNamedConcept #//IFunctionLike">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
+        eType="#//OperationParameter" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OperationParameter" eSuperTypes="#//IArgumentLike #//ITyped #//IVariableDeclaration"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ITyped" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="#//Type"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Type" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IIdentifierNamedConcept" abstract="true"
+      eSuperTypes="#//INamedConcept"/>
+  <eClassifiers xsi:type="ecore:EClass" name="INamedConcept" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IArgumentLike" abstract="true" eSuperTypes="#//IControlledNamedConcept #//ITyped"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IControlledNamedConcept" abstract="true"
+      eSuperTypes="#//IIdentifierNamedConcept"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IVariableDeclaration" eSuperTypes="#//INamedConcept"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AtomicComponent" eSuperTypes="#//Component">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contents" upperBound="-1"
+        eType="#//IComponentContent" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IComponentContent" abstract="true" eSuperTypes="#//IIdentifierNamedConcept"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ProvidedPort" eSuperTypes="#//Port"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Port" abstract="true" eSuperTypes="#//IComponentContent #//IIdentifierNamedConcept">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="intf" lowerBound="1" eType="#//Interface"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RequiredPort" eSuperTypes="#//Port"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Executable" eSuperTypes="#//IComponentContent #//IFunctionLike">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="trigger" eType="#//RunnableTrigger"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//StatementList"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IFunctionLike" abstract="true" eSuperTypes="#//ITyped #//IIdentifierNamedConcept">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="arguments" upperBound="-1"
+        eType="#//IArgumentLike" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RunnableTrigger" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StatementList" eSuperTypes="#//Statement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="statements" upperBound="-1"
+        eType="#//Statement" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OperationTrigger" eSuperTypes="#//RunnableTrigger #//IOperationTriggerLike"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IOperationTriggerLike" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="providedPort" lowerBound="1"
+        eType="#//Port"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="calledOperation" lowerBound="1"
+        eType="#//Operation"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Statement" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InstanceConfiguration" eSuperTypes="#//AbstractInstanceConfiguration #//IIdentifierNamedConcept #//IModuleContent"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractInstanceConfiguration" abstract="true"
+      eSuperTypes="#//IIdentifierNamedConcept">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contents" upperBound="-1"
+        eType="#//InstanceConfigContents" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InstanceConfigContents" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ComponentInstance" eSuperTypes="#//IIdentifierNamedConcept #//InstanceConfigContents">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="component" lowerBound="1"
+        eType="#//Component"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AssemblyConnector" eSuperTypes="#//InstanceConfigContents">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
+        eType="#//InstancePortRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
+        eType="#//InstancePortRef" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InstancePortRef" eSuperTypes="#//PortRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="instance" lowerBound="1"
+        eType="#//ComponentInstance"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="port" lowerBound="1" eType="#//Port"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PortRef" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PortAdapter" eSuperTypes="#//InstanceConfigContents #//IIdentifierNamedConcept">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="portRef" lowerBound="1"
+        eType="#//AdapterInstancePortRef" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AdapterInstancePortRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="instance" eType="#//ComponentInstance"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="port" lowerBound="1" eType="#//ProvidedPort"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TestCase" eSuperTypes="#//IModuleContent #//IFunctionLike">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="body" lowerBound="1" eType="#//StatementList"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InitializeConfiguration" eSuperTypes="#//Statement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="config" lowerBound="1"
+        eType="#//InstanceConfiguration"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PortAdapterOpCallExpr" eSuperTypes="#//InterfaceOperationCallExpr"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InterfaceOperationCallExpr" abstract="true"
+      eSuperTypes="#//UnaryExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="actuals" upperBound="-1"
+        eType="#//Expression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="operation" lowerBound="1"
+        eType="#//Operation"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PortAdapterRefExpr" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="portAdater" lowerBound="1"
+        eType="#//PortAdapter"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Expression" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="UnaryExpression" abstract="true" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" lowerBound="1"
+        eType="#//Expression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Int32Type" eSuperTypes="#//PrimitiveC99IntegralType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PrimitiveC99IntegralType" abstract="true"
+      eSuperTypes="#//PrimitiveType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PrimitiveType" abstract="true" eSuperTypes="#//Type"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Function" eSuperTypes="#//FunctionSignature #//IFunctionLike">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="body" lowerBound="1" eType="#//StatementList"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FunctionSignature" abstract="true" eSuperTypes="#//IFunctionLike #//IModuleContent"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StringType" eSuperTypes="#//PrimitiveType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ArrayType" eSuperTypes="#//Type #//ITypeContainingType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="VoidType" eSuperTypes="#//PrimitiveType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ReturnStatement" eSuperTypes="#//Statement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExecuteTestExpression" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tests" upperBound="-1"
+        eType="#//ICanBeExecutedAsTest" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ICanBeExecutedAsTest" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TestCaseRef" eSuperTypes="#//ICanBeExecutedAsTest">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="testcase" lowerBound="1"
+        eType="#//TestCase"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Argument" eSuperTypes="#//IArgumentLike"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IModuleContentContainer" abstract="true"
+      eSuperTypes="#//IIdentifierNamedConcept"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PortRefExpr" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="port" lowerBound="1" eType="#//Port"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExpressionStatement" eSuperTypes="#//Statement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" lowerBound="1" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RequiredPortOpCallExpr" eSuperTypes="#//InterfaceOperationCallExpr"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Literal" abstract="true" eSuperTypes="#//Expression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StringLiteral" eSuperTypes="#//Literal">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ArgumentRef" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="arg" lowerBound="1" eType="#//IArgumentLike"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LocalVariableDeclaration" eSuperTypes="#//Statement #//IControlledNamedConcept #//ITyped">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="init" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NumericLiteral" abstract="true" eSuperTypes="#//Literal">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NumberLiteral" eSuperTypes="#//NumericLiteral"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ITypeContainingType" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="baseType" lowerBound="1"
+        eType="#//Type" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WhileStatement" eSuperTypes="#//Statement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="condition" lowerBound="1"
+        eType="#//Expression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="body" lowerBound="1" eType="#//StatementList"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BinaryExpression" abstract="true" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" lowerBound="1" eType="#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" lowerBound="1" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AssignmentExpr" eSuperTypes="#//BinaryExpression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="BinaryComparisonExpression" abstract="true"
+      eSuperTypes="#//BinaryExpression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="BinaryOrderedComparisonExpression" abstract="true"
+      eSuperTypes="#//BinaryComparisonExpression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="GreaterEqualsExpression" eSuperTypes="#//BinaryOrderedComparisonExpression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LocalVarRef" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="var" lowerBound="1" eType="#//LocalVariableDeclaration"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BinaryArithmeticExpression" abstract="true"
+      eSuperTypes="#//BinaryExpression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlusExpression" eSuperTypes="#//BinaryArithmeticExpression"/>
+</ecore:EPackage>

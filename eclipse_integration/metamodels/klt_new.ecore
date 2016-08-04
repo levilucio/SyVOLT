@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="klt" nsURI="http://klt_new.ecore" nsPrefix="klt">
+  <eClassifiers xsi:type="ecore:EClass" name="Expr">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="literal" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Pattern">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="literal" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Def" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProcDef" eSuperTypes="#//Def">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="channelNames" upperBound="-1"
+        eType="#//Name" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="paramExprs" upperBound="-1"
+        eType="#//Expr" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="p" lowerBound="1" eType="#//Proc"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="channels" upperBound="-1"
+        eType="#//Name"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FuncDef" eSuperTypes="#//Def">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="varNames" upperBound="-1"
+        eType="#//Name" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" lowerBound="1" eType="#//Expr"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vars" upperBound="-1" eType="#//Name"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PythonRef" eSuperTypes="#//Name"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Module" eSuperTypes="#//ProcDef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pythonref" upperBound="-1"
+        eType="#//PythonRef" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Proc" abstract="true" eSuperTypes="#//TopLevelElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Null" eSuperTypes="#//Proc"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Trigger" eSuperTypes="#//Proc">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="channel" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="output" eType="#//Expr"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Listen" eSuperTypes="#//Proc">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="branches" lowerBound="1"
+        upperBound="-1" eType="#//ListenBranch" containment="true" eOpposite="#//ListenBranch/listenProc"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ListenBranch">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="channel" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="match" eType="#//Pattern"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="after" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="p" lowerBound="1" eType="#//Proc"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="listenProc" eType="#//Listen"
+        changeable="false" eOpposite="#//Listen/branches"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="New" eSuperTypes="#//Proc">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="channelNames" lowerBound="1"
+        upperBound="-1" eType="#//Name" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="p" lowerBound="1" eType="#//Proc"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="channels" lowerBound="1"
+        upperBound="-1" eType="#//Name"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Delay" eSuperTypes="#//Proc">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="time" lowerBound="1" eType="#//Expr"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="p" lowerBound="1" eType="#//Proc"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Par" eSuperTypes="#//Proc">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="p" lowerBound="2" upperBound="-1"
+        eType="#//Proc" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ParIndexed" eSuperTypes="#//Proc">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="p" lowerBound="1" eType="#//Proc"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="f" lowerBound="1" eType="#//Pattern"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="e" lowerBound="1" eType="#//Expr"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Seq" eSuperTypes="#//Par"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Inst" eSuperTypes="#//Proc">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral=""/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="channelNames" upperBound="-1"
+        eType="#//Name" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="paramExprs" upperBound="-1"
+        eType="#//Expr" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="channels" upperBound="-1"
+        eType="#//Name"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LocalDef" eSuperTypes="#//Proc">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="def" lowerBound="1" upperBound="-1"
+        eType="#//Def" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="p" lowerBound="1" eType="#//Proc"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Condition" eSuperTypes="#//Proc #//ConditionBranch">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="else" eType="#//Proc" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConditionBranch">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="if" lowerBound="1" eType="#//Expr"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="then" lowerBound="1" eType="#//Proc"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConditionSet" eSuperTypes="#//Proc">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="branches" lowerBound="1"
+        upperBound="-1" eType="#//ConditionBranch" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="alternative" eType="#//Proc"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Name">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="literal" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Site">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral=""/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="modules" upperBound="-1"
+        eType="#//Module"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Model">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sites" upperBound="-1"
+        eType="#//Site" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="modules" upperBound="-1"
+        eType="#//Module" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Match" eSuperTypes="#//Proc">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="e" lowerBound="1" eType="#//Expr"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cases" lowerBound="1" upperBound="-1"
+        eType="#//MatchCase" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MatchCase">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="p" lowerBound="1" eType="#//Pattern"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="proc" lowerBound="1" eType="#//Proc"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Print" eSuperTypes="#//Proc">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="output" lowerBound="1"
+        eType="#//Expr" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RootElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contains" upperBound="-1"
+        eType="#//TopLevelElement" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TopLevelElement"/>
+</ecore:EPackage>

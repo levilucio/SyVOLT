@@ -1,0 +1,756 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dsltrans:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dsltrans="http://dsltrans/2.0">
+  <source xsi:type="dsltrans:FilePort" name="maininput" filePathURI="myExSimple.xmi">
+    <metaModelId metaModelURI="rt_new.ecore" metaModelName="rt.Rt"/>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="CommonStateToProcessTransformationRules" description="CommonStateToProcessTransformationRules" previousSource="//@source.2" outputFilePathURI="" groupName="">
+    <metaModelId metaModelURI="klt_new.ecore" metaModelName="klt.Klt"/>
+    <hasRule description="State2ProcDef">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" description="" packageName="rt" className="State">
+          <attribute attributeName="name"/>
+        </class>
+      </match>
+      <apply>
+        <class packageName="klt" className="ProcDef" groupName="">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:Concat">
+              <leftTerm xsi:type="dsltrans:Atom" value="S"/>
+              <rightTerm xsi:type="dsltrans:AttributeRef" attributeRef="//@source.1/@hasRule.0/@match.0/@class.0/@attribute.0"/>
+            </attributeValue>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal" description="">
+            <attributeValue xsi:type="dsltrans:Atom" value="exack"/>
+          </attribute>
+        </class>
+        <association associationName="channelNames" source="//@source.1/@hasRule.0/@apply/@class.0" target="//@source.1/@hasRule.0/@apply/@class.1"/>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="RootElements" description="RootElements" previousSource="//@source.0" outputFilePathURI="">
+    <metaModelId metaModelURI="klt_new.ecore" metaModelName="klt.Klt"/>
+    <hasRule description="MapRootElementRule">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="RootElement"/>
+      </match>
+      <apply>
+        <class packageName="klt" className="RootElement"/>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="Connect2RootElement" description="Connect2RootElement" previousSource="//@source.7" outputFilePathURI="myExOp.xmi">
+    <metaModelId metaModelURI="klt_new.ecore" metaModelName="klt.Klt"/>
+    <hasRule description="RuleConnect2RootElement">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="RootElement"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="TopLevelElement"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="contains" source="//@source.3/@hasRule.0/@match.0/@class.0" target="//@source.3/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="klt" className="RootElement"/>
+        <class packageName="klt" className="TopLevelElement"/>
+        <association associationName="contains" source="//@source.3/@hasRule.0/@apply/@class.0" target="//@source.3/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.3/@hasRule.0/@apply/@class.0" sourceClass="//@source.3/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.3/@hasRule.0/@apply/@class.1" sourceClass="//@source.3/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+    <hasRule description="MapHeirarchyOfStates2HeirarchyOfProcs">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="State">
+          <attribute attributeName="isComposite">
+            <attributeValue xsi:type="dsltrans:Atom" value="true"/>
+          </attribute>
+        </class>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="State"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="states" source="//@source.3/@hasRule.1/@match.0/@class.0" target="//@source.3/@hasRule.1/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="klt" className="LocalDef"/>
+        <class packageName="klt" className="ProcDef"/>
+        <association associationName="def" source="//@source.3/@hasRule.1/@apply/@class.0" target="//@source.3/@hasRule.1/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.3/@hasRule.1/@apply/@class.0" sourceClass="//@source.3/@hasRule.1/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.3/@hasRule.1/@apply/@class.1" sourceClass="//@source.3/@hasRule.1/@match.0/@class.1"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="DiffStateTypes2DiffProcesses" description="DiffStateTypes2DiffProcesses" previousSource="//@source.1" outputFilePathURI="">
+    <metaModelId metaModelURI="klt_new.ecore" metaModelName="klt.Klt"/>
+    <hasRule description="BasicStateNoOutgoing2ProcDef">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="State">
+          <attribute attributeName="isComposite">
+            <attributeValue xsi:type="dsltrans:Atom" value="false"/>
+          </attribute>
+          <attribute attributeName="hasOutgoingTransitions">
+            <attributeValue xsi:type="dsltrans:Atom" value="false"/>
+          </attribute>
+        </class>
+      </match>
+      <apply>
+        <class packageName="klt" className="ProcDef"/>
+        <class packageName="klt" className="Null"/>
+        <association associationName="p" source="//@source.4/@hasRule.0/@apply/@class.0" target="//@source.4/@hasRule.0/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.4/@hasRule.0/@apply/@class.0" sourceClass="//@source.4/@hasRule.0/@match.0/@class.0"/>
+    </hasRule>
+    <hasRule description="BasicState2ProcDef">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="State">
+          <attribute attributeName="isComposite">
+            <attributeValue xsi:type="dsltrans:Atom" value="false"/>
+          </attribute>
+          <attribute attributeName="hasOutgoingTransitions">
+            <attributeValue xsi:type="dsltrans:Atom" value="true"/>
+          </attribute>
+        </class>
+      </match>
+      <apply>
+        <class packageName="klt" className="ProcDef"/>
+        <class packageName="klt" className="Listen"/>
+        <class packageName="klt" className="ListenBranch">
+          <attribute attributeName="channel">
+            <attributeValue xsi:type="dsltrans:Atom" value="exit"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Trigger">
+          <attribute attributeName="channel">
+            <attributeValue xsi:type="dsltrans:Atom" value="exack"/>
+          </attribute>
+        </class>
+        <association associationName="p" source="//@source.4/@hasRule.1/@apply/@class.0" target="//@source.4/@hasRule.1/@apply/@class.1"/>
+        <association associationName="branches" source="//@source.4/@hasRule.1/@apply/@class.1" target="//@source.4/@hasRule.1/@apply/@class.2"/>
+        <association associationName="p" source="//@source.4/@hasRule.1/@apply/@class.2" target="//@source.4/@hasRule.1/@apply/@class.3"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.4/@hasRule.1/@apply/@class.0" sourceClass="//@source.4/@hasRule.1/@match.0/@class.0"/>
+    </hasRule>
+    <hasRule description="CompositeState2ProcDef">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="State">
+          <attribute attributeName="isComposite">
+            <attributeValue xsi:type="dsltrans:Atom" value="true"/>
+          </attribute>
+        </class>
+      </match>
+      <apply>
+        <class packageName="klt" className="ProcDef"/>
+        <class packageName="klt" className="LocalDef"/>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="sh"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="New"/>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="exit_in"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="exack_in"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="sh_in"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Par"/>
+        <class packageName="klt" className="Inst">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:Atom" value="C"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Inst">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:Atom" value="H"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="enp"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="exit_in"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="exack_in"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="sh_in"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="exit_in"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="exack_in"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="sh_in"/>
+          </attribute>
+        </class>
+        <association associationName="p" source="//@source.4/@hasRule.2/@apply/@class.0" target="//@source.4/@hasRule.2/@apply/@class.1"/>
+        <association associationName="channelNames" source="//@source.4/@hasRule.2/@apply/@class.0" target="//@source.4/@hasRule.2/@apply/@class.2"/>
+        <association associationName="p" source="//@source.4/@hasRule.2/@apply/@class.1" target="//@source.4/@hasRule.2/@apply/@class.3"/>
+        <association associationName="channelNames" source="//@source.4/@hasRule.2/@apply/@class.3" target="//@source.4/@hasRule.2/@apply/@class.4"/>
+        <association associationName="channelNames" source="//@source.4/@hasRule.2/@apply/@class.3" target="//@source.4/@hasRule.2/@apply/@class.5"/>
+        <association associationName="channelNames" source="//@source.4/@hasRule.2/@apply/@class.3" target="//@source.4/@hasRule.2/@apply/@class.6"/>
+        <association associationName="p" source="//@source.4/@hasRule.2/@apply/@class.3" target="//@source.4/@hasRule.2/@apply/@class.7"/>
+        <association associationName="p" source="//@source.4/@hasRule.2/@apply/@class.7" target="//@source.4/@hasRule.2/@apply/@class.9"/>
+        <association associationName="p" source="//@source.4/@hasRule.2/@apply/@class.7" target="//@source.4/@hasRule.2/@apply/@class.8"/>
+        <association associationName="channelNames" source="//@source.4/@hasRule.2/@apply/@class.8" target="//@source.4/@hasRule.2/@apply/@class.10"/>
+        <association associationName="channelNames" source="//@source.4/@hasRule.2/@apply/@class.8" target="//@source.4/@hasRule.2/@apply/@class.11"/>
+        <association associationName="channelNames" source="//@source.4/@hasRule.2/@apply/@class.8" target="//@source.4/@hasRule.2/@apply/@class.12"/>
+        <association associationName="channelNames" source="//@source.4/@hasRule.2/@apply/@class.8" target="//@source.4/@hasRule.2/@apply/@class.13"/>
+        <association associationName="channelNames" source="//@source.4/@hasRule.2/@apply/@class.9" target="//@source.4/@hasRule.2/@apply/@class.14"/>
+        <association associationName="channelNames" source="//@source.4/@hasRule.2/@apply/@class.9" target="//@source.4/@hasRule.2/@apply/@class.15"/>
+        <association associationName="channelNames" source="//@source.4/@hasRule.2/@apply/@class.9" target="//@source.4/@hasRule.2/@apply/@class.16"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.4/@hasRule.2/@apply/@class.0" sourceClass="//@source.4/@hasRule.2/@match.0/@class.0"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="MapTransitionsOfDifferentStateTypes" description="MapTransitionsOfDifferentStateTypes" previousSource="//@source.4" outputFilePathURI="">
+    <metaModelId metaModelURI="klt_new.ecore" metaModelName="klt.Klt"/>
+    <hasRule description="ExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="State">
+          <attribute attributeName="isComposite">
+            <attributeValue xsi:type="dsltrans:Atom" value="true"/>
+          </attribute>
+        </class>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="ExitPoint">
+          <attribute attributeName="name"/>
+        </class>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="exitPoints" source="//@source.5/@hasRule.0/@match.0/@class.0" target="//@source.5/@hasRule.0/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="klt" className="LocalDef"/>
+        <class packageName="klt" className="ProcDef">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:Concat">
+              <leftTerm xsi:type="dsltrans:Atom" value="B"/>
+              <rightTerm xsi:type="dsltrans:AttributeRef" attributeRef="//@source.5/@hasRule.0/@match.0/@class.1/@attribute.0"/>
+            </attributeValue>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="sh_in"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Par">
+          <attribute>
+            <attributeValue xsi:type="dsltrans:Atom" value="parexitpoint"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Trigger">
+          <attribute attributeName="channel">
+            <attributeValue xsi:type="dsltrans:Atom" value="sh_in"/>
+          </attribute>
+        </class>
+        <association associationName="def" source="//@source.5/@hasRule.0/@apply/@class.0" target="//@source.5/@hasRule.0/@apply/@class.1"/>
+        <association associationName="channelNames" source="//@source.5/@hasRule.0/@apply/@class.1" target="//@source.5/@hasRule.0/@apply/@class.2"/>
+        <association associationName="p" source="//@source.5/@hasRule.0/@apply/@class.1" target="//@source.5/@hasRule.0/@apply/@class.3"/>
+        <association associationName="p" source="//@source.5/@hasRule.0/@apply/@class.3" target="//@source.5/@hasRule.0/@apply/@class.4"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.5/@hasRule.0/@apply/@class.0" sourceClass="//@source.5/@hasRule.0/@match.0/@class.0"/>
+    </hasRule>
+    <hasRule description="State2HProcDef">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="State">
+          <attribute attributeName="isComposite">
+            <attributeValue xsi:type="dsltrans:Atom" value="true"/>
+          </attribute>
+        </class>
+      </match>
+      <apply>
+        <class packageName="klt" className="LocalDef"/>
+        <class packageName="klt" className="ProcDef">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:Atom" value="H"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="exit_in"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="exack_in"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="sh_in"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Listen"/>
+        <class packageName="klt" className="ListenBranch">
+          <attribute attributeName="channel">
+            <attributeValue xsi:type="dsltrans:Atom" value="sh_in"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Null"/>
+        <class packageName="klt" className="ListenBranch">
+          <attribute attributeName="channel">
+            <attributeValue xsi:type="dsltrans:Atom" value="exit"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Seq"/>
+        <class packageName="klt" className="Trigger">
+          <attribute attributeName="channel">
+            <attributeValue xsi:type="dsltrans:Atom" value="exit_in"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Listen"/>
+        <class packageName="klt" className="ListenBranch">
+          <attribute attributeName="channel">
+            <attributeValue xsi:type="dsltrans:Atom" value="exack_in"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Trigger">
+          <attribute attributeName="channel">
+            <attributeValue xsi:type="dsltrans:Atom" value="exack"/>
+          </attribute>
+        </class>
+        <association associationName="def" source="//@source.5/@hasRule.1/@apply/@class.0" target="//@source.5/@hasRule.1/@apply/@class.1"/>
+        <association associationName="channelNames" source="//@source.5/@hasRule.1/@apply/@class.1" target="//@source.5/@hasRule.1/@apply/@class.2"/>
+        <association associationName="channelNames" source="//@source.5/@hasRule.1/@apply/@class.1" target="//@source.5/@hasRule.1/@apply/@class.3"/>
+        <association associationName="channelNames" source="//@source.5/@hasRule.1/@apply/@class.1" target="//@source.5/@hasRule.1/@apply/@class.4"/>
+        <association associationName="p" source="//@source.5/@hasRule.1/@apply/@class.1" target="//@source.5/@hasRule.1/@apply/@class.5"/>
+        <association associationName="branches" source="//@source.5/@hasRule.1/@apply/@class.5" target="//@source.5/@hasRule.1/@apply/@class.6"/>
+        <association associationName="p" source="//@source.5/@hasRule.1/@apply/@class.6" target="//@source.5/@hasRule.1/@apply/@class.7"/>
+        <association associationName="branches" source="//@source.5/@hasRule.1/@apply/@class.5" target="//@source.5/@hasRule.1/@apply/@class.8"/>
+        <association associationName="p" source="//@source.5/@hasRule.1/@apply/@class.8" target="//@source.5/@hasRule.1/@apply/@class.9"/>
+        <association associationName="p" source="//@source.5/@hasRule.1/@apply/@class.9" target="//@source.5/@hasRule.1/@apply/@class.10"/>
+        <association associationName="p" source="//@source.5/@hasRule.1/@apply/@class.9" target="//@source.5/@hasRule.1/@apply/@class.11"/>
+        <association associationName="branches" source="//@source.5/@hasRule.1/@apply/@class.11" target="//@source.5/@hasRule.1/@apply/@class.12"/>
+        <association associationName="p" source="//@source.5/@hasRule.1/@apply/@class.12" target="//@source.5/@hasRule.1/@apply/@class.13"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.5/@hasRule.1/@apply/@class.0" sourceClass="//@source.5/@hasRule.1/@match.0/@class.0"/>
+    </hasRule>
+    <hasRule description="State2CProcDef">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="State">
+          <attribute attributeName="isComposite">
+            <attributeValue xsi:type="dsltrans:Atom" value="true"/>
+          </attribute>
+        </class>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="rt" className="Transition"/>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="rt" className="EntryPoint">
+          <attribute attributeName="name"/>
+        </class>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="rt" className="StateMachine">
+          <attribute attributeName="name"/>
+        </class>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="initialTransition" source="//@source.5/@hasRule.2/@match.0/@class.0" target="//@source.5/@hasRule.2/@match.0/@class.1"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="dest" source="//@source.5/@hasRule.2/@match.0/@class.1" target="//@source.5/@hasRule.2/@match.0/@class.2"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="owningStateMachine" source="//@source.5/@hasRule.2/@match.0/@class.2" target="//@source.5/@hasRule.2/@match.0/@class.3"/>
+      </match>
+      <apply>
+        <class packageName="klt" className="LocalDef">
+          <attribute>
+            <attributeValue xsi:type="dsltrans:Atom" value="localdefcompstate"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="ProcDef">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:Atom" value="C"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="exit"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="exack"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="enp"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="sh"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="ConditionSet"/>
+        <class packageName="klt" className="Inst">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:Concat">
+              <leftTerm xsi:type="dsltrans:Atom" value="S"/>
+              <rightTerm xsi:type="dsltrans:AttributeRef" attributeRef="//@source.5/@hasRule.2/@match.0/@class.3/@attribute.0"/>
+            </attributeValue>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="exit_in"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="exack_in"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Concat">
+              <leftTerm xsi:type="dsltrans:Atom" value="A"/>
+              <rightTerm xsi:type="dsltrans:Concat">
+                <leftTerm xsi:type="dsltrans:AttributeRef" attributeRef="//@source.5/@hasRule.2/@match.0/@class.2/@attribute.0"/>
+                <rightTerm xsi:type="dsltrans:Atom" value="A"/>
+              </rightTerm>
+            </attributeValue>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="sh_in"/>
+          </attribute>
+        </class>
+        <association associationName="def" source="//@source.5/@hasRule.2/@apply/@class.0" target="//@source.5/@hasRule.2/@apply/@class.1"/>
+        <association associationName="channelNames" source="//@source.5/@hasRule.2/@apply/@class.1" target="//@source.5/@hasRule.2/@apply/@class.2"/>
+        <association associationName="channelNames" source="//@source.5/@hasRule.2/@apply/@class.1" target="//@source.5/@hasRule.2/@apply/@class.3"/>
+        <association associationName="channelNames" source="//@source.5/@hasRule.2/@apply/@class.1" target="//@source.5/@hasRule.2/@apply/@class.4"/>
+        <association associationName="channelNames" source="//@source.5/@hasRule.2/@apply/@class.1" target="//@source.5/@hasRule.2/@apply/@class.5"/>
+        <association associationName="p" source="//@source.5/@hasRule.2/@apply/@class.1" target="//@source.5/@hasRule.2/@apply/@class.6"/>
+        <association associationName="alternative" source="//@source.5/@hasRule.2/@apply/@class.6" target="//@source.5/@hasRule.2/@apply/@class.7"/>
+        <association associationName="channelNames" source="//@source.5/@hasRule.2/@apply/@class.7" target="//@source.5/@hasRule.2/@apply/@class.8"/>
+        <association associationName="channelNames" source="//@source.5/@hasRule.2/@apply/@class.7" target="//@source.5/@hasRule.2/@apply/@class.9"/>
+        <association associationName="channelNames" source="//@source.5/@hasRule.2/@apply/@class.7" target="//@source.5/@hasRule.2/@apply/@class.10"/>
+        <association associationName="channelNames" source="//@source.5/@hasRule.2/@apply/@class.7" target="//@source.5/@hasRule.2/@apply/@class.11"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.5/@hasRule.2/@apply/@class.0" sourceClass="//@source.5/@hasRule.2/@match.0/@class.0"/>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="Transition2Qinst" description="Transition2Qinst" previousSource="//@source.5" outputFilePathURI="">
+    <metaModelId metaModelURI="klt_new.ecore" metaModelName="klt.Klt"/>
+    <hasRule description="Transition2QInstSIBLING">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="Transition"/>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="rt" className="Vertex">
+          <attribute attributeName="name"/>
+        </class>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="rt" className="SIBLING0"/>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="rt" className="StateMachine">
+          <attribute attributeName="name"/>
+        </class>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="dest" source="//@source.6/@hasRule.0/@match.0/@class.0" target="//@source.6/@hasRule.0/@match.0/@class.1"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="type" source="//@source.6/@hasRule.0/@match.0/@class.0" target="//@source.6/@hasRule.0/@match.0/@class.2"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="owningStateMachine" source="//@source.6/@hasRule.0/@match.0/@class.1" target="//@source.6/@hasRule.0/@match.0/@class.3"/>
+      </match>
+      <apply>
+        <class packageName="klt" className="Inst">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:Concat">
+              <leftTerm xsi:type="dsltrans:Atom" value="S"/>
+              <rightTerm xsi:type="dsltrans:AttributeRef" attributeRef="//@source.6/@hasRule.0/@match.0/@class.3/@attribute.0"/>
+            </attributeValue>
+          </attribute>
+          <attribute>
+            <attributeValue xsi:type="dsltrans:Atom" value="instfortrans"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="exack"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Concat">
+              <leftTerm xsi:type="dsltrans:Atom" value="A"/>
+              <rightTerm xsi:type="dsltrans:Concat">
+                <leftTerm xsi:type="dsltrans:AttributeRef" attributeRef="//@source.6/@hasRule.0/@match.0/@class.1/@attribute.0"/>
+                <rightTerm xsi:type="dsltrans:Atom" value="A"/>
+              </rightTerm>
+            </attributeValue>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="exit"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="sh"/>
+          </attribute>
+        </class>
+        <association associationName="channelNames" source="//@source.6/@hasRule.0/@apply/@class.0" target="//@source.6/@hasRule.0/@apply/@class.3"/>
+        <association associationName="channelNames" source="//@source.6/@hasRule.0/@apply/@class.0" target="//@source.6/@hasRule.0/@apply/@class.1"/>
+        <association associationName="channelNames" source="//@source.6/@hasRule.0/@apply/@class.0" target="//@source.6/@hasRule.0/@apply/@class.2"/>
+        <association associationName="channelNames" source="//@source.6/@hasRule.0/@apply/@class.0" target="//@source.6/@hasRule.0/@apply/@class.4"/>
+      </apply>
+    </hasRule>
+    <hasRule description="Transition2QInstOUT">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="Transition"/>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="rt" className="OUT2"/>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="rt" className="StateMachine"/>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="rt" className="Vertex">
+          <attribute attributeName="name"/>
+        </class>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="type" source="//@source.6/@hasRule.1/@match.0/@class.0" target="//@source.6/@hasRule.1/@match.0/@class.1"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="owningStateMachine" source="//@source.6/@hasRule.1/@match.0/@class.0" target="//@source.6/@hasRule.1/@match.0/@class.2"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="exitPoints" source="//@source.6/@hasRule.1/@match.0/@class.2" target="//@source.6/@hasRule.1/@match.0/@class.3"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="dest" source="//@source.6/@hasRule.1/@match.0/@class.0" target="//@source.6/@hasRule.1/@match.0/@class.3"/>
+      </match>
+      <apply>
+        <class packageName="klt" className="Inst">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:Concat">
+              <leftTerm xsi:type="dsltrans:Atom" value="B"/>
+              <rightTerm xsi:type="dsltrans:AttributeRef" attributeRef="//@source.6/@hasRule.1/@match.0/@class.3/@attribute.0"/>
+            </attributeValue>
+          </attribute>
+          <attribute>
+            <attributeValue xsi:type="dsltrans:Atom" value="instfortrans"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="sh"/>
+          </attribute>
+        </class>
+        <association associationName="channelNames" source="//@source.6/@hasRule.1/@apply/@class.0" target="//@source.6/@hasRule.1/@apply/@class.1"/>
+      </apply>
+    </hasRule>
+    <hasRule description="Transition2Inst">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="State">
+          <attribute attributeName="isComposite">
+            <attributeValue xsi:type="dsltrans:Atom" value="true"/>
+          </attribute>
+        </class>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="Transition"/>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="rt" className="IN1"/>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="rt" className="EntryPoint">
+          <attribute attributeName="name"/>
+        </class>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="rt" className="StateMachine">
+          <attribute attributeName="name"/>
+        </class>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="transitions" source="//@source.6/@hasRule.2/@match.0/@class.0" target="//@source.6/@hasRule.2/@match.0/@class.1"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="type" source="//@source.6/@hasRule.2/@match.0/@class.1" target="//@source.6/@hasRule.2/@match.0/@class.2"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="dest" source="//@source.6/@hasRule.2/@match.0/@class.1" target="//@source.6/@hasRule.2/@match.0/@class.3"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="owningStateMachine" source="//@source.6/@hasRule.2/@match.0/@class.3" target="//@source.6/@hasRule.2/@match.0/@class.4"/>
+      </match>
+      <apply>
+        <class packageName="klt" className="Inst">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:Concat">
+              <leftTerm xsi:type="dsltrans:Atom" value="S"/>
+              <rightTerm xsi:type="dsltrans:AttributeRef" attributeRef="//@source.6/@hasRule.2/@match.0/@class.4/@attribute.0"/>
+            </attributeValue>
+          </attribute>
+          <attribute>
+            <attributeValue xsi:type="dsltrans:Atom" value="instForInTrans"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="exit_in"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="exack_in"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Concat">
+              <leftTerm xsi:type="dsltrans:Atom" value="A"/>
+              <rightTerm xsi:type="dsltrans:Concat">
+                <leftTerm xsi:type="dsltrans:AttributeRef" attributeRef="//@source.6/@hasRule.2/@match.0/@class.3/@attribute.0"/>
+                <rightTerm xsi:type="dsltrans:Atom" value="A"/>
+              </rightTerm>
+            </attributeValue>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Name">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Atom" value="sh_in"/>
+          </attribute>
+        </class>
+        <association associationName="channelNames" source="//@source.6/@hasRule.2/@apply/@class.0" target="//@source.6/@hasRule.2/@apply/@class.1"/>
+        <association associationName="channelNames" source="//@source.6/@hasRule.2/@apply/@class.0" target="//@source.6/@hasRule.2/@apply/@class.2"/>
+        <association associationName="channelNames" source="//@source.6/@hasRule.2/@apply/@class.0" target="//@source.6/@hasRule.2/@apply/@class.3"/>
+        <association associationName="channelNames" source="//@source.6/@hasRule.2/@apply/@class.0" target="//@source.6/@hasRule.2/@apply/@class.4"/>
+      </apply>
+    </hasRule>
+  </source>
+  <source xsi:type="dsltrans:Sequential" name="ConnectPrevGeneratedInstThatCorrespond2Transitions" description="ConnectPrevGeneratedInstThatCorrespond2Transitions" previousSource="//@source.6" outputFilePathURI="">
+    <metaModelId metaModelURI="klt_new.ecore" metaModelName="klt.Klt"/>
+    <hasRule description="Transition2ListenBranch">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="State">
+          <attribute attributeName="isComposite">
+            <attributeValue xsi:type="dsltrans:Atom" value="false"/>
+          </attribute>
+          <attribute attributeName="hasOutgoingTransitions">
+            <attributeValue xsi:type="dsltrans:Atom" value="true"/>
+          </attribute>
+        </class>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="Transition"/>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="rt" className="Trigger"/>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="rt" className="Signal">
+          <attribute attributeName="name"/>
+        </class>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="outgoingTransitions" source="//@source.7/@hasRule.0/@match.0/@class.0" target="//@source.7/@hasRule.0/@match.0/@class.1"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="triggers" source="//@source.7/@hasRule.0/@match.0/@class.1" target="//@source.7/@hasRule.0/@match.0/@class.2"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="signal" source="//@source.7/@hasRule.0/@match.0/@class.2" target="//@source.7/@hasRule.0/@match.0/@class.3"/>
+      </match>
+      <apply>
+        <class packageName="klt" className="Listen"/>
+        <class packageName="klt" className="ListenBranch">
+          <attribute attributeName="channel">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.7/@hasRule.0/@match.0/@class.3/@attribute.0"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Inst"/>
+        <association associationName="branches" source="//@source.7/@hasRule.0/@apply/@class.0" target="//@source.7/@hasRule.0/@apply/@class.1"/>
+        <association associationName="p" source="//@source.7/@hasRule.0/@apply/@class.1" target="//@source.7/@hasRule.0/@apply/@class.2"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.7/@hasRule.0/@apply/@class.0" sourceClass="//@source.7/@hasRule.0/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.7/@hasRule.0/@apply/@class.2" sourceClass="//@source.7/@hasRule.0/@match.0/@class.1"/>
+    </hasRule>
+    <hasRule description="ConnectOutputsOfExitPoint2BProcDefTransition2QInst">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="ExitPoint"/>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="rt" className="Transition"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="outgoingTransitions" source="//@source.7/@hasRule.1/@match.0/@class.0" target="//@source.7/@hasRule.1/@match.0/@class.1"/>
+      </match>
+      <apply>
+        <class packageName="klt" className="Par"/>
+        <class packageName="klt" className="Inst"/>
+        <association associationName="p" source="//@source.7/@hasRule.1/@apply/@class.0" target="//@source.7/@hasRule.1/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.7/@hasRule.1/@apply/@class.0" sourceClass="//@source.7/@hasRule.1/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.7/@hasRule.1/@apply/@class.1" sourceClass="//@source.7/@hasRule.1/@match.0/@class.1"/>
+    </hasRule>
+    <hasRule description="Transition2HListenBranch">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="Transition"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="Vertex"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="StateMachine"/>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="rt" className="State"/>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="rt" className="Trigger"/>
+        <class xsi:type="dsltrans:ExistsMatchClass" packageName="rt" className="Signal">
+          <attribute attributeName="name"/>
+        </class>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="State"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="src" source="//@source.7/@hasRule.2/@match.0/@class.0" target="//@source.7/@hasRule.2/@match.0/@class.1"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="owningStateMachine" source="//@source.7/@hasRule.2/@match.0/@class.1" target="//@source.7/@hasRule.2/@match.0/@class.2"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="states" source="//@source.7/@hasRule.2/@match.0/@class.2" target="//@source.7/@hasRule.2/@match.0/@class.3"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="triggers" source="//@source.7/@hasRule.2/@match.0/@class.0" target="//@source.7/@hasRule.2/@match.0/@class.4"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="signal" source="//@source.7/@hasRule.2/@match.0/@class.4" target="//@source.7/@hasRule.2/@match.0/@class.5"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="outgoingTransitions" source="//@source.7/@hasRule.2/@match.0/@class.6" target="//@source.7/@hasRule.2/@match.0/@class.0"/>
+      </match>
+      <apply>
+        <class packageName="klt" className="ListenBranch">
+          <attribute attributeName="channel">
+            <attributeValue xsi:type="dsltrans:AttributeRef" attributeRef="//@source.7/@hasRule.2/@match.0/@class.5/@attribute.0"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Seq"/>
+        <class packageName="klt" className="Trigger">
+          <attribute attributeName="channel">
+            <attributeValue xsi:type="dsltrans:Atom" value="exit_in"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Listen"/>
+        <class packageName="klt" className="ListenBranch">
+          <attribute attributeName="channel">
+            <attributeValue xsi:type="dsltrans:Atom" value="exack_in"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Inst">
+          <attribute>
+            <attributeValue xsi:type="dsltrans:Atom" value="instfortrans"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Listen">
+          <attribute>
+            <attributeValue xsi:type="dsltrans:Atom" value="listenhproc"/>
+          </attribute>
+        </class>
+        <association associationName="p" source="//@source.7/@hasRule.2/@apply/@class.0" target="//@source.7/@hasRule.2/@apply/@class.1"/>
+        <association associationName="p" source="//@source.7/@hasRule.2/@apply/@class.1" target="//@source.7/@hasRule.2/@apply/@class.2"/>
+        <association associationName="p" source="//@source.7/@hasRule.2/@apply/@class.1" target="//@source.7/@hasRule.2/@apply/@class.3"/>
+        <association associationName="branches" source="//@source.7/@hasRule.2/@apply/@class.3" target="//@source.7/@hasRule.2/@apply/@class.4"/>
+        <association associationName="p" source="//@source.7/@hasRule.2/@apply/@class.4" target="//@source.7/@hasRule.2/@apply/@class.5"/>
+        <association associationName="branches" source="//@source.7/@hasRule.2/@apply/@class.6" target="//@source.7/@hasRule.2/@apply/@class.0"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.7/@hasRule.2/@apply/@class.5" sourceClass="//@source.7/@hasRule.2/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.7/@hasRule.2/@apply/@class.6" sourceClass="//@source.7/@hasRule.2/@match.0/@class.6"/>
+    </hasRule>
+    <hasRule description="ConnectOPState2CProcDefTransition2InstotherInTransitions">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="Transition"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="IN1"/>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="State">
+          <attribute attributeName="isComposite">
+            <attributeValue xsi:type="dsltrans:Atom" value="true"/>
+          </attribute>
+        </class>
+        <class xsi:type="dsltrans:AnyMatchClass" packageName="rt" className="Vertex">
+          <attribute attributeName="name"/>
+        </class>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="transitions" source="//@source.7/@hasRule.3/@match.0/@class.2" target="//@source.7/@hasRule.3/@match.0/@class.0"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="type" source="//@source.7/@hasRule.3/@match.0/@class.0" target="//@source.7/@hasRule.3/@match.0/@class.1"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="src" source="//@source.7/@hasRule.3/@match.0/@class.0" target="//@source.7/@hasRule.3/@match.0/@class.3"/>
+      </match>
+      <apply>
+        <class packageName="klt" className="ConditionSet">
+          <attribute>
+            <attributeValue xsi:type="dsltrans:Atom" value="condsetcompstate"/>
+          </attribute>
+        </class>
+        <class packageName="klt" className="ConditionBranch"/>
+        <class packageName="klt" className="Expr">
+          <attribute attributeName="literal">
+            <attributeValue xsi:type="dsltrans:Concat">
+              <leftTerm xsi:type="dsltrans:Atom" value="enp=A"/>
+              <rightTerm xsi:type="dsltrans:Concat">
+                <leftTerm xsi:type="dsltrans:AttributeRef" attributeRef="//@source.7/@hasRule.3/@match.0/@class.3/@attribute.0"/>
+                <rightTerm xsi:type="dsltrans:Atom" value="A"/>
+              </rightTerm>
+            </attributeValue>
+          </attribute>
+        </class>
+        <class packageName="klt" className="Inst">
+          <attribute>
+            <attributeValue xsi:type="dsltrans:Atom" value="instForInTrans"/>
+          </attribute>
+        </class>
+        <association associationName="branches" source="//@source.7/@hasRule.3/@apply/@class.0" target="//@source.7/@hasRule.3/@apply/@class.1"/>
+        <association associationName="if" source="//@source.7/@hasRule.3/@apply/@class.1" target="//@source.7/@hasRule.3/@apply/@class.2"/>
+        <association associationName="then" source="//@source.7/@hasRule.3/@apply/@class.1" target="//@source.7/@hasRule.3/@apply/@class.3"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.7/@hasRule.3/@apply/@class.0" sourceClass="//@source.7/@hasRule.3/@match.0/@class.2"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.7/@hasRule.3/@apply/@class.3" sourceClass="//@source.7/@hasRule.3/@match.0/@class.0"/>
+    </hasRule>
+  </source>
+</dsltrans:TransformationModel>

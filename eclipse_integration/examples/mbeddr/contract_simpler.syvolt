@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syvolt:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:syvolt="http://syvolt/2.0">
+  <hasProperty name="Simpler">
+    <match>
+      <class xsi:type="syvolt:AnyMatchClass" className="ImplementationModule"/>
+      <class xsi:type="syvolt:AnyMatchClass" className="Function">
+        <attribute attributeName="name">
+          <attributeValue xsi:type="syvolt:Atom" value="main"/>
+        </attribute>
+      </class>
+      <class xsi:type="syvolt:AnyMatchClass" className="ComponentInstance"/>
+      <class xsi:type="syvolt:AnyMatchClass" className="InstanceConfiguration"/>
+      <class xsi:type="syvolt:AnyMatchClass" className="TestCase"/>
+      <class xsi:type="syvolt:AnyMatchClass" className="StatementList"/>
+      <class xsi:type="syvolt:AnyMatchClass" className="InitializeConfiguration"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="contents" source="//@hasProperty.0/@match.0/@class.3" target="//@hasProperty.0/@match.0/@class.2"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="contents" source="//@hasProperty.0/@match.0/@class.0" target="//@hasProperty.0/@match.0/@class.1"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="contents" source="//@hasProperty.0/@match.0/@class.0" target="//@hasProperty.0/@match.0/@class.3"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="contents" source="//@hasProperty.0/@match.0/@class.0" target="//@hasProperty.0/@match.0/@class.4"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="body" source="//@hasProperty.0/@match.0/@class.4" target="//@hasProperty.0/@match.0/@class.5"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="statements" source="//@hasProperty.0/@match.0/@class.5" target="//@hasProperty.0/@match.0/@class.6"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="config" source="//@hasProperty.0/@match.0/@class.6" target="//@hasProperty.0/@match.0/@class.3"/>
+    </match>
+    <apply>
+      <class className="Function">
+        <attribute attributeName="name">
+          <attributeValue xsi:type="syvolt:Concat">
+            <leftTerm xsi:type="syvolt:Wildcard"/>
+            <rightTerm xsi:type="syvolt:Atom" value="__init"/>
+          </attributeValue>
+        </attribute>
+      </class>
+      <class className="FunctionPrototype">
+        <attribute attributeName="name">
+          <attributeValue xsi:type="syvolt:Concat">
+            <leftTerm xsi:type="syvolt:Wildcard"/>
+            <rightTerm xsi:type="syvolt:Atom" value="__init"/>
+          </attributeValue>
+        </attribute>
+      </class>
+      <class className="ImplementationModule"/>
+      <class className="FunctionPrototype">
+        <attribute attributeName="name">
+          <attributeValue xsi:type="syvolt:Concat">
+            <leftTerm xsi:type="syvolt:Wildcard"/>
+            <rightTerm xsi:type="syvolt:Atom" value="_blockexpr_main_2"/>
+          </attributeValue>
+        </attribute>
+      </class>
+      <class className="FunctionPrototype">
+        <attribute attributeName="name">
+          <attributeValue xsi:type="syvolt:Concat">
+            <leftTerm xsi:type="syvolt:Wildcard"/>
+            <rightTerm xsi:type="syvolt:Atom" value="__wire"/>
+          </attributeValue>
+        </attribute>
+      </class>
+      <class className="StatementList"/>
+      <class className="Function">
+        <attribute attributeName="name">
+          <attributeValue xsi:type="syvolt:Concat">
+            <leftTerm xsi:type="syvolt:Wildcard"/>
+            <rightTerm xsi:type="syvolt:Atom" value="__wire"/>
+          </attributeValue>
+        </attribute>
+      </class>
+      <class className="FunctionCall"/>
+      <association associationName="contents" source="//@hasProperty.0/@apply/@class.2" target="//@hasProperty.0/@apply/@class.0"/>
+      <association associationName="contents" source="//@hasProperty.0/@apply/@class.2" target="//@hasProperty.0/@apply/@class.1"/>
+      <association associationName="contents" source="//@hasProperty.0/@apply/@class.2" target="//@hasProperty.0/@apply/@class.3"/>
+      <association associationName="contents" source="//@hasProperty.0/@apply/@class.2" target="//@hasProperty.0/@apply/@class.4"/>
+      <association associationName="body" source="//@hasProperty.0/@apply/@class.0" target="//@hasProperty.0/@apply/@class.5"/>
+      <association associationName="contents" source="//@hasProperty.0/@apply/@class.2" target="//@hasProperty.0/@apply/@class.6"/>
+      <association associationName="function" source="//@hasProperty.0/@apply/@class.7" target="//@hasProperty.0/@apply/@class.1"/>
+    </apply>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.1" sourceClass="//@hasProperty.0/@match.0/@class.3"/>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.0" sourceClass="//@hasProperty.0/@match.0/@class.3"/>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.2" sourceClass="//@hasProperty.0/@match.0/@class.0"/>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.4" sourceClass="//@hasProperty.0/@match.0/@class.2"/>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.3" sourceClass="//@hasProperty.0/@match.0/@class.1"/>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.6" sourceClass="//@hasProperty.0/@match.0/@class.2"/>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.7" sourceClass="//@hasProperty.0/@match.0/@class.6"/>
+  </hasProperty>
+</syvolt:TransformationModel>
