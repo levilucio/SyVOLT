@@ -691,9 +691,6 @@ class NewHimesisMatcher(object):
         return True
 
     def recursive_compare(self, patt, src):
-        print(patt)
-        print(src)
-
         if len(patt) == 0 and len(src) == 0:
             return True
 
