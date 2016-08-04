@@ -269,6 +269,9 @@ class NewHimesisMatcher(object):
                 #     print("Patt link: " + str(patt_link))
                 (patt0_n, patt1_n, patt_link_n) = patt_link
 
+                if patt_link_n is not None:
+                    patt_link_MM = self.pattern_mms[patt_link_n]
+
                 found_match = False
 
                 if self.debug:
@@ -288,7 +291,16 @@ class NewHimesisMatcher(object):
                     #     self.print_link(self.source_graph, graph_n0_n, graph_n1_n, graph_link_n)
 
                     if patt_link_n is not None and graph_link_n is not None:
-                        nodes_match_link = self.match_nodes(graph_link_n, patt_link_n)
+                        graph_link_MM = self.source_mms[graph_link_n]
+
+                        if patt_link_MM in ["trace_link", "backward_link"]:
+                            if graph_link_MM in ["trace_link", "backward_link"]:
+                                nodes_match_link = True
+                            else:
+                                nodes_match_link = False
+                        else:
+                            nodes_match_link = self.match_nodes(graph_link_n, patt_link_n)
+
                     else:
                         nodes_match_link = False
 
