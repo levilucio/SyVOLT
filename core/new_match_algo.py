@@ -511,7 +511,7 @@ class NewHimesisMatcher(object):
         #     print("Src: " + sourceMM + " Trgt: " + targetMM + " Are feasible: " + str(are_feasible))
         return are_feasible
 
-    @profile
+    #@profile
     def are_semantically_feasible(self, src_node_num, patt_node_num):
         """
             Determines whether the two nodes are syntactically feasible,
