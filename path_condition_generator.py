@@ -531,15 +531,16 @@ class PathConditionGenerator(object):
             path_conditions.append(pc)
         return path_conditions
 
-    def get_path_conditions(self, expand=True):
+    def get_path_conditions(self, expand=True, get_pretty_name = True):
 
         for pc_name in sorted(self.currentpathConditionSet):
             pc = self.pc_dict[pc_name]
 
             if expand:
                 pc = expand_graph(pc)
-            
-            pc_name = self.expand_pc_name_with_multiple_applications(pc_name)
+
+            if get_pretty_name:
+                pc_name = self.expand_pc_name_with_multiple_applications(pc_name)
         
             yield pc, pc_name
 
