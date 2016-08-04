@@ -94,7 +94,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="portRef" lowerBound="1"
         eType="#//AdapterInstancePortRef" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AdapterInstancePortRef">
+  <eClassifiers xsi:type="ecore:EClass" name="AdapterInstancePortRef" eSuperTypes="#//InstancePortRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="instance" eType="#//ComponentInstance"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="port" lowerBound="1" eType="#//ProvidedPort"/>
   </eClassifiers>

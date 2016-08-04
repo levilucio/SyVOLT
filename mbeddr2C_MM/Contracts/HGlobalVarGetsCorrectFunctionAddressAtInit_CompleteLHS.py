@@ -396,7 +396,7 @@ return True
                 self.vs[18]["MT_dirty__"] = False
                 self.vs[18]["mm__"] = """MT_pre__GlobalVarRef"""
                 self.vs[18]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
-        # match class ReferenceExpression() node
+        # match class ReferenceExpr() node
                 self.add_node()
                 self.vs[19]["MT_subtypeMatching__"] = False
                 self.vs[19]["MT_pre__attr1"] = """
@@ -414,7 +414,7 @@ return True
                 self.vs[19]["MT_label__"] = """20"""
                 self.vs[19]["MT_subtypes__"] = []
                 self.vs[19]["MT_dirty__"] = False
-                self.vs[19]["mm__"] = """MT_pre__ReferenceExpression"""
+                self.vs[19]["mm__"] = """MT_pre__ReferenceExpr"""
                 self.vs[19]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'')
         # match class GenericDotExpression() node
                 self.add_node()
@@ -882,7 +882,7 @@ return attr_value == "left"
                 self.vs[42]["MT_dirty__"] = False
                 self.vs[42]["mm__"] = """MT_pre__directLink_T"""
                 self.vs[42]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc42')
-        # apply association AssignmentExpr--right-->ReferenceExpression node
+        # apply association AssignmentExpr--right-->ReferenceExpr node
                 self.add_node()
                 self.vs[43]["MT_subtypeMatching__"] = False
                 self.vs[43]["MT_pre__attr1"] = """
@@ -942,7 +942,7 @@ return attr_value == "target"
                 self.vs[45]["MT_dirty__"] = False
                 self.vs[45]["mm__"] = """MT_pre__directLink_T"""
                 self.vs[45]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'assoc45')
-        # apply association ReferenceExpression--expression-->FunctionRefExpr node
+        # apply association ReferenceExpr--expression-->FunctionRefExpr node
                 self.add_node()
                 self.vs[46]["MT_subtypeMatching__"] = False
                 self.vs[46]["MT_pre__attr1"] = """
@@ -1140,12 +1140,12 @@ return attr_value == "var"
                 (11,42), # apply_class AssignmentExpr() -> association left
                 (42,20), # association left  -> apply_class GenericDotExpression()
                 (11,43), # apply_class AssignmentExpr() -> association right
-                (43,19), # association right  -> apply_class ReferenceExpression()
+                (43,19), # association right  -> apply_class ReferenceExpr()
                 (20,44), # apply_class GenericDotExpression() -> association expression
                 (44,18), # association expression  -> apply_class GlobalVarRef()
                 (20,45), # apply_class GenericDotExpression() -> association target
                 (45,10), # association target  -> apply_class GenericMemberRef()
-                (19,46), # apply_class ReferenceExpression() -> association expression
+                (19,46), # apply_class ReferenceExpr() -> association expression
                 (46,17), # association expression  -> apply_class FunctionRefExpr()
                 (17,47), # apply_class FunctionRefExpr() -> association function
                 (47,22), # association function  -> apply_class FunctionPrototype()
