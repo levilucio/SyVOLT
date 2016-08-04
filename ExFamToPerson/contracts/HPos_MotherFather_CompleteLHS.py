@@ -274,7 +274,7 @@ return attr_value == "persons"
                 ])
         
                 # Add the attribute equations
-                self["equations"] = [((3,'name'),('concat',((0,'firstName'),(1,'lastName')))), ((5,'name'),('concat',((2,'firstName'),(1,'lastName')))), ]
+                self["equations"] = [((3,'fullName'),('concat',((0,'firstName'),(1,'lastName')))), ((5,'fullName'),('concat',((2,'firstName'),(1,'lastName')))), ]
         
         def eval_attr11(self, attr_value, this):
 
