@@ -482,19 +482,8 @@ class NewHimesisMatcher(object):
     def match_nodes(self, graph_node, patt_node):
 
         targetMM = self.pattern_mms[patt_node]
+        sourceMM = self.source_mms[graph_node]
 
-        if graph_node is not None:
-            sourceMM = self.source_mms[graph_node]
-        else:
-            sourceMM = "backward_link"
-
-        # if self.debug:
-
-        if targetMM in ["trace_link", "backward_link"]:
-            if sourceMM in ["trace_link", "backward_link"]:
-                return True
-            else:
-                return False
 
         # if targetMM == "directLink_T" and sourceMM != "directLink_T":
         #     return False
@@ -518,10 +507,7 @@ class NewHimesisMatcher(object):
                 #     print("Src: " + sourceMM + " Trgt: " + targetMM + " Node mms don't match")
                 return False
 
-        are_feasible = self.are_semantically_feasible(graph_node, patt_node)
-        # if self.debug:
-        #     print("Src: " + sourceMM + " Trgt: " + targetMM + " Are feasible: " + str(are_feasible))
-        return are_feasible
+        return self.are_semantically_feasible(graph_node, patt_node)
 
     #@profile
     def are_semantically_feasible(self, src_node_num, patt_node_num):

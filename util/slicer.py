@@ -321,9 +321,13 @@ class Slicer:
             for patt0_n, patt1_n, patt_link_n in patt_links:
 
                 for graph_n0_n, graph_n1_n, graph_link_n in source_links:
-
-
-                    links_match = matcher.match_nodes(graph_link_n, patt_link_n)
+                    if pattern.vs[patt_link_n]["mm__"] in ["trace_link", "backward_link"]:
+                        if graph.vs[graph_link_n]["mm__"] in ["trace_link", "backward_link"]:
+                            links_match = True
+                        else:
+                            links_match = False
+                    else:
+                        links_match = matcher.match_nodes(graph_link_n, patt_link_n)
 
                     if not links_match:
                         #if verbosity > 1:
