@@ -112,7 +112,7 @@ class NewHimesisMatcher(object):
             eqs = []
 
         eqs_constant = {}
-        eqs_variable = []
+        eqs_variable = {}
 
 
 
@@ -124,10 +124,10 @@ class NewHimesisMatcher(object):
                 print(eq)
                 print(eq[1])
 
-            if eq[1][0] == "constant":
-                node_num = eq[0][0]
-                attr = eq[0][1]
+            node_num = eq[0][0]
+            attr = eq[0][1]
 
+            if eq[1][0] == "constant":
                 if attr == "pivot" or "ApplyAttribute" in attr:
                     continue
 
@@ -136,7 +136,10 @@ class NewHimesisMatcher(object):
                 except KeyError:
                     eqs_constant[node_num] = [(attr, eq[1][1])]
             else:
-                eqs_variable.append(eq)
+                try:
+                    eqs_variable[node_num].append((attr, eq[1]))
+                except KeyError:
+                    eqs_variable[node_num] = [(attr, eq[1])]
 
         return eqs_constant, eqs_variable
 
@@ -544,50 +547,18 @@ class NewHimesisMatcher(object):
             lookup = int(patt_label)
 
         try:
-            patt_equations = self.patt_eqs_constant[lookup]
+            patt_constant_equations = self.patt_eqs_constant[lookup]
         except KeyError:
-            patt_equations = []
+            patt_constant_equations = []
 
-        if patt_equations:
+        if patt_constant_equations:
             try:
-                src_equations = self.src_eqs_constant[src_node_num]
+                src_constant_equations = self.src_eqs_constant[src_node_num]
             except KeyError:
-                src_equations = []
+                src_constant_equations = []
 
-            for patt_eq in patt_equations:
-                patt_attr = patt_eq[0]
-
-                #skip matching pivots
-                if patt_attr == "pivot" or "ApplyAttribute" in patt_attr:
-                    continue
-
-                patt_value = patt_eq[1]
-
-                found = False
-                for (src_attr, src_value) in src_equations:
-                    if patt_attr == src_attr:
-                        if patt_value == src_value:
-                            found = True
-                            break
-                        else:
-                            if self.debug:
-                                print("Equations do not match")
-                            return False
-
-                if found:
-                    continue
-
-                try:
-                    if src_node[patt_attr] != patt_value:
-                        if self.debug:
-                            print("Couldn't find value, found " + str(src_node[patt_attr]))
-                            print("Patt eq: " + str(patt_eq))
-                        return False
-                except KeyError:
-                    if self.debug:
-                        print("Couldn't find " + patt_attr + " on node " + src_node["mm__"])
-                    return False
-
+            if not self.compare_constant_equations(patt_constant_equations, src_constant_equations, src_node):
+                return False
 
         # Check for attributes value/constraint
         for attr in self.pattern_attribs:
@@ -644,4 +615,42 @@ class NewHimesisMatcher(object):
                 # assume the method is callable
                 # else:
                 #    raise Exception('The method %s was not found in the pattern graph' % methName)
+        return True
+
+
+    def compare_constant_equations(self, patt_constant_equations, src_equations, src_node):
+        for patt_eq in patt_constant_equations:
+            patt_attr = patt_eq[0]
+
+            # skip matching pivots
+            if patt_attr == "pivot" or "ApplyAttribute" in patt_attr:
+                continue
+
+            patt_value = patt_eq[1]
+
+            found = False
+            for (src_attr, src_value) in src_equations:
+                if patt_attr == src_attr:
+                    if patt_value == src_value:
+                        found = True
+                        break
+                    else:
+                        if self.debug:
+                            print("Equations do not match")
+                        return False
+
+            if found:
+                continue
+
+            try:
+                if src_node[patt_attr] != patt_value:
+                    if self.debug:
+                        print("Couldn't find value, found " + str(src_node[patt_attr]))
+                        print("Patt eq: " + str(patt_eq))
+                    return False
+            except KeyError:
+                if self.debug:
+                    print("Couldn't find " + patt_attr + " on node " + src_node["mm__"])
+                return False
+
         return True
