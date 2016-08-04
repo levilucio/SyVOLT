@@ -23,7 +23,7 @@ class ContractProver:
         self.pathCondGen = None
 
         #super slow
-        self.draw_success_failed = True
+        self.draw_success_failed = False
 
     def find_smallest_pc(self, pc_names):
         smallest = []
