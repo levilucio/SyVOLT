@@ -99,7 +99,8 @@ class NewHimesisMatcher(object):
         if self.patt_eqs_constant or self.patt_eqs_variable:
             self.src_eqs_constant, self.src_eqs_variable = self.load_equations(source_graph)
 
-
+        from pyramify.ramify_actions import get_default_match_code
+        self.default_match_code = get_default_match_code()
 
 
 
@@ -510,7 +511,7 @@ class NewHimesisMatcher(object):
         #     print("Src: " + sourceMM + " Trgt: " + targetMM + " Are feasible: " + str(are_feasible))
         return are_feasible
 
-    #@profile
+    @profile
     def are_semantically_feasible(self, src_node_num, patt_node_num):
         """
             Determines whether the two nodes are syntactically feasible,
@@ -599,6 +600,9 @@ class NewHimesisMatcher(object):
             # If the attribute does not "in theory" exist
             # because igraph actually stores all attribute names in all nodes.
             if not patt_node[attr]:
+                continue
+
+            if patt_node[attr] == self.default_match_code:
                 continue
 
             attr_name = attr[8:]

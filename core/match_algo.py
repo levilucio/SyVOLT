@@ -3,6 +3,8 @@ import sys
 from .himesis import Himesis
 from .himesis_utils import standardize_name, is_RAM_attribute, to_non_RAM_attribute, get_preds_and_succs
 
+from pyramify.ramify_actions import get_default_match_code
+
 class Priority(object):
     """
         Implements heuristics for the HimesisMatcher algorithm.
@@ -552,7 +554,10 @@ class HimesisMatcher(object):
                 continue
             # If the attribute does not "in theory" exist
             # because igraph actually stores all attribute names in all nodes. 
-            elif patt_node[attr] == None:
+            elif patt_node[attr] is None:
+                continue
+
+            if patt_node[attr] == get_default_match_code():
                 continue
 
             attr_name = attr[8:]
