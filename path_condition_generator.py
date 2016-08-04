@@ -1,12 +1,4 @@
 
-from t_core.messages import Packet
-from t_core.matcher import Matcher
-from t_core.iterator import Iterator
-
-from t_core.tc_python.arule import ARule
-from t_core.tc_python.frule import FRule
-
-from itertools import permutations
 
 from core.himesis_utils import disjoint_model_union
 from core.himesis_utils import graph_to_dot
@@ -29,9 +21,6 @@ import time
 from copy import deepcopy
 
 import psutil
-
-#from solver.prolog_attribute_equation_evaluator import PrologAttributeEquationEvaluator
-from solver.simple_attribute_equation_evaluator import SimpleAttributeEquationEvaluator
 
 from util.Tester import Tester
 
@@ -126,33 +115,14 @@ class PathConditionGenerator(object):
         3) G - Build traceability links for merged rules
         """
 
-        # transformation to forward the cardinalities to the apply models
-        # from property_prover_rules.cardinality_resolution.Himesis.HForwardCardinalitiesToApplyModelLHS import \
-        #    HForwardCardinalitiesToApplyModelLHS
-        #from property_prover_rules.cardinality_resolution.Himesis.HForwardCardinalitiesToApplyModelRHS import \
-        #    HForwardCardinalitiesToApplyModelRHS
-        # declare the necessary T-Core rules
-        # self.forward_cardinalities_to_apply = SRule(HForwardCardinalitiesToApplyModelLHS(),
-        # HForwardCardinalitiesToApplyModelRHS())
+
 
         if self.verbosity >= 1:
             print("----------------Start pre-process")
-#         # forward the cardinalities to the apply part of the rules
-#         for layer in self.transformation:
-#             for rule in layer:
-#                 p = Packet()
-#                 p.graph = rule
-#                 p = self.forward_cardinalities_to_apply.packet_in(p)
-#                 rule = p.graph
-#                 print(rule.name)
-#                 print(rule)
 
-                #print('\n')
-
-#        self.debug()
 
                             
-        # TODO: now traceability is being built for all rules. We only need traceability for the rules that have no dependencies, 
+        # now traceability is being built for all rules. We only need traceability for the rules that have no dependencies,
         # as the others are built by the combinators associated to the rule
 
         if self.verbosity >= 1:
