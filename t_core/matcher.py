@@ -64,7 +64,7 @@ class Matcher(RulePrimitive):
 
 
         #0 = ignore errors, 1 = give warnings, 2 = give errors
-        self.warning_level = 1
+        self.warning_level = 2
 
     def print_matcher(self):
         print("Matcher:")
@@ -160,12 +160,12 @@ class Matcher(RulePrimitive):
                 print("self.condition: " + self.condition.name)
 
             elif self.warning_level == 2:
-                raise Exception("Matcher Error: " + str(e))
+                raise Exception("Matcher Error " + str(e))
 
             self.is_success = False
-            self.exception = TransformationException(e)
-            self.exception.packet = packet
-            self.exception.transformation_unit = self
+            # self.exception = TransformationException(e)
+            # self.exception.packet = packet
+            # self.exception.transformation_unit = self
             return packet
         
         # Don't forget to add the match set to the packet, even if no matches were found
