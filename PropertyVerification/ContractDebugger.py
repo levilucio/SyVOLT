@@ -7,8 +7,11 @@ class ContractDebugger:
 
         print("Explaining why contract fails: " + contract_name)
 
-        print(success_pcs)
-        print(failed_pcs)
+        # print("Success PCs: ")
+        # print(success_pcs)
+
+        # print("Failed PCs: ")
+        # print(failed_pcs)
 
         self.get_rule_differences(success_pcs, failed_pcs)
 
@@ -17,8 +20,8 @@ class ContractDebugger:
         rules_in_success = self.get_rules(success_pcs)
         rules_in_failed = self.get_rules(failed_pcs)
 
-        good_rules = [rule for rule in rules_in_success if not rule in rules_in_failed]
-        bad_rules = [rule for rule in rules_in_failed if not rule in rules_in_success]
+        good_rules = sorted([rule for rule in rules_in_success if not rule in rules_in_failed])
+        bad_rules = sorted([rule for rule in rules_in_failed if not rule in rules_in_success])
 
         print("Good rules: (Rules in success set and not failure set)")
         print(good_rules)
@@ -30,7 +33,6 @@ class ContractDebugger:
         rules = []
 
         for pc in pcs:
-            r = self.pathCondGen.rules_in_pc_real_name(pc)
-            print(r)
+            rules +=  self.pathCondGen.rules_in_pc_real_name(pc)
 
-        return rules
+        return list(set(rules))
