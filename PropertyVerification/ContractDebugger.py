@@ -21,7 +21,7 @@ class ContractDebugger:
         print("Good rules: (Rules in success set and not failure set)")
         print(good_rules)
 
-        print("Bad rules: (Rules in failure set and not success set)")
+        print("Bad rules: (Rules common to all in failure set)")
         print(bad_rules)
 
         required_rules = self.slicer.required_rules[contract_name]
@@ -64,7 +64,18 @@ class ContractDebugger:
         rules_in_failed = self.get_rules(failed_pcs)
 
         good_rules = sorted([rule for rule in rules_in_success if not rule in rules_in_failed])
-        bad_rules = sorted([rule for rule in rules_in_failed if not rule in rules_in_success])
+
+        bad_rules = []
+        for rule in rules_in_failed:
+
+            #see if this rule is in all failed PCs
+            if all(rule in self.pathCondGen.rules_in_pc_real_name(pc) for pc in failed_pcs):
+
+                #see if this rule is not in all success PCs
+                if not all(rule in self.pathCondGen.rules_in_pc_real_name(pc) for pc in success_pcs):
+                    bad_rules.append(rule)
+
+        bad_rules = sorted(bad_rules)
 
         return good_rules, bad_rules
 
