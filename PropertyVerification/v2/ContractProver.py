@@ -22,8 +22,7 @@ class ContractProver:
 
         self.pathCondGen = None
 
-        #super slow
-        self.draw_success_failed = False
+        self.draw_success_failed = True
 
     def find_smallest_pc(self, pc_names):
         smallest = []
@@ -139,17 +138,16 @@ class ContractProver:
             print("More than " + str(num_contracts_to_print) + " contracts")
 
         print ('\nSmallest Path Conditions where the contract ' + status + ':')
-        success_smallest_pc_set = self.find_smallest_pc(list_of_pcs[contract_name])
-        for pc_name in success_smallest_pc_set:
+        smallest_pc_set = self.find_smallest_pc(list_of_pcs[contract_name])
+        for pc_name in smallest_pc_set:
             self.print_name(pc_name)
 
-        print('\n')
+            if self.draw_success_failed:
+                shrunk_pc = self.pathCondGen.pc_dict[pc_name]
+                pc = expand_graph(shrunk_pc)
+                graph_to_dot(contract_name + "_" + status + "_" + pc.name, pc)
 
-        if self.draw_success_failed:
-            for pc, pc_name in self.pathCondGen.get_path_conditions(expand = False, get_pretty_name = False):
-                if pc_name in list_of_pcs[contract_name]:
-                    pc = expand_graph(pc)
-                    graph_to_dot(contract_name + "_" + status + "_" + pc.name, pc)
+        print('\n')
 
     def print_name(self, name):
 
