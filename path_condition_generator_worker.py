@@ -3,8 +3,6 @@ from t_core.messages import Packet
 from t_core.matcher import Matcher
 from t_core.iterator import Iterator
 
-from t_core.tc_python.srule import SRule
-from t_core.tc_python.frule import FRule
 
 import time
 
@@ -12,9 +10,6 @@ from multiprocessing import Process
 from core.himesis_utils import expand_graph, shrink_graph, delete_graph, disjoint_model_union, print_graph, graph_to_dot, get_preds_and_succs
 
 from copy import deepcopy
-
-from solver.simple_attribute_equation_evaluator import SimpleAttributeEquationEvaluator
-from solver.simple_attribute_equation_evaluator import is_consistent
 
 import numpy.random as nprnd
 

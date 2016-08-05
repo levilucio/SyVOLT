@@ -80,8 +80,6 @@ class PathConditionGenerator(object):
         self.num_path_conditions = 0
 
         self.verbosity = args.verbosity
-        
-        self.attributeEquationEvaluator = SimpleAttributeEquationEvaluator(self.verbosity)
 
         #with PyCallGraph(output=GraphvizOutput()):
         self._pre_process()
@@ -379,7 +377,6 @@ class PathConditionGenerator(object):
                 new_worker.daemon = True
 
                 new_worker.currentPathConditionSet = pc_chunks[i]#pc_queue
-                new_worker.attributeEquationEvaluator = self.attributeEquationEvaluator
 
                 #print("Size of chunk: " + str(len(pc_chunks[i])))
 
