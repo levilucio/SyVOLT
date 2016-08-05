@@ -1,7 +1,7 @@
 from profiler import *
 
 #from PropertyVerification.v2.disambiguate import Disambiguator
-from core.himesis_utils import graph_to_dot, expand_graph
+from core.himesis_utils import graph_to_dot, expand_graph, get_filename
 
 import multiprocessing
 from multiprocessing import Manager
@@ -141,6 +141,7 @@ class ContractProver:
         smallest_pc_set = self.find_smallest_pc(list_of_pcs[contract_name])
         for pc_name in smallest_pc_set:
             self.print_name(pc_name)
+            print("Filename: " + get_filename(pc_name))
 
             if self.draw_success_failed:
                 shrunk_pc = self.pathCondGen.pc_dict[pc_name]
