@@ -468,6 +468,7 @@ class NewHimesisMatcher(object):
         print(match_set)
         return match_set
 
+    @staticmethod
     def print_link(self, graph, n0, n1, nlink):
         if nlink is not None:
             link = graph.vs[nlink]["mm__"].replace("MT_pre__", "")
@@ -479,7 +480,8 @@ class NewHimesisMatcher(object):
 
             attr_string = attr_string.replace("#","").replace("=", "").replace("This code is executed when evaluating if a node shall be matched by this rule. You can access the value of the current node's attribute value by: attr_value. You can access any attribute x of this node by: this['x']. If the constraint relies on attribute values from other nodes, use the LHS/NAC constraint instead. The given constraint must evaluate to a boolean expression.", "")
 
-            link += " (" + attr_string + ") "
+            if attr_string != "None":
+                link += " (" + attr_string + ") "
 
         else:
             link = "backward_link"
