@@ -25,6 +25,8 @@ class Slicer:
 
         self.rules = rules
 
+        self.required_rules = {}
+
         for rule in self.rules:
             self.rules[rule] = build_traceability(deepcopy(self.rules[rule]))
 
@@ -76,9 +78,10 @@ class Slicer:
                 #    continue
 
                 r_rules = self.find_required_rules(rule.name, [rule])
-                r_rules = sorted([r.name for r in r_rules])
-                print("Rule " + rule.name + " depends on: " + str(r_rules))
+                self.required_rules[rule.name] = r_rules
 
+                r_rules_names = sorted([r for r,v in r_rules.items()])
+                print("Rule " + rule.name + " depends on: " + str(r_rules_names))
         for layer in transformation:
             for rule in layer:
                 self.check_for_missing_elements(rule, is_contract=False)
@@ -157,25 +160,29 @@ class Slicer:
 
         required_rules = self.find_required_rules(contract_name, contract_list, True, verbosity=0)
 
+        self.required_rules[contract_name] = required_rules
 
-        rr_names = [rule.name for rule in required_rules]
+        rr_names = [rule for rule, v in required_rules.items()]
 
         print("Required rules for contract " + contract_name + ": " + str(sorted(rr_names)))
 
         #this contract is a rule, so make sure it requires itself
         if contract_name in self.rules.keys():
-            required_rules.append(self.rules[contract_name])
+            required_rules[contract_name] = []
 
         #raise Exception("Contract Required Rules")
 
-        for rr in required_rules:
+        required_rules = list(required_rules.keys())
+        for rr in required_rules.copy():
 
-            new_rrs = self.find_required_rules(rr.name, [rr], False, self.transformation)
-            for new_rr in new_rrs:
-                if new_rr not in required_rules:
-                    required_rules.append(new_rr)
+            rule = self.rules[rr]
 
-        rr_names = [rule.name for rule in required_rules]
+            new_rrs = self.find_required_rules(rule.name, [rule], False, self.transformation)
+            for rr2, v in new_rrs.items():
+                if rr2 not in required_rules:
+                    required_rules.append(rr2)
+
+        rr_names = required_rules
 
         #add in the rules which might be needed for subsumption
         rrules_copy = list.copy(rr_names)
@@ -227,7 +234,7 @@ class Slicer:
         if self.debug:
             print("\nLooking for required rules for pattern: " + pattern_name)
 
-        required_rules = []
+        required_rules = {}
 
         for layer in self.transformation:
             # don't look at the same layer that a rule is on
@@ -277,16 +284,18 @@ class Slicer:
                         graph_me = set([pattern.vs[n]["mm__"].replace("MT_pre__", "") for n in graph_me])
 
                         if len(graph_me.intersection(rule_me)) > 0:
-                            required_rules.append(rule)
+                            try:
+                                required_rules[rule].append(graph_me)
+                            except KeyError:
+                                required_rules[rule] = [graph_me]
                             #continue
 
-                    if self.match_links(links, pattern, self.data[pattern.name], rule, self.data[rule.name], self.superclasses_dict,
-                                   verbosity = verbosity):
-                        required_rules.append(rule)
+                    self.match_links(required_rules, links, pattern, self.data[pattern.name], rule, self.data[rule.name], self.superclasses_dict,
+                                   verbosity = verbosity)
 
-        return list(set(required_rules))
+        return required_rules
 
-    def match_links(self, links, pattern, pattern_data, graph, source_data, superclasses_dict, verbosity=0):
+    def match_links(self, required_rules, links, pattern, pattern_data, graph, source_data, superclasses_dict, verbosity=0):
 
         matcher = NewHimesisMatcher(graph, pattern, pred1=source_data, pred2=pattern_data, superclasses_dict=superclasses_dict, skip_equations = True)
         # pattern_mms = pattern.vs["mm__"]
@@ -303,6 +312,10 @@ class Slicer:
                     if pattern.name not in self.found_isolated_match_elements.keys():
                         self.found_isolated_match_elements[pattern.name] = []
                     self.found_isolated_match_elements[pattern.name].append(iso_match_element)
+                    try:
+                        required_rules[graph.name].append(iso_match_element)
+                    except KeyError:
+                        required_rules[graph.name] = [iso_match_element]
                     does_match = True
 
         # copy these links, as we might need to remove some
@@ -369,6 +382,11 @@ class Slicer:
                         if pattern.name not in self.found_links.keys():
                             self.found_links[pattern.name] = []
                         self.found_links[pattern.name].append([patt0_n, patt1_n, patt_link_n])
+
+                        try:
+                            required_rules[graph.name].append([patt0_n, patt1_n, patt_link_n])
+                        except KeyError:
+                            required_rules[graph.name] = [[patt0_n, patt1_n, patt_link_n]]
 
                         does_match = True
                         #return True
