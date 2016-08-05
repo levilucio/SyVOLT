@@ -15,9 +15,11 @@ from solver.simple_attribute_equation_evaluator import compare_constant_equation
 class NewHimesisMatcher(object):
 
 
-    def __init__(self, source_graph, pattern_graph, pred1 = {}, succ1 = {}, pred2 = {}, succ2 = {}, superclasses_dict = {}):
+    def __init__(self, source_graph, pattern_graph, pred1 = {}, succ1 = {}, pred2 = {}, succ2 = {}, superclasses_dict = {}, skip_equations = False):
         self.debug = False
         self.print_reason_failed = False
+
+        self.skip_equations = skip_equations
 
         self.compare_to_old = False
 
@@ -107,6 +109,10 @@ class NewHimesisMatcher(object):
 
 
     def load_equations(self, graph):
+
+        if self.skip_equations:
+            return {}, {}
+
         try:
             eqs = graph["equations"]
         except KeyError:
