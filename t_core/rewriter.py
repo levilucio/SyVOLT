@@ -59,8 +59,7 @@ class Rewriter(RulePrimitive):
 
                     #get dict from label to node num
                     RHS_labels = {}
-                    for n in range(self.condition.vcount()):
-                        node = self.condition.vs[n]
+                    for n, node in enumerate(self.condition.vs):
                         if node["MT_label__"] == '':
                             continue
                         RHS_labels[int(node["MT_label__"])] = n
@@ -118,18 +117,3 @@ class Rewriter(RulePrimitive):
             self.is_success = True
             return packet
 
-
-class Rewriter_Equation(Rewriter):
-
-    def __init__(self, condition):
-        super(Rewriter_Equation, self).__init__(condition)
-
-
-    def packet_in(self, packet, verbosity = 0):
-
-        packet = super(Rewriter_Equation, self).packet_in(packet, verbosity)
-
-        if self.is_success:
-            solver.combine_equations(packet.graph, self.condition)
-
-        return packet
