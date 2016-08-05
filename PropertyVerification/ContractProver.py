@@ -1,6 +1,6 @@
 from profiler import *
 
-#from PropertyVerification.v2.disambiguate import Disambiguator
+from PropertyVerification.ContractDebugger import ContractDebugger
 from core.himesis_utils import graph_to_dot, expand_graph, get_filename
 
 import multiprocessing
@@ -50,12 +50,14 @@ class ContractProver:
         self.verbosity = pathCondGen.verbosity
         self.pathCondGen = pathCondGen
 
+        all_contracts = atomic_contracts + if_then_contracts
+
         print("\nStarting to prove contracts:")
         start_time = time.time()
 
         contract_failed_pcs = {}
         contract_succeeded_pcs = {}
-        for contract_name, atomic_contract in atomic_contracts + if_then_contracts:
+        for contract_name, atomic_contract in all_contracts:
             print("Proving: " + atomic_contract.to_string())
             contract_failed_pcs[contract_name] = []
             contract_succeeded_pcs[contract_name] = []
@@ -109,7 +111,7 @@ class ContractProver:
 
 
         print("")
-        for contract_name, atomic_contract in atomic_contracts + if_then_contracts:
+        for contract_name, atomic_contract in all_contracts:
 
             self.report_success_fail("Succeeded", contract_succeeded_pcs, contract_name)
 
@@ -119,12 +121,18 @@ class ContractProver:
                 atomic_contract.draw()
 
         print("Summary:")
-        for contract_name, atomic_contract in atomic_contracts + if_then_contracts:
+        for contract_name, atomic_contract in all_contracts:
             print("Name:" + contract_name)
             print("\tNum Succeeded Contracts: " + str(len(contract_succeeded_pcs[contract_name])))
             print("\tNum Failed Contracts: " + str(len(contract_failed_pcs[contract_name])))
 
         print("Took " + str(proof_time) + " seconds to prove " + str(len(atomic_contracts + if_then_contracts)) + " contracts\n")
+
+        if len(all_contracts) == 1:
+            cd = ContractDebugger(self.pathCondGen)
+            contract_name, contract = all_contracts[0]
+            if len(contract_failed_pcs[contract_name]) > 0:
+                cd.explain_failures(contract_name, contract, contract_succeeded_pcs[contract_name], contract_failed_pcs[contract_name])
 
     def report_success_fail(self, status, list_of_pcs, contract_name):
         num_contracts_to_print = 20
