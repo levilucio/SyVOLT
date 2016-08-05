@@ -10,6 +10,8 @@ import time
 
 from profiler import *
 
+from solver.simple_attribute_equation_evaluator import compare_constant_equations, compare_variable_equations
+
 class NewHimesisMatcher(object):
 
 
@@ -553,7 +555,7 @@ class NewHimesisMatcher(object):
             except KeyError:
                 src_constant_equations = []
 
-            if not self.compare_constant_equations(patt_constant_equations, src_constant_equations, src_node):
+            if not compare_constant_equations(patt_constant_equations, src_constant_equations, src_node):
                 return False
         except KeyError:
             pass
@@ -567,7 +569,7 @@ class NewHimesisMatcher(object):
             except KeyError:
                 src_variable_equations = []
 
-            if not self.compare_variable_equations(patt_variable_equations, src_variable_equations):
+            if not compare_variable_equations(patt_variable_equations, src_variable_equations):
                 return False
         except KeyError:
             pass
@@ -630,91 +632,3 @@ class NewHimesisMatcher(object):
         return True
 
 
-    def compare_constant_equations(self, patt_constant_equations, src_constant_equations, src_node):
-        for patt_eq in patt_constant_equations:
-            patt_attr = patt_eq[0]
-
-            # skip matching pivots
-            if patt_attr == "pivot" or "ApplyAttribute" in patt_attr:
-                continue
-
-            patt_value = patt_eq[1]
-
-            found = False
-            for (src_attr, src_value) in src_constant_equations:
-                if patt_attr == src_attr:
-                    if patt_value == src_value:
-                        found = True
-                        break
-                    else:
-                        if self.debug:
-                            print("Equations do not match")
-                        return False
-
-            if found:
-                continue
-
-            try:
-                if src_node[patt_attr] != patt_value:
-                    if self.debug:
-                        print("Couldn't find value, found " + str(src_node[patt_attr]))
-                        print("Patt eq: " + str(patt_eq))
-                    return False
-            except KeyError:
-                if self.debug:
-                    print("Couldn't find " + patt_attr + " on node " + src_node["mm__"])
-                return False
-
-        return True
-
-    def compare_variable_equations(self, patt_variable_equations, src_variable_equations):
-
-        for patt_eq in patt_variable_equations:
-            patt_attr = patt_eq[0]
-
-            patt_value = patt_eq[1]
-
-            found = False
-            for (src_attr, src_value) in src_variable_equations:
-
-                if patt_attr == src_attr:
-
-                    found = True
-                    if not self.recursive_compare(patt_value, src_value):
-                        return False
-
-            if not found:
-                return False
-
-
-
-        return True
-
-    def recursive_compare(self, patt, src):
-        if len(patt) == 0 and len(src) == 0:
-            return True
-
-        if len(patt) != len(src):
-            return False
-
-        head_patt = patt[0]
-        head_src = src[0]
-
-        if isinstance( head_patt, int) and isinstance( head_src, int):
-            return True
-
-        if isinstance( head_patt, str) and isinstance( head_src, str) and head_patt == head_src:
-            return True
-
-        if len(patt) > 1 and len(src) > 1:
-
-            tail_patt = patt[1]
-            tail_src = src[1]
-
-            if not self.recursive_compare(tail_patt, tail_src):
-                return False
-
-        if head_patt == head_src:
-            return True
-
-        return False
