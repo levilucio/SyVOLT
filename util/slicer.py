@@ -11,7 +11,7 @@ class Slicer:
 
     def __init__(self, rules, transformation, superclasses_dict, overlapping_rules):
 
-        self.debug = True
+        self.debug = False
 
         self.data = {}
         self.direct_links = {}
@@ -245,6 +245,8 @@ class Slicer:
                 if is_contract:
                     rule_me = self.match_elements[rule.name]
                     rule_me = set([rule.vs[n]["mm__"] for n in rule_me])
+                else:
+                    rule_me = set()
 
                 source_data = self.data[rule.name]
                 source_mms = rule.vs["mm__"]
@@ -284,7 +286,7 @@ class Slicer:
 
         return list(set(required_rules))
 
-    def match_links(self, links, pattern, pattern_data, graph, source_data, superclasses_dict, verbosity=0, match_all = False):
+    def match_links(self, links, pattern, pattern_data, graph, source_data, superclasses_dict, verbosity=0):
 
         matcher = NewHimesisMatcher(graph, pattern, pred1=source_data, pred2=pattern_data, superclasses_dict=superclasses_dict)
         # pattern_mms = pattern.vs["mm__"]
@@ -428,12 +430,6 @@ class Slicer:
                         print("Error! Direct link missing!")
                         print(mms[dl[0]] + " - " + mms[dl[2]] + " - " + mms[dl[1]])
                     #print(dl)
-
-
-
-
-
-
 
                     #raise Exception()
                 elif found_links.count(dl) < direct_links.count(dl):
