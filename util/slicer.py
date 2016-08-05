@@ -285,9 +285,9 @@ class Slicer:
 
                         if len(graph_me.intersection(rule_me)) > 0:
                             try:
-                                required_rules[rule].append(graph_me)
+                                required_rules[rule.name].append(graph_me)
                             except KeyError:
-                                required_rules[rule] = [graph_me]
+                                required_rules[rule.name] = [graph_me]
                             #continue
 
                     self.match_links(required_rules, links, pattern, self.data[pattern.name], rule, self.data[rule.name], self.superclasses_dict,
