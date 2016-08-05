@@ -1,7 +1,8 @@
 class ContractDebugger:
 
-    def __init__(self, pathCondGen):
+    def __init__(self, pathCondGen, slicer):
         self.pathCondGen = pathCondGen
+        self.slicer = slicer
 
     def explain_failures(self, contract_name, contract, success_pcs, failed_pcs):
 
@@ -14,6 +15,8 @@ class ContractDebugger:
         # print(failed_pcs)
 
         self.get_rule_differences(success_pcs, failed_pcs)
+
+        print(self.slicer)
 
     def get_rule_differences(self, success_pcs, failed_pcs):
 

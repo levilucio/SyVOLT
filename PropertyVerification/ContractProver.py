@@ -15,7 +15,7 @@ from time import sleep
 
 class ContractProver:
 
-    def __init__(self):
+    def __init__(self, slicer):
         #self.disambig = Disambiguator(0)
 
         self.verbosity = 2
@@ -23,6 +23,9 @@ class ContractProver:
         self.pathCondGen = None
 
         self.draw_success_failed = False
+
+        #used for debugging the contract
+        self.slicer = slicer
 
     def find_smallest_pc(self, pc_names):
         smallest = []
@@ -129,7 +132,7 @@ class ContractProver:
         print("Took " + str(proof_time) + " seconds to prove " + str(len(atomic_contracts + if_then_contracts)) + " contracts\n")
 
         if len(all_contracts) == 1:
-            cd = ContractDebugger(self.pathCondGen)
+            cd = ContractDebugger(self.pathCondGen, self.slicer)
             contract_name, contract = all_contracts[0]
             if len(contract_failed_pcs[contract_name]) > 0:
                 cd.explain_failures(contract_name, contract, contract_succeeded_pcs[contract_name], contract_failed_pcs[contract_name])

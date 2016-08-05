@@ -159,7 +159,7 @@ class Test:
 
         s.verbosity = 0
 
-        contract_prover = ContractProver()
+        contract_prover = ContractProver(slicer)
 
         contract_prover.prove_contracts(s, self.atomic_contracts, [])#self.if_then_contracts)
         print("\n\nTime to build the set of path conditions: " + str(pc_time))
