@@ -175,35 +175,3 @@ def var_eq_to_string(value):
     print("Value: " + str(value))
     print(len(value))
     raise Exception("Error in variable equation. Value is not parsable")
-
-
-
-def recursive_compare(self, patt, src):
-    #print("Pattern: " + str(patt))
-    #print("Source: " + str(src))
-    if len(patt) == 0 and len(src) == 0:
-        return True
-
-    if len(patt) != len(src):
-        return False
-
-    head_patt = patt[0]
-    head_src = src[0]
-
-    if isinstance(head_patt, int) and isinstance(head_src, int):
-        return True
-
-    if isinstance(head_patt, str) and isinstance(head_src, str) and head_patt == head_src:
-        return True
-
-    if len(patt) > 1 and len(src) > 1:
-        tail_patt = patt[1]
-        tail_src = src[1]
-
-        if not self.recursive_compare(tail_patt, tail_src):
-            return False
-
-    if head_patt == head_src:
-        return True
-
-    return False
