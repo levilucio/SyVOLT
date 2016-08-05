@@ -2,9 +2,9 @@ from core.himesis_utils import graph_to_dot, load_class
 from util.ecore_utils import EcoreUtils
 from core.himesis_plus import buildPreListFromClassNames
 
-from PropertyVerification.v2.atomic_contract import AtomicContract
-from PropertyVerification.v2.if_then_contract import IfThenContract
-from PropertyVerification.v2.prop_logic import *
+from PropertyVerification.atomic_contract import AtomicContract
+from PropertyVerification.if_then_contract import IfThenContract
+from PropertyVerification.prop_logic import *
 
 import os
 

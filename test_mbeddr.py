@@ -11,11 +11,7 @@ from pyramify.PyRamify import PyRamify
 from util.ecore_utils import EcoreUtils
 from core.himesis_plus import buildPreListFromClassNames
 
-from PropertyVerification.v2.atomic_contract import AtomicContract
-from PropertyVerification.v2.ContractProver import ContractProver
-
-from PropertyVerification.v2.if_then_contract import IfThenContract
-from PropertyVerification.v2.prop_logic import NotContract, AndContract
+from PropertyVerification.ContractProver import ContractProver
 
 from core.himesis_utils import graph_to_dot, load_directory
 from util.test_script_utils import select_rules, get_sub_and_super_classes,\

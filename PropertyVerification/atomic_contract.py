@@ -7,7 +7,7 @@ Created on 2013-08-17
 from t_core.messages import Packet
 from t_core.matcher import Matcher
 
-from PropertyVerification.v2.contract import Contract
+from PropertyVerification.contract import Contract
 
 from core.himesis_utils import graph_to_dot
 from core.himesis_plus import look_for_attached

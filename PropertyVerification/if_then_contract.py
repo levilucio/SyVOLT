@@ -1,4 +1,4 @@
-from PropertyVerification.v2.contract import Contract
+from PropertyVerification.contract import Contract
 
 class IfThenContract(Contract):
 

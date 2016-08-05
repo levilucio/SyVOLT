@@ -22,12 +22,7 @@ from core.himesis_utils import graph_to_dot, load_directory
 # the purpose is to do scalability testing with multiple configurations and multiple sets of rules
 
 
-from PropertyVerification.v2.atomic_contract import AtomicContract
-from PropertyVerification.v2.ContractProver import ContractProver
-
-from PropertyVerification.v2.if_then_contract import IfThenContract
-from PropertyVerification.v2.prop_logic import NotContract, AndContract
-
+from PropertyVerification.ContractProver import ContractProver
 
 from util.parser import load_parser
 

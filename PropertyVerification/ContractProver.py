@@ -6,7 +6,7 @@ from core.himesis_utils import graph_to_dot, expand_graph, get_filename
 import multiprocessing
 from multiprocessing import Manager
 
-from PropertyVerification.v2.prover_worker import prover_worker
+from PropertyVerification.prover_worker import prover_worker
 
 from util.progress import ProgressBar
 
@@ -22,7 +22,7 @@ class ContractProver:
 
         self.pathCondGen = None
 
-        self.draw_success_failed = True
+        self.draw_success_failed = False
 
     def find_smallest_pc(self, pc_names):
         smallest = []
