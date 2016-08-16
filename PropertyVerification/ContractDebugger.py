@@ -45,15 +45,17 @@ class ContractDebugger:
         contract_mms = [mm.replace("MT_pre__", "") for mm in contract.complete.vs["mm__"]]
 
         print("")
-        print("Contract requires elements of type:")
-        for iso in required_iso_elements:
-            print("\t" + contract_mms[iso])
+        if len(required_iso_elements) > 0:
+            print("Contract requires elements from good rules of type:")
+            for iso in required_iso_elements:
+                print("\t" + contract_mms[iso])
 
-        print("Contract requires links of type:")
-        for link in required_links:
-            n0, n1, nlink = link
-            print("\t", end="")
-            NewHimesisMatcher.print_link(None, contract.complete, n0, n1, nlink)
+        if len(required_links) > 0:
+            print("Contract requires links from good rules of type:")
+            for link in required_links:
+                n0, n1, nlink = link
+                print("\t", end="")
+                NewHimesisMatcher.print_link(None, contract.complete, n0, n1, nlink)
 
         print("")
 
