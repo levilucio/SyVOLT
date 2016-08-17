@@ -133,11 +133,11 @@ class path_condition_generator_worker(Process):
                     #print "Number of Path Conditions generated so far: " +  str(len(self.currentPathConditionSet))
                     #print "Number of Path Conditions Percentage: " +  str(int(pathConditionIndex / float(pathConSetLength) * 100))
 
-                subsumingRules = None
+                subsumingRules = []
                 if rule_name in self.overlappingRules.keys():
                     subsumingRules = self.overlappingRules[rule_name]
 
-                subsumedRules = None
+                subsumedRules = []
                 if rule_name in self.subsumption.keys():
                     subsumedRules = self.subsumption[rule_name]
 
@@ -168,21 +168,17 @@ class path_condition_generator_worker(Process):
 
                         child_pc_name = childrenPathConditions[child_pc_index]
                         
-                        subsumingRulesinPC = False
-                        
-                        if subsumingRules != None:
-                            for sRule in subsumingRules:
-                                if sRule in child_pc_name:
-                                    subsumingRulesinPC = True
-                                    break     
-                                
-                        subsumedRulesinPC = False
-                        
-                        if subsumedRules != None:
-                            for sRule in subsumedRules:
-                                if sRule in child_pc_name:
-                                    subsumedRulesinPC = True
-                                    break              
+                        has_subsuming = any(sRule in child_pc_name for sRule in subsumingRules)
+                        if has_subsuming:
+                            if self.verbosity >= 2:
+                                print("Skipping child: " + child_pc_name + " due to presence of subsuming rule")
+                            continue
+
+                        has_subsumed = any(sRule in child_pc_name for sRule in subsumedRules)
+                        if has_subsumed:
+                            if self.verbosity >= 2:
+                                print("Skipping child: " + child_pc_name + " due to presence of subsumed rule")
+                            continue
                         
     #                     if not (rule_name in self.overlappingRules.keys() or\
     #                             (rule_name in self.overlappingRules.keys() and subsumedRulesinPC)):
@@ -194,7 +190,7 @@ class path_condition_generator_worker(Process):
                         # dealt with during the second phase - i.e. all rules that execute and subsume
                         # others have to get their subsumed rules executed too.   
                         
-                        if not (subsumingRulesinPC or subsumedRulesinPC or ruleInLoopAndHasSubsumingParent):
+                        if not (ruleInLoopAndHasSubsumingParent):
 
                             cpc = self.pc_dict[child_pc_name]
 
