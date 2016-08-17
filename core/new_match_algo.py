@@ -18,6 +18,8 @@ class NewHimesisMatcher(object):
     def __init__(self, source_graph, pattern_graph, pred1 = {}, succ1 = {}, pred2 = {}, succ2 = {}, superclasses_dict = {}, skip_equations = False):
         self.debug = False
         self.print_reason_failed = False
+        self.failed_iso_elements = []
+        self.failed_links = []
 
         self.skip_equations = skip_equations
 
@@ -222,6 +224,9 @@ class NewHimesisMatcher(object):
             print("Source eqs (variable)")
             print(self.src_eqs_variable)
 
+        if len(self.superclasses_dict) == 0:
+            raise Exception("Error: Superclasses dictionary is empty!")
+
 
         for mapping in self._match():
             yield mapping
@@ -261,8 +266,9 @@ class NewHimesisMatcher(object):
 
             if not matched_element:
                 if self.print_reason_failed:
-                    print("Failed on iso element: " + str(iso_match_element))
-                    #failed_matches.append(iso_match_element)
+                    #print("Failed on iso element: " + str(iso_match_element))
+                    if iso_match_element not in self.failed_iso_elements:
+                        self.failed_iso_elements.append(iso_match_element)
                 return
 
         links = [
@@ -287,10 +293,10 @@ class NewHimesisMatcher(object):
 
                 if self.debug:
                     print("\n===================Checking Pattern " + self.pattern_graph.name + " nodes:")
-                    self.print_link(self.pattern_graph, patt0_n, patt1_n, patt_link_n)
+                    self.print_link(self, self.pattern_graph, patt0_n, patt1_n, patt_link_n)
 
 
-                    print("\nSource Graph nodes")# + self.source_graph.name + " nodes:")
+                    #print("\nSource Graph nodes")# + self.source_graph.name + " nodes:")
                     # for graph_n0_n, graph_n1_n, graph_link_n in self.source_data["direct_links"]:
                     #     self.print_link(self.source_graph, graph_n0_n, graph_n1_n, graph_link_n)
                     # print("\n===================\n")#End Source Graph " + self.source_graph.name + " nodes:")
@@ -299,7 +305,7 @@ class NewHimesisMatcher(object):
 
                     # if self.debug:
                     #     print("\nChecking Graph " + self.source_graph.name + " nodes:")
-                    #     self.print_link(self.source_graph, graph_n0_n, graph_n1_n, graph_link_n)
+                    #     self.print_link(self, self.source_graph, graph_n0_n, graph_n1_n, graph_link_n)
 
                     if patt_link_n is not None and graph_link_n is not None:
                         graph_link_MM = self.source_mms[graph_link_n]
@@ -316,8 +322,8 @@ class NewHimesisMatcher(object):
                         nodes_match_link = False
 
                     if not nodes_match_link:
-                        # if self.debug:
-                        #     print("Link doesn't match")
+                        if self.debug:
+                            print("Link doesn't match")
                         continue
 
 
@@ -336,12 +342,26 @@ class NewHimesisMatcher(object):
                         except KeyError:
                             link_matches[patt_link] = [source_link]
 
+                    if self.debug:
+
+                        if not self.match_nodes(graph_n0_n, patt0_n):
+                            print("First nodes didn't match")
+                        if not self.match_nodes(graph_n1_n, patt1_n):
+                            print("Second nodes didn't match")
+
+                        print("Pattern link:")
+                        self.print_link(self, self.pattern_graph, patt0_n, patt1_n, patt_link_n)
+                        print("Source link:")
+                        self.print_link(self, self.source_graph, graph_n0_n, graph_n1_n, graph_link_n)
+
                 if not found_match and len(self.pattern_data["isolated_match_elements"]) == 0:
                     if self.debug or self.print_reason_failed:
-                        print("Matching failed on:")
-                        self.print_link(self.pattern_graph, patt0_n, patt1_n, patt_link_n)
+                        #print("Matching failed on:")
+                        #self.print_link(self, self.pattern_graph, patt0_n, patt1_n, patt_link_n)
+                        if (patt0_n, patt1_n, patt_link_n) not in self.failed_links:
+                            self.failed_links.append((patt0_n, patt1_n, patt_link_n))
 
-                        raise Exception()
+                        #raise Exception()
                     return
 
 
