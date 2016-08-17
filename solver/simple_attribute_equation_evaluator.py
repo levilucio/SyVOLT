@@ -105,6 +105,7 @@ def compare_constant_equations(patt_constant_equations, src_constant_equations, 
 
 def compare_variable_equations(patt_variable_equations, src_variable_equations):
 
+    debug = False
     for patt_eq in patt_variable_equations:
 
         patt_attr = patt_eq[0]
@@ -123,25 +124,33 @@ def compare_variable_equations(patt_variable_equations, src_variable_equations):
 
                 src_str = var_eq_to_string(src_value)
 
-                # print("Patt: " + patt_str)
-                # print("Src: " + src_str)
+                if debug:
+                    print("Patt: " + patt_str)
+                    print("Src: " + src_str)
 
                 if patt_str == src_str:
                     found = True
 
                 #we don't know what the value is
+                elif patt_str.replace("X", "") == "":
+                    found = True
+
                 elif src_str.replace("X", "") == "":
                     found = True
 
                 elif "*" in patt_str:
                     if expr.match(src_str):
-                        #print("Matched")
+                        if debug:
+                            print("Matched on regex")
                         found = True
                     else:
-                        #print("Failed")
+                        if debug:
+                            print("Failed on regex")
                         return False
 
                 else:
+                    if debug:
+                        print("Didn't match on attr: " + patt_attr)
                     return False
 
         if not found:
