@@ -13,6 +13,8 @@ class ContractDebugger:
 
         print("Explaining why contract fails: " + contract_name)
 
+        contract.draw()
+
         # print("Success PCs: ")
         # print(success_pcs)
 
@@ -45,7 +47,12 @@ class ContractDebugger:
         # print(required_iso_elements)
         # print(required_links)
 
-        contract_mms = [mm.replace("MT_pre__", "") for mm in contract.complete.vs["mm__"]]
+        if contract.__name__ == "IfThenContract":
+            contract_complete = contract.then_contract.complete
+        else:
+            contract_complete = contract.complete
+
+        contract_mms = [mm.replace("MT_pre__", "") for mm in contract_complete.vs["mm__"]]
 
         print("")
         if len(required_iso_elements) > 0:
@@ -58,7 +65,7 @@ class ContractDebugger:
             for link in required_links:
                 n0, n1, nlink = link
                 print("\t", end="")
-                NewHimesisMatcher.print_link(None, contract.complete, n0, n1, nlink)
+                NewHimesisMatcher.print_link(None, contract_complete, n0, n1, nlink)
 
         print("")
 
@@ -68,7 +75,7 @@ class ContractDebugger:
         failed_pc = self.pathCondGen.pc_dict[failed_pc_name]
         failed_pc = expand_graph(failed_pc)
 
-        matcher = NewHimesisMatcher(failed_pc, contract.complete)
+        matcher = NewHimesisMatcher(failed_pc, contract_complete)
         matcher.print_reason_failed = True
         matcher.debug = False
 
