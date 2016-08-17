@@ -548,21 +548,20 @@ class NewHimesisMatcher(object):
 
         #print("Source: " + sourceMM + " vs Target: " + targetMM)
 
-        if sourceMM != targetMM:
+        if sourceMM == targetMM:
+            return self.are_semantically_feasible(graph_node, patt_node)
 
             # if debug:
             #    print("Superclasses: " + str(superclasses_dict))
 
             # print("Superclasses: " + str(superclasses_dict))
 
-            if sourceMM not in self.superclasses_dict or not self.superclasses_dict[sourceMM] or targetMM not in \
-                    self.superclasses_dict[sourceMM]:
+        if sourceMM in self.superclasses_dict and self.superclasses_dict[sourceMM] and targetMM in self.superclasses_dict[sourceMM]:
+            return self.are_semantically_feasible(graph_node, patt_node)
 
                 # if self.debug:
                 #     print("Src: " + sourceMM + " Trgt: " + targetMM + " Node mms don't match")
-                return False
-
-        return self.are_semantically_feasible(graph_node, patt_node)
+        return False
 
     #@profile
     def are_semantically_feasible(self, src_node_num, patt_node_num):
