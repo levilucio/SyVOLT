@@ -133,7 +133,19 @@ class path_condition_generator_worker(Process):
                     #print "Number of Path Conditions generated so far: " +  str(len(self.currentPathConditionSet))
                     #print "Number of Path Conditions Percentage: " +  str(int(pathConditionIndex / float(pathConSetLength) * 100))
 
+                subsumingRules = None
+                if rule_name in self.overlappingRules.keys():
+                    subsumingRules = self.overlappingRules[rule_name]
 
+                subsumedRules = None
+                if rule_name in self.subsumption.keys():
+                    subsumedRules = self.subsumption[rule_name]
+
+                # calculate if the rule is in a subsuming loop and has a subsuming parent
+                ruleInLoopAndHasSubsumingParent = False
+                for loop in self.loopingRuleSubsumption:
+                    if rule_name in loop and loop[0] != rule_name:
+                        ruleInLoopAndHasSubsumingParent = True
 
 
                 # possible cases of rule combination
@@ -151,20 +163,6 @@ class path_condition_generator_worker(Process):
                     # check if any of the subsuming rules exists in the path condition
                     
                     localPathConditionLayerAccumulator = []
-                    
-                    subsumingRules = None
-                    if rule_name in self.overlappingRules.keys():
-                        subsumingRules = self.overlappingRules[rule_name]
-                        
-                    subsumedRules = None
-                    if rule_name in self.subsumption.keys():
-                        subsumedRules = self.subsumption[rule_name]
-                        
-                    # calculate if the rule is in a subsuming loop and has a subsuming parent
-                    ruleInLoopAndHasSubsumingParent = False
-                    for loop in self.loopingRuleSubsumption:
-                        if rule_name in loop and loop[0] != rule_name:
-                            ruleInLoopAndHasSubsumingParent = True                            
                            
                     for child_pc_index in range(len(childrenPathConditions)):
 
@@ -315,19 +313,7 @@ class path_condition_generator_worker(Process):
 
                                 partialTotalPathCondLayerAccumulator = []
                                 
-                                subsumingRules = None
-                                if rule_name in self.overlappingRules.keys():
-                                    subsumingRules = self.overlappingRules[rule_name]
-                                   
-                                subsumedRules = None
-                                if rule_name in self.subsumption.keys():  
-                                    subsumedRules = self.subsumption[rule_name]
-                                    
-                                # calculate if the rule is in a subsuming loop and has a subsuming parent
-                                ruleInLoopAndHasSubsumingParent = False
-                                for loop in self.loopingRuleSubsumption:
-                                    if rule_name in loop and loop[0] != rule_name:
-                                        ruleInLoopAndHasSubsumingParent = True    
+
                                                                     
                                 # now combine the rule with the newly created path condition using the current combinator
                                 # in all the places where the rule matched on top of the path condition
