@@ -1,12 +1,15 @@
 from core.new_match_algo import NewHimesisMatcher
+from random import choice
+from core.himesis_utils import expand_graph, graph_to_dot
 
 class ContractDebugger:
 
-    def __init__(self, pathCondGen, slicer):
+    def __init__(self, pathCondGen, slicer, superclasses_dict):
         self.pathCondGen = pathCondGen
         self.slicer = slicer
+        self.superclasses_dict = superclasses_dict
 
-    def explain_failures(self, contract_name, contract, success_pcs, failed_pcs):
+    def explain_failures(self, contract_name, contract, success_pcs, failed_pcs, smallest_failed):
 
         print("Explaining why contract fails: " + contract_name)
 
@@ -58,6 +61,36 @@ class ContractDebugger:
                 NewHimesisMatcher.print_link(None, contract.complete, n0, n1, nlink)
 
         print("")
+
+        failed_pc_name = choice(smallest_failed)
+
+        print("Examining failed pc: " + failed_pc_name)
+        failed_pc = self.pathCondGen.pc_dict[failed_pc_name]
+        failed_pc = expand_graph(failed_pc)
+
+        matcher = NewHimesisMatcher(failed_pc, contract.complete)
+        matcher.print_reason_failed = True
+        matcher.debug = False
+
+        matcher.superclasses_dict = self.superclasses_dict
+
+        for _ in matcher.match_iter():
+            break
+
+        print("Elements of contract that fail on this path condition:")
+        if len(matcher.failed_iso_elements) > 0:
+            print("Contract requires elements of type:")
+            for iso in matcher.failed_iso_elements:
+                print("\t" + contract_mms[iso])
+        if len(required_links) > 0:
+            print("Contract requires links of type:")
+            for link in matcher.failed_links:
+                n0, n1, nlink = link
+                print("\t", end="")
+                NewHimesisMatcher.print_link(None, contract.complete, n0, n1, nlink)
+
+
+        #graph_to_dot(contract.complete.name + "_failed_" + failed_pc.name, failed_pc)
 
 
     def get_rule_differences(self, success_pcs, failed_pcs):
