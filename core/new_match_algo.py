@@ -631,10 +631,10 @@ class NewHimesisMatcher(object):
             #    continue
             # If the attribute does not "in theory" exist
             # because igraph actually stores all attribute names in all nodes.
-            if not patt_node[attr]:
-                continue
+            # if not patt_node[attr]:
+            #     continue
 
-            if patt_node[attr] == self.default_match_code:
+            if patt_node[attr] == self.default_match_code or not patt_node[attr]:
                 continue
 
             attr_name = attr[8:]
@@ -663,15 +663,8 @@ class NewHimesisMatcher(object):
                     #     print(methName)
                     return False
             except Exception as e:
-                # TODO: This should be a TransformationLanguageSpecificException
                 print("Source graph: " + self.source_graph.name)
                 print("Pattern graph: " + self.pattern_graph.name)
-                for n in self.source_nodes:
-                    try:
-                        print("Type: " + str(n["type"]))
-                        print("MM: " + n["mm__"])
-                    except KeyError:
-                        pass
                 raise Exception(
                     "An error has occurred while checking the constraint of the attribute '" + attr_name + "'"
                     + " in node '" + src_node["mm__"] + "' in graph: '" + self.source_graph.name + "'", e)
