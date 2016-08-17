@@ -1,7 +1,7 @@
 
-from core.himesis_plus import look_for_attached, get_all_attached
 from core.himesis_utils import graph_to_dot
-from copy import deepcopy
+#from core.new_match_algo import NewHimesisMatcher
+
 from profiler import *
 
 try:
@@ -16,8 +16,8 @@ except ImportError:
 #@do_cprofile
 #@Profiler
 @lru_cache(maxsize=1024)
-#@profile
-def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False, isolated_if_attached_backward = False):
+@profile
+def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False, isolated_if_attached_backward = False, get_isolated_match_elements = False):
     #decompose graph into directLinks, backwardLinks, and isolated elements
 
     debug = False
@@ -64,8 +64,8 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False, isolated_if_
     has_contains = "match_contains" in mms
 
     for e in graph.es:
-        source = e.source
-        target = e.target
+
+        source, target = e.tuple
 
         if source in bls:
             backward_links_dict[source][1] = target
@@ -103,14 +103,14 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False, isolated_if_
     if debug:
         print("Direct links: ")
         for n0, n1, nlink in direct_links:
-            print_link(graph, n0, n1, nlink)
+            NewHimesisMatcher.print_link(None, graph, n0, n1, nlink)
 
     backward_links = [[val[0], val[1], bl] for bl, val in backward_links_dict.items()]
 
     if debug:
         print("Backward links: ")
         for n0, n1, nlink in backward_links:
-            print_link(graph, n0, n1, nlink)
+            NewHimesisMatcher.print_link(None, graph, n0, n1, nlink)
 
 
 
@@ -121,18 +121,20 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False, isolated_if_
 
     # find the non-isolated elements
     isolated_match_elements = []
-    links = list.copy(direct_links)
 
-    if not isolated_if_attached_backward:
-        links += backward_links
-    for me in match_elements:
-        isolated = True
-        for dl in links:
-            if me == dl[0] or me == dl[1]:
-                isolated = False
-                break
-        if isolated:
-            isolated_match_elements.append(me)
+    if get_isolated_match_elements:
+        links = list.copy(direct_links)
+
+        if not isolated_if_attached_backward:
+            links += backward_links
+        for me in match_elements:
+            isolated = True
+            for dl in links:
+                if me == dl[0] or me == dl[1]:
+                    isolated = False
+                    break
+            if isolated:
+                isolated_match_elements.append(me)
 
     if debug:
         print("\nRule name: " + graph.name)

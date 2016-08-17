@@ -38,7 +38,7 @@ class Matcher(RulePrimitive):
 
         if disambig_matching:
             self.HimesisMatcher = NewHimesisMatcher
-            self.condition_pred = decompose_graph(condition)
+            self.condition_pred = decompose_graph(condition, get_isolated_match_elements = True)
             self.condition_succ = {}
 
         else:
@@ -55,7 +55,7 @@ class Matcher(RulePrimitive):
         for NAC in self.condition.NACs:
 
             if disambig_matching:
-                self.NAC_preds[NAC.name] = decompose_graph(NAC)
+                self.NAC_preds[NAC.name] = decompose_graph(NAC, get_isolated_match_elements = True)
                 self.NAC_succs[NAC.name] = {}
             else:
                 self.NAC_preds[NAC.name], self.NAC_succs[NAC.name] = get_preds_and_succs(NAC)
