@@ -108,7 +108,7 @@ class HcompostypeportSolveRefPhysicalNodePartitionModuleSchedulerServiceComposit
         self.vs[19]["mm__"] = """directLink_S"""
         # match association Scheduler--required-->Service node
         self.add_node()
-        self.vs[20]["attr1"] = """required"""
+        self.vs[20]["attr1"] = """provided"""
         self.vs[20]["mm__"] = """directLink_S"""
         
         # apply association CompositionType--port-->PPortPrototype node
