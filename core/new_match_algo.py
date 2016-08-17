@@ -105,7 +105,7 @@ class NewHimesisMatcher(object):
         if self.patt_eqs_constant or self.patt_eqs_variable:
             self.src_eqs_constant, self.src_eqs_variable = self.load_equations(source_graph)
 
-        from pyramify.ramify_actions import get_default_match_code
+        from core.himesis_plus import get_default_match_code
         self.default_match_code = get_default_match_code()
 
 
