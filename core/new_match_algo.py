@@ -239,6 +239,9 @@ class NewHimesisMatcher(object):
 
         link_matches = {}
 
+        patt_mms = self.pattern_mms
+        #src_mms = self.source_mms
+
         #failed_matches = []
 
         if self.debug:
@@ -249,11 +252,13 @@ class NewHimesisMatcher(object):
 
             matched_element = False
             #print("Matching iso element: " + str(iso_match_element))
+
+            iso_mm = patt_mms[iso_match_element]
             for node in range(len(self.source_graph.vs)):
 
                 #print("Matching on: " + str(node))
 
-                nodes_match = self.match_nodes(node, iso_match_element)
+                nodes_match = self.match_nodes(node, iso_match_element, iso_mm)
                 if nodes_match:
                     iso_link = (iso_match_element, None, None)
                     node_link = (node, None, None)
@@ -286,7 +291,9 @@ class NewHimesisMatcher(object):
                 #     print("Patt link: " + str(patt_link))
                 (patt0_n, patt1_n, patt_link_n) = patt_link
 
-                patt_link_MM = self.pattern_mms[patt_link_n]
+                patt_0_mm = patt_mms[patt0_n]
+                patt_1_mm = patt_mms[patt1_n]
+                patt_link_mm = patt_mms[patt_link_n]
 
                 found_match = False
 
@@ -307,24 +314,16 @@ class NewHimesisMatcher(object):
                     #     self.print_link(self, self.source_graph, graph_n0_n, graph_n1_n, graph_link_n)
 
 
-                    graph_link_MM = self.source_mms[graph_link_n]
 
-                    if patt_link_MM in ["trace_link", "backward_link"]:
-                        if graph_link_MM in ["trace_link", "backward_link"]:
-                            nodes_match_link = True
-                        else:
-                            nodes_match_link = False
-                    else:
-                        nodes_match_link = self.match_nodes(graph_link_n, patt_link_n)
 
-                    if not nodes_match_link:
-                        if self.debug:
-                            print("Link doesn't match")
-                        continue
-
+                    #trace links and backward links will always match over each other
+                    #so don't bother checking them
+                    if patt_link_mm not in ["trace_link", "backward_link"]:
+                        if not self.match_nodes(graph_link_n, patt_link_n, patt_link_mm):
+                            continue
 
                     #if nodes_match:
-                    if self.match_nodes(graph_n0_n, patt0_n) and self.match_nodes(graph_n1_n, patt1_n):
+                    if self.match_nodes(graph_n0_n, patt0_n, patt_0_mm) and self.match_nodes(graph_n1_n, patt1_n, patt_1_mm):
 
                         # if self.debug:
                         #     print("Found a link - " + str(graph_n0_n) + " " + str(graph_link_n) + " " + str(graph_n1_n))
@@ -537,9 +536,7 @@ class NewHimesisMatcher(object):
     #==============================================================
 
     #@profile
-    def match_nodes(self, graph_node, patt_node):
-
-        targetMM = self.pattern_mms[patt_node]
+    def match_nodes(self, graph_node, patt_node, targetMM):
         sourceMM = self.source_mms[graph_node]
 
 
