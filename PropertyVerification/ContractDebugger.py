@@ -77,18 +77,7 @@ class ContractDebugger:
         for _ in matcher.match_iter():
             break
 
-        print("Elements of contract that fail on this path condition:")
-        if len(matcher.failed_iso_elements) > 0:
-            print("Contract requires elements of type:")
-            for iso in matcher.failed_iso_elements:
-                print("\t" + contract_mms[iso])
-        if len(required_links) > 0:
-            print("Contract requires links of type:")
-            for link in matcher.failed_links:
-                n0, n1, nlink = link
-                print("\t", end="")
-                NewHimesisMatcher.print_link(None, contract.complete, n0, n1, nlink)
-
+        matcher.print_failures()
 
         #graph_to_dot(contract.complete.name + "_failed_" + failed_pc.name, failed_pc)
 

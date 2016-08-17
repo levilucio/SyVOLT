@@ -507,7 +507,36 @@ class NewHimesisMatcher(object):
             link = "backward_link"
         print(graph.vs[n0]["mm__"].replace("MT_pre__", "") + " - " + link + " - " + graph.vs[n1]["mm__"].replace("MT_pre__", ""))
 
+    def print_failures(self):
+        print("Elements of pattern that fail on this source:")
+        if len(self.failed_iso_elements) > 0:
+            print("Pattern requires elements of type:")
+            for iso in self.failed_iso_elements:
+                print("\t" + self.pattern_mms[iso])
+                self.print_equation(iso)
 
+        if len(self.failed_links) > 0:
+            print("Contract requires links of type:")
+            for link in self.failed_links:
+                n0, n1, nlink = link
+                print("\t", end = "")
+                NewHimesisMatcher.print_link(None, self.pattern_graph, n0, n1, nlink)
+                self.print_equation(n0)
+                self.print_equation(n1)
+
+    def print_equation(self, patt_node_num):
+        patt_label = self.pattern_labels[patt_node_num]
+        # HACK: Use patt node num not labels for contracts!
+        if self.is_contract:
+            lookup = patt_node_num
+        else:
+            lookup = int(patt_label)
+
+        if lookup in self.patt_eqs_constant:
+            print("Equation on " + self.pattern_mms[patt_node_num] + ": " + str(self.patt_eqs_constant[lookup]))
+
+        if lookup in self.patt_eqs_variable:
+            print("Equation on " + self.pattern_mms[patt_node_num] + ": " + str(self.patt_eqs_variable[lookup]))
 
     #==============================================================
 
