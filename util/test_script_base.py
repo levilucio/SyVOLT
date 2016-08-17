@@ -48,8 +48,7 @@ class Test:
 
         pyramify = PyRamify(verbosity = args.verbosity, draw_svg = args.draw_svg)
 
-        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns,
-         self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
+        [self.rules, self.ruleTraceCheckers, self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
             pyramify.ramify_directory(self.transformation_directory, self.transformation)
 
         self.subclasses_dict, self.superclasses_dict = get_sub_and_super_classes(self.inputMM, self.outputMM)
@@ -76,8 +75,7 @@ class Test:
 
         # raise Exception()
 
-        s = PathConditionGenerator(self.transformation, self.outputMM, self.ruleCombinators, self.ruleTraceCheckers,
-                                   self.matchRulePatterns, self.overlapping_rules, self.subsumption,
+        s = PathConditionGenerator(self.transformation, self.outputMM, self.ruleCombinators, self.ruleTraceCheckers, self.overlapping_rules, self.subsumption,
                                    self.loopingRuleSubsumption, args)  #
         # raise Exception()
 

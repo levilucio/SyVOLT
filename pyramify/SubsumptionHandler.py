@@ -58,7 +58,7 @@ class SubsumptionHandler:
                 
             p = Packet()
             p.graph = self.rules[pair[1]]
-            matcher = matchRulePatterns[pair[0]][0]
+            matcher = matchRulePatterns[pair[0]]
             matcher.packet_in(p)
 
             if matcher.is_success:

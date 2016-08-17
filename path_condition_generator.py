@@ -47,14 +47,13 @@ class PathConditionGenerator(object):
                            Each pair contains a partial or total possibility of matching of the rule on top of the path condition.
                            The first pair in the list entry for a rule key is always the one where only the backward links exist and no other match parts of the rule.
         - ruleTraceCheckers: dictionary containing a matcher for each set of backward links existing for each rule.
-        - matchRulePatterns: dictionary containing matchers for the match part of each rule. Needed in case the match parts of the rules overlap.
         - pathConditionSet: holds the set of path conditions. Starts off with the empty path condition.
         - ruleContainment: holds for each layer a lattice representing which match patterns for rules are included in those of other rules
         - verbosity: verbosity level (0 - no verbosity / 1 - verbose / 2 - debug)                          
     """
 
     #@do_cprofile
-    def __init__(self, transformation, targetMM, ruleCombinators, ruleTraceCheckers, matchRulePatterns, overlappingRules, subsumption, loopingRuleSubsumption, args):
+    def __init__(self, transformation, targetMM, ruleCombinators, ruleTraceCheckers, overlappingRules, subsumption, loopingRuleSubsumption, args):
 
 
         self.do_parallel = args.do_parallel
@@ -66,7 +65,6 @@ class PathConditionGenerator(object):
         self.targetMM = targetMM
         self.ruleCombinators = ruleCombinators
         self.ruleTraceCheckers = ruleTraceCheckers
-        self.matchRulePatterns = matchRulePatterns
         self.overlappingRules = overlappingRules
         self.subsumption = subsumption
         self.loopingRuleSubsumption = loopingRuleSubsumption 
@@ -87,13 +85,10 @@ class PathConditionGenerator(object):
         self.prunner = Pruner(self.targetMM, self.transformation, self.rule_names, self.rules_in_pc_name)
 
         self.tester = Tester(args)
-        self.tester.set_artifacts(self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators,
+        self.tester.set_artifacts(self.transformation, self.ruleTraceCheckers, self.ruleCombinators,
                                   self.rule_names)
 
         self.tester.debug()
-
-        #we don't need these anymore
-        self.matchRulePatterns = None
 
     def generate_letters(self, i):
 
@@ -165,9 +160,6 @@ class PathConditionGenerator(object):
    
                 self.ruleTraceCheckers[new_name] = self.ruleTraceCheckers[rule.name]
                 del self.ruleTraceCheckers[rule.name]
-
-                self.matchRulePatterns[new_name] = self.matchRulePatterns[rule.name]
-                del self.matchRulePatterns[rule.name]
                 
                 if rule.name in self.overlappingRules.keys():
                     self.overlappingRules[new_name] = self.overlappingRules[rule.name]

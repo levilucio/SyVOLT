@@ -672,8 +672,6 @@ class PyRamify:
 
             graph.vs[i]["MT_label__"] = str(label)
             label += 1
-
-        rewriter = self.make_rewriter(graph, back_to_trace = False)
         
         out_dir = "./patterns/"
 
@@ -698,19 +696,9 @@ class PyRamify:
         rule = load_class(out_dir + "/" + old_name + "_match_pattern_matcher")
         match_graph = list(rule.values())[0]
 
-        rewriter.pre = match_graph
-        rewriter.name = old_name + "_match_pattern_rewriter"
-
-        file_name = rewriter.compile(out_dir)
-        if self.verbosity >= 2:
-            print("Match pattern rewriter compiled to: " + file_name)
-
-        rewriter_dict = load_class(out_dir + rewriter.name)
-        rewriter = list(rewriter_dict.values())[0]
-
         matcher = Matcher(match_graph, disambig_matching = False)
 
-        return {name : [matcher, Rewriter(rewriter)]}
+        return {name : matcher}
 
 
     #ramify a whole directory
@@ -723,8 +711,6 @@ class PyRamify:
         rules = {}
         
         backwardPatterns = {}
-        backwardPatterns2Rules = {}
-        backwardPatternsComplete = {}
         matchRulePatterns = {}
         ruleCombinators = {}
 
@@ -743,9 +729,6 @@ class PyRamify:
                 rule3 = load_class(dir_name + "/" + rule.name + ".py")
                 (bwPattern, bwP2Rule) = self.get_backward_patterns(rule3)
                 backwardPatterns.update(bwPattern)
-
-                if not bwP2Rule is None:
-                    backwardPatterns2Rules.update(bwP2Rule)
 
                 #fresh rule for the match pattern
                 rule4 = load_class(dir_name + "/" + rule.name + ".py")
@@ -788,7 +771,7 @@ class PyRamify:
         print("Finished PyRamify")
         print("==================================\n")                    
 
-        return [rules, backwardPatterns, backwardPatterns2Rules, {}, matchRulePatterns, ruleCombinators, self.rulesNeedingOverlapTreatment, self.ruleSubsumption, loopingRuleSubsumption]
+        return [rules, backwardPatterns, ruleCombinators, self.rulesNeedingOverlapTreatment, self.ruleSubsumption, loopingRuleSubsumption]
 
 
     #================================================================================

@@ -20,7 +20,6 @@ class Tester:
         self.transformation = None
         self.rules = None
         self.ruleTraceCheckers = None
-        self.matchRulePatterns = None
         self.ruleCombinators = None
         self.rule_names = None
 
@@ -33,10 +32,8 @@ class Tester:
         if self.draw_svg:
             self.print_ruleCombinators()
             self.print_ruleTraceCheckers()
-            self.print_matchRulePatterns()
 
         if self.run_tests:
-            self.test_matchRulePatterns()
             self.test_ruleTraceCheckers()
             self.test_ruleCombinators()
 
@@ -48,7 +45,7 @@ class Tester:
         self.ruleCombinators = None
         self.rule_names = None
 
-    def set_artifacts(self, transformation, ruleTraceCheckers, matchRulePatterns, ruleCombinators, rule_names):
+    def set_artifacts(self, transformation, ruleTraceCheckers, ruleCombinators, rule_names):
         self.transformation = transformation
         self.rules = {}
         for layer in transformation:
@@ -56,7 +53,6 @@ class Tester:
                 self.rules[rule.name] = rule
 
         self.ruleTraceCheckers = ruleTraceCheckers
-        self.matchRulePatterns = matchRulePatterns
         self.ruleCombinators = ruleCombinators
         self.rule_names = rule_names
 
@@ -87,37 +83,6 @@ class Tester:
 
             tc = self.ruleTraceCheckers[key]
             graph_to_dot("traceChecker_" + str(tc.condition.name), tc.condition)
-
-    def print_matchRulePatterns(self):
-        for key in self.rules:
-            if self.matchRulePatterns[key] is None:
-                continue
-
-            matcher, rewriter = self.matchRulePatterns[key]
-            graph_to_dot("matchPattern_matcher_" + str(matcher.condition.name), matcher.condition)
-            graph_to_dot("matchPattern_rewriter_" + str(rewriter.condition.name), rewriter.condition)
-
-
-    def test_matchRulePatterns(self):
-
-        for rule_name in sorted(self.rules.keys()):
-            #print("Testing match rule pattern for " + self.rule_names[rule_name])
-
-            p = Packet()
-            p.graph = self.rules[rule_name].copy()
-
-            matcher = self.matchRulePatterns[rule_name][0]
-
-            matcher.packet_in(p)
-
-            if not matcher.is_success:
-                raise Exception("The matcher for " + self.rule_names[rule_name] + " did not match the rule")
-
-            rewriter = self.matchRulePatterns[rule_name][0]
-            rewriter.packet_in(p)
-
-            if not rewriter.is_success:
-                raise Exception("The rewriter for " + self.rule_names[rule_name] + " did not rewrite successfully")
 
     def test_ruleTraceCheckers(self):
 
