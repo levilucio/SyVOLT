@@ -286,8 +286,7 @@ class NewHimesisMatcher(object):
                 #     print("Patt link: " + str(patt_link))
                 (patt0_n, patt1_n, patt_link_n) = patt_link
 
-                if patt_link_n is not None:
-                    patt_link_MM = self.pattern_mms[patt_link_n]
+                patt_link_MM = self.pattern_mms[patt_link_n]
 
                 found_match = False
 
@@ -307,19 +306,16 @@ class NewHimesisMatcher(object):
                     #     print("\nChecking Graph " + self.source_graph.name + " nodes:")
                     #     self.print_link(self, self.source_graph, graph_n0_n, graph_n1_n, graph_link_n)
 
-                    if patt_link_n is not None and graph_link_n is not None:
-                        graph_link_MM = self.source_mms[graph_link_n]
 
-                        if patt_link_MM in ["trace_link", "backward_link"]:
-                            if graph_link_MM in ["trace_link", "backward_link"]:
-                                nodes_match_link = True
-                            else:
-                                nodes_match_link = False
+                    graph_link_MM = self.source_mms[graph_link_n]
+
+                    if patt_link_MM in ["trace_link", "backward_link"]:
+                        if graph_link_MM in ["trace_link", "backward_link"]:
+                            nodes_match_link = True
                         else:
-                            nodes_match_link = self.match_nodes(graph_link_n, patt_link_n)
-
+                            nodes_match_link = False
                     else:
-                        nodes_match_link = False
+                        nodes_match_link = self.match_nodes(graph_link_n, patt_link_n)
 
                     if not nodes_match_link:
                         if self.debug:
@@ -330,8 +326,8 @@ class NewHimesisMatcher(object):
                     #if nodes_match:
                     if self.match_nodes(graph_n0_n, patt0_n) and self.match_nodes(graph_n1_n, patt1_n):
 
-                        if self.debug:
-                            print("Found a link - " + str(graph_n0_n) + " " + str(graph_link_n) + " " + str(graph_n1_n))
+                        # if self.debug:
+                        #     print("Found a link - " + str(graph_n0_n) + " " + str(graph_link_n) + " " + str(graph_n1_n))
 
                         found_match = True
                         patt_link = (patt0_n, patt1_n, patt_link_n)
@@ -342,17 +338,17 @@ class NewHimesisMatcher(object):
                         except KeyError:
                             link_matches[patt_link] = [source_link]
 
-                    if self.debug:
-
-                        if not self.match_nodes(graph_n0_n, patt0_n):
-                            print("First nodes didn't match")
-                        if not self.match_nodes(graph_n1_n, patt1_n):
-                            print("Second nodes didn't match")
-
-                        print("Pattern link:")
-                        self.print_link(self, self.pattern_graph, patt0_n, patt1_n, patt_link_n)
-                        print("Source link:")
-                        self.print_link(self, self.source_graph, graph_n0_n, graph_n1_n, graph_link_n)
+                    # if self.debug:
+                    #
+                    #     if not self.match_nodes(graph_n0_n, patt0_n):
+                    #         print("First nodes didn't match")
+                    #     if not self.match_nodes(graph_n1_n, patt1_n):
+                    #         print("Second nodes didn't match")
+                    #
+                    #     print("Pattern link:")
+                    #     self.print_link(self, self.pattern_graph, patt0_n, patt1_n, patt_link_n)
+                    #     print("Source link:")
+                    #     self.print_link(self, self.source_graph, graph_n0_n, graph_n1_n, graph_link_n)
 
                 if not found_match and len(self.pattern_data["isolated_match_elements"]) == 0:
                     if self.debug or self.print_reason_failed:
