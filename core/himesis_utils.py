@@ -245,8 +245,9 @@ def graph_to_dot(name, g, verbosity = 0, force_trace_links = False):
 
     for e in g.es:
 
-        src = int(e.source)
-        trgt = int(e.target)
+        src, trgt = e.tuple
+        src = int(src)
+        trgt = int(trgt)
 
         if src in internal_links.keys():
             internal_links[src]["target"] = trgt
@@ -377,8 +378,7 @@ def get_preds_and_succs(graph):
     succs = [[0, []] for i in range(vcount)]
 
     for e in graph.es:
-        source = e.source
-        target = e.target
+        source, target = e.tuple
         preds[target][0] += 1
         preds[target][1].append(source)
 
@@ -628,8 +628,7 @@ def build_traceability(graph, add_label = False):
     has_contains = "match_contains" in mms
 
     for e in graph.es:
-        source = e.source
-        target = e.target
+        source, target = e.tuple
 
         if has_contains:
             if mms[source] == "match_contains":

@@ -10,8 +10,9 @@ def get_all_attached(graph):
     attached = [[] for x in range(graph.vcount())]
 
     for edge in graph.es:
-        attached[edge.source].append(edge.target)
-        attached[edge.target].append(edge.source)
+        source, target = edge.tuple
+        attached[source].append(target)
+        attached[target].append(source)
 
     for i in range(len(attached)):
         attached[i].append(i)
@@ -90,8 +91,7 @@ def flood_find_nodes(start_node, graph, stop_mms = None, stop_and_include_mms = 
     neighbours = [[] for i in range(vcount)]
 
     for e in graph.es:
-        source = e.source
-        target = e.target
+        source, target = e.tuple
         neighbours[source].append(target)
         neighbours[target].append(source)
 
