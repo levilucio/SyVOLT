@@ -133,6 +133,25 @@ class path_condition_generator_worker(Process):
                     #print "Number of Path Conditions generated so far: " +  str(len(self.currentPathConditionSet))
                     #print "Number of Path Conditions Percentage: " +  str(int(pathConditionIndex / float(pathConSetLength) * 100))
 
+                # calculate if the rule is in a subsuming loop and has a subsuming parent
+                ruleInLoopAndHasSubsumingParent = False
+                for loop in self.loopingRuleSubsumption:
+                    if rule_name in loop and loop[0] != rule_name:
+                        ruleInLoopAndHasSubsumingParent = True
+
+                # can symbolically execute only if the path condition contains no rule that subsumes
+                # the rule being executed or rule subsumed by the rule being executed.
+                # in this way we guarantee that all rules in a partial order get executed
+                # at least once (when the larger rules don't execute), and overlaps are
+                # dealt with during the second phase - i.e. all rules that execute and subsume
+                # others have to get their subsumed rules executed too.
+
+                if ruleInLoopAndHasSubsumingParent:
+                    if self.verbosity:
+                        print("Rule is in loop and has subsuming parent, skipping")
+                    continue
+
+
                 subsumingRules = []
                 if rule_name in self.overlappingRules.keys():
                     subsumingRules = self.overlappingRules[rule_name]
@@ -140,12 +159,6 @@ class path_condition_generator_worker(Process):
                 subsumedRules = []
                 if rule_name in self.subsumption.keys():
                     subsumedRules = self.subsumption[rule_name]
-
-                # calculate if the rule is in a subsuming loop and has a subsuming parent
-                ruleInLoopAndHasSubsumingParent = False
-                for loop in self.loopingRuleSubsumption:
-                    if rule_name in loop and loop[0] != rule_name:
-                        ruleInLoopAndHasSubsumingParent = True
 
 
                 # possible cases of rule combination
@@ -182,44 +195,35 @@ class path_condition_generator_worker(Process):
                         
     #                     if not (rule_name in self.overlappingRules.keys() or\
     #                             (rule_name in self.overlappingRules.keys() and subsumedRulesinPC)):
-                            
-                        # can symbolically execute only if the path condition contains no rule that subsumes
-                        # the rule being executed or rule subsumed by the rule being executed.
-                        # in this way we guarantee that all rules in a partial order get executed
-                        # at least once (when the larger rules don't execute), and overlaps are
-                        # dealt with during the second phase - i.e. all rules that execute and subsume
-                        # others have to get their subsumed rules executed too.   
-                        
-                        if not (ruleInLoopAndHasSubsumingParent):
 
-                            cpc = self.pc_dict[child_pc_name]
+                        cpc = self.pc_dict[child_pc_name]
 
-                            #take off the num of nodes in the name
-                            cpc_name = cpc.name.split(".")[0]
+                        #take off the num of nodes in the name
+                        cpc_name = cpc.name.split(".")[0]
 
-                            new_name = cpc_name + '_' + rule_name + "-"
-    
-                            # create a new path condition which is the result of combining the rule with the current path condition being examined
-                            newPathCond = cpc.copy()
-                            newPathCond = disjoint_model_union(newPathCond,rule)
+                        new_name = cpc_name + '_' + rule_name + "-"
 
-                            new_name += "." + str(newPathCond.vcount())
-                                
-                            # name the new path condition as the combination of the previous path condition and the rule    
-                            newPathCond.name = new_name
+                        # create a new path condition which is the result of combining the rule with the current path condition being examined
+                        newPathCond = cpc.copy()
+                        newPathCond = disjoint_model_union(newPathCond,rule)
 
-                            if not self.pruning or self.pruner.isPathConditionStillFeasible(newPathCond, self.rulesToTreat):
-                                shrunk_newCond = shrink_graph(newPathCond)
-                                self.pc_dict[new_name] = shrunk_newCond
-                                new_pc_dict[new_name] = shrunk_newCond
+                        new_name += "." + str(newPathCond.vcount())
 
-                                if self.verbosity >= 2 : print("Created path condition with name: " + newPathCond.name)
-                                localPathConditionLayerAccumulator.append(new_name)
+                        # name the new path condition as the combination of the previous path condition and the rule
+                        newPathCond.name = new_name
 
-                                #print_graph(newPathCond)
+                        if not self.pruning or self.pruner.isPathConditionStillFeasible(newPathCond, self.rulesToTreat):
+                            shrunk_newCond = shrink_graph(newPathCond)
+                            self.pc_dict[new_name] = shrunk_newCond
+                            new_pc_dict[new_name] = shrunk_newCond
 
-                                # store the newly created path condition as a child
-                                childrenPathConditions.append(new_name)
+                            if self.verbosity >= 2 : print("Created path condition with name: " + newPathCond.name)
+                            localPathConditionLayerAccumulator.append(new_name)
+
+                            #print_graph(newPathCond)
+
+                            # store the newly created path condition as a child
+                            childrenPathConditions.append(new_name)
                                     
 
                     newPathConditionSet.extend(localPathConditionLayerAccumulator)
@@ -328,155 +332,142 @@ class path_condition_generator_worker(Process):
 
                                         #get the name of the child
                                         child_pc_name = childrenPathConditions[child_pc_index]
- 
-                                        subsumingRulesinPC = False
-                                        
-                                        if subsumingRules != None:
-                                            for sRule in subsumingRules:
-                                                if sRule in child_pc_name:
-                                                    subsumingRulesinPC = True
-                                                    break     
-                                                
-                                        subsumedRulesinPC = False
-                                 
-                                        #print(".......... Child PC name: " + child_pc_name)
-                                        #print(".......... Subsumed Rules: " + str(subsumedRules))                                        
-                                        
-                                        if subsumedRules != None:
-                                            for sRule in subsumedRules:
-                                                if sRule in child_pc_name:
-                                                    subsumedRulesinPC = True
-                                                    break              
-                                                
-                                        #print("----------------> RuleInLoopAndHasSubsumingParent: " + str(ruleInLoopAndHasSubsumingParent))
-                                        #print("----------------> subsumingRulesinPC: " + str(subsumingRulesinPC))         
-                                        #print("----------------> subsumedRulesinPC: " + str(subsumedRulesinPC))                                                  
-                                        #print("----------------> Going to execute: " + str(not (subsumingRulesinPC or subsumedRulesinPC or ruleInLoopAndHasSubsumingParent)))
-                            
-                                        if not (subsumingRulesinPC or subsumedRulesinPC or ruleInLoopAndHasSubsumingParent):
 
-                                            if self.verbosity >= 2 :
-                                                print("--> Combining with path condition: " + child_pc_name)
-    
-    #                                         # only combine if the rule hasn't executed yet on that path condition
-    #                                                                     
-    #                                         # get all the rule names in the name of the rule being executed (can be merged with subsumed rules).
-    #                                         # also get the rule names of all rules already present in the path condition
-    #                                         ruleNamesInRule = rule.name.split("_")
-    #                                         ruleNamesInPC = child_pc_name.split("_")
-    #                                         # cleanup the dashes from the rule names in the path condition
-    #                                         for nameIndex in range(len(ruleNamesInPC)):
-    #                                             ruleNamesInPC[nameIndex] = ruleNamesInPC[nameIndex].split("-")[0]
-    
-    
-                                            #get the path condition from the dictionary
-                                            cpc = self.pc_dict[child_pc_name]
-    
-                                            # if the combinator is not the total one, make a copy of the path condition in the set
-                                            # of combinations generated so far.
-                                            # the total combinator is always the one at the end of the combinator list for the rule.
-    
-                                            # name the new path condition as the combination of the previous path condition and the rule
-                                            newPathCondName = cpc.name.split(".")[0] + "_" + rule.name
-    
-                                            p_copy = deepcopy(p)
-                                            newPathCond = cpc.copy()
-                                            p_copy.graph = newPathCond
-    
-                                            rewriter = self.ruleCombinators[rule.name][combinator][1]
-                                            p_copy = rewriter.packet_in(p_copy)
-                                                                                              
-                                            newPathCond = p_copy.graph
+                                        has_subsuming = any(sRule in child_pc_name for sRule in subsumingRules)
+                                        if has_subsuming:
+                                            if self.verbosity >= 2:
+                                                print("Skipping child: " + child_pc_name + " due to presence of subsuming rule")
+                                            continue
 
-    
-                                            # check if the equations on the attributes of the newly created path condition are satisfied
-    
-                                            #if not is_consistent(newPathCond):
-                                            if not rewriter.is_success:
-                                                if self.verbosity >= 2:
-                                                    print("Path Condition: " + newPathCondName + " has inconsistent equations")
+                                        has_subsumed = any(sRule in child_pc_name for sRule in subsumedRules)
+                                        if has_subsumed:
+                                            if self.verbosity >= 2:
+                                                print("Skipping child: " + child_pc_name + " due to presence of subsumed rule")
+                                            continue
 
-                                            # elif self.pruning and not self.pruner.isPathConditionStillFeasible(newPathCond,
-                                            #                                                                 rulesToTreat):
-                                            #     if self.verbosity >= 2:
-                                            #         print("Path Condition: " + newPathCondName + " was pruned")
-                                            else:
 
-                                                valid = True
-                                                if isTotalCombinator:
-    
-                                                    #print("Going to write a total: " + newPathCondName)
-    
-                                                    newPathCondName = newPathCondName +"-T"# + str(pathCondSubnum)
+                                        if self.verbosity >= 2 :
+                                            print("--> Combining with path condition: " + child_pc_name)
 
-                                                    newPathCondName += "." + str(len(newPathCond.vs))
-                                                    newPathCond.name = newPathCondName
+#                                         # only combine if the rule hasn't executed yet on that path condition
+#
+#                                         # get all the rule names in the name of the rule being executed (can be merged with subsumed rules).
+#                                         # also get the rule names of all rules already present in the path condition
+#                                         ruleNamesInRule = rule.name.split("_")
+#                                         ruleNamesInPC = child_pc_name.split("_")
+#                                         # cleanup the dashes from the rule names in the path condition
+#                                         for nameIndex in range(len(ruleNamesInPC)):
+#                                             ruleNamesInPC[nameIndex] = ruleNamesInPC[nameIndex].split("-")[0]
 
-                                                    if self.pruning and not self.pruner.isPathConditionStillFeasible(
-                                                            newPathCond, self.rulesToTreat):
-                                                        valid = False
 
-                                                    if self.verbosity >= 2:
-                                                        print("Total: Possible PC: " + newPathCondName + " valid?: " + str(valid))
-                                                                                                        
-                                                    # because the rule combines totally with a path condition in the accumulator we just copy it
-                                                    # directly on top of the accumulated path condition
-    
-                                                    # several totals my exist, so the original PC may be rewritten multiple times
-    
-                                                    # previousTotalPC = None
-                                                    # writeOverPreviousTotalPC = False
+                                        #get the path condition from the dictionary
+                                        cpc = self.pc_dict[child_pc_name]
 
-                                                    if valid:
-                                                        try:
-                                                            reverse_name = reverse_name_dict[cpc.name]
-                                                            name_dict[reverse_name] = newPathCondName
-                                                            reverse_name_dict[newPathCondName] = reverse_name
-                                                        except KeyError:
-                                                            name_dict[cpc.name] = newPathCondName
-                                                            reverse_name_dict[newPathCondName] = cpc.name
+                                        # if the combinator is not the total one, make a copy of the path condition in the set
+                                        # of combinations generated so far.
+                                        # the total combinator is always the one at the end of the combinator list for the rule.
 
-                                                    #prune the old path condition
-                                                    pcs_to_prune.append(childrenPathConditions[child_pc_index])
+                                        # name the new path condition as the combination of the previous path condition and the rule
+                                        newPathCondName = cpc.name.split(".")[0] + "_" + rule.name
 
-                                                    #change the child's name in the child's array
-                                                    childrenPathConditions[child_pc_index] = newPathCondName
-    
-                                                else:
-    
-                                                    #print("Going to write a partial: " + newPathCondName)
-    
-                                                    newPathCondName = newPathCondName +"-P"# + str(pathCondSubnum)
-                                                    newPathCondName += "." + str(len(newPathCond.vs))
-                                                    newPathCond.name = newPathCondName
-                                                    
-                                                    # we are dealing with a partial combination of the rule.
-                                                    # create a copy of the path condition in the accumulator because this match of the rule is partial.
+                                        p_copy = deepcopy(p)
+                                        newPathCond = cpc.copy()
+                                        p_copy.graph = newPathCond
 
-                                                    if self.pruning and not self.pruner.isPathConditionStillFeasible(
-                                                            newPathCond, self.rulesToTreat):
-                                                        valid = False
-                                                    else:
-                                                        # add the result to the local accumulator
-                                                        partialTotalPathCondLayerAccumulator.append(newPathCond.name)
-                                                    if self.verbosity >= 2:
-                                                        print("Partial: Possible PC: " + newPathCondName + " valid?: " + str(valid))
+                                        rewriter = self.ruleCombinators[rule.name][combinator][1]
+                                        p_copy = rewriter.packet_in(p_copy)
 
-                                                    # store the parent of the newly created path condition
-                                                    childrenPathConditions.append(newPathCond.name)
+                                        newPathCond = p_copy.graph
+
+
+                                        # check if the equations on the attributes of the newly created path condition are satisfied
+
+                                        #if not is_consistent(newPathCond):
+                                        if not rewriter.is_success:
+                                            if self.verbosity >= 2:
+                                                print("Path Condition: " + newPathCondName + " has inconsistent equations")
+
+                                        # elif self.pruning and not self.pruner.isPathConditionStillFeasible(newPathCond,
+                                        #                                                                 rulesToTreat):
+                                        #     if self.verbosity >= 2:
+                                        #         print("Path Condition: " + newPathCondName + " was pruned")
+                                        else:
+
+                                            valid = True
+                                            if isTotalCombinator:
+
+                                                #print("Going to write a total: " + newPathCondName)
+
+                                                newPathCondName = newPathCondName +"-T"# + str(pathCondSubnum)
+
+                                                newPathCondName += "." + str(len(newPathCond.vs))
+                                                newPathCond.name = newPathCondName
+
+                                                if self.pruning and not self.pruner.isPathConditionStillFeasible(
+                                                        newPathCond, self.rulesToTreat):
+                                                    valid = False
 
                                                 if self.verbosity >= 2:
-                                                    print("Created path condition with name: " + newPathCondName)
+                                                    print("Total: Possible PC: " + newPathCondName + " valid?: " + str(valid))
 
+                                                # because the rule combines totally with a path condition in the accumulator we just copy it
+                                                # directly on top of the accumulated path condition
 
-                                                # store the new path condition
-                                                shrunk_newCond = shrink_graph(newPathCond)
-                                                self.pc_dict[newPathCondName] = shrunk_newCond
+                                                # several totals my exist, so the original PC may be rewritten multiple times
+
+                                                # previousTotalPC = None
+                                                # writeOverPreviousTotalPC = False
 
                                                 if valid:
-                                                    new_pc_dict[newPathCondName] = shrunk_newCond
+                                                    try:
+                                                        reverse_name = reverse_name_dict[cpc.name]
+                                                        name_dict[reverse_name] = newPathCondName
+                                                        reverse_name_dict[newPathCondName] = reverse_name
+                                                    except KeyError:
+                                                        name_dict[cpc.name] = newPathCondName
+                                                        reverse_name_dict[newPathCondName] = cpc.name
+
+                                                #prune the old path condition
+                                                pcs_to_prune.append(childrenPathConditions[child_pc_index])
+
+                                                #change the child's name in the child's array
+                                                childrenPathConditions[child_pc_index] = newPathCondName
+
+                                            else:
+
+                                                #print("Going to write a partial: " + newPathCondName)
+
+                                                newPathCondName = newPathCondName +"-P"# + str(pathCondSubnum)
+                                                newPathCondName += "." + str(len(newPathCond.vs))
+                                                newPathCond.name = newPathCondName
+
+                                                # we are dealing with a partial combination of the rule.
+                                                # create a copy of the path condition in the accumulator because this match of the rule is partial.
+
+                                                if self.pruning and not self.pruner.isPathConditionStillFeasible(
+                                                        newPathCond, self.rulesToTreat):
+                                                    valid = False
                                                 else:
-                                                    pcs_to_prune.append(newPathCondName)
+                                                    # add the result to the local accumulator
+                                                    partialTotalPathCondLayerAccumulator.append(newPathCond.name)
+                                                if self.verbosity >= 2:
+                                                    print("Partial: Possible PC: " + newPathCondName + " valid?: " + str(valid))
+
+                                                # store the parent of the newly created path condition
+                                                childrenPathConditions.append(newPathCond.name)
+
+                                            if self.verbosity >= 2:
+                                                print("Created path condition with name: " + newPathCondName)
+
+
+                                            # store the new path condition
+                                            shrunk_newCond = shrink_graph(newPathCond)
+                                            self.pc_dict[newPathCondName] = shrunk_newCond
+
+                                            if valid:
+                                                new_pc_dict[newPathCondName] = shrunk_newCond
+                                            else:
+                                                pcs_to_prune.append(newPathCondName)
 
                                     p = i.next_in(p)
                                     pathCondSubnum += 1
