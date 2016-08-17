@@ -298,7 +298,7 @@ class Slicer:
     def match_links(self, required_rules, links, pattern, pattern_data, graph, source_data, superclasses_dict, verbosity=0):
 
         matcher = NewHimesisMatcher(graph, pattern, pred1=source_data, pred2=pattern_data, superclasses_dict=superclasses_dict, skip_equations = True)
-        pattern_mms = pattern.vs["mm__"]
+        pattern_mms = matcher.pattern_mms
         # source_mms = graph.vs["mm__"]
 
         does_match = False
