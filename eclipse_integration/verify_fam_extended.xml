@@ -2,7 +2,7 @@
 
 	<target name="main" depends="clean">
 		
-		<property name="absolute.backend.path" location="backend/generated/transformation"/>
+		<property name="absolute.backend.path" location="backend/generated/"/>
 		<property name="dsltrans.install.path" location="/home/dcx/Projects/SyVOLT"/>
 		
 		<echo message= "${absolute.backend.path}"/>
@@ -24,7 +24,7 @@
 				      read="true"
 				      store="false"
 				      metamodeluri="http://syvolt/2.0"
-				      modelfile="examples/ExFamToPerson/contracts/Pos_TownHallComm.syvolt"
+				      modelfile="examples/ExFamToPerson/contracts/Pos_FourMembers.syvolt"
 				    />
 		
 
@@ -44,15 +44,16 @@
 			<model ref="inputProperties"/>
 			<parameter name="absoluteBackendPath" value="${absolute.backend.path}"/>
 			<parameter name="dsltransInstallPath" value="${dsltrans.install.path}"/>
+			<parameter name="transformationName" value="F2P"/>
 		</epsilon.egl>
 
 		<echo message= "Running script"/>
-		<!--
+		
 		<exec dir="backend/generated" executable="python">
-		    <arg line="toplevel.py -skip_tests -no_svg -verbosity=1"/>
+		    <arg line="toplevel.py"/>
 			<env key="PYTHONPATH" value="${dsltrans.install.path}:./backend/generated"/> 
 		</exec>
-		-->
+		
 	</target>
 	
     <target name="clean">

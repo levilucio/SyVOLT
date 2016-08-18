@@ -2,12 +2,13 @@
 
 	<target name="main" depends="clean">
 		
-		<property name="absolute.backend.path" location="backend/generated/transformation"/>
+		<property name="absolute.backend.path" location="backend/generated/"/>
 		<property name="dsltrans.install.path" location="/home/dcx/Projects/SyVOLT"/>
 		
 		<echo message= "${absolute.backend.path}"/>
 		<echo message= "${dsltrans.install.path}"/>
 		
+		<echo message= "Loading model"/>
 		<epsilon.emf.loadModel
 		      name="inputTransformation"
 		      read="true"
@@ -16,33 +17,43 @@
 		      modelfile="examples/mbeddr/mbeddr2C.dsltrans"
 		    />
 		
+		
+		<echo message= "Loading contracts"/>
+    
 		<epsilon.emf.loadModel
 		      name="inputProperties"
 		      read="true"
 		      store="false"
 		      metamodeluri="http://syvolt/2.0"
-		      modelfile="examples/mbeddr/contract_simpler.syvolt"
+		      modelfile="examples/mbeddr/contract2.syvolt"
 		    />
 		
+
+		<echo message= "Creating transformation"/>
 		<epsilon.egl src="backend/DSLTrans2Himesis.egl">
 			<model ref="inputTransformation"/>
 		</epsilon.egl>
 		
+		<echo message= "Creating contracts"/>
 		<epsilon.egl src="backend/SyVolt2Himesis.egl">
 			<model ref="inputProperties"/>
 		</epsilon.egl>
 		
+		<echo message= "Creating top-level script"/>
 		<epsilon.egl src="backend/GenerateTopLevelPython.egl">
 			<model ref="inputTransformation"/>
 			<model ref="inputProperties"/>
 			<parameter name="absoluteBackendPath" value="${absolute.backend.path}"/>
 			<parameter name="dsltransInstallPath" value="${dsltrans.install.path}"/>
+			<parameter name="transformationName" value="mbeddr"/>
 		</epsilon.egl>
 
 		<exec dir="backend/generated" executable="python">
-		    <arg line="toplevel.py --no_svg --skip_tests --verbosity=1"/>
+		    <arg line="toplevel.py"/>
 			<env key="PYTHONPATH" value="${dsltrans.install.path}:./backend/generated"/> 
 		</exec>
+		
+		
 		
 	</target>
 	
@@ -53,8 +64,11 @@
     	<mkdir dir="backend/generated"/>    
     	<mkdir dir="backend/generated/dot"/>  
     	<mkdir dir="backend/generated/patterns"/>  
+    	<touch file="backend/generated/patterns/__init__.py"/>
        	<mkdir dir="backend/generated/transformation"/>
+    	<touch file="backend/generated/transformation/__init__.py"/>
     	<mkdir dir="backend/generated/pickle"/>
+    	<mkdir dir="backend/generated/contracts"/>
     	<copy todir="backend/generated">
     	   <fileset dir="metamodels"/>
     	</copy>
