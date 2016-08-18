@@ -4,17 +4,17 @@
   	// generate complete LHS himesys graph
   	var completeLHS : Template = TemplateFactory.load("AtomicContract2CompleteLHSEquations.egl");
   	completeLHS.populate("contract", contract);
-  	completeLHS.generate("./generated/H" + contract.name + "_CompleteLHS.py");
+  	completeLHS.generate("./generated/contracts/H" + contract.name + "_CompleteLHS.py");
   	
   	// generate conneceted LHS himesis graph
   	var connectedLHS : Template = TemplateFactory.load("AtomicContract2ConnectedLHS.egl");
   	connectedLHS.populate("contract", contract);
-  	connectedLHS.generate("./generated/H" + contract.name + "_ConnectedLHS.py");
+  	connectedLHS.generate("./generated/contracts/H" + contract.name + "_ConnectedLHS.py");
   	
   	// generate isolated LHS himesis graph
   	var isolatedLHS : Template = TemplateFactory.load("AtomicContract2IsolatedLHS.egl");
   	isolatedLHS.populate("contract", contract);
-  	isolatedLHS.generate("./generated/H" + contract.name + "_IsolatedLHS.py");
+  	isolatedLHS.generate("./generated/contracts/H" + contract.name + "_IsolatedLHS.py");
   	
   }
  %]

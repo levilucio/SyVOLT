@@ -1,0 +1,226 @@
+[%
+var ruleIndex = 0;
+var ruleShortMap : new Map;
+var transformationArrayStr = "";
+var lastLayerTreated = "";
+var inputMM = "";
+var outputMM = "";
+%]
+
+#-----------------------------------------------------------------------------
+# Auto generated from the DSLTrans transformation and the properties to prove
+#-----------------------------------------------------------------------------
+
+import time
+
+from path_condition_generator import PathConditionGenerator
+from pyramify.PyRamify import PyRamify
+
+from util.ecore_utils import EcoreUtils
+from core.himesis_plus import buildPreListFromClassNames
+
+from property_prover_rules.HEmptyPathCondition import HEmptyPathCondition
+
+from PropertyVerification.v2.atomic_contract import AtomicContract
+from PropertyVerification.v2.ContractProver import ContractProver
+
+from core.himesis_utils import graph_to_dot, load_directory
+from util.test_script_utils import select_rules, get_sub_and_super_classes,\
+    load_transformation, changePropertyProverMetamodel, set_supertypes, load_contracts
+from util.slicer import Slicer
+
+# imports for properties' atomic contracts
+
+[%
+for (ac in inputProperties!AtomicContract) { %]
+from H[%=ac.Name%]_IsolatedLHS import H[%=ac.Name%]_IsolatedLHS
+from H[%=ac.Name%]_ConnectedLHS import H[%=ac.Name%]_ConnectedLHS       
+from H[%=ac.Name%]_CompleteLHS import H[%=ac.Name%]_CompleteLHS
+[%}%]
+
+
+class Prover():
+
+
+    def do_proof(self,args):    
+
+        pyramify = PyRamify(verbosity=args.verbosity, draw_svg=args.draw_svg)
+        
+        [*- get all the rules from the files generated to disk *]
+        [% for (r in Rule.all) { %]
+        r[%=ruleIndex%] = 'H[%=r.Description%]'
+        [% ruleShortMap.put(r, ruleIndex);
+            ruleIndex = ruleIndex + 1;
+           }
+        %]    
+        
+        [*- build the transformation array with the right layering *]                     
+        [% 
+        for (l in Sequential) {
+            for (prev in l.previousSource) {
+                if (prev.isKindOf(FilePort)) {
+                    transformationArrayStr = transformationArrayStr + "[";
+                    for (r in l.hasRule) {
+                        transformationArrayStr = transformationArrayStr + "r" + ruleShortMap.get(r) + (",");
+                    }
+                    transformationArrayStr = transformationArrayStr + "],";
+                    lastLayerTreated = l.Name;
+                    inputMM = prev.metaModelId.metaModelURI;
+                    break;
+                 }
+             }
+        }
+        
+        var isLastLayer = false;  
+        
+        while (not isLastLayer) { 
+            isLastLayer = true;
+            for (l in Sequential) {
+                for (prev in l.previousSource) {
+                    if (prev.isKindOf(Sequential) and prev.Name == lastLayerTreated) {
+                        transformationArrayStr = transformationArrayStr + "[";
+                        for (r in l.hasRule) {
+                            transformationArrayStr = transformationArrayStr + "r" + ruleShortMap.get(r) + (",");
+                        }
+                        transformationArrayStr = transformationArrayStr + "],";
+                        lastLayerTreated = l.Name;
+                        outputMM = l.metaModelId.metaModelURI;
+                        isLastLayer = false;              
+                        break;
+                    }
+                }
+             }
+        } 
+        %]
+        full_transformation = [[%=transformationArrayStr%]]
+        
+        absoluteBackendPath = "[%=absoluteBackendPath%]"
+        
+        self.rules, self.transformation = load_transformation(absoluteBackendPath, full_transformation)
+        
+        
+        inputMM = "[%=inputMM%]"
+        outputMM = "[%=outputMM%]"
+        
+        subclasses_dict, superclasses_dict = get_sub_and_super_classes(inputMM, outputMM)
+
+        [self.rules, self.ruleTraceCheckers, backwardPatterns2Rules, backwardPatternsComplete, self.matchRulePatterns, self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
+            pyramify.ramify_directory(absoluteBackendPath, self.transformation)   
+
+        [*- Generate operations to deal with Polymorphism *]        
+        pre_metamodel = ["MT_pre__S_MM", "MoTifRule"]
+        post_metamodel = ["MT_post__T_MM", "MoTifRule"]
+
+        changePropertyProverMetamodel(pre_metamodel, post_metamodel, subclasses_dict, superclasses_dict, dsltransInstallDir = "[%=dsltransInstallPath%]")
+        
+        # go through all the matchers, combinators and tracers to add polymorphism on all classes in an inheritance hierarchy
+                                                                  
+        
+        set_supertypes(superclasses_dict, self.rules, self.transformation, self.ruleTraceCheckers, self.matchRulePatterns, self.ruleCombinators)
+
+            
+        # load the contracts, and add polymorphism
+
+        if (args.draw_svg): 
+        [%
+        for (ac in inputProperties!AtomicContract) { %]
+                graph_to_dot("property_[%=ac.Name%]_isolated", H[%=ac.Name%]_IsolatedLHS())
+                graph_to_dot("property_[%=ac.Name%]_connected", H[%=ac.Name%]_ConnectedLHS())
+                graph_to_dot("property_[%=ac.Name%]_complete", H[%=ac.Name%]_CompleteLHS())
+        [%}%]       
+
+        self.atomic_contracts = []
+        self.if_then_contracts = []
+        
+        [%
+        var atomicContractIndex = 0;
+        for (ac in inputProperties!AtomicContract) { %]
+        
+        isolated = H[%=ac.Name%]_IsolatedLHS()
+        connected = H[%=ac.Name%]_ConnectedLHS()
+        complete = H[%=ac.Name%]_CompleteLHS()
+        
+        isolated["superclasses_dict"] = superclasses_dict 
+        connected["superclasses_dict"] = superclasses_dict 
+        complete["superclasses_dict"] = superclasses_dict 
+        
+        c[%=atomicContractIndex%] = AtomicContract(isolated, connected, complete)
+        
+        self.atomic_contracts.append(("[%=ac.Name%]", c[%=atomicContractIndex%]))
+        
+          
+        [%}%]
+        
+        if args.slice > 0:
+            print("Slicing for contract number " + str(args.slice))
+            contract = self.atomic_contracts[args.slice - 1]
+            self.new_rules, self.new_transformation = slice_transformation(self.rules, self.transformation, contract, args)
+            
+            
+        # generate path conditions
+        pc_set = PathConditionGenerator(self.transformation, outputMM, self.ruleCombinators, self.ruleTraceCheckers, self.matchRulePatterns, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption, args)
+    
+        ts0 = time.time()
+        pc_set.build_path_conditions()
+        ts1 = time.time()
+             
+        print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
+        print("Number of path conditions: " + str(pc_set.num_path_conditions))
+ 
+        # print path conditions to screen
+        
+        if pc_set.num_path_conditions < 300:
+            pc_set.print_path_conditions_screen()
+        
+        # now actually prove these contracts
+        
+        contract_prover = ContractProver()
+
+        contract_prover.prove_contracts(pc_set, self.atomic_contracts, self.if_then_contracts)
+        print("\n\nTime to build the set of path conditions: " + str(ts1 - ts0))
+        print("Number of path conditions: " + str(pc_set.num_path_conditions))
+
+
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(description='Run the test.')
+    
+    parser.add_argument('--skip_tests', dest = 'run_tests', action = 'store_false',
+                        help = 'Option to skip the running of matching tests')
+    parser.set_defaults(run_tests = True)
+
+    parser.add_argument('--skip_parallel', dest = 'do_parallel', action = 'store_false',
+                        help = 'Option to force computation to run single-thread')
+    parser.set_defaults(do_parallel = True)
+
+    parser.add_argument('--skip_pickle', dest = 'do_pickle', action = 'store_false',
+                        help = 'Option to skip the use of pickling')
+    parser.set_defaults(do_pickle = True)
+    
+    parser.add_argument('--compression', type = int, default = 6,
+                        help = 'Level of compression to use with pickling. Range: 0 (no compression) to 9 (high compression) (default: 6)')
+    parser.set_defaults(compression = 6)
+    
+    parser.add_argument('--slice', type = int, default = 0,
+                        help = 'Index of contract to slice for. Range: 0 (no slicing) to #CONTRACTS (default: 0)')
+    parser.set_defaults(slice = 0)
+    
+    parser.add_argument('--no_svg', dest = 'draw_svg', action = 'store_false',
+                        help = 'Flag to force svg files to not be drawn')
+    parser.set_defaults(draw_svg = True)
+
+    parser.add_argument('--num_pcs', type = int, default = -1,
+                        help = 'Number of path conditions which should be produced by this test (default: -1)')
+
+    parser.add_argument('--num_rules', type = int, default = -1,
+                        help = 'Number of rules in the transformation (default: -1)')
+                        
+    parser.add_argument('--verbosity', type = int, default = 0,
+                        help = 'Verbosity level (default: 0 - minimum output)')
+                        
+    args = parser.parse_args()
+
+
+    prover = Prover()
+    prover.do_proof(args)
