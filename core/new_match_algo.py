@@ -318,6 +318,8 @@ class NewHimesisMatcher(object):
                 patt_1_mm = patt_mms[patt1_n]
                 patt_link_mm = patt_mms[patt_link_n]
 
+                patt_link_is_not_trace_back = patt_link_mm not in ["trace_link", "backward_link"]
+
                 patt_constraints_0 = self.get_patt_node_constraints(patt0_n)
                 patt_constraints_1 = self.get_patt_node_constraints(patt1_n)
                 patt_constraints_link = self.get_patt_node_constraints(patt_link_n)
@@ -334,7 +336,8 @@ class NewHimesisMatcher(object):
                     #     self.print_link(self.source_graph, graph_n0_n, graph_n1_n, graph_link_n)
                     # print("\n===================\n")#End Source Graph " + self.source_graph.name + " nodes:")
 
-                for graph_n0_n, graph_n1_n, graph_link_n in source_links:
+                for source_link in source_links:
+                    #graph_n0_n, graph_n1_n, graph_link_n = source_link
 
                     # if self.debug:
                     #     print("\nChecking Graph " + self.source_graph.name + " nodes:")
@@ -345,19 +348,19 @@ class NewHimesisMatcher(object):
 
                     #trace links and backward links will always match over each other
                     #so don't bother checking them
-                    if patt_link_mm not in ["trace_link", "backward_link"]:
-                        if not self.match_nodes(graph_link_n, patt_link_n, patt_link_mm, patt_constraints_link):
+                    if patt_link_is_not_trace_back:
+                        if not self.match_nodes(source_link[2], patt_link_n, patt_link_mm, patt_constraints_link):
                             continue
 
                     #if nodes_match:
-                    if self.match_nodes(graph_n0_n, patt0_n, patt_0_mm, patt_constraints_0) and self.match_nodes(graph_n1_n, patt1_n, patt_1_mm, patt_constraints_1):
+                    if self.match_nodes(source_link[0], patt0_n, patt_0_mm, patt_constraints_0) and self.match_nodes(source_link[1], patt1_n, patt_1_mm, patt_constraints_1):
 
                         # if self.debug:
                         #     print("Found a link - " + str(graph_n0_n) + " " + str(graph_link_n) + " " + str(graph_n1_n))
 
                         found_match = True
                         patt_link = (patt0_n, patt1_n, patt_link_n)
-                        source_link = (graph_n0_n, graph_n1_n, graph_link_n)
+                        #source_link = (graph_n0_n, graph_n1_n, graph_link_n)
 
                         try:
                             link_matches[patt_link].append(source_link)
@@ -419,10 +422,7 @@ class NewHimesisMatcher(object):
                     new_v.append(original_v)
 
 
-
         def combo_generator3(match_set, reverse_match_set, *link_matches):
-
-
             if len(link_matches) == 0:
                 yield {}
             else:
@@ -469,10 +469,7 @@ class NewHimesisMatcher(object):
         link_matches_list.sort(key = lambda tup: (len(tup[1]), str(tup[1])))
 
 
-        for i, combo in enumerate(combo_generator3({}, {}, *link_matches_list)):
-            #print(i)
-            #print(combo)
-            #print("New time: " + str(time.time() - start_time))
+        for combo in combo_generator3({}, {}, *link_matches_list):
             yield combo
 
     def combo_generator(self, link_matches):
