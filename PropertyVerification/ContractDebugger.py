@@ -1,6 +1,6 @@
 from core.new_match_algo import NewHimesisMatcher
 from random import choice
-from core.himesis_utils import expand_graph, graph_to_dot
+from core.himesis_utils import expand_graph, graph_to_dot, get_filename
 
 class ContractDebugger:
 
@@ -72,6 +72,7 @@ class ContractDebugger:
         failed_pc_name = choice(smallest_failed)
 
         print("Examining failed pc: " + failed_pc_name)
+        print("Filename: " + str(get_filename(failed_pc_name)))
         failed_pc = self.pathCondGen.pc_dict[failed_pc_name]
         failed_pc = expand_graph(failed_pc)
 
@@ -103,7 +104,7 @@ class ContractDebugger:
             if all(rule in self.pathCondGen.rules_in_pc_real_name(pc) for pc in failed_pcs):
 
                 #see if this rule is not in all success PCs
-                if not all(rule in self.pathCondGen.rules_in_pc_real_name(pc) for pc in success_pcs):
+                if not success_pcs or not all(rule in self.pathCondGen.rules_in_pc_real_name(pc) for pc in success_pcs):
                     bad_rules.append(rule)
 
         bad_rules = sorted(bad_rules)
