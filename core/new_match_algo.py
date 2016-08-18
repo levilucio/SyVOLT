@@ -70,6 +70,15 @@ class NewHimesisMatcher(object):
         except IndexError:
             self.pattern_attribs = []
 
+        from core.himesis_plus import get_default_match_code
+        self.default_match_code = get_default_match_code()
+
+        self.pattern_attribs_by_node = {}
+
+        for i, patt_node in enumerate(self.pattern_nodes):
+            self.pattern_attribs_by_node[i] = [attr[8:] for attr in self.pattern_attribs if patt_node[attr] != self.default_match_code and patt_node[attr] is not None]
+
+
         # if "MM5_then_Complete" in self.pattern_graph.name and \
         #                 "HEmptyPathCondition_HState2ProcDef-0_HBasicState2ProcDef-P0_HTransition2Inst-0_HTransitionHListenBranch" in self.source_graph.name:  # "HPP3_CompleteLHS" in self.pattern_graph.name:# and \
         #
@@ -105,8 +114,7 @@ class NewHimesisMatcher(object):
         if self.patt_eqs_constant or self.patt_eqs_variable:
             self.src_eqs_constant, self.src_eqs_variable = self.load_equations(source_graph)
 
-        from core.himesis_plus import get_default_match_code
-        self.default_match_code = get_default_match_code()
+
 
 
 
@@ -620,7 +628,7 @@ class NewHimesisMatcher(object):
             pass
 
         # Check for attributes value/constraint
-        for attr in self.pattern_attribs:
+        for attr_name in self.pattern_attribs_by_node[patt_node_num]:
             # Attribute constraints are stored as attributes in the pattern node.
             # The attribute must be prefixed by a specific keyword
             #if not attr.startswith("MT_pre__"):
@@ -630,10 +638,8 @@ class NewHimesisMatcher(object):
             # if not patt_node[attr]:
             #     continue
 
-            if patt_node[attr] == self.default_match_code or not patt_node[attr]:
-                continue
-
-            attr_name = attr[8:]
+            # if patt_node[attr] == self.default_match_code or not patt_node[attr]:
+            #     continue
 
             # methName = self.G2.get_attr_constraint_name(patt_node.index, attr)
             methName = 'eval_{}{}'.format(attr_name, patt_label)
