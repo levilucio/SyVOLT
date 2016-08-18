@@ -1,11 +1,12 @@
 from util.decompose_graph import decompose_graph
+from core.new_match_algo import NewHimesisMatcher
 
 from core.himesis_utils import expand_graph, set_do_pickle, set_compression
 
 set_do_pickle(True)
 set_compression(6)
 
-file_name = "226482067288742734644994685633991185819"
+file_name = "283038437670457923837516267818581708163"
 
 graph = expand_graph(file_name)
 
@@ -15,7 +16,7 @@ from core.himesis_utils import load_directory
 contracts = load_directory("mbeddr2C_MM/Contracts/")
 
 atomic_contracts = [
-    'AssignmentInstance'
+    'AssignmentInstance_UniqueAssignment'
 ]
 
 if_then_contracts = []
@@ -49,5 +50,13 @@ result = contract.check(graph)
 print(result)
 print("Finished in " + str(time.time() - start_time) + " seconds")
 
+matcher = NewHimesisMatcher(graph, contract.complete)
+matcher.print_reason_failed = True
+matcher.debug = False
 
-#decompose_graph(graph)
+matcher.superclasses_dict = superclasses_dict
+
+for _ in matcher.match_iter():
+    break
+
+matcher.print_failures()
