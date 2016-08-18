@@ -707,7 +707,7 @@ def load_class(full_class_string, args = None):
     # sometimes the file is still being written,
     # so wait for a bit
     if not path.isfile(full_class_string):
-        sleep(0.001)
+        sleep(0.01)
 
     succeed = True
     try:
