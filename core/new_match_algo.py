@@ -551,11 +551,11 @@ class NewHimesisMatcher(object):
         else:
             lookup = int(patt_label)
 
-        if lookup in self.patt_eqs_constant:
-            print("Equation on " + self.pattern_mms[patt_node_num] + ": " + str(self.patt_eqs_constant[lookup]))
+        if self.patt_eqs_constant[lookup]:
+            print("Constant equation on " + self.pattern_mms[patt_node_num] + ": " + str(self.patt_eqs_constant[lookup]))
 
-        if lookup in self.patt_eqs_variable:
-            print("Equation on " + self.pattern_mms[patt_node_num] + ": " + str(self.patt_eqs_variable[lookup]))
+        if self.patt_eqs_variable[lookup]:
+            print("Variable equation on " + self.pattern_mms[patt_node_num] + ": " + str(self.patt_eqs_variable[lookup]))
 
     #==============================================================
 
