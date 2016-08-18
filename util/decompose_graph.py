@@ -39,8 +39,6 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False, isolated_if_
             mms = [mm[8:] for mm in mms]
     except KeyError:
         mms = []
-        
-    vcount = len(mms)
 
     # only get the match direct links
     if ignore_apply_dls:
@@ -63,9 +61,9 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False, isolated_if_
 
     has_contains = "match_contains" in mms
 
-    for e in graph.es:
+    for source, target in [e.tuple for e in graph.es]:
 
-        source, target = e.tuple
+        #source, target = e.tuple
 
         if source in bls:
             backward_links_dict[source][1] = target
@@ -85,10 +83,10 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False, isolated_if_
         source_mm = mms[source]
         target_mm = mms[target]
 
-        if not has_contains:
-            if source_mm == "MatchModel" and target_mm != "paired_with":
+        if target_mm != "paired_with" and not has_contains:
+            if source_mm == "MatchModel":
                 match_elements.append(target)
-            elif source_mm == "ApplyModel" and target_mm != "paired_with":
+            elif source_mm == "ApplyModel":
                 apply_elements.append(target)
         else:
             if source_mm == "match_contains":
