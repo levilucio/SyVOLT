@@ -306,9 +306,11 @@ class Slicer:
 
             iso_mm = pattern_mms[iso_match_element]
 
+            patt_constraints = matcher.get_patt_node_constraints(iso_match_element)
+
             for node in range(len(graph.vs)):
                 # print("Matching on: " + str(node))
-                nodes_match = matcher.match_nodes(node, iso_match_element, iso_mm)
+                nodes_match = matcher.match_nodes(node, iso_match_element, iso_mm, patt_constraints)
 
                 if nodes_match:
                     if pattern.name not in self.found_isolated_match_elements.keys():
@@ -341,6 +343,10 @@ class Slicer:
                 patt_1_mm = pattern_mms[patt1_n]
                 patt_link_mm = pattern_mms[patt_link_n]
 
+                patt_constraints_0 = matcher.get_patt_node_constraints(patt0_n)
+                patt_constraints_1 = matcher.get_patt_node_constraints(patt1_n)
+                patt_constraints_link = matcher.get_patt_node_constraints(patt_link_n)
+
                 for graph_n0_n, graph_n1_n, graph_link_n in source_links:
                     if pattern.vs[patt_link_n]["mm__"] in ["trace_link", "backward_link"]:
                         if graph.vs[graph_link_n]["mm__"] in ["trace_link", "backward_link"]:
@@ -348,7 +354,7 @@ class Slicer:
                         else:
                             links_match = False
                     else:
-                        links_match = matcher.match_nodes(graph_link_n, patt_link_n, patt_link_mm)
+                        links_match = matcher.match_nodes(graph_link_n, patt_link_n, patt_link_mm, patt_constraints_link)
 
                     if not links_match:
                         #if verbosity > 1:
@@ -357,15 +363,15 @@ class Slicer:
 
                     if verbosity > 1:
                         print("\nChecking Pattern " + pattern.name + " nodes:")
-                        matcher.print_link(pattern, patt0_n, patt1_n, patt_link_n)
+                        matcher.print_link(None, pattern, patt0_n, patt1_n, patt_link_n)
 
-                    nodes_match_1 = matcher.match_nodes(graph_n0_n, patt0_n, patt_0_mm)
+                    nodes_match_1 = matcher.match_nodes(graph_n0_n, patt0_n, patt_0_mm, patt_constraints_0)
 
-                    nodes_match_2 = matcher.match_nodes(graph_n1_n, patt1_n, patt_1_mm)
+                    nodes_match_2 = matcher.match_nodes(graph_n1_n, patt1_n, patt_1_mm, patt_constraints_1)
 
-                    nodes_match_3 = matcher.match_nodes(graph_n1_n, patt0_n, patt_0_mm)
+                    nodes_match_3 = matcher.match_nodes(graph_n1_n, patt0_n, patt_0_mm, patt_constraints_0)
 
-                    nodes_match_4 = matcher.match_nodes(graph_n0_n, patt1_n, patt_1_mm)
+                    nodes_match_4 = matcher.match_nodes(graph_n0_n, patt1_n, patt_1_mm, patt_constraints_1)
 
 
                     nodes_match = (nodes_match_1 and nodes_match_2) or (nodes_match_3 and nodes_match_4)
