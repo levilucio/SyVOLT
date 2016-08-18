@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dsltrans:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dsltrans="http://dsltrans/2.0">
   <source xsi:type="dsltrans:FilePort" name="maininput" filePathURI="IN">
-    <metaModelId metaModelURI="-- @path Families=../input/Families_Extended.ecore" metaModelName="Families"/>
+    <metaModelId metaModelURI="Families_Extended.ecore" metaModelName="Families"/>
   </source>
   <source xsi:type="dsltrans:Sequential" name="Country2Community_CreationRule" previousSource="//@source.0">
     <metaModelId metaModelURI="Persons.ecore" metaModelName="Persons"/>
@@ -504,7 +504,7 @@
     </hasRule>
   </source>
   <source xsi:type="dsltrans:Sequential" name="dfacilitiesSolveRef" previousSource="//@source.18">
-    <metaModelId metaModelURI="Persons.ecore" metaModelName="Persons"/>
+    <metaModelId metaModelURI="Persons_Extended.ecore" metaModelName="Persons"/>
     <hasRule description="dfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictSpecialFacilityPerson">
       <match>
         <class xsi:type="dsltrans:AnyMatchClass" packageName="families" className="Neighborhood"/>
