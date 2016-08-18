@@ -271,8 +271,8 @@ class PathConditionGenerator(object):
 
         start_time = time.time()
 
-        min_chunk_size = 5
-        max_chunk_size = 50
+        min_chunk_size = 10
+        max_chunk_size = 100
 
         for layer in range(len(self.transformation)):
             print("Layer: " + str(layer + 1) + "/" + str(len(self.transformation)) + " at time " + str(time.time() - start_time))
