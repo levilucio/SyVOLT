@@ -1,0 +1,213 @@
+AbstractInstanceConfiguration
+['INamedConcept', 'MetaModelElement_S', 'IIdentifierNamedConcept']
+AdapterInstancePortRef
+['MetaModelElement_S']
+Argument
+['IArgumentLike', 'IControlledNamedConcept', 'IIdentifierNamedConcept', 'INamedConcept', 'MetaModelElement_T', 'ITyped']
+ArgumentRef
+['MetaModelElement_S', 'Expression']
+ArrayType
+['MetaModelElement_T', 'Type', 'IType']
+AssemblyConnector
+['MetaModelElement_S', 'InstanceConfigContents']
+AssignmentExpr
+['MetaModelElement_T', 'Expression', 'BinaryExpression']
+AtomicComponent
+['Component', 'INamedConcept', 'MetaModelElement_S', 'IModuleContent', 'IIdentifierNamedConcept']
+BinaryArithmeticExpression
+['MetaModelElement_S', 'Expression', 'BinaryExpression']
+BinaryComparisonExpression
+['MetaModelElement_T', 'Expression', 'BinaryExpression']
+BinaryExpression
+['MetaModelElement_T', 'Expression']
+BinaryOrderedComparisonExpression
+['MetaModelElement_T', 'BinaryComparisonExpression', 'BinaryExpression', 'Expression']
+CFunctionPointerStructMember
+['IControlledNamedConcept', 'IIdentifierNamedConcept', 'IVariableDeclaration', 'INamedConcept', 'SUContent', 'Member', 'MetaModelElement_T', 'ITyped']
+CModule
+['IModuleContentContainer', 'INamedConcept', 'MetaModelElement_T', 'IIdentifierNamedConcept']
+CastExpression
+['MetaModelElement_T', 'Expression']
+ClientServerInterface
+['INamedConcept', 'MetaModelElement_S', 'IModuleContent', 'Interface', 'IIdentifierNamedConcept']
+Component
+['INamedConcept', 'MetaModelElement_S', 'IModuleContent', 'IIdentifierNamedConcept']
+ComponentInstance
+['INamedConcept', 'MetaModelElement_S', 'InstanceConfigContents', 'IIdentifierNamedConcept']
+DerefExpr
+['PointerExpr', 'MetaModelElement_T', 'UnaryExpression', 'Expression']
+Executable
+['IIdentifierNamedConcept', 'INamedConcept', 'MetaModelElement_S', 'IFunctionLike', 'ITyped', 'IComponentContent']
+ExecuteTestExpression
+['MetaModelElement_S', 'Expression']
+Expression
+['MetaModelElement_T']
+ExpressionStatement
+['Statement', 'MetaModelElement_T']
+Function
+['FunctionSignature', 'IIdentifierNamedConcept', 'INamedConcept', 'IFunctionLike', 'IModuleContent', 'MetaModelElement_T', 'ITyped']
+FunctionCall
+['MetaModelElement_T', 'Expression']
+FunctionPrototype
+['FunctionSignature', 'IIdentifierNamedConcept', 'INamedConcept', 'IFunctionLike', 'IModuleContent', 'MetaModelElement_T', 'ITyped']
+FunctionRefExpr
+['MetaModelElement_T', 'Expression']
+FunctionRefType
+['MetaModelElement_T', 'Type', 'IType']
+FunctionSignature
+['IIdentifierNamedConcept', 'INamedConcept', 'IFunctionLike', 'IModuleContent', 'MetaModelElement_T', 'ITyped']
+GenericDotExpression
+['MetaModelElement_T', 'UnaryExpression', 'Expression']
+GenericMemberRef
+['MetaModelElement_T', 'IGenericDotTarget']
+GlobalVarRef
+['MetaModelElement_T', 'Expression']
+GlobalVariableDeclaration
+['IControlledNamedConcept', 'IIdentifierNamedConcept', 'INamedConcept', 'IModuleContent', 'MetaModelElement_T', 'ITyped']
+GreaterEqualsExpression
+['MetaModelElement_T', 'BinaryOrderedComparisonExpression', 'Expression', 'BinaryComparisonExpression', 'BinaryExpression']
+IArgumentLike
+['IIdentifierNamedConcept', 'INamedConcept', 'MetaModelElement_T', 'IControlledNamedConcept', 'ITyped']
+ICSInterfaceContents
+['MetaModelElement_S']
+ICanBeExecutedAsTest
+['MetaModelElement_S']
+IComponentContent
+['INamedConcept', 'MetaModelElement_S', 'IIdentifierNamedConcept']
+IControlledNamedConcept
+['INamedConcept', 'MetaModelElement_T', 'IIdentifierNamedConcept']
+IFunctionLike
+['MetaModelElement_T', 'ITyped']
+IGenericDotTarget
+['MetaModelElement_T']
+IHasPrefixes
+['MetaModelElement_T']
+IIdentifierNamedConcept
+['INamedConcept', 'MetaModelElement_T']
+IModuleContent
+['INamedConcept', 'MetaModelElement_T', 'IIdentifierNamedConcept']
+IModuleContentContainer
+['INamedConcept', 'MetaModelElement_T', 'IIdentifierNamedConcept']
+INamedConcept
+['MetaModelElement_T']
+IOperationTriggerLike
+['MetaModelElement_S']
+IType
+['MetaModelElement_T']
+ITypeContainingType
+['MetaModelElement_T']
+ITyped
+['MetaModelElement_T']
+IVariableDeclaration
+['INamedConcept', 'MetaModelElement_T']
+ImplementationModule
+['IModuleContentContainer', 'INamedConcept', 'MetaModelElement_T', 'CModule', 'IIdentifierNamedConcept']
+InitializeConfiguration
+['Statement', 'MetaModelElement_S']
+InstanceConfigContents
+['MetaModelElement_S']
+InstanceConfiguration
+['INamedConcept', 'AbstractInstanceConfiguration', 'IModuleContent', 'MetaModelElement_S', 'IIdentifierNamedConcept']
+InstancePortRef
+['PortRef', 'MetaModelElement_S']
+Int32Type
+['MetaModelElement_T', 'PrimitiveType', 'PrimitiveC99IntegralType', 'Type', 'IType']
+Interface
+['INamedConcept', 'MetaModelElement_S', 'IModuleContent', 'IIdentifierNamedConcept']
+InterfaceOperationCallExpr
+['UnaryExpression', 'MetaModelElement_S', 'Expression']
+Literal
+['MetaModelElement_T', 'Expression']
+LocalVarRef
+['MetaModelElement_S', 'Expression']
+LocalVariableDeclaration
+['Statement', 'IControlledNamedConcept', 'IVariableDeclaration', 'IIdentifierNamedConcept', 'INamedConcept', 'MetaModelElement_T', 'ITyped']
+MbeddrModule
+['IModuleContentContainer', 'INamedConcept', 'MetaModelElement_S', 'IIdentifierNamedConcept']
+Member
+['IControlledNamedConcept', 'IIdentifierNamedConcept', 'IVariableDeclaration', 'INamedConcept', 'SUContent', 'MetaModelElement_T', 'ITyped']
+ModuleContentSUDeclaration
+['IIdentifierNamedConcept', 'INamedConcept', 'IModuleContent', 'SUDeclaration', 'MetaModelElement_T', 'IHasPrefixes']
+NumberLiteral
+['NumericLiteral', 'MetaModelElement_T', 'Literal', 'Expression']
+NumericLiteral
+['MetaModelElement_T', 'Literal', 'Expression']
+Operation
+['IIdentifierNamedConcept', 'INamedConcept', 'MetaModelElement_S', 'IFunctionLike', 'ITyped', 'ICSInterfaceContents']
+OperationParameter
+['IArgumentLike', 'IControlledNamedConcept', 'IIdentifierNamedConcept', 'IVariableDeclaration', 'INamedConcept', 'MetaModelElement_S', 'ITyped']
+OperationTrigger
+['RunnableTrigger', 'MetaModelElement_S', 'IOperationTriggerLike']
+PlusExpression
+['BinaryArithmeticExpression', 'MetaModelElement_S', 'BinaryExpression', 'Expression']
+PointerExpr
+['MetaModelElement_T', 'UnaryExpression', 'Expression']
+PointerType
+['ITypeContainingType', 'MetaModelElement_T', 'Type', 'IType']
+Port
+['INamedConcept', 'MetaModelElement_S', 'IIdentifierNamedConcept', 'IComponentContent']
+PortAdapter
+['INamedConcept', 'MetaModelElement_S', 'InstanceConfigContents', 'IIdentifierNamedConcept']
+PortAdapterOpCallExpr
+['InterfaceOperationCallExpr', 'UnaryExpression', 'MetaModelElement_S', 'Expression']
+PortAdapterRefExpr
+['MetaModelElement_S', 'Expression']
+PortRef
+['MetaModelElement_S']
+PortRefExpr
+['MetaModelElement_S', 'Expression']
+Prefix
+['MetaModelElement_T']
+PrimitiveC99IntegralType
+['MetaModelElement_T', 'PrimitiveType', 'Type', 'IType']
+PrimitiveType
+['MetaModelElement_T', 'Type', 'IType']
+ProvidedPort
+['IIdentifierNamedConcept', 'INamedConcept', 'MetaModelElement_S', 'Port', 'IComponentContent']
+ReferenceExpr
+['PointerExpr', 'MetaModelElement_T', 'UnaryExpression', 'Expression']
+RequiredPort
+['IIdentifierNamedConcept', 'INamedConcept', 'MetaModelElement_S', 'Port', 'IComponentContent']
+RequiredPortOpCallExpr
+['InterfaceOperationCallExpr', 'UnaryExpression', 'MetaModelElement_S', 'Expression']
+ReturnStatement
+['Statement', 'MetaModelElement_T']
+RunnableTrigger
+['MetaModelElement_S']
+SUContent
+['MetaModelElement_T']
+SUDeclaration
+['MetaModelElement_T', 'IHasPrefixes']
+SUType
+['MetaModelElement_T', 'TypeWithDeclaration', 'Type', 'IType']
+Statement
+['MetaModelElement_T']
+StatementList
+['Statement', 'MetaModelElement_T']
+StringLiteral
+['MetaModelElement_S', 'Literal', 'Expression']
+StringType
+['MetaModelElement_T', 'PrimitiveType', 'Type', 'IType']
+StructDeclaration
+['IIdentifierNamedConcept', 'INamedConcept', 'IModuleContent', 'SUDeclaration', 'MetaModelElement_T', 'IHasPrefixes', 'ModuleContentSUDeclaration']
+StructType
+['Type', 'SUType', 'MetaModelElement_T', 'TypeWithDeclaration', 'IType']
+TestCase
+['IIdentifierNamedConcept', 'INamedConcept', 'MetaModelElement_S', 'IFunctionLike', 'IModuleContent', 'ITyped']
+TestCaseRef
+['ICanBeExecutedAsTest', 'MetaModelElement_S']
+Type
+['MetaModelElement_T', 'IType']
+TypeDef
+['INamedConcept', 'MetaModelElement_T', 'IModuleContent', 'IIdentifierNamedConcept']
+TypeDefType
+['MetaModelElement_T', 'TypeWithDeclaration', 'Type', 'IType']
+TypeWithDeclaration
+['MetaModelElement_T', 'Type', 'IType']
+UnaryExpression
+['MetaModelElement_T', 'Expression']
+VoidType
+['MetaModelElement_T', 'PrimitiveType', 'Type', 'IType']
+WhileStatement
+['Statement', 'MetaModelElement_T']
+

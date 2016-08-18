@@ -1624,7 +1624,7 @@ return attr_value == "function"
                 ])
         
                 # Add the attribute equations
-                self["equations"] = [((1,'name'),('constant','main')), ((11,'name'),('constant','blah')), ((12,'name'),('constant','blah')), ((14,'name'),('constant','blah')), ((15,'name'),('constant','blah')), ((17,'name'),('constant','blah')), ((24,'name'),('constant','blah')), ((27,'name'),('constant','main')), ]
+                self["equations"] = []
         
         def eval_attr11(self, attr_value, this):
 
