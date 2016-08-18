@@ -44,11 +44,11 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False, isolated_if_
 
     # only get the match direct links
     if ignore_apply_dls:
-        dls = [i for i in range(vcount) if mms[i] == "directLink_S"]
+        dls = set([i for i, mm in enumerate(mms) if mm == "directLink_S"])
     else:
-        dls = [i for i in range(vcount) if mms[i] in ["directLink_S", "directLink_T"]]
+        dls = set([i for i, mm in enumerate(mms) if mm in ["directLink_S", "directLink_T"]])
 
-    bls = [i for i in range(vcount) if mms[i] in ["trace_link", "backward_link"]]
+    bls = set([i for i, mm in enumerate(mms) if mm in ["trace_link", "backward_link"]])
 
     direct_links_dict = {n: [None, None] for n in dls}
     backward_links_dict = {n: [None, None] for n in bls}
