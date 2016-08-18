@@ -119,7 +119,6 @@ class NewHimesisMatcher(object):
 
 
 
-
     def load_equations(self, graph):
 
         if self.skip_equations:
@@ -244,6 +243,18 @@ class NewHimesisMatcher(object):
     def reset_recursion_limit(self):
         pass
 
+    def get_patt_node_constraints(self, patt_node_num):
+        patt_label = self.pattern_labels[patt_node_num]
+
+        # HACK: Use patt node num not labels for contracts!
+        if self.is_contract:
+            lookup = patt_node_num
+        else:
+            lookup = patt_label
+
+        return self.patt_eqs_constant[lookup], self.patt_eqs_variable[lookup], self.pattern_attribs_by_node[patt_node_num]
+
+
     #@profile
     def _match(self):
 
@@ -264,11 +275,13 @@ class NewHimesisMatcher(object):
             #print("Matching iso element: " + str(iso_match_element))
 
             iso_mm = patt_mms[iso_match_element]
+
+            patt_constraints = self.get_patt_node_constraints(iso_match_element)
             for node in range(len(self.source_graph.vs)):
 
                 #print("Matching on: " + str(node))
 
-                nodes_match = self.match_nodes(node, iso_match_element, iso_mm)
+                nodes_match = self.match_nodes(node, iso_match_element, iso_mm, patt_constraints)
                 if nodes_match:
                     iso_link = (iso_match_element, None, None)
                     node_link = (node, None, None)
@@ -305,6 +318,10 @@ class NewHimesisMatcher(object):
                 patt_1_mm = patt_mms[patt1_n]
                 patt_link_mm = patt_mms[patt_link_n]
 
+                patt_constraints_0 = self.get_patt_node_constraints(patt0_n)
+                patt_constraints_1 = self.get_patt_node_constraints(patt1_n)
+                patt_constraints_link = self.get_patt_node_constraints(patt_link_n)
+
                 found_match = False
 
                 if self.debug:
@@ -329,11 +346,11 @@ class NewHimesisMatcher(object):
                     #trace links and backward links will always match over each other
                     #so don't bother checking them
                     if patt_link_mm not in ["trace_link", "backward_link"]:
-                        if not self.match_nodes(graph_link_n, patt_link_n, patt_link_mm):
+                        if not self.match_nodes(graph_link_n, patt_link_n, patt_link_mm, patt_constraints_link):
                             continue
 
                     #if nodes_match:
-                    if self.match_nodes(graph_n0_n, patt0_n, patt_0_mm) and self.match_nodes(graph_n1_n, patt1_n, patt_1_mm):
+                    if self.match_nodes(graph_n0_n, patt0_n, patt_0_mm, patt_constraints_0) and self.match_nodes(graph_n1_n, patt1_n, patt_1_mm, patt_constraints_1):
 
                         # if self.debug:
                         #     print("Found a link - " + str(graph_n0_n) + " " + str(graph_link_n) + " " + str(graph_n1_n))
@@ -546,7 +563,7 @@ class NewHimesisMatcher(object):
     #==============================================================
 
     #@profile
-    def match_nodes(self, graph_node, patt_node, targetMM):
+    def match_nodes(self, graph_node, patt_node, targetMM, patt_constraints):
         sourceMM = self.source_mms[graph_node]
 
 
@@ -559,7 +576,7 @@ class NewHimesisMatcher(object):
         #print("Source: " + sourceMM + " vs Target: " + targetMM)
 
         if sourceMM == targetMM or (sourceMM in self.superclasses_dict and targetMM in self.superclasses_dict[sourceMM]):
-            return self.are_semantically_feasible(graph_node, patt_node)
+            return self.are_semantically_feasible(graph_node, patt_node, patt_constraints)
 
             # if debug:
             #    print("Superclasses: " + str(superclasses_dict))
@@ -570,7 +587,7 @@ class NewHimesisMatcher(object):
         return False
 
     #@profile
-    def are_semantically_feasible(self, src_node_num, patt_node_num):
+    def are_semantically_feasible(self, src_node_num, patt_node_num, patt_constraints):
         """
             Determines whether the two nodes are syntactically feasible,
             i.e., it ensures that adding this candidate pair does not make it impossible to find a total mapping.
@@ -583,35 +600,20 @@ class NewHimesisMatcher(object):
         # It verifies that all attribute constraints are satisfied.
         # =======================================================================
 
-        src_node = self.source_nodes[src_node_num]
-
-        patt_label = self.pattern_labels[patt_node_num]
-
-        #HACK: Use patt node num not labels for contracts!
-
-        if self.is_contract:
-            lookup = patt_node_num
-        else:
-            lookup = patt_label
-
-        patt_constant_equations = self.patt_eqs_constant[lookup]
+        patt_constant_equations, patt_variable_equations, attr_constraints = patt_constraints
 
         if patt_constant_equations:
             src_constant_equations = self.src_eqs_constant[src_node_num]
-            if not compare_constant_equations(patt_constant_equations, src_constant_equations, src_node):
+            if not compare_constant_equations(patt_constant_equations, src_constant_equations, self.source_nodes[src_node_num]):
                 return False
 
-
-        patt_variable_equations = self.patt_eqs_variable[lookup]
         if patt_variable_equations:
-
             src_variable_equations = self.src_eqs_variable[src_node_num]
             if not compare_variable_equations(patt_variable_equations, src_variable_equations):
                 return False
 
-
         # Check for attributes value/constraint
-        for attr_name in self.pattern_attribs_by_node[patt_node_num]:
+        for attr_name in attr_constraints:
             # Attribute constraints are stored as attributes in the pattern node.
             # The attribute must be prefixed by a specific keyword
             #if not attr.startswith("MT_pre__"):
@@ -625,7 +627,7 @@ class NewHimesisMatcher(object):
             #     continue
 
             # methName = self.G2.get_attr_constraint_name(patt_node.index, attr)
-            methName = 'eval_{}{}'.format(attr_name, patt_label)
+            methName = 'eval_{}{}'.format(attr_name, self.pattern_labels[patt_node_num])
             #
             # print("Attr name: " + attr_name)
             # print("Meth name: " + methName)
@@ -639,6 +641,7 @@ class NewHimesisMatcher(object):
             # if callable(checkConstraint):
             try:
                 # This is equivalent to: if not eval_attrLbl(attr_value, currNode)
+                src_node = self.source_nodes[src_node_num]
                 if not checkConstraint(src_node[attr_name], src_node):
 
                     if self.debug:
