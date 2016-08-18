@@ -38,8 +38,6 @@ class PyRamify:
 
     def __init__(self, verbosity = 0, draw_svg = "True"):
 
-        #keep track of the next label to give a graph node
-        self.next_label = 0
         self.verbosity = verbosity
         self.draw_svg =(draw_svg == "True")
         self.ruleSubsumption = {}
