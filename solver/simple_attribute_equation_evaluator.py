@@ -113,16 +113,21 @@ def compare_variable_equations(patt_variable_equations, src_variable_equations):
         patt_value = patt_eq[1]
         patt_str = var_eq_to_string(patt_value)
 
-        if "*" in patt_str:
-            expr = re.compile(patt_str)
+        if ".*" in patt_str:
+            patt_expr = re.compile(patt_str)
         else:
-            expr = None
+            patt_expr = None
 
         found = False
         for (src_attr, src_value) in src_variable_equations:
             if patt_attr == src_attr:
 
                 src_str = var_eq_to_string(src_value)
+
+                if ".*" in src_str:
+                    src_expr = re.compile(src_str)
+                else:
+                    src_expr = None
 
                 if debug:
                     print("Patt: " + patt_str)
@@ -131,17 +136,15 @@ def compare_variable_equations(patt_variable_equations, src_variable_equations):
                 if patt_str == src_str:
                     found = True
 
-                #we don't know what the value is
-                elif patt_str.replace("X", "") == "":
-                    found = True
 
-                elif src_str.replace("X", "") == "":
-                    found = True
-
-                elif "*" in patt_str:
-                    if expr.match(src_str):
+                elif patt_expr or src_expr:
+                    if patt_expr.match(src_str):
                         if debug:
-                            print("Matched on regex")
+                            print("Matched on regex from patt")
+                        found = True
+                    elif src_expr.match(patt_str):
+                        if debug:
+                            print("Matched on regex from src")
                         found = True
                     else:
                         if debug:
@@ -154,6 +157,8 @@ def compare_variable_equations(patt_variable_equations, src_variable_equations):
                     return False
 
         if not found:
+            if debug:
+                print("Patt: " + str(patt_eq) + " not found")
             return False
 
     return True
@@ -179,7 +184,7 @@ def var_eq_to_string(value):
         return str(tail)
 
     if isinstance(head, int):
-        return "X"
+        return ".*"
 
     print("Value: " + str(value))
     print(len(value))
