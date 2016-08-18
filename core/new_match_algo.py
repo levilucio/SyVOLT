@@ -96,7 +96,7 @@ class NewHimesisMatcher(object):
         self.is_contract = self.pattern_graph.name.endswith("LHS")
 
         if len(self.pattern_nodes) > 0 and "MT_label__" in self.pattern_nodes[0].attribute_names():
-            self.pattern_labels = self.pattern_graph.vs["MT_label__"]
+            self.pattern_labels = [int(l) for l in self.pattern_graph.vs["MT_label__"]]
         else:
             self.pattern_labels = [-1] * len(self.pattern_nodes)
 
@@ -591,7 +591,7 @@ class NewHimesisMatcher(object):
         if self.is_contract:
             lookup = patt_node_num
         else:
-            lookup = int(patt_label)
+            lookup = patt_label
 
         try:
             patt_constant_equations = self.patt_eqs_constant[lookup]
@@ -636,7 +636,7 @@ class NewHimesisMatcher(object):
             attr_name = attr[8:]
 
             # methName = self.G2.get_attr_constraint_name(patt_node.index, attr)
-            methName = 'eval_%s%s' % (attr_name, patt_label)
+            methName = 'eval_{}{}'.format(attr_name, patt_label)
             #
             # print("Attr name: " + attr_name)
             # print("Meth name: " + methName)
