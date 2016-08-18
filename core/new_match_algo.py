@@ -582,15 +582,6 @@ class NewHimesisMatcher(object):
         # =======================================================================
 
         src_node = self.source_nodes[src_node_num]
-        patt_node = self.pattern_nodes[patt_node_num]
-
-
-        # if self.debug_equations:
-        #     print("\n")
-        #     print("Src node: " + str(src_node_num))
-        #     print("Src constant: " + str(self.src_eqs_constant))
-        #     print("Patt node: " + str(patt_node_num))
-        #     print("Patt constant: " + str(self.patt_eqs_constant))
 
         patt_label = self.pattern_labels[patt_node_num]
 
