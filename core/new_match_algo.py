@@ -1,12 +1,14 @@
 
 from util.decompose_graph import decompose_graph
 
-from core.match_algo import HimesisMatcher
-
-from core.himesis_utils import graph_to_dot
+# from core.match_algo import HimesisMatcher
+#
+# from core.himesis_utils import graph_to_dot
 
 from itertools import product
 import time
+
+from collections import defaultdict
 
 from profiler import *
 
@@ -121,7 +123,7 @@ class NewHimesisMatcher(object):
     def load_equations(self, graph):
 
         if self.skip_equations:
-            return {}, {}
+            return defaultdict(list), defaultdict(list)
 
         try:
             eqs = graph["equations"]
@@ -129,8 +131,8 @@ class NewHimesisMatcher(object):
             print("Graph has no equations array: " + graph.name)
             eqs = []
 
-        eqs_constant = {}
-        eqs_variable = {}
+        eqs_constant = defaultdict(list)
+        eqs_variable = defaultdict(list)
 
 
 
@@ -592,31 +594,21 @@ class NewHimesisMatcher(object):
         else:
             lookup = patt_label
 
-        try:
-            patt_constant_equations = self.patt_eqs_constant[lookup]
-            try:
-                src_constant_equations = self.src_eqs_constant[src_node_num]
-            except KeyError:
-                src_constant_equations = []
+        patt_constant_equations = self.patt_eqs_constant[lookup]
 
+        if patt_constant_equations:
+            src_constant_equations = self.src_eqs_constant[src_node_num]
             if not compare_constant_equations(patt_constant_equations, src_constant_equations, src_node):
                 return False
-        except KeyError:
-            pass
 
 
+        patt_variable_equations = self.patt_eqs_variable[lookup]
+        if patt_variable_equations:
 
-        try:
-            patt_variable_equations = self.patt_eqs_variable[lookup]
-            try:
-                src_variable_equations = self.src_eqs_variable[src_node_num]
-            except KeyError:
-                src_variable_equations = []
-
+            src_variable_equations = self.src_eqs_variable[src_node_num]
             if not compare_variable_equations(patt_variable_equations, src_variable_equations):
                 return False
-        except KeyError:
-            pass
+
 
         # Check for attributes value/constraint
         for attr_name in self.pattern_attribs_by_node[patt_node_num]:
