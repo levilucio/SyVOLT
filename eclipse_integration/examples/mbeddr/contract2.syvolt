@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syvolt:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:syvolt="http://syvolt/2.0">
+  <hasProperty name="AssignmentInstance">
+    <match>
+      <class xsi:type="syvolt:AnyMatchClass" className="AssemblyConnector"/>
+      <class xsi:type="syvolt:AnyMatchClass" className="InstancePortRef"/>
+      <class xsi:type="syvolt:AnyMatchClass" className="ComponentInstance"/>
+      <class xsi:type="syvolt:AnyMatchClass" className="RequiredPort"/>
+      <class xsi:type="syvolt:AnyMatchClass" className="AtomicComponent"/>
+      <class xsi:type="syvolt:AnyMatchClass" className="InstancePortRef"/>
+      <class xsi:type="syvolt:AnyMatchClass" className="ComponentInstance"/>
+      <class xsi:type="syvolt:AnyMatchClass" className="ProvidedPort"/>
+      <class xsi:type="syvolt:AnyMatchClass" className="AtomicComponent"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="source" source="//@hasProperty.0/@match.0/@class.0" target="//@hasProperty.0/@match.0/@class.1"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="instance" source="//@hasProperty.0/@match.0/@class.1" target="//@hasProperty.0/@match.0/@class.2"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="port" source="//@hasProperty.0/@match.0/@class.1" target="//@hasProperty.0/@match.0/@class.3"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="component" source="//@hasProperty.0/@match.0/@class.2" target="//@hasProperty.0/@match.0/@class.4"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="contents" source="//@hasProperty.0/@match.0/@class.4" target="//@hasProperty.0/@match.0/@class.3"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="target" source="//@hasProperty.0/@match.0/@class.0" target="//@hasProperty.0/@match.0/@class.5"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="instance" source="//@hasProperty.0/@match.0/@class.5" target="//@hasProperty.0/@match.0/@class.6"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="port" source="//@hasProperty.0/@match.0/@class.5" target="//@hasProperty.0/@match.0/@class.7"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="component" source="//@hasProperty.0/@match.0/@class.6" target="//@hasProperty.0/@match.0/@class.8"/>
+      <association xsi:type="syvolt:PositiveMatchAssociation" associationName="contents" source="//@hasProperty.0/@match.0/@class.8" target="//@hasProperty.0/@match.0/@class.7"/>
+    </match>
+    <apply>
+      <class className="GenericDotExpression"/>
+      <class className="GlobalVarRef"/>
+      <class className="GlobalVariableDeclaration">
+        <attribute attributeName="name">
+          <attributeValue xsi:type="syvolt:Concat">
+            <leftTerm xsi:type="syvolt:Wildcard"/>
+            <rightTerm xsi:type="syvolt:Atom" value="__instance"/>
+          </attributeValue>
+        </attribute>
+      </class>
+      <class className="ReferenceExpr"/>
+      <class className="GenericMemberRef"/>
+      <class className="GlobalVariableDeclaration">
+        <attribute attributeName="name">
+          <attributeValue xsi:type="syvolt:Concat">
+            <leftTerm xsi:type="syvolt:Wildcard"/>
+            <rightTerm xsi:type="syvolt:Atom" value="__ops"/>
+          </attributeValue>
+        </attribute>
+      </class>
+      <class className="GlobalVarRef"/>
+      <class className="AssignmentExpr"/>
+      <class className="StructDeclaration">
+        <attribute attributeName="name">
+          <attributeValue xsi:type="syvolt:Concat">
+            <leftTerm xsi:type="syvolt:Wildcard"/>
+            <rightTerm xsi:type="syvolt:Atom" value="__cdata"/>
+          </attributeValue>
+        </attribute>
+      </class>
+      <class className="Member">
+        <attribute attributeName="name">
+          <attributeValue xsi:type="syvolt:Concat">
+            <leftTerm xsi:type="syvolt:Wildcard"/>
+            <rightTerm xsi:type="syvolt:Atom" value="__ops"/>
+          </attributeValue>
+        </attribute>
+      </class>
+      <class className="TypeDefType"/>
+      <class className="TypeDef"/>
+      <class className="StructType"/>
+      <association associationName="left" source="//@hasProperty.0/@apply/@class.7" target="//@hasProperty.0/@apply/@class.0"/>
+      <association associationName="right" source="//@hasProperty.0/@apply/@class.7" target="//@hasProperty.0/@apply/@class.3"/>
+      <association associationName="expression" source="//@hasProperty.0/@apply/@class.0" target="//@hasProperty.0/@apply/@class.6"/>
+      <association associationName="target" source="//@hasProperty.0/@apply/@class.0" target="//@hasProperty.0/@apply/@class.4"/>
+      <association associationName="expression" source="//@hasProperty.0/@apply/@class.3" target="//@hasProperty.0/@apply/@class.1"/>
+      <association associationName="var" source="//@hasProperty.0/@apply/@class.6" target="//@hasProperty.0/@apply/@class.2"/>
+      <association associationName="member" source="//@hasProperty.0/@apply/@class.4" target="//@hasProperty.0/@apply/@class.9"/>
+      <association associationName="members" source="//@hasProperty.0/@apply/@class.8" target="//@hasProperty.0/@apply/@class.9"/>
+      <association associationName="var" source="//@hasProperty.0/@apply/@class.1" target="//@hasProperty.0/@apply/@class.5"/>
+      <association associationName="type" source="//@hasProperty.0/@apply/@class.2" target="//@hasProperty.0/@apply/@class.10"/>
+      <association associationName="typeDef" source="//@hasProperty.0/@apply/@class.10" target="//@hasProperty.0/@apply/@class.11"/>
+      <association associationName="original" source="//@hasProperty.0/@apply/@class.11" target="//@hasProperty.0/@apply/@class.12"/>
+      <association associationName="struct" source="//@hasProperty.0/@apply/@class.12" target="//@hasProperty.0/@apply/@class.8"/>
+    </apply>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.2" sourceClass="//@hasProperty.0/@match.0/@class.2"/>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.8" sourceClass="//@hasProperty.0/@match.0/@class.4"/>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.5" sourceClass="//@hasProperty.0/@match.0/@class.6"/>
+    <backwards xsi:type="syvolt:Trace" targetClass="//@hasProperty.0/@apply/@class.9" sourceClass="//@hasProperty.0/@match.0/@class.3"/>
+  </hasProperty>
+</syvolt:TransformationModel>

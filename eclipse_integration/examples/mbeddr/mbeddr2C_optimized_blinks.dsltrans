@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dsltrans:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dsltrans="http://dsltrans/2.0">
-  <source xsi:type="dsltrans:FilePort" name="inputModel" filePathURI="model/ComponentsSample.xmi">
-    <metaModelId metaModelURI="model/Module.ecore" metaModelName="Module.Module"/>
+  <source xsi:type="dsltrans:FilePort" name="inputModel" filePathURI="Module.ecore">
+    <metaModelId metaModelURI="Module.ecore" metaModelName="Module.Module"/>
   </source>
   <source xsi:type="dsltrans:Sequential" name="layer0" description="layer0" previousSource="//@source.0" outputFilePathURI="model/ComponentsSampleInC.xmi" groupName="">
     <metaModelId metaModelURI="model/C.ecore" metaModelName="CModel.CModel"/>
@@ -1037,6 +1037,37 @@
       </apply>
       <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="layer3rule5class2" sourceClass="layer3rule5class0"/>
     </hasRule>
+    <hasRule description="layer3rule4copy">
+      <match>
+        <class xsi:type="dsltrans:AnyMatchClass" className="ImplementationModule">
+          <attribute attributeName="name"/>
+        </class>
+        <class xsi:type="dsltrans:AnyMatchClass" className="InstanceConfiguration"/>
+        <class xsi:type="dsltrans:AnyMatchClass" className="ComponentInstance"/>
+        <class xsi:type="dsltrans:AnyMatchClass" className="AtomicComponent"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="contents" source="//@source.4/@hasRule.6/@match.0/@class.0" target="//@source.4/@hasRule.6/@match.0/@class.1"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="contents" source="//@source.4/@hasRule.6/@match.0/@class.1" target="//@source.4/@hasRule.6/@match.0/@class.2"/>
+        <association xsi:type="dsltrans:PositiveMatchAssociation" associationName="component" source="//@source.4/@hasRule.6/@match.0/@class.2" target="//@source.4/@hasRule.6/@match.0/@class.3"/>
+      </match>
+      <apply>
+        <class className="ImplementationModule"/>
+        <class className="GlobalVariableDeclaration">
+          <attribute attributeName="name">
+            <attributeValue xsi:type="dsltrans:Concat">
+              <leftTerm xsi:type="dsltrans:AttributeRef" attributeRef="//@source.4/@hasRule.6/@match.0/@class.0/@attribute.0"/>
+              <rightTerm xsi:type="dsltrans:Atom" value="_instance"/>
+            </attributeValue>
+          </attribute>
+        </class>
+        <class className="TypeDef"/>
+        <class className="TypeDefType"/>
+        <association associationName="type" source="//@source.4/@hasRule.6/@apply/@class.3" target="//@source.4/@hasRule.6/@apply/@class.2"/>
+        <association associationName="typeDef" source="//@source.4/@hasRule.6/@apply/@class.1" target="//@source.4/@hasRule.6/@apply/@class.3"/>
+        <association associationName="contents" source="//@source.4/@hasRule.6/@apply/@class.0" target="//@source.4/@hasRule.6/@apply/@class.1"/>
+      </apply>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.4/@hasRule.6/@apply/@class.0" sourceClass="//@source.4/@hasRule.6/@match.0/@class.0"/>
+      <backwards xsi:type="dsltrans:PositiveBackwardRestriction" targetClass="//@source.4/@hasRule.6/@apply/@class.2" sourceClass="//@source.4/@hasRule.6/@match.0/@class.3"/>
+    </hasRule>
   </source>
   <source xsi:type="dsltrans:Sequential" name="layer4" description="layer4" previousSource="//@source.4" outputFilePathURI="model/ComponentsSampleInC.xmi">
     <metaModelId metaModelURI="model/C.ecore" metaModelName="CModel.CModel"/>
@@ -1548,7 +1579,7 @@
     </hasRule>
   </source>
   <source xsi:type="dsltrans:Sequential" name="layer6" description="layer6" previousSource="//@source.6" outputFilePathURI="model/ComponentsSampleInC.xmi">
-    <metaModelId metaModelURI="model/C.ecore" metaModelName="CModel.CModel"/>
+    <metaModelId metaModelURI="C.ecore" metaModelName="CModel.CModel"/>
     <hasRule description="layer6rule0">
       <match>
         <class xsi:type="dsltrans:AnyMatchClass" description="layer6rule0class0" packageName="Module" className="Function" id="layer6rule0class0">
