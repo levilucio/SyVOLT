@@ -750,6 +750,9 @@ def load_directory(directory):
         if not f.endswith(".py") or f.startswith("__"):
             continue
 
+        if f.startswith("IGNORE"):
+            continue
+
         file_name = directory + "/" + f
 
         c = load_class(file_name)
