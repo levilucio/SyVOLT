@@ -86,6 +86,8 @@ class Slicer:
             for rule in layer:
                 self.check_for_missing_elements(rule, is_contract=False)
 
+        #raise Exception()
+
     def get_contract(self, contract_num, atomic, if_then):
 
         contract = None
@@ -226,7 +228,6 @@ class Slicer:
         #raise Exception()
 
 
-        #raise Exception()
         return new_rules, new_transformation
 
 
@@ -324,6 +325,7 @@ class Slicer:
 
         # copy these links, as we might need to remove some
 
+        #print("Pattern: " + pattern.name)
 
         for patt_links, source_links in links:
             if verbosity > 1:
@@ -349,7 +351,7 @@ class Slicer:
 
                 for graph_n0_n, graph_n1_n, graph_link_n in source_links:
                     if pattern.vs[patt_link_n]["mm__"] in ["trace_link", "backward_link"]:
-                        if graph.vs[graph_link_n]["mm__"] in ["trace_link", "backward_link"]:
+                        if graph.vs[graph_link_n]["mm__"] == "trace_link":
                             links_match = True
                         else:
                             links_match = False
@@ -369,12 +371,6 @@ class Slicer:
 
                     nodes_match_2 = matcher.match_nodes(graph_n1_n, patt1_n, patt_1_mm, patt_constraints_1)
 
-                    nodes_match_3 = matcher.match_nodes(graph_n1_n, patt0_n, patt_0_mm, patt_constraints_0)
-
-                    nodes_match_4 = matcher.match_nodes(graph_n0_n, patt1_n, patt_1_mm, patt_constraints_1)
-
-
-                    nodes_match = (nodes_match_1 and nodes_match_2) or (nodes_match_3 and nodes_match_4)
 
                     #if nodes_match:
                     #    print("\nNodes found!")
@@ -384,16 +380,20 @@ class Slicer:
                     # if not nodes_match:
                     #     print("Failure matching on " + pc.vs[pc_n1_n]["mm__"] + " vs " + contract.vs[n1_n]["mm__"])
 
-                    if nodes_match:
+                    if nodes_match_1 and nodes_match_2:
                         if verbosity > 1:
                             print("\nFound the pattern link: ")
-                            matcher.print_link(pattern, patt0_n, patt1_n, patt_link_n)
+                            matcher.print_link(None, pattern, patt0_n, patt1_n, patt_link_n)
                             print("On:")
-                            matcher.print_link(graph, graph_n0_n, graph_n1_n, graph_link_n)
+                            matcher.print_link(None, graph, graph_n0_n, graph_n1_n, graph_link_n)
 
                         if pattern.name not in self.found_links.keys():
                             self.found_links[pattern.name] = []
-                        self.found_links[pattern.name].append([patt0_n, patt1_n, patt_link_n])
+
+                        patt_mms = (pattern_mms[patt0_n], pattern_mms[patt1_n], pattern_mms[patt_link_n])
+
+                        #print("Pattern link " + str(patt_mms) + " found in " + graph.name)
+                        self.found_links[pattern.name].append(patt_mms)
 
                         try:
                             required_rules[graph.name].append([patt0_n, patt1_n, patt_link_n])
@@ -437,8 +437,9 @@ class Slicer:
 
         backward_links = self.data[graph.name]["backward_links"]
 
+        #print("Check missing elements: " + graph.name)
         if not is_contract:
-            backward_links = [bl for bl in backward_links if bl[2] == "backward_link"]
+            backward_links = [bl for bl in backward_links if mms[bl[2]] == "backward_link"]
 
         try:
             found_links = self.found_links[graph.name]
@@ -475,14 +476,21 @@ class Slicer:
                 self.print_rules_with_element(original_mms[iso])
                 #raise Exception()
 
-        for bl in backward_links:
+        #print("BL after")
+        #print(backward_links)
+
+        bl_as_mms = [(mms[bl[0]], mms[bl[1]], mms[bl[2]]) for bl in backward_links]
+        for bl in bl_as_mms:
+            #print(bl)
+            #print("Times in found links: " + str(found_links.count(bl)))
+            #print("Times as backward links: " + str(bl_as_mms.count(bl)))
             if bl not in found_links:
                 print("Error! Backward link might be missing!")
                 print(bl)
                 print(mms[bl[0]] + " " + mms[bl[2]] + " " + mms[bl[1]])
                 self.print_rules_with_element(original_mms[bl[0]])
                 self.print_rules_with_element(original_mms[bl[1]])
-            elif found_links.count(bl) < backward_links.count(bl):
+            elif found_links.count(bl)/bl_as_mms.count(bl) < bl_as_mms.count(bl):
                 print("Possible error in multiplicity!")
 
     def print_rules_with_element(self, element_mm, verbose = True):
