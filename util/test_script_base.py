@@ -107,6 +107,7 @@ class Test:
         print("\nContract proving:")
         s.verbosity = 0
         contract_prover = ContractProver(slicer, self.superclasses_dict)
+        contract_prover.show_progress_bar = args.show_progress_bar
         contract_prover.prove_contracts(s, self.atomic_contracts, self.if_then_contracts)
         print("\n\nTime to build the set of path conditions: " + str(pc_time))
         print("Number of path conditions: " + str(s.num_path_conditions))

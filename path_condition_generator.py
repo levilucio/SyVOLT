@@ -81,6 +81,8 @@ class PathConditionGenerator(object):
 
         self.verbosity = args.verbosity
 
+        self.show_progress_bar = args.show_progress_bar
+
         #with PyCallGraph(output=GraphvizOutput()):
         self._pre_process()
         
@@ -401,7 +403,7 @@ class PathConditionGenerator(object):
             total_rounds = len(worker_chunks) - 1
             for curr_round, ws in enumerate(worker_chunks):
                 for i, worker in enumerate(ws):
-                    if i == 0:
+                    if i == 0 and self.show_progress_bar:
                         worker.report_progress = True
                     worker.start()
 

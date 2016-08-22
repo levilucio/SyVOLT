@@ -28,6 +28,8 @@ class ContractProver:
         self.slicer = slicer
         self.superclasses_dict = superclasses_dict
 
+        self.show_progress_bar = True
+
     def find_smallest_pc(self, pc_names):
         smallest = []
         smallestSize = 0
@@ -90,11 +92,12 @@ class ContractProver:
         pc_set_length = pathCondGen.num_path_conditions
         progress_bar = ProgressBar(pc_set_length)
 
-        len_pc_queue = pc_queue.qsize()
-        while len_pc_queue > 0:
-            progress_bar.update_progress(pc_set_length - len_pc_queue)
-            sleep(1)
+        if self.show_progress_bar:
             len_pc_queue = pc_queue.qsize()
+            while len_pc_queue > 0:
+                progress_bar.update_progress(pc_set_length - len_pc_queue)
+                sleep(1)
+                len_pc_queue = pc_queue.qsize()
 
         for worker in workers:
             worker.join()

@@ -4,9 +4,11 @@ import argparse
 def load_parser():
     parser = argparse.ArgumentParser(description='Run the test.')
 
-    parser.add_argument('--skip_tests', dest = 'run_tests', action = 'store_false',
+    parser.add_argument('--skip_tests', dest = 'run_tests', default = True, action = 'store_false',
                         help = 'Option to skip the running of matching tests')
-    parser.set_defaults(run_tests = True)
+
+    parser.add_argument('--skip_progress_bar', dest = 'show_progress_bar', default = True, action = 'store_false',
+                        help = 'Option to skip the showing of a progress bar')
 
     parser.add_argument('--skip_parallel', dest = 'do_parallel', action = 'store_false',
                         help = 'Option to force computation to run single-thread')
