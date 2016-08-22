@@ -1,5 +1,3 @@
-from util.memory_status import *
-
 #profile memory
 global global_profile_memory
 global global_memory_tracker
@@ -52,7 +50,6 @@ try:
 except ImportError:
     from io import StringIO
 
-import pstats
 from random import randint
 
 import pstats

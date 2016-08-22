@@ -20,7 +20,7 @@ import time
 
 from copy import deepcopy
 
-import psutil
+
 
 from util.Tester import Tester
 
@@ -76,6 +76,12 @@ class PathConditionGenerator(object):
         self.pc_dict = {}
         self.currentpathConditionSet = []
         self.num_path_conditions = 0
+
+        self.print_memory_usage = True
+        try:
+            import psutil
+        except ImportError:
+            self.print_memory_usage = False
 
         self.verbosity = args.verbosity
 
@@ -411,8 +417,9 @@ class PathConditionGenerator(object):
                     layer_time = round_time * rounds_remaining
                     print("Time remaining in layer " + str(layer + 1) + "/" + str(len(self.transformation)) + ": {:.2f}".format(layer_time) + " seconds = {:.2f} minutes".format(layer_time/60))
 
-                memory_percent = psutil.virtual_memory()[2]
-                print("Memory usage percent: {:.2f} %".format(memory_percent))
+                if self.print_memory_usage:
+                    memory_percent = psutil.virtual_memory()[2]
+                    print("Memory usage percent: {:.2f} %".format(memory_percent))
 
             layer_finish_time = time.time()
 
