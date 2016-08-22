@@ -55,6 +55,8 @@ class PathConditionGenerator(object):
     #@do_cprofile
     def __init__(self, transformation, targetMM, ruleCombinators, ruleTraceCheckers, overlappingRules, subsumption, loopingRuleSubsumption, args):
 
+        self.print_memory_usage = True
+
 
         self.do_parallel = args.do_parallel
 
@@ -76,12 +78,6 @@ class PathConditionGenerator(object):
         self.pc_dict = {}
         self.currentpathConditionSet = []
         self.num_path_conditions = 0
-
-        self.print_memory_usage = True
-        try:
-            import psutil
-        except ImportError:
-            self.print_memory_usage = False
 
         self.verbosity = args.verbosity
 
@@ -270,6 +266,12 @@ class PathConditionGenerator(object):
         else:
             cpu_count = multiprocessing.cpu_count()
             print("CPU Count: " + str(cpu_count))
+
+        try:
+            import psutil as psutil
+        except ImportError:
+            print("Warning: psutil not found")
+            self.print_memory_usage = False
 
         manager = Manager()
 
