@@ -173,7 +173,7 @@ class Slicer:
         #raise Exception("Contract Required Rules")
 
         required_rules = list(required_rules.keys())
-        for rr in required_rules.copy():
+        for rr in required_rules[:]:
 
             rule = self.rules[rr]
 
@@ -185,7 +185,7 @@ class Slicer:
         rr_names = required_rules
 
         #add in the rules which might be needed for subsumption
-        rrules_copy = list.copy(rr_names)
+        rrules_copy = rr_names[:]
         for rr in rrules_copy:
             for key, values in self.overlapping_rules.items():
                 if rr == key:
