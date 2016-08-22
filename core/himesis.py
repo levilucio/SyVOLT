@@ -106,7 +106,7 @@ class Himesis(igraph.Graph):
             cpy.NACs = copy.deepcopy(self.NACs)
 
         #cpy["equations"] = copy.deepcopy(self["equations"])
-        cpy["equations"] = self["equations"].copy()
+        cpy["equations"] = self["equations"][:]
 
         # cpy.init_params = copy.deepcopy(self.init_params)
         #cpy.import_name = copy.deepcopy(self.import_name)

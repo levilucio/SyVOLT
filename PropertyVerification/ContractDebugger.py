@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from core.new_match_algo import NewHimesisMatcher
 from random import choice
 from core.himesis_utils import expand_graph, graph_to_dot, get_filename

@@ -413,7 +413,8 @@ def delete_graph(graph_name):
 
     try:
         os.remove(pickle_dir + "/" + file_name_as_int)
-    except FileNotFoundError:
+    #except FileNotFoundError:
+    except (IOError, OSError):
         pass
         #print("Graph: " + graph_name + " did not exist")
 

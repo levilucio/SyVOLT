@@ -121,7 +121,7 @@ def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False, isolated_if_
     isolated_match_elements = []
 
     if get_isolated_match_elements:
-        links = list.copy(direct_links)
+        links = direct_links[:]
 
         if not isolated_if_attached_backward:
             links += backward_links

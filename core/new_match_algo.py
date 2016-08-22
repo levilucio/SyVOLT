@@ -1,4 +1,4 @@
-
+from __future__ import print_function
 from util.decompose_graph import decompose_graph
 
 # from core.match_algo import HimesisMatcher
