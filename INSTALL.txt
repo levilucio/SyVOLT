@@ -25,6 +25,10 @@ sudo pip install python-igraph
 
 If that doesn't work, you'll have to install from source
 
+- Try installing the igraph C part from your package manager first
+sudo apt-get install libigraph0v5
+sudo apt-get install libigraph0-dev
+
 - Download the python-igraph source code at http://igraph.org/python/ under the Downloads section.
 - Unzip the archive
 - python setup.py install
