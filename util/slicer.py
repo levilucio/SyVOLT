@@ -6,6 +6,9 @@ from core.himesis_utils import build_traceability
 from core.new_match_algo import NewHimesisMatcher
 
 from copy import deepcopy
+
+from collections import defaultdict
+
 class Slicer:
 
 
@@ -479,19 +482,66 @@ class Slicer:
         #print("BL after")
         #print(backward_links)
 
-        bl_as_mms = [(mms[bl[0]], mms[bl[1]], mms[bl[2]]) for bl in backward_links]
-        for bl in bl_as_mms:
-            #print(bl)
-            #print("Times in found links: " + str(found_links.count(bl)))
-            #print("Times as backward links: " + str(bl_as_mms.count(bl)))
-            if bl not in found_links:
+        #see if we have the multiplicity for backward elements correct
+        bl_element_count = defaultdict(int)
+        bl_elements_counted = []
+
+        #get the mm for each backward link element
+        all_bls_as_mms = [(mms[bl[0]], mms[bl[1]], mms[bl[2]]) for bl in backward_links]
+
+        for bl in backward_links:
+            bl_as_mms = (mms[bl[0]], mms[bl[1]], mms[bl[2]])
+
+            if bl_as_mms not in found_links:
                 print("Error! Backward link might be missing!")
-                print(bl)
-                print(mms[bl[0]] + " " + mms[bl[2]] + " " + mms[bl[1]])
+                print(bl_as_mms)
                 self.print_rules_with_element(original_mms[bl[0]])
                 self.print_rules_with_element(original_mms[bl[1]])
-            elif found_links.count(bl)/bl_as_mms.count(bl) < bl_as_mms.count(bl):
+
+            elif found_links.count(bl_as_mms)/all_bls_as_mms.count(bl_as_mms) < all_bls_as_mms.count(bl_as_mms):
                 print("Possible error in multiplicity!")
+
+            #record that we need this element
+            #but don't double-count if two backward links want the same element
+            if bl[0] not in bl_elements_counted:
+                bl_element_count[mms[bl[0]]] += 1
+                bl_elements_counted.append(bl[0])
+
+            if bl[1] not in bl_elements_counted:
+                bl_element_count[mms[bl[1]]] += 1
+                bl_elements_counted.append(bl[1])
+
+        #go through the transformation, and count multiplicities of elements
+        found_bl_element_count = defaultdict(int)
+        mm_to_rules = defaultdict(list)
+
+        for layer in self.transformation:
+            # don't look at the same layer that a rule is on
+            if not is_contract:
+                rule_names = [r.name for r in layer]
+                if graph.name in rule_names:
+                    break
+
+            #count the number of elements (or supertypes) in this rule
+            for rule in layer:
+                for mm in rule.vs["mm__"]:
+                    mm = mm.replace("MT_pre__", "")
+                    if mm in bl_element_count:
+                        found_bl_element_count[mm] += 1
+                        mm_to_rules[mm].append(rule.name)
+                    if mm in self.superclasses_dict:
+                        for super_mm in self.superclasses_dict[mm]:
+                            if super_mm in bl_element_count:
+                                found_bl_element_count[super_mm] += 1
+                                mm_to_rules[super_mm].append(rule.name)
+
+        #see if there are any elements where not enough might be built
+        for mm in bl_element_count:
+            if bl_element_count[mm] > found_bl_element_count[mm]:
+                print("Error: Rule " + graph.name + "may need " + str(bl_element_count[mm]) + " elements of type " + mm + ", but only " + str(found_bl_element_count[mm]) + " were found!")
+                print("Rule duplication may be needed!")
+                print("Try rules: " + str(mm_to_rules[mm]))
+                print()
 
     def print_rules_with_element(self, element_mm, verbose = True):
         element_mm = element_mm.replace("MT_pre__", "")
