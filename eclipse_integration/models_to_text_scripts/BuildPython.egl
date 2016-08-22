@@ -14,7 +14,7 @@ from util.test_script_base import Test
 class ProverTest(Test):
 
     def __init__(self):
-        super(ProverTest, self).__init__()
+        Test.__init__(self)
 
         #============TRANSFORMATION=================
         [*- get all the rules from the files generated to disk *]

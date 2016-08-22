@@ -12,7 +12,7 @@ from util.test_script_base import Test
 
 class MBEddr(Test):
     def __init__(self):
-        super(MBEddr, self).__init__()
+        Test.__init__(self)
 
         # ============TRANSFORMATION=================
         r0 = 'Hlayer0rule0'

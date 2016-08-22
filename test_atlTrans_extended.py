@@ -12,7 +12,7 @@ from util.test_script_base import Test
 class ATLTest(Test):
 
     def __init__(self):
-        super(ATLTest, self).__init__()
+        Test.__init__(self)
 
         #============TRANSFORMATION=================
         self.full_transformation = [
