@@ -1,5 +1,4 @@
 import time
-import sys
 
 from path_condition_generator import PathConditionGenerator
 
