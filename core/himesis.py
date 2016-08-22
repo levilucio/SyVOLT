@@ -1,6 +1,7 @@
 import uuid, os.path, copy\
 
-import igraph as ig
+from core.igraph_helper import *
+
 from functools import reduce
 
 try:
@@ -35,7 +36,7 @@ class HConstants:
     MT_POSTCOND_PREFIX = 'MT_post__'
 
 
-class Himesis(ig.Graph):
+class Himesis(igraph.Graph):
     """
         Creates a typed, attributed, directed, multi-graph.
         @param num_nodes: the total number of nodes. If not known, you can add more vertices later
@@ -53,7 +54,7 @@ class Himesis(ig.Graph):
             @param edges: the list of edges where each edge is a tuple representing the ids of the source and target nodes
         """
 
-        ig.GraphBase.__init__(self, n=num_nodes, edges=edges, directed=True)
+        igraph.GraphBase.__init__(self, n=num_nodes, edges=edges, directed=True)
         if not name:
             name = self.__class__.__name__
         self.name = standardize_name(name)
@@ -80,7 +81,7 @@ class Himesis(ig.Graph):
 
 
     def __reduce__(self):
-        return (self.name, ig.Graph.__reduce__(self)[1])
+        return (self.name, igraph.Graph.__reduce__(self)[1])
 
         #remove constructor
         #return (value[1], value[2])
@@ -92,7 +93,7 @@ class Himesis(ig.Graph):
         return self.__reduce__()
 
     def copy(self):
-        cpy = ig.Graph.copy(self)
+        cpy = igraph.Graph.copy(self)
         # cpy.nodes_id = copy.deepcopy(self.nodes_id)
 
         # only copy these if necessary

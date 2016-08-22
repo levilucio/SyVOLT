@@ -31,7 +31,9 @@ try:
 except ImportError:
     import pickle as pickle
 
-import igraph
+from core.igraph_helper import *
+
+
 import time
 
 from copy import deepcopy
