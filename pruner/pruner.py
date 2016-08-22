@@ -5,11 +5,12 @@ Created on Sep 6, 2015
 '''
 
 
-from pruner.pruner_helper import PrunerHelper
-from core.himesis_utils import graph_to_dot
+#work around strange importing in Python2
+try:
+    from pruner.pruner_helper import PrunerHelper
+except ImportError:
+    from .pruner_helper import PrunerHelper
 
-from profiler import *
-from operator import itemgetter
 from collections import Counter
 
 class Pruner(object):
