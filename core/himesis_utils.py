@@ -704,6 +704,10 @@ def load_class(full_class_string, args = None):
     directory, module_name = os.path.split(full_class_string)
     module_name = os.path.splitext(module_name)[0]
 
+    load_module_name = module_name
+    if load_module_name.endswith("copy"):
+        load_module_name = load_module_name[:-4]
+
     old_path = list(sys.path)
     sys.path.insert(0, directory)
 
@@ -714,13 +718,14 @@ def load_class(full_class_string, args = None):
 
     succeed = True
     try:
-        module = __import__(module_name)
+        module = __import__(load_module_name)
         if args is None:
-            loaded_class = getattr(module, module_name)()
+            loaded_class = getattr(module, load_module_name)()
         else:
-            loaded_class = getattr(module, module_name)(args[0])
+            loaded_class = getattr(module, load_module_name)(args[0])
 
         clean_graph(loaded_class)
+        loaded_class.name = module_name
 
         loaded_module = {module_name : loaded_class}
 

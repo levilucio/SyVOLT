@@ -19,12 +19,22 @@ def load_transformation(dir_name, full_transformation):
         new_layer = []
         for rule_name in layer:
             print("Loading rule: " + rule_name)
+            load_rule_name = rule_name
+
+            #for copies, load the original rule
+            #and change the name after
+            if rule_name.endswith("copy"):
+                load_rule_name = rule_name[:-4]
 
             # add the rule to the rules dict
-            rule = load_class(dir_name + "/" + rule_name + ".py")
-            rules.update(rule)
+            rule = load_class(dir_name + "/" + load_rule_name + ".py")
 
-            new_layer.append(list(rule.values())[0])
+            rule_object = list(rule.values())[0]
+            rule_object.name = rule_name
+
+            rules[load_rule_name] = rule_object
+
+            new_layer.append(rule_object)
 
         transformation.append(new_layer)
 
