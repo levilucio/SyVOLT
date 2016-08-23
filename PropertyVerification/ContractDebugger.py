@@ -32,7 +32,7 @@ class ContractDebugger:
     def test_failed_pc(self, smallest_failed, contract):
         failed_pc_name = choice(smallest_failed)
 
-        print("\n\nExamining failed pc: " + failed_pc_name)
+        print("\n\nExamining failed pc: " + self.get_real_name(failed_pc_name))
         #print("Filename: " + str(get_filename(failed_pc_name)))
         failed_pc = self.pathCondGen.pc_dict[failed_pc_name]
         failed_pc = expand_graph(failed_pc)
@@ -135,3 +135,9 @@ class ContractDebugger:
             rules +=  self.pathCondGen.rules_in_pc_real_name(pc)
 
         return list(set(rules))
+
+    def get_real_name(self, pc_name):
+        name_max_size = 300
+        name = pc_name[:name_max_size]
+        real_name_list = self.pathCondGen.rules_in_pc_real_name(name)
+        return "_".join(real_name_list)
