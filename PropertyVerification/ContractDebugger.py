@@ -17,12 +17,6 @@ class ContractDebugger:
 
         contract.draw()
 
-        # print("Success PCs: ")
-        # print(success_pcs)
-
-        # print("Failed PCs: ")
-        # print(failed_pcs)
-
         good_rules, bad_rules = self.get_rule_differences(success_pcs, failed_pcs)
 
         print("Good rules: (Rules in success set and not failure set)")
@@ -31,6 +25,39 @@ class ContractDebugger:
         print("Bad rules: (Rules common to all in failure set)")
         print(bad_rules)
 
+        self.examine_required_rules(contract, contract_name, good_rules)
+
+        self.test_failed_pc(smallest_failed, contract)
+
+    def test_failed_pc(self, smallest_failed, contract):
+        failed_pc_name = choice(smallest_failed)
+
+        print("Examining failed pc: " + failed_pc_name)
+        #print("Filename: " + str(get_filename(failed_pc_name)))
+        failed_pc = self.pathCondGen.pc_dict[failed_pc_name]
+        failed_pc = expand_graph(failed_pc)
+
+        if contract.__name__ == "IfThenContract":
+            contract_complete = contract.then_contract.complete
+        else:
+            contract_complete = contract.complete
+
+        matcher = NewHimesisMatcher(failed_pc, contract_complete)
+        matcher.print_reason_failed = True
+        matcher.debug = False
+
+        matcher.superclasses_dict = self.superclasses_dict
+
+        for _ in matcher.match_iter():
+            break
+
+        matcher.print_failures()
+
+        # graph_to_dot(contract.complete.name + "_failed_" + failed_pc.name, failed_pc)
+
+    def examine_required_rules(self, contract, contract_name, good_rules):
+        if contract_name not in self.slicer.required_rules:
+            return
         required_rules = self.slicer.required_rules[contract_name]
 
         required_iso_elements = []
@@ -70,26 +97,6 @@ class ContractDebugger:
                 NewHimesisMatcher.print_link(None, contract_complete, n0, n1, nlink)
 
         print("")
-
-        failed_pc_name = choice(smallest_failed)
-
-        print("Examining failed pc: " + failed_pc_name)
-        print("Filename: " + str(get_filename(failed_pc_name)))
-        failed_pc = self.pathCondGen.pc_dict[failed_pc_name]
-        failed_pc = expand_graph(failed_pc)
-
-        matcher = NewHimesisMatcher(failed_pc, contract_complete)
-        matcher.print_reason_failed = True
-        matcher.debug = False
-
-        matcher.superclasses_dict = self.superclasses_dict
-
-        for _ in matcher.match_iter():
-            break
-
-        matcher.print_failures()
-
-        #graph_to_dot(contract.complete.name + "_failed_" + failed_pc.name, failed_pc)
 
 
     def get_rule_differences(self, success_pcs, failed_pcs):

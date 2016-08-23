@@ -149,8 +149,8 @@ class ContractProver:
         if len(list_of_pcs[contract_name]) < num_contracts_to_print:
             for pc_name in sorted(list_of_pcs[contract_name]):
                 self.print_name(pc_name)
-        else:
-            print("More than " + str(num_contracts_to_print) + " contracts")
+        #else:
+        #    print("More than " + str(num_contracts_to_print) + " contracts")
 
         print ('\nSmallest Path Conditions where the contract ' + status + ':')
         smallest_pc_set = self.find_smallest_pc(list_of_pcs[contract_name])
