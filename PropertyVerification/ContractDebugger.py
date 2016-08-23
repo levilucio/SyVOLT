@@ -32,7 +32,7 @@ class ContractDebugger:
     def test_failed_pc(self, smallest_failed, contract):
         failed_pc_name = choice(smallest_failed)
 
-        print("Examining failed pc: " + failed_pc_name)
+        print("\n\nExamining failed pc: " + failed_pc_name)
         #print("Filename: " + str(get_filename(failed_pc_name)))
         failed_pc = self.pathCondGen.pc_dict[failed_pc_name]
         failed_pc = expand_graph(failed_pc)
@@ -43,7 +43,7 @@ class ContractDebugger:
             contract_complete = contract.complete
 
         matcher = NewHimesisMatcher(failed_pc, contract_complete)
-        matcher.print_reason_failed = True
+        matcher.record_reason_failed = True
         matcher.debug = False
 
         matcher.superclasses_dict = self.superclasses_dict

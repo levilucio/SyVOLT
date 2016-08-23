@@ -19,9 +19,10 @@ class NewHimesisMatcher(object):
 
     def __init__(self, source_graph, pattern_graph, pred1 = {}, succ1 = {}, pred2 = {}, succ2 = {}, superclasses_dict = {}, skip_equations = False):
         self.debug = False
-        self.print_reason_failed = False
+        self.record_reason_failed = False
         self.failed_iso_elements = []
         self.failed_links = []
+        self.failed_link_matches = []
 
         self.skip_equations = skip_equations
 
@@ -209,7 +210,7 @@ class NewHimesisMatcher(object):
         #                 has_required = False
         #
         #             if has_required:
-        #                 self.print_reason_failed = True
+        #                 self.record_reason_failed = True
         #                 self.debug = True
         #                 #graph_to_dot(self.source_graph.name, self.source_graph)
         #                 graph_to_dot("links_" + self.source_graph.name, self.source_graph, force_trace_links = True)
@@ -293,7 +294,7 @@ class NewHimesisMatcher(object):
                         link_matches[iso_link] = [node_link]
 
             if not matched_element:
-                if self.print_reason_failed:
+                if self.record_reason_failed:
                     #print("Failed on iso element: " + str(iso_match_element))
                     if iso_match_element not in self.failed_iso_elements:
                         self.failed_iso_elements.append(iso_match_element)
@@ -380,7 +381,7 @@ class NewHimesisMatcher(object):
                     #     self.print_link(self, self.source_graph, graph_n0_n, graph_n1_n, graph_link_n)
 
                 if not found_match and len(self.pattern_data["isolated_match_elements"]) == 0:
-                    if self.debug or self.print_reason_failed:
+                    if self.debug or self.record_reason_failed:
                         #print("Matching failed on:")
                         #self.print_link(self, self.pattern_graph, patt0_n, patt1_n, patt_link_n)
                         if (patt0_n, patt1_n, patt_link_n) not in self.failed_links:
@@ -468,9 +469,20 @@ class NewHimesisMatcher(object):
 
         link_matches_list.sort(key = lambda tup: (len(tup[1]), str(tup[1])))
 
-
-        for combo in combo_generator3({}, {}, *link_matches_list):
+        num_of_combos = 0
+        for i, combo in enumerate(combo_generator3({}, {}, *link_matches_list)):
+            num_of_combos = i
             yield combo
+
+        if num_of_combos == 0 and self.record_reason_failed:
+            for key, value in link_matches_list:
+
+                number = sum([1 for key2, val2 in link_matches_list if value == val2])
+                if len(value) >= number:
+                    continue
+
+                # more pattern links want this link than can be satisfied
+                self.failed_link_matches.append(key)
 
     def combo_generator(self, link_matches):
         for values in product(*link_matches.values()):
@@ -527,7 +539,7 @@ class NewHimesisMatcher(object):
         print(graph.vs[n0]["mm__"].replace("MT_pre__", "") + " - " + link + " - " + graph.vs[n1]["mm__"].replace("MT_pre__", ""))
 
     def print_failures(self):
-        print("Elements of pattern that fail on this source:")
+        print("Elements of pattern that fail on this target:")
         if len(self.failed_iso_elements) > 0:
             print("Pattern requires elements of type:")
             for iso in self.failed_iso_elements:
@@ -535,8 +547,17 @@ class NewHimesisMatcher(object):
                 self.print_equation(iso)
 
         if len(self.failed_links) > 0:
-            print("Contract requires links of type:")
+            print("Pattern could not find links of type:")
             for link in self.failed_links:
+                n0, n1, nlink = link
+                print("\t", end = "")
+                NewHimesisMatcher.print_link(None, self.pattern_graph, n0, n1, nlink)
+                self.print_equation(n0)
+                self.print_equation(n1)
+
+        if len(self.failed_link_matches) > 0:
+            print("Pattern requires multiple links of these types:")
+            for link in self.failed_link_matches:
                 n0, n1, nlink = link
                 print("\t", end = "")
                 NewHimesisMatcher.print_link(None, self.pattern_graph, n0, n1, nlink)
