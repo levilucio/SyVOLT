@@ -476,7 +476,7 @@ class NewHimesisMatcher(object):
 
         if num_of_combos == 0 and self.record_reason_failed:
             for key, value in link_matches_list:
-
+                #print(str(key) + " : " + str(value))
                 number = sum([1 for key2, val2 in link_matches_list if value == val2])
                 if len(value) >= number:
                     continue
@@ -555,8 +555,7 @@ class NewHimesisMatcher(object):
                 self.print_equation(n0)
                 self.print_equation(n1)
 
-            # for link in self.failed_links:
-            #     self.print_rules_with_link(required_rules, link)
+            #self.print_rules_with_link(required_rules, self.failed_links)
 
         if len(self.failed_link_matches) > 0:
             print("Pattern requires multiple links of these types:")
@@ -567,13 +566,14 @@ class NewHimesisMatcher(object):
                 self.print_equation(n0)
                 self.print_equation(n1)
 
-            # for link in self.failed_link_matches:
-            #     self.print_rules_with_link(required_rules, link)
+            #self.print_rules_with_link(required_rules, self.failed_link_matches)
 
-    def print_rules_with_link(self, required_rules, link):
-        for rr, links in required_rules.items():
-            if link in links:
-                print(rr + " contains this link")
+    def print_rules_with_link(self, required_rules, failed_links):
+
+        for fl in set(failed_links):
+            for rr, links in required_rules.items():
+                if fl in links:
+                    print(rr + " contains link")
 
     def print_equation(self, patt_node_num):
         patt_label = self.pattern_labels[patt_node_num]
