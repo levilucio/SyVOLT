@@ -393,9 +393,9 @@ class Slicer:
                         self.found_links[pattern.name].append(patt_mms)
 
                         try:
-                            required_rules[graph.name].append([patt0_n, patt1_n, patt_link_n])
+                            required_rules[graph.name].append((patt0_n, patt1_n, patt_link_n))
                         except KeyError:
-                            required_rules[graph.name] = [[patt0_n, patt1_n, patt_link_n]]
+                            required_rules[graph.name] = [(patt0_n, patt1_n, patt_link_n)]
 
                         does_match = True
                         #return True

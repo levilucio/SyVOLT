@@ -538,7 +538,7 @@ class NewHimesisMatcher(object):
             link = "backward_link"
         print(graph.vs[n0]["mm__"].replace("MT_pre__", "") + " - " + link + " - " + graph.vs[n1]["mm__"].replace("MT_pre__", ""))
 
-    def print_failures(self):
+    def print_failures(self, required_rules = {}):
         print("Elements of pattern that fail on this target:")
         if len(self.failed_iso_elements) > 0:
             print("Pattern requires elements of type:")
@@ -555,6 +555,9 @@ class NewHimesisMatcher(object):
                 self.print_equation(n0)
                 self.print_equation(n1)
 
+            # for link in self.failed_links:
+            #     self.print_rules_with_link(required_rules, link)
+
         if len(self.failed_link_matches) > 0:
             print("Pattern requires multiple links of these types:")
             for link in self.failed_link_matches:
@@ -563,6 +566,14 @@ class NewHimesisMatcher(object):
                 NewHimesisMatcher.print_link(None, self.pattern_graph, n0, n1, nlink)
                 self.print_equation(n0)
                 self.print_equation(n1)
+
+            # for link in self.failed_link_matches:
+            #     self.print_rules_with_link(required_rules, link)
+
+    def print_rules_with_link(self, required_rules, link):
+        for rr, links in required_rules.items():
+            if link in links:
+                print(rr + " contains this link")
 
     def print_equation(self, patt_node_num):
         patt_label = self.pattern_labels[patt_node_num]
