@@ -23,6 +23,8 @@ class Tester:
         self.ruleCombinators = None
         self.rule_names = None
 
+        self.rules_not_seen = []
+
 
     def debug(self):
         if self.draw_svg or self.draw_rules:
@@ -165,6 +167,8 @@ class Tester:
                 #print("Rules seen:")
                 #print(rules_seen)
                 rules_not_seen.append(rule)
+
+        self.rules_not_seen = rules_not_seen
 
         #print("Reachability check took " + str(time.time() - reachability_start) + " seconds")
 
