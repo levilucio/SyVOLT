@@ -104,6 +104,8 @@ class Test:
         #        s.print_path_conditions_file()
         # raise Exception()
 
+        print("\n===================")
+        print("\n===================")
         print("\nContract proving:")
         s.verbosity = 0
         contract_prover = ContractProver(slicer, self.superclasses_dict)
