@@ -58,7 +58,10 @@ class ContractDebugger:
     def examine_required_rules(self, contract, contract_name, good_rules):
         if contract_name not in self.slicer.required_rules:
             return
+
         required_rules = self.slicer.required_rules[contract_name]
+
+        print("\nRequired rules for this contract: " + str(sorted(list(required_rules.keys()))))
 
         required_iso_elements = []
         required_links = []

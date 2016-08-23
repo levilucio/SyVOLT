@@ -12,7 +12,7 @@ from collections import defaultdict
 class Slicer:
 
 
-    def __init__(self, rules, transformation, superclasses_dict, overlapping_rules):
+    def __init__(self, rules, transformation, superclasses_dict, overlapping_rules, atomic_contracts):
 
         self.debug = False
 
@@ -27,6 +27,8 @@ class Slicer:
         self.found_isolated_match_elements = {}
 
         self.rules = rules
+
+        self.atomic_contracts = atomic_contracts
 
         self.required_rules = {}
 
@@ -60,20 +62,6 @@ class Slicer:
                     #print("Drawing: " + rule.name)
                     #graph_to_dot(rule.name, rule)
 
-
-
-        # if self.debug:
-        #
-        #     print("Supertype hierarchy: ")
-        #     supertypes = list(self.rules.values())[0]["superclasses_dict"]
-        #     defaults = ['MetaModelElement_S', 'MetaModelElement_T']
-        #     for k in sorted(supertypes.keys()):
-        #         v = [s for s in supertypes[k] if s not in defaults]
-        #         if v:
-        #             print(k + " : " + str(v))
-
-
-
         for layer in transformation:
             for rule in layer:
 
@@ -85,11 +73,17 @@ class Slicer:
 
                 r_rules_names = sorted([r for r,v in r_rules.items()])
                 print("Rule " + rule.name + " depends on: " + str(r_rules_names))
+
         for layer in transformation:
             for rule in layer:
                 self.check_for_missing_elements(rule, is_contract=False)
 
-        #raise Exception()
+        for contract in atomic_contracts:
+            contract_name, contract_list = self.decompose_contract(contract)
+            required_rules = self.find_required_rules(contract_name, contract_list, True, verbosity = 0)
+
+            self.required_rules[contract_name] = required_rules
+
 
     def get_contract(self, contract_num, atomic, if_then):
 
@@ -118,7 +112,7 @@ class Slicer:
         contract_list = contract[1].get_graph()
         contract_name = contract[1].name
 
-        print("Slicing for: " + contract_name)
+        #print("Slicing for: " + contract_name)
 
         self.direct_links[contract_name] = []
         self.backward_links[contract_name] = []

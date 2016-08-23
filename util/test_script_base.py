@@ -64,7 +64,7 @@ class Test:
                                                                        self.prop_if_then_contracts,
                                                                        args.draw_svg)
 
-        slicer = Slicer(self.rules, self.transformation, self.superclasses_dict, self.overlapping_rules)
+        slicer = Slicer(self.rules, self.transformation, self.superclasses_dict, self.overlapping_rules, self.atomic_contracts)
 
         if args.slice > -1:
             contract, self.atomic_contracts, self.if_then_contracts = slicer.get_contract(args.slice,
