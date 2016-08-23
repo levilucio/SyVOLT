@@ -62,11 +62,11 @@ class ContractDebugger:
         required_rules = self.slicer.required_rules[contract_name]
         rr_list = sorted(list(required_rules.keys()))
 
-        print("\nRequired rules for this contract: " + str(rr_list))
+        #print("\nRequired rules for this contract: " + str(rr_list))
 
         for rr in rr_list:
             if rr in self.pathCondGen.tester.rules_not_seen:
-                print("Error: Required rule '" + rr + "' was not executed during path condition construction!")
+                print("\nError: Rule '" + rr + "' is required for contract, but was not executed during path condition construction!")
 
         required_iso_elements = []
         required_links = []
