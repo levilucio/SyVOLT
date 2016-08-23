@@ -445,7 +445,8 @@ class Slicer:
 
         if is_contract:
             for dl in direct_links:
-                if dl not in found_links:
+                dl_as_mm = (mms[dl[0]], mms[dl[1]], mms[dl[2]])
+                if dl_as_mm not in found_links:
                     rwe = self.print_rules_with_element(original_mms[dl[0]], verbose = False)
                     rwe2 = self.print_rules_with_element(original_mms[dl[1]], verbose = False)
 
@@ -455,12 +456,10 @@ class Slicer:
                             print("Elements in direct link are missing")
                             print(mms[dl[0]] + " - " + mms[dl[2]] + " - " + mms[dl[1]])
                     else:
-                        print("Error! Direct link missing!")
+                        print("Error! Direct link missing in contract " + graph.name + "!")
                         print(mms[dl[0]] + " - " + mms[dl[2]] + " - " + mms[dl[1]])
-                    #print(dl)
 
-                    #raise Exception()
-                elif found_links.count(dl) < direct_links.count(dl):
+                elif found_links.count(dl_as_mm) < direct_links.count(dl):
                     print("Possible error in multiplicity!")
                     print(mms[dl[0]] + " " + mms[dl[2]] + " " + mms[dl[1]])
 
@@ -531,8 +530,8 @@ class Slicer:
 
         #see if there are any elements where not enough might be built
         for mm in bl_element_count:
-            if bl_element_count[mm] > found_bl_element_count[mm]:
-                print("Error: Rule " + graph.name + "may need " + str(bl_element_count[mm]) + " elements of type " + mm + ", but only " + str(found_bl_element_count[mm]) + " were found!")
+            if bl_element_count[mm] > found_bl_element_count[mm] and found_bl_element_count[mm] > 0:
+                print("Error: Rule " + graph.name + " may need " + str(bl_element_count[mm]) + " elements of type " + mm + ", but only " + str(found_bl_element_count[mm]) + " were found!")
                 print("Rule duplication may be needed!")
                 print("Try rules: " + str(mm_to_rules[mm]))
                 print()
