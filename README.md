@@ -16,8 +16,12 @@ Please see the INSTALL.txt file in this directory.
 
 ### Command-line
 - Run the test script using Python
--- Example: 'python test_atlTrans_extended.py'
-- Use the flag '--help' to see some useful arguments
+  - Example: 'python test_atlTrans_extended.py'
+- Use the argument `--help` to see some useful arguments
+  * `--slice=N` will slice the transformation for contract N
+  * `--contract=N` will select only one contract to prove, but will not slice
+  * `--verbosity=2` will output many details of path condition construction
+  * `--load` will attempt to load PCs generated previously, to begin contract proving immediately
 
 ### Eclipse
 - Install the DSLTrans and SyVOLT plugins to edit and visualize the transformations and contracts
