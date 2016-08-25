@@ -16,7 +16,7 @@
     </match>
     <apply>
       <class className="Man">
-        <attribute attributeName="name">
+        <attribute attributeName="fullName">
           <attributeValue xsi:type="syvolt:Concat">
             <leftTerm xsi:type="syvolt:AttributeRef" attributeRef="//@hasProperty.0/@match.0/@class.0/@attribute.0"/>
             <rightTerm xsi:type="syvolt:AttributeRef" attributeRef="//@hasProperty.0/@match.0/@class.1/@attribute.0"/>
@@ -25,7 +25,7 @@
       </class>
       <class className="Community"/>
       <class className="Woman">
-        <attribute attributeName="name">
+        <attribute attributeName="fullName">
           <attributeValue xsi:type="syvolt:Concat">
             <leftTerm xsi:type="syvolt:AttributeRef" attributeRef="//@hasProperty.0/@match.0/@class.2/@attribute.0"/>
             <rightTerm xsi:type="syvolt:AttributeRef" attributeRef="//@hasProperty.0/@match.0/@class.1/@attribute.0"/>
