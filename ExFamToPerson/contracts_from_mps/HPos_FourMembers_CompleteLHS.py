@@ -18,8 +18,8 @@ class HPos_FourMembers_CompleteLHS(HimesisPreConditionPatternLHS):
     self["mm__"] = ['MT_pre__FamiliesToPersonsMM', 'MoTifRule']
     self["MT_constraint__"] = """return True"""
     self["name"] = """"""
-    self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Pos_FourMembers')
-
+    self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'HPos_FourMembers_CompleteLHS')
+    self["equations"] = []
     # Set the node attributes
 
     # match class Family(FourMem_M1) node
@@ -64,7 +64,6 @@ class HPos_FourMembers_CompleteLHS(HimesisPreConditionPatternLHS):
 
     # apply class Community(FourMem_A1) node
     self.add_node()
-    self.vs[5]["MT_subtypeMatching__"] = False
     self.vs[5]["MT_pre__attr1"] = """return True"""
     self.vs[5]["MT_label__"] = """6"""
     self.vs[5]["MT_dirty"] = False
@@ -73,7 +72,6 @@ class HPos_FourMembers_CompleteLHS(HimesisPreConditionPatternLHS):
 
     # apply class Man(FourMem_A2) node
     self.add_node()
-    self.vs[6]["MT_subtypeMatching__"] = False
     self.vs[6]["MT_pre__attr1"] = """return True"""
     self.vs[6]["MT_label__"] = """7"""
     self.vs[6]["MT_dirty"] = False
@@ -82,7 +80,6 @@ class HPos_FourMembers_CompleteLHS(HimesisPreConditionPatternLHS):
 
     # apply class Woman(FourMem_A3) node
     self.add_node()
-    self.vs[7]["MT_subtypeMatching__"] = False
     self.vs[7]["MT_pre__attr1"] = """return True"""
     self.vs[7]["MT_label__"] = """8"""
     self.vs[7]["MT_dirty"] = False
@@ -91,7 +88,6 @@ class HPos_FourMembers_CompleteLHS(HimesisPreConditionPatternLHS):
 
     # apply class Man(FourMem_A4) node
     self.add_node()
-    self.vs[8]["MT_subtypeMatching__"] = False
     self.vs[8]["MT_pre__attr1"] = """return True"""
     self.vs[8]["MT_label__"] = """9"""
     self.vs[8]["MT_dirty"] = False
@@ -100,7 +96,6 @@ class HPos_FourMembers_CompleteLHS(HimesisPreConditionPatternLHS):
 
     # apply class Woman(FourMem_A5) node
     self.add_node()
-    self.vs[9]["MT_subtypeMatching__"] = False
     self.vs[9]["MT_pre__attr1"] = """return True"""
     self.vs[9]["MT_label__"] = """10"""
     self.vs[9]["MT_dirty"] = False
@@ -109,7 +104,6 @@ class HPos_FourMembers_CompleteLHS(HimesisPreConditionPatternLHS):
 
     # match association Family--fathers-->Membernode
     self.add_node()
-    self.vs[10]["MT_subtypeMatching__"] = False
     self.vs[10]["MT_pre__attr1"] = """fathers"""
     self.vs[10]["MT_label__"] = """11"""
     self.vs[10]["MT_subtypes__"] = []
@@ -119,7 +113,6 @@ class HPos_FourMembers_CompleteLHS(HimesisPreConditionPatternLHS):
 
     # match association Family--mothers-->Membernode
     self.add_node()
-    self.vs[11]["MT_subtypeMatching__"] = False
     self.vs[11]["MT_pre__attr1"] = """mothers"""
     self.vs[11]["MT_label__"] = """12"""
     self.vs[11]["MT_subtypes__"] = []
@@ -129,7 +122,6 @@ class HPos_FourMembers_CompleteLHS(HimesisPreConditionPatternLHS):
 
     # match association Family--sons-->Membernode
     self.add_node()
-    self.vs[12]["MT_subtypeMatching__"] = False
     self.vs[12]["MT_pre__attr1"] = """sons"""
     self.vs[12]["MT_label__"] = """13"""
     self.vs[12]["MT_subtypes__"] = []
@@ -139,7 +131,6 @@ class HPos_FourMembers_CompleteLHS(HimesisPreConditionPatternLHS):
 
     # match association Family--daughters-->Membernode
     self.add_node()
-    self.vs[13]["MT_subtypeMatching__"] = False
     self.vs[13]["MT_pre__attr1"] = """daughters"""
     self.vs[13]["MT_label__"] = """14"""
     self.vs[13]["MT_subtypes__"] = []
@@ -149,7 +140,6 @@ class HPos_FourMembers_CompleteLHS(HimesisPreConditionPatternLHS):
 
     # apply association Community--persons-->Mannode
     self.add_node()
-    self.vs[14]["MT_subtypeMatching__"] = False
     self.vs[14]["MT_pre__attr1"] = """persons"""
     self.vs[14]["MT_label__"] = """15"""
     self.vs[14]["MT_subtypes__"] = []
@@ -159,7 +149,6 @@ class HPos_FourMembers_CompleteLHS(HimesisPreConditionPatternLHS):
 
     # apply association Community--persons-->Womannode
     self.add_node()
-    self.vs[15]["MT_subtypeMatching__"] = False
     self.vs[15]["MT_pre__attr1"] = """persons"""
     self.vs[15]["MT_label__"] = """16"""
     self.vs[15]["MT_subtypes__"] = []
@@ -169,7 +158,6 @@ class HPos_FourMembers_CompleteLHS(HimesisPreConditionPatternLHS):
 
     # apply association Community--persons-->Mannode
     self.add_node()
-    self.vs[16]["MT_subtypeMatching__"] = False
     self.vs[16]["MT_pre__attr1"] = """persons"""
     self.vs[16]["MT_label__"] = """17"""
     self.vs[16]["MT_subtypes__"] = []
@@ -179,7 +167,6 @@ class HPos_FourMembers_CompleteLHS(HimesisPreConditionPatternLHS):
 
     # apply association Community--persons-->Womannode
     self.add_node()
-    self.vs[17]["MT_subtypeMatching__"] = False
     self.vs[17]["MT_pre__attr1"] = """persons"""
     self.vs[17]["MT_label__"] = """18"""
     self.vs[17]["MT_subtypes__"] = []
@@ -187,36 +174,32 @@ class HPos_FourMembers_CompleteLHS(HimesisPreConditionPatternLHS):
     self.vs[17]["mm__"] = """MT_pre__directLink_T"""
     self.vs[17]["GUID"] = uuid.uuid3(uuid.NAMESPACE_DNS,'FourMem_A1assoc17FourMem_A5')
 
-    # backward association Man--trace-->Membernode
+    # trace association Man--trace-->Membernode
     self.add_node()
-    self.vs[18]["MT_subtypeMatching__"] = False
     self.vs[18]["MT_label__"] = """19"""
     self.vs[18]["MT_subtypes__"] = []
     self.vs[18]["MT_dirty"] = False
     self.vs[18]["mm__"] = """MT_pre__trace_link"""
     self.vs[18]["GUID"] = uuid.uuid3(uuid.NAMESPACE_DNS,'FourMem_A2assoc18FourMem_M2')
 
-    # backward association Woman--trace-->Membernode
+    # trace association Woman--trace-->Membernode
     self.add_node()
-    self.vs[19]["MT_subtypeMatching__"] = False
     self.vs[19]["MT_label__"] = """20"""
     self.vs[19]["MT_subtypes__"] = []
     self.vs[19]["MT_dirty"] = False
     self.vs[19]["mm__"] = """MT_pre__trace_link"""
     self.vs[19]["GUID"] = uuid.uuid3(uuid.NAMESPACE_DNS,'FourMem_A3assoc19FourMem_M3')
 
-    # backward association Man--trace-->Membernode
+    # trace association Man--trace-->Membernode
     self.add_node()
-    self.vs[20]["MT_subtypeMatching__"] = False
     self.vs[20]["MT_label__"] = """21"""
     self.vs[20]["MT_subtypes__"] = []
     self.vs[20]["MT_dirty"] = False
     self.vs[20]["mm__"] = """MT_pre__trace_link"""
     self.vs[20]["GUID"] = uuid.uuid3(uuid.NAMESPACE_DNS,'FourMem_A4assoc20FourMem_M4')
 
-    # backward association Woman--trace-->Membernode
+    # trace association Woman--trace-->Membernode
     self.add_node()
-    self.vs[21]["MT_subtypeMatching__"] = False
     self.vs[21]["MT_label__"] = """22"""
     self.vs[21]["MT_subtypes__"] = []
     self.vs[21]["MT_dirty"] = False
@@ -225,6 +208,22 @@ class HPos_FourMembers_CompleteLHS(HimesisPreConditionPatternLHS):
 
     # Add the edges
     self.add_edges([
+      (0,10), # match class Family(FourMem_M1) -> association fathers
+      (10,1), # associationMember -> match class Member(FourMem_M2)
+      (0,11), # match class Family(FourMem_M1) -> association mothers
+      (11,2), # associationMember -> match class Member(FourMem_M3)
+      (0,12), # match class Family(FourMem_M1) -> association sons
+      (12,3), # associationMember -> match class Member(FourMem_M4)
+      (0,13), # match class Family(FourMem_M1) -> association daughters
+      (13,4), # associationMember -> match class Member(FourMem_M5)
+      (5,14), # apply class Community(FourMem_A1) -> association persons
+      (14,6), # associationMan -> apply class Man(FourMem_A2)
+      (5,15), # apply class Community(FourMem_A1) -> association persons
+      (15,7), # associationWoman -> apply class Woman(FourMem_A3)
+      (5,16), # apply class Community(FourMem_A1) -> association persons
+      (16,8), # associationMan -> apply class Man(FourMem_A4)
+      (5,17), # apply class Community(FourMem_A1) -> association persons
+      (17,9), # associationWoman -> apply class Woman(FourMem_A5)
       (6,18), # apply class Man(FourMem_M2) -> backward_association 
       (18,1), # backward_associationMember -> match_class Member(FourMem_M2)
       (7,19), # apply class Woman(FourMem_M3) -> backward_association 
@@ -233,22 +232,6 @@ class HPos_FourMembers_CompleteLHS(HimesisPreConditionPatternLHS):
       (20,3), # backward_associationMember -> match_class Member(FourMem_M4)
       (9,21), # apply class Woman(FourMem_M5) -> backward_association 
       (21,4), # backward_associationMember -> match_class Member(FourMem_M5)
-      (5,14), # apply class Community(FourMem_A1) -> association persons
-      (14,6), # associationMan -> apply_classMan(FourMem_A2)
-      (5,15), # apply class Community(FourMem_A1) -> association persons
-      (15,7), # associationWoman -> apply_classWoman(FourMem_A3)
-      (5,16), # apply class Community(FourMem_A1) -> association persons
-      (16,8), # associationMan -> apply_classMan(FourMem_A4)
-      (5,17), # apply class Community(FourMem_A1) -> association persons
-      (17,9), # associationWoman -> apply_classWoman(FourMem_A5)
-      (0,10), # match classFamily(FourMem_M1) -> association fathers
-      (10,1), # associationMember -> match_classMember(FourMem_M2)
-      (0,11), # match classFamily(FourMem_M1) -> association mothers
-      (11,2), # associationMember -> match_classMember(FourMem_M3)
-      (0,12), # match classFamily(FourMem_M1) -> association sons
-      (12,3), # associationMember -> match_classMember(FourMem_M4)
-      (0,13), # match classFamily(FourMem_M1) -> association daughters
-      (13,4), # associationMember -> match_classMember(FourMem_M5)
     ])
 
     # Add the attribute equations
@@ -272,20 +255,6 @@ class HPos_FourMembers_CompleteLHS(HimesisPreConditionPatternLHS):
   def eval_attr15(self, attr_value, this):
     return True
 
-  # define evaluation methods for each match association.
-
-  def eval_attr111(self, attr_value, this):
-    return attr_value == "fathers"
-
-  def eval_attr112(self, attr_value, this):
-    return attr_value == "mothers"
-
-  def eval_attr113(self, attr_value, this):
-    return attr_value == "sons"
-
-  def eval_attr114(self, attr_value, this):
-    return attr_value == "daughters"
-
   # define evaluation methods for each apply class.
 
   def eval_attr16(self, attr_value, this):
@@ -303,6 +272,16 @@ class HPos_FourMembers_CompleteLHS(HimesisPreConditionPatternLHS):
   def eval_attr110(self, attr_value, this):
     return True
 
+  # define evaluation methods for each match association.
+
+  def eval_attr111(self, attr_value, this):
+    return attr_value == "fathers"
+  def eval_attr112(self, attr_value, this):
+    return attr_value == "mothers"
+  def eval_attr113(self, attr_value, this):
+    return attr_value == "sons"
+  def eval_attr114(self, attr_value, this):
+    return attr_value == "daughters"
   # define evaluation methods for each apply association.
 
   def eval_attr115(self, attr_value, this):
@@ -316,3 +295,5 @@ class HPos_FourMembers_CompleteLHS(HimesisPreConditionPatternLHS):
 
   def constraint(self, PreNode, graph):
     return True
+
+

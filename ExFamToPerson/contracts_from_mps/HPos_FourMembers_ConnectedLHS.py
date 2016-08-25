@@ -18,8 +18,8 @@ class HPos_FourMembers_ConnectedLHS(HimesisPreConditionPatternLHS):
     self["mm__"] = ['MT_pre__FamiliesToPersonsMM', 'MoTifRule']
     self["MT_constraint__"] = """return True"""
     self["name"] = """"""
-    self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Pos_FourMembers')
-
+    self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'HPos_FourMembers_ConnectedLHS')
+    self["equations"] = []
     # Set the node attributes
 
     # match class Family(FourMem_M1) node
@@ -100,19 +100,16 @@ class HPos_FourMembers_ConnectedLHS(HimesisPreConditionPatternLHS):
 
     # Add the edges
     self.add_edges([
-      (0,5), # match classFamily(FourMem_M1) -> association fathers
-      (5,1), # associationMember -> match_classMember(FourMem_M2)
-      (0,6), # match classFamily(FourMem_M1) -> association mothers
-      (6,2), # associationMember -> match_classMember(FourMem_M3)
-      (0,7), # match classFamily(FourMem_M1) -> association sons
-      (7,3), # associationMember -> match_classMember(FourMem_M4)
-      (0,8), # match classFamily(FourMem_M1) -> association daughters
-      (8,4), # associationMember -> match_classMember(FourMem_M5)
+      (0,5), # apply class Family(FourMem_M1) -> association fathers
+      (5,1), # associationMember -> apply class Member(FourMem_M2)
+      (0,6), # apply class Family(FourMem_M1) -> association mothers
+      (6,2), # associationMember -> apply class Member(FourMem_M3)
+      (0,7), # apply class Family(FourMem_M1) -> association sons
+      (7,3), # associationMember -> apply class Member(FourMem_M4)
+      (0,8), # apply class Family(FourMem_M1) -> association daughters
+      (8,4), # associationMember -> apply class Member(FourMem_M5)
     ])
 
-    # Add the attribute equations
-
-    self["equations"] = []
 
   # define evaluation methods for each class.
 
@@ -144,3 +141,5 @@ class HPos_FourMembers_ConnectedLHS(HimesisPreConditionPatternLHS):
 
   def constraint(self, PreNode, graph):
     return True
+
+

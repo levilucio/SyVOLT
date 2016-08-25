@@ -1,4 +1,3 @@
-
 from core.himesis import Himesis, HimesisPreConditionPatternLHS
 import uuid
 
@@ -19,8 +18,8 @@ class HPos_FourMembers_IsolatedLHS(HimesisPreConditionPatternLHS):
     self["mm__"] = ['MT_pre__FamiliesToPersonsMM', 'MoTifRule']
     self["MT_constraint__"] = """return True"""
     self["name"] = """"""
-    self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Pos_FourMembers')
-
+    self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'HPos_FourMembers_IsolatedLHS')
+    self["equations"] = []
     # Set the node attributes
 
     # match class Family(FourMem_M1) node
@@ -88,4 +87,5 @@ class HPos_FourMembers_IsolatedLHS(HimesisPreConditionPatternLHS):
 
   def constraint(self, PreNode, graph):
     return True
+
 
