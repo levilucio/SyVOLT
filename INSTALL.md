@@ -9,6 +9,10 @@ SyVOLT requires a number of libraries for the Python scripts to run correctly
 
 These libraries are best installed through your package manager. However, difficulties can arise with igraph, so further instructions are below.
 
+
+# Linux
+
+
 ## IGRAPH:
 
 SyVOLT requires the Python bindings to the igraph C library.
@@ -38,8 +42,27 @@ or
 
 `sudo pip install python-igraph`
 
-###From Source
-If that doesn't work, you'll have to install from source
+
+# Mac
+
+Install Homebrew first (http://brew.sh/)
+
+Then install PIP (comes with python):
+
+`brew install python3`
+
+## IGRAPH:
+
+`sudo pip3.5 install python-igraph`
+
+## numpy:
+
+`sudo pip3 install numpy`
+
+
+# From Source
+
+If the previous work, you'll have to install from source
 
 * Try installing the igraph C part from your package manager first
 
@@ -51,5 +74,6 @@ If that doesn't work, you'll have to install from source
 * Unzip the archive
 * `python setup.py install`
 * or `python3 setup.py install`
+
 
 
