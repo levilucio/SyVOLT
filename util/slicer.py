@@ -486,7 +486,7 @@ class Slicer:
             bl_as_mms = (mms[bl[0]], mms[bl[1]], mms[bl[2]])
 
             if bl_as_mms not in found_links:
-                print("Error! Backward link might be missing!")
+                print("Error! Backward link might be missing in rule " + graph.name + "!")
                 print(bl_as_mms)
                 self.print_rules_with_element(original_mms[bl[0]])
                 self.print_rules_with_element(original_mms[bl[1]])

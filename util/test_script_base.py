@@ -4,7 +4,7 @@ from path_condition_generator import PathConditionGenerator
 
 from pyramify.PyRamify import PyRamify
 
-from util.test_script_utils import get_sub_and_super_classes, set_supertypes, load_contracts, save_pcs, load_pcs, load_transformation
+from util.test_script_utils import set_artifact_directory, get_sub_and_super_classes, set_supertypes, load_contracts, save_pcs, load_pcs, load_transformation
 from util.slicer import Slicer
 
 from core.himesis_utils import load_directory
@@ -15,6 +15,7 @@ from PropertyVerification.ContractProver import ContractProver
 class Test:
 
     def __init__(self):
+        self.artifact_directory = ""
         self.transformation_directory = ""
         self.contract_directory = ""
 
@@ -42,6 +43,8 @@ class Test:
         self.pc_save_filename = ""
 
     def test_correct(self, args):
+        set_artifact_directory(self.artifact_directory)
+
         self.rules, self.transformation = load_transformation(self.transformation_directory, self.full_transformation)
 
 

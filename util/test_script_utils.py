@@ -8,6 +8,18 @@ from PropertyVerification.prop_logic import *
 
 import os
 
+def set_artifact_directory(artifact_directory):
+
+    #nothing was set, so just ignore
+    if not artifact_directory:
+        return
+
+    if not os.path.isdir(artifact_directory):
+        e = IOError(2, 'Artifact directory does not exist or is not a directory: ' + artifact_directory)
+        e.filename = artifact_directory
+        raise e
+    os.chdir(artifact_directory)
+
 # get all the rules in the transformation
 def load_transformation(dir_name, full_transformation):
     print("Loading transformation from directory: " + dir_name)
