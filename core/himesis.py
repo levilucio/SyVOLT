@@ -1,5 +1,6 @@
-import uuid, os.path, copy\
+import uuid, copy
 
+from os import path, fsync
 from core.igraph_helper import *
 
 from functools import reduce
@@ -173,42 +174,6 @@ class Himesis(igraph.Graph):
         except ValueError:
             #TODO: This should be a TransformationLanguageSpecificException
             raise Exception('No node was found with the given id: ' + str(id))
-    
-    # def draw(self, visual_style={}, label=None, show_guid=False, show_id=False, debug=False, width=600, height=900):
-    #     """
-    #     Visual graphic rendering of the graph.
-    #     @param label: The attribute to use as node label in the figure.
-    #                   If not provided, the index of the node is used.
-    #     @param visual_style: More drawing options
-    #     (see http://igraph.sourceforge.net/doc/python/igraph.Graph-class.html#__plot__ for more details).
-    #     """
-    #     if 'layout' not in visual_style:
-    #         visual_style["layout"] = 'fr'
-    #     if 'margin' not in visual_style:
-    #         visual_style["margin"] = 10
-    #
-    #     # Set the labels
-    #     if not label:
-    #         if show_guid:
-    #             visual_style["vertex_label"] = [str(self.vs[i][Himesis.Constants.GUID])[:4] for i in self.node_iter()]
-    #         elif show_id:
-    #             visual_style["vertex_label"] = [str(i) for i in self.node_iter()]
-    #         else:
-    #             visual_style["vertex_label"] = [''] *  self.vcount()
-    #     else:
-    #         try:
-    #             visual_style["vertex_label"] = self.vs[label]
-    #             for n in self.node_iter():
-    #                 if not visual_style["vertex_label"][n]:
-    #                     visual_style["vertex_label"][n] = self.vs[n][Himesis.Constants.META_MODEL]
-    #                     if debug:
-    #                         visual_style["vertex_label"][n] = str(n) + ':' + visual_style["vertex_label"][n]
-    #                 elif debug:
-    #                     visual_style["vertex_label"][n] = str(n) + ':' + visual_style["vertex_label"][n]
-    #         except:
-    #             raise Exception('%s is not a valid attribute' % label)
-    #
-    #     return plot(self, bbox=(0, 0, width, height), **visual_style)
 
     def _compile_additional_info(self, file):
         if hasattr(self, "execute_body"):
@@ -278,9 +243,9 @@ class Himesis(igraph.Graph):
 
         # Make sure the directory exists
         # If the path contains the output file name, it will be replaced by the default one
-        if os.path.isfile(file_path):
-            file_path = os.path.dirname(file_path)
-        if not os.path.isdir(file_path):
+        if path.isfile(file_path):
+            file_path = path.dirname(file_path)
+        if not path.isdir(file_path):
             e = IOError(2, 'Output path does not exist')
             e.filename = file_path
             raise e
@@ -289,7 +254,7 @@ class Himesis(igraph.Graph):
         
         #with open(file, 'w') as file:
         
-        file = open(os.path.join(file_path, self.name + '.py'), 'w')
+        file = open(path.join(file_path, self.name + '.py'), 'w')
         if True:
             # Save the nodes in increasing order of the occurrence of its meta-model:
             # First build a dictionary {meta-model element: number of nodes of that type}
@@ -422,8 +387,11 @@ class %s(%s):
             file.write('\n')
             self._compile_additional_info(file)
             file.write('\n')
-        
+
+        file.flush()
+        fsync(file.fileno())
         file.close()
+
         
         for sg in subgraphs:
             sg.compile(file_path)

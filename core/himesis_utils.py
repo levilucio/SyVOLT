@@ -20,6 +20,7 @@ import subprocess
 import re
 import sys
 import os
+import traceback
 from os import path
 
 import uuid
@@ -713,8 +714,8 @@ def load_class(full_class_string, args = None):
 
     # sometimes the file is still being written,
     # so wait for a bit
-    if not path.isfile(full_class_string):
-        sleep(0.01)
+    # if not path.isfile(full_class_string):
+    #     sleep(0.01)
 
     succeed = True
     try:
@@ -731,13 +732,13 @@ def load_class(full_class_string, args = None):
 
     except Exception as e:
         print("Error: " + str(e))
+        #traceback.print_exc()
         succeed = False
         loaded_module = None
     finally:
         sys.path[:] = old_path # restore
 
     if not succeed:
-
         print("File: " + full_class_string)
         print("Exists: " + str(path.isfile(full_class_string)))
         raise Exception("Could not load module: " + module_name)
