@@ -160,7 +160,7 @@ class Tester:
 
         rules_seen = set(rules_seen)
         rules_not_seen = []
-        print("Rules seen: " + str(rules_seen))
+
         for rule in rules:
             if rule not in rules_seen:
                 print("ERROR: Rule " + rule + " was not executed!")
@@ -169,6 +169,9 @@ class Tester:
                 rules_not_seen.append(rule)
 
         self.rules_not_seen = rules_not_seen
+
+        if self.rules_not_seen:
+            print("Rules seen: " + str(rules_seen))
 
         #print("Reachability check took " + str(time.time() - reachability_start) + " seconds")
 
