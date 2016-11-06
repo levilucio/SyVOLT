@@ -709,13 +709,36 @@ def load_class(full_class_string, args = None):
     if load_module_name.endswith("copy"):
         load_module_name = load_module_name[:-4]
 
+        #this is not super robust
+        full_class_string = full_class_string.replace("copy", "")
+
     old_path = list(sys.path)
     sys.path.insert(0, directory)
 
+    full_file_path = full_class_string
+
+    #fix up the file path to have .py
+    if not full_file_path.endswith(".py"):
+        full_file_path += ".py"
+
     # sometimes the file is still being written,
     # so wait for a bit
-    # if not path.isfile(full_class_string):
-    #     sleep(0.01)
+    if not path.isfile(full_file_path):
+        os.sync()
+        print(full_class_string)
+        print(full_file_path)
+
+        if path.isfile(full_file_path):
+            print("Sync fixed it")
+        else:
+            print("Sync didn't fix it")
+
+            sleep(1)
+            if path.isfile(full_file_path):
+                print("Sleep fixed it")
+            else:
+                print("Sleep didn't fix it")
+        raise Exception()
 
     succeed = True
     try:
