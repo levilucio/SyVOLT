@@ -702,8 +702,16 @@ class PyRamify:
     #ramify a whole directory
     #@do_cprofile
     def ramify_directory(self, dir_name, transformation_layers):
+
+        #fix up directory to be relative if needed
+        if not dir_name.startswith("/") and not dir_name.startswith("./"):
+            dir_name = "./" + dir_name
+
+        #add trailing slash if needed
+        if not dir_name.endswith("/"):
+            dir_name += "/"
+
         print("Ramifying directory: " + dir_name)
-        
         self.transformation_layers = transformation_layers
         
         rules = {}
@@ -716,7 +724,7 @@ class PyRamify:
             for rule in layer:
 
                 #add the rule to the rules dict
-                rule2 = load_class(dir_name + "/" + rule.name + ".py")
+                rule2 = load_class(dir_name + rule.name)
                 rules.update(rule2)
 
                 #reload the rule
@@ -724,12 +732,12 @@ class PyRamify:
                 #but there were problems with aliasing and copying
 
                 #get the backwards pattern for this rule
-                rule3 = load_class(dir_name + "/" + rule.name + ".py")
+                rule3 = load_class(dir_name + rule.name)
                 (bwPattern, bwP2Rule) = self.get_backward_patterns(rule3)
                 backwardPatterns.update(bwPattern)
 
                 #fresh rule for the match pattern
-                rule4 = load_class(dir_name + "/" + rule.name + ".py")
+                rule4 = load_class(dir_name + rule.name)
                 matchRulePattern = self.get_match_pattern(rule4)
                 matchRulePatterns.update(matchRulePattern)
 
