@@ -691,7 +691,7 @@ class PyRamify:
             graph_to_dot(graph.name, graph)
 
         #have to reload the graph to define all the eval functions
-        rule = load_class(out_dir + "/" + old_name + "_match_pattern_matcher")
+        rule = load_class(out_dir + old_name + "_match_pattern_matcher")
         match_graph = list(rule.values())[0]
 
         matcher = Matcher(match_graph, disambig_matching = False)
