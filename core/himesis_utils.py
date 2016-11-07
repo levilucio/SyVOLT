@@ -715,6 +715,7 @@ def load_class(full_class_string, args = None):
     old_path = list(sys.path)
     sys.path.insert(0, directory)
 
+    #print(full_class_string)
     full_file_path = full_class_string
 
     #fix up the file path to have .py
@@ -762,8 +763,9 @@ def load_class(full_class_string, args = None):
         sys.path[:] = old_path # restore
 
     if not succeed:
-        print("File: " + full_class_string)
-        print("Exists: " + str(path.isfile(full_class_string)))
+        print("Class: " + full_class_string)
+        print("File: " + full_file_path)
+        print("Exists: " + str(path.isfile(full_file_path)))
         raise Exception("Could not load module: " + module_name)
 
     return loaded_module
