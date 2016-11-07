@@ -766,6 +766,7 @@ def load_class(full_class_string, args = None):
         print("Class: " + full_class_string)
         print("File: " + full_file_path)
         print("Exists: " + str(path.isfile(full_file_path)))
+        print("System path: " + str(sys.path))
         raise Exception("Could not load module: " + module_name)
 
     return loaded_module
