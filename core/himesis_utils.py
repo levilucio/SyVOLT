@@ -701,7 +701,7 @@ except ImportError:
 
 from time import sleep
 def load_class(full_class_string, args = None):
-
+    sleep(1)
     directory, module_name = os.path.split(full_class_string)
     module_name = os.path.splitext(module_name)[0]
 
@@ -734,7 +734,7 @@ def load_class(full_class_string, args = None):
         else:
             print("Sync didn't fix it")
 
-            sleep(1)
+
             if path.isfile(full_file_path):
                 print("Sleep fixed it")
             else:
