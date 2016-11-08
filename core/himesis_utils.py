@@ -9,6 +9,7 @@ Useful Himesis-related operations
 
 '''
 
+from importlib import invalidate_caches
 
 try:
     import pydot
@@ -699,9 +700,20 @@ try:
 except ImportError:
     pass
 
-from time import sleep
+def try_load(load_module_name, module_name, args):
+    module = __import__(load_module_name)
+    if args is None:
+        loaded_class = getattr(module, load_module_name)()
+    else:
+        loaded_class = getattr(module, load_module_name)(args[0])
+
+    clean_graph(loaded_class)
+    loaded_class.name = module_name
+    return {module_name: loaded_class}
+
+#from time import sleep
 def load_class(full_class_string, args = None):
-    sleep(1)
+
     directory, module_name = os.path.split(full_class_string)
     module_name = os.path.splitext(module_name)[0]
 
@@ -722,38 +734,12 @@ def load_class(full_class_string, args = None):
     if not full_file_path.endswith(".py"):
         full_file_path += ".py"
 
-    # sometimes the file is still being written,
-    # so wait for a bit
-    if not path.isfile(full_file_path):
-        os.sync()
-        print(full_class_string)
-        print(full_file_path)
-
-        if path.isfile(full_file_path):
-            print("Sync fixed it")
-        else:
-            print("Sync didn't fix it")
-
-
-            if path.isfile(full_file_path):
-                print("Sleep fixed it")
-            else:
-                print("Sleep didn't fix it")
-        raise Exception()
-
     succeed = True
     try:
-        module = __import__(load_module_name)
-        if args is None:
-            loaded_class = getattr(module, load_module_name)()
-        else:
-            loaded_class = getattr(module, load_module_name)(args[0])
-
-        clean_graph(loaded_class)
-        loaded_class.name = module_name
-
-        loaded_module = {module_name : loaded_class}
-
+        loaded_module = try_load(load_module_name, module_name, args)
+    except ImportError:
+        importlib.invalidate_caches()
+        loaded_module = try_load(load_module_name, module_name, args)
     except Exception as e:
         print("Error: " + str(e))
         #traceback.print_exc()
