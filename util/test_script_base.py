@@ -65,7 +65,7 @@ class Test:
         self.atomic_contracts, self.if_then_contracts = load_contracts(contracts, self.superclasses_dict,
                                                                        self.atomic_contracts, self.if_then_contracts,
                                                                        self.prop_if_then_contracts,
-                                                                       args.draw_svg)
+                                                                       args.draw_svg or args.draw_contracts)
 
         slicer = Slicer(self.rules, self.transformation, self.superclasses_dict, self.overlapping_rules, self.atomic_contracts)
 

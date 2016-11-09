@@ -258,12 +258,15 @@ def set_supertypes(superclasses_dict, rules, transformation, ruleTraceCheckers, 
 #=================================================
 
 
-def load_contracts(contracts, superclasses_dict, atomic_names, simple_if_then_names, prop_if_then_names, draw_svg):
+def load_contracts(contracts, superclasses_dict, atomic_names, simple_if_then_names, prop_if_then_names, draw_contracts):
 
     atomic_contracts = []
     for contract_name in atomic_names:
         atomic_contract = load_contract(contract_name, contracts, superclasses_dict)
         atomic_contracts.append([atomic_contract.name, atomic_contract])
+
+        if draw_contracts:
+            atomic_contract.draw()
 
     if_then_contracts = []
     for contract_name_if, contract_name_then in simple_if_then_names:
@@ -271,6 +274,9 @@ def load_contracts(contracts, superclasses_dict, atomic_names, simple_if_then_na
         then_contract = load_contract(contract_name_then, contracts, superclasses_dict)
         if_then_contract = IfThenContract(if_contract, then_contract)
         if_then_contracts.append([if_then_contract.name, if_then_contract])
+
+        if draw_contracts:
+            if_then_contract.draw()
 
     for contract_name_if, prop_equation in prop_if_then_names:
 
@@ -283,6 +289,9 @@ def load_contracts(contracts, superclasses_dict, atomic_names, simple_if_then_na
 
         full_contract = IfThenContract(if_contract, then_contract)
         if_then_contracts.append([full_contract.name, full_contract])
+
+        if draw_contracts:
+            full_contract.draw()
 
     return atomic_contracts, if_then_contracts
 
