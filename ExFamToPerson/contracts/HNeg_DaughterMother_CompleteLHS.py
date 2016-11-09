@@ -1,7 +1,7 @@
 from core.himesis import Himesis, HimesisPreConditionPatternLHS
 import uuid
 
-class HPos_DaughterMother_CompleteLHS(HimesisPreConditionPatternLHS):
+class HNeg_DaughterMother_CompleteLHS(HimesisPreConditionPatternLHS):
         def __init__(self):
                 """
                 Creates the himesis graph representing the AToM3 model HPos_DaughterMother_CompleteLHS.
@@ -9,7 +9,7 @@ class HPos_DaughterMother_CompleteLHS(HimesisPreConditionPatternLHS):
                 # Flag this instance as compiled now
                 self.is_compiled = True
 
-                super(HPos_DaughterMother_CompleteLHS, self).__init__(name='HPos_DaughterMother_CompleteLHS', num_nodes=0, edges=[])
+                super(HNeg_DaughterMother_CompleteLHS, self).__init__(name='HNeg_DaughterMother_CompleteLHS', num_nodes=0, edges=[])
 
                 # Set the graph attributes
                 self["mm__"] = []
