@@ -29,7 +29,7 @@ def load_transformation(dir_name, full_transformation):
 
     for layer in full_transformation:
         new_layer = []
-        for rule_name in layer:
+        for rule_name in sorted(layer):
             print("Loading rule: " + rule_name)
             load_rule_name = rule_name
 
