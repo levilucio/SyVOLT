@@ -7,6 +7,7 @@ from PropertyVerification.if_then_contract import IfThenContract
 from PropertyVerification.prop_logic import *
 
 import os
+import traceback
 
 def set_artifact_directory(artifact_directory):
 
@@ -29,7 +30,7 @@ def load_transformation(dir_name, full_transformation):
 
     for layer in full_transformation:
         new_layer = []
-        for rule_name in layer:
+        for rule_name in sorted(layer):
             print("Loading rule: " + rule_name)
             load_rule_name = rule_name
 
@@ -258,15 +259,20 @@ def set_supertypes(superclasses_dict, rules, transformation, ruleTraceCheckers, 
 #=================================================
 
 
-def load_contracts(contracts, superclasses_dict, atomic_names, if_then_names, draw_svg):
+def load_contracts(contracts, superclasses_dict, atomic_names, if_then_names, draw_contracts):
 
     atomic_contracts = []
     for contract_name in atomic_names:
         atomic_contract = load_contract(contract_name, contracts, superclasses_dict)
         atomic_contracts.append([atomic_contract.name, atomic_contract])
 
+        if draw_contracts:
+            atomic_contract.draw()
+
     if_then_contracts = []
+
     for contract_name_if, contract_name_then in if_then_names:
+
         if type(contract_name_if) is list:
             if_contract = handle_prop(contract_name_if, contracts, superclasses_dict)
         else:
@@ -279,6 +285,9 @@ def load_contracts(contracts, superclasses_dict, atomic_names, if_then_names, dr
 
         if_then_contract = IfThenContract(if_contract, then_contract)
         if_then_contracts.append([if_then_contract.name, if_then_contract])
+
+        if draw_contracts:
+            if_then_contract.draw()
 
     return atomic_contracts, if_then_contracts
 

@@ -29,6 +29,9 @@ def load_parser():
     parser.add_argument('--draw_svg', dest = 'draw_svg', action = 'store_true', default = False,
                         help = 'Flag to force svg files to be drawn (default: False)')
 
+    parser.add_argument('--draw_contracts', dest='draw_contracts', action='store_true', default=False,
+                        help='Flag to force svg files to be drawn for contracts (default: False)')
+
     parser.add_argument('--draw_rules', dest = 'draw_rules', action = 'store_true', default = False,
                         help = 'Flag to force rule svg files to be drawn (default: False)')
     
