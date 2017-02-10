@@ -40,35 +40,38 @@ class ATLTest(Test):
 
         ]
 
-        self.transformation_directory = "ExFamToPerson/transformation/no_contains"
-
+        #self.transformation_directory = "ExFamToPerson/transformation"
+        
+        self.transformation_directory = "/home/dcx/Projects/SyVOLT/tmp/backend/transformation/"
+        self.artifact_directory = "/home/dcx/Projects/SyVOLT/tmp/backend/"
 
         #=====METAMODELS===============
 
-        self.inputMM = "ExFamToPerson/Families_Extended.ecore"
-        self.outputMM = "ExFamToPerson/Persons_Extended.ecore"
+        self.inputMM = "/home/dcx/Projects/SyVOLT/tmp/backend/ecore/Families.ecore"
+        self.outputMM = "/home/dcx/Projects/SyVOLT/tmp/backend/ecore/Persons.ecore"
 
 
         #====CONTRACTS==================
 
-        self.contract_directory = "ExFamToPerson/contracts"
+        #self.contract_directory = "ExFamToPerson/contracts"
+        self.contract_directory = "/home/dcx/Projects/SyVOLT/tmp/backend/contracts/"
 
         self.atomic_contracts = [
-            "Neg_CityCompany",
-            "Neg_CountryCity",
-            "Neg_SchoolOrdFac",
-            "Pos_AssocCity",
-            "Pos_ChildSchool",
-            "Pos_DaughterMother",
-            "Pos_FourMembers",
-            "Pos_MotherFather",
-            "Pos_ParentCompany",
-            "Pos_TownHallComm"
+             "Neg_CityCompany",
+             "Neg_CountryCity",
+             "Neg_SchoolOrdFac",
+             "Pos_AssocCity",
+             "Pos_ChildSchool",
+             "Pos_DaughterMother",
+             "Pos_FourMembers",
+             "Pos_MotherFather",
+             "Pos_ParentCompany",
+             "Pos_TownHallComm"
         ]
 
         self.if_then_contracts = []
 
-        self.prop_if_then_contracts = []
+        self.if_then_contracts += []
 
 
         #=========PC SAVE LOCATION

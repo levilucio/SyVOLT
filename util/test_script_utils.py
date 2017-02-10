@@ -258,7 +258,7 @@ def set_supertypes(superclasses_dict, rules, transformation, ruleTraceCheckers, 
 #=================================================
 
 
-def load_contracts(contracts, superclasses_dict, atomic_names, simple_if_then_names, prop_if_then_names, draw_svg):
+def load_contracts(contracts, superclasses_dict, atomic_names, if_then_names, draw_svg):
 
     atomic_contracts = []
     for contract_name in atomic_names:
@@ -266,23 +266,19 @@ def load_contracts(contracts, superclasses_dict, atomic_names, simple_if_then_na
         atomic_contracts.append([atomic_contract.name, atomic_contract])
 
     if_then_contracts = []
-    for contract_name_if, contract_name_then in simple_if_then_names:
-        if_contract = load_contract(contract_name_if, contracts, superclasses_dict)
-        then_contract = load_contract(contract_name_then, contracts, superclasses_dict)
-        if_then_contract = IfThenContract(if_contract, then_contract)
-        if_then_contracts.append([if_then_contract.name, if_then_contract])
-
-    for contract_name_if, prop_equation in prop_if_then_names:
-
+    for contract_name_if, contract_name_then in if_then_names:
         if type(contract_name_if) is list:
             if_contract = handle_prop(contract_name_if, contracts, superclasses_dict)
         else:
             if_contract = load_contract(contract_name_if, contracts, superclasses_dict)
 
-        then_contract = handle_prop(prop_equation, contracts, superclasses_dict)
+        if type(contract_name_then) is list:
+            then_contract = handle_prop(contract_name_then, contracts, superclasses_dict)
+        else:
+            then_contract = load_contract(contract_name_then, contracts, superclasses_dict)
 
-        full_contract = IfThenContract(if_contract, then_contract)
-        if_then_contracts.append([full_contract.name, full_contract])
+        if_then_contract = IfThenContract(if_contract, then_contract)
+        if_then_contracts.append([if_then_contract.name, if_then_contract])
 
     return atomic_contracts, if_then_contracts
 

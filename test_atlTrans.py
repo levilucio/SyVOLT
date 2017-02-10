@@ -82,7 +82,7 @@ class Test():
         if_then_contracts = [
             # ["S1_if", "S1_then"],
         ]
-        prop_if_then_contracts = [
+        if_then_contracts += [
             # structure is 'if graph', 'then graph'
             # where the 'then graph' is made up of reverse polish notation
             ["CommunityPerson_if", ["CommunityPerson_then", "NOT"]],

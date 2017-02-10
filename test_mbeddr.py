@@ -94,7 +94,7 @@ class MBEddr(Test):
 
         self.if_then_contracts = []
 
-        self.prop_if_then_contracts = []
+        self.if_then_contracts += []
 
         # =========PC SAVE LOCATION
 

@@ -97,7 +97,7 @@ class UMLTest(Test):
             # ["SS3_if2", "SS3_then2"],
         ]
 
-        self.prop_if_then_contracts = [
+        self.if_then_contracts += [
             # structure is 'if graph', 'then graph'
             # where the 'then graph' is made up of reverse polish notation
             ["MM1_if", ["MM1_then1", "MM1_then2", "NOT", "AND"]],

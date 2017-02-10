@@ -74,7 +74,7 @@ class GMTest(Test):
             ["M3_if", "M3_then"],
         ]
 
-        self.prop_if_then_contracts = [
+        self.if_then_contracts += [
             # structure is 'if graph', 'then graph'
             # where the 'then graph' is made up of reverse polish notation
             ["M2_if", ["M2_then1", "M2_then2", "NOT", "AND"]],
