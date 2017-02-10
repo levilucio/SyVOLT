@@ -8,7 +8,7 @@ class IfThenContract(Contract):
         self.if_contract = if_contract
         self.then_contract = then_contract
 
-        self.name = self.if_contract.name
+        self.name = self.to_string()
 
         self.__name__ = "IfThenContract"
 

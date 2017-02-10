@@ -5,6 +5,7 @@ from core.himesis_plus import buildPreListFromClassNames
 from PropertyVerification.atomic_contract import AtomicContract
 from PropertyVerification.if_then_contract import IfThenContract
 from PropertyVerification.prop_logic import *
+from PropertyVerification.empty_contract import EmptyContract
 
 import os
 import traceback
@@ -273,15 +274,8 @@ def load_contracts(contracts, superclasses_dict, atomic_names, if_then_names, dr
 
     for contract_name_if, contract_name_then in if_then_names:
 
-        if type(contract_name_if) is list:
-            if_contract = handle_prop(contract_name_if, contracts, superclasses_dict)
-        else:
-            if_contract = load_contract(contract_name_if, contracts, superclasses_dict)
-
-        if type(contract_name_then) is list:
-            then_contract = handle_prop(contract_name_then, contracts, superclasses_dict)
-        else:
-            then_contract = load_contract(contract_name_then, contracts, superclasses_dict)
+        if_contract = handle_prop(contract_name_if, contracts, superclasses_dict)
+        then_contract = handle_prop(contract_name_then, contracts, superclasses_dict)
 
         if_then_contract = IfThenContract(if_contract, then_contract)
         if_then_contracts.append([if_then_contract.name, if_then_contract])
@@ -326,6 +320,10 @@ def handle_prop(prop_equation, contracts, superclasses_dict):
 
 
 def load_contract(contract_name, contracts, superclasses_dict):
+    if contract_name == "EmptyContract":
+        empty = EmptyContract()
+        return empty
+
     h_contract_name = "H" + contract_name
 
     iso = contracts[h_contract_name + "_IsolatedLHS"]
