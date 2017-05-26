@@ -2,8 +2,8 @@
 
 	<target name="main" depends="clean">
 		
-		<property name="absolute.backend.path" location="backend/generated/transformation"/>
-		<property name="dsltrans.install.path" location="/home/dcx/Projects/SyVOLT"/>
+		<property name="absolute.backend.path" location="backend/generated/"/>
+		<property name="dsltrans.install.path" location="/home/dcx/Projects/SyVOLT/"/>
 		
 		<echo message= "${absolute.backend.path}"/>
 		<echo message= "${dsltrans.install.path}"/>
@@ -24,7 +24,7 @@
 				      read="true"
 				      store="false"
 				      metamodeluri="http://syvolt/2.0"
-				      modelfile="examples/UML2Kiltera/prop2_a.syvolt"
+				      modelfile="examples/UML2Kiltera/contracts/MM1.syvolt"
 				    />
 		
 
@@ -44,16 +44,17 @@
 			<model ref="inputProperties"/>
 			<parameter name="absoluteBackendPath" value="${absolute.backend.path}"/>
 			<parameter name="dsltransInstallPath" value="${dsltrans.install.path}"/>
+			<parameter name="transformationName" value="UML2Kiltera"/>
 		</epsilon.egl>
 
 		<echo message= "Running script"/>
 		
-		<!--
+		
 		<exec dir="backend/generated" executable="python">
-		    <arg line="toplevel.py -skip_tests -verbosity=1"/>
+		    <arg line="toplevel.py"/>
 			<env key="PYTHONPATH" value="${dsltrans.install.path}:./backend/generated"/> 
 		</exec>
-		-->
+		
 		
 	</target>
 	

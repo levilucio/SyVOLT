@@ -3,7 +3,7 @@
 	<target name="main" depends="clean">
 		
 		<property name="absolute.backend.path" location="backend/generated/"/>
-		<property name="dsltrans.install.path" location="/Users/levilucio/fortiss/SyVOLT/"/>
+		<property name="dsltrans.install.path" location="/home/dcx/Projects/SyVOLT/"/>
 		
 		<echo message= "${absolute.backend.path}"/>
 		<echo message= "${dsltrans.install.path}"/>
@@ -70,7 +70,7 @@
     	   <fileset dir="metamodels"/>
     	</copy>
     	<copy todir="backend">
-    	   <fileset dir="/Users/levilucio/fortiss/SyVOLT/eclipse_integration/models_to_text_scripts"/>
+    	   <fileset dir="/home/dcx/Projects/SyVOLT/eclipse_integration/models_to_text_scripts"/>
     	</copy>
     </target>	
 	

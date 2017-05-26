@@ -3,7 +3,7 @@
 	<target name="main" depends="clean">
 		
 		<property name="absolute.backend.path" location="backend/generated/"/>
-		<property name="dsltrans.install.path" location="/home/dcx/Projects/SyVOLT"/>
+		<property name="dsltrans.install.path" location="/home/dcx/Projects/SyVOLT/"/>
 		
 		<echo message= "${absolute.backend.path}"/>
 		<echo message= "${dsltrans.install.path}"/>
@@ -48,8 +48,10 @@
 			<parameter name="transformationName" value="mbeddr"/>
 		</epsilon.egl>
 
+		<echo message= "Running script"/>
+		
 		<exec dir="backend/generated" executable="python">
-		    <arg line="toplevel.py --slice=0"/>
+		    <arg line="toplevel.py"/>
 			<env key="PYTHONPATH" value="${dsltrans.install.path}:./backend/generated"/> 
 		</exec>
 		
