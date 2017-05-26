@@ -9,8 +9,6 @@ Useful Himesis-related operations
 
 '''
 
-from importlib import invalidate_caches
-
 try:
     import pydot
     has_pydot = True
@@ -738,7 +736,14 @@ def load_class(full_class_string, args = None):
     try:
         loaded_module = try_load(load_module_name, module_name, args)
     except ImportError:
-        importlib.invalidate_caches()
+
+        try:
+            from importlib import invalidate_caches
+            importlib.invalidate_caches()
+        except ImportError:
+            print("Error importing!")
+            print("Try using Python 3.5 or greater!")
+            
         loaded_module = try_load(load_module_name, module_name, args)
     except Exception as e:
         print("Error: " + str(e))
