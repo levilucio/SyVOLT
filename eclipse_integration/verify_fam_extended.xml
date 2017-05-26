@@ -65,6 +65,7 @@
     	<mkdir dir="backend/generated/patterns"/>  
     	<touch file="backend/generated/patterns/__init__.py"/>
        	<mkdir dir="backend/generated/transformation"/>
+    	<touch file="backend/generated/transformation/__init__.py"/>
     	<mkdir dir="backend/generated/pickle"/>
     	<copy todir="backend/generated">
     	   <fileset dir="metamodels"/>
