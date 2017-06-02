@@ -37,6 +37,11 @@ class ProverTest(Test):
                     transformationArrayStr = transformationArrayStr + "],";
                     lastLayerTreated = l.Name;
                     inputMM = prev.metaModelId.metaModelURI;
+                    
+                    if (inputMM == null){
+                        inputMM = prev.metaModelId.metaModelName + ".ecore";
+                    }
+                    
                     break;
                  }
              }
@@ -53,6 +58,10 @@ class ProverTest(Test):
                     transformationArrayStr = transformationArrayStr + "],";
                     lastLayerTreated = l.Name;
                     outputMM = l.metaModelId.metaModelURI;
+                    
+                    if (outputMM == null){
+                        outputMM = l.metaModelId.metaModelName + ".ecore";
+                    }
                                 
                     break;
                 }
@@ -70,7 +79,9 @@ class ProverTest(Test):
 
         self.inputMM = "[%=absoluteBackendPath%]/[%=inputMM%]"
         self.outputMM = "[%=absoluteBackendPath%]/[%=outputMM%]"
-
+        
+        print("Input Metamodel: " + self.inputMM)
+        print("Output Metamodel: " + self.outputMM)
 
         #====CONTRACTS==================
 
