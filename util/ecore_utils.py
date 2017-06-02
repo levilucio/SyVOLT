@@ -23,7 +23,13 @@ class EcoreUtils(object):
         if self.debug:
             print("Parsing: " + xmlfileName)
 
-        self.xmldoc = minidom.parse(xmlfileName)
+        self.xmldoc = None
+
+        try:
+            self.xmldoc = minidom.parse(xmlfileName)
+        except FileNotFoundError:
+            raise FileNotFoundError("Metamodel file not found: " + xmlfileName + "\nWas the metamodel placed in the 'SyVOLT/eclipse_integration/metamodels/' folder?")
+
         self.inheritanceRels = self.getSuperClassInheritanceRelationForClasses()
 
         self.containmentRels = []
