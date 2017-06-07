@@ -107,6 +107,8 @@ def compare_variable_equations(patt_variable_equations, src_variable_equations):
 
     debug = False
     for patt_eq in patt_variable_equations:
+        if debug:
+            print("Pattern eq: " + str(patt_eq))
 
         patt_attr = patt_eq[0]
 
@@ -120,41 +122,45 @@ def compare_variable_equations(patt_variable_equations, src_variable_equations):
 
         found = False
         for (src_attr, src_value) in src_variable_equations:
-            if patt_attr == src_attr:
+            if debug:
+                print("Source eq: " + str(src_attr) + " " + str(src_value))
 
-                src_str = var_eq_to_string(src_value)
+            if patt_attr != src_attr:
+                continue
 
-                if ".*" in src_str:
-                    src_expr = re.compile(src_str)
-                else:
-                    src_expr = None
+            src_str = var_eq_to_string(src_value)
 
-                if debug:
-                    print("Patt: " + patt_str)
-                    print("Src: " + src_str)
+            if ".*" in src_str:
+                src_expr = re.compile(src_str)
+            else:
+                src_expr = None
 
-                if patt_str == src_str:
+            if debug:
+                print("Patt: " + patt_str)
+                print("Src: " + src_str)
+
+            if patt_str == src_str:
+                found = True
+
+
+            elif patt_expr or src_expr:
+                if patt_expr.match(src_str):
+                    if debug:
+                        print("Matched on regex from patt")
                     found = True
-
-
-                elif patt_expr or src_expr:
-                    if patt_expr.match(src_str):
-                        if debug:
-                            print("Matched on regex from patt")
-                        found = True
-                    elif src_expr.match(patt_str):
-                        if debug:
-                            print("Matched on regex from src")
-                        found = True
-                    else:
-                        if debug:
-                            print("Failed on regex")
-                        return False
-
+                elif src_expr.match(patt_str):
+                    if debug:
+                        print("Matched on regex from src")
+                    found = True
                 else:
                     if debug:
-                        print("Didn't match on attr: " + patt_attr)
+                        print("Failed on regex")
                     return False
+
+            else:
+                if debug:
+                    print("Didn't match on attr: " + patt_attr)
+                return False
 
         if not found:
             if debug:
@@ -183,8 +189,10 @@ def var_eq_to_string(value):
     if head == "constant":
         return str(tail)
 
-    if isinstance(head, int):
-        return ".*"
+    if isinstance(head, int) and isinstance(tail, str):
+        return tail
+    elif isinstance(head, int):
+        return var_eq_to_string(tail)
 
     print("Value: " + str(value))
     print(len(value))
