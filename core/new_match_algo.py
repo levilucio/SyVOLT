@@ -116,7 +116,9 @@ class NewHimesisMatcher(object):
 
         if self.patt_eqs_constant or self.patt_eqs_variable:
             self.src_eqs_constant, self.src_eqs_variable = self.load_equations(source_graph)
-
+        else:
+            self.src_eqs_constant = defaultdict(list)
+            self.src_eqs_variable = defaultdict(list)
 
 
 
