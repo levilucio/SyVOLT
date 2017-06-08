@@ -260,11 +260,16 @@ def set_supertypes(superclasses_dict, rules, transformation, ruleTraceCheckers, 
 #=================================================
 
 
-def load_contracts(contracts, superclasses_dict, atomic_names, if_then_names, draw_contracts):
+def load_contracts(contracts, contracts_dict, superclasses_dict, atomic_names, if_then_names, draw_contracts):
 
     atomic_contracts = []
     for contract_name in atomic_names:
-        atomic_contract = load_contract(contract_name, contracts, superclasses_dict)
+        try:
+            atomic_contract = load_contract(contract_name, contracts, superclasses_dict)
+        except KeyError:
+            print("Error: Contract '" + contract_name + "'could not be loaded from directory '" + contracts_dict + "'")
+            exit(0)
+
         atomic_contracts.append([atomic_contract.name, atomic_contract])
 
         if draw_contracts:

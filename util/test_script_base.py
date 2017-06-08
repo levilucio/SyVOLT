@@ -62,7 +62,7 @@ class Test:
 
         contracts = load_directory(self.contract_directory)
 
-        self.atomic_contracts, self.if_then_contracts = load_contracts(contracts, self.superclasses_dict,
+        self.atomic_contracts, self.if_then_contracts = load_contracts(contracts, self.contract_directory, self.superclasses_dict,
                                                                        self.atomic_contracts, self.if_then_contracts,
                                                                        args.draw_svg or args.draw_contracts)
 
