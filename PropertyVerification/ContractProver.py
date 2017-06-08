@@ -15,8 +15,10 @@ from time import sleep
 
 class ContractProver:
 
-    def __init__(self, slicer, superclasses_dict):
+    def __init__(self, slicer, superclasses_dict, args):
         #self.disambig = Disambiguator(0)
+
+        self.do_parallel = args.do_parallel
 
         self.verbosity = 2
 
@@ -69,8 +71,13 @@ class ContractProver:
             contract_succeeded_pcs[contract_name] = []
 
         manager = Manager()
-        cpu_count = multiprocessing.cpu_count()
-        print("CPU Count: " + str(cpu_count))
+
+        if self.do_parallel:
+            cpu_count = multiprocessing.cpu_count()
+            print("CPU Count: " + str(cpu_count))
+        else:
+            cpu_count = 1
+            print("Restricting to one thread")
 
         pc_queue = manager.Queue()
         results_queue = manager.Queue()
