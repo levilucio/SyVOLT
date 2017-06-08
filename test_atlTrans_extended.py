@@ -40,21 +40,21 @@ class ATLTest(Test):
 
         ]
 
-        #self.transformation_directory = "ExFamToPerson/transformation"
+        self.transformation_directory = "ExFamToPerson/transformation"
         
-        self.transformation_directory = "/home/dcx/Projects/SyVOLT/tmp/backend/transformation/"
-        self.artifact_directory = "/home/dcx/Projects/SyVOLT/tmp/backend/"
+        #self.transformation_directory = "/home/dcx/Projects/SyVOLT/tmp/backend/transformation/"
+        self.artifact_directory = "/home/dcx/Projects/SyVOLT/"
 
         #=====METAMODELS===============
 
-        self.inputMM = "/home/dcx/Projects/SyVOLT/tmp/backend/ecore/Families.ecore"
-        self.outputMM = "/home/dcx/Projects/SyVOLT/tmp/backend/ecore/Persons.ecore"
+        self.inputMM = "/home/dcx/Projects/SyVOLT/eclipse_integration/metamodels/Families_Extended.ecore"
+        self.outputMM = "/home/dcx/Projects/SyVOLT/eclipse_integration/metamodels/Persons_Extended.ecore"
 
 
         #====CONTRACTS==================
 
-        #self.contract_directory = "ExFamToPerson/contracts"
-        self.contract_directory = "/home/dcx/Projects/SyVOLT/tmp/backend/contracts/"
+        self.contract_directory = "ExFamToPerson/contracts"
+        # self.contract_directory = "/home/dcx/Projects/SyVOLT/tmp/backend/contracts/"
 
         self.atomic_contracts = [
              "Neg_CityCompany",
@@ -62,16 +62,17 @@ class ATLTest(Test):
              "Neg_SchoolOrdFac",
              "Pos_AssocCity",
              "Pos_ChildSchool",
-             "Pos_DaughterMother",
+             "Neg_DaughterMother",
              "Pos_FourMembers",
              "Pos_MotherFather",
              "Pos_ParentCompany",
              "Pos_TownHallComm"
         ]
 
-        self.if_then_contracts = []
-
-        self.if_then_contracts += []
+        self.if_then_contracts = [
+            #[["Neg_CountryCity"], ["Neg_CityCompany", "Neg_SchoolOrdFac", "AND"]],
+            # [["EmptyContract"], ["Pos_FourMembers", "Pos_MotherFather", "AND"]],
+        ]
 
 
         #=========PC SAVE LOCATION
