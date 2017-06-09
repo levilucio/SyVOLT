@@ -16,6 +16,8 @@ def set_artifact_directory(artifact_directory):
     if not artifact_directory:
         return
 
+    artifact_directory = os.path.expanduser(artifact_directory)
+
     if not os.path.isdir(artifact_directory):
         e = IOError(2, 'Artifact directory does not exist or is not a directory: ' + artifact_directory)
         e.filename = artifact_directory
