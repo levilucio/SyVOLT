@@ -94,7 +94,7 @@ class Test:
             ts1 = time.time()
 
             pc_time = ts1 - ts0
-            print("\n\nTime to build the set of path conditions: " + str(pc_time))
+            #print("\n\nTime to build the set of path conditions: " + str(pc_time))
 
             save_pcs(s, self.pc_save_filename)
 
