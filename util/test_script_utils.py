@@ -267,7 +267,7 @@ def load_contracts(contracts, contracts_dict, superclasses_dict, atomic_names, i
     atomic_contracts = []
     for contract_name in atomic_names:
         try:
-            atomic_contract = load_contract(contract_name, contracts, superclasses_dict)
+            atomic_contract = load_contract(contract_name, contracts_dict, contracts, superclasses_dict)
         except KeyError:
             print("Error: Contract '" + contract_name + "'could not be loaded from directory '" + contracts_dict + "'")
             exit(0)
@@ -281,8 +281,8 @@ def load_contracts(contracts, contracts_dict, superclasses_dict, atomic_names, i
 
     for contract_name_if, contract_name_then in if_then_names:
 
-        if_contract = handle_prop(contract_name_if, contracts, superclasses_dict)
-        then_contract = handle_prop(contract_name_then, contracts, superclasses_dict)
+        if_contract = handle_prop(contract_name_if, contracts_dict, contracts, superclasses_dict)
+        then_contract = handle_prop(contract_name_then, contracts_dict, contracts, superclasses_dict)
 
         if_then_contract = IfThenContract(if_contract, then_contract)
         if_then_contracts.append([if_then_contract.name, if_then_contract])
@@ -292,8 +292,12 @@ def load_contracts(contracts, contracts_dict, superclasses_dict, atomic_names, i
 
     return atomic_contracts, if_then_contracts
 
-def handle_prop(prop_equation, contracts, superclasses_dict):
+def handle_prop(prop_equation, contracts_dict, contracts, superclasses_dict):
     prop_stack = []
+    
+    if not isinstance(prop_equation, list):
+        return load_contract(prop_equation, contracts_dict, contracts, superclasses_dict)
+
     for p in prop_equation:
         if p == "AND":
             if len(prop_stack) < 2:
@@ -318,7 +322,7 @@ def handle_prop(prop_equation, contracts, superclasses_dict):
             c = NotContract(last)
 
         else:
-            c = load_contract(p, contracts, superclasses_dict)
+            c = load_contract(p, contracts_dict, contracts, superclasses_dict)
 
         prop_stack.append(c)
     if len(prop_stack) != 1:
@@ -326,12 +330,15 @@ def handle_prop(prop_equation, contracts, superclasses_dict):
     return prop_stack.pop()
 
 
-def load_contract(contract_name, contracts, superclasses_dict):
+def load_contract(contract_name, contracts_dict, contracts, superclasses_dict):
     if contract_name == "EmptyContract":
         empty = EmptyContract()
         return empty
 
     h_contract_name = "H" + contract_name
+
+    if h_contract_name + "_IsolatedLHS" not in contracts:
+        raise Exception("Error: Contract " + h_contract_name + " not found in " + contracts_dict)
 
     iso = contracts[h_contract_name + "_IsolatedLHS"]
     iso["superclasses_dict"] = superclasses_dict

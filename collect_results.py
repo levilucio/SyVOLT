@@ -5,7 +5,7 @@ def get_avg(l):
 
 times_to_run = 2
 
-experiments = ["test_atlTrans_extended"]
+experiments = ["test_atlTrans_extended", "test_umlToKiltera"]
 
 for ex_file in experiments:
 
@@ -15,15 +15,8 @@ for ex_file in experiments:
         for x in range(times_to_run):
 
             print("Running " + ex_file + " for time " + str(x))
-            proc = subprocess.Popen(['/usr/bin/time', 'python3', ex_file + ".py"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            out, err = proc.communicate()
-
-            if out:
-                for line in out:
-                    g.write(line)
-            if err:
-                for line in err:
-                    g.write(line)
+            print("Command: " + "/usr/bin/time " + "python3 " + ex_file + ".py")
+            proc = subprocess.check_call(['/usr/bin/time', 'python3', ex_file + ".py"], stdout=g, stderr=subprocess.STDOUT)
 
 
     with open(ex_filename) as f:
@@ -56,7 +49,7 @@ for ex_file in experiments:
         avg_build_time = get_avg(time_build_pcs)
         avg_proof_time = get_avg(time_contract_proof)
 
-        print(" ")
+        print("\nResults for '" + ex_file +"'")
         print("Time build: " + str(round(avg_build_time, 2)))
         print("Time proof: " + str(round(avg_proof_time, 2)))
         print("Memory: " + str(int(get_avg(memory))))
