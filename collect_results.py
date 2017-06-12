@@ -3,9 +3,16 @@ import subprocess
 def get_avg(l):
     return sum(l) / float(len(l))
 
-times_to_run = 2
+times_to_run = 1
 
-experiments = ["test_atlTrans_extended", "test_umlToKiltera"]
+experiments = [
+    #"test_atlTrans",
+    "test_atlTrans_extended",
+    "test_competition",
+    "test_GM2Autosar_transformation",
+    #"test_mbeddr",
+    "test_umlToKiltera",
+]
 
 for ex_file in experiments:
 
