@@ -3,6 +3,7 @@ from __future__ import print_function
 from core.new_match_algo import NewHimesisMatcher
 from random import choice
 from core.himesis_utils import expand_graph, graph_to_dot, get_filename
+from PropertyVerification.prop_logic import NotContract
 
 class ContractDebugger:
 
@@ -27,18 +28,25 @@ class ContractDebugger:
 
         self.examine_required_rules(contract, contract_name, good_rules)
 
-        self.test_failed_pc(smallest_failed, contract, contract_name)
+        self.test_failed_pc(failed_pcs, contract, contract_name)
 
     def test_failed_pc(self, smallest_failed, contract, contract_name):
         failed_pc_name = choice(smallest_failed)
 
         print("\n\nExamining failed pc: " + self.get_real_name(failed_pc_name))
-        #print("Filename: " + str(get_filename(failed_pc_name)))
+        print("Filename: " + str(get_filename(failed_pc_name)))
         failed_pc = self.pathCondGen.pc_dict[failed_pc_name]
         failed_pc = expand_graph(failed_pc)
 
+        #TODO: Fix this
         if contract.__name__ == "IfThenContract":
-            contract_complete = contract.then_contract.complete
+            try:
+                contract_complete = contract.contract
+            except AttributeError:
+                try:
+                    contract_complete = contract.then_contract.complete
+                except AttributeError:
+                    contract_complete = contract.then_contract.contract.complete
         else:
             contract_complete = contract.complete
 

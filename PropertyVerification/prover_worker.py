@@ -27,7 +27,7 @@ class prover_worker(Process):
 
         print("Starting contract prover worker")
 
-        #self.verbosity = 2
+        self.verbosity = 0
         while True:
 
             pc = self.pc_queue.get()
