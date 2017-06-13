@@ -472,9 +472,20 @@ class NewHimesisMatcher(object):
         link_matches_list.sort(key = lambda tup: (len(tup[1]), str(tup[1])))
 
         num_of_combos = 0
-        for i, combo in enumerate(combo_generator3({}, {}, *link_matches_list)):
-            num_of_combos = i
-            yield combo
+
+        use_old_match_set_gen = False
+        if use_old_match_set_gen:
+
+            for combo in self.combo_generator(link_matches):
+                ms = self.create_match_set(combo)
+                if ms:
+                    num_of_combos += 1
+                    yield ms
+
+        else:
+            for i, combo in enumerate(combo_generator3({}, {}, *link_matches_list)):
+                num_of_combos = i
+                yield combo
 
         if num_of_combos == 0 and self.record_reason_failed:
             for key, value in link_matches_list:
@@ -516,9 +527,9 @@ class NewHimesisMatcher(object):
                 match_set[p] = s
                 reverse_match_set[s] = p
 
-        #if self.debug:
-        print("Match set:")
-        print(match_set)
+        if self.debug:
+            print("Match set:")
+            print(match_set)
         return match_set
 
     @staticmethod
