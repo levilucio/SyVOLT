@@ -1,23 +1,29 @@
 import subprocess
 
 def get_avg(l):
+    if len(l) == 0:
+        return -1
     return sum(l) / float(len(l))
 
-times_to_run = 1
+times_to_run = 5
 
 experiments = [
     #"test_atlTrans",
     "test_atlTrans_extended",
-    "test_competition",
-    "test_GM2Autosar_transformation",
+    #"test_competition",
+    #"test_GM2Autosar_transformation",
     #"test_mbeddr",
-    "test_umlToKiltera",
+    #"test_umlToKiltera",
 ]
 
 for ex_file in experiments:
 
     ex_filename = ex_file + "_results.txt"
-    with open(ex_filename, 'w') as g:
+
+    with open(ex_filename, 'w') as h:
+        h.write("Starting experiments for: " + ex_file)
+
+    with open(ex_filename, 'w+') as g:
 
         for x in range(times_to_run):
 
