@@ -80,7 +80,18 @@ class Test:
                                    self.loopingRuleSubsumption, args)  #
         # raise Exception()
 
-        if not args.pc_filename is None:
+        if args.pc_filename is None:
+            ts0 = time.time()
+            s.build_path_conditions()
+            ts1 = time.time()
+
+            pc_time = ts1 - ts0
+            # print("\n\nTime to build the set of path conditions: " + str(pc_time))
+
+            if not args.do_pickle:
+                save_pcs(s, self.pc_save_filename)
+
+        else:
             if len(args.pc_filename) == 0:
                 loaded_pc_dict = load_pcs(self.pc_save_filename)
             else:
@@ -88,15 +99,6 @@ class Test:
             s.load_saved_pcs(loaded_pc_dict)
 
             pc_time = "(PCs loaded)"
-        else:
-            ts0 = time.time()
-            s.build_path_conditions()
-            ts1 = time.time()
-
-            pc_time = ts1 - ts0
-            #print("\n\nTime to build the set of path conditions: " + str(pc_time))
-
-            save_pcs(s, self.pc_save_filename)
 
         #print("Number of path conditions: " + str(s.num_path_conditions))
 
