@@ -16,6 +16,8 @@ experiments = [
     #"test_umlToKiltera",
 ]
 
+experiment_args = ""
+
 for ex_file in experiments:
 
     ex_filename = ex_file + "_results.txt"
@@ -28,8 +30,13 @@ for ex_file in experiments:
         for x in range(times_to_run):
 
             print("Running " + ex_file + " for time " + str(x))
-            print("Command: " + "/usr/bin/time " + "python3 " + ex_file + ".py")
-            proc = subprocess.check_call(['/usr/bin/time', 'python3', ex_file + ".py"], stdout=g, stderr=subprocess.STDOUT)
+            command = ["/usr/bin/time", "python3", ex_file + ".py"]
+            if len(experiment_args.strip()) > 0:
+                command.append(experiment_args)
+
+            print("Command: " + " ".join(command))
+            command.append("--skip_progress_bar")
+            proc = subprocess.check_call(command, stdout=g, stderr=subprocess.STDOUT)
 
 
     with open(ex_filename) as f:
