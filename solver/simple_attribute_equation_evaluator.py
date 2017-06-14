@@ -144,11 +144,11 @@ def compare_variable_equations(patt_variable_equations, src_variable_equations):
 
 
             elif patt_expr or src_expr:
-                if patt_expr.match(src_str):
+                if patt_expr and patt_expr.match(src_str):
                     if debug:
                         print("Matched on regex from patt")
                     found = True
-                elif src_expr.match(patt_str):
+                elif src_expr and src_expr.match(patt_str):
                     if debug:
                         print("Matched on regex from src")
                     found = True
