@@ -78,8 +78,6 @@ def select_rules(full_transformation, num_rules):
 def get_sub_and_super_classes(inputMM, outputMM):
     subclasses_dict = {}
 
-
-
     inMM = EcoreUtils(inputMM)
     subclasses_dict["MT_pre__MetaModelElement_S"] = buildPreListFromClassNames(inMM.getMetamodelClassNames())
 

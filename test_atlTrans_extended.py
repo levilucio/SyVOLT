@@ -13,7 +13,7 @@ class ATLTest(Test):
 
     def __init__(self):
         Test.__init__(self)
-
+        
         #============TRANSFORMATION=================
         self.full_transformation = [
             ['HCountry2Community'],
@@ -43,12 +43,12 @@ class ATLTest(Test):
         self.transformation_directory = "ExFamToPerson/transformation"
         
         #self.transformation_directory = "/home/dcx/Projects/SyVOLT/tmp/backend/transformation/"
-        self.artifact_directory = "/home/dcx/Projects/SyVOLT/"
+        self.artifact_directory = "~/Projects/SyVOLT/"
 
         #=====METAMODELS===============
 
-        self.inputMM = "/home/dcx/Projects/SyVOLT/eclipse_integration/metamodels/Families_Extended.ecore"
-        self.outputMM = "/home/dcx/Projects/SyVOLT/eclipse_integration/metamodels/Persons_Extended.ecore"
+        self.inputMM = "~/Projects/SyVOLT/eclipse_integration/metamodels/Families_Extended.ecore"
+        self.outputMM = "~/Projects/SyVOLT/eclipse_integration/metamodels/Persons_Extended.ecore"
 
 
         #====CONTRACTS==================

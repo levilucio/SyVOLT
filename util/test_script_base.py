@@ -1,4 +1,5 @@
 import time
+import os
 
 from path_condition_generator import PathConditionGenerator
 
@@ -44,6 +45,10 @@ class Test:
 
     def test_correct(self, args):
         set_artifact_directory(self.artifact_directory)
+        
+        
+        self.inputMM = os.path.expanduser(self.inputMM)
+        self.outputMM = os.path.expanduser(self.outputMM)
 
         self.rules, self.transformation = load_transformation(self.transformation_directory, self.full_transformation)
 
