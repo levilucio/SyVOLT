@@ -146,19 +146,19 @@ class PrunerHelper:
 
         new_links = dict.copy(links)
 
-        for classname, clinks in links.items():
-            child_links = self.generate_child_links(clinks)
-            new_links[classname] = child_links
-
-            if classname not in self.mmClassParents:
-                continue
-
-            for classname_parent in self.mmClassParents[classname]:
-                #print("Class: " + classname + " Parent: " + classname_parent)
-                try:
-                    new_links[classname_parent] += deepcopy(child_links)
-                except KeyError:
-                    new_links[classname_parent] = deepcopy(child_links)
+        # for classname, clinks in links.items():
+        #     child_links = self.generate_child_links(clinks)
+        #     new_links[classname] = child_links
+        #
+        #     if classname not in self.mmClassParents:
+        #         continue
+        #
+        #     for classname_parent in self.mmClassParents[classname]:
+        #         #print("Class: " + classname + " Parent: " + classname_parent)
+        #         try:
+        #             new_links[classname_parent] += deepcopy(child_links)
+        #         except KeyError:
+        #             new_links[classname_parent] = deepcopy(child_links)
 
         return new_links
 

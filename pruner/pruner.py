@@ -77,9 +77,9 @@ class Pruner(object):
     def will_links_be_built_lists(self, rule_name, missing_links, future_contain_rules, require_all_links = False):
         links_not_found = {}
 
-        all_keys = []
-        for rule in future_contain_rules:
-            all_keys += list(self.prunerHelper.ruleContainmentLinksExtended[rule].keys())
+        # all_keys = []
+        # for rule in future_contain_rules:
+        #     all_keys += list(self.prunerHelper.ruleContainmentLinksExtended[rule].keys())
 
         debug = False
 
@@ -89,21 +89,33 @@ class Pruner(object):
         # look at each class that the rule is missing
         for (className, la, lb) in missing_links:
             found_link = False
-
-            for rule in future_contain_rules:
+            if debug:
+                print("Classname: " + className + " link: " + str([la, lb]))
                 try:
-                    vals = self.prunerHelper.ruleContainmentLinksExtended[rule][className]
-                    if debug:
-                        print(vals)
-
-                    if (la, lb) in vals:
-                        if debug:
-                            print(vals)
-                            print("la, lb in vals")
-                        found_link = True
-                        break
+                    print("Parents: " + str(self.prunerHelper.mmClassParents[className]))
                 except KeyError:
                     pass
+
+            for rule in future_contain_rules:
+                if debug:
+                    print("Looking at rule: " + rule)
+
+                for parent_class in [className] + self.prunerHelper.mmClassParents[className]:
+                    try:
+                        vals = self.prunerHelper.ruleContainmentLinksExtended[rule][parent_class]
+                        if debug:
+                            print("Parent class: " + parent_class + " Vals: " + str(vals))
+                        if (la, lb) in vals:
+                            found_link = True
+                            break
+                    except KeyError:
+                        pass
+
+                if found_link:
+                    break
+
+            if debug:
+                print("Found link: " + str(found_link))
 
             if not found_link:
                 try:
@@ -115,9 +127,9 @@ class Pruner(object):
         if debug:
             if len(links_not_found) > 0:
                 print("Links not found for " + rule_name)
-                self.prunerHelper.print_dict("Not Found Links", links_not_found)
+                self.prunerHelper.print_dict("Links Not Found (in transformation)", links_not_found)
 
-                raise Exception()
+                #raise Exception()
         return links_not_found
 
 
