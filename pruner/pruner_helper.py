@@ -5,6 +5,9 @@ class PrunerHelper:
 
     def __init__(self, metamodel, transformation, rule_names):
 
+        self.debug = False
+
+
         self.rule_names = rule_names
 
         empty_pc_name = "Em"
@@ -18,7 +21,7 @@ class PrunerHelper:
         self.ruleMissingContLinks_List = {empty_pc_name: []}
 
         eu = EcoreUtils(metamodel)
-        #self.mmClassParents = eu.getSuperClassInheritanceRelationForClasses()
+        self.mmClassParents = eu.getSuperClassInheritanceRelationForClasses()
         self.mmClassChildren = eu.getSubClassInheritanceRelationForClasses()
 
         self.links_to_rules = {}
@@ -27,10 +30,14 @@ class PrunerHelper:
             for rule in layer:
                 ruleContainmentLinks[rule.name] = eu.getBuiltContainmentLinks(rule)
 
-                #print("\n================\nRule: " + self.rule_names[rule.name])
-                #self.print_dict("Rule containment links", self.ruleContainmentLinks[rule.name])
+                if self.debug:
+                    print("\n================\nRule: " + self.rule_names[rule.name])
+                    self.print_dict("Rule containment links", ruleContainmentLinks[rule.name])
+
                 self.ruleContainmentLinksExtended[rule.name] = self.extend_links(ruleContainmentLinks[rule.name])
-                #self.print_dict("ruleContainmentLinksExtended", self.ruleContainmentLinksExtended[rule.name])
+
+                if self.debug:
+                    self.print_dict("ruleContainmentLinksExtended", self.ruleContainmentLinksExtended[rule.name])
 
                 for classname, clinks in self.ruleContainmentLinksExtended[rule.name].items():
                     for clink in clinks:
@@ -143,10 +150,11 @@ class PrunerHelper:
             child_links = self.generate_child_links(clinks)
             new_links[classname] = child_links
 
-            if classname not in self.mmClassChildren:
+            if classname not in self.mmClassParents:
                 continue
 
-            for classname_parent in self.mmClassChildren[classname]:
+            for classname_parent in self.mmClassParents[classname]:
+                #print("Class: " + classname + " Parent: " + classname_parent)
                 try:
                     new_links[classname_parent] += deepcopy(child_links)
                 except KeyError:

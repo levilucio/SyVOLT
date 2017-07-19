@@ -45,11 +45,15 @@ class Pruner(object):
                 if len(missing_links) == 0:
                     continue
 
+                # if self.debug:
+                #     print("Rule: " + rule.name)
+                #     self.prunerHelper.print_list("Missing Links in Rule", missing_links)
+
                 links_not_found = self.will_links_be_built_lists(rule.name, missing_links, self.prunerHelper.ruleContainmentLinksExtended.keys(), require_all_links = True)
 
                 if self.debug and len(links_not_found) > 0:
                     print("\nError for rule: " + self.rule_names[rule.name])
-                    self.prunerHelper.print_dict("Missing Links", links_not_found)
+                    self.prunerHelper.print_dict("Missing Links (not found in transformation)", links_not_found)
 
                 if len(links_not_found):
                     self.prunerHelper.combine_dicts(self.all_missing_contain_links, links_not_found)
@@ -80,22 +84,26 @@ class Pruner(object):
         debug = False
 
         if debug:
-            self.prunerHelper.print_dict(rule_name + " Missing Containment links:", missing_links)
+            self.prunerHelper.print_list(rule_name + " Missing Containment links:", missing_links)
 
         # look at each class that the rule is missing
         for (className, la, lb) in missing_links:
-            found_link = True
-            if className not in all_keys:
-                found_link = False
-            else:
-                for rule in future_contain_rules:
-                    try:
-                        vals = self.prunerHelper.ruleContainmentLinksExtended[rule][className]
-                        if (la, lb) not in vals:
-                            found_link = False
-                            break
-                    except KeyError:
-                        pass
+            found_link = False
+
+            for rule in future_contain_rules:
+                try:
+                    vals = self.prunerHelper.ruleContainmentLinksExtended[rule][className]
+                    if debug:
+                        print(vals)
+
+                    if (la, lb) in vals:
+                        if debug:
+                            print(vals)
+                            print("la, lb in vals")
+                        found_link = True
+                        break
+                except KeyError:
+                    pass
 
             if not found_link:
                 try:
