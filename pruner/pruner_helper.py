@@ -54,12 +54,54 @@ class PrunerHelper:
                 #self.print_dict("ruleMissingContLinks (before removing built)", self.ruleMissingContLinks[rule.name])
 
                 #remove those missing cont links which are built in the same rule
-                missing_links_copy = deepcopy(self.ruleMissingContLinks[rule.name])
-                self.ruleMissingContLinks[rule.name] = self.subtract_dicts(missing_links_copy, self.ruleContainmentLinksExtended[rule.name])
+                #missing_links_copy = deepcopy(self.ruleMissingContLinks[rule.name])
+                #self.ruleMissingContLinks[rule.name] = self.subtract_dicts(missing_links_copy, self.ruleContainmentLinksExtended[rule.name])
 
+
+                new_containment_links = {}
+
+                for classname, clinks in self.ruleMissingContLinks[rule.name].items():
+                    #print(classname)
+                    #print(clinks)
+
+                    for clink in clinks:
+
+                        cl, link_name = clink
+
+                        found_link = False
+
+                        try:
+                            #print(self.ruleMissingContLinks[rule.name][classname])
+
+                            for built_link in self.ruleContainmentLinksExtended[rule.name][classname]:
+                                if built_link[1] == link_name:
+                                    found_link = True
+
+
+                        except KeyError:
+                            if self.debug:
+                                print("Couldn't find " + classname)
+
+                        if not found_link:
+                            if not classname in new_containment_links.keys():
+                                new_containment_links[classname] = []
+                            new_containment_links[classname].append(clink)
+
+                        else:
+                            if self.debug:
+                                print("Found link: " + str(clink))
+
+
+                if self.debug:
+                    self.print_dict("New containment links", new_containment_links)
+
+                self.ruleContainmentLinksExtended[rule.name] = new_containment_links
 
                 self.ruleContainmentLinks_List[rule.name] = self.collapse_dict(self.ruleContainmentLinksExtended[rule.name])
                 self.ruleMissingContLinks_List[rule.name] = self.collapse_dict(self.ruleMissingContLinks[rule.name])
+
+                if self.debug:
+                    self.print_dict("Rule Missing Links", self.ruleMissingContLinks[rule.name])
 
                 # print("rule: " + rule.name)
                 #self.print_list("ruleMissingContLinks", self.ruleMissingContLinks_List[rule.name])
