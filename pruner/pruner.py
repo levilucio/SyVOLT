@@ -54,6 +54,8 @@ class Pruner(object):
                 if len(links_not_found):
                     self.prunerHelper.combine_dicts(self.all_missing_contain_links, links_not_found)
 
+
+
         self.prunerHelper.remove_all_missing_links(self.all_missing_contain_links)
 
 
@@ -131,15 +133,21 @@ class Pruner(object):
         containment requirements cannot be fulfilled
         '''
 
-        #print(pathCondition.name)
+        if self.debug:
+            print(pathCondition.name)
         #self.debug = "L0R9" in pathCondition.name
 
 
         rules_in_pc = self.pc_name_function(pathCondition.name)
 
+        #print("Rules in pc: " + str(rules_in_pc))
+        #print("Rules in missing list: " + str(self.prunerHelper.ruleMissingContLinks_List.keys()))
         pc_missing_lists = self.combineForAll_lists(rules_in_pc, self.prunerHelper.ruleMissingContLinks_List)
+        #print("Missing lists: " + str(pc_missing_lists))
 
         if len(pc_missing_lists) == 0:
+            if self.debug:
+                print("No missing links in rules, returning true")
             return True
 
         #only keep the number of links needed that we have elements for
@@ -162,6 +170,8 @@ class Pruner(object):
         pc_missing_lists = new_pc_missing_lists
 
         if len(pc_missing_lists) == 0:
+            if self.debug:
+                print("No missing links, returning true")
             return True
 
         pc_built_lists = self.combineForAll_lists(rules_in_pc, self.prunerHelper.ruleContainmentLinks_List)
@@ -184,11 +194,15 @@ class Pruner(object):
         #self.prunerHelper.print_dict("PC Missing After", pc_missing)
 
         if len(new_pc_missing_lists) == 0:
+            if self.debug:
+                print("No missing links after built, returning true")
             return True
 
         missingLinks = self.will_links_be_built_lists(pathCondition.name, new_pc_missing_lists, rulesToTreat)
 
         if len(missingLinks) == 0:
+            if self.debug:
+                print("Links will be built, returning true")
             return True
 
         #not enough copies of the link may be built
