@@ -236,8 +236,8 @@ class NewHimesisMatcher(object):
             print("Source eqs (variable)")
             print(self.src_eqs_variable)
 
-        if len(self.superclasses_dict) == 0:
-            raise Exception("Error: Superclasses dictionary is empty!")
+        #if len(self.superclasses_dict) == 0:
+        #    raise Exception("Error: Superclasses dictionary is empty!")
 
 
         for mapping in self._match():
