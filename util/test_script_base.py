@@ -1,4 +1,5 @@
 import time
+import os
 
 from path_condition_generator import PathConditionGenerator
 
@@ -45,8 +46,10 @@ class Test:
     def test_correct(self, args):
         set_artifact_directory(self.artifact_directory)
 
-        self.rules, self.transformation = load_transformation(self.transformation_directory, self.full_transformation)
+        self.inputMM = os.path.expanduser(self.inputMM)
+        self.outputMM = os.path.expanduser(self.outputMM)
 
+        self.rules, self.transformation = load_transformation(self.transformation_directory, self.full_transformation)
 
         pyramify = PyRamify(verbosity = args.verbosity, draw_svg = args.draw_svg)
 
@@ -100,7 +103,7 @@ class Test:
 
             pc_time = "(PCs loaded)"
 
-        #print("Number of path conditions: " + str(s.num_path_conditions))
+        # print("Number of path conditions: " + str(s.num_path_conditions))
 
         # print("printing path conditions")
         # s.print_path_conditions_screen()
@@ -110,12 +113,11 @@ class Test:
 
         print("\n===================")
         print("\n===================")
-        print("\nContract proving:")
+        print("\nContract proving on " + str(s.num_path_conditions) + " path conditions:")
         s.verbosity = 0
         contract_prover = ContractProver(slicer, self.superclasses_dict, args)
         contract_prover.show_progress_bar = args.show_progress_bar
         contract_prover.prove_contracts(s, self.atomic_contracts, self.if_then_contracts)
 
-        
         print("\n\nTime to build the set of path conditions: " + str(pc_time))
         print("Number of path conditions: " + str(s.num_path_conditions))
