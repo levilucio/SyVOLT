@@ -28,7 +28,7 @@ class ContractDebugger:
 
         self.examine_required_rules(contract, contract_name, good_rules)
 
-        self.test_failed_pc(failed_pcs, contract, contract_name)
+        self.test_failed_pc(smallest_failed, contract, contract_name)
 
     def test_failed_pc(self, smallest_failed, contract, contract_name):
         failed_pc_name = choice(smallest_failed)
@@ -61,7 +61,7 @@ class ContractDebugger:
 
         matcher.print_failures(required_rules = self.slicer.required_rules[contract.name])
 
-        # graph_to_dot(contract.complete.name + "_failed_" + failed_pc.name, failed_pc)
+        graph_to_dot(contract.complete.name + "_failed_" + failed_pc.name, failed_pc)
 
     def examine_required_rules(self, contract, contract_name, good_rules):
         if contract_name not in self.slicer.required_rules:
