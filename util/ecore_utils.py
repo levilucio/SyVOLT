@@ -45,6 +45,9 @@ class EcoreUtils(object):
         # several containment relations can exist towards the same metamodel class.
         # also keep a list of all containment relations in the metamodel.
 
+
+        debug_contain_links = True
+
         for mmClass in metamodelClasses:
             mmClassName = mmClass.attributes['name'].value
             rels = mmClass.getElementsByTagName('eStructuralFeatures')
@@ -66,6 +69,14 @@ class EcoreUtils(object):
                         self.containmentRels.append(relName)
                 except KeyError:
                     pass
+
+
+        if debug_contain_links:
+            print("Contain links:")
+            for k, v in self.containmentLinks.items():
+                print(str(k) + ":" + str(v))
+
+        #raise Exception()
 
     def getMetamodelClassNames(self):
         '''
@@ -326,23 +337,23 @@ class EcoreUtils(object):
 
 
 
-    def getMissingContainmentLinks(self, pathCond):
+    def getMissingContainmentLinks(self, rule):
         '''
-        return all missing containment relations in a path condition, in the form of a
+        return all missing containment relations in a rule, in the form of a
         dictionary having as key the targetClass and as data the containmentLinks that 
         can be used to build the missing containment link.
         '''
 
         debug = False
 
-        # if "HcompostypeportSolveRefPhysicalNodePartitionModuleSchedulerServiceCompositionTypeRPortPrototype" in pathCond.name or "L4R0" in pathCond.name:
-        #     debug = True
-        #     print("\nExamining: " + pathCond.name)
+        if "HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans" in rule.name or "3R0" in rule.name:
+            debug = True
+            print("\nExamining: " + rule.name)
 
         missingContainmentLinks = {}
 
         try:
-            mms = pathCond.vs["mm__"]
+            mms = rule.vs["mm__"]
         except KeyError:
             return {}
 
@@ -369,7 +380,7 @@ class EcoreUtils(object):
             #print("\nTarget Class: " + targetClassName)
 
             skip_match_nodes = False
-            neighbours_in = pathCond.neighbors(node, 2)
+            neighbours_in = rule.neighbors(node, 2)
             for n in neighbours_in:
                 if mms[n] in ["MatchModel", "match_contains"]:
                     skip_match_nodes = True
@@ -392,7 +403,7 @@ class EcoreUtils(object):
                 print("Missing containment links:")
                 for link in missingContainmentLinks:
                     print(link + " : " + str(missingContainmentLinks[link]))
-                raise Exception()
+                #raise Exception()
 
         return missingContainmentLinks
         
