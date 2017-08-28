@@ -55,7 +55,8 @@ class PrunerHelper:
                 #print("\nRule: " + rule.name)
                 self.ruleMissingContLinks[rule.name] = eu.getMissingContainmentLinks(rule)
 
-                #self.print_dict("ruleMissingContLinks (before removing built)", self.ruleMissingContLinks[rule.name])
+                if self.debug:
+                    self.print_dict("ruleMissingContLinks (before removing built)", self.ruleMissingContLinks[rule.name])
 
                 #remove those missing cont links which are built in the same rule
                 #missing_links_copy = deepcopy(self.ruleMissingContLinks[rule.name])
@@ -97,9 +98,9 @@ class PrunerHelper:
 
 
                 if self.debug:
-                    self.print_dict("New containment links", new_containment_links)
+                    self.print_dict("New missing containment links", new_containment_links)
 
-                self.ruleContainmentLinksExtended[rule.name] = new_containment_links
+                self.ruleMissingContLinks[rule.name] = new_containment_links
 
                 self.ruleContainmentLinks_List[rule.name] = self.collapse_dict(self.ruleContainmentLinksExtended[rule.name])
                 self.ruleMissingContLinks_List[rule.name] = self.collapse_dict(self.ruleMissingContLinks[rule.name])
@@ -109,6 +110,8 @@ class PrunerHelper:
                     self.print_list("Missing containment links for '" + rule.name + "'", self.ruleMissingContLinks_List[rule.name])
 
                     self.print_dict("Rule Missing Links", self.ruleMissingContLinks[rule.name])
+
+                    self.print_list("Rule Built Links", self.ruleContainmentLinks_List[rule.name])
 
 
                 # print("rule: " + rule.name)
