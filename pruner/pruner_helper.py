@@ -5,7 +5,7 @@ class PrunerHelper:
 
     def __init__(self, metamodel, transformation, rule_names):
 
-        self.debug = False
+        self.debug = 1
 
         self.rule_names = rule_names
 
@@ -30,18 +30,16 @@ class PrunerHelper:
         for layer in transformation:
             for rule in layer:
 
-                print("Rule: " + rule.name)
-
                 ruleContainmentLinks[rule.name] = eu.getBuiltContainmentLinks(rule)
 
                 if self.debug:
-                    print("\n================\nRule: " + self.rule_names[rule.name])
+                    print("\n================\nRule: " + self.rule_names[rule.name] + " = " + rule.name)
                     self.print_dict("Rule containment links", ruleContainmentLinks[rule.name])
 
                 self.ruleContainmentLinksExtended[rule.name] = self.extend_links(ruleContainmentLinks[rule.name])
 
-                if self.debug:
-                    self.print_dict("ruleContainmentLinksExtended", self.ruleContainmentLinksExtended[rule.name])
+                #if self.debug:
+                #    self.print_dict("ruleContainmentLinksExtended", self.ruleContainmentLinksExtended[rule.name])
 
                 for classname, clinks in self.ruleContainmentLinksExtended[rule.name].items():
                     for clink in clinks:
@@ -84,7 +82,7 @@ class PrunerHelper:
 
 
                         except KeyError:
-                            if self.debug:
+                            if self.debug > 1:
                                 print("Couldn't find " + classname)
 
                         if not found_link:
@@ -93,12 +91,12 @@ class PrunerHelper:
                             new_containment_links[classname].append(clink)
 
                         else:
-                            if self.debug:
+                            if self.debug > 1:
                                 print("Found link: " + str(clink))
 
 
-                if self.debug:
-                    self.print_dict("New missing containment links", new_containment_links)
+                #if self.debug:
+                #    self.print_dict("New missing containment links", new_containment_links)
 
                 self.ruleMissingContLinks[rule.name] = new_containment_links
 
@@ -107,7 +105,7 @@ class PrunerHelper:
 
                 if self.debug:
 
-                    self.print_list("Missing containment links for '" + rule.name + "'", self.ruleMissingContLinks_List[rule.name])
+                    print("Missing containment links for '" + rule.name + "':")
 
                     self.print_dict("Rule Missing Links", self.ruleMissingContLinks[rule.name])
 
