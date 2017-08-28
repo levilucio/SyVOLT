@@ -144,6 +144,7 @@ class Tester:
         #reachability_start = time.time()
         #see if any rules are missing
         rules = []
+        short_names = {}
         for i, layer in enumerate(pathCondGen.transformation):
             if i > curr_layer:
                 break
@@ -151,6 +152,7 @@ class Tester:
             for rule in layer:
                 real_name = pathCondGen.rule_names[rule.name]
                 rules.append(real_name)
+                short_names[real_name] = rule.name
 
         rules_seen = []
         for pc, pc_name in pathCondGen.get_path_conditions(expand = False):
@@ -163,7 +165,7 @@ class Tester:
 
         for rule in rules:
             if rule not in rules_seen:
-                print("ERROR: Rule " + rule + " was not executed!")
+                print("ERROR: Rule " + rule + " = " + str(short_names[rule]) + " was not executed!")
                 #print("Rules seen:")
                 #print(rules_seen)
                 rules_not_seen.append(rule)
