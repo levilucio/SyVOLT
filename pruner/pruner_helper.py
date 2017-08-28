@@ -7,7 +7,6 @@ class PrunerHelper:
 
         self.debug = False
 
-
         self.rule_names = rule_names
 
         empty_pc_name = "Em"
@@ -26,8 +25,13 @@ class PrunerHelper:
 
         self.links_to_rules = {}
 
+        print("Transformation: " + str(transformation))
+
         for layer in transformation:
             for rule in layer:
+
+                print("Rule: " + rule.name)
+
                 ruleContainmentLinks[rule.name] = eu.getBuiltContainmentLinks(rule)
 
                 if self.debug:
@@ -101,7 +105,11 @@ class PrunerHelper:
                 self.ruleMissingContLinks_List[rule.name] = self.collapse_dict(self.ruleMissingContLinks[rule.name])
 
                 if self.debug:
+
+                    self.print_list("Missing containment links for '" + rule.name + "'", self.ruleMissingContLinks_List[rule.name])
+
                     self.print_dict("Rule Missing Links", self.ruleMissingContLinks[rule.name])
+
 
                 # print("rule: " + rule.name)
                 #self.print_list("ruleMissingContLinks", self.ruleMissingContLinks_List[rule.name])
@@ -219,7 +227,7 @@ class PrunerHelper:
 
     def print_list(self, name, l):
         if str(type(l)) == "<class 'dict'>":
-            raise Exception()
+            self.print_dict(name, l)
         print("\n" + name + ":")
         print(sorted(l))
 
