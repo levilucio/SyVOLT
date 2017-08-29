@@ -235,6 +235,7 @@ class Pruner(object):
 
                 if b == e and c == f:
                     found = True
+                    pc_built_lists.remove((d, e, f))
                     break
 
             if not found:
