@@ -177,8 +177,7 @@ class EcoreUtils(object):
         '''
         build a list of all parents of the given class
         '''
-        
-        inheritanceRel = {}
+
         metamodelClasses = self.xmldoc.getElementsByTagName('eClassifiers')
         
         mmClassesToTreat = []
@@ -208,9 +207,9 @@ class EcoreUtils(object):
                     
             parentNames.extend(superTypeNames)
             
-            if parentNames != None:
+            if parentNames:
                 parentNames.extend(self.buildInheritanceDependenciesForClass(parentNames))
-            
+
         return list(set(parentNames))
 
 
@@ -346,9 +345,13 @@ class EcoreUtils(object):
 
         debug = False
 
-        if "HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans" in rule.name or "3R0" in rule.name:
-            debug = True
-            print("\nExamining: " + rule.name)
+        # if "HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans" in rule.name or "3R0" in rule.name:
+        #     debug = True
+        #     print("\nExamining: " + rule.name)
+
+        if debug:
+            print("===========================")
+            print("Examining: " + rule.name)
 
         missingContainmentLinks = {}
 
@@ -377,7 +380,8 @@ class EcoreUtils(object):
             if not has_links:
                 continue
 
-            #print("\nTarget Class: " + targetClassName)
+            if debug:
+                print("\nTarget Class: " + targetClassName)
 
             skip_match_nodes = False
             neighbours_in = rule.neighbors(node, 2)
@@ -389,9 +393,15 @@ class EcoreUtils(object):
                 continue
 
             for cl in class_inheri:
+
                 if cl in self.containmentLinks:
 
+                    if debug:
+                        print("\tClassname: " + str(cl) + ":")
+
                     for containLink in self.containmentLinks[cl]:
+                        if debug:
+                            print("\t\t" + str(containLink))
                         try:
                             if containLink not in missingContainmentLinks[targetClassName]:
                                 missingContainmentLinks[targetClassName].append(containLink)
