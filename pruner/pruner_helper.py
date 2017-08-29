@@ -5,7 +5,7 @@ class PrunerHelper:
 
     def __init__(self, metamodel, transformation, rule_names):
 
-        self.debug = 1
+        self.debug = 0
 
         self.rule_names = rule_names
 
@@ -43,7 +43,9 @@ class PrunerHelper:
 
                 for classname, clinks in self.ruleContainmentLinksExtended[rule.name].items():
                     for clink in clinks:
-                        link = (classname, clink[0], clink[1])
+                        #link = (classname, clink[0], clink[1])
+                        link = (clink[0], clink[1])
+
                         try:
                             if rule.name not in self.links_to_rules[link]:
                                 self.links_to_rules[link].append(rule.name)
@@ -61,38 +63,7 @@ class PrunerHelper:
                 #self.ruleMissingContLinks[rule.name] = self.subtract_dicts(missing_links_copy, self.ruleContainmentLinksExtended[rule.name])
 
 
-                new_containment_links = {}
-
-                for classname, clinks in self.ruleMissingContLinks[rule.name].items():
-                    #print(classname)
-                    #print(clinks)
-
-                    for clink in clinks:
-
-                        cl, link_name = clink
-
-                        found_link = False
-
-                        try:
-                            #print(self.ruleMissingContLinks[rule.name][classname])
-
-                            for built_link in self.ruleContainmentLinksExtended[rule.name][classname]:
-                                if built_link[1] == link_name:
-                                    found_link = True
-
-
-                        except KeyError:
-                            if self.debug > 1:
-                                print("Couldn't find " + classname)
-
-                        if not found_link:
-                            if not classname in new_containment_links.keys():
-                                new_containment_links[classname] = []
-                            new_containment_links[classname].append(clink)
-
-                        else:
-                            if self.debug > 1:
-                                print("Found link: " + str(clink))
+                new_containment_links = self.remove_built_links(self.ruleMissingContLinks[rule.name], self.ruleContainmentLinksExtended[rule.name])
 
 
                 #if self.debug:
@@ -124,6 +95,43 @@ class PrunerHelper:
         # for links, rules in self.links_to_rules.items():
         #     print(links)
         #     print(rules)
+        # raise Exception()
+
+    def remove_built_links(self, missing, built):
+        new_containment_links = {}
+
+        for classname, clinks in missing.items():
+            # print(classname)
+            # print(clinks)
+
+            for clink in clinks:
+                cl, link_name = clink
+
+                found_link = False
+
+                try:
+                    # print(self.ruleMissingContLinks[rule.name][classname])
+
+                    for built_link in built[classname]:
+                        if built_link[1] == link_name:
+                            found_link = True
+
+
+                except KeyError:
+                    if self.debug > 1:
+                        print("Couldn't find " + classname)
+
+                if not found_link:
+                    if not classname in new_containment_links.keys():
+                        new_containment_links[classname] = []
+                    new_containment_links[classname].append(clink)
+
+                else:
+                    if self.debug > 1:
+                        print("Found link: " + str(clink))
+
+        return new_containment_links
+
 
     def collapse_dict(self, d):
         l = []
@@ -226,6 +234,12 @@ class PrunerHelper:
         return new_links
 
 
+    def print(self, name, t):
+        if str(type(t)) == "<class 'dict'>":
+            self.print_dict(name, t)
+        else:
+            self.print_list(name, t)
+
     def print_list(self, name, l):
         if str(type(l)) == "<class 'dict'>":
             self.print_dict(name, l)
@@ -235,7 +249,7 @@ class PrunerHelper:
     def print_dict(self, name, d):
         print("\n" + name + ":")
         for k, v in sorted(d.items()):
-            print(k + " :")
+            print(str(k) + " :")
             try:
                 for c in sorted(v):
                     print("\t" + str(c) + " : " + str(v[c]))
