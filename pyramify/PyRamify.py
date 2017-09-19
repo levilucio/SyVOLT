@@ -661,20 +661,24 @@ class PyRamify:
 
         return rewriter
 
-    def get_match_pattern(self, rule):
+    def get_match_pattern(self, rule, build_matcher = True):
         name = list(rule.keys())[0]
         graph = list(rule.values())[0]
 
         label = 0
         for i in range(len(graph.vs)):
-
             graph.vs[i]["MT_label__"] = str(label)
             label += 1
         
         out_dir = "./patterns/"
 
-        graph = self.get_match_graph(graph)     
-        
+        #graph_to_dot(graph.name + "_first", graph)
+
+        graph = self.get_match_graph(graph)
+
+        #graph_to_dot(graph.name + "_second", graph)
+
+
         graph = self.do_RAMify(graph, out_dir, remove_rule_nodes = False, back_to_trace = False)
 
         graph["mm__"] = [graph["mm__"][0], 'MoTifRule']
@@ -694,9 +698,11 @@ class PyRamify:
         rule = load_class(out_dir + old_name + "_match_pattern_matcher")
         match_graph = list(rule.values())[0]
 
-        matcher = Matcher(match_graph, disambig_matching = False)
-
-        return {name : matcher}
+        if build_matcher:
+            matcher = Matcher(match_graph, disambig_matching = False)
+            return {name : matcher}
+        else:
+            return {name : match_graph}
 
 
     #ramify a whole directory
