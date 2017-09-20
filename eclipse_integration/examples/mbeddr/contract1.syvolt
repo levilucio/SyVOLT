@@ -24,7 +24,7 @@
     </match>
     <apply>
       <class className="GenericDotExpression"/>
-      <class className="GlobarRefExpr"/>
+      <class className="GlobalVarRef"/>
       <class className="GlobalVariableDeclaration">
         <attribute attributeName="name">
           <attributeValue xsi:type="syvolt:Concat">
