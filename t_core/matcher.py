@@ -6,6 +6,7 @@ from core.new_match_algo import NewHimesisMatcher
 from core.himesis import HConstants as HC
 from .rule_primitive import RulePrimitive
 from .messages import MatchSet, Match, TransformationException
+import time
 
 from core.himesis_utils import print_graph, print_GUIDs, get_preds_and_succs
 import traceback
@@ -13,6 +14,8 @@ import traceback
 from profiler import *
 
 from util.decompose_graph import decompose_graph
+
+from functools import reduce
 
 class Matcher(RulePrimitive):
     '''
@@ -36,9 +39,14 @@ class Matcher(RulePrimitive):
         except KeyError:
             self.superclasses_dict = {}
 
+        self.decomposing_time = None
         if disambig_matching:
             self.HimesisMatcher = NewHimesisMatcher
+
+            self.decomposing_time = time.time()
             self.condition_pred = decompose_graph(condition, get_isolated_match_elements = True)
+            self.decomposing_time = time.time() - self.decomposing_time
+
             self.condition_succ = {}
 
         else:
@@ -95,7 +103,9 @@ class Matcher(RulePrimitive):
 
 
         if self.disambig_matching:
+            self.decomposing_time = time.time()
             self.graph_pred = decompose_graph(packet.graph)
+            self.decomposing_time = time.time() - self.decomposing_time
             self.graph_succ = {}
         else:
 
