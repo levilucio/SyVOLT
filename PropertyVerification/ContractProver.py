@@ -137,8 +137,8 @@ class ContractProver:
         print("Summary:")
         for contract_name, atomic_contract in all_contracts:
             print("Name:" + contract_name)
-            print("\tNum Succeeded Contracts: " + str(len(contract_succeeded_pcs[contract_name])))
-            print("\tNum Failed Contracts: " + str(len(contract_failed_pcs[contract_name])))
+            print("\tNum Succeeded Path Conditions: " + str(len(contract_succeeded_pcs[contract_name])))
+            print("\tNum Failed Path Conditions: " + str(len(contract_failed_pcs[contract_name])))
 
         print("Took " + str(proof_time) + " seconds to prove " + str(len(atomic_contracts + if_then_contracts)) + " contracts\n")
 
