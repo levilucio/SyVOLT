@@ -80,6 +80,8 @@ def graph_to_dot(name, g, verbosity = 0, force_trace_links = False):
     """
 
     if not has_pydot:
+        if verbosity > 0:
+            print("No pydot")
         return
 
     if g is None:
@@ -324,18 +326,20 @@ def graph_to_dot(name, g, verbosity = 0, force_trace_links = False):
     try:
         graph.write_svg(svg_filename, prog = 'dot')
 
+        if verbosity >= 2:
+            print("Wrote svg to: " + svg_filename)
     except Exception as e:
         print("Error in graph_to_dot: " + str(e))
         #raise(e)
 
-        dot_filename = svg_filename.replace(".svg", ".dot")
-        graph.write(dot_filename, prog='dot')
+    dot_filename = svg_filename.replace(".svg", ".dot")
+    graph.write(dot_filename, prog='dot')
 
-        command = "dot -Tsvg " + dot_filename + " -o " + svg_filename
-        subprocess.call(command, shell=True)
+    command = "dot -Tsvg " + dot_filename + " -o " + svg_filename
+    subprocess.call(command, shell=True)
 
-        command = "rm " + dot_filename
-        subprocess.call(command, shell=True)
+    command = "rm " + dot_filename
+    subprocess.call(command, shell=True)
 
 
 def draw_graphs(title, g_dir):
