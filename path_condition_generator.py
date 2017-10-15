@@ -284,6 +284,9 @@ class PathConditionGenerator(object):
         min_chunk_size = 10
         max_chunk_size = 100
 
+
+        bin_packing_time = 0
+
         for layer in range(len(self.transformation)):
             print("Layer: " + str(layer + 1) + "/" + str(len(self.transformation)) + " at time " + str(time.time() - start_time))
 
@@ -296,10 +299,11 @@ class PathConditionGenerator(object):
 
             print("Path Cond Set Size: " + str(pathConSetLength))
 
-            use_bin_packing = True
+            use_bin_packing = False
             layer_start_time = time.time()
 
             if use_bin_packing:
+                bin_packing_start_time = time.time()
 
                 if not self.do_parallel:
                     number_of_bins = 1
@@ -328,6 +332,8 @@ class PathConditionGenerator(object):
                     pc_count[min_index] += weight
 
                 pc_chunks = [chunk for chunk in pc_chunks if chunk]
+
+                bin_packing_time += time.time() - bin_packing_start_time
             else:
                 # divide the path conditions up into little pieces
                 shuffle(currentpathConditionSet)
@@ -466,6 +472,8 @@ class PathConditionGenerator(object):
         self.pc_dict = pc_dict
         self.currentpathConditionSet = currentpathConditionSet
         self.num_path_conditions = len(currentpathConditionSet)
+
+        print("Bin time: " + str(bin_packing_time))
 
     #clean up
     def __del__(self):
