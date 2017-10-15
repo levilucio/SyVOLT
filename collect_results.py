@@ -1,4 +1,5 @@
 import subprocess
+import os
 
 def get_avg(l):
     if len(l) == 0:
@@ -6,6 +7,33 @@ def get_avg(l):
     return sum(l) / float(len(l))
 
 times_to_run = 5
+
+#
+# Parallel
+# (F2P)
+# --Off
+# --Shuffle
+# --Bin packing
+# Not Pruning vs non-pruning
+#
+#
+# --Rounds: Number of pcs per thread
+# (can be fastest of shuffle or bin packing)
+#
+# Slicing
+# --Time taken for slicing
+# --Slicing results for each transformation
+# (F2P, GM, UML, mbeddr, RSS2ATOM)
+#
+#
+# Pruning
+# (F2P, GM, UML, mbeddr, RSS2ATOM)
+# Do with/without parallel
+#
+# Pickling
+# Do with/without parallel
+# (F2P, GM, UML, mbeddr, RSS2ATOM)
+
 
 experiments = [
     #"test_atlTrans",
@@ -16,12 +44,13 @@ experiments = [
     #"test_umlToKiltera",
 ]
 
-experiment_args = ""
+experiment_args = ["--slice=2", "--skip_parallel"]
 
 for ex_file in experiments:
 
-    ex_filename = ex_file + "_results.txt"
+    ex_filename = os.path.join("results", ex_file + "_results.txt")
 
+    #open fresh file, and write header
     with open(ex_filename, 'w') as h:
         h.write("Starting experiments for: " + ex_file)
 
@@ -30,9 +59,7 @@ for ex_file in experiments:
         for x in range(times_to_run):
 
             print("Running " + ex_file + " for time " + str(x))
-            command = ["/usr/bin/time", "python3", ex_file + ".py"]
-            if len(experiment_args.strip()) > 0:
-                command.append(experiment_args)
+            command = ["/usr/bin/time", "python3", ex_file + ".py"] + experiment_args
 
             print("Command: " + " ".join(command))
             command.append("--skip_progress_bar")
@@ -69,11 +96,21 @@ for ex_file in experiments:
         avg_build_time = get_avg(time_build_pcs)
         avg_proof_time = get_avg(time_contract_proof)
 
-        print("\nResults for '" + ex_file +"'")
-        print("Time build: " + str(round(avg_build_time, 2)))
-        print("Time proof: " + str(round(avg_proof_time, 2)))
-        print("Memory: " + str(int(get_avg(memory))))
-        print("Number of path conditions: " + str(int(get_avg(num_pcs))))
+        s1 = "\nResults for '" + ex_file +"'"
+        s2 = "Time build: " + str(round(avg_build_time, 2))
+        s3 = "Time proof: " + str(round(avg_proof_time, 2))
+        s4 = "Memory: " + str(int(get_avg(memory)))
+        s5 = "Number of path conditions: " + str(int(get_avg(num_pcs)))
 
+
+        experiment_filename = ex_filename.replace(".txt", "")
+        experiment_filename += "".join(experiment_args)
+        experiment_filename = experiment_filename.replace("=", "").replace("-", "") + ".txt"
+
+        with open(experiment_filename, 'w') as e:
+
+            for s in [s1, s2, s3, s4, s5]:
+                print(s)
+                e.write(s + "\n")
 
 
