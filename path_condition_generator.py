@@ -96,6 +96,9 @@ class PathConditionGenerator(object):
 
         self.use_bin_packing = not args.shuffle
 
+        self.max_chunk_size = args.max_chunk_size
+        self.min_chunk_size = min(0, self.max_chunk_size)
+
     def generate_letters(self, i):
 
         if i <= 25:
@@ -283,10 +286,6 @@ class PathConditionGenerator(object):
 
         start_time = time.time()
 
-        min_chunk_size = 10
-        max_chunk_size = 100
-
-
         bin_packing_time = 0
 
         for layer in range(len(self.transformation)):
@@ -309,12 +308,12 @@ class PathConditionGenerator(object):
                 if not self.do_parallel:
                     number_of_bins = 1
                     chunkSize = pathConSetLength
-                elif chunkSize < min_chunk_size:
-                    number_of_bins = int(math.ceil(pathConSetLength / float(min_chunk_size)))
-                    chunkSize = min_chunk_size
-                elif chunkSize > max_chunk_size:
-                    number_of_bins = int(math.ceil(pathConSetLength / float(max_chunk_size)))
-                    chunkSize = max_chunk_size
+                elif chunkSize < self.min_chunk_size:
+                    number_of_bins = int(math.ceil(pathConSetLength / float(self.min_chunk_size)))
+                    chunkSize = self.min_chunk_size
+                elif chunkSize > self.max_chunk_size:
+                    number_of_bins = int(math.ceil(pathConSetLength / float(self.max_chunk_size)))
+                    chunkSize = self.max_chunk_size
                 else:
                     number_of_bins = cpu_count
 
