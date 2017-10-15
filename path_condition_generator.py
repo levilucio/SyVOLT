@@ -286,7 +286,7 @@ class PathConditionGenerator(object):
 
         start_time = time.time()
 
-        bin_packing_time = 0
+        pc_divide_time = 0
 
         for layer in range(len(self.transformation)):
             print("Layer: " + str(layer + 1) + "/" + str(len(self.transformation)) + " at time " + str(time.time() - start_time))
@@ -300,10 +300,10 @@ class PathConditionGenerator(object):
 
             print("Path Cond Set Size: " + str(pathConSetLength))
 
-            layer_start_time = time.time()
+            #layer_start_time = time.time()
 
             if self.use_bin_packing:
-                bin_packing_start_time = time.time()
+                pc_divide_start_time = time.time()
 
                 if not self.do_parallel:
                     number_of_bins = 1
@@ -333,11 +333,13 @@ class PathConditionGenerator(object):
 
                 pc_chunks = [chunk for chunk in pc_chunks if chunk]
 
-                bin_packing_time += time.time() - bin_packing_start_time
+                pc_divide_time += time.time() - pc_divide_start_time
             else:
                 # divide the path conditions up into little pieces
+                pc_divide_start_time = time.time()
                 shuffle(currentpathConditionSet)
                 pc_chunks = self.chunks(currentpathConditionSet, chunkSize)
+                pc_divide_time += time.time() - pc_divide_start_time
 
             results_queue = manager.Queue()
 
@@ -473,7 +475,8 @@ class PathConditionGenerator(object):
         self.currentpathConditionSet = currentpathConditionSet
         self.num_path_conditions = len(currentpathConditionSet)
 
-        print("Bin time: " + str(bin_packing_time))
+        print("Time taken for: -Dividing pcs-" + str(bin_packing_time) + " seconds")
+        print("Time taken for: -Pruning pcs-" + str(self.prunner.pruning_time) + " seconds")
 
     #clean up
     def __del__(self):

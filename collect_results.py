@@ -180,6 +180,10 @@ for i, experiment in enumerate(experiments):
     memory = []
     num_pcs = []
 
+    pruning_time = []
+    slicing_time = []
+    dividing_time = []
+
     with open(ex_filename) as f:
 
         for line in f:
@@ -197,6 +201,15 @@ for i, experiment in enumerate(experiments):
             elif "Number of path conditions:" in line:
                 pcs = line.split(" ")[4]
                 num_pcs.append(int(pcs))
+            elif "Time taken for: -Dividing pcs-" in line:
+                t = line.split(" ")[5]
+                dividing_time.append(float(t))
+            elif "Time taken for: -Pruning pcs-" in line:
+                t = line.split(" ")[5]
+                pruning_time.append(float(t))
+            elif "Time taken for: -slicing-" in line:
+                t = line.split(" ")[5]
+                slicing_time.append(float(t))
 
             #print(line.strip())
 
@@ -210,7 +223,11 @@ for i, experiment in enumerate(experiments):
         s4 = "Memory: " + str(int(get_avg(memory)))
         s5 = "Number of path conditions: " + str(int(get_avg(num_pcs)))
 
-        for s in [s1, s2, s3, s4, s5]:
+        s6 = "Dividing time: " + str(round(get_avg(dividing_time)))
+        s7 = "Pruning time: " + str(round(get_avg(pruning_time)))
+        s8 = "Slicing time: " + str(round(get_avg(slicing_time)))
+
+        for s in [s1, s2, s3, s4, s5, s6, s7, s8]:
             print(s)
             f.write(s + "\n")
 

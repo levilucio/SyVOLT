@@ -220,7 +220,7 @@ class Slicer:
         for contract in contract_list:
             self.check_for_missing_elements(contract, is_contract = True)
 
-        print("Slicing took: " + str(end_time) + " seconds")
+        print("Time taken for: -slicing-" + str(end_time) + " seconds")
         print("Number rules after: " + str(len(new_rules)))
         #raise Exception()
 
