@@ -54,6 +54,9 @@ class EmptyContract(Contract):
     def get_graph(self):
         return [self.complete]
 
+    def get_complete(self):
+        return self.complete
+
     def draw(self):
         pass
 

@@ -41,17 +41,7 @@ class ContractDebugger:
         failed_pc = self.pathCondGen.pc_dict[failed_pc_name]
         failed_pc = expand_graph(failed_pc)
 
-        #TODO: Fix this
-        if contract.__name__ == "IfThenContract":
-            try:
-                contract_complete = contract.contract
-            except AttributeError:
-                try:
-                    contract_complete = contract.then_contract.complete
-                except AttributeError:
-                    contract_complete = contract.then_contract.contract.complete
-        else:
-            contract_complete = contract.complete
+        contract_complete = contract.get_complete()
 
         matcher = NewHimesisMatcher(failed_pc, contract_complete)
         matcher.record_reason_failed = True
@@ -96,10 +86,7 @@ class ContractDebugger:
         # print(required_iso_elements)
         # print(required_links)
 
-        if contract.__name__ == "IfThenContract":
-            contract_complete = contract.then_contract.complete
-        else:
-            contract_complete = contract.complete
+        contract_complete = contract.get_complete()
 
         contract_mms = [mm.replace("MT_pre__", "") for mm in contract_complete.vs["mm__"]]
 

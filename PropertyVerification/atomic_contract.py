@@ -76,6 +76,9 @@ class AtomicContract(Contract):
     def get_graph(self):
         return [self.complete]
 
+    def get_complete(self):
+        return self.complete
+
     def draw(self):
 
         graph_to_dot("contract_isolated_" + self.name, self.isolated)

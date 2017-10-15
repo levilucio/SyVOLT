@@ -22,6 +22,9 @@ class IfThenContract(Contract):
         then_graph = self.then_contract.get_graph()
         return if_graph + then_graph
 
+    def get_complete(self):
+        return self.then_contract.get_complete()
+
     def check_isolated(self, pc):
         return self.if_contract.check_isolated(pc)
 

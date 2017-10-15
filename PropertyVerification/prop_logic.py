@@ -16,6 +16,9 @@ class NotContract(Contract):
     def get_graph(self):
         return self.contract.get_graph()
 
+    def get_complete(self):
+        return self.contract.get_complete()
+
     def check_isolated(self, pc):
         return self.contract.check_isolated(pc)
 
@@ -60,6 +63,9 @@ class AndContract(Contract):
         contract_1 = self.contract_1.get_graph()
         contract_2 = self.contract_2.get_graph()
         return contract_1 + contract_2
+
+    def get_complete(self):
+        return self.contract_1.get_complete()
 
     def check_isolated(self, pc):
 
@@ -120,6 +126,9 @@ class OrContract(Contract):
         contract_1 = self.contract_1.get_graph()
         contract_2 = self.contract_2.get_graph()
         return contract_1 + contract_2
+
+    def get_complete(self):
+        return self.contract_1.get_complete()
 
     def check_isolated(self, pc):
 
