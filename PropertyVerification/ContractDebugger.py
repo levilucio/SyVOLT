@@ -12,11 +12,14 @@ class ContractDebugger:
         self.slicer = slicer
         self.superclasses_dict = superclasses_dict
 
+        self.draw = False
+
     def explain_failures(self, contract_name, contract, success_pcs, failed_pcs, smallest_failed):
 
         print("Explaining why contract fails: " + contract_name)
 
-        contract.draw()
+        if self.draw:
+            contract.draw()
 
         good_rules, bad_rules = self.get_rule_differences(success_pcs, failed_pcs)
 
@@ -61,7 +64,8 @@ class ContractDebugger:
 
         matcher.print_failures(required_rules = self.slicer.required_rules[contract.name])
 
-        graph_to_dot(contract.complete.name + "_failed_" + failed_pc.name, failed_pc)
+        if self.draw:
+            graph_to_dot(contract.complete.name + "_failed_" + failed_pc.name, failed_pc)
 
     def examine_required_rules(self, contract, contract_name, good_rules):
         if contract_name not in self.slicer.required_rules:
