@@ -6,73 +6,181 @@ def get_avg(l):
         return -1
     return sum(l) / float(len(l))
 
-times_to_run = 5
-
-#
-# Parallel
-# (F2P)
-# --Off
-# --Shuffle
-# --Bin packing
-# Not Pruning vs non-pruning
-#
-#
-# --Rounds: Number of pcs per thread
-# (can be fastest of shuffle or bin packing)
-#
-# Slicing
-# --Time taken for slicing
-# --Slicing results for each transformation
-# (F2P, GM, UML, mbeddr, RSS2ATOM)
-#
-#
-# Pruning
-# (F2P, GM, UML, mbeddr, RSS2ATOM)
-# Do with/without parallel
-#
-# Pickling
-# Do with/without parallel
-# (F2P, GM, UML, mbeddr, RSS2ATOM)
-
+times_to_run = 1
 
 experiments = [
-    #"test_atlTrans",
-    "test_atlTrans_extended",
-    #"test_competition",
-    #"test_GM2Autosar_transformation",
-    #"test_mbeddr",
-    #"test_umlToKiltera",
+
+    # Parallel
+    # (F2P)
+    # --Off
+    # --Shuffle
+    # --Bin packing
+    # no pruning
+    ["test_atlTrans_extended", "--skip_parallel", "--skip_pruning"],
+    ["test_atlTrans_extended", "--shuffle", "--skip_pruning"],
+    ["test_atlTrans_extended", "--skip_pruning"],
+
+    ["test_mbeddr", "--slice=2", "--skip_parallel", "--skip_pruning"],
+    ["test_mbeddr", "--slice=2", "--shuffle", "--skip_pruning"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning"],
+
+    # --Rounds: Number of pcs per thread
+    # (can be fastest of shuffle or bin packing)
+
+    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=5"],
+    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=10"],
+    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=20"],
+    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=100"],
+    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=200"],
+    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=500"],
+    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=1000"],
+
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=5"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=10"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=20"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=100"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=200"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=500"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=1000"],
+
+    # Pruning
+    # (F2P, GM, UML, mbeddr, RSS2ATOM)
+    # Do with/without parallel
+
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel"],
+    ["test_atlTrans_extended", "--skip_parallel"],
+    ["test_atlTrans_extended", "--skip_pruning"],
+    ["test_atlTrans_extended",],
+
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel"],
+    ["test_GM2Autosar_transformation", "--skip_parallel"],
+    ["test_GM2Autosar_transformation", "--skip_pruning"],
+    ["test_GM2Autosar_transformation",],
+
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel"],
+    ["test_umlToKiltera", "--skip_parallel"],
+    ["test_umlToKiltera", "--skip_pruning"],
+    ["test_umlToKiltera",],
+
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--skip_parallel"],
+    ["test_mbeddr", "--slice=2", "--skip_parallel"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning"],
+    ["test_mbeddr", "--slice=2",],
+
+    ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel"],
+    ["test_RSS2ATOM", "--skip_parallel"],
+    ["test_RSS2ATOM", "--skip_pruning"],
+    ["test_RSS2ATOM",],
+
+    # Slicing
+    # --Time taken for slicing
+    # --Slicing results for each transformation
+    # (F2P, GM, UML, mbeddr, RSS2ATOM)
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel"],
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--slice=0"],
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--slice=1"],
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--slice=2"],
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--slice=3"],
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--slice=4"],
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--slice=5"],
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--slice=6"],
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--slice=7"],
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--slice=8"],
+
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel"],
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=0"],
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=1"],
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=2"],
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=3"],
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=4"],
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=5"],
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=6"],
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=7"],
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=8"],
+
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=0"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=1"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=2"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=3"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=4"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=5"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=6"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=7"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=8"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=9"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=10"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=11"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=12"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=13"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=14"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=15"],
+
+    ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel"],
+    ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel", "--slice=0"],
+    ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel", "--slice=1"],
+
+    # Pickling
+    # Do with/without parallel
+    # (F2P, GM, UML, mbeddr, RSS2ATOM)
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel"],
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--skip_pickle"],
+
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel"],
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--skip_pickle"],
+
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--skip_parallel"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--skip_parallel", "--skip_pickle"],
+
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--skip_pickle"],
+
+    ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel"],
+    ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel", "--skip_pickle"],
+
 ]
 
-experiment_args = ["--slice=2", "--skip_parallel"]
 
-for ex_file in experiments:
+for i, experiment in enumerate(experiments):
 
-    ex_filename = os.path.join("results", ex_file + "_results.txt")
+    experiment_name = experiment[0]
+    experiment_args = experiment[1:]
+
+    #print(i)
+    #print(experiment_name)
+    #print(experiment_args)
+
+    args_string = "".join(experiment_args)
+    args_string = args_string.replace("=", "").replace("-", "")
+
+    #print(args_string)
+
+    ex_filename = os.path.join("results", str(i) + "-" + experiment_name + "-" + args_string + ".txt")
+
+    #print(ex_filename)
 
     #open fresh file, and write header
     with open(ex_filename, 'w') as h:
-        h.write("Starting experiments for: " + ex_file)
+        h.write("Starting experiments for: " + experiment_name + "-" + args_string)
+
 
     with open(ex_filename, 'w+') as g:
 
         for x in range(times_to_run):
 
-            print("Running " + ex_file + " for time " + str(x))
-            command = ["/usr/bin/time", "python3", ex_file + ".py"] + experiment_args
+            print("Running " + str(i) + "-" + experiment_name +"-" + args_string + " for time " + str(x))
+            command = ["/usr/bin/time", "python3", experiment_name + ".py"] + experiment_args
 
             print("Command: " + " ".join(command))
             command.append("--skip_progress_bar")
             proc = subprocess.check_call(command, stdout=g, stderr=subprocess.STDOUT)
 
+    time_build_pcs = []
+    time_contract_proof = []
+    memory = []
+    num_pcs = []
 
     with open(ex_filename) as f:
-
-        time_build_pcs = []
-        time_contract_proof = []
-        memory = []
-        num_pcs = []
-
 
         for line in f:
 
@@ -92,25 +200,20 @@ for ex_file in experiments:
 
             #print(line.strip())
 
-
+    with open(ex_filename, "a") as f:
         avg_build_time = get_avg(time_build_pcs)
         avg_proof_time = get_avg(time_contract_proof)
 
-        s1 = "\nResults for '" + ex_file +"'"
+        s1 = "\nResults for '" + experiment_name +"-" + args_string +"'"
         s2 = "Time build: " + str(round(avg_build_time, 2))
         s3 = "Time proof: " + str(round(avg_proof_time, 2))
         s4 = "Memory: " + str(int(get_avg(memory)))
         s5 = "Number of path conditions: " + str(int(get_avg(num_pcs)))
 
+        for s in [s1, s2, s3, s4, s5]:
+            print(s)
+            f.write(s + "\n")
 
-        experiment_filename = ex_filename.replace(".txt", "")
-        experiment_filename += "".join(experiment_args)
-        experiment_filename = experiment_filename.replace("=", "").replace("-", "") + ".txt"
 
-        with open(experiment_filename, 'w') as e:
-
-            for s in [s1, s2, s3, s4, s5]:
-                print(s)
-                e.write(s + "\n")
 
 
