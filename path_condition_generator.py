@@ -475,8 +475,8 @@ class PathConditionGenerator(object):
         self.currentpathConditionSet = currentpathConditionSet
         self.num_path_conditions = len(currentpathConditionSet)
 
-        print("Time taken for: -Dividing pcs-" + str(bin_packing_time) + " seconds")
-        print("Time taken for: -Pruning pcs-" + str(self.prunner.pruning_time) + " seconds")
+        print("Time taken for: -Dividing pcs-" + str(pc_divide_time) + " seconds")
+        #print("Time taken for: -Pruning pcs-" + str(self.prunner.pruning_time) + " seconds")
 
     #clean up
     def __del__(self):

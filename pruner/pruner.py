@@ -43,7 +43,7 @@ class Pruner(object):
         # test containment links and see if any are missing
         self.all_missing_contain_links = {}
 
-        self.pruning_time = 0
+        #self.pruning_time = 0
 
         for layer_num in range(len(transformation)):
             for rule in transformation[layer_num]:
@@ -206,7 +206,7 @@ class Pruner(object):
                 print("No missing links in rules, returning true")
                 if self.exception_on_exit:
                     raise Exception()
-            self.pruning_time += pruning_start_time - time.time()
+            #self.pruning_time += time.time() - pruning_start_time
             return True
 
         #only keep the number of links needed that we have elements for
@@ -233,7 +233,7 @@ class Pruner(object):
                 print("No missing links, returning true")
                 if self.exception_on_exit:
                     raise Exception()
-            self.pruning_time += pruning_start_time - time.time()
+            #self.pruning_time += time.time() - pruning_start_time
             return True
 
         pc_built_lists = self.combineForAll_lists(rules_in_pc, self.prunerHelper.ruleContainmentLinks_List)
@@ -279,7 +279,7 @@ class Pruner(object):
                 print("No missing links after built, returning true")
                 if self.exception_on_exit:
                     raise Exception()
-            self.pruning_time += pruning_start_time - time.time()
+            #self.pruning_time += time.time() - pruning_start_time
             return True
 
         missingLinks = self.will_links_be_built_lists(pathCondition.name, new_pc_missing_lists, rulesToTreat)
@@ -289,7 +289,7 @@ class Pruner(object):
                 print("Links will be built, returning true")
                 if self.exception_on_exit:
                     raise Exception()
-            self.pruning_time += pruning_start_time - time.time()
+            #self.pruning_time += time.time() - pruning_start_time
             return True
 
         #not enough copies of the link may be built
@@ -312,7 +312,7 @@ class Pruner(object):
                     #raise Exception
 
         if link_already_built:
-            self.pruning_time += pruning_start_time - time.time()
+            #self.pruning_time += time.time() - pruning_start_time
             return True
 
         if self.debug:
@@ -366,7 +366,7 @@ class Pruner(object):
             print("... Pruner Returning False")
             if self.exception_on_exit:
                 raise Exception()
-        self.pruning_time += pruning_start_time - time.time()
+        #self.pruning_time += time.time() - pruning_start_time
         return False
         
     def print_results(self):
