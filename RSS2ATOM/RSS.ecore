@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="">
+  <eClassifiers xsi:type="ecore:EClass" name="Category">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="channel"  upperBound="1"  eType="#//Channel"  />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="items"  upperBound="1"  eType="#//Item"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Channel">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="image"  eType="#//Image"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="textInput"  eType="#//TextInput"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="cloud"  eType="#//Cloud"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="category"  eType="#//Category"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="items"  upperBound="-1"  eType="#//Item"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="rss"  upperBound="1"  eType="#//RSS"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Cloud">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="channel"  upperBound="1"  eType="#//Channel"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Enclosure">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Image">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="channel"  upperBound="1"  eType="#//Channel"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Item">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="source"  eType="#//Source"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="enclosure"  eType="#//Enclosure"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="category"  eType="#//Category"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="channel"  upperBound="1"  eType="#//Channel"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RSS">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="channel"  upperBound="1"  eType="#//Channel"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Source">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TextInput">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="channel"  upperBound="1"  eType="#//Channel"  />
+</eClassifiers>
+</ecore:EPackage>

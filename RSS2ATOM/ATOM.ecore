@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="">
+  <eClassifiers xsi:type="ecore:EClass" name="ATOM">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="links"  upperBound="-1"  lowerBound="1"  eType="#//Link"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="generator"  eType="#//Generator"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="categories"  upperBound="-1"  eType="#//Category"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="authors"  upperBound="-1"  lowerBound="1"  eType="#//Author"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="contributors"  upperBound="-1"  eType="#//Contributor"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="entrie"  upperBound="-1"  eType="#//Entry"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Author" eSuperTypes="#//Person ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="atom"  upperBound="1"  eType="#//ATOM"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Category">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="atom"  upperBound="1"  eType="#//ATOM"  />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="entry"  upperBound="1"  eType="#//Entry"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Content" abstract="true" >
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Contributor" eSuperTypes="#//Person ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Entry">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="links"  upperBound="-1"  lowerBound="1"  eType="#//Link"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="source"  eType="#//Source"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="content"  eType="#//Content"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="categories"  upperBound="-1"  eType="#//Category"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="authors"  upperBound="-1"  lowerBound="1"  eType="#//Author"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="contributors"  upperBound="-1"  eType="#//Contributor"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="atom"  upperBound="1"  eType="#//ATOM"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Generator">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InLineOtherContent" eSuperTypes="#//Content ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InLineTextContent" eSuperTypes="#//Content ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InLineXHTMLContent" eSuperTypes="#//Content ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Link">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="atom"  upperBound="1"  eType="#//ATOM"  />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="entry"  upperBound="1"  eType="#//Entry"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OutOfLineContent" eSuperTypes="#//Content ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Person">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Source">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="links"  upperBound="-1"  eType="#//Link"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="generator"  eType="#//Generator"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="contributors"  upperBound="-1"  eType="#//Contributor"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="categories"  upperBound="-1"  eType="#//Category"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="author"  eType="#//Author"  containment="true" />
+</eClassifiers>
+</ecore:EPackage>
