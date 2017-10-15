@@ -46,8 +46,6 @@ class path_condition_generator_worker(Process):
         self.report_progress = report_progress
         
         self.pruner = pruner
-        
-        self.pruning = True
 
         self.pc_dict = None
 
@@ -212,7 +210,7 @@ class path_condition_generator_worker(Process):
                         # name the new path condition as the combination of the previous path condition and the rule
                         newPathCond.name = new_name
 
-                        if not self.pruning or self.pruner.isPathConditionStillFeasible(newPathCond, self.rulesToTreat):
+                        if self.pruner.isPathConditionStillFeasible(newPathCond, self.rulesToTreat):
                             shrunk_newCond = shrink_graph(newPathCond)
                             self.pc_dict[new_name] = shrunk_newCond
                             new_pc_dict[new_name] = shrunk_newCond
@@ -388,7 +386,7 @@ class path_condition_generator_worker(Process):
                                         if self.verbosity >= 2:
                                             print("Path Condition: " + newPathCondName + " has inconsistent equations")
 
-                                    # elif self.pruning and not self.pruner.isPathConditionStillFeasible(newPathCond,
+                                    # elif not self.pruner.isPathConditionStillFeasible(newPathCond,
                                     #                                                                 rulesToTreat):
                                     #     if self.verbosity >= 2:
                                     #         print("Path Condition: " + newPathCondName + " was pruned")
@@ -404,7 +402,7 @@ class path_condition_generator_worker(Process):
                                             newPathCondName += "." + str(len(newPathCond.vs))
                                             newPathCond.name = newPathCondName
 
-                                            if self.pruning and not self.pruner.isPathConditionStillFeasible(
+                                            if not self.pruner.isPathConditionStillFeasible(
                                                     newPathCond, self.rulesToTreat):
                                                 valid = False
 
@@ -445,7 +443,7 @@ class path_condition_generator_worker(Process):
                                             # we are dealing with a partial combination of the rule.
                                             # create a copy of the path condition in the accumulator because this match of the rule is partial.
 
-                                            if self.pruning and not self.pruner.isPathConditionStillFeasible(
+                                            if not self.pruner.isPathConditionStillFeasible(
                                                     newPathCond, self.rulesToTreat):
                                                 valid = False
                                             else:
@@ -596,7 +594,7 @@ class path_condition_generator_worker(Process):
                         new_pc_dict[newPathCondName] = shrunk_pc
 
 
-            if self.pruning and not self.pruner.isPathConditionStillFeasible(pc, self.rulesToTreat):
+            if not self.pruner.isPathConditionStillFeasible(pc, self.rulesToTreat):
                 pcs_to_prune.append(pc_name)
 
         #print("Current length: " + str(len(self.currentPathConditionSet)))
@@ -605,7 +603,7 @@ class path_condition_generator_worker(Process):
         self.currentPathConditionSet = list(set(self.currentPathConditionSet))
 
 
-        if self.pruning:
+        if self.pruner.do_pruning:
 
             #pruning_time = time.time()
 
@@ -654,7 +652,7 @@ class path_condition_generator_worker(Process):
         # print("new_pc_dict: " + str(new_pc_dict.keys()))
         # print("name_dict: " + str(name_dict.keys()))
 
-        if self.pruning:
+        if self.pruner.do_pruning:
             self.pruner.print_results()
 
         #print(asizeof.asized(self, detail = 2).format())

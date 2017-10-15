@@ -85,8 +85,8 @@ class PathConditionGenerator(object):
 
         #with PyCallGraph(output=GraphvizOutput()):
         self._pre_process()
-        
-        self.prunner = Pruner(self.targetMM, self.transformation, self.rule_names, self.rules_in_pc_name)
+
+        self.prunner = Pruner(args.do_pruning, self.targetMM, self.transformation, self.rule_names, self.rules_in_pc_name)
 
         self.tester = Tester(args)
         self.tester.set_artifacts(self.transformation, self.ruleTraceCheckers, self.ruleCombinators,

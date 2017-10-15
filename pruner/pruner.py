@@ -20,10 +20,12 @@ class Pruner(object):
     left to symbolically execute
     '''
 
-    def __init__(self, metamodel, transformation, rule_names, pc_name_function):
+    def __init__(self, do_pruning, metamodel, transformation, rule_names, pc_name_function):
         '''
         Constructor
         '''
+
+        self.do_pruning = do_pruning
 
         self.debug = 0
         self.exception_on_exit = False
@@ -172,6 +174,9 @@ class Pruner(object):
         decide whether a path condition can be removed from the path condition set because the
         containment requirements cannot be fulfilled
         '''
+
+        if not self.do_pruning:
+            return True
 
         #if self.debug:
         #    print(pathCondition.name)

@@ -18,6 +18,10 @@ def load_parser():
                         help = 'Option to skip the use of pickling')
     parser.set_defaults(do_pickle = True)
 
+    parser.add_argument('--skip_pruning', dest = 'do_pruning', action = 'store_false',
+                        help = 'Option to skip the use of pruning')
+    parser.set_defaults(do_pruning = True)
+
     parser.add_argument('--compression', type = int, default = 6,
                         help = 'Level of compression to use with pickling. Range: 0 (no compression) to 9 (high compression) (default: 6)')
     parser.set_defaults(compression = 6)
