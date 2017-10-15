@@ -89,15 +89,16 @@ class Slicer:
 
         contract = None
         num = contract_num
-        if contract_num >= 0 and contract_num < len(atomic):
+        if 0 <= contract_num < len(atomic):
             atomic = [atomic[contract_num]]
             if_then = []
             contract = atomic[0]
 
         num -= len(atomic)
-        if contract_num >= 0 and contract_num < len(if_then):
+
+        if 0 <= num < len(if_then):
             atomic = []
-            if_then = [if_then[contract_num]]
+            if_then = [if_then[num]]
             contract = if_then[0]
 
         print("Slicing for contract number " + str(contract_num) + " : " + contract[0])
