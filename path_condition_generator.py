@@ -94,6 +94,8 @@ class PathConditionGenerator(object):
 
         self.tester.debug()
 
+        self.use_bin_packing = not args.shuffle
+
     def generate_letters(self, i):
 
         if i <= 25:
@@ -299,10 +301,9 @@ class PathConditionGenerator(object):
 
             print("Path Cond Set Size: " + str(pathConSetLength))
 
-            use_bin_packing = False
             layer_start_time = time.time()
 
-            if use_bin_packing:
+            if self.use_bin_packing:
                 bin_packing_start_time = time.time()
 
                 if not self.do_parallel:
