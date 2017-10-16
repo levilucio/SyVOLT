@@ -140,98 +140,108 @@ experiments = [
 
 ]
 
+results_filename = os.path.join("results", "000-all_results.txt")
 
-for i, experiment in enumerate(experiments):
+with open(results_filename, "w") as a:
+    for i, experiment in enumerate(experiments):
 
-    experiment_name = experiment[0]
-    experiment_args = experiment[1:]
+        experiment_name = experiment[0]
+        experiment_args = experiment[1:]
 
-    #print(i)
-    #print(experiment_name)
-    #print(experiment_args)
+        #print(i)
+        #print(experiment_name)
+        #print(experiment_args)
 
-    args_string = "".join(experiment_args)
-    args_string = args_string.replace("=", "").replace("-", "")
+        args_string = "".join(experiment_args)
+        args_string = args_string.replace("=", "").replace("-", "")
 
-    #print(args_string)
+        #print(args_string)
 
-    ex_filename = os.path.join("results", str(i) + "-" + experiment_name + "-" + args_string + ".txt")
+        ex_filename = os.path.join("results", str(i) + "-" + experiment_name + "-" + args_string + ".txt")
 
-    #print(ex_filename)
+        #print(ex_filename)
 
-    #open fresh file, and write header
-    with open(ex_filename, 'w') as h:
-        h.write("Starting experiments for: " + experiment_name + "-" + args_string)
+        #open fresh file, and write header
+        with open(ex_filename, 'w') as h:
+            h.write("Starting experiments for: " + experiment_name + "-" + args_string)
 
 
-    with open(ex_filename, 'w+') as g:
+        with open(ex_filename, 'w+') as g:
 
-        for x in range(times_to_run):
+            for x in range(times_to_run):
 
-            print("Running " + str(i) + "-" + experiment_name +"-" + args_string + " for time " + str(x))
-            command = ["/usr/bin/time", "python3", experiment_name + ".py"] + experiment_args
+                print("Running " + str(i) + "-" + experiment_name +"-" + args_string + " for time " + str(x))
+                command = ["/usr/bin/time", "python3", experiment_name + ".py"] + experiment_args
 
-            print("Command: " + " ".join(command))
-            command.append("--skip_progress_bar")
-            proc = subprocess.check_call(command, stdout=g, stderr=subprocess.STDOUT)
+                print("Command: " + " ".join(command))
+                command.append("--skip_progress_bar")
+                proc = subprocess.check_call(command, stdout=g, stderr=subprocess.STDOUT)
 
-    time_build_pcs = []
-    time_contract_proof = []
-    memory = []
-    num_pcs = []
+        time_build_pcs = []
+        time_contract_proof = []
+        memory = []
+        num_pcs = []
 
-    pruning_time = []
-    slicing_time = []
-    dividing_time = []
+        pruning_time = []
+        slicing_time = []
+        dividing_time = []
 
-    with open(ex_filename) as f:
+        with open(ex_filename) as f:
 
-        for line in f:
+            for line in f:
 
-            if "Time to build the set of path conditions" in line:
-                t = line.split(" ")[8]
-                time_build_pcs.append(float(t))
-            elif "seconds to prove" in line:
-                t = line.split(" ")[1]
-                time_contract_proof.append(float(t))
-            elif "maxresident" in line:
-                line = line.replace("maxresident)k", "")
-                m = line.split(" ")[5]
-                memory.append(int(m)/1000)
-            elif "Number of path conditions:" in line:
-                pcs = line.split(" ")[4]
-                num_pcs.append(int(pcs))
-            elif "Time taken for: -Dividing pcs-" in line:
-                t = line.split(" ")[5]
-                dividing_time.append(float(t))
-                print(line)
-            # elif "Time taken for: -Pruning pcs-" in line:
-            #     t = line.split(" ")[5]
-            #     pruning_time.append(float(t))
-            elif "Time taken for: -slicing-" in line:
-                t = line.split(" ")[4]
-                slicing_time.append(float(t))
-                print(line)
+                if "Time to build the set of path conditions" in line:
+                    t = line.split(" ")[8]
+                    time_build_pcs.append(float(t))
+                elif "seconds to prove" in line:
+                    t = line.split(" ")[1]
+                    time_contract_proof.append(float(t))
+                elif "maxresident" in line:
+                    line = line.replace("maxresident)k", "")
+                    m = line.split(" ")[5]
+                    memory.append(int(m)/1000)
+                elif "Number of path conditions:" in line:
+                    pcs = line.split(" ")[4]
+                    num_pcs.append(int(pcs))
+                elif "Time taken for: -Dividing pcs-" in line:
+                    t = line.split(" ")[5]
+                    dividing_time.append(float(t))
+                    print(line)
+                # elif "Time taken for: -Pruning pcs-" in line:
+                #     t = line.split(" ")[5]
+                #     pruning_time.append(float(t))
+                elif "Time taken for: -slicing-" in line:
+                    t = line.split(" ")[4]
+                    slicing_time.append(float(t))
+                    print(line)
 
-            #print(line.strip())
+                #print(line.strip())
 
-    with open(ex_filename, "a") as f:
-        avg_build_time = get_avg(time_build_pcs)
-        avg_proof_time = get_avg(time_contract_proof)
+        with open(ex_filename, "a") as f:
+            avg_build_time = get_avg(time_build_pcs)
+            avg_proof_time = get_avg(time_contract_proof)
 
-        s1 = "\nResults for '" + experiment_name +"-" + args_string +"'"
-        s2 = "Time build: " + str(round(avg_build_time, 2))
-        s3 = "Time proof: " + str(round(avg_proof_time, 2))
-        s4 = "Memory: " + str(int(get_avg(memory)))
-        s5 = "Number of path conditions: " + str(int(get_avg(num_pcs)))
+            s1 = "\nResults for '" + experiment_name +"-" + args_string +"'"
+            s2 = "Time build: " + str(round(avg_build_time, 2))
+            s3 = "Time proof: " + str(round(avg_proof_time, 2))
+            s4 = "Memory: " + str(int(get_avg(memory)))
+            s5 = "Number of path conditions: " + str(int(get_avg(num_pcs)))
 
-        s6 = "Dividing time: " + str(round(get_avg(dividing_time), 4))
-        #s7 = "Pruning time: " + str(round(get_avg(pruning_time), 2))
-        s8 = "Slicing time: " + str(round(get_avg(slicing_time), 4))
+            s6 = "Dividing time: " + str(round(get_avg(dividing_time), 4))
+            #s7 = "Pruning time: " + str(round(get_avg(pruning_time), 2))
 
-        for s in [s1, s2, s3, s4, s5, s6, s8]:
-            print(s)
-            f.write(s + "\n")
+            slicing_time = round(get_avg(slicing_time), 4)
+            if slicing_time > -1:
+                s8 = "Slicing time: " + str()
+            else:
+                s8 = None
 
+            for s in [s1, s2, s3, s4, s5, s6, s8]:
+                if s is None:
+                    continue
+
+                print(s)
+                f.write(s + "\n")
+                a.write(s + "\n")
 
 
