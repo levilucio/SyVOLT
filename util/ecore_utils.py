@@ -46,7 +46,7 @@ class EcoreUtils(object):
         # also keep a list of all containment relations in the metamodel.
 
 
-        debug_contain_links = True
+        debug_contain_links = False
 
         for mmClass in metamodelClasses:
             mmClassName = mmClass.attributes['name'].value
@@ -73,7 +73,7 @@ class EcoreUtils(object):
 
         if debug_contain_links:
             print("Contain links:")
-            for k, v in self.containmentLinks.items():
+            for k, v in sorted(self.containmentLinks.items()):
                 print(str(k) + ":" + str(v))
 
         #raise Exception()
