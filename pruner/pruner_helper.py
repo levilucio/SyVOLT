@@ -25,7 +25,7 @@ class PrunerHelper:
 
         self.links_to_rules = {}
 
-        print("Transformation: " + str(transformation))
+        #print("Transformation: " + str(transformation))
 
         for layer in transformation:
             for rule in layer:
