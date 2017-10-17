@@ -97,7 +97,7 @@ class PathConditionGenerator(object):
         self.use_bin_packing = not args.shuffle
 
         self.max_chunk_size = args.max_chunk_size
-        self.min_chunk_size = min(0, self.max_chunk_size)
+        self.min_chunk_size = args.min_chunk_size
 
     def generate_letters(self, i):
 

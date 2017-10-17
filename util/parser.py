@@ -34,8 +34,11 @@ def load_parser():
                         help = 'Index of contract to slice for. Range: -1 (no slicing) to #CONTRACTS-1 (default: -1)')
     parser.set_defaults(slice = -1)
 
-    parser.add_argument('--max_chunk_size', type = int, dest = 'max_chunk_size', default = 100,
-                        help = 'When parallizing, set the max number of path conditions a worker will operate on. This reduces memory needed. (default: 100)')
+    parser.add_argument('--min_chunk_size', type=int, dest='min_chunk_size', default=10,
+                        help='When parallelizing, set the min number of path conditions a worker will operate on. (default: 10)')
+
+    parser.add_argument('--max_chunk_size', type = int, dest = 'max_chunk_size', default = 10000,
+                        help = 'When parallelizing, set the max number of path conditions a worker will operate on. (default: 10000)')
 
     parser.add_argument('--draw_svg', dest = 'draw_svg', action = 'store_true', default = False,
                         help = 'Flag to force svg files to be drawn (default: False)')
