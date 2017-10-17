@@ -34,12 +34,12 @@ class PrunerHelper:
 
                 if self.debug:
                     print("\n================\nRule: " + self.rule_names[rule.name] + " = " + rule.name)
-                    self.print_dict("Rule containment links", ruleContainmentLinks[rule.name])
+                    self.display("Rule containment links", ruleContainmentLinks[rule.name])
 
                 self.ruleContainmentLinksExtended[rule.name] = self.extend_links(ruleContainmentLinks[rule.name])
 
                 #if self.debug:
-                #    self.print_dict("ruleContainmentLinksExtended", self.ruleContainmentLinksExtended[rule.name])
+                #    self.display("ruleContainmentLinksExtended", self.ruleContainmentLinksExtended[rule.name])
 
                 for classname, clinks in self.ruleContainmentLinksExtended[rule.name].items():
                     for clink in clinks:
@@ -56,7 +56,7 @@ class PrunerHelper:
                 self.ruleMissingContLinks[rule.name] = eu.getMissingContainmentLinks(rule)
 
                 if self.debug:
-                    self.print_dict("ruleMissingContLinks (before removing built)", self.ruleMissingContLinks[rule.name])
+                    self.display("ruleMissingContLinks (before removing built)", self.ruleMissingContLinks[rule.name])
 
                 #remove those missing cont links which are built in the same rule
                 #missing_links_copy = deepcopy(self.ruleMissingContLinks[rule.name])
@@ -67,7 +67,7 @@ class PrunerHelper:
 
 
                 #if self.debug:
-                #    self.print_dict("New missing containment links", new_containment_links)
+                #    self.display("New missing containment links", new_containment_links)
 
                 self.ruleMissingContLinks[rule.name] = new_containment_links
 
@@ -78,16 +78,16 @@ class PrunerHelper:
 
                     print("Missing containment links for '" + rule.name + "':")
 
-                    self.print_dict("Rule Missing Links", self.ruleMissingContLinks[rule.name])
+                    self.display("Rule Missing Links", self.ruleMissingContLinks[rule.name])
 
-                    self.print_list("Rule Built Links", self.ruleContainmentLinks_List[rule.name])
+                    self.display("Rule Built Links", self.ruleContainmentLinks_List[rule.name])
 
 
                 # print("rule: " + rule.name)
-                #self.print_list("ruleMissingContLinks", self.ruleMissingContLinks_List[rule.name])
-                #self.print_list("cont links", self.ruleContainmentLinks_List[rule.name])
+                #self.display("ruleMissingContLinks", self.ruleMissingContLinks_List[rule.name])
+                #self.display("cont links", self.ruleContainmentLinks_List[rule.name])
                 #self.ruleMissingContLinksExtended[rule.name] = self.extend_links(self.ruleMissingContLinks[rule.name])
-                #self.print_dict("ruleMissingContLinksExtended", self.ruleMissingContLinksExtended[rule.name])
+                #self.display("ruleMissingContLinksExtended", self.ruleMissingContLinksExtended[rule.name])
 
 
         #raise Exception()
@@ -146,7 +146,7 @@ class PrunerHelper:
             self.ruleMissingContLinks[rule] = self.subtract_dicts(self.ruleMissingContLinks[rule], all_missing_links)
             self.ruleMissingContLinks_List[rule] = self.collapse_dict(self.ruleMissingContLinks[rule])
 
-            #self.print_list("self.ruleMissingContLinks_List[" + rule + "]", self.ruleMissingContLinks_List[rule])
+            #self.display("self.ruleMissingContLinks_List[" + rule + "]", self.ruleMissingContLinks_List[rule])
 
     def combine_dicts(self, d1, d2):
         for key, value in d2.items():
@@ -234,25 +234,16 @@ class PrunerHelper:
         return new_links
 
 
-    def print(self, name, t):
-        if str(type(t)) == "<class 'dict'>":
-            self.print_dict(name, t)
+    def display(self, name, t):
+        print("\n" + name + ":")
+        if str(type(t)) == "<class 'list'>":
+            print(sorted(t))
         else:
-            self.print_list(name, t)
-
-    def print_list(self, name, l):
-        if str(type(l)) == "<class 'dict'>":
-            self.print_dict(name, l)
-        print("\n" + name + ":")
-        print(sorted(l))
-
-    def print_dict(self, name, d):
-        print("\n" + name + ":")
-        for k, v in sorted(d.items()):
-            print(str(k) + " :")
-            try:
-                for c in sorted(v):
-                    print("\t" + str(c) + " : " + str(v[c]))
-            except TypeError:
-                for c in sorted(v):
-                    print("\t" + str(c))
+            for k, v in sorted(t.items()):
+                print(str(k) + " :")
+                try:
+                    for c in sorted(v):
+                        print("\t" + str(c) + " : " + str(v[c]))
+                except TypeError:
+                    for c in sorted(v):
+                        print("\t" + str(c))

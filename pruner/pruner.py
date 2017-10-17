@@ -57,14 +57,14 @@ class Pruner(object):
 
                 # if self.debug:
                 #     print("Rule: " + rule.name)
-                #     self.prunerHelper.print_list("Missing Links in Rule", missing_links)
+                #     self.prunerHelper.display("Missing Links in Rule", missing_links)
 
                 links_not_found = self.will_links_be_built_lists(rule.name, missing_links, self.prunerHelper.ruleContainmentLinksExtended.keys(), require_specific_link = True)
 
 
                 if self.debug and len(links_not_found) > 0:
                     print("\nError for rule: " + self.rule_names[rule.name])
-                    self.prunerHelper.print_dict("Missing Links (not found in transformation)", links_not_found)
+                    self.prunerHelper.display("Missing Links (not found in transformation)", links_not_found)
 
                 if links_not_found:
                     #print("Link not found " + str(links_not_found))
@@ -79,7 +79,7 @@ class Pruner(object):
                 missing_count += len(v)
             print("\nTransformation is missing " + str(missing_count) + " containment links:")
             if missing_count > 0:
-                self.prunerHelper.print_dict("All missing containment links", self.all_missing_contain_links)
+                self.prunerHelper.display("All missing containment links", self.all_missing_contain_links)
 
 
         self.prunerHelper.remove_all_missing_links(self.all_missing_contain_links)
@@ -96,7 +96,7 @@ class Pruner(object):
         links_not_found = {}
 
         if self.debug > 1:
-            self.prunerHelper.print_list(rule_name + " Missing Containment links:", missing_links)
+            self.prunerHelper.display(rule_name + " Missing Containment links:", missing_links)
 
         missing_link_counts = defaultdict(int)
         for link in missing_links:
@@ -181,7 +181,7 @@ class Pruner(object):
         if self.debug > 1:
             if len(links_not_found) > 0:
                 print("Links not found for " + rule_name)
-                self.prunerHelper.print_dict("Links Not Found (in transformation)", links_not_found)
+                self.prunerHelper.display("Links Not Found (in transformation)", links_not_found)
 
                 #raise Exception()
 
@@ -260,7 +260,7 @@ class Pruner(object):
         if self.debug:
 
             print("Path condition (before): " + pathCondition.name)
-            self.prunerHelper.print_list("Could not find these links (without built)", new_pc_missing_lists)
+            self.prunerHelper.display("Could not find these links (without built)", new_pc_missing_lists)
 
 
         if len(pc_missing_lists) == 0:
@@ -297,7 +297,7 @@ class Pruner(object):
                 except KeyError:
                     # pass
                     print("Could not find link: " + str(link))
-                    self.prunerHelper.print_dict("Links to rules",self.prunerHelper.links_to_rules)
+                    self.prunerHelper.display("Links to rules",self.prunerHelper.links_to_rules)
                     #raise Exception
 
         if link_already_built:
@@ -307,8 +307,8 @@ class Pruner(object):
         if self.debug:
 
             print("Path condition: " + pathCondition.name)
-            self.prunerHelper.print_dict("Could not find these links", missingLinks)
-            self.prunerHelper.print_list("Could not find these links (without built)", new_pc_missing_lists)
+            self.prunerHelper.display("Could not find these links", missingLinks)
+            self.prunerHelper.display("Could not find these links (without built)", new_pc_missing_lists)
             # self.prunerHelper.print_list("Built Links", pc_built_lists)
             #graph_to_dot(pathCondition.name, pathCondition)
 
