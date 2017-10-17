@@ -331,7 +331,8 @@ class PathConditionGenerator(object):
                     pc_chunks[min_index].append(pc)
                     pc_count[min_index] += weight
 
-                pc_chunks = [chunk for chunk in pc_chunks if chunk]
+                pc_chunks = [sorted(chunk) for chunk in pc_chunks if chunk]
+                #print(pc_chunks)
 
                 pc_divide_time += time.time() - pc_divide_start_time
             else:
