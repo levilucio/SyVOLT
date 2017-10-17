@@ -11,7 +11,8 @@ try:
 except ImportError:
     from .pruner_helper import PrunerHelper
 
-from collections import Counter
+from collections import Counter, defaultdict
+from copy import deepcopy
 import time
 
 class Pruner(object):
@@ -97,10 +98,18 @@ class Pruner(object):
         if self.debug > 1:
             self.prunerHelper.print_list(rule_name + " Missing Containment links:", missing_links)
 
+        missing_link_counts = defaultdict(int)
+        for link in missing_links:
+            missing_link_counts[link] += 1
+
+        found_link_counts = defaultdict(int)
+
+        rule_contain_links = deepcopy(self.prunerHelper.ruleContainmentLinksExtended)
+
         # look at each class that the rule is missing
         missing_links_sorted = sorted(missing_links, key=lambda link: link[0])
         for (className, la, lb) in missing_links_sorted:
-            found_link = False
+
             if self.debug > 1:
                 print("Classname: " + className + " link: " + str([la, lb]))
                 try:
@@ -119,9 +128,14 @@ class Pruner(object):
                     if not require_specific_link:
                         # if the other rule provides ANY containment link to the parent,
                         # assume it can contain us
-                        if parent_class in self.prunerHelper.ruleContainmentLinksExtended[rule]:
-                            found_link = True
-                            break
+                        if parent_class in rule_contain_links[rule]:
+                            found_link_counts[(className, la, lb)] += 1
+
+                            del rule_contain_links[rule][parent_class]
+                            if self.debug > 1:
+                                print("Found link: " + str(rule) + " = " + str((className, la, lb)))
+                                print(self.prunerHelper.ruleContainmentLinksExtended[rule])
+                            #break
                     else:
                         try:
                             if self.debug > 1:
@@ -130,23 +144,39 @@ class Pruner(object):
                             vals = self.prunerHelper.ruleContainmentLinksExtended[rule][parent_class]
 
                             if (la, lb) in vals:
-                                found_link = True
-                                break
+                                found_link_counts[(className, la, lb)] += 1
+                                #break
                         except KeyError:
                             pass
 
-                if found_link:
-                    break
+                #if found_link:
+                    #break
 
-            if self.debug > 1:
-                print("Found link: " + str(found_link) + " = " + str((className, la, lb)))
 
-            if not found_link:
-                try:
-                    if (la, lb) not in links_not_found[className]:
-                        links_not_found[className].append((la, lb))
-                except KeyError:
-                    links_not_found[className] = [(la, lb)]
+
+            # if not found_link:
+            #     try:
+            #         if (la, lb) not in links_not_found[className]:
+            #             links_not_found[className].append((la, lb))
+            #     except KeyError:
+            #         links_not_found[className] = [(la, lb)]
+
+
+        links_not_found = defaultdict(list)
+
+
+        for link in missing_link_counts:
+            #print("Link is: " + str(link))
+            if missing_link_counts[link] > found_link_counts[link]:
+                #print("Missing links: ")
+                #print(missing_link_counts)
+
+                #print("Found links:")
+                #print(found_link_counts)
+
+                links_not_found[link[0]].append((link[1], link[2]))
+                #raise Exception()
+
 
         if self.debug > 1:
             if len(links_not_found) > 0:
@@ -154,6 +184,8 @@ class Pruner(object):
                 self.prunerHelper.print_dict("Links Not Found (in transformation)", links_not_found)
 
                 #raise Exception()
+
+
         return links_not_found
 
 
@@ -185,7 +217,7 @@ class Pruner(object):
         #     raise Exception(pathCondition.name)
 
 
-        pruning_start_time = time.time()
+        #pruning_start_time = time.time()
 
         rules_in_pc = self.pc_name_function(pathCondition.name)
 
@@ -228,7 +260,6 @@ class Pruner(object):
         if self.debug:
 
             print("Path condition (before): " + pathCondition.name)
-            self.prunerHelper.print_dict("Could not find these links", self.prunerHelper.ruleMissingContLinks_List)
             self.prunerHelper.print_list("Could not find these links (without built)", new_pc_missing_lists)
 
 
