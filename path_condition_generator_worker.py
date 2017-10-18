@@ -603,6 +603,7 @@ class path_condition_generator_worker(Process):
         self.currentPathConditionSet = list(set(self.currentPathConditionSet))
 
 
+        pruning_debug = True
         if self.pruner.do_pruning:
 
             #pruning_time = time.time()
@@ -613,6 +614,8 @@ class path_condition_generator_worker(Process):
 
                 try:
                     del self.pc_dict[pathCondName]
+                    if pruning_debug:
+                        print("Pruned from new pc dict: " + pathCondName)
                 except KeyError:
                     pass
 
@@ -620,12 +623,24 @@ class path_condition_generator_worker(Process):
 
                 try:
                     del new_pc_dict[pathCondName]
+                    if pruning_debug:
+                        print("Pruned from new pc dict: " + pathCondName)
                 except KeyError:
+                    pass
+
+
+                try:
+                    newPathConditionSet.remove(pathCondName)
+                    if pruning_debug:
+                        print("Pruned from new path cond set: " + pathCondName)
+                except ValueError:
                     pass
 
                 if pathCondName not in name_dict:
                     try:
                         self.currentPathConditionSet.remove(pathCondName)
+                        if pruning_debug:
+                            print("Pruned from set: " + pathCondName)
                     except ValueError:
                         pass
 
