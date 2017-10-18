@@ -7,6 +7,7 @@ class PrunerHelper:
 
         self.debug = 0
 
+        # raise Exception()
         self.rule_names = rule_names
 
         empty_pc_name = "Em"
@@ -76,11 +77,9 @@ class PrunerHelper:
 
                 if self.debug:
 
-                    print("Missing containment links for '" + rule.name + "':")
+                    self.display("Rule {0} Missing Links".format(rule.name), self.ruleMissingContLinks[rule.name])
 
-                    self.display("Rule Missing Links", self.ruleMissingContLinks[rule.name])
-
-                    self.display("Rule Built Links", self.ruleContainmentLinks_List[rule.name])
+                    self.display("Rule {0} Built Links".format(rule.name), self.ruleContainmentLinks_List[rule.name])
 
 
                 # print("rule: " + rule.name)
@@ -203,7 +202,7 @@ class PrunerHelper:
         if len(links) == 0:
             return {}
 
-        new_links = dict.copy(links)
+        new_links = deepcopy(links)
 
         # for classname, clinks in links.items():
         #     child_links = self.generate_child_links(clinks)
