@@ -172,15 +172,23 @@ class Slicer:
 
         #raise Exception("Contract Required Rules")
 
-        required_rules = list(required_rules.keys())
-        for rr in required_rules[:]:
+        required_rules_stack = deepcopy(list(required_rules.keys()))
+        required_rules = []
+        while required_rules_stack:
+            rr = required_rules_stack[0]
+            required_rules_stack = required_rules_stack[1:]
+
+            if rr not in required_rules:
+                required_rules.append(rr)
 
             rule = self.rules[rr]
 
+            #print("Getting rrs for: " + rr)
             new_rrs = self.find_required_rules(rule.name, [rule], False, self.transformation)
-            for rr2, v in new_rrs.items():
-                if rr2 not in required_rules:
-                    required_rules.append(rr2)
+            for rr2 in list(new_rrs.keys()):
+                if rr2 not in required_rules and rr2 not in required_rules_stack:
+                    required_rules_stack.append(rr2)
+
 
         rr_names = required_rules
 
@@ -197,7 +205,7 @@ class Slicer:
                     rr_names.append(key)
                     #print("Adding: " + str(key))
 
-        print("Required rules for contract " + contract_name + ":\n" + str(sorted(rr_names)))
+        print("Required rules for contract " + contract_name + " (recursive):\n" + str(sorted(rr_names)))
         #raise Exception()
 
         new_rules = {}
