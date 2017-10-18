@@ -107,8 +107,6 @@ class Pruner(object):
 
         found_link_counts = defaultdict(int)
 
-        rule_contain_links = deepcopy(self.prunerHelper.ruleContainmentLinksExtended)
-
         # look at each class that the rule is missing
         missing_links_sorted = sorted(set(missing_links), key=lambda l: l[0])
         for (className, la, lb) in missing_links_sorted:
@@ -131,17 +129,8 @@ class Pruner(object):
                     if not require_specific_link:
                         # if the other rule provides ANY containment link to the parent,
                         # assume it can contain us
-                        if parent_class in rule_contain_links[rule]:
+                        if parent_class in self.prunerHelper.ruleContainmentLinksExtended[rule]:
                             found_link_counts[(className, la, lb)] += 1
-
-
-                            try:
-                                rule_contain_links[rule][parent_class].remove((la, lb))
-
-                                if self.debug:
-                                    print("\t\tRemoving " + str((la, lb)) + " from " + parent_class)
-                            except ValueError:
-                                pass
 
                             if self.debug > 1:
                                 print("Found link: " + str(rule) + " = " + str((className, la, lb)) + " under classname: " + parent_class)
