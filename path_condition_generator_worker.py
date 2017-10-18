@@ -603,7 +603,7 @@ class path_condition_generator_worker(Process):
         self.currentPathConditionSet = list(set(self.currentPathConditionSet))
 
 
-        pruning_debug = True
+        pruning_debug = False
         if self.pruner.do_pruning:
 
             #pruning_time = time.time()
