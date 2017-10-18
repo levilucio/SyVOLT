@@ -177,6 +177,6 @@ class Tester:
 
         #print("Reachability check took " + str(time.time() - reachability_start) + " seconds")
 
-        # if len(rules_not_seen) > 0:
-        #    raise Exception()
+        if len(rules_not_seen) > 0:
+            raise Exception()
 
