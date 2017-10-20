@@ -34,6 +34,7 @@ experiments = [
     ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=200"],
     ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=500"],
     ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=1000"],
+    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=2000"],
 
     ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=5"],
     ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=10"],
@@ -42,6 +43,25 @@ experiments = [
     ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=200"],
     ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=500"],
     ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=1000"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=2000"],
+
+    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=5", "--skip_pickle"],
+    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=10", "--skip_pickle"],
+    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=20", "--skip_pickle"],
+    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=100", "--skip_pickle"],
+    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=200", "--skip_pickle"],
+    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=500", "--skip_pickle"],
+    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=1000", "--skip_pickle"],
+    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=2000", "--skip_pickle"],
+
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=5", "--skip_pickle"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=10", "--skip_pickle"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=20", "--skip_pickle"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=100", "--skip_pickle"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=200", "--skip_pickle"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=500", "--skip_pickle"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=1000", "--skip_pickle"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=2000", "--skip_pickle"],
 
     # Pruning
     # (F2P, GM, UML, mbeddr, RSS2ATOM)
@@ -140,7 +160,8 @@ experiments = [
 
 ]
 
-results_filename = os.path.join("results", "000-all_results.txt")
+results_dir = os.path.expanduser("~/Dropbox/University/PHD/results")
+results_filename = os.path.join(results_dir, "000-all_results.txt")
 
 with open(results_filename, "w") as a:
     for i, experiment in enumerate(experiments):
@@ -157,7 +178,7 @@ with open(results_filename, "w") as a:
 
         #print(args_string)
 
-        ex_filename = os.path.join("results", str(i) + "-" + experiment_name + "-" + args_string + ".txt")
+        ex_filename = os.path.join(results_dir, str(i) + "-" + experiment_name + "-" + args_string + ".txt")
 
         #print(ex_filename)
 
