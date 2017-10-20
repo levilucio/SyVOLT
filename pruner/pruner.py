@@ -108,13 +108,13 @@ class Pruner(object):
         found_link_counts = defaultdict(int)
 
         # look at each class that the rule is missing
-        missing_links_sorted = sorted(set(missing_links), key=lambda l: l[0])
+        missing_links_sorted = sorted(set(missing_links), key=lambda l: (l[0], l[1], l[2]))
         for (className, la, lb) in missing_links_sorted:
 
             if self.debug > 1:
                 print("Classname: " + className + " link: " + str([la, lb]))
                 try:
-                    print("Parents: " + str(self.prunerHelper.mmClassParents[className]))
+                    print("Parents: " + str(sorted(self.prunerHelper.mmClassParents[className])))
                 except KeyError:
                     pass
 
@@ -124,7 +124,7 @@ class Pruner(object):
                 if self.debug > 1:
                     print("\tLooking at rule: " + rule)
 
-                for parent_class in [className] + self.prunerHelper.mmClassParents[className]:
+                for parent_class in [className] + sorted(self.prunerHelper.mmClassParents[className]):
 
                     if not require_specific_link:
                         # if the other rule provides ANY containment link to the parent,
@@ -296,6 +296,8 @@ class Pruner(object):
 
         if link_already_built:
             #self.pruning_time += time.time() - pruning_start_time
+            if self.debug:
+                print("Link already built, returning true")
             return True
 
         if self.debug:
