@@ -91,6 +91,7 @@ class path_condition_generator_worker(Process):
             progress_bar = ProgressBar(pathConSetLength)
 
         pcs_to_prune = []
+        pcs_to_prune_less = []
 
         for pathConditionIndex in range(pathConSetLength):
 
@@ -428,6 +429,7 @@ class path_condition_generator_worker(Process):
 
                                             #prune the old path condition
                                             pcs_to_prune.append(childrenPathConditions[child_pc_index])
+                                            pcs_to_prune_less.append(childrenPathConditions[child_pc_index])
 
                                             #change the child's name in the child's array
                                             childrenPathConditions[child_pc_index] = newPathCondName
@@ -628,13 +630,14 @@ class path_condition_generator_worker(Process):
                 except KeyError:
                     pass
 
-
-                try:
-                    newPathConditionSet.remove(pathCondName)
-                    if pruning_debug:
-                        print("Pruned from new path cond set: " + pathCondName)
-                except ValueError:
-                    pass
+                # work around bug
+                if pathCondName not in pcs_to_prune_less:
+                    try:
+                        newPathConditionSet.remove(pathCondName)
+                        if pruning_debug:
+                            print("Pruned from new path cond set: " + pathCondName)
+                    except ValueError:
+                        pass
 
                 if pathCondName not in name_dict:
                     try:
