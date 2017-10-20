@@ -138,6 +138,29 @@ experiments = [
     ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel"],
     ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel", "--skip_pickle"],
 
+
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel"],
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--compression=0"],
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--compression=9"],
+
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel"],
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--compression=0"],
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--compression=9"],
+
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--skip_parallel"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--skip_parallel", "--compression=0"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--skip_parallel", "--compression=9"],
+
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--compression=0"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--compression=9"],
+
+    ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel"],
+    ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel", "--compression=0"],
+    ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel", "--compression=9"],
+
+
+
 ]
 
 results_filename = os.path.join("results", "000-all_results.txt")
