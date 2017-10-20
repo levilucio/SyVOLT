@@ -1,26 +1,12 @@
 
 
-from core.himesis_utils import disjoint_model_union
-from core.himesis_utils import graph_to_dot
 from core.himesis_utils import clean_graph
-from core.himesis_utils import print_graph
 from core.himesis_utils import set_do_pickle
 from core.himesis_utils import set_compression
 from core.himesis_utils import build_traceability
-from core.himesis_utils import delete_graph
-
-from core.himesis_plus import *
-
-#from core.himesis import Himesis
 
 import math
 import time
-
-#from PCDict import PCDict
-
-from copy import deepcopy
-
-
 
 from util.Tester import Tester
 
@@ -279,6 +265,7 @@ class PathConditionGenerator(object):
         except ImportError:
             print("Warning: psutil not found")
             self.print_memory_usage = False
+            psutil = None
 
         manager = Manager()
 
@@ -317,7 +304,7 @@ class PathConditionGenerator(object):
                 else:
                     number_of_bins = cpu_count
 
-                pc_chunks = [[] for i in range(number_of_bins)]
+                pc_chunks = [[] for _ in range(number_of_bins)]
                 pc_count = [0] * number_of_bins
 
                 pc_with_weights = [[pc, int(pc.split(".")[1])] for pc in currentpathConditionSet]
@@ -438,7 +425,7 @@ class PathConditionGenerator(object):
 
             currentpathConditionSet = []
 
-            for worker in workers:
+            for _ in workers:
                 r = results_queue.get()
                 currentpathConditionSet.extend(r[0])
 
@@ -526,20 +513,6 @@ class PathConditionGenerator(object):
         
             yield pc, pc_name
 
-    #@do_cprofile
-    def _buildTraceabilityLinks(self,layer):
-        """
-        build traceability (for the time being apply all rules until exhaustion)
-        """
-        symbLayer = []
-        for rule in layer:
-            p = Packet()
-            p.graph = rule
-            for transf in self.traceBuildTransf:
-                p = transf.packet_in(p)
-            symbLayer.append(p)
-        return symbLayer
-    
 
 #     def _buildBackLinksCacheKeys(self,backLinkMatchers,pathCondition):
 #         """
