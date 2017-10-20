@@ -1,6 +1,5 @@
 
 from t_core.messages import Packet
-from t_core.matcher import Matcher
 from t_core.iterator import Iterator
 
 
@@ -39,7 +38,12 @@ class path_condition_generator_worker(Process):
         self.results_queue = None
         self.verbosity = verbosity
 
-        #self.attributeEquationEvaluator = SimpleAttributeEquationEvaluator(verbosity)
+        self.rule_names = None
+        self.ruleCombinators = None
+        self.ruleTraceCheckers = None
+        self.overlappingRules = None
+        self.subsumption = None
+        self.loopingRuleSubsumption = None
 
         nprnd.seed(num)
 
@@ -74,7 +78,7 @@ class path_condition_generator_worker(Process):
     #@profile
     def run(self):
 
-        start_time = time.time()
+        #start_time = time.time()
 
         #print("Running thread")
 
@@ -91,6 +95,7 @@ class path_condition_generator_worker(Process):
             progress_bar = ProgressBar(pathConSetLength)
 
         pcs_to_prune = []
+        pcs_to_prune_less = []
 
         for pathConditionIndex in range(pathConSetLength):
 
@@ -428,6 +433,7 @@ class path_condition_generator_worker(Process):
 
                                             #prune the old path condition
                                             pcs_to_prune.append(childrenPathConditions[child_pc_index])
+                                            pcs_to_prune_less.append(childrenPathConditions[child_pc_index])
 
                                             #change the child's name in the child's array
                                             childrenPathConditions[child_pc_index] = newPathCondName
@@ -486,11 +492,11 @@ class path_condition_generator_worker(Process):
 #             print("Rules for second phase: " + str(rulesForSecondPhase))
 
                 
-            for pathConditionIndex in range(len(childrenPathConditions)):
+            for pathConditionIndex2 in range(len(childrenPathConditions)):
                 
                 for rule_name in self.rulesForSecondPhase:
                     ruleNamesInPC = []
-                    for token in childrenPathConditions[pathConditionIndex].split("_"):
+                    for token in childrenPathConditions[pathConditionIndex2].split("_"):
                         ruleNamesInPC.append(token.split("-")[0])
                         
 #                     print("Rule names in PC: " + str(ruleNamesInPC))
@@ -501,12 +507,12 @@ class path_condition_generator_worker(Process):
                     # otherwise don't even try to apply the rule.
                     # check also if the rules has not been previously executed as a rule with no dependencies
                     if set(self.overlappingRules[rule_name]).intersection(set(ruleNamesInPC)) != set() and\
-                        rule_name not in childrenPathConditions[pathConditionIndex]:
+                        rule_name not in childrenPathConditions[pathConditionIndex2]:
                         
                         if self.verbosity >= 2 : print("Executing rule " + self.rule_names[rule_name] + " in second phase for overlaps.")
                         
-                        combinatorMatcher = None
-                        combinatorRewriter = None
+                        #combinatorMatcher = None
+                        #combinatorRewriter = None
                         
                         if len(self.ruleCombinators[rule_name]) == 1:
                             # Case 1: Rule has no dependencies
@@ -521,7 +527,7 @@ class path_condition_generator_worker(Process):
                         # execute the rule
 
                         p = Packet()
-                        cpc = self.pc_dict[childrenPathConditions[pathConditionIndex]]
+                        cpc = self.pc_dict[childrenPathConditions[pathConditionIndex2]]
                         p.graph = cpc
                         p = combinatorMatcher.packet_in(p)
 #                         print "----> PC Name: " + childrenPathConditions[pathConditionIndex]                         
@@ -583,7 +589,7 @@ class path_condition_generator_worker(Process):
                         #     name_dict[previousTotalPC] = newPathCondName
                         #     reverse_name_dict[newPathCondName] = previousTotalPC
 
-                        childrenPathConditions[pathConditionIndex] = newPathCondName
+                        childrenPathConditions[pathConditionIndex2] = newPathCondName
 
                         if self.verbosity >= 2:
                             print("Second Phase: Created new path condition: " + newPathCondName)
@@ -628,13 +634,14 @@ class path_condition_generator_worker(Process):
                 except KeyError:
                     pass
 
-
-                try:
-                    newPathConditionSet.remove(pathCondName)
-                    if pruning_debug:
-                        print("Pruned from new path cond set: " + pathCondName)
-                except ValueError:
-                    pass
+                # work around bug
+                if pathCondName not in pcs_to_prune_less:
+                    try:
+                        newPathConditionSet.remove(pathCondName)
+                        if pruning_debug:
+                            print("Pruned from new path cond set: " + pathCondName)
+                    except ValueError:
+                        pass
 
                 if pathCondName not in name_dict:
                     try:
