@@ -185,32 +185,25 @@ class Slicer:
 
             #print("Getting rrs for: " + rr)
             new_rrs = self.find_required_rules(rule.name, [rule], False, self.transformation)
-            for rr2 in list(new_rrs.keys()):
+            new_rrs = list(new_rrs.keys())
+
+            # add in the rules which might be needed for subsumption
+            for key, values in self.overlapping_rules.items():
+                if rr == key:
+                    for val in values:
+                        new_rrs.append(val)
+
+            for rr2 in new_rrs:
                 if rr2 not in required_rules and rr2 not in required_rules_stack:
                     required_rules_stack.append(rr2)
 
 
-        rr_names = required_rules
-
-        #add in the rules which might be needed for subsumption
-        rrules_copy = rr_names[:]
-        for rr in rrules_copy:
-            for key, values in self.overlapping_rules.items():
-                if rr == key:
-                    for val in values:
-                        if val not in rr_names:
-                            rr_names += values
-                            #print("Adding: " + str(values))
-                if rr in values and key not in rr_names:
-                    rr_names.append(key)
-                    #print("Adding: " + str(key))
-
-        print("Required rules for contract " + contract_name + " (recursive):\n" + str(sorted(rr_names)))
+        print("Required rules for contract " + contract_name + " (recursive):\n" + str(sorted(required_rules)))
         #raise Exception()
 
         new_rules = {}
         for k in self.rules.keys():
-            if k in rr_names:
+            if k in required_rules:
                 new_rules[k] = self.rules[k]
 
 
@@ -218,7 +211,7 @@ class Slicer:
         for layer in self.transformation:
             new_layer = []
             for rule in layer:
-                if rule.name in rr_names:
+                if rule.name in required_rules:
                     new_layer.append(rule)
 
             if len(new_layer) > 0:
