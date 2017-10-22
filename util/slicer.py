@@ -12,7 +12,7 @@ from collections import defaultdict
 class Slicer:
 
 
-    def __init__(self, rules, transformation, superclasses_dict, overlapping_rules, atomic_contracts):
+    def __init__(self, rules, transformation, superclasses_dict, overlapping_rules, subsumption, atomic_contracts):
 
         self.debug = False
 
@@ -41,6 +41,7 @@ class Slicer:
         self.superclasses_dict = superclasses_dict
 
         self.overlapping_rules = overlapping_rules
+        self.subsumption = subsumption
 
         for layer in transformation:
             for i, rule in enumerate(layer):
@@ -64,9 +65,6 @@ class Slicer:
 
         for layer in transformation:
             for rule in layer:
-
-                #if "UnionMother" not in rule.name:
-                #    continue
 
                 r_rules = self.find_required_rules(rule.name, [rule])
                 self.required_rules[rule.name] = r_rules
@@ -193,6 +191,13 @@ class Slicer:
                     for val in values:
                         new_rrs.append(val)
 
+            for key, values in self.subsumption.items():
+                if rr == key:
+                    for val in values:
+                        new_rrs.append(val)
+                if rr in values:
+                    new_rrs.append(key)
+
             for rr2 in new_rrs:
                 if rr2 not in required_rules and rr2 not in required_rules_stack:
                     required_rules_stack.append(rr2)
@@ -224,6 +229,7 @@ class Slicer:
 
         print("Time taken for: -slicing- " + str(end_time) + " seconds")
         print("Number rules after: " + str(len(new_rules)))
+
         #raise Exception()
 
 
