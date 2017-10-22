@@ -36,7 +36,7 @@ class HSS1_then_CompleteLHS(HimesisPreConditionPatternLHS):
 		self.vs[1]["mm__"] = """MT_pre__ProcDef"""
 		self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'0.36.a.1ProcDef')
 
-		self['equations'].append(((0,'name'),('concat', (('constant', 'S'), (1, 'name')))))
+		self['equations'].append(((1,'name'),('concat', (('constant', 'S'), (0, 'name')))))
 		self["equations"].append(((0,'pivot'),('constant','Inst0c012f83Inst')))
 
 
