@@ -17,7 +17,7 @@
         eType="#//Name" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="paramExprs" upperBound="-1"
         eType="#//Expr" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="p" lowerBound="1" eType="#//Proc"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="proc" lowerBound="1" eType="#//Proc"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="channels" upperBound="-1"
         eType="#//Name"/>
@@ -97,7 +97,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="LocalDef" eSuperTypes="#//Proc">
     <eStructuralFeatures xsi:type="ecore:EReference" name="def" lowerBound="1" upperBound="-1"
         eType="#//Def" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="p" lowerBound="1" eType="#//Proc"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ldProc" lowerBound="1" eType="#//Proc"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Condition" eSuperTypes="#//Proc #//ConditionBranch">

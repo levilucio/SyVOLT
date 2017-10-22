@@ -61,54 +61,73 @@ class UMLTest(Test):
             r15 = 'HRuleConnect2RootElement'
             r16 = 'HMapHierarchyOfStates2HierarchyOfProcs'
 
-            # full_transformation = [[r0, ], [r1, ], [r2, ], [r3, ], [r4, ], [r5, ], [r6, ], [r7, ], [r8, ], [r9, ],
-            #                        [r10, ], [r11, ], [r12, ], [r13, ], [r14, ], [r15, ], [r16, ], ]
+            # ['HBasicState2ProcDef', 'HCompositeState2ProcDef', 'HConnectOutputsOfExitPoint2BProcDefTransition2QInst',
+            #  'HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans', 'HState2CProcDef', 'HState2HProcDef',
+            #  'HState2ProcDef', 'HTransition2Inst', 'HTransition2QInstOUT', 'HTransition2QInstSIBLING',
+            #  'HTransitionHListenBranch']
+            #sliced
+            #self.full_transformation = [ [r1, ], [r2, r4, ], [r7, r5, r6, ], [r8, r9, r10, ],
+             #                           [r11, r12, r13], ]
+
             self.full_transformation = [[r0], [r1, ], [r3, r2, r4, ], [r7, r5, r6, ], [r8, r9, r10, ],
-                                   [r11, r12, r13, r14, ], [r15], [r16, ], ]
+                                    [r11, r12, r13, r14, ], [r15], [r16, ], ]
 
-            self.transformation_directory = "UMLRT2Kiltera_MM/transformation/from_ATL/"
+            self.transformation_directory = "UMLRT2Kiltera_MM/transformation/from_MPS/"
 
+        # #switch to MPS version
+        self.full_transformation = []
+        self.full_transformation.append(['HMapRootElementRule', ])  # RootElements
+        self.full_transformation.append(['HState2ProcDef', ])  # CommonStateToProcessTransformationRules
+        self.full_transformation.append(['HBasicStateNoOutgoing2ProcDef', 'HBasicState2ProcDef',
+                                         'HCompositeState2ProcDef', ])  # DiffStateTypes2DiffProcesses
+        self.full_transformation.append(['HExitPoint2BProcDefWhetherOrNotExitPtHasOutgoingTrans', 'HState2HProcDef',
+                                         'HState2CProcDef', ])  # MapTransitionsOfDifferentStateTypes
+        self.full_transformation.append(
+            ['HTransition2QInstSIBLING', 'HTransition2QInstOUT', 'HTransition2Inst', ])  # Transition2Qinst
+
+
+        self.full_transformation.append(
+            ['HTransition2ListenBranch', 'HConnectOutputsOfExitPoint2BProcDefTransition2QInst',
+             'HTransition2HListenBranch',
+             'HConnectOPState2CProcDefTransition2InstotherInTransitions', ])  # ConnectPrevGeneratedInstThatCorrespond2Transitions
+
+        self.full_transformation.append(
+            ['HRuleConnect2RootElement'])  # Connect2RootElement
+        self.full_transformation.append(
+            ['HMapHeirarchyOfStates2HeirarchyOfProcs', ]
+        )
         # =====METAMODELS===============
 
-        self.inputMM = "UMLRT2Kiltera_MM/transformation_for_prunning/metamodels/rt_new.ecore"
-        self.outputMM = "UMLRT2Kiltera_MM/transformation_for_prunning/metamodels/klt_new.ecore"
+        self.inputMM = "UMLRT2Kiltera_MM/metamodels/UMLRT.ecore"
+        self.outputMM = "UMLRT2Kiltera_MM/metamodels/Kiltera.ecore"
 
         # ====CONTRACTS==================
 
-        self.contract_directory = "UMLRT2Kiltera_MM/Properties/from_thesis/"
+        self.contract_directory = "UMLRT2Kiltera_MM/Properties/from_MPS/"
 
         self.atomic_contracts = [
             "PP1",
             "PP2",
             "PP3",
             "PP4",
-            # #"PP5",
+            #"PP5",
         ]
 
         self.if_then_contracts = [
-            ["MM5_if", "MM5_then"],
-            ["MM6_if", "MM6_then"],
-            ["MM7_if", "MM7_then"],
-            ["MM11_if", "MM11_then"],
-            ["SS1_if", "SS1_then"],
-            # skip this one
-            # #["SS2_if", "SS2_then"],
-            # ["SS3_if1", "SS3_then1"],
-            # ["SS3_if2", "SS3_then2"],
-        ]
-
-        self.if_then_contracts += [
-            # structure is 'if graph', 'then graph'
-            # where the 'then graph' is made up of reverse polish notation
-            ["MM1_if", ["MM1_then1", "MM1_then2", "NOT", "AND"]],
-            ["MM2_if", ["MM2_then1", "MM2_then2", "NOT", "AND"]],
-            ["MM3_if", ["MM3_then1", "MM3_then2", "NOT", "AND"]],
-            ["MM4_if", ["MM4_then1", "MM4_then2", "NOT", "AND"]],
-            ["MM8_if", ["MM8_then1", "MM8_then2", "NOT", "AND", "MM8_then1", "NOT", "OR"]],
-            ["MM9_if", ["MM9_then1", "MM9_then2", "NOT", "AND", "MM9_then1", "NOT", "OR"]],
-            ["MM10_if", ["MM10_then1", "MM10_then2", "NOT", "AND", "MM10_then1", "NOT", "OR"]],
-            # skip this one
-            #  #[["SS3_if1", "SS3_if2", "NOT", "AND"], ["SS3_then1", "SS3_then2", "NOT", "AND"]],
+            [["MM1_if"], ["MM1_then1", "MM1_then2", "NOT", "AND"]],
+            [["MM2_if"], ["MM2_then1", "MM2_then2", "NOT", "AND"]],
+            [["MM3_if"], ["MM3_then1", "MM3_then2", "NOT", "AND"]],
+            [["MM4_if"], ["MM4_then1", "MM4_then2", "NOT", "AND"]],
+            [["MM5_if"], ["MM5_then"]],
+            [["MM6_if"], ["MM6_then"]],
+            [["MM7_if"], ["MM7_then"]],
+            [["MM8_if"], ["MM8_then1", "MM8_then2", "NOT", "AND", "MM8_then1", "NOT", "OR"]],
+            [["MM9_if"], ["MM9_then1", "MM9_then2", "NOT", "AND", "MM9_then1", "NOT", "OR"]],
+            [["MM10_if"], ["MM9_then1", "MM10_then2", "NOT", "AND", "MM10_then1", "NOT", "OR"]],
+            [["MM11_if"], ["MM11_then"]],
+            [["SS1_if"], ["SS1_then"]],
+            #[["SS2_if"], ["SS2_then"]],
+            #[["SS3_if1", "SS3_if2", "NOT", "AND"], ["SS3_then1", "SS3_then2", "NOT", "AND"]],
         ]
 
         # =========PC SAVE LOCATION

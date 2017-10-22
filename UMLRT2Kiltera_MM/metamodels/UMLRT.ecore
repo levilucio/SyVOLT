@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="">
+  <eClassifiers xsi:type="ecore:EClass" name="Action" eSuperTypes="#//Element #//TopLevelElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="context"  upperBound="1"  eType="#//Capsule"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BASE0" eSuperTypes="#//PortType #//TopLevelElement ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CONJUGATE1" eSuperTypes="#//PortType #//TopLevelElement ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Capsule">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="primaryStateMachine"  upperBound="1"  eType="#//StateMachine"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="ports"  upperBound="-1"  eType="#//Port"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="roles"  upperBound="-1"  eType="#//CapsuleRole"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="connectors"  upperBound="-1"  eType="#//PortConnector"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CapsuleRole">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="servicePortConnectors"  upperBound="-1"  eType="#//PortConnectorRef"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="baseCapsuleRef"  upperBound="1"  eType="#//Capsule"  />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="container"  upperBound="1"  eType="#//Capsule"  />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="roleType"  upperBound="1"  eType="#//RoleType"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Element" eSuperTypes="#//TopLevelElement ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EntryPoint" eSuperTypes="#//StateMachineElement #//Vertex ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="outgoingTransitions"  upperBound="-1"  eType="#//Transition"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="owningStateMachine"  upperBound="1"  eType="#//StateMachine"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExitPoint" eSuperTypes="#//StateMachineElement #//Vertex ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="outgoingTransitions"  upperBound="-1"  eType="#//Transition"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="owningStateMachine"  upperBound="1"  eType="#//StateMachine"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FIXED0" eSuperTypes="#//RoleType #//TopLevelElement ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IN0" eSuperTypes="#//SignalType #//TopLevelElement ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IN1" eSuperTypes="#//TopLevelElement #//TransitionType ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InitialPoint" eSuperTypes="#//StateMachineElement #//Vertex ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="outgoingTransitions"  upperBound="-1"  eType="#//Transition"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="owningStateMachine"  upperBound="1"  eType="#//StateMachine"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalThread" eSuperTypes="#//Thread ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="physical"  upperBound="1"  eType="#//PhysicalThread"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Model" eSuperTypes="#//PackageContainer ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="pThreads"  upperBound="-1"  eType="#//PhysicalThread"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="lThreads"  upperBound="-1"  eType="#//LogicalThread"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="topCapsule"  upperBound="1"  eType="#//Capsule"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OPTIONAL1" eSuperTypes="#//RoleType #//TopLevelElement ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OUT1" eSuperTypes="#//SignalType #//TopLevelElement ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OUT2" eSuperTypes="#//TopLevelElement #//TransitionType ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PLUGIN2" eSuperTypes="#//RoleType #//TopLevelElement ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Package" eSuperTypes="#//PackageContainer ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="capsules"  upperBound="-1"  eType="#//Capsule"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="protocols"  upperBound="-1"  eType="#//Protocol"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PackageContainer" abstract="true" >
+	<eStructuralFeatures xsi:type="ecore:EReference" name="packages"  upperBound="-1"  eType="#//Package"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PhysicalThread" eSuperTypes="#//Thread ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Port">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="sendSignals"  upperBound="-1"  eType="#//Signal"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="receiveSignals"  upperBound="-1"  eType="#//Signal"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="protocol"  upperBound="1"  eType="#//Protocol"  />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="type"  upperBound="1"  eType="#//PortType"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PortConnector">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="end"  upperBound="1"  eType="#//PortRef"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="owningCapsule"  upperBound="1"  eType="#//Capsule"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PortConnectorRef" eSuperTypes="#//Element #//TopLevelElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="connector"  upperBound="1"  eType="#//PortConnector"  />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="role"  upperBound="1"  eType="#//CapsuleRole"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PortRef" eSuperTypes="#//Element #//TopLevelElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="role"  upperBound="1"  eType="#//CapsuleRole"  />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="port"  upperBound="1"  eType="#//Port"  />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="owningConnector"  upperBound="1"  eType="#//PortConnector"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PortType" abstract="true"  eSuperTypes="#//TopLevelElement ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Protocol">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="signals"  upperBound="-1"  eType="#//Signal"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RoleType" abstract="true"  eSuperTypes="#//TopLevelElement ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RootElement">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="contains"  upperBound="-1"  eType="#//TopLevelElement"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SIBLING0" eSuperTypes="#//TopLevelElement #//TransitionType ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Signal">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="protocol"  upperBound="1"  eType="#//Protocol"  />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="type"  upperBound="1"  eType="#//SignalType"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SignalType" abstract="true"  eSuperTypes="#//TopLevelElement ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="State" eSuperTypes="#//StateMachine ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="entryAction"  eType="#//Action"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="exitAction"  eType="#//Action"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="states"  upperBound="-1"  eType="#//State"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="transitions"  upperBound="-1"  eType="#//Transition"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="entryPoints"  upperBound="-1"  eType="#//EntryPoint"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="exitPoints"  upperBound="-1"  eType="#//ExitPoint"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="initialPoint"  eType="#//InitialPoint"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="connectionPoints"  upperBound="-1"  eType="#//Vertex"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="capsule"  upperBound="1"  eType="#//Capsule"  />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="initialTransition"  upperBound="1"  eType="#//Transition"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StateMachine">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="states"  upperBound="-1"  eType="#//State"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="transitions"  upperBound="-1"  eType="#//Transition"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="entryPoints"  upperBound="-1"  eType="#//EntryPoint"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="exitPoints"  upperBound="-1"  eType="#//ExitPoint"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="initialPoint"  eType="#//InitialPoint"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="connectionPoints"  upperBound="-1"  eType="#//Vertex"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="capsule"  upperBound="1"  eType="#//Capsule"  />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="initialTransition"  upperBound="1"  eType="#//Transition"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StateMachineElement" abstract="true" >
+	<eStructuralFeatures xsi:type="ecore:EReference" name="owningStateMachine"  upperBound="1"  eType="#//StateMachine"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Thread" abstract="true" >
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TopLevelElement" abstract="true" >
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="#//StateMachineElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="triggers"  upperBound="-1"  eType="#//Trigger"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="action"  eType="#//Action"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="src"  upperBound="1"  eType="#//Vertex"  />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="dest"  upperBound="1"  eType="#//Vertex"  />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="type"  upperBound="1"  eType="#//TransitionType"  />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="owningStateMachine"  upperBound="1"  eType="#//StateMachine"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TransitionType" abstract="true"  eSuperTypes="#//TopLevelElement ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Trigger" eSuperTypes="#//Element #//TopLevelElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="port"  upperBound="1"  eType="#//Port"  />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="signal"  upperBound="1"  eType="#//Signal"  />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="owningTransition"  upperBound="1"  eType="#//Transition"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Vertex" eSuperTypes="#//StateMachineElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="outgoingTransitions"  upperBound="-1"  eType="#//Transition"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="owningStateMachine"  upperBound="1"  eType="#//StateMachine"  />
+</eClassifiers>
+</ecore:EPackage>

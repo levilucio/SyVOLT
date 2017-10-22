@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="">
+  <eClassifiers xsi:type="ecore:EClass" name="Condition" eSuperTypes="#//ConditionBranch #//Proc #//TopLevelElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="else"  eType="#//Proc"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="if"  upperBound="1"  eType="#//Expr"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="then"  upperBound="1"  eType="#//Proc"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConditionBranch" eSuperTypes="#//TopLevelElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="if"  upperBound="1"  eType="#//Expr"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="then"  upperBound="1"  eType="#//Proc"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConditionSet" eSuperTypes="#//Proc #//TopLevelElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="branches"  upperBound="-1"  lowerBound="1"  eType="#//ConditionBranch"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="alternative"  eType="#//Proc"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Def" abstract="true" >
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Delay" eSuperTypes="#//Proc #//TopLevelElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="time"  upperBound="1"  eType="#//Expr"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="p"  upperBound="1"  eType="#//Proc"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Expr">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FuncDef" eSuperTypes="#//Def ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="varNames"  upperBound="-1"  eType="#//Name"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="expr"  upperBound="1"  eType="#//Expr"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="vars"  upperBound="-1"  eType="#//Name"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Inst" eSuperTypes="#//Proc #//TopLevelElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="channelNames"  upperBound="-1"  eType="#//Name"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="paramExprs"  upperBound="-1"  eType="#//Expr"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="channels"  upperBound="-1"  eType="#//Name"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Listen" eSuperTypes="#//Proc #//TopLevelElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="branches"  upperBound="-1"  lowerBound="1"  eType="#//ListenBranch"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ListenBranch" eSuperTypes="#//TopLevelElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="match"  eType="#//Pattern"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="p"  upperBound="1"  eType="#//Proc"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="listenProc"  upperBound="1"  eType="#//Listen"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LocalDef" eSuperTypes="#//Proc #//TopLevelElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="def"  upperBound="-1"  lowerBound="1"  eType="#//Def"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="p"  upperBound="1"  eType="#//Proc"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Match" eSuperTypes="#//Proc #//TopLevelElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="e"  upperBound="1"  eType="#//Expr"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="cases"  upperBound="-1"  lowerBound="1"  eType="#//MatchCase"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MatchCase" eSuperTypes="#//TopLevelElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="p"  upperBound="1"  eType="#//Pattern"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="proc"  upperBound="1"  eType="#//Proc"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Model" eSuperTypes="#//TopLevelElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="sites"  upperBound="-1"  eType="#//Site"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="modules"  upperBound="-1"  eType="#//Module"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Module" eSuperTypes="#//TopLevelElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="pythonref"  upperBound="-1"  eType="#//PythonRef"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Name" eSuperTypes="#//TopLevelElement ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="New" eSuperTypes="#//Proc #//TopLevelElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="channelNames"  upperBound="-1"  lowerBound="1"  eType="#//Name"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="p"  upperBound="1"  eType="#//Proc"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="channels"  upperBound="-1"  lowerBound="1"  eType="#//Name"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Null" eSuperTypes="#//Proc #//TopLevelElement ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Par" eSuperTypes="#//Proc #//TopLevelElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="p"  upperBound="1"  eType="#//Proc"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ParIndexed" eSuperTypes="#//Proc #//TopLevelElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="p"  upperBound="1"  eType="#//Proc"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="f"  upperBound="1"  eType="#//Pattern"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="e"  upperBound="1"  eType="#//Expr"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Pattern" eSuperTypes="#//TopLevelElement ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Print" eSuperTypes="#//Proc #//TopLevelElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="output"  upperBound="1"  eType="#//Expr"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Proc" abstract="true" >
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProcDef" eSuperTypes="#//Def ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="channelNames"  upperBound="-1"  eType="#//Name"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="paramExprs"  upperBound="-1"  eType="#//Expr"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="p"  upperBound="1"  eType="#//Proc"  containment="true" />
+	<eStructuralFeatures xsi:type="ecore:EReference" name="channels"  upperBound="-1"  eType="#//Name"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PythonRef" eSuperTypes="#//TopLevelElement ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RootElement">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="contains"  upperBound="-1"  eType="#//TopLevelElement"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Seq" eSuperTypes="#//Par #//Proc #//TopLevelElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="p"  upperBound="1"  eType="#//Proc"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Site" eSuperTypes="#//TopLevelElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="modules"  upperBound="-1"  eType="#//Module"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TopLevelElement" abstract="true" >
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Trigger" eSuperTypes="#//Proc #//TopLevelElement ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="output"  eType="#//Expr"  containment="true" />
+</eClassifiers>
+</ecore:EPackage>
