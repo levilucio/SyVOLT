@@ -109,7 +109,7 @@ class Slicer:
     def decompose_contract(self, contract):
 
         contract_list = contract[1].get_graph()
-        contract_name = contract[1].name
+        contract_name = contract[1].to_string()
 
         #print("Slicing for: " + contract_name)
 

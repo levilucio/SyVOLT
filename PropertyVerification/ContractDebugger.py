@@ -52,7 +52,9 @@ class ContractDebugger:
         for _ in matcher.match_iter():
             break
 
-        matcher.print_failures(required_rules = self.slicer.required_rules[contract.name])
+
+        matcher.print_failures()
+        
 
         if self.draw:
             graph_to_dot(contract_complete.name + "_failed_" + failed_pc.name, failed_pc)

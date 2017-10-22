@@ -551,7 +551,7 @@ class NewHimesisMatcher(object):
             link = "backward_link"
         print(graph.vs[n0]["mm__"].replace("MT_pre__", "") + " - " + link + " - " + graph.vs[n1]["mm__"].replace("MT_pre__", ""))
 
-    def print_failures(self, required_rules = {}):
+    def print_failures(self):
         print("Elements of pattern that fail on this target:")
         if len(self.failed_iso_elements) > 0:
             print("Pattern requires elements of type:")
