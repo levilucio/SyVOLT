@@ -217,24 +217,8 @@ class NewHimesisMatcher(object):
         #                 #graph_to_dot(self.source_graph.name, self.source_graph)
         #                 graph_to_dot("links_" + self.source_graph.name, self.source_graph, force_trace_links = True)
 
-
-
-
-
         if self.debug_equations:
-            print("Pattern eqs:")
-            print(self.pattern_graph["equations"])
-            print("Pattern eqs (constant)")
-            print(self.patt_eqs_constant)
-            print("Pattern eqs (variable)")
-            print(self.patt_eqs_variable)
-
-            print("Source eqs:")
-            print(self.source_graph["equations"])
-            print("Source eqs (constant)")
-            print(self.src_eqs_constant)
-            print("Source eqs (variable)")
-            print(self.src_eqs_variable)
+            self.print_equations()
 
         #if len(self.superclasses_dict) == 0:
         #    raise Exception("Error: Superclasses dictionary is empty!")
@@ -242,6 +226,22 @@ class NewHimesisMatcher(object):
 
         for mapping in self._match():
             yield mapping
+
+    def print_equations(self):
+
+        #print("Pattern eqs:")
+        #print(self.pattern_graph["equations"])
+        print("Pattern eqs (constant)")
+        print(dict(self.patt_eqs_constant))
+        print("Pattern eqs (variable)")
+        print(dict(self.patt_eqs_variable))
+
+        #print("Source eqs:")
+        #print(self.source_graph["equations"])
+        print("Source eqs (constant)")
+        print(dict(self.src_eqs_constant))
+        print("Source eqs (variable)")
+        print(dict(self.src_eqs_variable))
 
     def reset_recursion_limit(self):
         pass
@@ -397,7 +397,7 @@ class NewHimesisMatcher(object):
         if len(link_matches) == 0:
             if self.debug:
                 print("Found no matches")
-                raise Exception()
+                #raise Exception()
             yield {}
             return
 
@@ -578,6 +578,8 @@ class NewHimesisMatcher(object):
                 NewHimesisMatcher.print_link(None, self.pattern_graph, n0, n1, nlink)
                 self.print_equation(n0)
                 self.print_equation(n1)
+
+        self.print_equations()
 
             #self.print_rules_with_link(required_rules, self.failed_link_matches)
 
