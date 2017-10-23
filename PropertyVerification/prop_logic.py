@@ -89,7 +89,9 @@ class AndContract(Contract):
         if verbosity > 1 or self.debug:
             print("And Contract: Second contract is " + result_2)
 
-        return result_2
+        if result_2 == self.COMPLETE_FOUND:
+            return self.NO_COMPLETE
+        return self.COMPLETE_FOUND
 
     def draw(self):
         self.contract_1.draw()
