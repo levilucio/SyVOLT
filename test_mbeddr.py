@@ -71,8 +71,8 @@ class MBEddr(Test):
                                [r40, r41, r42, r43, r44, r45, ], [r46, ],
                                ]
 
-        self.transformation_directory = "mbeddr2C_MM/transformation_from_eclipse/"
-        #self.transformation_directory = "mbeddr2C_MM/transformation_from_mps/"
+        #self.transformation_directory = "mbeddr2C_MM/transformation_from_eclipse/"
+        self.transformation_directory = "mbeddr2C_MM/transformation_from_mps/"
 
         # =====METAMODELS===============
 
@@ -81,14 +81,14 @@ class MBEddr(Test):
 
         # ====CONTRACTS==================
 
-        self.contract_directory = "mbeddr2C_MM/Contracts/"
+        self.contract_directory = "mbeddr2C_MM/contracts_from_mps/"
 
         self.atomic_contracts = [
-            'Rulelayer1rule10_holds',
+            #'Rulelayer1rule10_holds',
             'AssignmentInstance',
-            'AssignmentInstance_UniqueAssignment',
-            'GlobalVarGetsCorrectFunctionAddressAtInit',
-            'Simple',
+            'AssignmentInstance2',
+            #'GlobalVarGetsCorrectFunctionAddressAtInit',
+            'Simpler',
             'VerySimple'
         ]
 
