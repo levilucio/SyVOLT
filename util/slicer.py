@@ -500,7 +500,8 @@ class Slicer:
                 self.print_rules_with_element(original_mms[bl[1]])
 
             elif found_links.count(bl_as_mms)/all_bls_as_mms.count(bl_as_mms) < all_bls_as_mms.count(bl_as_mms):
-                print("Possible error in multiplicity!")
+                print("Possible error in multiplicity! " + graph.name)
+                print(mms[bl[0]] + " " + mms[bl[2]] + " " + mms[bl[1]])
 
             #record that we need this element
             #but don't double-count if two backward links want the same element
