@@ -145,7 +145,7 @@ class OrContract(Contract):
         result_1 = self.contract_1.check(pc, verbosity)
 
         if result_1 == self.COMPLETE_FOUND:
-            return result_1
+            return self.COMPLETE_FOUND
 
         if verbosity > 1:
             print("Or Contract: First contract is " + result_1)
@@ -155,7 +155,10 @@ class OrContract(Contract):
         if verbosity > 1:
             print("Or Contract: Second contract is " + result_2)
 
-        return result_2
+        if result_2 == self.COMPLETE_FOUND:
+            return self.COMPLETE_FOUND
+        else:
+            return self.NO_COMPLETE
 
     def draw(self):
         self.contract_1.draw()
