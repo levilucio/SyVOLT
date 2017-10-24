@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <syvolt:TransformationModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:syvolt="http://syvolt/2.0">
-  <hasProperty name="AssignmentInstance">
+  <hasProperty name="AssignmentInstance1">
     <match>
       <class xsi:type="syvolt:AnyMatchClass" className="AssemblyConnector"/>
       <class xsi:type="syvolt:AnyMatchClass" className="InstancePortRef"/>
@@ -24,7 +24,7 @@
     </match>
     <apply>
       <class className="GenericDotExpression"/>
-      <class className="GlobarRefExpr"/>
+      <class className="GlobalVarRef"/>
       <class className="GlobalVariableDeclaration">
         <attribute attributeName="name">
           <attributeValue xsi:type="syvolt:Concat">

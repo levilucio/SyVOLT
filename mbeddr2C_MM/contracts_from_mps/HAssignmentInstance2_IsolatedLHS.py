@@ -22,19 +22,19 @@ class HAssignmentInstance2_IsolatedLHS(HimesisPreConditionPatternLHS):
 		self["equations"] = []
 		# Set the node attributes
 
-		# match class ImplementationModule(0.3.m.0ImplementationModule) node
+		# match class AssemblyConnector(0.3.m.0AssemblyConnector) node
 		self.add_node()
 		self.vs[0]["MT_pre__attr1"] = """return True"""
 		self.vs[0]["MT_label__"] = """1"""
-		self.vs[0]["mm__"] = """MT_pre__ImplementationModule"""
-		self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'0.3.m.0ImplementationModule')
+		self.vs[0]["mm__"] = """MT_pre__AssemblyConnector"""
+		self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'0.3.m.0AssemblyConnector')
 
-		# match class Function(0.3.m.1Function) node
+		# match class InstancePortRef(0.3.m.1InstancePortRef) node
 		self.add_node()
 		self.vs[1]["MT_pre__attr1"] = """return True"""
 		self.vs[1]["MT_label__"] = """2"""
-		self.vs[1]["mm__"] = """MT_pre__Function"""
-		self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'0.3.m.1Function')
+		self.vs[1]["mm__"] = """MT_pre__InstancePortRef"""
+		self.vs[1]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'0.3.m.1InstancePortRef')
 
 		# match class ComponentInstance(0.3.m.2ComponentInstance) node
 		self.add_node()
@@ -43,61 +43,47 @@ class HAssignmentInstance2_IsolatedLHS(HimesisPreConditionPatternLHS):
 		self.vs[2]["mm__"] = """MT_pre__ComponentInstance"""
 		self.vs[2]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'0.3.m.2ComponentInstance')
 
-		# match class InstanceConfiguration(0.3.m.3InstanceConfiguration) node
+		# match class RequiredPort(0.3.m.3RequiredPort) node
 		self.add_node()
 		self.vs[3]["MT_pre__attr1"] = """return True"""
 		self.vs[3]["MT_label__"] = """4"""
-		self.vs[3]["mm__"] = """MT_pre__InstanceConfiguration"""
-		self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'0.3.m.3InstanceConfiguration')
+		self.vs[3]["mm__"] = """MT_pre__RequiredPort"""
+		self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'0.3.m.3RequiredPort')
 
-		# match class TestCase(0.3.m.4TestCase) node
+		# match class AtomicComponent(0.3.m.4AtomicComponent) node
 		self.add_node()
 		self.vs[4]["MT_pre__attr1"] = """return True"""
 		self.vs[4]["MT_label__"] = """5"""
-		self.vs[4]["mm__"] = """MT_pre__TestCase"""
-		self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'0.3.m.4TestCase')
+		self.vs[4]["mm__"] = """MT_pre__AtomicComponent"""
+		self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'0.3.m.4AtomicComponent')
 
-		# match class StatementList(0.3.m.5StatementList) node
+		# match class InstancePortRef(0.3.m.5InstancePortRef) node
 		self.add_node()
 		self.vs[5]["MT_pre__attr1"] = """return True"""
 		self.vs[5]["MT_label__"] = """6"""
-		self.vs[5]["mm__"] = """MT_pre__StatementList"""
-		self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'0.3.m.5StatementList')
+		self.vs[5]["mm__"] = """MT_pre__InstancePortRef"""
+		self.vs[5]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'0.3.m.5InstancePortRef')
 
-		# match class InitializeConfiguration(0.3.m.6InitializeConfiguration) node
+		# match class ComponentInstance(0.3.m.6ComponentInstance) node
 		self.add_node()
 		self.vs[6]["MT_pre__attr1"] = """return True"""
 		self.vs[6]["MT_label__"] = """7"""
-		self.vs[6]["mm__"] = """MT_pre__InitializeConfiguration"""
-		self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'0.3.m.6InitializeConfiguration')
+		self.vs[6]["mm__"] = """MT_pre__ComponentInstance"""
+		self.vs[6]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'0.3.m.6ComponentInstance')
 
-		# match class StatementList(0.3.m.7StatementList) node
+		# match class ProvidedPort(0.3.m.7ProvidedPort) node
 		self.add_node()
 		self.vs[7]["MT_pre__attr1"] = """return True"""
 		self.vs[7]["MT_label__"] = """8"""
-		self.vs[7]["mm__"] = """MT_pre__StatementList"""
-		self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'0.3.m.7StatementList')
+		self.vs[7]["mm__"] = """MT_pre__ProvidedPort"""
+		self.vs[7]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'0.3.m.7ProvidedPort')
 
-		# match class ExecuteTestExpression(0.3.m.8ExecuteTestExpression) node
+		# match class AtomicComponent(0.3.m.8AtomicComponent) node
 		self.add_node()
 		self.vs[8]["MT_pre__attr1"] = """return True"""
 		self.vs[8]["MT_label__"] = """9"""
-		self.vs[8]["mm__"] = """MT_pre__ExecuteTestExpression"""
-		self.vs[8]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'0.3.m.8ExecuteTestExpression')
-
-		# match class TestCaseRef(0.3.m.9TestCaseRef) node
-		self.add_node()
-		self.vs[9]["MT_pre__attr1"] = """return True"""
-		self.vs[9]["MT_label__"] = """10"""
-		self.vs[9]["mm__"] = """MT_pre__TestCaseRef"""
-		self.vs[9]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'0.3.m.9TestCaseRef')
-
-		# match class ReturnStatement(0.3.m.10ReturnStatement) node
-		self.add_node()
-		self.vs[10]["MT_pre__attr1"] = """return True"""
-		self.vs[10]["MT_label__"] = """11"""
-		self.vs[10]["mm__"] = """MT_pre__ReturnStatement"""
-		self.vs[10]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'0.3.m.10ReturnStatement')
+		self.vs[8]["mm__"] = """MT_pre__AtomicComponent"""
+		self.vs[8]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'0.3.m.8AtomicComponent')
 
 	# define evaluation methods for each apply class.
 
@@ -126,12 +112,6 @@ class HAssignmentInstance2_IsolatedLHS(HimesisPreConditionPatternLHS):
 		return True
 
 	def eval_attr19(self, attr_value, this):
-		return True
-
-	def eval_attr110(self, attr_value, this):
-		return True
-
-	def eval_attr111(self, attr_value, this):
 		return True
 
 
