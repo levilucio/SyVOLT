@@ -71,7 +71,25 @@ class MBEddr(Test):
                                [r40, r41, r42, r43, r44, r45, ], [r46, ],
                                ]
 
+        #from MPS
+        self.full_transformation = []
+        self.full_transformation.append(
+            ['Hlayer0rule0', 'Hlayer0rule1', 'Hlayer0rule2', 'Hlayer0rule3', 'Hlayer0rule4', 'Hlayer0rule6',
+             'Hlayer0rule7', 'Hlayer0rule8', 'Hlayer0rule9', 'Hlayer0rule10', 'Hlayer0rule11', ])  # layer0
+        self.full_transformation.append(
+            ['Hlayer1rule0', 'Hlayer1rule1', 'Hlayer1rule2', 'Hlayer1rule3', 'Hlayer1rule4', 'Hlayer1rule5',
+             'Hlayer1rule6', 'Hlayer1rule7', 'Hlayer1rule8', 'Hlayer1rule9', 'Hlayer1rule10', 'Hlayer1rule11',
+             'Hlayer1rule12', 'Hlayer1rule13', 'Hlayer1rule14', 'Hlayer1rule15', ])  # layer1
+        self.full_transformation.append(['Hlayer2rule1', 'Hlayer2rule2', 'Hlayer2rule3', ])  # layer2
+        self.full_transformation.append(
+            ['Hlayer3rule0', 'Hlayer3rule1', 'Hlayer3rule2', 'Hlayer3rule3', 'Hlayer3rule4', 'Hlayer3rule5',
+             'Hlayer3rule4copy', ])  # layer3
+        self.full_transformation.append(['Hlayer4rule0', 'Hlayer4rule1', 'Hlayer4rule2', 'Hlayer4rule3', ])  # layer4
+        self.full_transformation.append(
+            ['Hlayer5rule1', 'Hlayer5rule2', 'Hlayer5rule3', 'Hlayer5rule4', 'Hlayer5rule5', ])  # layer5
+
         #self.transformation_directory = "mbeddr2C_MM/transformation_from_eclipse/"
+        self.artifact_directory = "~/Projects/SyVOLT/"
         self.transformation_directory = "mbeddr2C_MM/transformation_from_mps/"
 
         # =====METAMODELS===============
@@ -84,17 +102,12 @@ class MBEddr(Test):
         self.contract_directory = "mbeddr2C_MM/contracts_from_mps/"
 
         self.atomic_contracts = [
-            #'Rulelayer1rule10_holds',
-            'AssignmentInstance',
-            'AssignmentInstance2',
-            #'GlobalVarGetsCorrectFunctionAddressAtInit',
-            'Simpler',
-            'VerySimple'
+            "AssignmentInstance",
+            "GlobalVarGetsCorrectFunctionAddress",
+            "AssignmentInstance2",
         ]
-
-        self.if_then_contracts = []
-
-        self.if_then_contracts += []
+        self.if_then_contracts = [
+        ]
 
         # =========PC SAVE LOCATION
 
