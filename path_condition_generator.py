@@ -49,6 +49,10 @@ class PathConditionGenerator(object):
         set_do_pickle(args.do_pickle)
         set_compression(args.compression)
 
+        from core.new_match_algo import NewHimesisMatcher
+        NewHimesisMatcher.use_old_match_gen = args.old_match_gen
+
+
         self.transformation = transformation
         self.targetMM = targetMM
         self.ruleCombinators = ruleCombinators

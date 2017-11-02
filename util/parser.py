@@ -26,6 +26,10 @@ def load_parser():
                         help = 'Use shuffling instead of bin packing when parallelizing')
     parser.set_defaults(shuffle = False)
 
+    parser.add_argument('--old_match_gen', dest = 'old_match_gen', action = 'store_true',
+                        help = 'Use the old match generator instead of the super-clever recursive version')
+    parser.set_defaults(shuffle = False)
+
     parser.add_argument('--compression', type = int, default = 6,
                         help = 'Level of compression to use with pickling. Range: 0 (no compression) to 9 (high compression) (default: 6)')
     parser.set_defaults(compression = 6)

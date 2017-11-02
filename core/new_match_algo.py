@@ -6,7 +6,6 @@ from util.decompose_graph import decompose_graph
 # from core.himesis_utils import graph_to_dot
 
 from itertools import product
-import time
 
 from collections import defaultdict
 
@@ -14,8 +13,9 @@ from profiler import *
 
 from solver.simple_attribute_equation_evaluator import compare_constant_equations, compare_variable_equations
 
-class NewHimesisMatcher(object):
+class NewHimesisMatcher:
 
+    use_old_match_gen = False
 
     def __init__(self, source_graph, pattern_graph, pred1 = {}, succ1 = {}, pred2 = {}, succ2 = {}, superclasses_dict = {}, skip_equations = False):
         self.debug = False
@@ -473,8 +473,7 @@ class NewHimesisMatcher(object):
 
         num_of_combos = 0
 
-        use_old_match_set_gen = False
-        if use_old_match_set_gen:
+        if self.use_old_match_gen:
 
             for combo in self.combo_generator(link_matches):
                 ms = self.create_match_set(combo)
