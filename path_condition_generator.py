@@ -45,6 +45,7 @@ class PathConditionGenerator(object):
 
 
         self.do_parallel = args.do_parallel
+        self.num_threads = args.num_threads
 
         set_do_pickle(args.do_pickle)
         set_compression(args.compression)
@@ -261,7 +262,10 @@ class PathConditionGenerator(object):
             print("Restricting to one thread")
             cpu_count = 1
         else:
-            cpu_count = multiprocessing.cpu_count()
+            if self.num_threads > 0:
+                cpu_count = self.num_threads
+            else:
+                cpu_count = multiprocessing.cpu_count()
             print("CPU Count: " + str(cpu_count))
 
         try:

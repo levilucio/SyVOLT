@@ -14,6 +14,9 @@ def load_parser():
                         help = 'Option to force computation to run single-thread')
     parser.set_defaults(do_parallel = True)
 
+    parser.add_argument('--num_threads', type = int, dest = 'num_threads', default = -1,
+                        help = 'When parallelizing, set the max number of threads to use. Defaults to as many as your computer has.')
+
     parser.add_argument('--skip_pickle', dest = 'do_pickle', action = 'store_false',
                         help = 'Option to skip the use of pickling')
     parser.set_defaults(do_pickle = True)
