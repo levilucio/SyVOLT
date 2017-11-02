@@ -44,3 +44,19 @@ def mem_after(fcn_name):
         print("Function " + fcn_name + " mem usage: " + str(sum(diff_data)))
     else:
         print("Function " + fcn_name + ": no memory usage seen")
+
+#-------USING SMEM---------
+# https://www.selenic.com/smem/
+# https://www.selenic.com/smem/download/smem.pdf
+import subprocess
+
+def report_memory(pid):
+    proc = subprocess.Popen(['smem', '-P test_'], stdout = subprocess.PIPE)
+    while True:
+        line = proc.stdout.readline().decode('utf-8')
+        if not line:
+            break
+
+        print("test: " + str(line))
+        if line.strip().startswith(str(pid)):
+            print("Found!")
