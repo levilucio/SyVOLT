@@ -16,148 +16,166 @@ experiments = [
     # --Shuffle
     # --Bin packing
     # no pruning
-    ["test_atlTrans_extended", "--skip_pruning"],
-    ["test_atlTrans_extended", "--skip_parallel", "--skip_pruning"],
-    ["test_atlTrans_extended", "--shuffle", "--skip_pruning"],
+    # ["test_atlTrans_extended", "--skip_pruning"],
+    # ["test_atlTrans_extended", "--skip_parallel", "--skip_pruning"],
+    # ["test_atlTrans_extended", "--shuffle", "--skip_pruning"],
+    #
+    # ["test_mbeddr", "--slice=2", "--skip_parallel", "--skip_pruning"],
+    # ["test_mbeddr", "--slice=2", "--shuffle", "--skip_pruning"],
+    # ["test_mbeddr", "--slice=2", "--skip_pruning"],
 
-    ["test_mbeddr", "--slice=2", "--skip_parallel", "--skip_pruning"],
-    ["test_mbeddr", "--slice=2", "--shuffle", "--skip_pruning"],
-    ["test_mbeddr", "--slice=2", "--skip_pruning"],
+    ["test_GM2Autosar_transformation", "--skip_pruning"],
+    ["test_GM2Autosar_transformation", "--skip_parallel", "--skip_pruning"],
+    ["test_GM2Autosar_transformation", "--shuffle", "--skip_pruning"],
+
+    ["test_umlToKiltera", "--skip_pruning"],
+    ["test_umlToKiltera", "--skip_parallel", "--skip_pruning"],
+    ["test_umlToKiltera", "--shuffle", "--skip_pruning"],
+
+    ["test_RSS2ATOM", "--skip_pruning"],
+    ["test_RSS2ATOM", "--skip_parallel", "--skip_pruning"],
+    ["test_RSS2ATOM", "--shuffle", "--skip_pruning"],
 
     # --Rounds: Number of pcs per thread
     # (can be fastest of shuffle or bin packing)
 
-    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=5"],
-    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=10"],
-    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=20"],
-    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=100"],
-    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=200"],
-    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=500"],
-    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=1000"],
-    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=2000"],
-
-    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=5"],
-    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=10"],
-    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=20"],
-    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=100"],
-    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=200"],
-    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=500"],
-    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=1000"],
-    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=2000"],
-
-    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=5", "--skip_pickle"],
-    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=10", "--skip_pickle"],
-    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=20", "--skip_pickle"],
-    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=100", "--skip_pickle"],
-    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=200", "--skip_pickle"],
-    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=500", "--skip_pickle"],
-    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=1000", "--skip_pickle"],
-    ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=2000", "--skip_pickle"],
-
-    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=5", "--skip_pickle"],
-    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=10", "--skip_pickle"],
-    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=20", "--skip_pickle"],
-    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=100", "--skip_pickle"],
-    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=200", "--skip_pickle"],
-    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=500", "--skip_pickle"],
-    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=1000", "--skip_pickle"],
-    ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=2000", "--skip_pickle"],
+    # ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=5"],
+    # ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=10"],
+    # ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=20"],
+    # ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=100"],
+    # ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=200"],
+    # ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=500"],
+    # ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=1000"],
+    # ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=2000"],
+    #
+    # ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=5"],
+    # ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=10"],
+    # ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=20"],
+    # ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=100"],
+    # ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=200"],
+    # ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=500"],
+    # ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=1000"],
+    # ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=2000"],
+    #
+    # ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=5", "--skip_pickle"],
+    # ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=10", "--skip_pickle"],
+    # ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=20", "--skip_pickle"],
+    # ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=100", "--skip_pickle"],
+    # ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=200", "--skip_pickle"],
+    # ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=500", "--skip_pickle"],
+    # ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=1000", "--skip_pickle"],
+    # ["test_atlTrans_extended", "--skip_pruning", "--max_chunk_size=2000", "--skip_pickle"],
+    #
+    # ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=5", "--skip_pickle"],
+    # ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=10", "--skip_pickle"],
+    # ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=20", "--skip_pickle"],
+    # ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=100", "--skip_pickle"],
+    # ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=200", "--skip_pickle"],
+    # ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=500", "--skip_pickle"],
+    # ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=1000", "--skip_pickle"],
+    # ["test_mbeddr", "--slice=2", "--skip_pruning", "--max_chunk_size=2000", "--skip_pickle"],
 
     # Pruning
     # (F2P, GM, UML, mbeddr, RSS2ATOM)
     # Do with/without parallel
-
-    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel"],
-    ["test_atlTrans_extended", "--skip_parallel"],
-    ["test_atlTrans_extended", "--skip_pruning"],
-    ["test_atlTrans_extended",],
-
-    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel"],
-    ["test_GM2Autosar_transformation", "--skip_parallel"],
-    ["test_GM2Autosar_transformation", "--skip_pruning"],
-    ["test_GM2Autosar_transformation",],
-
-    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel"],
-    ["test_umlToKiltera", "--skip_parallel"],
-    ["test_umlToKiltera", "--skip_pruning"],
-    ["test_umlToKiltera",],
-
-    ["test_mbeddr", "--slice=2", "--skip_pruning", "--skip_parallel"],
-    ["test_mbeddr", "--slice=2", "--skip_parallel"],
-    ["test_mbeddr", "--slice=2", "--skip_pruning"],
-    ["test_mbeddr", "--slice=2",],
-
-    ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel"],
-    ["test_RSS2ATOM", "--skip_parallel"],
-    ["test_RSS2ATOM", "--skip_pruning"],
-    ["test_RSS2ATOM",],
+    #
+    # ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel"],
+    # ["test_atlTrans_extended", "--skip_parallel"],
+    # ["test_atlTrans_extended", "--skip_pruning"],
+    # ["test_atlTrans_extended",],
+    #
+    # ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel"],
+    # ["test_GM2Autosar_transformation", "--skip_parallel"],
+    # ["test_GM2Autosar_transformation", "--skip_pruning"],
+    # ["test_GM2Autosar_transformation",],
+    #
+    # ["test_umlToKiltera", "--skip_pruning", "--skip_parallel"],
+    # ["test_umlToKiltera", "--skip_parallel"],
+    # ["test_umlToKiltera", "--skip_pruning"],
+    # ["test_umlToKiltera",],
+    #
+    # ["test_mbeddr", "--slice=2", "--skip_pruning", "--skip_parallel"],
+    # ["test_mbeddr", "--slice=2", "--skip_parallel"],
+    # ["test_mbeddr", "--slice=2", "--skip_pruning"],
+    # ["test_mbeddr", "--slice=2",],
+    #
+    # ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel"],
+    # ["test_RSS2ATOM", "--skip_parallel"],
+    # ["test_RSS2ATOM", "--skip_pruning"],
+    # ["test_RSS2ATOM",],
 
     # Slicing
     # --Time taken for slicing
     # --Slicing results for each transformation
     # (F2P, GM, UML, mbeddr, RSS2ATOM)
-    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel"],
-    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--slice=0"],
-    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--slice=1"],
-    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--slice=2"],
-    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--slice=3"],
-    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--slice=4"],
-    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--slice=5"],
-    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--slice=6"],
-    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--slice=7"],
-    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--slice=8"],
 
-    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel"],
-    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=0"],
-    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=1"],
-    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=2"],
-    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=3"],
-    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=4"],
-    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=5"],
-    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=6"],
-    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=7"],
-    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=8"],
+    # ---->DO CONTRACT SELECTION<-----------
 
-    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel"],
-    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=0"],
-    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=1"],
-    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=2"],
-    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=3"],
-    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=4"],
-    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=5"],
-    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=6"],
-    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=7"],
-    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=8"],
-    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=9"],
-    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=10"],
-    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=11"],
-    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=12"],
-    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=13"],
-    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=14"],
-    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--slice=15"],
+    # ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel"],
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--contract=0"],
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--contract=1"],
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--contract=2"],
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--contract=3"],
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--contract=4"],
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--contract=5"],
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--contract=6"],
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--contract=7"],
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--contract=8"],
+    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--contract=9"],
+     ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--slice=9"],
+    #
+    # ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel"],
+    # ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=0"],
+    # ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=1"],
+    # ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=2"],
+    # ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=3"],
+    # ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=4"],
+    # ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=5"],
+    # ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=6"],
+    # ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=7"],
+    # ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--slice=8"],
 
-    ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel"],
-    ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel", "--slice=0"],
-    ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel", "--slice=1"],
+    #["test_umlToKiltera", "--skip_pruning", "--skip_parallel"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--contract=0"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--contract=1"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--contract=2"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--contract=3"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--contract=4"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--contract=5"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--contract=6"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--contract=7"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--contract=8"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--contract=9"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--contract=10"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--contract=11"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--contract=12"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--contract=13"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--contract=14"],
+    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--contract=15"],
+
+    # ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel"],
+    # ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel", "--slice=0"],
+    # ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel", "--slice=1"],
 
     # Pickling
     # Do with/without parallel
     # (F2P, GM, UML, mbeddr, RSS2ATOM)
-    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel"],
-    ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--skip_pickle"],
+    # ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel"],
+    # ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--skip_pickle"],
+    #
+    # ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel"],
+    # ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--skip_pickle"],
+    #
+    # ["test_mbeddr", "--slice=2", "--skip_pruning", "--skip_parallel"],
+    # ["test_mbeddr", "--slice=2", "--skip_pruning", "--skip_parallel", "--skip_pickle"],
+    #
+    # ["test_umlToKiltera", "--skip_pruning", "--skip_parallel"],
+    # ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--skip_pickle"],
+    #
+    # ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel"],
+    # ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel", "--skip_pickle"],
 
-    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel"],
-    ["test_GM2Autosar_transformation", "--skip_pruning", "--skip_parallel", "--skip_pickle"],
-
-    ["test_mbeddr", "--slice=2", "--skip_pruning", "--skip_parallel"],
-    ["test_mbeddr", "--slice=2", "--skip_pruning", "--skip_parallel", "--skip_pickle"],
-
-    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel"],
-    ["test_umlToKiltera", "--skip_pruning", "--skip_parallel", "--skip_pickle"],
-
-    ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel"],
-    ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel", "--skip_pickle"],
-
+    # TEST DISK SPACE FOR COMPRESSION
 
     ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel"],
     ["test_atlTrans_extended", "--skip_pruning", "--skip_parallel", "--compression=0"],
@@ -179,8 +197,68 @@ experiments = [
     ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel", "--compression=0"],
     ["test_RSS2ATOM", "--skip_pruning", "--skip_parallel", "--compression=9"],
 
+    #Old match set generation
+    ["test_atlTrans_extended", "--skip_pruning",],
+    ["test_atlTrans_extended", "--skip_pruning", "--old_match_gen"],
+
+    ["test_GM2Autosar_transformation", "--skip_pruning", ],
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--old_match_gen"],
+
+    ["test_mbeddr", "--slice=2", "--skip_pruning", ],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--old_match_gen"],
+
+    ["test_umlToKiltera", "--skip_pruning", ],
+    ["test_umlToKiltera", "--skip_pruning", "--old_match_gen"],
+
+    ["test_RSS2ATOM", "--skip_pruning", ],
+    ["test_RSS2ATOM", "--skip_pruning", "--old_match_gen"],
 
 
+    #Per number of threads
+    ["test_atlTrans_extended", "--skip_pruning", "--num_threads=1"],
+    ["test_atlTrans_extended", "--skip_pruning", "--num_threads=2"],
+    ["test_atlTrans_extended", "--skip_pruning", "--num_threads=3"],
+    ["test_atlTrans_extended", "--skip_pruning", "--num_threads=4"],
+    ["test_atlTrans_extended", "--skip_pruning", "--num_threads=5"],
+    ["test_atlTrans_extended", "--skip_pruning", "--num_threads=6"],
+    ["test_atlTrans_extended", "--skip_pruning", "--num_threads=7"],
+    ["test_atlTrans_extended", "--skip_pruning", "--num_threads=8"],
+
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--num_threads=1"],
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--num_threads=2"],
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--num_threads=3"],
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--num_threads=4"],
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--num_threads=5"],
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--num_threads=6"],
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--num_threads=7"],
+    ["test_GM2Autosar_transformation", "--skip_pruning", "--num_threads=8"],
+
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--num_threads=1"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--num_threads=2"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--num_threads=3"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--num_threads=4"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--num_threads=5"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--num_threads=6"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--num_threads=7"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning", "--num_threads=8"],
+
+    ["test_umlToKiltera", "--skip_pruning", "--num_threads=1"],
+    ["test_umlToKiltera", "--skip_pruning", "--num_threads=2"],
+    ["test_umlToKiltera", "--skip_pruning", "--num_threads=3"],
+    ["test_umlToKiltera", "--skip_pruning", "--num_threads=4"],
+    ["test_umlToKiltera", "--skip_pruning", "--num_threads=5"],
+    ["test_umlToKiltera", "--skip_pruning", "--num_threads=6"],
+    ["test_umlToKiltera", "--skip_pruning", "--num_threads=7"],
+    ["test_umlToKiltera", "--skip_pruning", "--num_threads=8"],
+
+    ["test_RSS2ATOM", "--skip_pruning", "--num_threads=1"],
+    ["test_RSS2ATOM", "--skip_pruning", "--num_threads=2"],
+    ["test_RSS2ATOM", "--skip_pruning", "--num_threads=3"],
+    ["test_RSS2ATOM", "--skip_pruning", "--num_threads=4"],
+    ["test_RSS2ATOM", "--skip_pruning", "--num_threads=5"],
+    ["test_RSS2ATOM", "--skip_pruning", "--num_threads=6"],
+    ["test_RSS2ATOM", "--skip_pruning", "--num_threads=7"],
+    ["test_RSS2ATOM", "--skip_pruning", "--num_threads=8"],
 ]
 
 results_dir = os.path.expanduser("~/Dropbox/University/PHD/results")
