@@ -16,13 +16,15 @@ experiments = [
     # --Shuffle
     # --Bin packing
     # no pruning
-    # ["test_atlTrans_extended", "--skip_pruning"],
-    # ["test_atlTrans_extended", "--skip_parallel", "--skip_pruning"],
-    # ["test_atlTrans_extended", "--shuffle", "--skip_pruning"],
-    #
-    # ["test_mbeddr", "--slice=2", "--skip_parallel", "--skip_pruning"],
-    # ["test_mbeddr", "--slice=2", "--shuffle", "--skip_pruning"],
-    # ["test_mbeddr", "--slice=2", "--skip_pruning"],
+
+    #Re-run these
+    ["test_atlTrans_extended", "--skip_pruning"],
+    ["test_atlTrans_extended", "--skip_parallel", "--skip_pruning"],
+    ["test_atlTrans_extended", "--shuffle", "--skip_pruning"],
+
+    ["test_mbeddr", "--slice=2", "--skip_parallel", "--skip_pruning"],
+    ["test_mbeddr", "--slice=2", "--shuffle", "--skip_pruning"],
+    ["test_mbeddr", "--slice=2", "--skip_pruning"],
 
     ["test_GM2Autosar_transformation", "--skip_pruning"],
     ["test_GM2Autosar_transformation", "--skip_parallel", "--skip_pruning"],
