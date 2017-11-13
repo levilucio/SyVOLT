@@ -58,8 +58,6 @@ def load_transformation(dir_name, full_transformation):
 
 
 def select_rules(full_rules, full_transformation, sliced_rules, sliced_transformation, num_rules, overlapping_rules, subsumption):
-
-
     if num_rules < 0:
 
         if len(sliced_rules) > 0:
@@ -72,8 +70,11 @@ def select_rules(full_rules, full_transformation, sliced_rules, sliced_transform
         raise Exception("Error: Can't have less than {0} rules for contract to be proved.".format(len(sliced_rules)))
 
     selected_rules = sliced_rules
-    selected_transformation = sliced_transformation
 
+    if sliced_transformation:
+        selected_transformation = sliced_transformation
+    else:
+        selected_transformation = [list() for _ in range(len(full_transformation))]
 
     print("Selecting " + str(num_rules) + " rules")
 
