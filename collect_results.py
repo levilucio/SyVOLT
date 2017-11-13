@@ -21,7 +21,7 @@ times_to_run = 5
 
 experiments = []
 
-for i in range(8, 19):
+for i in range(22, 50):
     experiments.append(["test_mbeddr", "--slice=0", "--num_rules=" + str(i)],)
     experiments.append(["test_mbeddr", "--slice=0", "--num_rules=" + str(i), "--skip_parallel", "--skip_pruning"])
     experiments.append(["test_mbeddr", "--slice=0", "--num_rules=" + str(i), "--shuffle", "--skip_pruning"])
