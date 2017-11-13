@@ -113,6 +113,15 @@ class PathConditionGenerator(object):
         if self.verbosity >= 1:
             print("----------------Start pre-process")
 
+        #remove empty layers
+        new_transformation = []
+        for layer in range(len(self.transformation)):
+            new_layer = [rule for rule in self.transformation[layer]]
+            if new_layer:
+                new_transformation.append(new_layer)
+        self.transformation = new_transformation
+
+
 
                             
         # now traceability is being built for all rules. We only need traceability for the rules that have no dependencies,

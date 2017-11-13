@@ -219,8 +219,7 @@ class Slicer:
                 if rule.name in required_rules:
                     new_layer.append(rule)
 
-            if len(new_layer) > 0:
-                new_transformation.append(new_layer)
+            new_transformation.append(new_layer)
 
         end_time = time.time() - start_time
 

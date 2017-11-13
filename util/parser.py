@@ -56,11 +56,11 @@ def load_parser():
     parser.add_argument('--draw_rules', dest = 'draw_rules', action = 'store_true', default = False,
                         help = 'Flag to force rule svg files to be drawn (default: False)')
     
-    parser.add_argument('--num_pcs', type = int, default = -1,
-                        help = 'Number of path conditions which should be produced by this test (default: -1)')
+    parser.add_argument('--num_pcs', type = int, dest = "num_pcs", default = -1,
+                        help = 'Number of path conditions which should be produced by this test. Used for regression testing (default: -1 = no check)')
 
-    parser.add_argument('--num_rules', type = int, default = -1,
-                        help = 'Number of rules in the transformation (default: -1)')
+    parser.add_argument('--num_rules', type = int, dest = "num_rules", default = -1,
+                        help = 'Number of rules in the transformation. Used for scalability testing (default: -1 = all)')
 
     parser.add_argument('--verbosity', type = int, default = 0,
                         help = 'Verbosity level (default: 0 - minimum output)')
