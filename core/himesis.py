@@ -126,6 +126,9 @@ class Himesis(igraph.Graph):
     
     def __str__(self):
         return self.name + ' V: ' + str(self.vcount()) + ' E: ' + str(len(self.es)) + ' GUID: ' + str(self[Himesis.Constants.GUID])
+
+    def __repr__(self):
+        return "<Himesis:" + self.name + ">"
     
     def get_id(self):
         """
