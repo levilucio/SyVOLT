@@ -1,27 +1,45 @@
 import subprocess
 import os
+import shutil
+
+def sizeof_fmt(num, suffix='B'):
+    for unit in ['','Ki','Mi','Gi','Ti','Pi','Ei','Zi']:
+        if abs(num) < 1024.0:
+            return "%3.1f%s%s" % (num, unit, suffix)
+        num /= 1024.0
+    return "%.1f%s%s" % (num, 'Yi', suffix)
+
+def calc_dir_size(dir_name):
+    return sum(os.path.getsize(os.path.join(dir_name, f)) for f in os.listdir(dir_name) if os.path.isfile(os.path.join(dir_name, f)))
 
 def get_avg(l):
     if len(l) == 0:
         return -1
     return sum(l) / float(len(l))
 
-times_to_run = 1
+times_to_run = 5
 
 experiments = []
 
-
-for i in range(25, 50):
+for i in range(8, 19):
     experiments.append(["test_mbeddr", "--slice=0", "--num_rules=" + str(i)],)
+    experiments.append(["test_mbeddr", "--slice=0", "--num_rules=" + str(i), "--skip_parallel", "--skip_pruning"])
+    experiments.append(["test_mbeddr", "--slice=0", "--num_rules=" + str(i), "--shuffle", "--skip_pruning"])
+    experiments.append(["test_mbeddr", "--slice=0", "--num_rules=" + str(i), "--skip_pruning"])
 
-    # Parallel
+    for j in range(1, 8):
+        experiments.append(["test_mbeddr", "--slice=0", "--num_rules=" + str(i), "--skip_pruning", "--num_threads=" + str(j)])
+
+    experiments.append(["test_mbeddr", "--slice=0", "--skip_pruning", "--skip_parallel", "--skip_pickle"])
+    experiments.append(["test_mbeddr", "--slice=0", "--skip_pruning", "--skip_parallel", "--compression=0"],)
+    experiments.append(["test_mbeddr", "--slice=0", "--skip_pruning", "--skip_parallel", "--compression=9"],)
+
+        # Parallel
     # (F2P)
     # --Off
     # --Shuffle
     # --Bin packing
     # no pruning
-    #["test_mbeddr"],
-    #Re-run these
 #    ["test_atlTrans_extended", "--skip_pruning"],
 #    ["test_atlTrans_extended", "--skip_parallel", "--skip_pruning"],
 #    ["test_atlTrans_extended", "--shuffle", "--skip_pruning"],
@@ -311,9 +329,19 @@ with open(results_filename, "w") as a:
                 print("Running " + str(i) + "-" + experiment_name +"-" + args_string + " for time " + str(x))
                 command = ["/usr/bin/time", "python3", experiment_name + ".py"] + experiment_args
 
+                #delete pickle and patterns dir for accurate disk usage
+                shutil.rmtree("./pickle")
+                shutil.rmtree("./patterns")
+
+
                 print("Command: " + " ".join(command))
                 command.append("--skip_progress_bar")
                 proc = subprocess.check_call(command, stdout=g, stderr=subprocess.STDOUT)
+
+                patterns_space = calc_dir_size("./patterns")
+                pickle_space = calc_dir_size("./pickle")
+                g.write("Space taken: " + str(patterns_space + pickle_space) + " bytes\n")
+
 
         time_build_pcs = []
         time_contract_proof = []
@@ -323,6 +351,8 @@ with open(results_filename, "w") as a:
         pruning_time = []
         slicing_time = []
         dividing_time = []
+
+        space_taken = []
 
         with open(ex_filename) as f:
 
@@ -344,14 +374,18 @@ with open(results_filename, "w") as a:
                 elif "Time taken for: -Dividing pcs-" in line:
                     t = line.split(" ")[5]
                     dividing_time.append(float(t))
-                    print(line)
+                    #print(line)
                 # elif "Time taken for: -Pruning pcs-" in line:
                 #     t = line.split(" ")[5]
                 #     pruning_time.append(float(t))
                 elif "Time taken for: -slicing-" in line:
                     t = line.split(" ")[4]
                     slicing_time.append(float(t))
-                    print(line)
+                    #print(line)
+                elif "Space taken: " in line:
+                    t = line.split(" ")[2]
+                    space_taken.append(int(t))
+                    #print(line)
 
                 #print(line.strip())
 
@@ -374,7 +408,9 @@ with open(results_filename, "w") as a:
             else:
                 s8 = None
 
-            for s in [s1, s2, s3, s4, s5, s6, s8]:
+            s9 = "Space taken: " + str(get_avg(space_taken)) + " bytes"
+
+            for s in [s1, s2, s3, s4, s5, s6, s8, s9]:
                 if s is None:
                     continue
 
