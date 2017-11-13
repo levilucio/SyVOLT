@@ -57,22 +57,62 @@ def load_transformation(dir_name, full_transformation):
     return rules, transformation
 
 
-def select_rules(full_transformation, num_rules):
-    selected_transformation = []
+def select_rules(full_rules, full_transformation, sliced_rules, sliced_transformation, num_rules, overlapping_rules, subsumption):
+
+
+    if num_rules < 0:
+
+        if len(sliced_rules) > 0:
+            return sliced_rules, sliced_transformation
+        else:
+            return full_rules, full_transformation
+
+
+    if num_rules < len(sliced_rules):
+        raise Exception("Error: Can't have less than {0} rules for contract to be proved.".format(len(sliced_rules)))
+
+    selected_rules = sliced_rules
+    selected_transformation = sliced_transformation
+
 
     print("Selecting " + str(num_rules) + " rules")
 
-    i = 1
+
     for layer in range(len(full_transformation)):
-        selected_transformation.append([])
+
+        if len(selected_rules) >= num_rules: break
+
         for rule in full_transformation[layer]:
-            selected_transformation[layer].append(rule)
-            i += 1
-            if i > num_rules:
-                print("Returning: " + str(selected_transformation))
-                return selected_transformation
+
+            to_add = [rule]
+            if rule.name in overlapping_rules:
+                for r2 in overlapping_rules[rule.name]:
+                    to_add.append(full_rules[r2])
+            if rule.name in subsumption:
+                for r2 in subsumption[rule.name]:
+                    to_add.append(full_rules[r2])
+
+            for r in to_add:
+
+                if r not in full_transformation[layer]:
+                    continue
+
+                if r not in selected_transformation[layer]:
+                    selected_transformation[layer].append(r)
+
+                if r.name not in selected_rules:
+                    selected_rules[r.name] = r
 
 
+            if len(selected_rules) >= num_rules:
+                break
+
+    print("Selected Transformation: Total size: " + str(len(selected_rules)))
+    for layer in selected_transformation:
+        if layer:
+            print(layer)
+
+    return selected_rules, selected_transformation
 
 
 def get_sub_and_super_classes(inputMM, outputMM):
