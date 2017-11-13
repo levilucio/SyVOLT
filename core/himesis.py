@@ -1,6 +1,6 @@
 import uuid, copy
 
-from os import path, fsync
+from os import path, fsync, mkdir
 from core.igraph_helper import *
 
 from functools import reduce
@@ -249,9 +249,7 @@ class Himesis(igraph.Graph):
         if path.isfile(file_path):
             file_path = path.dirname(file_path)
         if not path.isdir(file_path):
-            e = IOError(2, 'Output path does not exist')
-            e.filename = file_path
-            raise e
+            mkdir(file_path)
         
         subgraphs = []      # references to Himesis sub-graphs of this graph
         
