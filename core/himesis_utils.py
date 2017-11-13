@@ -416,6 +416,8 @@ def set_compression(value):
     compression = value
 
 pickle_dir = "pickle/"
+if not os.path.exists(pickle_dir):
+    os.mkdir(pickle_dir)
 
 def get_filename(graph_name):
     file_name = hashlib.md5(graph_name.encode("UTF-8")).hexdigest()
