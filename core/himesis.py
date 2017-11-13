@@ -942,6 +942,11 @@ labels['%s'] = node_num
 vs[node_num]["mm__"] = '%s'
 vs[node_num]['GUID__'] = nprnd.randint(9223372036854775806)
 """ % (className, label, label, className))
+
+                #HACK: Add rule name to paired_with
+                if className == "paired_with":
+                    transformationCode.append("""vs[node_num]["attr1"] = self["name"]
+""")
                 transformationCode += self.set_attributes(rhsNode, 'node_num', has_old_values = False)
                 transformationCode.append("""
 node_num += 1

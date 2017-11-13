@@ -278,13 +278,22 @@ def graph_to_dot(name, g, verbosity = 0, force_trace_links = False):
 
 
         color = link_colours[mm]
-        label = mm
+        label = " "#mm
         arrowhead = "vee"
         penwidth = 1
 
         if not force_trace_links:
             if mm == "trace_link" and skip_trace_links:
                 continue
+
+        if mm == "paired_with":
+            try:
+                attr1 = g.vs[link]["attr1"]
+                if attr1:
+                    label = attr1
+            except Exception as e:
+                raise
+
 
         if mm == "trace_link" or mm == "backward_link":
             temp = src

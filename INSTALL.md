@@ -40,7 +40,7 @@ or
 
 `sudo apt-get install python3-pip`
 
-`sudo pip install python-igraph`
+`sudo pip3 install python-igraph`
 
 
 # Mac
@@ -62,7 +62,7 @@ Then install PIP (comes with python):
 
 # From Source
 
-If the previous work, you'll have to install from source
+If the previous ideas don't work, you'll have to install from source
 
 * Try installing the igraph C part from your package manager first
 
