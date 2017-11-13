@@ -19,6 +19,7 @@ class ContractProver:
         #self.disambig = Disambiguator(0)
 
         self.do_parallel = args.do_parallel
+        self.num_threads = args.num_threads
 
         self.verbosity = 2
 
@@ -73,7 +74,12 @@ class ContractProver:
         manager = Manager()
 
         if self.do_parallel:
-            cpu_count = multiprocessing.cpu_count()
+
+            if self.num_threads > 0:
+                cpu_count = self.num_threads
+            else:
+                cpu_count = multiprocessing.cpu_count()
+
             print("CPU Count: " + str(cpu_count))
         else:
             cpu_count = 1
@@ -109,7 +115,7 @@ class ContractProver:
         for worker in workers:
             worker.join()
 
-        for worker in workers:
+        for _ in workers:
             [fail, succeed] = results_queue.get()
 
             print("Thread finished at time: " + str(time.time() - start_time))
@@ -149,7 +155,7 @@ class ContractProver:
                 cd.explain_failures(contract_name, contract, contract_succeeded_pcs[contract_name], contract_failed_pcs[contract_name], self.find_smallest_pc(contract_failed_pcs[contract_name]))
 
     def report_success_fail(self, status, list_of_pcs, contract_name):
-        num_contracts_to_print = 20
+        num_contracts_to_print = 25
 
         print("\n" + str(len(list_of_pcs[contract_name])) + " " + status + " PCs for " + contract_name + ":")
 
