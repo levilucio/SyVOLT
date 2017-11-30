@@ -83,9 +83,10 @@ def select_rules(full_rules, full_transformation, sliced_rules, sliced_transform
 
         if len(selected_rules) >= num_rules: break
 
+        to_add = []
         for rule in full_transformation[layer]:
 
-            to_add = [rule]
+            to_add.append(rule)
             if rule.name in overlapping_rules:
                 for r2 in overlapping_rules[rule.name]:
                     to_add.append(full_rules[r2])
@@ -93,22 +94,30 @@ def select_rules(full_rules, full_transformation, sliced_rules, sliced_transform
                 for r2 in subsumption[rule.name]:
                     to_add.append(full_rules[r2])
 
-            for r in to_add:
-
-                if r not in full_transformation[layer]:
-                    continue
-
-                if r not in selected_transformation[layer]:
-                    selected_transformation[layer].append(r)
-
-                if r.name not in selected_rules:
-                    selected_rules[r.name] = r
-
-
             if len(selected_rules) >= num_rules:
                 break
 
-    print("Selected Transformation: Total size: " + str(len(selected_rules)))
+        temp_layer = []
+        for r in full_transformation[layer]:
+
+            if r not in to_add + selected_transformation[layer]:
+                continue
+
+            if r not in temp_layer:
+                temp_layer.append(r)
+
+            if r.name not in selected_rules:
+                selected_rules[r.name] = r
+
+        selected_transformation[layer] = temp_layer
+
+
+    # print("\n\nFull Transformation: Total size: " + str(len(full_rules)))
+    # for layer in full_transformation:
+    #     if layer:
+    #         print(layer)
+
+    print("\n\nSelected Transformation: Total size: " + str(len(selected_rules)))
     for layer in selected_transformation:
         if layer:
             print(layer)
