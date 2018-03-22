@@ -314,8 +314,10 @@ with open(results_filename, "w") as a:
                 command = ["/usr/bin/time", "python3", experiment_name + ".py"] + experiment_args
 
                 #delete pickle and patterns dir for accurate disk usage
-                shutil.rmtree("./pickle")
-                shutil.rmtree("./patterns")
+                if os.path.exists("./pickle"):
+                    shutil.rmtree("./pickle")
+                if os.path.exists("./patterns"):
+                    shutil.rmtree("./patterns")
 
 
                 print("Command: " + " ".join(command))
