@@ -4,7 +4,7 @@ import shutil
 try:
     import statistics.variance as variance
 except ImportError:
-    import numpy.var as variance
+    from numpy import var as variance
     
 def sizeof_fmt(num, suffix='B'):
     for unit in ['','Ki','Mi','Gi','Ti','Pi','Ei','Zi']:
