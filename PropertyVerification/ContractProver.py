@@ -148,11 +148,12 @@ class ContractProver:
 
         print("Took " + str(proof_time) + " seconds to prove " + str(len(atomic_contracts + if_then_contracts)) + " contracts\n")
 
-        if len(all_contracts) == 1:
+        for contract_name, contract in all_contracts:
             cd = ContractDebugger(self.pathCondGen, self.slicer, self.superclasses_dict)
-            contract_name, contract = all_contracts[0]
             if len(contract_failed_pcs[contract_name]) > 0:
                 cd.explain_failures(contract_name, contract, contract_succeeded_pcs[contract_name], contract_failed_pcs[contract_name], self.find_smallest_pc(contract_failed_pcs[contract_name]))
+
+        self.print_spectrum_based_analysis_info(pathCondGen, all_contracts, contract_succeeded_pcs, contract_failed_pcs)
 
     def report_success_fail(self, status, list_of_pcs, contract_name):
         num_contracts_to_print = 25
@@ -186,3 +187,69 @@ class ContractProver:
         name = name[:contract_name_max_size]
         real_name_list = self.pathCondGen.rules_in_pc_real_name(name)
         print("_".join(real_name_list))
+
+
+    def print_spectrum_based_analysis_info(self, pathCondGen, all_contracts, contract_succeeded_pcs, contract_failed_pcs):
+
+        print("Starting spectrum-based analysis...")
+
+        filename = "sba.txt"
+
+        print("Writing to file: " + filename)
+        with open(filename, "w") as f:
+            f.write("Contracts:")
+            f.write("\n")
+            for (c_name, _) in all_contracts:
+                f.write(c_name)
+                f.write("\n")
+            f.write("\n")
+
+            f.write("Rules in each path condition:")
+            f.write("\n")
+            i = 0
+            for _, pc_name in pathCondGen.get_path_conditions(expand = False, get_pretty_name = True):
+
+                # f.write(pc_name)
+                rules = pathCondGen.rules_in_pc_name(pc_name)
+                if len(rules) == 1:
+                    continue
+                rules.remove("HEmptyPathCondition")
+                f.write("PC" + str(i) + ": ")
+                i += 1
+
+                for r in rules:
+                    f.write(r + ",")
+                f.write("\n")
+
+            f.write("\n")
+
+            f.write("Contracts per path condition:")
+            f.write("\n")
+            i = 0
+            for _, pc_name in pathCondGen.get_path_conditions(expand = False, get_pretty_name = False):
+                # print(pc_name)
+                if pc_name == "Em.0":
+                    continue
+                f.write("PC" + str(i) + ": ")
+                i += 1
+                f.write("\n")
+
+                f.write("Sat: ")
+
+                for contract_name in contract_succeeded_pcs:
+                    if pc_name in contract_succeeded_pcs[contract_name]:
+                        f.write(contract_name + ",")
+
+                f.write("\n")
+
+                f.write("Non Sat: ")
+
+                for contract_name in contract_failed_pcs:
+                    if pc_name in contract_failed_pcs[contract_name]:
+                        f.write(contract_name + ",")
+
+                f.write("\n")
+
+
+
+        print("Finished spectrum-based analysis")

@@ -19,6 +19,7 @@ class ContractDebugger:
         print("Explaining why contract fails: " + contract_name)
 
         if self.draw:
+            print("Drawing...")
             contract.draw()
 
         good_rules, bad_rules = self.get_rule_differences(success_pcs, failed_pcs)
@@ -54,7 +55,7 @@ class ContractDebugger:
 
 
         matcher.print_failures()
-        
+
 
         if self.draw:
             graph_to_dot(contract_complete.name + "_failed_" + failed_pc.name, failed_pc)
