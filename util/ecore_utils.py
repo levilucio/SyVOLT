@@ -38,8 +38,11 @@ class EcoreUtils(object):
         self.mmClassParents = self.getSuperClassInheritanceRelationForClasses()
         self.mmClassChildren = self.getSubClassInheritanceRelationForClasses()
 
+        self.classes = []
+        self.rels = {}
+        self.attribs = {}
         self.containmentLinks = {}
-        metamodelClasses = self.xmldoc.getElementsByTagName('eClassifiers')
+        self.metamodelClasses = self.xmldoc.getElementsByTagName('eClassifiers')
 
         # first get a dictionary with all the metamodel classes that have containment relations towards them.
         # several containment relations can exist towards the same metamodel class.
@@ -47,26 +50,46 @@ class EcoreUtils(object):
 
 
         debug_contain_links = False
-
-        for mmClass in metamodelClasses:
+        for mmClass in self.metamodelClasses:
             mmClassName = mmClass.attributes['name'].value
+            self.classes.append(mmClassName)
+
             rels = mmClass.getElementsByTagName('eStructuralFeatures')
 
             for rel in rels:
 
                 try:
-                    if str(rel.attributes['containment'].value) == "true":
-                        targetClassName = str(rel.attributes['eType'].value).split('#//', 1)[1]
-                        relName = str(rel.attributes['name'].value)
 
-                        containment_link = (mmClassName, relName)
+                    targetClassName = str(rel.attributes['eType'].value).split('#//', 1)[1]
+                    relName = str(rel.attributes['name'].value)
 
-                        if targetClassName not in self.containmentLinks.keys():
-                            self.containmentLinks[targetClassName] = [containment_link]
+
+
+                    isAttrib = "EAttribute" in str(rel.attributes['xsi:type'].value)
+                    if isAttrib:
+                        # record this attrib
+                        if mmClassName not in self.attribs.keys():
+                            self.attribs[mmClassName] = [relName]
                         else:
-                            if containment_link not in self.containmentLinks[targetClassName]:
-                                self.containmentLinks[targetClassName].append(containment_link)
-                        self.containmentRels.append(relName)
+                            self.attribs[mmClassName].append(relName)
+
+                    else:
+
+                        relTuple = (mmClassName, relName)
+                        if str(rel.attributes['containment'].value) == "true":
+                            if targetClassName not in self.containmentLinks.keys():
+                                self.containmentLinks[targetClassName] = [relTuple]
+                            else:
+                                if rel not in self.containmentLinks[targetClassName]:
+                                    self.containmentLinks[targetClassName].append(relTuple)
+                            self.containmentRels.append(relName)
+
+                        #record this relation
+                        if mmClassName not in self.rels.keys():
+                            self.rels[mmClassName] = [relTuple]
+                        else:
+                            if relTuple not in self.rels[mmClassName]:
+                                self.rels[mmClassName].append(relTuple)
                 except KeyError:
                     pass
 
