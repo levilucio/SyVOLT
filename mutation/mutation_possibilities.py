@@ -46,12 +46,19 @@ class MutationPossibilityGenerator:
 
             if mm in children:
                 for child in children[mm]:
-                    poss_tuple = (i, MutationOperators.RENAME_CLASS, child)
+                    poss_tuple = (MutationOperators.RENAME_CLASS.name, i, child)
                     poss.append(poss_tuple)
 
             if mm in parents:
                 for parent in parents[mm]:
-                    poss_tuple = (i, MutationOperators.RENAME_CLASS, parent)
+                    poss_tuple = (MutationOperators.RENAME_CLASS.name, i, parent)
                     poss.append(poss_tuple)
+
+
+        print("Possibilities:")
+        for p in poss:
+            print(p)
+
+        # raise Exception()
 
         return poss

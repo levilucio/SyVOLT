@@ -76,5 +76,10 @@ def load_parser():
     parser.add_argument('--load', dest = 'pc_filename', nargs='?', const="", type=str,
                         help = 'Input the txt filename that contains the PC filenames you want to load')
 
+    parser.add_argument('--rule_to_mutate', dest='rule_to_mutate', type=str, default="",
+                        help = "The rule name to mutate. Uses the --mutate flag.")
+    parser.add_argument('--mutate', dest='mutate', type=str, default="",
+                        help="The mutation to apply to the rule specified by --rule_to_mutate.")
+
     return parser
 

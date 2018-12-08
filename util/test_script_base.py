@@ -1,6 +1,7 @@
 import time
 import os
 
+from mutation.mutator import Mutator
 from path_condition_generator import PathConditionGenerator
 
 from pyramify.PyRamify import PyRamify
@@ -54,10 +55,14 @@ class Test:
 
         self.rules, self.transformation = load_transformation(self.transformation_directory, self.full_transformation)
 
+        if args.rule_to_mutate and args.mutate:
+            m = Mutator(args.rule_to_mutate, args.mutate)
+            self.rules, self.transformation = m.mutate_rules(self.rules, self.transformation)
+
         pyramify = PyRamify(verbosity = args.verbosity, draw_svg = args.draw_svg)
 
         [self.rules, self.ruleTraceCheckers, self.ruleCombinators, self.overlapping_rules, self.subsumption, self.loopingRuleSubsumption] = \
-            pyramify.ramify_directory(self.transformation_directory, self.transformation)
+            pyramify.ramify_directory(self.transformation_directory, self.rules, self.transformation)
 
         self.subclasses_dict, self.superclasses_dict = get_sub_and_super_classes(self.inputMM, self.outputMM)
 

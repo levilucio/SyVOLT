@@ -707,7 +707,7 @@ class PyRamify:
 
     #ramify a whole directory
     #@do_cprofile
-    def ramify_directory(self, dir_name, transformation_layers):
+    def ramify_directory(self, dir_name, rules, transformation_layers):
 
         #fix up directory to be relative if needed
         if not dir_name.startswith("/") and not dir_name.startswith("./"):
@@ -720,31 +720,16 @@ class PyRamify:
         print("Ramifying directory: " + dir_name)
         self.transformation_layers = transformation_layers
         
-        rules = {}
-        
         backwardPatterns = {}
         matchRulePatterns = {}
         ruleCombinators = {}
 
         for layer in transformation_layers:
             for rule in layer:
-
-                #add the rule to the rules dict
-                rule2 = load_class(dir_name + rule.name)
-                rules.update(rule2)
-
-                #reload the rule
-                #this is probably not needed
-                #but there were problems with aliasing and copying
-
-                #get the backwards pattern for this rule
-                rule3 = load_class(dir_name + rule.name)
-                (bwPattern, bwP2Rule) = self.get_backward_patterns(rule3)
+                (bwPattern, bwP2Rule) = self.get_backward_patterns({rule.name : rule.copy()})
                 backwardPatterns.update(bwPattern)
 
-                #fresh rule for the match pattern
-                rule4 = load_class(dir_name + rule.name)
-                matchRulePattern = self.get_match_pattern(rule4)
+                matchRulePattern = self.get_match_pattern({rule.name : rule.copy()})
                 matchRulePatterns.update(matchRulePattern)
 
         self.rules = rules
@@ -762,10 +747,8 @@ class PyRamify:
         #build the combinators only after calculating the dependencies between rules
         for layer in transformation_layers:
             for rule in layer:
-
-                # fresh rule for the rule combinators
-                rule5 = load_class(dir_name + "/" + rule.name + ".py")
-                rule_combinator = self.get_rule_combinators(rule5)
+                rule_dict = {rule.name: rule.copy()}
+                rule_combinator = self.get_rule_combinators(rule_dict)
                 ruleCombinators.update(rule_combinator)
        
 
@@ -783,7 +766,7 @@ class PyRamify:
         print("Finished PyRamify")
         print("==================================\n")                    
 
-        return [rules, backwardPatterns, ruleCombinators, self.rulesNeedingOverlapTreatment, self.ruleSubsumption, loopingRuleSubsumption]
+        return [self.rules, backwardPatterns, ruleCombinators, self.rulesNeedingOverlapTreatment, self.ruleSubsumption, loopingRuleSubsumption]
 
 
     #================================================================================
