@@ -4,37 +4,38 @@ class SpectrumBasedAnalyzer:
 
         print("Starting spectrum-based analysis...")
 
-        filename = "sba.txt"
+        filename = "sba.xml"
 
         print("Writing to file: " + filename)
         with open(filename, "w") as f:
 
-            f.write("Contract Satisfaction:")
+            f.write("<contract_satisfaction>")
             f.write("\n")
             for (c_name, _) in all_contracts:
-                f.write(c_name + " - ")
-                f.write("Succeed: " + str(len(contract_succeeded_pcs[c_name])))
+                f.write('<contract name="' + c_name + '" ')
+                f.write("succeed='" + str(len(contract_succeeded_pcs[c_name])) + "'")
                 f.write(" ")
-                f.write("Failed: " + str(len(contract_failed_pcs[c_name])))
-                f.write("\n")
-            f.write("\n")
+                f.write("failed='" + str(len(contract_failed_pcs[c_name])) + "'")
+                f.write("/>\n")
+            f.write("</contract_satisfaction>\n")
 
-            f.write("Rules:")
+            f.write("<rules>")
             f.write("\n")
             for layer in pathCondGen.transformation:
                 for rule in layer:
-                    f.write(pathCondGen.rule_names[rule.name])
+                    f.write('<rule name="' + pathCondGen.rule_names[rule.name] + '"/>')
                     f.write("\n")
-            f.write("\n")
+            f.write("</rules>\n")
 
-            f.write("Contracts:")
+
+            f.write("<contracts>")
             f.write("\n")
             for (c_name, _) in all_contracts:
-                f.write(c_name)
+                f.write('<contract name="' + c_name + '"/>')
                 f.write("\n")
-            f.write("\n")
+            f.write("</contracts>\n")
 
-            f.write("Rules in each path condition:")
+            f.write("<rules_for_each_path_condition>")
             f.write("\n")
             i = 0
             for _, pc_name in pathCondGen.get_path_conditions(expand = False, get_pretty_name = True):
@@ -44,41 +45,44 @@ class SpectrumBasedAnalyzer:
                 if len(rules) == 1:
                     continue
                 rules.remove("HEmptyPathCondition")
-                f.write("PC" + str(i) + ": ")
+                f.write("<PC num='" + str(i) + "' ")
                 i += 1
 
+                f.write('rules="')
                 for r in rules:
                     f.write(r + ",")
-                f.write("\n")
+                f.write('"/>\n')
 
-            f.write("\n")
+            f.write("</rules_for_each_path_condition>\n")
 
-            f.write("Contracts per path condition:")
+            f.write("<contracts_for_each_path_condition>")
             f.write("\n")
             i = 0
             for _, pc_name in pathCondGen.get_path_conditions(expand = False, get_pretty_name = False):
                 # print(pc_name)
                 if pc_name == "Em.0":
                     continue
-                f.write("PC" + str(i) + ": ")
+                f.write("<PC num='" + str(i) + "'>")
                 i += 1
                 f.write("\n")
 
-                f.write("Sat: ")
+                f.write("<sat contracts='")
 
                 for contract_name in contract_succeeded_pcs:
                     if pc_name in contract_succeeded_pcs[contract_name]:
                         f.write(contract_name + ",")
 
-                f.write("\n")
+                f.write("'/>\n")
 
-                f.write("Non Sat: ")
+                f.write("<nonsat contracts='")
 
                 for contract_name in contract_failed_pcs:
                     if pc_name in contract_failed_pcs[contract_name]:
                         f.write(contract_name + ",")
 
-                f.write("\n")
+                f.write("'/>\n")
+                f.write("</PC>\n")
+            f.write("</contracts_for_each_path_condition>\n")
 
 
 
