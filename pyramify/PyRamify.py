@@ -425,7 +425,10 @@ class PyRamify:
         if has_contains:
             apply_contains_nodes = find_nodes_with_mm(base_graph, ["MT_pre__apply_contains"])
             for node in apply_contains_nodes:
-                apply_node = base_graph.neighbors(node,"out")[0]
+                neighbours = base_graph.neighbors(node,"out")
+                if len(neighbours) == 0:
+                    continue
+                apply_node = neighbours[0]
                 neighbors_apply_node = base_graph.neighbors(apply_node,"out")
                 if set(neighbors_apply_node).intersection(bk_links_nums) == set():
                     apply_nums.append(apply_node)

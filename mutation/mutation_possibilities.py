@@ -13,8 +13,9 @@ class MutationPossibilityGenerator:
         self.outMM = EcoreUtils(outputMM)
 
         self.structural_classes = ["MatchModel", "ApplyModel", "paired_with",
-                                                               "match_contains", "apply_contains",
-                                   "directLink_S", "directLink_T"]
+                                                               "match_contains", "apply_contains"
+                                   ]
+        self.link_classes = ["directLink_S", "directLink_T", "backward_link"]
 
     def get_children(self, v):
         isInMatch = v["mm__"] in self.inMM.classes
@@ -35,12 +36,26 @@ class MutationPossibilityGenerator:
     def generate_possibilities(self, rule):
 
         poss = []
+        poss += self.element_replacement(rule)
+        poss += self.element_deletion(rule)
+
+        print("Possibilities for " + rule.name + ":")
+        for p in poss:
+            print(p)
+
+        # raise Exception()
+
+        return poss
+
+    # REPLACE BY ANOTHER CLASS
+    def element_replacement(self, rule):
+
+        poss = []
         for i, v in enumerate(rule.vs):
             mm = v["mm__"]
-            if mm in self.structural_classes:
+            if mm in self.structural_classes or mm in self.link_classes:
                 continue
 
-            #REPLACE BY ANOTHER CLASS
             children = self.get_children(v)
             parents = self.get_parents(v)
 
@@ -54,11 +69,18 @@ class MutationPossibilityGenerator:
                     poss_tuple = (MutationOperators.RENAME_CLASS.name, i, parent)
                     poss.append(poss_tuple)
 
+        return poss
 
-        print("Possibilities:")
-        for p in poss:
-            print(p)
+    # DELETE ELEMENT
+    def element_deletion(self, rule):
 
-        # raise Exception()
+        poss = []
+        for i, v in enumerate(rule.vs):
+            mm = v["mm__"]
+            if mm in self.structural_classes:
+                continue
+
+            poss_tuple = (MutationOperators.DELETE_ELEMENT.name, i)
+            poss.append(poss_tuple)
 
         return poss

@@ -22,7 +22,7 @@ if __name__ == "__main__":
         # ['HNeighborhood2District'],
         # ['HCity2TownHall', 'HCityCompany2Association'],
         #
-        ['HcopersonsSolveRefCountryFamilyParentCommunityMan'],
+        # ['HcopersonsSolveRefCountryFamilyParentCommunityMan'],
         # ['HcopersonsSolveRefCountryFamilyParentCommunityWoman'],
         #
         # ['HcopersonsSolveRefCountryFamilyChildCommunityMan'],
@@ -56,7 +56,7 @@ if __name__ == "__main__":
             poss = mpg.generate_possibilities(rule)
             poss_dict[rule.name] = poss
 
-            f.write('<mutation rule_name="' + rule.name + '" mutation="' + str(poss) + '"/>')
+            f.write('<mutation rule_name="' + rule.name + '" mutations="' + str(poss) + '"/>\n')
 
         f.write('</header>\n')
 
@@ -73,7 +73,7 @@ if __name__ == "__main__":
                 poss_cmd = "--mutate=" + str(p).replace(" ", "")
                 cmd = ["python3", "test_atlTrans_extended.py", rule_cmd, poss_cmd]
 
-                # subprocess.run(cmd)
+                #subprocess.run(cmd)
                 subprocess.run(cmd, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 
 

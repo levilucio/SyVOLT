@@ -62,26 +62,24 @@ class SpectrumBasedAnalyzer:
                 # print(pc_name)
                 if pc_name == "Em.0":
                     continue
-                f.write("<PC num='" + str(i) + "'>")
+                f.write("<PC num='" + str(i) + "' ")
                 i += 1
-                f.write("\n")
 
-                f.write("<sat contracts='")
+                f.write("sat_contracts='")
 
                 for contract_name in contract_succeeded_pcs:
                     if pc_name in contract_succeeded_pcs[contract_name]:
                         f.write(contract_name + ",")
 
-                f.write("'/>\n")
+                f.write("' ")
 
-                f.write("<nonsat contracts='")
+                f.write("nonsat_contracts='")
 
                 for contract_name in contract_failed_pcs:
                     if pc_name in contract_failed_pcs[contract_name]:
                         f.write(contract_name + ",")
 
-                f.write("'/>\n")
-                f.write("</PC>\n")
+                f.write("' />\n")
             f.write("</contracts_for_each_path_condition>\n")
 
 

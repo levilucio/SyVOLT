@@ -1,9 +1,13 @@
 import ast
 
 from enum import Enum
+
+from himesis_utils import graph_to_dot
+
+
 class MutationOperators(Enum):
     RENAME_CLASS = "RENAME"
-    DELETE_CLASS = "DELETE"
+    DELETE_ELEMENT = "DELETE"
 
     #CLASSES:
     #Replace class with another class
@@ -31,27 +35,23 @@ class MutationOperators(Enum):
 
 class Mutator:
 
-
-
     def __init__(self, rule_to_mutate, mutate):
         self.rule_to_mutate = rule_to_mutate
         self.mutate = ast.literal_eval(mutate)
 
-        print("Mutator")
-        print(rule_to_mutate)
-        print(mutate)
+        self.structural_classes = ["MatchModel", "ApplyModel", "paired_with",
+                                   "match_contains", "apply_contains"
+                                   ]
+        self.link_classes = ["directLink_S", "directLink_T", "backward_link"]
 
     def mutate_rules(self, rules, transformation):
-
-        print(rules)
-        print(transformation)
 
         for i, layer in enumerate(transformation):
             for j, rule in enumerate(layer):
                 if self.rule_to_mutate == rule.name:
-                    self.print_rule(rule)
+                    # self.print_rule(rule)
                     self.mutate_rule(rule)
-                    self.print_rule(rule)
+                    # self.print_rule(rule)
 
                     rules[rule.name] = rule
 
@@ -59,20 +59,30 @@ class Mutator:
         return rules, transformation
 
     def mutate_rule(self, rule):
-        print("Mutate")
-        print(rule.name)
-        print(self.mutate)
+
+        print("Mutating " + rule.name + " with " + str(self.mutate))
 
         op = self.mutate[0]
 
         if op == MutationOperators.RENAME_CLASS.name:
             op, node_num, change = self.mutate
-            print(rule.vs[node_num])
-            print(change)
 
             rule.vs[node_num]["mm__"] = change
+
+        elif op == MutationOperators.DELETE_ELEMENT.name:
+            op, node_num = self.mutate
+
+            assoc_nodes = []
+            for edge in rule.es:
+                if edge.source == node_num and rule.vs[edge.target]["mm__"] in self.link_classes:
+                    assoc_nodes.append(edge.target)
+                elif edge.target == node_num and rule.vs[edge.source]["mm__"] in self.link_classes:
+                    assoc_nodes.append(edge.source)
+
+            rule.delete_nodes([node_num] + assoc_nodes)
+
         else:
-            print("Unknown mutation operator: " + op)
+            raise Exception("Unknown mutation operator: " + op)
 
     def print_rule(self, rule):
         for v in rule.vs:
