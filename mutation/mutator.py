@@ -6,32 +6,40 @@ from core.himesis_utils import graph_to_dot
 
 
 class MutationOperators(Enum):
-    RENAME_CLASS = "RENAME"
+
+    #ADD OPERATIONS
+    ADD_CLASS = "ADD_CLASS"
+    ADD_ASSOC = "ADD_ASSOC"
+    ADD_BACK_LINK = "ADD_BACK_LINK"
+
+    #DELETE OPERATIONS
     DELETE_ELEMENT = "DELETE"
 
-    #CLASSES:
-    #Replace class with another class
-    #Add/remove classes
-    #Change Any/Exists type of classes
-    #Change positive/negative type of classes
+    #MODIFY OPERATIONS
+    RENAME_CLASS = "RENAME_CLASS"
+    RENAME_ASSOC = "RENAME_ASSOC"
 
-    #ASSOCIATIONS:
-    #Remove/add associations
-    #Change class of associations
-    #Change positive/negative associations
-    #Change direct/indirect associations
+    #ATTRIB OPERATIONS
+    DELETE_ATTRIB = "DELETE_ATTRIB"
+    DELETE_EQ = "DELETE_EQ"
 
-    #BACKWARD LINKS
-    #Add/remove backward links
-    #Change negative/positive
+    CHANGE_TERM_NODE = "CHANGE_TERM_NODE"
+    CHANGE_TERM_ATTRIB = "CHANGE_TERM_ATTRIB"
 
-    #ATTRIBUTES
-    #Add/remove attributes
-    #Change match attrib
-    #Change Atom value (what values?)
-    #Change apply attrib
-    #Change target of attribRef
-    #Concat, prefer one or the other side
+    CHANGE_CONCAT = "CHANGE_CONCAT"
+    CHANGE_ATOM = "CHANGE_ATOM"
+
+    # TO ADD
+    #   CLASSES:
+    #   Change Any/Exists type of classes
+    #   Change positive/negative type of classes
+
+    #   ASSOCIATIONS:
+    #   Change positive/negative associations
+    #   Change direct/indirect associations
+
+    #   BACKWARD LINKS
+    #   Change negative/positive
 
 class Mutator:
 
@@ -45,49 +53,6 @@ class Mutator:
         self.link_classes = ["directLink_S", "directLink_T", "backward_link"]
 
         self.debug = True
-
-    def mutate_rules(self, rules, transformation):
-
-        for i, layer in enumerate(transformation):
-            for j, rule in enumerate(layer):
-                if self.rule_to_mutate == rule.name:
-
-                    self.debug_rule(rule, True)
-                    self.mutate_rule(rule)
-                    self.debug_rule(rule, False)
-
-                    rules[rule.name] = rule
-
-        #raise Exception()
-        return rules, transformation
-
-    def mutate_rule(self, rule):
-
-        print("Mutating " + rule.name + " with " + str(self.mutate))
-
-        op = self.mutate[0]
-
-        if op == MutationOperators.RENAME_CLASS.name:
-            op, node_num, change = self.mutate
-
-            rule.vs[node_num]["mm__"] = change
-
-        elif op == MutationOperators.DELETE_ELEMENT.name:
-            op, node_num = self.mutate
-
-            assoc_nodes = []
-            for edge in rule.es:
-                if edge.source == node_num and rule.vs[edge.target]["mm__"] in self.link_classes + ["match_contains", "apply_contains"]:
-                    assoc_nodes.append(edge.target)
-                elif edge.target == node_num and rule.vs[edge.source]["mm__"] in self.link_classes + ["match_contains", "apply_contains"]:
-                    assoc_nodes.append(edge.source)
-
-            print("Nodes to delete: " + str(node_num) + " " + str(assoc_nodes))
-
-            rule.delete_nodes([node_num] + assoc_nodes)
-
-        else:
-            raise Exception("Unknown mutation operator: " + op)
 
     def print_rule(self, rule):
         mms = rule.vs["mm__"]
@@ -110,3 +75,87 @@ class Mutator:
 
         self.print_rule(rule)
         graph_to_dot(rule.name + "_" + str(self.mutate[0]) + str(self.mutate[1]) + "_" + stage_str, rule)
+
+
+    def mutate_rules(self, rules, transformation):
+
+        for i, layer in enumerate(transformation):
+            for j, rule in enumerate(layer):
+                if self.rule_to_mutate == rule.name:
+
+                    self.debug_rule(rule, True)
+                    self.mutate_rule(rule)
+                    self.debug_rule(rule, False)
+
+                    rules[rule.name] = rule
+
+        #raise Exception()
+        return rules, transformation
+
+    def mutate_rule(self, rule):
+
+        print("Mutating " + rule.name + " with " + str(self.mutate))
+
+        op = self.mutate[0]
+        try:
+            # call the mutation function
+            getattr(self, op)(self.mutate, rule)
+        except KeyError:
+            raise Exception("Unknown mutation operator: " + op)
+
+
+    ## OPERATIONS
+
+    def ADD_CLASS(self, mutate, rule):
+        return rule
+
+    def ADD_ASSOC(self, mutate, rule):
+        return rule
+
+    def ADD_BACK_LINK(self, mutate, rule):
+        return rule
+
+    def DELETE_ELEMENT(self, mutate, rule):
+        op, node_num = self.mutate
+
+        assoc_nodes = []
+        for edge in rule.es:
+            if edge.source == node_num and rule.vs[edge.target]["mm__"] in self.link_classes + ["match_contains",
+                                                                                                "apply_contains"]:
+                assoc_nodes.append(edge.target)
+            elif edge.target == node_num and rule.vs[edge.source]["mm__"] in self.link_classes + ["match_contains",
+                                                                                                  "apply_contains"]:
+                assoc_nodes.append(edge.source)
+
+        print("Nodes to delete: " + str(node_num) + " " + str(assoc_nodes))
+
+        rule.delete_nodes([node_num] + assoc_nodes)
+        return rule
+
+    def RENAME_CLASS(self, mutate, rule):
+        op, node_num, change = self.mutate
+
+        rule.vs[node_num]["mm__"] = change
+
+        return rule
+
+    def RENAME_ASSOC(self, mutate, rule):
+        return rule
+
+    def DELETE_ATTRIB(self, mutate, rule):
+        return rule
+
+    def DELETE_EQ(self, mutate, rule):
+        return rule
+
+    def CHANGE_TERM_NODE(self, mutate, rule):
+        return rule
+
+    def CHANGE_TERM_ATTRIB(self, mutate, rule):
+        return rule
+
+    def CHANGE_CONCAT(self, mutate, rule):
+        return rule
+
+    def CHANGE_ATOM(self, mutate, rule):
+        return rule

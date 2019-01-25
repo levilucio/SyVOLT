@@ -4,10 +4,6 @@ from mutation.mutator import MutationOperators
 
 class MutationPossibilityGenerator:
 
-
-
-
-
     def __init__(self, inputMM, outputMM):
         self.inMM = EcoreUtils(inputMM)
         self.outMM = EcoreUtils(outputMM)
@@ -36,8 +32,23 @@ class MutationPossibilityGenerator:
     def generate_possibilities(self, rule):
 
         poss = []
-        poss += self.element_replacement(rule)
-        poss += self.element_deletion(rule)
+        poss += self.ADD_CLASS(rule)
+        poss += self.ADD_ASSOC(rule)
+        poss += self.ADD_BACK_LINK(rule)
+
+        poss += self.DELETE_ELEMENT(rule)
+
+        poss += self.RENAME_CLASS(rule)
+        poss += self.RENAME_ASSOC(rule)
+
+        poss += self.DELETE_ATTRIB(rule)
+        poss += self.DELETE_EQ(rule)
+
+        poss += self.CHANGE_TERM_NODE(rule)
+        poss += self.CHANGE_TERM_ATTRIB(rule)
+
+        poss += self.CHANGE_CONCAT(rule)
+        poss += self.CHANGE_ATOM(rule)
 
         print("Possibilities for " + rule.name + ":")
         for p in poss:
@@ -47,9 +58,29 @@ class MutationPossibilityGenerator:
 
         return poss
 
-    # REPLACE BY ANOTHER CLASS
-    def element_replacement(self, rule):
+    def ADD_CLASS(self, rule):
+        return []
 
+    def ADD_ASSOC(self, rule):
+        return []
+
+    def ADD_BACK_LINK(self, rule):
+        return []
+
+    def DELETE_ELEMENT(self, rule):
+        poss = []
+        for i, v in enumerate(rule.vs):
+            mm = v["mm__"]
+            if mm in self.structural_classes:
+                continue
+
+            poss_tuple = (MutationOperators.DELETE_ELEMENT.name, i)
+            poss.append(poss_tuple)
+
+        return poss
+
+    # REPLACE BY ANOTHER CLASS
+    def RENAME_CLASS(self, rule):
         poss = []
         for i, v in enumerate(rule.vs):
             mm = v["mm__"]
@@ -71,16 +102,23 @@ class MutationPossibilityGenerator:
 
         return poss
 
-    # DELETE ELEMENT
-    def element_deletion(self, rule):
+    def RENAME_ASSOC(self, rule):
+        return []
 
-        poss = []
-        for i, v in enumerate(rule.vs):
-            mm = v["mm__"]
-            if mm in self.structural_classes:
-                continue
+    def DELETE_ATTRIB(self, rule):
+        return []
 
-            poss_tuple = (MutationOperators.DELETE_ELEMENT.name, i)
-            poss.append(poss_tuple)
+    def DELETE_EQ(self, rule):
+        return []
 
-        return poss
+    def CHANGE_TERM_NODE(self, rule):
+        return []
+
+    def CHANGE_TERM_ATTRIB(self, rule):
+        return []
+
+    def CHANGE_CONCAT(self, rule):
+        return []
+
+    def CHANGE_ATOM(self, rule):
+        return []

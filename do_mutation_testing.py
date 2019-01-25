@@ -4,42 +4,8 @@ import datetime
 from mutation.mutation_possibilities import MutationPossibilityGenerator
 from util.test_script_utils import load_transformation
 
-if __name__ == "__main__":
-    print("Performing mutations...")
 
-    transformation_dir = "./ExFamToPerson/"
-    inputMM = transformation_dir + "Families_Extended.ecore"
-    outputMM = transformation_dir + "Persons_Extended.ecore"
-
-    mpg = MutationPossibilityGenerator(inputMM, outputMM)
-
-    full_transformation = [
-        # ['HCountry2Community'],
-        ['HFather2Man'],
-        # ['HMother2Woman'],
-        # ['HDaughter2Woman'],
-        # ['HSon2Man'],
-        # ['HNeighborhood2District'],
-        # ['HCity2TownHall', 'HCityCompany2Association'],
-        #
-        # ['HcopersonsSolveRefCountryFamilyParentCommunityMan'],
-        # ['HcopersonsSolveRefCountryFamilyParentCommunityWoman'],
-        #
-        # ['HcopersonsSolveRefCountryFamilyChildCommunityMan'],
-        # ['HcopersonsSolveRefCountryFamilyChildCommunityWoman'],
-        #
-        # ['HcotownHallsSolveRefCountryCityCommunityTownHall',
-        #  'HcoassociationsSolveRefCountryCityCompanyCommunityAssociation',
-        #  'HacommitteeSolveRefCompanyCityAssociationCommittee'],
-        # ['HtworkersSolveRefCompanyParentCityTownHallPerson'],
-        # ['HtdistrictsSolveRefCityNeighborhoodTownHallDistrict'],
-        # ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityPerson'],
-        # ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictSpecialFacilityPerson']
-
-    ]
-
-    rules, transformation = load_transformation(transformation_dir + "transformation/", full_transformation)
-
+def do_mutation_testing(mpg, rules, transformation):
     poss_dict = {}
 
     xml_filename = "mutation_testing.xml"
@@ -73,9 +39,8 @@ if __name__ == "__main__":
                 poss_cmd = "--mutate=" + str(p).replace(" ", "")
                 cmd = ["python3", "test_atlTrans_extended.py", rule_cmd, poss_cmd]
 
-                #subprocess.run(cmd)
-                subprocess.run(cmd, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
-
+                subprocess.run(cmd)
+                # subprocess.run(cmd, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 
                 # f.write(rule.name + "\n")
                 # f.write(str(p) + "\n\n")
@@ -87,3 +52,47 @@ if __name__ == "__main__":
             f.write('</mutation_set>\n')
 
         f.write('</mutation_testing>\n')
+
+if __name__ == "__main__":
+    print("Performing mutations...")
+
+    transformation_dir = "./ExFamToPerson/"
+    inputMM = transformation_dir + "Families_Extended.ecore"
+    outputMM = transformation_dir + "Persons_Extended.ecore"
+
+    mpg = MutationPossibilityGenerator(inputMM, outputMM)
+
+    full_transformation = [
+        # ['HCountry2Community'],
+        ['HFather2Man'],
+        # ['HMother2Woman'],
+        # ['HDaughter2Woman'],
+        # ['HSon2Man'],
+        # ['HNeighborhood2District'],
+        # ['HCity2TownHall', 'HCityCompany2Association'],
+        #
+        #['HcopersonsSolveRefCountryFamilyParentCommunityMan'],
+        # ['HcopersonsSolveRefCountryFamilyParentCommunityWoman'],
+        #
+        # ['HcopersonsSolveRefCountryFamilyChildCommunityMan'],
+        # ['HcopersonsSolveRefCountryFamilyChildCommunityWoman'],
+        #
+        # ['HcotownHallsSolveRefCountryCityCommunityTownHall',
+        #  'HcoassociationsSolveRefCountryCityCompanyCommunityAssociation',
+        #  'HacommitteeSolveRefCompanyCityAssociationCommittee'],
+        # ['HtworkersSolveRefCompanyParentCityTownHallPerson'],
+        # ['HtdistrictsSolveRefCityNeighborhoodTownHallDistrict'],
+        # ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityPerson'],
+        # ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictSpecialFacilityPerson']
+
+    ]
+
+    rules, transformation = load_transformation(transformation_dir + "transformation/", full_transformation)
+
+    do_only_generation = False
+
+    if do_only_generation:
+        for rule in rules.values():
+            poss = mpg.generate_possibilities(rule)
+    else:
+        do_mutation_testing(mpg, rules, transformation)
