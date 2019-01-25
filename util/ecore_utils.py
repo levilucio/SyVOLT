@@ -7,6 +7,9 @@ Created on 2015-02-16
 from xml.dom import minidom
 from copy import deepcopy
 from core.himesis_utils import graph_to_dot
+
+from collections import defaultdict
+
 class EcoreUtils(object):
     '''
     a set of utils to deal with ecore files
@@ -39,7 +42,7 @@ class EcoreUtils(object):
         self.mmClassChildren = self.getSubClassInheritanceRelationForClasses()
 
         self.classes = []
-        self.rels = {}
+        self.rels = defaultdict(list)
         self.attribs = {}
         self.containmentLinks = {}
         self.metamodelClasses = self.xmldoc.getElementsByTagName('eClassifiers')
@@ -55,27 +58,23 @@ class EcoreUtils(object):
             self.classes.append(mmClassName)
 
             rels = mmClass.getElementsByTagName('eStructuralFeatures')
-
             for rel in rels:
 
-                try:
+                targetClassName = str(rel.attributes['eType'].value).split('#//', 1)[1]
+                relName = str(rel.attributes['name'].value)
 
-                    targetClassName = str(rel.attributes['eType'].value).split('#//', 1)[1]
-                    relName = str(rel.attributes['name'].value)
-
-
-
-                    isAttrib = "EAttribute" in str(rel.attributes['xsi:type'].value)
-                    if isAttrib:
-                        # record this attrib
-                        if mmClassName not in self.attribs.keys():
-                            self.attribs[mmClassName] = [relName]
-                        else:
-                            self.attribs[mmClassName].append(relName)
-
+                isAttrib = "EAttribute" in str(rel.attributes['xsi:type'].value)
+                if isAttrib:
+                    # record this attrib
+                    if mmClassName not in self.attribs.keys():
+                        self.attribs[mmClassName] = [relName]
                     else:
+                        self.attribs[mmClassName].append(relName)
 
-                        relTuple = (mmClassName, relName)
+                else:
+
+                    relTuple = (targetClassName, relName)
+                    try:
                         if str(rel.attributes['containment'].value) == "true":
                             if targetClassName not in self.containmentLinks.keys():
                                 self.containmentLinks[targetClassName] = [relTuple]
@@ -83,15 +82,12 @@ class EcoreUtils(object):
                                 if rel not in self.containmentLinks[targetClassName]:
                                     self.containmentLinks[targetClassName].append(relTuple)
                             self.containmentRels.append(relName)
+                    except KeyError:
+                        pass
 
-                        #record this relation
-                        if mmClassName not in self.rels.keys():
-                            self.rels[mmClassName] = [relTuple]
-                        else:
-                            if relTuple not in self.rels[mmClassName]:
-                                self.rels[mmClassName].append(relTuple)
-                except KeyError:
-                    pass
+                    #record this relation
+                    if relTuple not in self.rels[mmClassName]:
+                        self.rels[mmClassName].append(relTuple)
 
 
         if debug_contain_links:
