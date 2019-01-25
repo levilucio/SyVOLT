@@ -2,7 +2,7 @@ import ast
 
 from enum import Enum
 
-from himesis_utils import graph_to_dot
+from core.himesis_utils import graph_to_dot
 
 
 class MutationOperators(Enum):
@@ -44,14 +44,17 @@ class Mutator:
                                    ]
         self.link_classes = ["directLink_S", "directLink_T", "backward_link"]
 
+        self.debug = True
+
     def mutate_rules(self, rules, transformation):
 
         for i, layer in enumerate(transformation):
             for j, rule in enumerate(layer):
                 if self.rule_to_mutate == rule.name:
-                    # self.print_rule(rule)
+
+                    self.debug_rule(rule, True)
                     self.mutate_rule(rule)
-                    # self.print_rule(rule)
+                    self.debug_rule(rule, False)
 
                     rules[rule.name] = rule
 
@@ -74,10 +77,12 @@ class Mutator:
 
             assoc_nodes = []
             for edge in rule.es:
-                if edge.source == node_num and rule.vs[edge.target]["mm__"] in self.link_classes:
+                if edge.source == node_num and rule.vs[edge.target]["mm__"] in self.link_classes + ["match_contains", "apply_contains"]:
                     assoc_nodes.append(edge.target)
-                elif edge.target == node_num and rule.vs[edge.source]["mm__"] in self.link_classes:
+                elif edge.target == node_num and rule.vs[edge.source]["mm__"] in self.link_classes + ["match_contains", "apply_contains"]:
                     assoc_nodes.append(edge.source)
+
+            print("Nodes to delete: " + str(node_num) + " " + str(assoc_nodes))
 
             rule.delete_nodes([node_num] + assoc_nodes)
 
@@ -85,5 +90,23 @@ class Mutator:
             raise Exception("Unknown mutation operator: " + op)
 
     def print_rule(self, rule):
-        for v in rule.vs:
-            print(v["mm__"])
+        mms = rule.vs["mm__"]
+        print("Rule: " + rule.name)
+        print([v["mm__"] for v in rule.vs])
+        print([str(edge.source) + "-" + str(edge.target) for edge in rule.es])
+        print([str(mms[edge.source]) + "-" + str(mms[edge.target]) for edge in rule.es])
+
+
+    def debug_rule(self, rule, stage):
+
+        if not self.debug:
+            return
+
+        if stage:
+            stage_str = "before"
+        else:
+            stage_str = "after"
+
+
+        self.print_rule(rule)
+        graph_to_dot(rule.name + "_" + str(self.mutate[0]) + str(self.mutate[1]) + "_" + stage_str, rule)
