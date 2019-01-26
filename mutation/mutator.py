@@ -100,12 +100,15 @@ class Mutator:
     ## OPERATIONS
 
     def ADD_CLASS(self, mutate, rule):
+        raise Exception("Not implemented!")
         return rule
 
     def ADD_ASSOC(self, mutate, rule):
+        raise Exception("Not implemented!")
         return rule
 
     def ADD_BACK_LINK(self, mutate, rule):
+        raise Exception("Not implemented!")
         return rule
 
     def DELETE_ELEMENT(self, mutate, rule):
@@ -133,22 +136,21 @@ class Mutator:
         return rule
 
     def RENAME_ASSOC(self, mutate, rule):
+        num = mutate[1]
+        new_assoc = mutate[2]
+
+        node = rule.vs[num]
+        node["attr1"] = new_assoc
         return rule
 
-    def DELETE_ATTRIB(self, mutate, rule):
+    def DELETE_EQUATION(self, mutate, rule):
+        num = mutate[1]
+        del rule["equations"][num]
         return rule
 
-    def DELETE_EQ(self, mutate, rule):
-        return rule
+    def MODIFY_EQUATION(self, mutate, rule):
+        eq_num = mutate[1]
+        new_eq = mutate[2]
 
-    def CHANGE_TERM_NODE(self, mutate, rule):
-        return rule
-
-    def CHANGE_TERM_ATTRIB(self, mutate, rule):
-        return rule
-
-    def CHANGE_CONCAT(self, mutate, rule):
-        return rule
-
-    def CHANGE_ATOM(self, mutate, rule):
+        rule["equations"][eq_num] = new_eq
         return rule

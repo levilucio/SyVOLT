@@ -39,7 +39,7 @@ class MutationPossibilityGenerator:
         poss += self.ADD_EQUATION(rule)
 
         poss += self.DELETE_ELEMENT(rule)
-        poss += self.DELETE_EQ(rule)
+        poss += self.DELETE_EQUATION(rule)
 
         poss += self.RENAME_CLASS(rule)
         poss += self.RENAME_ASSOC(rule)
@@ -139,7 +139,7 @@ class MutationPossibilityGenerator:
 
         return poss
 
-    def DELETE_EQ(self, rule):
+    def DELETE_EQUATION(self, rule):
         poss = []
         for i, _ in enumerate(rule["equations"]):
             poss_tuple = (MutationOperators.DELETE_EQUATION.name, i)
@@ -149,7 +149,7 @@ class MutationPossibilityGenerator:
     # MODIFY EQUATION
     # IMPLEMENTED:
     # - REPLACE CONCAT WITH EACH PIECE
-    # - REPLACE REF WITH
+    # - REPLACE REF WITH ANOTHER REF FROM SAME CLASS OR PARENT
 
     def MODIFY_EQUATION(self, rule):
         poss = []
@@ -194,15 +194,18 @@ class MutationPossibilityGenerator:
             poss.append(concat_args[0])
             poss.append(concat_args[1])
 
+            switch = ('concat', (concat_args[1], concat_args[0]))
+            poss.append(switch)
+
             first_poss = self.get_eq_poss(concat_args[0], rule, is_match=True)
             second_poss = self.get_eq_poss(concat_args[1], rule, is_match=True)
 
             for p in first_poss:
-                new_p = "('concat', (" + str(p) + ", " + str(concat_args[1]) + "))"
+                new_p = ('concat', (p, concat_args[1]))
                 poss.append(new_p)
 
             for p in second_poss:
-                new_p = "('concat', (" + str(concat_args[0]) + ", " + str(p) + "))"
+                new_p = ('concat', (concat_args[0], p))
                 poss.append(new_p)
             return poss
 
