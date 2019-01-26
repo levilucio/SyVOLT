@@ -7,6 +7,7 @@ from util.test_script_utils import load_transformation
 
 def do_mutation_testing(mpg, rules, transformation):
     poss_dict = {}
+    mutation_count = 0
 
     xml_filename = "mutation_testing.xml"
     in_xml_filename = "sba.xml"
@@ -21,17 +22,24 @@ def do_mutation_testing(mpg, rules, transformation):
         for rule in rules.values():
             poss = mpg.generate_possibilities(rule)
             poss_dict[rule.name] = poss
+            mutation_count += len(poss)
 
             f.write('<mutation rule_name="' + rule.name + '" mutations="' + str(poss) + '"/>\n')
 
         f.write('</header>\n')
 
+        curr_mutation_count = 0
         for rule_name, poss_set in poss_dict.items():
             f.write('<mutation_set rule_name="' + rule_name + '">\n')
 
             print("Poss for rule: " + rule_name)
             for p in poss_set:
+
+                print("Running mutation " + str(curr_mutation_count+1) +
+                      " out of " + str(mutation_count+1) + "...")
                 print(p)
+
+                curr_mutation_count += 1
 
                 f.write('<mutation operation="' + str(p) + '">\n')
 
@@ -39,8 +47,8 @@ def do_mutation_testing(mpg, rules, transformation):
                 poss_cmd = "--mutate=" + str(p).replace(" ", "")
                 cmd = ["python3", "test_atlTrans_extended.py", rule_cmd, poss_cmd]
 
-                subprocess.run(cmd)
-                # subprocess.run(cmd, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+                #subprocess.run(cmd)
+                subprocess.run(cmd, stdout = subprocess.PIPE)#, stderr = subprocess.PIPE)
 
                 # f.write(rule.name + "\n")
                 # f.write(str(p) + "\n\n")
@@ -71,7 +79,7 @@ if __name__ == "__main__":
         # ['HNeighborhood2District'],
         # ['HCity2TownHall', 'HCityCompany2Association'],
         #
-        #['HcopersonsSolveRefCountryFamilyParentCommunityMan'],
+        # ['HcopersonsSolveRefCountryFamilyParentCommunityMan'],
         # ['HcopersonsSolveRefCountryFamilyParentCommunityWoman'],
         #
         # ['HcopersonsSolveRefCountryFamilyChildCommunityMan'],
@@ -84,7 +92,6 @@ if __name__ == "__main__":
         # ['HtdistrictsSolveRefCityNeighborhoodTownHallDistrict'],
         # ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityPerson'],
         # ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictSpecialFacilityPerson']
-
     ]
 
     rules, transformation = load_transformation(transformation_dir + "transformation/", full_transformation)

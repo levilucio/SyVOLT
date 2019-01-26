@@ -45,7 +45,7 @@ class Mutator:
                                    ]
         self.link_classes = ["directLink_S", "directLink_T", "backward_link"]
 
-        self.debug = True
+        self.debug = False
 
     def print_rule(self, rule):
         mms = rule.vs["mm__"]
