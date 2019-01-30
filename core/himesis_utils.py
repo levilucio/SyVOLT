@@ -352,7 +352,11 @@ def graph_to_dot(name, g, verbosity=0, force_trace_links=False):
 
     name = name[:240]
 
-    svg_filename = './dot/' + name + '.svg'
+    dot_dir = './dot/'
+    svg_filename = os.path.join(dot_dir, name + '.svg')
+
+    if not os.path.exists(dot_dir):
+        os.makedirs(dot_dir)
 
     try:
         graph.write_svg(svg_filename, prog='dot')
