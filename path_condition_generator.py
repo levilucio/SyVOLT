@@ -195,7 +195,11 @@ class PathConditionGenerator(object):
             for subsumedRule in subsumingRulesInLayer:
                 for subsumingRuleIndex in range(len(self.subsumption[subsumedRule])):
                     ruleName = self.subsumption[subsumedRule][subsumingRuleIndex]
-                    short_rule_name = self.shortened_rule_names[ruleName]
+                    try:
+                        short_rule_name = self.shortened_rule_names[ruleName]
+                    except:
+                        #TODO: Fix this Exception
+                        short_rule_name = ruleName
                     self.subsumption[subsumedRule][subsumingRuleIndex] = short_rule_name
 
                     
