@@ -6,18 +6,17 @@ from core.himesis_utils import graph_to_dot
 
 
 class MutationOperators(Enum):
-
-    #ADD OPERATIONS
+    # ADD OPERATIONS
     ADD_CLASS = "ADD_CLASS"
     ADD_ASSOC = "ADD_ASSOC"
     ADD_BACK_LINK = "ADD_BACK_LINK"
     ADD_EQUATION = "ADD_EQUATION"
 
-    #DELETE OPERATIONS
+    # DELETE OPERATIONS
     DELETE_ELEMENT = "DELETE"
     DELETE_EQUATION = "DELETE_EQUATION"
 
-    #MODIFY OPERATIONS
+    # MODIFY OPERATIONS
     RENAME_CLASS = "RENAME_CLASS"
     RENAME_ASSOC = "RENAME_ASSOC"
     MODIFY_EQUATION = "MODIFY_EQUATION"
@@ -33,6 +32,7 @@ class MutationOperators(Enum):
 
     #   BACKWARD LINKS
     #   Change negative/positive
+
 
 class Mutator:
 
@@ -54,7 +54,6 @@ class Mutator:
         print([str(edge.source) + "-" + str(edge.target) for edge in rule.es])
         print([str(mms[edge.source]) + "-" + str(mms[edge.target]) for edge in rule.es])
 
-
     def debug_rule(self, rule, stage):
 
         if not self.debug:
@@ -65,24 +64,21 @@ class Mutator:
         else:
             stage_str = "after"
 
-
         self.print_rule(rule)
         graph_to_dot(rule.name + "_" + str(self.mutate[0]) + str(self.mutate[1]) + "_" + stage_str, rule)
-
 
     def mutate_rules(self, rules, transformation):
 
         for i, layer in enumerate(transformation):
             for j, rule in enumerate(layer):
                 if self.rule_to_mutate == rule.name:
-
                     self.debug_rule(rule, True)
                     self.mutate_rule(rule)
                     self.debug_rule(rule, False)
 
                     rules[rule.name] = rule
 
-        #raise Exception()
+        # raise Exception()
         return rules, transformation
 
     def mutate_rule(self, rule):
@@ -96,7 +92,6 @@ class Mutator:
         except KeyError:
             raise Exception("Unknown mutation operator: " + op)
 
-
     ## OPERATIONS
 
     def ADD_CLASS(self, mutate, rule):
@@ -108,7 +103,18 @@ class Mutator:
         return rule
 
     def ADD_BACK_LINK(self, mutate, rule):
-        raise Exception("Not implemented!")
+
+        new_node_index = len(list(rule.vs))
+
+        rule.add_node()
+        new_node = rule.vs[new_node_index]
+        new_node["mm__"] = "backward_link"
+
+        match_index = mutate[1]
+        apply_index = mutate[2]
+
+        rule.add_edge(apply_index, new_node_index)
+        rule.add_edge(new_node_index, match_index)
         return rule
 
     def DELETE_ELEMENT(self, mutate, rule):
