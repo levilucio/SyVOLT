@@ -99,7 +99,19 @@ class Mutator:
         return rule
 
     def ADD_ASSOC(self, mutate, rule):
-        raise Exception("Not implemented!")
+
+        op, assoc_name, src, trgt = mutate
+
+        new_node_index = len(list(rule.vs))
+
+        rule.add_node()
+        new_node = rule.vs[new_node_index]
+        new_node["mm__"] = "directLink_S"
+        new_node["attr1"] = assoc_name
+
+        rule.add_edge(src, new_node_index)
+        rule.add_edge(new_node_index, trgt)
+
         return rule
 
     def ADD_BACK_LINK(self, mutate, rule):
