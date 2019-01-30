@@ -2,6 +2,7 @@ from util.ecore_utils import EcoreUtils
 from util.test_script_utils import load_transformation
 from mutation.mutator import MutationOperators
 from collections import defaultdict
+from copy import deepcopy
 
 
 class MutationPossibilityGenerator:
@@ -46,18 +47,18 @@ class MutationPossibilityGenerator:
     def generate_possibilities(self, rule, transformation):
 
         poss = []
-        poss += self.ADD_CLASS(rule)
+        # poss += self.ADD_CLASS(rule)
         poss += self.ADD_ASSOC(rule)
-        poss += self.ADD_BACK_LINK(rule, transformation)
-        poss += self.ADD_EQUATION(rule)
-
-        poss += self.DELETE_ELEMENT(rule)
-        poss += self.DELETE_EQUATION(rule)
-
-        poss += self.RENAME_CLASS(rule)
-        poss += self.RENAME_ASSOC(rule)
-
-        poss += self.MODIFY_EQUATION(rule)
+        # poss += self.ADD_BACK_LINK(rule, transformation)
+        # poss += self.ADD_EQUATION(rule)
+        #
+        # poss += self.DELETE_ELEMENT(rule)
+        # poss += self.DELETE_EQUATION(rule)
+        #
+        # poss += self.RENAME_CLASS(rule)
+        # poss += self.RENAME_ASSOC(rule)
+        #
+        # poss += self.MODIFY_EQUATION(rule)
 
         print("Possibilities for " + rule.name + ":")
         for p in poss:
@@ -68,10 +69,90 @@ class MutationPossibilityGenerator:
         return poss
 
     def ADD_CLASS(self, rule):
-        return []
+        poss = []
+
+        for m in self.inMM.classes:
+            # add the possibility
+            poss_tuple = (MutationOperators.ADD_CLASS.name, m)
+            poss.append(poss_tuple)
+
+        for m in self.outMM.classes:
+            # add the possibility
+            poss_tuple = (MutationOperators.ADD_CLASS.name, m)
+            poss.append(poss_tuple)
+
+        return poss
+
+    def gen_assocs(self, nodes, rels):
+        poss_rels = []
+
+        # get all possibilities of assocs between nodes
+        for i, n1 in enumerate(nodes):
+            for j, n2 in enumerate(nodes):
+                n1_mm = n1["mm__"]
+                n2_mm = n2["mm__"]
+
+                # skip if there is no assoc in the metamodel
+                if n1_mm not in rels:
+                    continue
+
+                # generate the possible assocs
+                rels_to_choose = []
+                for r in rels[n1_mm]:
+                    if r[0] == n2_mm:
+                        rels_to_choose.append(r)
+
+                if not rels_to_choose:
+                    continue
+
+                # generate the concrete possiblities
+                for rtc in rels_to_choose:
+                    rel_tuple = (rtc[1], i, j)
+                    poss_rels.append(rel_tuple)
+        return poss_rels
+
+    # does this assoc already exist in the graph?
+    def does_rel_exist(self, rule, rel, src, trgt):
+        from_src = []
+        to_trgt = []
+
+        # populate the list of nodes to/from the src and target
+        for edge in rule.es:
+            if edge.source == src:
+                from_src.append(edge.target)
+            if edge.target == trgt:
+                to_trgt.append(edge.source)
+
+        # do the intersection
+        rels_between = list(set(from_src) & set(to_trgt))
+
+        # see whether any assoc has this value already
+        for r in rels_between:
+            if rule.vs[r]["attr1"] == rel:
+                return True
+
+        return False
 
     def ADD_ASSOC(self, rule):
-        return []
+
+        poss = []
+
+        # TODO: Assuming no conflicts
+        rels = deepcopy(self.inMM.rels)
+        rels.update(self.outMM.rels)
+
+        # get the possible list of assocs
+        assocs = self.gen_assocs(list(rule.vs), rels)
+        for assoc in assocs:
+
+            # skip ones that exist already
+            if self.does_rel_exist(rule, assoc[0], assoc[1], assoc[2]):
+                continue
+
+            poss_tuple = (MutationOperators.ADD_ASSOC.name, assoc[0], assoc[1], assoc[2])
+            poss.append(poss_tuple)
+
+        return poss
 
     def ADD_BACK_LINK(self, rule, transformation):
 
