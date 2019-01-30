@@ -95,7 +95,26 @@ class Mutator:
     ## OPERATIONS
 
     def ADD_CLASS(self, mutate, rule):
-        raise Exception("Not implemented!")
+        op, class_name, is_match, ma_model_index = mutate
+
+        new_node_index = len(list(rule.vs))
+
+        rule.add_node()
+        new_node = rule.vs[new_node_index]
+        new_node["mm__"] = class_name
+        new_node["attr1"] = "+"
+
+        container_node_index = len(list(rule.vs))
+        rule.add_node()
+        container_node = rule.vs[container_node_index]
+        if is_match:
+            container_node["mm__"] = "match_contains"
+        else:
+            container_node["mm__"] = "apply_contains"
+
+        rule.add_edge(ma_model_index, container_node_index)
+        rule.add_edge(container_node_index, new_node_index)
+
         return rule
 
     def ADD_ASSOC(self, mutate, rule):

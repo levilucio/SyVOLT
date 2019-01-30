@@ -47,18 +47,18 @@ class MutationPossibilityGenerator:
     def generate_possibilities(self, rule, transformation):
 
         poss = []
-        # poss += self.ADD_CLASS(rule)
+        poss += self.ADD_CLASS(rule)
         poss += self.ADD_ASSOC(rule)
-        # poss += self.ADD_BACK_LINK(rule, transformation)
-        # poss += self.ADD_EQUATION(rule)
-        #
-        # poss += self.DELETE_ELEMENT(rule)
-        # poss += self.DELETE_EQUATION(rule)
-        #
-        # poss += self.RENAME_CLASS(rule)
-        # poss += self.RENAME_ASSOC(rule)
-        #
-        # poss += self.MODIFY_EQUATION(rule)
+        poss += self.ADD_BACK_LINK(rule, transformation)
+        poss += self.ADD_EQUATION(rule)
+
+        poss += self.DELETE_ELEMENT(rule)
+        poss += self.DELETE_EQUATION(rule)
+
+        poss += self.RENAME_CLASS(rule)
+        poss += self.RENAME_ASSOC(rule)
+
+        poss += self.MODIFY_EQUATION(rule)
 
         print("Possibilities for " + rule.name + ":")
         for p in poss:
@@ -72,13 +72,17 @@ class MutationPossibilityGenerator:
         poss = []
 
         for m in self.inMM.classes:
+            match_model_node = [i for i, node in enumerate(rule.vs) if node["mm__"] == "MatchModel"][0]
+
             # add the possibility
-            poss_tuple = (MutationOperators.ADD_CLASS.name, m)
+            poss_tuple = (MutationOperators.ADD_CLASS.name, m, True, match_model_node)
             poss.append(poss_tuple)
 
         for m in self.outMM.classes:
+            apply_model_node = [i for i, node in enumerate(rule.vs) if node["mm__"] == "ApplyModel"][0]
+
             # add the possibility
-            poss_tuple = (MutationOperators.ADD_CLASS.name, m)
+            poss_tuple = (MutationOperators.ADD_CLASS.name, m, False, apply_model_node)
             poss.append(poss_tuple)
 
         return poss
