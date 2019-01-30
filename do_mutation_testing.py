@@ -20,7 +20,7 @@ def do_mutation_testing(mpg, rules, transformation):
         f.write('<header')
         f.write(' date="' + str(datetime.datetime.now()) + '">\n')
         for rule in rules.values():
-            poss = mpg.generate_possibilities(rule)
+            poss = mpg.generate_possibilities(rule, transformation)
             poss_dict[rule.name] = poss
             mutation_count += len(poss)
 
@@ -71,15 +71,15 @@ if __name__ == "__main__":
     mpg = MutationPossibilityGenerator(inputMM, outputMM)
 
     full_transformation = [
-        # ['HCountry2Community'],
+        ['HCountry2Community'],
         ['HFather2Man'],
-        # ['HMother2Woman'],
-        # ['HDaughter2Woman'],
-        # ['HSon2Man'],
-        # ['HNeighborhood2District'],
-        # ['HCity2TownHall', 'HCityCompany2Association'],
-        #
-        # ['HcopersonsSolveRefCountryFamilyParentCommunityMan'],
+        ['HMother2Woman'],
+        ['HDaughter2Woman'],
+        ['HSon2Man'],
+        ['HNeighborhood2District'],
+        ['HCity2TownHall', 'HCityCompany2Association'],
+
+        ['HcopersonsSolveRefCountryFamilyParentCommunityMan'],
         # ['HcopersonsSolveRefCountryFamilyParentCommunityWoman'],
         #
         # ['HcopersonsSolveRefCountryFamilyChildCommunityMan'],
@@ -100,6 +100,6 @@ if __name__ == "__main__":
 
     if do_only_generation:
         for rule in rules.values():
-            poss = mpg.generate_possibilities(rule)
+            poss = mpg.generate_possibilities(rule, transformation)
     else:
         do_mutation_testing(mpg, rules, transformation)

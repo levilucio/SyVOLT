@@ -1,6 +1,7 @@
 from util.ecore_utils import EcoreUtils
 from util.test_script_utils import load_transformation
 from mutation.mutator import MutationOperators
+from collections import defaultdict
 
 
 class MutationPossibilityGenerator:
@@ -30,12 +31,24 @@ class MutationPossibilityGenerator:
         else:
             return self.outMM.mmClassParents
 
-    def generate_possibilities(self, rule):
+    def collect_nodes(self, rule, get_match_nodes):
+        nodes = []
+        if get_match_nodes:
+            mm = self.inMM.classes
+        else:
+            mm = self.outMM.classes
+
+        for node in rule.vs:
+            if node["mm__"] in mm:
+                nodes.append(node)
+        return nodes
+
+    def generate_possibilities(self, rule, transformation):
 
         poss = []
         poss += self.ADD_CLASS(rule)
         poss += self.ADD_ASSOC(rule)
-        poss += self.ADD_BACK_LINK(rule)
+        poss += self.ADD_BACK_LINK(rule, transformation)
         poss += self.ADD_EQUATION(rule)
 
         poss += self.DELETE_ELEMENT(rule)
@@ -60,8 +73,76 @@ class MutationPossibilityGenerator:
     def ADD_ASSOC(self, rule):
         return []
 
-    def ADD_BACK_LINK(self, rule):
-        return []
+    def ADD_BACK_LINK(self, rule, transformation):
+
+        # get the match and apply nodes
+        match_nodes = self.collect_nodes(rule, True)
+        apply_nodes = self.collect_nodes(rule, False)
+
+        # generate all the combos
+        combos = []
+        for m in match_nodes:
+            for a in apply_nodes:
+                combo = [m, a, False]
+                combos.append(combo)
+
+        # collect all the past rules in the transformation
+        past_rules = []
+        for layer in transformation:
+            names = [r.name for r in layer]
+            if rule.name in names:
+                break
+            for r in layer:
+                past_rules.append(r)
+
+        # mark all those combos where the apply element
+        # could have been created from the match elements
+        for past_rule in past_rules:
+
+            for i, combo in enumerate(combos):
+                m, a, found = combo
+                if found:
+                    continue
+
+                # TODO: Handle inheritance here
+                if m["mm__"] in past_rule.vs["mm__"] and \
+                        a["mm__"] in past_rule.vs["mm__"]:
+                    combos[i][2] = True
+
+        nodes = list(rule.vs)
+
+        # collect existing backward links
+        back_link_index = [nodes.index(n) for n in nodes if n["mm__"] == "backward_link"]
+        back_links = defaultdict(dict)
+        for bl in back_link_index:
+            for edge in rule.es:
+                if edge.source == bl:
+                    back_links[bl]["trgt"] = edge.target
+                if edge.target == bl:
+                    back_links[bl]["src"] = edge.source
+
+        poss = []
+        for c in combos:
+            # this apply element could have been created from
+            # this match element
+            if not c[2]:
+                continue
+
+            match_index = nodes.index(c[0])
+            apply_index = nodes.index(c[1])
+
+            # check if the backward link already exists
+            exists = False
+            for bl, val in back_links.items():
+                if match_index == val['trgt'] and apply_index == val["src"]:
+                    exists = True
+
+            if not exists:
+                # add the possibility
+                poss_tuple = (MutationOperators.ADD_BACK_LINK.name, match_index, apply_index)
+                poss.append(poss_tuple)
+
+        return poss
 
     def ADD_EQUATION(self, rule):
         return []
