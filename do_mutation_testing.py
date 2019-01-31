@@ -6,6 +6,9 @@ from util.test_script_utils import load_transformation
 
 
 def do_mutation_testing(mpg, rules, transformation):
+
+    print_output = False
+
     poss_dict = {}
     mutation_count = 0
 
@@ -45,10 +48,13 @@ def do_mutation_testing(mpg, rules, transformation):
 
                 rule_cmd = "--rule_to_mutate=" + rule_name
                 poss_cmd = "--mutate=" + str(p).replace(" ", "")
-                cmd = ["python3", "test_atlTrans_extended.py", rule_cmd, poss_cmd]
+                saving_cmd = "--skip_saving"
+                cmd = ["python3", "test_atlTrans_extended.py", rule_cmd, poss_cmd, saving_cmd]
 
-                #subprocess.run(cmd)
-                subprocess.run(cmd, stdout = subprocess.PIPE)#, stderr = subprocess.PIPE)
+                if print_output:
+                    subprocess.run(cmd)
+                else:
+                    subprocess.run(cmd, stdout = subprocess.PIPE)#, stderr = subprocess.PIPE)
 
                 # f.write(rule.name + "\n")
                 # f.write(str(p) + "\n\n")
@@ -80,18 +86,18 @@ if __name__ == "__main__":
         ['HCity2TownHall', 'HCityCompany2Association'],
 
         ['HcopersonsSolveRefCountryFamilyParentCommunityMan'],
-        # ['HcopersonsSolveRefCountryFamilyParentCommunityWoman'],
-        #
-        # ['HcopersonsSolveRefCountryFamilyChildCommunityMan'],
-        # ['HcopersonsSolveRefCountryFamilyChildCommunityWoman'],
-        #
-        # ['HcotownHallsSolveRefCountryCityCommunityTownHall',
-        #  'HcoassociationsSolveRefCountryCityCompanyCommunityAssociation',
-        #  'HacommitteeSolveRefCompanyCityAssociationCommittee'],
-        # ['HtworkersSolveRefCompanyParentCityTownHallPerson'],
-        # ['HtdistrictsSolveRefCityNeighborhoodTownHallDistrict'],
-        # ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityPerson'],
-        # ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictSpecialFacilityPerson']
+        ['HcopersonsSolveRefCountryFamilyParentCommunityWoman'],
+
+        ['HcopersonsSolveRefCountryFamilyChildCommunityMan'],
+        ['HcopersonsSolveRefCountryFamilyChildCommunityWoman'],
+
+        ['HcotownHallsSolveRefCountryCityCommunityTownHall',
+         'HcoassociationsSolveRefCountryCityCompanyCommunityAssociation',
+         'HacommitteeSolveRefCompanyCityAssociationCommittee'],
+        ['HtworkersSolveRefCompanyParentCityTownHallPerson'],
+        ['HtdistrictsSolveRefCityNeighborhoodTownHallDistrict'],
+        ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityPerson'],
+        ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictSpecialFacilityPerson']
     ]
 
     rules, transformation = load_transformation(transformation_dir + "transformation/", full_transformation)
