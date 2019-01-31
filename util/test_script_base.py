@@ -104,7 +104,7 @@ class Test:
             pc_time = ts1 - ts0
             # print("\n\nTime to build the set of path conditions: " + str(pc_time))
 
-            if args.do_pickle:
+            if args.do_saving:
                 save_pcs(s, self.pc_save_filename)
 
         else:
