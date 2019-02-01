@@ -39,7 +39,7 @@ def do_mutation_testing(mpg, rules, transformation):
             for p in poss_set:
 
                 print("Running mutation " + str(curr_mutation_count+1) +
-                      " out of " + str(mutation_count+1) + "...")
+                      " out of " + str(mutation_count) + "...")
                 print(p)
 
                 curr_mutation_count += 1
