@@ -149,6 +149,9 @@ class Mutator:
         return rule
 
     def DELETE_ELEMENT(self, mutate, rule):
+
+        #TODO: Delete elements in equations
+
         op, node_num = self.mutate
 
         assoc_nodes = []
@@ -159,8 +162,6 @@ class Mutator:
             elif edge.target == node_num and rule.vs[edge.source]["mm__"] in self.link_classes + ["match_contains",
                                                                                                   "apply_contains"]:
                 assoc_nodes.append(edge.source)
-
-        print("Nodes to delete: " + str(node_num) + " " + str(assoc_nodes))
 
         rule.delete_nodes([node_num] + assoc_nodes)
         return rule
