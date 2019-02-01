@@ -234,10 +234,19 @@ class MutationPossibilityGenerator:
 
     def DELETE_ELEMENT(self, rule):
         poss = []
+
+        match_nodes = self.collect_nodes(rule, True)
+
         for i, v in enumerate(rule.vs):
             mm = v["mm__"]
             if mm in self.structural_classes:
                 continue
+
+            #do not remove the only match node
+            if len(match_nodes) == 1:
+                index = list(rule.vs).index(match_nodes[0])
+                if i == index:
+                    continue
 
             poss_tuple = (MutationOperators.DELETE_ELEMENT.name, i)
             poss.append(poss_tuple)
