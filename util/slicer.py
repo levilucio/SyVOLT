@@ -473,7 +473,8 @@ class Slicer:
 
 
         for iso in self.isolated_match_elements[graph.name]:
-            if iso not in self.found_isolated_match_elements[graph.name]:
+            if graph.name not in self.found_isolated_match_elements or \
+                iso not in self.found_isolated_match_elements[graph.name]:
                 print("Isolated element " + str(iso) + " cannot be found!")
                 print(mms[iso])
                 self.print_rules_with_element(original_mms[iso])
