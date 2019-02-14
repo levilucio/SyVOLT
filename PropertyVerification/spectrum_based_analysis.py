@@ -9,6 +9,40 @@ class SpectrumBasedAnalyzer:
         print("Writing to file: " + filename)
         with open(filename, "w") as f:
 
+            # a run is valid if at least one contract both succeeds and fails
+            # on one rule
+            is_valid_analysis = False
+            for (c_name, _) in all_contracts:
+
+                rules_succeed = []
+                rules_fail = []
+
+                # collect all the rules involved in succeeding or failing
+                for pc_name in contract_succeeded_pcs[c_name]:
+                    rules_succeed += pathCondGen.rules_in_pc_name(pc_name)
+
+                for pc_name in contract_failed_pcs[c_name]:
+                    rules_fail += pathCondGen.rules_in_pc_name(pc_name)
+
+                # create sets
+                rules_succeed = list(set(rules_succeed))
+                rules_fail = list(set(rules_fail))
+
+                #remove the empty rule
+                empty_rule = "Em"
+                if empty_rule in rules_succeed:
+                    rules_succeed.remove(empty_rule)
+                if empty_rule in rules_fail:
+                    rules_fail.remove(empty_rule)
+
+                # if there is a common rule, then this mutant is valid
+                for r in rules_succeed:
+                    if r in rules_fail:
+                        is_valid_analysis = True
+                        print("Valid for " + c_name)
+
+            f.write("<is_valid_mutant val='" + str(is_valid_analysis) + "'/>")
+
             f.write("<contract_satisfaction>")
             f.write("\n")
             for (c_name, _) in all_contracts:
