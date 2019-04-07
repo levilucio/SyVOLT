@@ -41,9 +41,10 @@ class SpectrumBasedAnalyzer:
                         is_valid_analysis = True
                         print("Valid for " + c_name)
 
-            f.write("<is_valid_mutant val='" + str(is_valid_analysis) + "'/>")
+            f.write("<is_valid_mutant val='" + str(is_valid_analysis) + "'/>\n")
+            pcs = [pc_name for _, pc_name in pathCondGen.get_path_conditions(expand=False, get_pretty_name=True)]
 
-            f.write("<contract_satisfaction>")
+            f.write("<contract_satisfaction num_pcs='" + str(len(pcs)) + "'>")
             f.write("\n")
             for (c_name, _) in all_contracts:
                 f.write('<contract name="' + c_name + '" ')
@@ -52,6 +53,7 @@ class SpectrumBasedAnalyzer:
                 f.write("failed='" + str(len(contract_failed_pcs[c_name])) + "'")
                 f.write("/>\n")
             f.write("</contract_satisfaction>\n")
+
 
             f.write("<rules>")
             f.write("\n")
@@ -72,7 +74,7 @@ class SpectrumBasedAnalyzer:
             f.write("<rules_for_each_path_condition>")
             f.write("\n")
             i = 0
-            for _, pc_name in pathCondGen.get_path_conditions(expand = False, get_pretty_name = True):
+            for pc_name in pcs:
 
                 # f.write(pc_name)
                 rules = pathCondGen.rules_in_pc_name(pc_name)

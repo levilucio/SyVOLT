@@ -14,6 +14,7 @@ try:
 
     has_pydot = True
 except ImportError:
+    print("pydot not installed")
     has_pydot = False
 
 import subprocess
@@ -352,7 +353,7 @@ def graph_to_dot(name, g, verbosity=0, force_trace_links=False):
 
     name = name[:240]
 
-    dot_dir = './dot/'
+    dot_dir = os.path.abspath('./dot/')
     svg_filename = os.path.join(dot_dir, name + '.svg')
 
     if not os.path.exists(dot_dir):

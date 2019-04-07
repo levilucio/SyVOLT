@@ -5,7 +5,7 @@ from mutation.mutation_possibilities import MutationPossibilityGenerator
 from util.test_script_utils import load_transformation
 
 
-def do_mutation_testing(mpg, rules, transformation):
+def do_mutation_testing(mpg, rules, transformation, test_script):
 
     print_output = False
 
@@ -13,7 +13,7 @@ def do_mutation_testing(mpg, rules, transformation):
     mutation_count = 0
 
     xml_filename = "mutation_testing.xml"
-    in_xml_filename = "sba.xml"
+    in_xml_filename = "./UML2ER/sba.xml"
     with open(xml_filename, "w") as f:
 
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n')
@@ -49,7 +49,8 @@ def do_mutation_testing(mpg, rules, transformation):
                 rule_cmd = "--rule_to_mutate=" + rule_name
                 poss_cmd = "--mutate=" + str(p).replace(" ", "")
                 saving_cmd = "--skip_saving"
-                cmd = ["python3", "test_atlTrans_extended.py", rule_cmd, poss_cmd, saving_cmd]
+                pickle_cmd = "--skip_pickle"
+                cmd = ["python3", test_script, rule_cmd, poss_cmd, saving_cmd, pickle_cmd]
 
                 if print_output:
                     subprocess.run(cmd)
@@ -70,35 +71,53 @@ def do_mutation_testing(mpg, rules, transformation):
 if __name__ == "__main__":
     print("Performing mutations...")
 
+    #### FAMILIES TO PERSONS
+    test_script = "test_atlTrans_extended.py"
     transformation_dir = "./ExFamToPerson/"
     inputMM = transformation_dir + "Families_Extended.ecore"
     outputMM = transformation_dir + "Persons_Extended.ecore"
 
-    mpg = MutationPossibilityGenerator(inputMM, outputMM)
-
     full_transformation = [
-        ['HCountry2Community'],
-        ['HFather2Man'],
-        ['HMother2Woman'],
-        ['HDaughter2Woman'],
-        ['HSon2Man'],
-        ['HNeighborhood2District'],
-        ['HCity2TownHall', 'HCityCompany2Association'],
+       ['HCountry2Community'],
+       ['HFather2Man'],
+       ['HMother2Woman'],
+       ['HDaughter2Woman'],
+       ['HSon2Man'],
+       ['HNeighborhood2District'],
+       ['HCity2TownHall', 'HCityCompany2Association'],
 
-        ['HcopersonsSolveRefCountryFamilyParentCommunityMan'],
-        ['HcopersonsSolveRefCountryFamilyParentCommunityWoman'],
+       ['HcopersonsSolveRefCountryFamilyParentCommunityMan'],
+       ['HcopersonsSolveRefCountryFamilyParentCommunityWoman'],
 
-        ['HcopersonsSolveRefCountryFamilyChildCommunityMan'],
-        ['HcopersonsSolveRefCountryFamilyChildCommunityWoman'],
+       ['HcopersonsSolveRefCountryFamilyChildCommunityMan'],
+       ['HcopersonsSolveRefCountryFamilyChildCommunityWoman'],
 
-        ['HcotownHallsSolveRefCountryCityCommunityTownHall',
-         'HcoassociationsSolveRefCountryCityCompanyCommunityAssociation',
-         'HacommitteeSolveRefCompanyCityAssociationCommittee'],
-        ['HtworkersSolveRefCompanyParentCityTownHallPerson'],
-        ['HtdistrictsSolveRefCityNeighborhoodTownHallDistrict'],
-        ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityPerson'],
-        ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictSpecialFacilityPerson']
-    ]
+       ['HcotownHallsSolveRefCountryCityCommunityTownHall',
+        'HcoassociationsSolveRefCountryCityCompanyCommunityAssociation',
+        'HacommitteeSolveRefCompanyCityAssociationCommittee'],
+       ['HtworkersSolveRefCompanyParentCityTownHallPerson'],
+       ['HtdistrictsSolveRefCityNeighborhoodTownHallDistrict'],
+       ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityPerson'],
+       ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictSpecialFacilityPerson']
+   ]
+
+    #### UML2ER
+    # test_script = "test_uml2er.py"
+    # transformation_dir = "UML2ER/"
+    # inputMM = transformation_dir + "UML.ecore"
+    # outputMM = transformation_dir + "ER.ecore"
+    #
+    # full_transformation = []
+    # full_transformation.append(['H02Package2ERModel',]) #L1
+    # full_transformation.append(['H03Class2EntityType',]) #L2
+    # full_transformation.append(['H05aProperty2AttributeNoType','H05bProperty2AttributeType',]) #L3
+    # full_transformation.append(['H07Property2WeakReference','H08Property2StrongReference',]) #L5
+    # full_transformation.append(['H09ConnectClass',]) #L7
+    # full_transformation.append(['H10ConnectProperty',]) #L8
+    # full_transformation.append(['H11ConnectReference',]) #L9
+
+
+    mpg = MutationPossibilityGenerator(inputMM, outputMM)
 
     rules, transformation = load_transformation(transformation_dir + "transformation/", full_transformation)
 
@@ -108,4 +127,4 @@ if __name__ == "__main__":
         for rule in rules.values():
             poss = mpg.generate_possibilities(rule, transformation)
     else:
-        do_mutation_testing(mpg, rules, transformation)
+        do_mutation_testing(mpg, rules, transformation, test_script)

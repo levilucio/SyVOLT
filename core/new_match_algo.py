@@ -146,6 +146,9 @@ class NewHimesisMatcher:
                 print(eq)
                 print(eq[1])
 
+            if eq is None or eq[0] is None:
+                continue
+
             node_num = eq[0][0]
             attr = eq[0][1]
 

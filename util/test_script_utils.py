@@ -408,7 +408,7 @@ def save_pcs(pathCondGen, filename):
         for pc_name in sorted(pathCondGen.currentpathConditionSet):
             pc = pathCondGen.pc_dict[pc_name]
             f.write(pc_name + "\n")
-            f.write(pc + "\n")
+            f.write(str(pc) + "\n")
 
 def load_pcs(filename):
     pc_dict = {}

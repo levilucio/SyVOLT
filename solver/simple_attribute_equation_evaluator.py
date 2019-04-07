@@ -24,6 +24,10 @@ def is_consistent(graph, verbosity=0):
 
     i = -1
     for eq in eqs:
+
+        if eq is None or eq[0] is None:
+            continue
+
         node = eq[0][0]
         attr = eq[0][1]
 
