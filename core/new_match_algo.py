@@ -232,19 +232,24 @@ class NewHimesisMatcher:
 
     def print_equations(self):
 
-        #print("Pattern eqs:")
-        #print(self.pattern_graph["equations"])
-        print("Pattern eqs (constant)")
-        print(dict(self.patt_eqs_constant))
-        print("Pattern eqs (variable)")
-        print(dict(self.patt_eqs_variable))
+        # print("Pattern eqs:")
+        # print(self.pattern_graph["equations"])
+        if any([x for x in dict(self.patt_eqs_constant).keys() if x]):
+            print("Pattern eqs (constant)")
+            print(dict(self.patt_eqs_constant))
+
+        if any([x for x in dict(self.patt_eqs_variable).keys() if x]):
+            print("Pattern eqs (variable)")
+            print(dict(self.patt_eqs_variable))
 
         #print("Source eqs:")
         #print(self.source_graph["equations"])
-        print("Source eqs (constant)")
-        print(dict(self.src_eqs_constant))
-        print("Source eqs (variable)")
-        print(dict(self.src_eqs_variable))
+        if self.src_eqs_constant:
+            print("Source eqs (constant)")
+            print(dict(self.src_eqs_constant))
+        if self.src_eqs_variable:
+            print("Source eqs (variable)")
+            print(dict(self.src_eqs_variable))
 
     def reset_recursion_limit(self):
         pass
