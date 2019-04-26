@@ -6,6 +6,8 @@ from core.himesis_utils import graph_to_dot
 
 
 class MutationOperators(Enum):
+
+    NONE = "NONE"
     # ADD OPERATIONS
     ADD_CLASS = "ADD_CLASS"
     ADD_ASSOC = "ADD_ASSOC"
@@ -93,6 +95,10 @@ class Mutator:
             raise Exception("Unknown mutation operator: " + op)
 
     ## OPERATIONS
+
+    #null operator for baseline
+    def NONE(self, mutate, rule):
+        return rule
 
     def ADD_CLASS(self, mutate, rule):
         op, class_name, is_match, ma_model_index = mutate

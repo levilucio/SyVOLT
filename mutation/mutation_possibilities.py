@@ -46,7 +46,8 @@ class MutationPossibilityGenerator:
 
     def generate_possibilities(self, rule, transformation):
 
-        poss = []
+        #start with the baseline (no) mutation
+        poss = self.NONE()
         poss += self.ADD_CLASS(rule)
         poss += self.ADD_ASSOC(rule)
         poss += self.ADD_BACK_LINK(rule, transformation)
@@ -67,6 +68,9 @@ class MutationPossibilityGenerator:
         # raise Exception()
 
         return poss
+
+    def NONE(self):
+        return [(MutationOperators.NONE.name,)]
 
     def ADD_CLASS(self, rule):
         poss = []
