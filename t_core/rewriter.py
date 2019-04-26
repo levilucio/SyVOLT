@@ -100,7 +100,7 @@ class Rewriter(RulePrimitive):
                 print(tb)
                 print("packet.graph: " + packet.graph.name)
                 print("self.condition: " + self.condition.name)
-                raise
+                #raise
                 self.is_success = False
                 self.exception = TransformationException(e)
                 self.exception.packet = packet
