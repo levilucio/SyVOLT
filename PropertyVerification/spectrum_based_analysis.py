@@ -39,7 +39,7 @@ class SpectrumBasedAnalyzer:
                 for r in rules_succeed:
                     if r in rules_fail:
                         is_valid_analysis = True
-                        print("Valid for " + c_name)
+                        #print("Valid for " + c_name)
 
             f.write("<is_valid_mutant val='" + str(is_valid_analysis) + "'/>\n")
             pcs = [pc_name for _, pc_name in pathCondGen.get_path_conditions(expand=False, get_pretty_name=True)]
