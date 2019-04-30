@@ -61,6 +61,9 @@ class Mutator:
         if not self.debug:
             return
 
+        if MutationOperators.NONE.name in self.mutate[0]:
+            return
+
         if stage:
             stage_str = "before"
         else:
