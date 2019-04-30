@@ -7,6 +7,7 @@ Created on 2015-02-16
 from xml.dom import minidom
 from copy import deepcopy
 from core.himesis_utils import graph_to_dot
+from collections import defaultdict
 class EcoreUtils(object):
     '''
     a set of utils to deal with ecore files
@@ -39,7 +40,7 @@ class EcoreUtils(object):
         self.mmClassChildren = self.getSubClassInheritanceRelationForClasses()
 
         self.classes = []
-        self.rels = {}
+        self.rels = defaultdict(list)
         self.attribs = {}
         self.containmentLinks = {}
         self.metamodelClasses = self.xmldoc.getElementsByTagName('eClassifiers')
@@ -82,22 +83,18 @@ class EcoreUtils(object):
                         self.containmentRels.append(relName)
 
                     #record this relation
-                    if mmClassName not in self.rels.keys():
-                        self.rels[mmClassName] = [relTuple]
-                    else:
-                        if relTuple not in self.rels[mmClassName]:
-                            self.rels[mmClassName].append(relTuple)
+                    if relTuple not in self.rels[targetClassName]:
+                        self.rels[targetClassName].append(relTuple)
 
 
         if debug_rels:
-            print("Links:")
-            for k, v in sorted(self.containmentLinks.items()):
+            print("\nLinks:")
+            for k, v in sorted(self.rels.items()):
                 print(str(k) + ":" + str(v))
 
-            raise Exception()
 
         if debug_contain_links:
-            print("Contain links:")
+            print("\nContain links:")
             for k, v in sorted(self.containmentLinks.items()):
                 print(str(k) + ":" + str(v))
 
