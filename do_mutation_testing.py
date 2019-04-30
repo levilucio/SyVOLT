@@ -6,14 +6,13 @@ from util.test_script_utils import load_transformation
 
 
 def do_mutation_testing(mpg, rules, transformation, test_script):
-
     print_output = False
 
     poss_dict = {}
     mutation_count = 0
 
     xml_filename = "mutation_testing.xml"
-    in_xml_filename = "./UML2ER/sba.xml"
+    in_xml_filename = "./sba.xml"
     with open(xml_filename, "w") as f:
 
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n')
@@ -38,7 +37,7 @@ def do_mutation_testing(mpg, rules, transformation, test_script):
             print("Poss for rule: " + rule_name)
             for p in poss_set:
 
-                print("Running mutation " + str(curr_mutation_count+1) +
+                print("Running mutation " + str(curr_mutation_count + 1) +
                       " out of " + str(mutation_count) + "...")
                 print(p)
 
@@ -50,12 +49,16 @@ def do_mutation_testing(mpg, rules, transformation, test_script):
                 poss_cmd = "--mutate=" + str(p).replace(" ", "")
                 saving_cmd = "--skip_saving"
                 pickle_cmd = "--skip_pickle"
+                pruning_cmd = "--skip_pruning"
+
                 cmd = ["python3", test_script, rule_cmd, poss_cmd, saving_cmd, pickle_cmd]
+
+                # print(" ".join(cmd))
 
                 if print_output:
                     subprocess.run(cmd)
                 else:
-                    subprocess.run(cmd, stdout = subprocess.PIPE)#, stderr = subprocess.PIPE)
+                    subprocess.run(cmd, stdout=subprocess.PIPE)  # , stderr = subprocess.PIPE)
 
                 # f.write(rule.name + "\n")
                 # f.write(str(p) + "\n\n")
@@ -68,6 +71,7 @@ def do_mutation_testing(mpg, rules, transformation, test_script):
 
         f.write('</mutation_testing>\n')
 
+
 if __name__ == "__main__":
     print("Performing mutations...")
 
@@ -78,28 +82,28 @@ if __name__ == "__main__":
     outputMM = transformation_dir + "Persons_Extended.ecore"
 
     full_transformation = [
-       ['HCountry2Community'],
-       ['HFather2Man'],
-       ['HMother2Woman'],
-       ['HDaughter2Woman'],
-       ['HSon2Man'],
-       ['HNeighborhood2District'],
-       ['HCity2TownHall', 'HCityCompany2Association'],
+        ['HCountry2Community'],
+        ['HFather2Man'],
+        ['HMother2Woman'],
+        ['HDaughter2Woman'],
+        ['HSon2Man'],
+        ['HNeighborhood2District'],
+        ['HCity2TownHall', 'HCityCompany2Association'],
 
-       ['HcopersonsSolveRefCountryFamilyParentCommunityMan'],
-       ['HcopersonsSolveRefCountryFamilyParentCommunityWoman'],
+        ['HcopersonsSolveRefCountryFamilyParentCommunityMan'],
+        ['HcopersonsSolveRefCountryFamilyParentCommunityWoman'],
 
-       ['HcopersonsSolveRefCountryFamilyChildCommunityMan'],
-       ['HcopersonsSolveRefCountryFamilyChildCommunityWoman'],
+        ['HcopersonsSolveRefCountryFamilyChildCommunityMan'],
+        ['HcopersonsSolveRefCountryFamilyChildCommunityWoman'],
 
-       ['HcotownHallsSolveRefCountryCityCommunityTownHall',
-        'HcoassociationsSolveRefCountryCityCompanyCommunityAssociation',
-        'HacommitteeSolveRefCompanyCityAssociationCommittee'],
-       ['HtworkersSolveRefCompanyParentCityTownHallPerson'],
-       ['HtdistrictsSolveRefCityNeighborhoodTownHallDistrict'],
-       ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityPerson'],
-       ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictSpecialFacilityPerson']
-   ]
+        ['HcotownHallsSolveRefCountryCityCommunityTownHall',
+         'HcoassociationsSolveRefCountryCityCompanyCommunityAssociation',
+         'HacommitteeSolveRefCompanyCityAssociationCommittee'],
+        ['HtworkersSolveRefCompanyParentCityTownHallPerson'],
+        ['HtdistrictsSolveRefCityNeighborhoodTownHallDistrict'],
+        ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityPerson'],
+        ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictSpecialFacilityPerson']
+    ]
 
     #### UML2ER
     # test_script = "test_uml2er.py"
@@ -115,7 +119,6 @@ if __name__ == "__main__":
     # full_transformation.append(['H09ConnectClass',]) #L7
     # full_transformation.append(['H10ConnectProperty',]) #L8
     # full_transformation.append(['H11ConnectReference',]) #L9
-
 
     mpg = MutationPossibilityGenerator(inputMM, outputMM)
 
