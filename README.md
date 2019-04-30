@@ -12,6 +12,8 @@ For more information, including a demo of the prover: <a href="https://youtu.be/
 
 Please see the INSTALL.txt file in this directory.
 
+The main development and usage platform is Linux. SyVOLT may not work on MacOS or Windows.
+
 ## Usage
 
 ### Command-line
@@ -31,7 +33,16 @@ Please see the INSTALL.txt file in this directory.
 The MPS plugin can be downloaded at: https://plugins.jetbrains.com/plugin/10385-dsltrans
 Please see the plugin repository for usage instructions: https://github.com/mbeddr/language_verification/blob/master/README.md
 
+### Mutation Testing
+For mutation testing, edit and run the `do_mutation_testing.py` file in the root directory.
+
+This will use the file `mutation/mutation_possibilities.py` to generate all possible mutations on the transformation.
+
 ## Related Work
+<a href="http://www.sable.mcgill.ca/~clump/theses/oakes-18-symbolic-TH.pdf">[6]</a> <i>A Symbolic Execution-Based Approach To Model Transformation Verification using Structural Contracts</i>. B. Oakes.  Ph.D. dissertation, McGill University, 2018. <br>
+
+<a href="https://repository.uantwerpen.be/docman/irua/d4a3c4/155126.pdf">[6]</a> <i>Debugging of Model Transformations and Contracts in SyVOLT</i>. B. Oakes, L. Lúcio, C. Verbrugge, H. Vangheluwe. Proceedings of MDEbug co-located with MODELS 2018, 532-537. 2018.<br>
+
 <a href="http://msdl.cs.mcgill.ca/people/bentley/research/paper_sosym_2016.pdf">[6]</a> <i>Full Contract Verification for ATL using Symbolic Execution</i>. B. Oakes, J. Troya, L. Lúcio, M. Wimmer. Software and Systems Modeling 2016 (pp. 1-35). Springer Berlin Heidelberg. <br>
 
 <a href="http://msdl.cs.mcgill.ca/people/bentley/research/paper1.pdf">[5]</a> <i>SyVOLT: Full Model Transformation Verification Using Contracts</i>. L. Lúcio, B. Oakes, C. Gomes, G. Selim, J. Dingel, J. R. Cordy, H. Vangheluwe. Proceedings of MODELS 2015.<br>
