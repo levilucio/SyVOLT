@@ -157,7 +157,11 @@ class MutationPossibilityGenerator:
             if self.does_rel_exist(rule, assoc[0], assoc[1], assoc[2]):
                 continue
 
-            poss_tuple = (MutationOperators.ADD_ASSOC.name, assoc[0], assoc[1], assoc[2])
+            # check whether this is match or apply
+            mm1 = rule.vs[assoc[1]]["mm__"]
+            is_in_match = mm1 in self.inMM.classes
+
+            poss_tuple = (MutationOperators.ADD_ASSOC.name, assoc[0], assoc[1], assoc[2], is_in_match)
             poss.append(poss_tuple)
 
         return poss

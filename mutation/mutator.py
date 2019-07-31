@@ -128,13 +128,18 @@ class Mutator:
 
     def ADD_ASSOC(self, mutate, rule):
 
-        op, assoc_name, src, trgt = mutate
+        op, assoc_name, src, trgt, is_in_match = mutate
+
+        if is_in_match:
+            mm = "directLink_S"
+        else:
+            mm = "directLink_T"
 
         new_node_index = len(list(rule.vs))
 
         rule.add_node()
         new_node = rule.vs[new_node_index]
-        new_node["mm__"] = "directLink_S"
+        new_node["mm__"] = mm
         new_node["attr1"] = assoc_name
 
         rule.add_edge(src, new_node_index)
