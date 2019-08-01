@@ -1,9 +1,16 @@
 import subprocess
 import datetime
+import os, sys
 
 from mutation.mutation_possibilities import MutationPossibilityGenerator
 from util.test_script_utils import load_transformation
 
+from test_atlTrans_extended import ATLTest as FamToPersons
+from test_GM2Autosar_transformation import GMTest
+from test_umlToKiltera import UMLTest as UML2Kiltera
+from test_uml2er import ProverTest as UML2ER
+from test_RSS2ATOM import RSS2ATOMTest
+from test_mbeddr import MBEddr
 
 def do_mutation_testing(mpg, rules, transformation, test_script):
     print_output = False
@@ -75,54 +82,70 @@ def do_mutation_testing(mpg, rules, transformation, test_script):
 if __name__ == "__main__":
     print("Performing mutations...")
 
-    #### FAMILIES TO PERSONS
-    test_script = "test_atlTrans_extended.py"
-    transformation_dir = "./ExFamToPerson/"
-    inputMM = transformation_dir + "Families_Extended.ecore"
-    outputMM = transformation_dir + "Persons_Extended.ecore"
+    test_script = ""
+    transformation_dir = ""
+    inputMM = ""
+    outputMM = ""
+    full_transformation = []
 
-    full_transformation = [
-        ['HCountry2Community'],
-        ['HFather2Man'],
-        ['HMother2Woman'],
-        ['HDaughter2Woman'],
-        ['HSon2Man'],
-        ['HNeighborhood2District'],
-        ['HCity2TownHall', 'HCityCompany2Association'],
+    trans = "Kiltera"
 
-        ['HcopersonsSolveRefCountryFamilyParentCommunityMan'],
-        ['HcopersonsSolveRefCountryFamilyParentCommunityWoman'],
+    if len(sys.argv) > 1:
+        trans = sys.argv[1]
 
-        ['HcopersonsSolveRefCountryFamilyChildCommunityMan'],
-        ['HcopersonsSolveRefCountryFamilyChildCommunityWoman'],
+    if trans == "F2P":
+        #### FAMILIES TO PERSONS
+        F2P = FamToPersons()
+        test_script = "test_atlTrans_extended.py"
+        transformation_dir = F2P.transformation_directory
+        inputMM = F2P.inputMM
+        outputMM = F2P.outputMM
+        full_transformation = F2P.full_transformation
 
-        ['HcotownHallsSolveRefCountryCityCommunityTownHall',
-         'HcoassociationsSolveRefCountryCityCompanyCommunityAssociation',
-         'HacommitteeSolveRefCompanyCityAssociationCommittee'],
-        ['HtworkersSolveRefCompanyParentCityTownHallPerson'],
-        ['HtdistrictsSolveRefCityNeighborhoodTownHallDistrict'],
-        ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictOrdinaryFacilityPerson'],
-        ['HdfacilitiesSolveRefNeighborhoodSchoolServiceChildDistrictSpecialFacilityPerson']
-    ]
+    elif trans == "RSS":
+        #### RSSToATOM
+        RSS2ATOM = RSS2ATOMTest()
+        test_script = "test_RSS2ATOM.py"
+        transformation_dir = RSS2ATOM.transformation_directory
+        inputMM = RSS2ATOM.inputMM
+        outputMM = RSS2ATOM.outputMM
+        full_transformation = RSS2ATOM.full_transformation
 
-    #### UML2ER
-    # test_script = "test_uml2er.py"
-    # transformation_dir = "UML2ER/"
-    # inputMM = transformation_dir + "UML.ecore"
-    # outputMM = transformation_dir + "ER.ecore"
-    #
-    # full_transformation = []
-    # full_transformation.append(['H02Package2ERModel',]) #L1
-    # full_transformation.append(['H03Class2EntityType',]) #L2
-    # full_transformation.append(['H05aProperty2AttributeNoType','H05bProperty2AttributeType',]) #L3
-    # full_transformation.append(['H07Property2WeakReference','H08Property2StrongReference',]) #L5
-    # full_transformation.append(['H09ConnectClass',]) #L7
-    # full_transformation.append(['H10ConnectProperty',]) #L8
-    # full_transformation.append(['H11ConnectReference',]) #L9
+    elif trans == "UML2ER":
+        #### UML2ER
+        UML2ER = UML2ER()
+        test_script = "test_uml2er.py"
+        transformation_dir = UML2ER.transformation_directory
+        inputMM = UML2ER.inputMM
+        outputMM = UML2ER.outputMM
+        full_transformation = UML2ER.full_transformation
 
-    mpg = MutationPossibilityGenerator(inputMM, outputMM)
+    elif trans == "GM":
+        #### GM2AUTOSAR
+        class Temp:
+            handbuilt = True
+        GM2AUTOSAR = GMTest(Temp())
+        test_script = "test_GM2Autosar_transformation.py"
+        transformation_dir = GM2AUTOSAR.transformation_directory
+        inputMM = GM2AUTOSAR.inputMM
+        outputMM = GM2AUTOSAR.outputMM
+        full_transformation = GM2AUTOSAR.full_transformation
 
-    rules, transformation = load_transformation(transformation_dir + "transformation/", full_transformation)
+    elif trans == "Kiltera":
+        #### UML2Kiltera
+        class Temp:
+            handbuilt = True
+
+        UML2Kiltera_ = UML2Kiltera(Temp())
+        test_script = "test_umlToKiltera.py"
+        transformation_dir = UML2Kiltera_.transformation_directory
+        inputMM = UML2Kiltera_.inputMM
+        outputMM = UML2Kiltera_.outputMM
+        full_transformation = UML2Kiltera_.full_transformation
+
+    mpg = MutationPossibilityGenerator(os.path.expanduser(inputMM), os.path.expanduser(outputMM))
+
+    rules, transformation = load_transformation(transformation_dir, full_transformation)
 
     do_only_generation = False
 
