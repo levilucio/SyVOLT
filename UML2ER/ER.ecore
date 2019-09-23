@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="">
+  <eClassifiers xsi:type="ecore:EClass" name="Attribute" eSuperTypes="#//Feature ">
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ERModel">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="entities"  upperBound="-1"  eType="#//EntityType"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EntityType">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="features"  upperBound="-1"  eType="#//Feature"  containment="true" />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Feature" abstract="true" >
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Reference" abstract="true"  eSuperTypes="#//Feature ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="type"  upperBound="1"  eType="#//EntityType"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StrongReference" eSuperTypes="#//Feature #//Reference ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="type"  upperBound="1"  eType="#//EntityType"  />
+</eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WeakReference" eSuperTypes="#//Feature #//Reference ">
+	<eStructuralFeatures xsi:type="ecore:EReference" name="type"  upperBound="1"  eType="#//EntityType"  />
+</eClassifiers>
+</ecore:EPackage>
