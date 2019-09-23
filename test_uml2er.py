@@ -17,17 +17,17 @@ class ProverTest(Test):
 		self.full_transformation.append(['H09ConnectClass',]) #L7
 		self.full_transformation.append(['H10ConnectProperty',]) #L8
 		self.full_transformation.append(['H11ConnectReference',]) #L9
-		self.artifact_directory = "/home/boakes/Projects/SyVOLT/"
-		self.transformation_directory = "/home/boakes/Projects/SyVOLT/UML2ER/transformation/"
+		self.artifact_directory = "~/Projects/SyVOLT/"
+		self.transformation_directory = "~/Projects/SyVOLT/UML2ER/transformation/"
 
 
 		#=====METAMODELS=================
-		self.inputMM = "/home/boakes/Projects/SyVOLT/UML2ER/UML.ecore"
-		self.outputMM = "/home/boakes/Projects/SyVOLT/UML2ER/ER.ecore"
+		self.inputMM = "~/Projects/SyVOLT/UML2ER/UML.ecore"
+		self.outputMM = "~/Projects/SyVOLT/UML2ER/ER.ecore"
 
 
 		#====CONTRACTS==================
-		self.contract_directory = "/home/boakes/Projects/SyVOLT/UML2ER/contracts/"
+		self.contract_directory = "~/Projects/SyVOLT/UML2ER/contracts/"
 		self.atomic_contracts = [
 			"Contract01",
 			"Contract02",
