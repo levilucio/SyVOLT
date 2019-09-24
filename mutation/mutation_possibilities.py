@@ -47,11 +47,11 @@ class MutationPossibilityGenerator:
 
                 #check to see if mm in both match and apply
                 containing_node = rule.neighbors(node, 2)[0]
-                mm = rule.vs[containing_node]["mm__"].lower()
+                contain_mm = rule.vs[containing_node]["mm__"].lower()
 
-                if get_match_nodes and "match" in mm:
+                if get_match_nodes and "match" in contain_mm:
                     nodes.append(node)
-                elif not get_match_nodes and "apply" in mm:
+                elif not get_match_nodes and "apply" in contain_mm:
                     nodes.append(node)
         return nodes
 
