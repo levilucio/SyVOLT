@@ -82,6 +82,7 @@ class Mutator:
                     self.debug_rule(rule, False)
 
                     rules[rule.name] = rule
+                    transformation[i][j] = rule
 
         # raise Exception()
         return rules, transformation
@@ -162,9 +163,30 @@ class Mutator:
         rule.add_edge(new_node_index, match_index)
         return rule
 
-    def DELETE_ELEMENT(self, mutate, rule):
+    def replace_eq(self, node_num, eq):
 
-        #TODO: Delete elements in equations
+        #print("Replacing: " + str(eq))
+        if isinstance(eq, tuple):
+            head, tail = eq
+            head = self.replace_eq(node_num, head)
+            tail = self.replace_eq(node_num, tail)
+            if not head or not tail:
+                return None
+            else:
+                return (head, tail)
+        else:
+            if eq == node_num:
+                return None
+            try:
+                if int(eq) and int(eq) > int(node_num):
+                    return int(eq) - 1
+            except Exception:
+                return eq
+
+        return eq
+
+
+    def DELETE_ELEMENT(self, mutate, rule):
 
         op, node_num = self.mutate
 
@@ -178,7 +200,18 @@ class Mutator:
                 assoc_nodes.append(edge.source)
 
         rule.delete_nodes([node_num] + assoc_nodes)
+
+        # Handle nodes in equations
+        new_eqs = []
+        for eq in rule["equations"]:
+            new_eq = self.replace_eq(node_num, eq)
+            if new_eq:
+                new_eqs.append(new_eq)
+
+        rule["equations"] = new_eqs
+        #print(rule["equations"])
         return rule
+
 
     def RENAME_CLASS(self, mutate, rule):
         op, node_num, change = self.mutate
