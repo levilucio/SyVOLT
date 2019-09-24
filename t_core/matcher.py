@@ -262,7 +262,7 @@ class Matcher(RulePrimitive):
                         yield mapping
             except Exception as e:
                 tb = traceback.format_exc()
-                print("NAC Error: " + str(e))
+                print("LHS Error: " + str(e))
                 print(tb)
                 raise e
             finally: lhsMatcher.reset_recursion_limit()
