@@ -88,7 +88,10 @@ if __name__ == "__main__":
     outputMM = ""
     full_transformation = []
 
-    trans = "Kiltera"
+    trans = "F2P"
+    if len(sys.argv) > 1:
+        trans = sys.argv[1]
+    print("Mutating transformation: " + trans)
 
     if len(sys.argv) > 1:
         trans = sys.argv[1]
@@ -123,7 +126,7 @@ if __name__ == "__main__":
     elif trans == "GM":
         #### GM2AUTOSAR
         class Temp:
-            handbuilt = True
+            handbuilt = False
         GM2AUTOSAR = GMTest(Temp())
         test_script = "test_GM2Autosar_transformation.py"
         transformation_dir = GM2AUTOSAR.transformation_directory
@@ -134,7 +137,7 @@ if __name__ == "__main__":
     elif trans == "Kiltera":
         #### UML2Kiltera
         class Temp:
-            handbuilt = True
+            handbuilt = False
 
         UML2Kiltera_ = UML2Kiltera(Temp())
         test_script = "test_umlToKiltera.py"
