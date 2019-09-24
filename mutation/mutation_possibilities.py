@@ -34,14 +34,25 @@ class MutationPossibilityGenerator:
 
     def collect_nodes(self, rule, get_match_nodes):
         nodes = []
+
         if get_match_nodes:
             mm = self.inMM.classes
         else:
             mm = self.outMM.classes
 
         for node in rule.vs:
+
+            #check metamodel first
             if node["mm__"] in mm:
-                nodes.append(node)
+
+                #check to see if mm in both match and apply
+                containing_node = rule.neighbors(node, 2)[0]
+                mm = rule.vs[containing_node]["mm__"].lower()
+
+                if get_match_nodes and "match" in mm:
+                    nodes.append(node)
+                elif not get_match_nodes and "apply" in mm:
+                    nodes.append(node)
         return nodes
 
     def generate_possibilities(self, rule, transformation):
@@ -171,6 +182,9 @@ class MutationPossibilityGenerator:
         # get the match and apply nodes
         match_nodes = self.collect_nodes(rule, True)
         apply_nodes = self.collect_nodes(rule, False)
+
+        # print("Match nodes: " + str([n["mm__"] for n in match_nodes]))
+        # print("Apply nodes: " + str([n["mm__"] for n in apply_nodes]))
 
         # generate all the combos
         combos = []
