@@ -152,6 +152,12 @@ class MutationPossibilityGenerator:
 
         return False
 
+    def is_in_match(self, node, graph):
+        containing_node = graph.neighbors(node, 2)[0]
+        contain_mm = graph.vs[containing_node]["mm__"].lower()
+
+        return "match" in contain_mm
+
     def ADD_ASSOC(self, rule):
 
         poss = []
@@ -169,10 +175,13 @@ class MutationPossibilityGenerator:
                 continue
 
             # check whether this is match or apply
-            mm1 = rule.vs[assoc[1]]["mm__"]
-            is_in_match = mm1 in self.inMM.classes
+            first_in_match = self.is_in_match(assoc[1], rule)
+            second_in_match = self.is_in_match(assoc[2], rule)
 
-            poss_tuple = (MutationOperators.ADD_ASSOC.name, assoc[0], assoc[1], assoc[2], is_in_match)
+            if first_in_match != second_in_match:
+                continue
+
+            poss_tuple = (MutationOperators.ADD_ASSOC.name, assoc[0], assoc[1], assoc[2], first_in_match)
             poss.append(poss_tuple)
 
         return poss
