@@ -18,7 +18,7 @@ class ProverTest(Test):
 		self.full_transformation.append(['H10ConnectProperty',]) #L8
 		self.full_transformation.append(['H11ConnectReference',]) #L9
 		self.artifact_directory = "~/Projects/SyVOLT/"
-		self.transformation_directory = "~/Projects/SyVOLT/UML2ER/transformation/"
+		self.transformation_directory = "UML2ER/transformation/"
 
 
 		#=====METAMODELS=================
@@ -27,7 +27,7 @@ class ProverTest(Test):
 
 
 		#====CONTRACTS==================
-		self.contract_directory = "~/Projects/SyVOLT/UML2ER/contracts/"
+		self.contract_directory = "UML2ER/contracts/"
 		self.atomic_contracts = [
 			"Contract01",
 			"Contract02",
