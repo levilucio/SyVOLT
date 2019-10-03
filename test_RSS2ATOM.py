@@ -41,12 +41,25 @@ class RSS2ATOMTest(Test):
 
         #====CONTRACTS==================
 
-        self.contract_directory = "RSS2ATOM/contracts"
+        use_original_contracts = False
 
-        self.atomic_contracts = [
-             "ChannelProduction",
-             "EntryContent",
-        ]
+        if use_original_contracts:
+            self.contract_directory = "RSS2ATOM/contracts"
+            self.atomic_contracts = [
+                 "ChannelProduction",
+                 "EntryContent",
+            ]
+        else:
+            self.contract_directory = "RSS2ATOM/contracts/unit"
+            self.atomic_contracts = [
+                "UnitC2A",
+                "UnitC2C",
+                "UnitI2E",
+                "UnitConnectCAE",
+                "UnitConnectCAG",
+                "UnitConnectCCAC",
+                "UnitConnectIEC",
+            ]
 
         self.if_then_contracts = [
             #[["Neg_CountryCity"], ["Neg_CityCompany", "Neg_SchoolOrdFac", "AND"]],
