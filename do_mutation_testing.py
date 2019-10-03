@@ -153,7 +153,9 @@ if __name__ == "__main__":
     do_only_generation = False
 
     if do_only_generation:
+        posses = []
         for rule in rules.values():
-            poss = mpg.generate_possibilities(rule, transformation)
+            posses += mpg.generate_possibilities(rule, transformation)
+        print("Number of possibilities: " + str(len(posses)))
     else:
         do_mutation_testing(mpg, rules, transformation, test_script)
