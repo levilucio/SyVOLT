@@ -52,22 +52,43 @@ class ATLTest(Test):
 
 
         #====CONTRACTS==================
+        use_original_contracts = True
+        if use_original_contracts:
+            self.contract_directory = "ExFamToPerson/contracts"
+            self.atomic_contracts = [
+                 "Neg_CityCompany",
+                 "Neg_CountryCity",
+                 "Neg_SchoolOrdFac",
+                 "Neg_DaughterMother",
+                "Pos_AssocCity",
+                "Pos_ChildSchool",
+                "Pos_FourMembers",
+                "Pos_MotherFather",
+                "Pos_ParentCompany",
+                "Pos_TownHallComm",
+                ]
+        else:
+            self.contract_directory = "ExFamToPerson/contracts/unit"
 
-        self.contract_directory = "ExFamToPerson/contracts"
-        # self.contract_directory = "/home/dcx/Projects/SyVOLT/tmp/backend/contracts/"
-
-        self.atomic_contracts = [
-             "Neg_CityCompany",
-             "Neg_CountryCity",
-             "Neg_SchoolOrdFac",
-             "Neg_DaughterMother",
-             "Pos_AssocCity",
-             "Pos_ChildSchool",
-             "Pos_FourMembers",
-             "Pos_MotherFather",
-             "Pos_ParentCompany",
-             "Pos_TownHallComm"
-        ]
+            self.atomic_contracts = [
+               "UnitCountry2Community",
+               "UnitDaughter2Woman",
+               "UnitFather2Man",
+               "UnitMother2Woman",
+               "UnitSon2Man",
+               "UnitCity2TownHall",
+               "UnitN2D",
+               "UnitConnectDaughter",
+               "UnitConnectSon",
+               "UnitConnectMother",
+               "UnitConnectFather",
+               "UnitConnectAssoc",
+    #            #"UnitConnectCommittee",
+               "UnitConnectDistricts",
+               "UnitConnectTownHall",
+               "UnitConnectOrdSchool",
+               "UnitConnectSpecSchool",
+            ]
 
         self.if_then_contracts = [
             #[["Neg_CountryCity"], ["Neg_CityCompany", "Neg_SchoolOrdFac", "AND"]],
