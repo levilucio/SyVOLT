@@ -1,6 +1,7 @@
 import subprocess
 import datetime
 import os, sys
+from collections import defaultdict
 
 from mutation.mutation_possibilities import MutationPossibilityGenerator
 from util.test_script_utils import load_transformation
@@ -156,6 +157,16 @@ if __name__ == "__main__":
         posses = []
         for rule in rules.values():
             posses += mpg.generate_possibilities(rule, transformation)
+
+        # group mutations by type
+        muts_by_type = defaultdict(int)
+        for p in posses:
+            mut_type = p[0]
+            muts_by_type[mut_type] += 1
+
+        for t in sorted(muts_by_type):
+            print(t + " : " + str(muts_by_type[t]))
+
         print("Number of possibilities: " + str(len(posses)))
     else:
         do_mutation_testing(mpg, rules, transformation, test_script)
