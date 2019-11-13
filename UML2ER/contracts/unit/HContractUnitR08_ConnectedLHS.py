@@ -1,15 +1,15 @@
 from core.himesis import Himesis, HimesisPreConditionPatternLHS
 import uuid
 
-class HContract01_ConnectedLHS(HimesisPreConditionPatternLHS):
+class HContractUnitR08_ConnectedLHS(HimesisPreConditionPatternLHS):
 	def __init__(self):
 		"""
-		Creates the himesis graph representing the AToM3 model HContract01_ConnectedLHS
+		Creates the himesis graph representing the AToM3 model HContractUnitR08_ConnectedLHS
 		"""
 		# Flag this instance as compiled now
 		self.is_compiled = True
 
-		super(HContract01_ConnectedLHS, self).__init__(name='HContract01_ConnectedLHS', num_nodes=0, edges=[])
+		super(HContractUnitR08_ConnectedLHS, self).__init__(name='HContractUnitR08_ConnectedLHS', num_nodes=0, edges=[])
 
 		# Add the edges
 		self.add_edges([])
@@ -18,17 +18,19 @@ class HContract01_ConnectedLHS(HimesisPreConditionPatternLHS):
 		self["mm__"] = ['MT_pre__FamiliesToPersonsMM', 'MoTifRule']
 		self["MT_constraint__"] = """return True"""
 		self["name"] = """"""
-		self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'HContract01_ConnectedLHS')
+		self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'HContractUnitR08_ConnectedLHS')
 		self["equations"] = []
 		# Set the node attributes
 
-		# match class Package(Package) node
+		# match class Property(Property) node
 		self.add_node()
 		self.vs[0]["MT_pre__attr1"] = """return True"""
 		self.vs[0]["MT_label__"] = """1"""
-		self.vs[0]["mm__"] = """MT_pre__Package"""
-		self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Package')
+		self.vs[0]["mm__"] = """MT_pre__Property"""
+		self.vs[0]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Property')
 
+		self['equations'].append(((0,'isContainment'),('constant','TRUE')))
+		self['equations'].append(((0,'isComplex'),('constant','TRUE')))
 
 		# Add the edges
 		self.add_edges([

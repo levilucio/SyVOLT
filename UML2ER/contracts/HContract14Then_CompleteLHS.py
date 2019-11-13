@@ -91,7 +91,7 @@ class HContract14Then_CompleteLHS(HimesisPreConditionPatternLHS):
 		self.vs[9]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'StrongReferenceassoc9Property')
 
 		self['equations'].append(((3,'name'),(2,'name')))
-		self["equations"].append(((4,'pivot'),('constant','StrongReferenced91baae5StrongReference')))
+		self["equations"].append(((4,'pivot'),('constant','StrongReferencefeca1872StrongReference')))
 
 
 		# Add the edges

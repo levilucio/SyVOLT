@@ -27,28 +27,47 @@ class ProverTest(Test):
 
 
 		#====CONTRACTS==================
-		self.contract_directory = "UML2ER/contracts/"
-		self.atomic_contracts = [
-			"Contract01",
-			"Contract02",
-			"Contract03",
-			"Contract05",
-			"Contract06",
-			"Contract07",
-			"Contract08",
-			"Contract09",
-			"Contract10",
-			"Contract12a",
-			"Contract12b",
-#			"Contract13Then",
-#			"Contract13If",
-#			"Contract14Then",
-#			"Contract14If",
-		]
-		self.if_then_contracts = [
-			[["Contract13If"], ["Contract13Then"]],
-			[["Contract14If"], ["Contract14Then"]],
-		]
+		use_original_contracts = True
+		if use_original_contracts:
+			self.contract_directory = "UML2ER/contracts/"
+			self.atomic_contracts = [
+				"Contract01",
+				"Contract02",
+				"Contract03",
+				"Contract05",
+				"Contract06",
+				"Contract07",
+				"Contract08",
+				"Contract09",
+				"Contract10",
+				"Contract12a",
+				"Contract12b",
+				#			"Contract13Then",
+				#			"Contract13If",
+				#			"Contract14Then",
+				#			"Contract14If",
+			]
+			self.if_then_contracts = [
+				[["Contract13If"], ["Contract13Then"]],
+				[["Contract14If"], ["Contract14Then"]],
+			]
+		else:
+			self.contract_directory = "ExFamToPerson/contracts/unit"
+
+			self.atomic_contracts = [
+				"ContractUnitR02",
+				"ContractUnitR03",
+				"ContractUnitR05a",
+				"ContractUnitR05b",
+				"ContractUnitR07",
+				"ContractUnitR08",
+				"ContractUnitR09",
+				"ContractUnitR10",
+				"ContractUnitR14",
+			]
+		self.if_then_contracts = []
+
+
 
 
 		#=========PC SAVE LOCATION

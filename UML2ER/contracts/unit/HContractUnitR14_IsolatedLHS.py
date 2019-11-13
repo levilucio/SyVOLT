@@ -1,15 +1,15 @@
 from core.himesis import Himesis, HimesisPreConditionPatternLHS
 import uuid
 
-class HContract14Then_IsolatedLHS(HimesisPreConditionPatternLHS):
+class HContractUnitR14_IsolatedLHS(HimesisPreConditionPatternLHS):
 	def __init__(self):
 		"""
-		Creates the himesis graph representing the AToM3 model HContract14Then_IsolatedLHS
+		Creates the himesis graph representing the AToM3 model HContractUnitR14_IsolatedLHS
 		"""
 		# Flag this instance as compiled now
 		self.is_compiled = True
 
-		super(HContract14Then_IsolatedLHS, self).__init__(name='HContract14Then_IsolatedLHS', num_nodes=0, edges=[])
+		super(HContractUnitR14_IsolatedLHS, self).__init__(name='HContractUnitR14_IsolatedLHS', num_nodes=0, edges=[])
 
 		# Add the edges
 		self.add_edges([])
@@ -18,7 +18,7 @@ class HContract14Then_IsolatedLHS(HimesisPreConditionPatternLHS):
 		self["mm__"] = ['MT_pre__FamiliesToPersonsMM', 'MoTifRule']
 		self["MT_constraint__"] = """return True"""
 		self["name"] = """"""
-		self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'HContract14Then_IsolatedLHS')
+		self["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'HContractUnitR14_IsolatedLHS')
 		self["equations"] = []
 		# Set the node attributes
 
@@ -50,14 +50,12 @@ class HContract14Then_IsolatedLHS(HimesisPreConditionPatternLHS):
 		self.vs[3]["mm__"] = """MT_pre__EntityType"""
 		self.vs[3]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EntityType')
 
-		# apply class StrongReference(StrongReference) node
+		# apply class Reference(Reference) node
 		self.add_node()
 		self.vs[4]["MT_pre__attr1"] = """return True"""
 		self.vs[4]["MT_label__"] = """5"""
-		self.vs[4]["mm__"] = """MT_pre__StrongReference"""
-		self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'StrongReference')
-
-		self["equations"].append(((4,'pivot'),('constant','StrongReferencefeca1872StrongReference')))
+		self.vs[4]["mm__"] = """MT_pre__Reference"""
+		self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'Reference')
 
 	# define evaluation methods for each apply class.
 

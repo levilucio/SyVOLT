@@ -57,7 +57,7 @@ class HContract13Then_CompleteLHS(HimesisPreConditionPatternLHS):
 		self.vs[4]["GUID__"] = uuid.uuid3(uuid.NAMESPACE_DNS,'EntityTypeassoc4Class')
 
 		self['equations'].append(((1,'name'),(0,'name')))
-		self["equations"].append(((2,'pivot'),('constant','WeakReferencef8b48c65WeakReference')))
+		self["equations"].append(((2,'pivot'),('constant','WeakReferencea56b1c24WeakReference')))
 
 
 		# Add the edges
