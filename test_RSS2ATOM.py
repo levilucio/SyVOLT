@@ -11,7 +11,7 @@ from util.test_script_base import Test
 
 class RSS2ATOMTest(Test):
 
-    def __init__(self):
+    def __init__(self, args):
         Test.__init__(self)
         
         #============TRANSFORMATION=================
@@ -41,9 +41,7 @@ class RSS2ATOMTest(Test):
 
         #====CONTRACTS==================
 
-        use_original_contracts = False
-
-        if use_original_contracts:
+        if not hasattr(args, "integration_contracts") or args.integration_contracts:
             self.contract_directory = "RSS2ATOM/contracts"
             self.atomic_contracts = [
                  "ChannelProduction",
@@ -77,7 +75,7 @@ if __name__ == "__main__":
     parser = load_parser()
     args = parser.parse_args()
 
-    test = RSS2ATOMTest()
+    test = RSS2ATOMTest(args)
     test.test_correct(args)
 
     

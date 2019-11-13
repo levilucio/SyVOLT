@@ -11,7 +11,7 @@ from util.test_script_base import Test
 
 class ATLTest(Test):
 
-    def __init__(self):
+    def __init__(self, args):
         Test.__init__(self)
         
         #============TRANSFORMATION=================
@@ -52,8 +52,7 @@ class ATLTest(Test):
 
 
         #====CONTRACTS==================
-        use_original_contracts = True
-        if use_original_contracts:
+        if not hasattr(args, "integration_contracts") or args.integration_contracts:
             self.contract_directory = "ExFamToPerson/contracts"
             self.atomic_contracts = [
                  "Neg_CityCompany",
@@ -106,7 +105,7 @@ if __name__ == "__main__":
     parser = load_parser()
     args = parser.parse_args()
 
-    exFam = ATLTest()
+    exFam = ATLTest(args)
     exFam.test_correct(args)
 
     

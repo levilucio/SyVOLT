@@ -90,16 +90,24 @@ if __name__ == "__main__":
     full_transformation = []
 
     trans = "F2P"
+    do_original_trans = False
     if len(sys.argv) > 1:
         trans = sys.argv[1]
+
+    if len(sys.argv) > 2:
+        do_original_trans = bool(sys.argv[2])
+
     print("Mutating transformation: " + trans)
+    print("Using original transformation: " + str(do_original_trans))
 
     if len(sys.argv) > 1:
         trans = sys.argv[1]
 
     if trans == "F2P":
         #### FAMILIES TO PERSONS
-        F2P = FamToPersons()
+        class Temp:
+            integration_contracts = do_original_trans
+        F2P = FamToPersons(Temp())
         test_script = "test_atlTrans_extended.py"
         transformation_dir = F2P.transformation_directory
         inputMM = F2P.inputMM
@@ -108,7 +116,9 @@ if __name__ == "__main__":
 
     elif trans == "RSS":
         #### RSSToATOM
-        RSS2ATOM = RSS2ATOMTest()
+        class Temp:
+            integration_contracts = do_original_trans
+        RSS2ATOM = RSS2ATOMTest(Temp())
         test_script = "test_RSS2ATOM.py"
         transformation_dir = RSS2ATOM.transformation_directory
         inputMM = RSS2ATOM.inputMM
@@ -117,7 +127,9 @@ if __name__ == "__main__":
 
     elif trans == "UML2ER":
         #### UML2ER
-        UML2ER = UML2ER()
+        class Temp:
+            integration_contracts = do_original_trans
+        UML2ER = UML2ER(Temp())
         test_script = "test_uml2er.py"
         transformation_dir = UML2ER.transformation_directory
         inputMM = UML2ER.inputMM
@@ -139,7 +151,6 @@ if __name__ == "__main__":
         #### UML2Kiltera
         class Temp:
             handbuilt = False
-
         UML2Kiltera_ = UML2Kiltera(Temp())
         test_script = "test_umlToKiltera.py"
         transformation_dir = UML2Kiltera_.transformation_directory

@@ -4,7 +4,7 @@ from util.test_script_base import Test
 
 class ProverTest(Test):
 
-	def __init__(self):
+	def __init__(self, args):
 		Test.__init__(self)
 
 
@@ -27,11 +27,9 @@ class ProverTest(Test):
 
 
 		#====CONTRACTS==================
-		use_original_contracts = True
-		if use_original_contracts:
+		if not hasattr(args, "integration_contracts") or args.integration_contracts:
 			self.contract_directory = "UML2ER/contracts/"
 			self.atomic_contracts = [
-				"Contract01",
 				"Contract02",
 				"Contract03",
 				"Contract05",
@@ -80,5 +78,5 @@ if __name__ == "__main__":
 	parser = load_parser()
 	args = parser.parse_args()
 
-	test = ProverTest()
+	test = ProverTest(args)
 	test.test_correct(args)
