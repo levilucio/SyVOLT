@@ -1,6 +1,8 @@
 import subprocess
 import datetime
 import os, sys
+from time import sleep
+
 from collections import defaultdict
 
 from mutation.mutation_possibilities import MutationPossibilityGenerator
@@ -13,7 +15,7 @@ from test_uml2er import ProverTest as UML2ER
 from test_RSS2ATOM import RSS2ATOMTest
 from test_mbeddr import MBEddr
 
-def do_mutation_testing(mpg, rules, transformation, test_script):
+def do_mutation_testing(mpg, rules, transformation, test_script, use_integration_contracts):
     print_output = False
 
     poss_dict = {}
@@ -48,6 +50,7 @@ def do_mutation_testing(mpg, rules, transformation, test_script):
                 print("Running mutation " + str(curr_mutation_count + 1) +
                       " out of " + str(mutation_count) + "...")
                 print(p)
+                sleep(0.5)
 
                 curr_mutation_count += 1
 
@@ -60,6 +63,10 @@ def do_mutation_testing(mpg, rules, transformation, test_script):
                 pruning_cmd = "--skip_pruning"
 
                 cmd = ["python3", test_script, rule_cmd, poss_cmd, saving_cmd, pickle_cmd]
+
+                if not use_integration_contracts:
+                    contracts_cmd = "--unit_contracts"
+                    cmd += contracts_cmd
 
                 # print(" ".join(cmd))
 
@@ -90,15 +97,15 @@ if __name__ == "__main__":
     full_transformation = []
 
     trans = "F2P"
-    do_original_trans = False
+    use_integration_contracts = False
     if len(sys.argv) > 1:
         trans = sys.argv[1]
 
     if len(sys.argv) > 2:
-        do_original_trans = bool(sys.argv[2])
+        use_integration_contracts = bool(sys.argv[2])
 
     print("Mutating transformation: " + trans)
-    print("Using original transformation: " + str(do_original_trans))
+    print("Using integration contracts: " + str(use_integration_contracts))
 
     if len(sys.argv) > 1:
         trans = sys.argv[1]
@@ -106,7 +113,7 @@ if __name__ == "__main__":
     if trans == "F2P":
         #### FAMILIES TO PERSONS
         class Temp:
-            integration_contracts = do_original_trans
+            integration_contracts = use_integration_contracts
         F2P = FamToPersons(Temp())
         test_script = "test_atlTrans_extended.py"
         transformation_dir = F2P.transformation_directory
@@ -117,7 +124,7 @@ if __name__ == "__main__":
     elif trans == "RSS":
         #### RSSToATOM
         class Temp:
-            integration_contracts = do_original_trans
+            integration_contracts = use_integration_contracts
         RSS2ATOM = RSS2ATOMTest(Temp())
         test_script = "test_RSS2ATOM.py"
         transformation_dir = RSS2ATOM.transformation_directory
@@ -128,7 +135,7 @@ if __name__ == "__main__":
     elif trans == "UML2ER":
         #### UML2ER
         class Temp:
-            integration_contracts = do_original_trans
+            integration_contracts = use_integration_contracts
         UML2ER = UML2ER(Temp())
         test_script = "test_uml2er.py"
         transformation_dir = UML2ER.transformation_directory
@@ -180,4 +187,4 @@ if __name__ == "__main__":
 
         print("Number of possibilities: " + str(len(posses)))
     else:
-        do_mutation_testing(mpg, rules, transformation, test_script)
+        do_mutation_testing(mpg, rules, transformation, test_script, use_integration_contracts)

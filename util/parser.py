@@ -77,6 +77,11 @@ def load_parser():
                         help = 'Select the handbuilt version (default: False - use HOT version)')
     parser.set_defaults(handbuilt = False)
 
+    parser.add_argument('--unit_contracts', dest='integration_contracts', default=True,
+                        action='store_false', help='Select unit contracts (default: False - use integration contracts)')
+
+    parser.set_defaults(handbuilt=False)
+
     parser.add_argument('--load', dest = 'pc_filename', nargs='?', const="", type=str,
                         help = 'Input the txt filename that contains the PC filenames you want to load')
 
