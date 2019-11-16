@@ -50,7 +50,6 @@ def do_mutation_testing(mpg, rules, transformation, test_script, use_integration
                 print("Running mutation " + str(curr_mutation_count + 1) +
                       " out of " + str(mutation_count) + "...")
                 print(p)
-                sleep(0.5)
 
                 curr_mutation_count += 1
 
