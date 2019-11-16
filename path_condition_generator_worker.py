@@ -35,7 +35,7 @@ class path_condition_generator_worker(Process):
         self.layer = layer
         self.num = num
         self.currentPathConditionSet = None
-        self.results_queue = None
+        self.worker_list = None
         self.verbosity = verbosity
 
         self.rule_names = None
@@ -681,7 +681,9 @@ class path_condition_generator_worker(Process):
 
         #print("Thread finished: Took " + str(time.time() - start_time) + " seconds")
 
-        self.results_queue.put((self.currentPathConditionSet, new_pc_dict, name_dict))
+        self.worker_list[0] = self.currentPathConditionSet
+        self.worker_list[1] = new_pc_dict
+        self.worker_list[2] = name_dict
 
 
 

@@ -11,7 +11,7 @@ import time
 from util.Tester import Tester
 
 import multiprocessing
-from multiprocessing import Manager, Queue
+from multiprocessing import Manager
 from path_condition_generator_worker import *
 
 from pruner.pruner import Pruner
@@ -350,8 +350,6 @@ class PathConditionGenerator(object):
                 pc_chunks = self.chunks(currentpathConditionSet, chunkSize)
                 pc_divide_time += time.time() - pc_divide_start_time
 
-            results_queue = manager.Queue()
-
             #only give the workers exactly the artifacts they need
 
             layer_rules = self.transformation[layer]
@@ -383,6 +381,7 @@ class PathConditionGenerator(object):
             print("Starting " + str(len(pc_chunks)) + " workers with chunk size: " + str(chunkSize))
 
             workers = []
+            worker_result_list = []
 
             #initialize the workers
             for i in range(len(pc_chunks)):#range(cpu_count):
@@ -399,7 +398,9 @@ class PathConditionGenerator(object):
 
                 #print("Size of chunk: " + str(len(pc_chunks[i])))
 
-                new_worker.results_queue = results_queue
+                worker_list = manager.list([None, None, None])
+                worker_result_list.append(worker_list)
+                new_worker.worker_list = worker_list
 
                 new_worker.load_pc_dict(pc_dict)
 
@@ -446,8 +447,8 @@ class PathConditionGenerator(object):
 
             currentpathConditionSet = []
 
-            for _ in workers:
-                r = results_queue.get()
+            for worker_list in worker_result_list:
+                r = worker_list
                 currentpathConditionSet.extend(r[0])
 
                 pc_dict.update(r[1])
