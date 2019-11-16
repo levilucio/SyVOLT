@@ -454,6 +454,9 @@ class PathConditionGenerator(object):
 
                 name_dict.update(r[2])
 
+            currentpathConditionSet.sort()
+
+
             if len(name_dict) > 0:
                 for i in range(len(currentpathConditionSet)):
                     try:
