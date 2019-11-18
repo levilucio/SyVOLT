@@ -97,11 +97,12 @@ if __name__ == "__main__":
 
     trans = "F2P"
     use_integration_contracts = False
+
     if len(sys.argv) > 1:
         trans = sys.argv[1]
 
     if len(sys.argv) > 2:
-        use_integration_contracts = bool(sys.argv[2])
+        use_integration_contracts = "True" in sys.argv[2] or "True" in sys.argv[2]
 
     print("Mutating transformation: " + trans)
     print("Using integration contracts: " + str(use_integration_contracts))
