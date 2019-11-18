@@ -50,7 +50,7 @@ class ProverTest(Test):
 				[["Contract14If"], ["Contract14Then"]],
 			]
 		else:
-			self.contract_directory = "ExFamToPerson/contracts/unit"
+			self.contract_directory = "UML2ER/contracts/unit"
 
 			self.atomic_contracts = [
 				"ContractUnitR02",
