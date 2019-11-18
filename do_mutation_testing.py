@@ -65,7 +65,7 @@ def do_mutation_testing(mpg, rules, transformation, test_script, use_integration
 
                 if not use_integration_contracts:
                     contracts_cmd = "--unit_contracts"
-                    cmd += contracts_cmd
+                    cmd.append(contracts_cmd)
 
                 # print(" ".join(cmd))
 
