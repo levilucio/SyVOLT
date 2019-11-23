@@ -147,6 +147,7 @@ if __name__ == "__main__":
         #### GM2AUTOSAR
         class Temp:
             handbuilt = False
+            integration_contracts = use_integration_contracts
         GM2AUTOSAR = GMTest(Temp())
         test_script = "test_GM2Autosar_transformation.py"
         transformation_dir = GM2AUTOSAR.transformation_directory
@@ -158,6 +159,7 @@ if __name__ == "__main__":
         #### UML2Kiltera
         class Temp:
             handbuilt = False
+            integration_contracts = use_integration_contracts
         UML2Kiltera_ = UML2Kiltera(Temp())
         test_script = "test_umlToKiltera.py"
         transformation_dir = UML2Kiltera_.transformation_directory
