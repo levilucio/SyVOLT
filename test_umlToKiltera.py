@@ -103,32 +103,56 @@ class UMLTest(Test):
 
         # ====CONTRACTS==================
 
-        self.contract_directory = "UMLRT2Kiltera_MM/Properties/from_MPS/"
+        if not hasattr(args, "integration_contracts") or args.integration_contracts:
+            self.contract_directory = "UMLRT2Kiltera_MM/Properties/from_MPS/"
 
-        self.atomic_contracts = [
-            "PP1",
-            "PP2",
-            "PP3",
-            "PP4",
-            #"PP5",
-        ]
+            self.atomic_contracts = [
+                "PP1",
+                "PP2",
+                "PP3",
+                "PP4",
+                #"PP5",
+            ]
 
-        self.if_then_contracts = [
-            [["MM1_if"], ["MM1_then1", "MM1_then2", "NOT", "AND"]],
-            [["MM2_if"], ["MM2_then1", "MM2_then2", "NOT", "AND"]],
-            [["MM3_if"], ["MM3_then1", "MM3_then2", "NOT", "AND"]],
-            [["MM4_if"], ["MM4_then1", "MM4_then2", "NOT", "AND"]],
-            [["MM5_if"], ["MM5_then"]],
-            [["MM6_if"], ["MM6_then"]],
-            [["MM7_if"], ["MM7_then"]],
-            [["MM8_if"], ["MM8_then1", "MM8_then2", "NOT", "AND", "MM8_then1", "NOT", "OR"]],
-            [["MM9_if"], ["MM9_then1", "MM9_then2", "NOT", "AND", "MM9_then1", "NOT", "OR"]],
-            [["MM10_if"], ["MM9_then1", "MM10_then2", "NOT", "AND", "MM10_then1", "NOT", "OR"]],
-            [["MM11_if"], ["MM11_then"]],
-            [["SS1_if"], ["SS1_then"]],
-            #[["SS2_if"], ["SS2_then"]],
-            #[["SS3_if1", "SS3_if2", "NOT", "AND"], ["SS3_then1", "SS3_then2", "NOT", "AND"]],
-        ]
+            self.if_then_contracts = [
+                [["MM1_if"], ["MM1_then1", "MM1_then2", "NOT", "AND"]],
+                [["MM2_if"], ["MM2_then1", "MM2_then2", "NOT", "AND"]],
+                [["MM3_if"], ["MM3_then1", "MM3_then2", "NOT", "AND"]],
+                [["MM4_if"], ["MM4_then1", "MM4_then2", "NOT", "AND"]],
+                [["MM5_if"], ["MM5_then"]],
+                [["MM6_if"], ["MM6_then"]],
+                [["MM7_if"], ["MM7_then"]],
+                [["MM8_if"], ["MM8_then1", "MM8_then2", "NOT", "AND", "MM8_then1", "NOT", "OR"]],
+                [["MM9_if"], ["MM9_then1", "MM9_then2", "NOT", "AND", "MM9_then1", "NOT", "OR"]],
+                #[["MM10_if"], ["MM9_then1", "MM10_then2", "NOT", "AND", "MM10_then1", "NOT", "OR"]],
+                [["MM11_if"], ["MM11_then"]],
+                #[["SS1_if"], ["SS1_then"]],
+                #[["SS2_if"], ["SS2_then"]],
+                #[["SS3_if1", "SS3_if2", "NOT", "AND"], ["SS3_then1", "SS3_then2", "NOT", "AND"]],
+            ]
+        else:
+            self.contract_directory = "UMLRT2Kiltera_MM/Properties/unit_contracts/"
+            self.atomic_contracts = [
+                "UnitR01",
+                "UnitR02",
+                "UnitR03a",
+                #"UnitR03b", -- fails due to multiplicity
+                #"UnitR04a", -- fails
+                #"UnitR04b", -- fails
+                #"UnitR04c", -- fails
+                "UnitR05a",
+                "UnitR05a",
+                "UnitR06c",
+                "UnitR06a",
+                "UnitR06b",
+                "UnitR06c",
+                #"UnitR07a", -- fails
+                "UnitR07b",
+                "UnitR07c",
+                #"UnitR07d", -- fails
+		    ]
+            self.if_then_contracts = [
+            ]
 
         # =========PC SAVE LOCATION
 
