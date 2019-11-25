@@ -104,8 +104,8 @@ class GMTest(Test):
                 "UnitR01c",
                 "UnitR02",
                 "UnitR03",
-                #"UnitR04a", -- these contracts check
-                #"UnitR04b",
+                "UnitR04a",
+                "UnitR04b",
                 "UnitR05",
                 "UnitR06",
             ]
