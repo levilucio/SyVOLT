@@ -53,6 +53,18 @@ class GMTest(Test):
             self.transformation_directory = "GM2AUTOSAR_MM/transformation_from_ATL/"
 
 
+        #=====FROM MPS=================
+        self.full_transformation = []
+        self.full_transformation.append(
+            ['HMapPN2FiveElements', 'HMapPartition', 'HMapModule', ])  # initSysTemp_CreationRule
+        self.full_transformation.append(['HConnECU2VirtualDevice1', ])  # sysmapping_swMapping_SolveRef
+        self.full_transformation.append(['HConnVirtualDevice2Distributable1', ])  # compostype_component_SolveRef
+        self.full_transformation.append(
+            ['HConnectPPortPrototype', 'HConnectRPortPrototype', ])  # compostype_port_SolveRef
+        self.full_transformation.append(['HConnVirtualDevice2Distributable2', ])  # mapping_component_SolveRef
+        self.full_transformation.append(['HConnECU2VirtualDevice2', ])  # mapping_ecuInstance_SolveRef
+        self.transformation_directory = "GM2AUTOSAR_MM/transformation_from_MPS/"
+
         #=====METAMODELS===============
 
         self.inputMM = "GM2AUTOSAR_MM/metamodels/Industrial.ecore"
@@ -61,27 +73,45 @@ class GMTest(Test):
 
         #====CONTRACTS==================
 
-        self.contract_directory = "GM2AUTOSAR_MM/Properties/from_eclipse/"
+        if not hasattr(args, "integration_contracts") or args.integration_contracts:
+            self.contract_directory = "GM2AUTOSAR_MM/Properties/from_eclipse/"
 
-        self.atomic_contracts = [
-            "P1",
-            "P2",
-        ]
+            self.atomic_contracts = [
+                "P1",
+                "P2",
+            ]
 
-        self.if_then_contracts = [
-            ["S1_if", "S1_then"],
-            ["M1_if", "M1_then"],
-            ["M3_if", "M3_then"],
-        ]
+            self.if_then_contracts = [
+                ["S1_if", "S1_then"],
+                # ["M1_if", "M1_then"],
+                # ["M3_if", "M3_then"],
+            ]
 
-        self.if_then_contracts += [
-            # structure is 'if graph', 'then graph'
-            # where the 'then graph' is made up of reverse polish notation
-            ["M2_if", ["M2_then1", "M2_then2", "NOT", "AND"]],
-            ["M4_if", ["M4_then1", "M4_then2", "NOT", "AND"]],
-            ["M5_if", ["M5_then1", "M5_then2", "NOT", "AND"]],
-            ["M6_if", ["M6_then1", "M6_then2", "NOT", "AND"]],
-        ]
+            self.if_then_contracts += [
+                # structure is 'if graph', 'then graph'
+                # where the 'then graph' is made up of reverse polish notation
+                ["M2_if", ["M2_then1", "M2_then2", "NOT", "AND"]],
+                ["M4_if", ["M4_then1", "M4_then2", "NOT", "AND"]],
+                ["M5_if", ["M5_then1", "M5_then2", "NOT", "AND"]],
+                ["M6_if", ["M6_then1", "M6_then2", "NOT", "AND"]],
+            ]
+        else:
+            self.contract_directory = "GM2AUTOSAR_MM/Properties/unit_contracts/"
+
+            self.atomic_contracts = [
+                "UnitR01a",
+                "UnitR01b",
+                "UnitR01c",
+                "UnitR02",
+                "UnitR03",
+                #"UnitR04a", -- these contracts check
+                #"UnitR04b",
+                "UnitR05",
+                "UnitR06",
+            ]
+            self.if_then_contracts = [
+            ]
+
 
 
         #=========PC SAVE LOCATION
