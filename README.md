@@ -34,14 +34,29 @@ The MPS plugin can be downloaded at: https://plugins.jetbrains.com/plugin/10385-
 Please see the plugin repository for usage instructions: https://github.com/mbeddr/language_verification/blob/master/README.md
 
 ### Mutation Testing
-For mutation testing, edit and run the `do_mutation_testing.py` file in the root directory.
 
-This will use the file `mutation/mutation_possibilities.py` to generate all possible mutations on the transformation.
+The script for each transformation can take parameters to mutate individual rules.
+
+For example, here is one mutation of the Families-To-Persons transformation:
+  `python3 test_atlTrans_extended.py --rule_to_mutate=HCountry2Community --mutate=('ADD_CLASS','Family',True,0) --unit_contracts`
+  * The actual mutation is performed in `mutation/mutate.py`
+
+To perform wide-scale mutation testing, the main file is `do_mutation_testing.py`.
+  * This uses `mutation/mutation_possibilities.py` to generate all the mutations for each transformation
+  * Then the main transformation script is run for each possibility, with the appropriate mutation parameters
+  
+
+For example, run `python3 do_mutation_testing.py F2P False` to test all mutants for the Families-To-Persons transformation with the unit contracts. Change the `False` to `True` for the integration contracts.
+
+The other transformations are: `RSS`, `UML2ER`, `GM`, `Kiltera`.
+
+The mutation results will be collected in `mutation_testing.xml`. This is then the input into the Spectrum-Based Fault Localization Java program.
+
 
 ## Related Work
-<a href="http://www.sable.mcgill.ca/~clump/theses/oakes-18-symbolic-TH.pdf">[6]</a> <i>A Symbolic Execution-Based Approach To Model Transformation Verification using Structural Contracts</i>. B. Oakes.  Ph.D. dissertation, McGill University, 2018. <br>
+<a href="http://www.sable.mcgill.ca/~clump/theses/oakes-18-symbolic-TH.pdf">[8]</a> <i>A Symbolic Execution-Based Approach To Model Transformation Verification using Structural Contracts</i>. B. Oakes.  Ph.D. dissertation, McGill University, 2018. <br>
 
-<a href="https://repository.uantwerpen.be/docman/irua/d4a3c4/155126.pdf">[6]</a> <i>Debugging of Model Transformations and Contracts in SyVOLT</i>. B. Oakes, L. Lúcio, C. Verbrugge, H. Vangheluwe. Proceedings of MDEbug co-located with MODELS 2018, 532-537. 2018.<br>
+<a href="https://repository.uantwerpen.be/docman/irua/d4a3c4/155126.pdf">[7]</a> <i>Debugging of Model Transformations and Contracts in SyVOLT</i>. B. Oakes, L. Lúcio, C. Verbrugge, H. Vangheluwe. Proceedings of MDEbug co-located with MODELS 2018, 532-537. 2018.<br>
 
 <a href="http://msdl.cs.mcgill.ca/people/bentley/research/paper_sosym_2016.pdf">[6]</a> <i>Full Contract Verification for ATL using Symbolic Execution</i>. B. Oakes, J. Troya, L. Lúcio, M. Wimmer. Software and Systems Modeling 2016 (pp. 1-35). Springer Berlin Heidelberg. <br>
 
