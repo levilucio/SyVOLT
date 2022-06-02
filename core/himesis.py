@@ -1,9 +1,9 @@
-import uuid, copy
-
-from os import path, fsync, mkdir
-from core.igraph_helper import *
-
+import copy
+import uuid
 from functools import reduce
+from os import path, fsync, mkdir
+
+from core.igraph_helper import *
 
 try:
     import util.misc as misc
@@ -48,7 +48,7 @@ class Himesis(igraph.Graph):
     
 
     
-    def __init__(self, name='', num_nodes=0, edges=[]):
+    def __init__(self, *args, name='', num_nodes=0, edges=[], **kwargs):
         """
             Creates a typed, attributed, directed, multi-graph.
             @param num_nodes: the total number of nodes. If not known, you can add more vertices later
@@ -96,6 +96,24 @@ class Himesis(igraph.Graph):
     def copy(self):
         cpy = igraph.Graph.copy(self)
         # cpy.nodes_id = copy.deepcopy(self.nodes_id)
+
+        # TODO: Fix this bug
+        if cpy.vcount() != self.vcount():
+            cpy.add_vertices(self.vcount() - cpy.vcount())
+
+        for attr in self.attributes():
+            cpy[attr] = self[attr]
+
+        for i, n in enumerate(self.vs):
+            for attr in n.attributes():
+                cpy.vs[i][attr] = n[attr]
+
+        #TODO: Fix this bug
+        if cpy.ecount() != self.ecount():
+            for edge in self.es:
+                source_vertex_id = edge.source
+                target_vertex_id = edge.target
+                cpy.add_edge(source_vertex_id, target_vertex_id)
 
         # only copy these if necessary
         if hasattr(self, "execute_body"):
@@ -288,17 +306,18 @@ class Himesis(igraph.Graph):
 
             file.write('''
 
+from uuid import UUID\n
 from core.himesis import Himesis''')
 
 
             if class_name != 'Himesis':
                 file.write(''', %s''' % class_name)
-            
+
             init_params2 = ''
             init_params_values = ''
             if len(init_params) > 0:
                 init_params2 = reduce(lambda p1, p2: p1 + p2,
-                                    map(lambda p: ', %s' % p,
+                                    map(lambda p: ', %s=None' % p,
                                         init_params))
                 init_params_values = reduce(lambda p1, p2: p1 + p2,
                                             map(lambda p: ', %s=%s' % (p, p),
@@ -306,9 +325,9 @@ from core.himesis import Himesis''')
             file.write('''
 
 class %s(%s):
-    def __init__(self%s):
+    def __init__(self%s, **kwargs):
         """
-        Creates the himesis graph representing the AToM3 model %s.
+        Creates the himesis graph representing the model %s.
         """
         # Flag this instance as compiled now
         self.is_compiled = True
@@ -323,8 +342,42 @@ class %s(%s):
        self.vcount(),
        init_params_values))
             
+
+            
+            # Set the graph attributes
+            file.write('''
+        # Add the nodes
+        self.add_vertices('''+ str(self.vcount()) + ''')\n''')
+            file.write('''
+        # Set the graph attributes''')
+            for attr in self.attributes():
+                if attr == "equations":
+                    file.write('''
+        self["equations"] = ''' + self._validate_equations(self[attr]))
+                    continue
+
+                value = self[attr]
+                access = 'self["%s"]' % attr
+                file.write(self.__compile_attribute(access, value))
+                if isinstance(value, Himesis):
+                    subgraphs.append(value)
+            
+            # Set node attributes
+            file.write('''
+        
+        # Set the node attributes''')
+            # Compile the node attributes, always in the reight order
+            for new_node_index, old_node_index in enumerate(self.ordered_nodes):
+                for attr in self.vs[old_node_index].attribute_names():
+                    if self.vs[old_node_index][attr] is not None:
+                        value = self.vs[old_node_index][attr]
+                        access = 'self.vs[%d]["%s"]' % (new_node_index, attr)
+                        file.write(self.__compile_attribute(access, value))
+                        if isinstance(value, Himesis):
+                            subgraphs.append(value)
+
             # Add the edges
-            file.write('''        
+            file.write('''\n        
         # Add the edges''')
             edge_list = []
             # Determines if it's possible to provide the edges as a single list
@@ -354,37 +407,8 @@ class %s(%s):
         self.add_edges(%s)''' % str(edge_list))
                     pitch += Himesis.EDGE_LIST_THRESHOLD
                 file.write('''
-        ''')
-            
-            # Set the graph attributes
-            file.write('''
-        # Set the graph attributes''')
-            for attr in self.attributes():
-                if attr == "equations":
-                    file.write('''
-        self["equations"] = ''' + self._validate_equations(self[attr]))
-                    continue
+                    ''')
 
-                value = self[attr]
-                access = 'self["%s"]' % attr
-                file.write(self.__compile_attribute(access, value))
-                if isinstance(value, Himesis):
-                    subgraphs.append(value)
-            
-            # Set node attributes
-            file.write('''
-        
-        # Set the node attributes''')
-            # Compile the node attributes, always in the reight order
-            for new_node_index, old_node_index in enumerate(self.ordered_nodes):
-                for attr in self.vs[old_node_index].attribute_names():
-                    if self.vs[old_node_index][attr] is not None:
-                        value = self.vs[old_node_index][attr]
-                        access = 'self.vs[%d]["%s"]' % (new_node_index, attr)
-                        file.write(self.__compile_attribute(access, value))
-                        if isinstance(value, Himesis):
-                            subgraphs.append(value)
-            
             file.write('\n')
             self._compile_additional_info(file)
             file.write('\n')
@@ -404,7 +428,7 @@ class %s(%s):
 
 
 class HimesisPattern(Himesis):
-    def __init__(self, name='', num_nodes=0, edges=[]):
+    def __init__(self, *args, name='', num_nodes=0, edges=[], **kwargs):
         super(HimesisPattern, self).__init__(name, num_nodes, edges)
 
         #disable these attributes to save memory
@@ -546,7 +570,7 @@ class HimesisPreConditionPattern(HimesisPattern):
 
 
 class HimesisPreConditionPatternLHS(HimesisPreConditionPattern):
-    def __init__(self, name='', num_nodes=0, edges=[]):
+    def __init__(self, *args, name='', num_nodes=0, edges=[], **kwargs):
         super(HimesisPreConditionPatternLHS, self).__init__(name, num_nodes, edges)
         #self.import_name = 'HimesisPreConditionPatternLHS'
         self.NACs = []
@@ -596,7 +620,7 @@ class HimesisPreConditionPatternLHS(HimesisPreConditionPattern):
 
 
 class HimesisPreConditionPatternNAC(HimesisPreConditionPattern):
-    def __init__(self, LHS, name='', num_nodes=0, edges=[]):
+    def __init__(self, *args, LHS=None, name='', num_nodes=0, edges=[], **kwargs):
         super(HimesisPreConditionPatternNAC, self).__init__(name, num_nodes, edges)
         self.LHS = LHS
         self.bridge = None
@@ -731,7 +755,7 @@ return %s().%s(attr_value, this) and %s(lhs).%s(attr_value, this)'''
 
 
 class HimesisPostConditionPattern(HimesisPattern):
-    def __init__(self, name='', num_nodes=0, edges=[]):
+    def __init__(self, *args, name='', num_nodes=0, edges=[], **kwargs):
         super(HimesisPostConditionPattern, self).__init__(name, num_nodes, edges)
         self.pre = None
         #self.import_name = 'HimesisPostConditionPattern'

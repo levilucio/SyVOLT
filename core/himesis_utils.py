@@ -641,7 +641,11 @@ def to_non_RAM_attribute(attr_name):
 
 
 def clean_graph(graph):
-    # shrink the size of the uuids into ints
+
+    if not hasattr(graph, "GUID__"):
+        return
+
+        # shrink the size of the uuids into ints
     if isinstance(graph["GUID__"], uuid.UUID):
         # get the uuid as an int
         # and fit it in 24 bytes
@@ -795,7 +799,7 @@ def load_class(full_class_string, args=None):
             loaded_module = try_load(load_module_name, module_name, args)
     except Exception as e:
         print("Error: " + str(e))
-        # traceback.print_exc()
+        traceback.print_exc()
         succeed = False
         loaded_module = None
     finally:

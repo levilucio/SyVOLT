@@ -2,7 +2,7 @@ from core.himesis import Himesis
 import uuid
 
 class HFather2Man(Himesis):
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
 
     
     

@@ -420,7 +420,7 @@ class PyRamify:
         bk_links = find_nodes_with_mm(base_graph, ["MT_pre__trace_link"])
         bk_links_nums = [item.index for item in bk_links]
 
-        has_contains = "MT_pre__apply_contains" in base_graph.vs["mm__"]
+        has_contains = hasattr(base_graph.vs["mm__"], "MT_pre__apply_contains")
 
         if has_contains:
             apply_contains_nodes = find_nodes_with_mm(base_graph, ["MT_pre__apply_contains"])
