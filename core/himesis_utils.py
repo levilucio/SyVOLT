@@ -642,7 +642,7 @@ def to_non_RAM_attribute(attr_name):
 
 def clean_graph(graph):
 
-    if not hasattr(graph, "GUID__"):
+    if not "GUID__" in graph.attributes():
         return
 
         # shrink the size of the uuids into ints

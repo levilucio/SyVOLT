@@ -251,7 +251,7 @@ class Slicer:
                     break
 
             for rule in layer:
-                if rule in required_rules:
+                if rule.name in required_rules:
                     continue
 
                 if is_contract:
