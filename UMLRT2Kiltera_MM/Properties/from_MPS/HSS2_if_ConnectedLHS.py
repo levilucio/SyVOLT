@@ -2,7 +2,7 @@ from core.himesis import Himesis, HimesisPreConditionPatternLHS
 import uuid
 
 class HSS2_if_ConnectedLHS(HimesisPreConditionPatternLHS):
-	def __init__(self):
+	def __init__(self, *args, **kwargs):
 		"""
 		Creates the himesis graph representing the AToM3 model HSS2_if_ConnectedLHS
 		"""

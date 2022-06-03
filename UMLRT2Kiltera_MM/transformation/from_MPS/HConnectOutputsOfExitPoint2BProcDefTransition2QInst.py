@@ -2,7 +2,7 @@ from core.himesis import Himesis
 import uuid
 
 class HConnectOutputsOfExitPoint2BProcDefTransition2QInst(Himesis):
-	def __init__(self):
+	def __init__(self, *args, **kwargs):
 		"""
 		Creates the himesis graph representing the DSLTrans rule ConnectOutputsOfExitPoint2BProcDefTransition2QInst.
 		"""
