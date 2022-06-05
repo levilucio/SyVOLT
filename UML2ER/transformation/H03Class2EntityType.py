@@ -2,7 +2,7 @@ from core.himesis import Himesis
 import uuid
 
 class H03Class2EntityType(Himesis):
-	def __init__(self):
+	def __init__(self, *args, **kwargs):
 		"""
 		Creates the himesis graph representing the DSLTrans rule 03Class2EntityType.
 		"""

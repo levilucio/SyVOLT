@@ -2,7 +2,7 @@ from core.himesis import Himesis
 import uuid
 
 class HcompostypeportSolveRefPhysicalNodePartitionModuleSchedulerServiceCompositionTypePPortPrototype(Himesis):
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
 
     
     

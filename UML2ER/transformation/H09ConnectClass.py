@@ -2,7 +2,7 @@ from core.himesis import Himesis
 import uuid
 
 class H09ConnectClass(Himesis):
-	def __init__(self):
+	def __init__(self, *args, **kwargs):
 		"""
 		Creates the himesis graph representing the DSLTrans rule 09ConnectClass.
 		"""

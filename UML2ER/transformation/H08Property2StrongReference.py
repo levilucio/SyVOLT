@@ -2,7 +2,7 @@ from core.himesis import Himesis
 import uuid
 
 class H08Property2StrongReference(Himesis):
-	def __init__(self):
+	def __init__(self, *args, **kwargs):
 		"""
 		Creates the himesis graph representing the DSLTrans rule 08Property2StrongReference.
 		"""

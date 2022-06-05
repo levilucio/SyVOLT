@@ -1,0 +1,90 @@
+<is_valid_mutant val='False'/>
+<contract_satisfaction num_pcs='23'>
+<contract name="Contract01" succeed='22' failed='0'/>
+<contract name="Contract02" succeed='21' failed='0'/>
+<contract name="Contract03" succeed='20' failed='0'/>
+<contract name="Contract05" succeed='22' failed='0'/>
+<contract name="Contract06" succeed='21' failed='0'/>
+<contract name="Contract07" succeed='20' failed='0'/>
+<contract name="Contract08" succeed='5' failed='0'/>
+<contract name="Contract09" succeed='4' failed='0'/>
+<contract name="Contract10" succeed='6' failed='0'/>
+<contract name="Contract12a" succeed='5' failed='0'/>
+<contract name="Contract12b" succeed='5' failed='0'/>
+<contract name="IF(Contract13If): THEN(Contract13Then)" succeed='5' failed='0'/>
+<contract name="IF(Contract14If): THEN(Contract14Then)" succeed='4' failed='0'/>
+</contract_satisfaction>
+<rules>
+<rule name="H02Package2ERModel"/>
+<rule name="H03Class2EntityType"/>
+<rule name="H05aProperty2AttributeNoType"/>
+<rule name="H05bProperty2AttributeType"/>
+<rule name="H07Property2WeakReference"/>
+<rule name="H08Property2StrongReference"/>
+<rule name="H09ConnectClass"/>
+<rule name="H10ConnectProperty"/>
+<rule name="H11ConnectReference"/>
+</rules>
+<contracts>
+<contract name="Contract01"/>
+<contract name="Contract02"/>
+<contract name="Contract03"/>
+<contract name="Contract05"/>
+<contract name="Contract06"/>
+<contract name="Contract07"/>
+<contract name="Contract08"/>
+<contract name="Contract09"/>
+<contract name="Contract10"/>
+<contract name="Contract12a"/>
+<contract name="Contract12b"/>
+<contract name="IF(Contract13If): THEN(Contract13Then)"/>
+<contract name="IF(Contract14If): THEN(Contract14Then)"/>
+</contracts>
+<rules_for_each_path_condition>
+<PC num='0' rules="H02Package2ERModel,"/>
+<PC num='1' rules="H02Package2ERModel,H03Class2EntityType,H05aProperty2AttributeNoType,H07Property2WeakReference,H08Property2StrongReference,H09ConnectClass,H10ConnectProperty,"/>
+<PC num='2' rules="H02Package2ERModel,H03Class2EntityType,H05aProperty2AttributeNoType,H07Property2WeakReference,H08Property2StrongReference,H09ConnectClass,H10ConnectProperty,H11ConnectReference,"/>
+<PC num='3' rules="H02Package2ERModel,H03Class2EntityType,H05aProperty2AttributeNoType,H07Property2WeakReference,H09ConnectClass,H10ConnectProperty,"/>
+<PC num='4' rules="H02Package2ERModel,H03Class2EntityType,H05aProperty2AttributeNoType,H07Property2WeakReference,H09ConnectClass,H10ConnectProperty,H11ConnectReference,"/>
+<PC num='5' rules="H02Package2ERModel,H03Class2EntityType,H05aProperty2AttributeNoType,H08Property2StrongReference,H09ConnectClass,H10ConnectProperty,"/>
+<PC num='6' rules="H02Package2ERModel,H03Class2EntityType,H05aProperty2AttributeNoType,H08Property2StrongReference,H09ConnectClass,H10ConnectProperty,H11ConnectReference,"/>
+<PC num='7' rules="H02Package2ERModel,H03Class2EntityType,H05aProperty2AttributeNoType,H09ConnectClass,H10ConnectProperty,"/>
+<PC num='8' rules="H02Package2ERModel,H03Class2EntityType,H05bProperty2AttributeType,H07Property2WeakReference,H08Property2StrongReference,H09ConnectClass,H10ConnectProperty,"/>
+<PC num='9' rules="H02Package2ERModel,H03Class2EntityType,H05bProperty2AttributeType,H07Property2WeakReference,H08Property2StrongReference,H09ConnectClass,H10ConnectProperty,H11ConnectReference,"/>
+<PC num='10' rules="H02Package2ERModel,H03Class2EntityType,H05bProperty2AttributeType,H07Property2WeakReference,H09ConnectClass,H10ConnectProperty,"/>
+<PC num='11' rules="H02Package2ERModel,H03Class2EntityType,H05bProperty2AttributeType,H07Property2WeakReference,H09ConnectClass,H10ConnectProperty,H11ConnectReference,"/>
+<PC num='12' rules="H02Package2ERModel,H03Class2EntityType,H05bProperty2AttributeType,H08Property2StrongReference,H09ConnectClass,H10ConnectProperty,"/>
+<PC num='13' rules="H02Package2ERModel,H03Class2EntityType,H05bProperty2AttributeType,H08Property2StrongReference,H09ConnectClass,H10ConnectProperty,H11ConnectReference,"/>
+<PC num='14' rules="H02Package2ERModel,H03Class2EntityType,H05bProperty2AttributeType,H09ConnectClass,H10ConnectProperty,"/>
+<PC num='15' rules="H02Package2ERModel,H03Class2EntityType,H07Property2WeakReference,H08Property2StrongReference,H09ConnectClass,H10ConnectProperty,"/>
+<PC num='16' rules="H02Package2ERModel,H03Class2EntityType,H07Property2WeakReference,H08Property2StrongReference,H09ConnectClass,H10ConnectProperty,H11ConnectReference,"/>
+<PC num='17' rules="H02Package2ERModel,H03Class2EntityType,H07Property2WeakReference,H09ConnectClass,H10ConnectProperty,"/>
+<PC num='18' rules="H02Package2ERModel,H03Class2EntityType,H07Property2WeakReference,H09ConnectClass,H10ConnectProperty,H11ConnectReference,"/>
+<PC num='19' rules="H02Package2ERModel,H03Class2EntityType,H08Property2StrongReference,H09ConnectClass,H10ConnectProperty,"/>
+<PC num='20' rules="H02Package2ERModel,H03Class2EntityType,H08Property2StrongReference,H09ConnectClass,H10ConnectProperty,H11ConnectReference,"/>
+<PC num='21' rules="H02Package2ERModel,H03Class2EntityType,H09ConnectClass,"/>
+</rules_for_each_path_condition>
+<contracts_for_each_path_condition>
+<PC num='0' sat_contracts='Contract01,Contract05,' nonsat_contracts='' />
+<PC num='1' sat_contracts='Contract01,Contract02,Contract03,Contract05,Contract06,Contract07,Contract10,' nonsat_contracts='' />
+<PC num='2' sat_contracts='Contract01,Contract02,Contract03,Contract05,Contract06,Contract07,Contract10,IF(Contract13If): THEN(Contract13Then),' nonsat_contracts='' />
+<PC num='3' sat_contracts='Contract01,Contract02,Contract03,Contract05,Contract06,Contract07,Contract08,Contract12a,' nonsat_contracts='' />
+<PC num='4' sat_contracts='Contract01,Contract02,Contract03,Contract05,Contract06,Contract07,Contract08,Contract12a,IF(Contract13If): THEN(Contract13Then),' nonsat_contracts='' />
+<PC num='5' sat_contracts='Contract01,Contract02,Contract03,Contract05,Contract06,Contract07,Contract08,Contract12a,' nonsat_contracts='' />
+<PC num='6' sat_contracts='Contract01,Contract02,Contract03,Contract05,Contract06,Contract07,Contract08,Contract12a,IF(Contract14If): THEN(Contract14Then),' nonsat_contracts='' />
+<PC num='7' sat_contracts='Contract01,Contract02,Contract03,Contract05,Contract06,Contract07,Contract08,Contract12a,' nonsat_contracts='' />
+<PC num='8' sat_contracts='Contract01,Contract02,Contract03,Contract05,Contract06,Contract07,Contract10,' nonsat_contracts='' />
+<PC num='9' sat_contracts='Contract01,Contract02,Contract03,Contract05,Contract06,Contract07,Contract10,IF(Contract13If): THEN(Contract13Then),' nonsat_contracts='' />
+<PC num='10' sat_contracts='Contract01,Contract02,Contract03,Contract05,Contract06,Contract07,Contract12b,' nonsat_contracts='' />
+<PC num='11' sat_contracts='Contract01,Contract02,Contract03,Contract05,Contract06,Contract07,Contract12b,IF(Contract13If): THEN(Contract13Then),' nonsat_contracts='' />
+<PC num='12' sat_contracts='Contract01,Contract02,Contract03,Contract05,Contract06,Contract07,Contract12b,' nonsat_contracts='' />
+<PC num='13' sat_contracts='Contract01,Contract02,Contract03,Contract05,Contract06,Contract07,Contract12b,IF(Contract14If): THEN(Contract14Then),' nonsat_contracts='' />
+<PC num='14' sat_contracts='Contract01,Contract02,Contract03,Contract05,Contract06,Contract07,Contract12b,' nonsat_contracts='' />
+<PC num='15' sat_contracts='Contract01,Contract02,Contract03,Contract05,Contract06,Contract07,Contract09,' nonsat_contracts='' />
+<PC num='16' sat_contracts='Contract01,Contract02,Contract03,Contract05,Contract06,Contract07,Contract09,IF(Contract14If): THEN(Contract14Then),' nonsat_contracts='' />
+<PC num='17' sat_contracts='Contract01,Contract02,Contract03,Contract05,Contract06,Contract07,Contract09,' nonsat_contracts='' />
+<PC num='18' sat_contracts='Contract01,Contract02,Contract03,Contract05,Contract06,Contract07,Contract09,IF(Contract13If): THEN(Contract13Then),' nonsat_contracts='' />
+<PC num='19' sat_contracts='Contract01,Contract02,Contract03,Contract05,Contract06,Contract07,Contract10,' nonsat_contracts='' />
+<PC num='20' sat_contracts='Contract01,Contract02,Contract03,Contract05,Contract06,Contract07,Contract10,IF(Contract14If): THEN(Contract14Then),' nonsat_contracts='' />
+<PC num='21' sat_contracts='Contract01,Contract02,Contract05,Contract06,' nonsat_contracts='' />
+</contracts_for_each_path_condition>

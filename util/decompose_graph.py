@@ -15,7 +15,7 @@ except ImportError:
 
 #@do_cprofile
 #@Profiler
-@lru_cache(maxsize=1024)
+#@lru_cache(maxsize=1024)
 #@profile
 def decompose_graph(graph, verbosity = 0, ignore_apply_dls = False, isolated_if_attached_backward = False, get_isolated_match_elements = False):
     #decompose graph into directLinks, backwardLinks, and isolated elements
