@@ -50,7 +50,7 @@ For example, run `python3 do_mutation_testing.py F2P False` to test all mutants 
 
 The other transformations are: `RSS`, `UML2ER`, `GM`, `Kiltera`.
 
-The mutation results will be collected in `mutation_testing.xml`. This is then the input into the Spectrum-Based Fault Localization Java program.
+The mutation results will be collected in `mutation_testing.xml`. This is then the input into the [Spectrum-Based Fault Localization Java program](https://github.com/javitroya/sbfl-symbolic-execution-mt).
 
 
 ## Related Work
