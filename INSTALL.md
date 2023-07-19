@@ -34,13 +34,13 @@ If that doesn't work, try other package managers:
 
 `sudo apt-get install python-pip`
 
-`sudo pip install python-igraph`
+`sudo pip install igraph`
 
 or
 
 `sudo apt-get install python3-pip`
 
-`sudo pip3 install python-igraph`
+`sudo pip3 install igraph`
 
 
 # Mac
