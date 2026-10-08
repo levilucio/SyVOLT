@@ -5,7 +5,11 @@ from t_core.iterator import Iterator
 
 import time
 
-from multiprocessing import Process
+import multiprocessing
+
+# The workers rely on fork semantics: the rules they carry cannot be pickled,
+# and Python 3.14 changed the default Linux start method to forkserver
+Process = multiprocessing.get_context("fork").Process
 from core.himesis_utils import expand_graph, shrink_graph, delete_graph, disjoint_model_union, print_graph, graph_to_dot, get_preds_and_succs
 
 from copy import deepcopy

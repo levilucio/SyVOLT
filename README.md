@@ -10,7 +10,7 @@ For more information, including a demo of the prover: <a href="https://youtu.be/
 
 ## Installation
 
-Please see the INSTALL.txt file in this directory.
+Please see the INSTALL.md file in this directory.
 
 The main development and usage platform is Linux. SyVOLT may not work on MacOS or Windows.
 

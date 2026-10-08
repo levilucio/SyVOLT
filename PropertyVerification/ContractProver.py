@@ -4,7 +4,6 @@ from PropertyVerification.ContractDebugger import ContractDebugger
 from core.himesis_utils import graph_to_dot, expand_graph, get_filename
 
 import multiprocessing
-from multiprocessing import Manager
 
 from PropertyVerification.prover_worker import prover_worker
 from PropertyVerification.spectrum_based_analysis import SpectrumBasedAnalyzer
@@ -72,7 +71,7 @@ class ContractProver:
             contract_failed_pcs[contract_name] = []
             contract_succeeded_pcs[contract_name] = []
 
-        manager = Manager()
+        manager = multiprocessing.get_context("fork").Manager()
 
         if self.do_parallel:
 

@@ -229,13 +229,17 @@ class Match(dict):
         print(s)
     
     def __copy__(self):
-        cpy = copy.copy(super(Match, self))
+        cpy = type(self)()
+        cpy.update(self)
         cpy.local_pivots = copy.copy(self.local_pivots)
         return cpy
     
     def __deepcopy__(self, memo):
-        cpy = copy.deepcopy(super(Match, self))
-        cpy.local_pivots = copy.deepcopy(self.local_pivots)
+        cpy = type(self)()
+        memo[id(self)] = cpy
+        for k, v in self.items():
+            cpy[copy.deepcopy(k, memo)] = copy.deepcopy(v, memo)
+        cpy.local_pivots = copy.deepcopy(self.local_pivots, memo)
         return cpy
     
     def is_dirty(self, packet):
@@ -321,12 +325,16 @@ class Pivots(dict):
         self.has_source_node_indices = False
     
     def __copy__(self):
-        cpy = copy.copy(super(Pivots, self))
+        cpy = type(self)()
+        cpy.update(self)
         cpy.has_source_node_indices = self.has_source_node_indices
         return cpy
     
     def __deepcopy__(self, memo):
-        cpy = copy.deepcopy(super(Pivots, self))
+        cpy = type(self)()
+        memo[id(self)] = cpy
+        for k, v in self.items():
+            cpy[copy.deepcopy(k, memo)] = copy.deepcopy(v, memo)
         cpy.has_source_node_indices = self.has_source_node_indices
         return cpy
     

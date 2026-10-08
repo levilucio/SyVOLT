@@ -1,5 +1,9 @@
 
-from multiprocessing import Process
+import multiprocessing
+
+# The workers rely on fork semantics: the contracts they carry cannot be pickled,
+# and Python 3.14 changed the default Linux start method to forkserver
+Process = multiprocessing.get_context("fork").Process
 
 from core.himesis_utils import expand_graph
 from copy import deepcopy

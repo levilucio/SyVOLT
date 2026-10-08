@@ -11,7 +11,6 @@ import time
 from util.Tester import Tester
 
 import multiprocessing
-from multiprocessing import Manager
 from path_condition_generator_worker import *
 
 from pruner.pruner import Pruner
@@ -288,7 +287,7 @@ class PathConditionGenerator(object):
             self.print_memory_usage = False
             psutil = None
 
-        manager = Manager()
+        manager = multiprocessing.get_context("fork").Manager()
 
         # now go through the layers one-by-one
 
